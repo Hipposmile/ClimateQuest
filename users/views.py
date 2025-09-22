@@ -1,0 +1,104 @@
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.hashers import check_password
+from django.http import JsonResponse
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.db.models import Sum
+from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+from core.all_messages import all_messages
+
+from .models import *
+from utils.functions import *
+
+from datetime import datetime, timedelta, date
+import random
+import string
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+@login_required
+def klimapunkte_view(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        messages.error(request, all_messages["user_not_found"])
+        return redirect('home')
+    
+    zeitraum = 'gesamt'
+    aktionen = Aktion.objects.filter(user=user)
+    klimapunkte = get_klimapunkte(aktionen)
+
+    if request.method == 'POST':
+        heute = date.today()
+        siebenTage = date.today() - timedelta(days=7)
+        dreißigTage = date.today() - timedelta(days=30)
+        dreihundertfünfundsechzigTage = date.today() - timedelta(days=365)
+
+        zeitraum = request.POST.get('zeitraum')
+
+        if zeitraum == 'heute':
+            aktionen = Aktion.objects.filter(user=user, date=heute)
+            klimapunkte = get_klimapunkte(aktionen)
+
+        elif zeitraum == 'sieben Tage':
+            aktionen = Aktion.objects.filter(user=user, date__gte=siebenTage)
+            klimapunkte = get_klimapunkte(aktionen)
+
+        elif zeitraum == 'dreißig Tage':
+            aktionen = Aktion.objects.filter(user=user, date__gte=dreißigTage)
+            klimapunkte = get_klimapunkte(aktionen)
+
+        elif zeitraum == 'dreihundertfünfundsechzig Tage':
+            aktionen = Aktion.objects.filter(user=user, date__gte=dreihundertfünfundsechzigTage)
+            klimapunkte = get_klimapunkte(aktionen)
+
+        elif zeitraum == 'gesamt':
+            aktionen = Aktion.objects.filter(user=user)
+            klimapunkte = get_klimapunkte(aktionen)
+            
+        elif zeitraum == 'benutzerdefiniert':
+            start_datum = request.POST.get('start_date')
+            end_datum = request.POST.get('end_date')
+            if not start_datum or not end_datum:
+                messages.error(request, all_messages["missing_date_fields"])
+                return redirect('klimapunkte_view')
+            try:
+                start_datum = datetime.strptime(start_datum, '%Y-%m-%d').date()
+                end_datum = datetime.strptime(end_datum, '%Y-%m-%d').date()
+                if start_datum > end_datum:
+                    messages.error(request, all_messages["invalid_date_range"])
+                    return redirect('klimapunkte_view')
+                if end_datum > heute:
+                    messages.error(request, all_messages["date_in_future"])
+                    return redirect('klimapunkte_view')
+            except ValueError:
+                messages.error(request, all_messages["invalid_date_format"])
+                return redirect('klimapunkte_view')
+            aktionen = Aktion.objects.filter(user=user, date__range=(start_datum, end_datum))
+            klimapunkte = get_klimapunkte(aktionen)
+            zeitraum = f'von {start_datum} bis {end_datum}'
+        else:
+            messages.error(request, all_messages["invalid_zeitraum"])
+            return redirect('klimapunkte_view')
+        
+        if klimapunkte is None:
+            klimapunkte = 0
+
+    return render(request, './klimapunkte.html', {'klimapunkte': klimapunkte, 'zeitraum': zeitraum, 'user': user})
+
+def level_view(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        messages.error(request, all_messages["user_not_found"])
+        return redirect('home')
+
+    levelData = get_level(user)
+    return render(request, './level.html', {'levelData': levelData, 'user': user})

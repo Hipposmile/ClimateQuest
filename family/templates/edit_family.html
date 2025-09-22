@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %} {% if family %}Family {{ family.name }} bearbeiten{% else %}Die Family konnte nicht geladen
+werden.{% endif %} {% endblock %}
+
+{% block content %}
+
+<h1>Family <a href="{% url 'family_detail' family.id %}">{{ family.name }}</a> bearbeiten</h1>
+
+{% if messages %}
+{% for message in messages %}
+<p class="{{message.level_tag}}-message">{{ message }}</p>
+{% endfor %}
+{% endif %}
+<h3>Benutzernamen ändern</h3>
+<form method="post">
+    {% csrf_token %}
+    <input type="password" name="admin_password" placeholder="Admin Passwort" required>
+    <small id="familyname-feedback"></small>
+    <input type="text" name="new_familyname" id="new_familyname" placeholder="Neuer Familyname" required>
+    <button type="submit" name="change_familyname">Speichern</button>
+</form>
+{% if familyname_error %}<p class="error-message">{{ familyname_error }}</p>{% endif %}
+{% if familyname_success %}<p class="success-message">{{ familyname_success }}</p>{% endif %}
+
+<script>
+    document.getElementById('new_familyname').addEventListener('input', function () {
+        const familyname = this.value;
+        const feedback = document.getElementById('familyname-feedback');
+        const registerButton = document.getElementById('register-button');
+
+        if (familyname.length > 0) {
+            feedback.textContent = 'Überprüfe, ob Familyname bereits existiert...';
+            feedback.style.color = 'grey';
+            fetch(`/family/check-familyname/?familyname=${encodeURIComponent(familyname)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exists) {
+                        feedback.textContent = 'Familyname bereits vorhanden';
+                        feedback.style.color = 'red';
+                    } else {
+                        feedback.textContent = 'Familyname noch nicht vorhanden';
+                        feedback.style.color = 'green';
+                    }
+                });
+        } else {
+            feedback.textContent = '';
+        }
+    });
+</script>
+
+<hr>
+
+<h3>Passwort ändern</h3>
+<form method="post">
+    {% csrf_token %}
+    <input type="password" name="admin_password" placeholder="Admin Passwort" required>
+    <input type="password" name="new_password" placeholder="Neues Passwort" required>
+    <button type="submit" name="change_password">Ändern</button>
+</form>
+{% if password_error %}<p class="error-message">{{ password_error }}</p>{% endif %}
+{% if password_success %}<p class="success-message">{{ password_success }}</p>{% endif %}
+
+<hr>
+
+<h3>Admin Passwort ändern</h3>
+<form method="post">
+    {% csrf_token %}
+    <input type="password" name="current_admin_password" placeholder="aktuelles Admin Passwort" required>
+    <input type="password" name="new_admin_password" id="new_admin_password" placeholder="neues Admin Passwort" required>
+    <div>
+        <h4>Wir empfehlen folgende Admin-Passwort-Anforderungen, um die Family vor unerlaubter Bearbeitung zu schützen:
+        </h4>
+        <ul class="criteria-list">
+            <li id="length" class="error-message">Mindestens acht Zeichen</li>
+            <li id="uppercase" class="error-message">Mindestens ein Großbuchstabe</li>
+            <li id="lowercase" class="error-message">Mindestens ein Kleinbuchstabe</li>
+            <li id="number" class="error-message">Mindestens eine Zahl</li>
+            <li id="punctuation" class="error-message">Mindestens ein Sonderzeichen</li>
+        </ul>
+    </div>
+    <button type="submit" name="change_admin_password">Ändern</button>
+</form>
+<script>
+    const passwordInput = document.getElementById('new_admin_password')
+    const password_lenght = document.getElementById('length')
+    const uppercase = document.getElementById('uppercase')
+    const lowercase = document.getElementById('lowercase')
+    const number = document.getElementById('number')
+    const punctuation = document.getElementById('punctuation')
+
+    passwordInput.addEventListener('input', function () {
+        let password = this.value;
+
+        password_lenght.className = password.length >= 8 ? "success-message" : "error-message"
+        uppercase.className = /[A-Z]/.test(password) ? "success-message" : "error-message"
+        lowercase.className = /[a-z]/.test(password) ? "success-message" : "error-message"
+        number.className = /\d/.test(password) ? "success-message" : "error-message"
+        punctuation.className = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(password) ? "success-message" : "error-message";
+    });
+
+</script>
+{% if admin_password_error %}<p class="error-message">{{ admin_password_error }}</p>{% endif %}
+{% if admin_password_success %}<p class="success-message">{{ admin_password_success }}</p>{% endif %}
+
+<hr>
+
+<h3>Mitglieder entfernen</h3>
+<form method="post">
+    {% csrf_token %}
+    <input type="password" name="admin_password" placeholder="Admin Passwort" required>
+    <input type="password" name="username" placeholder="Username" required>
+    <button type="submit" name="remove_member">Ändern</button>
+</form>
+{% if remove_error %}<p class="error-message">{{ remove_error }}</p>{% endif %}
+{% if remove_success %}<p class="success-message">{{ remove_success }}</p>{% endif %}
+
+<hr>
+
+<h3>Family verlassen</h3>
+<form method="post" onsubmit="return confirm('Willst du diese Family wirklich verlassen?');">
+    {% csrf_token %}
+    <button type="submit" name="leave_family" style="color:red;">Diese Family verlassen</button>
+</form>
+{% if leave_error %}<p style="color:red;">{{ leave_error }}</p>{% endif %}
+
+<hr>
+
+<h3>Chat-Einstellungen</h3>
+<form method="POST">
+    {% csrf_token %}
+    <input type="password" name="admin_password" placeholder="Admin-Passwort" required>
+    <label class="custom-checkbox">
+        <input type="hidden" id="chat_settings" value="{{ family.chat }}">
+        <input type="checkbox" name="chat_checkbox" id="chat_checkbox">
+        <span class="checkmark"></span>
+        <span class="label-text">Chat-Funktion aktivieren / deaktivieren</span>
+    </label>
+    <button type="submit" name="change_chat_settings">Speichern</button>
+</form>
+
+<script>
+    let chat_settings = document.getElementById('chat_settings');
+    const checkbox = document.getElementById('chat_checkbox');
+
+    if (chat_settings.value == 'True') {
+        checkbox.checked = true;
+    } else {
+        checkbox.checked = false;
+    }
+</script>
+
+<hr>
+
+<h3>Family löschen</h3>
+<form method="post" onsubmit="return confirm('Willst du diese Family wirklich löschen?');">
+    {% csrf_token %}
+    <input type="password" name="admin_password" placeholder="Admin-Passwort" required>
+    <button type="submit" name="delete_family" style="color:red;">Diese Family löschen</button>
+</form>
+{% if delete_error %}<p style="color:red;">{{ delete_error }}</p>{% endif %}
+
+{% endblock %}

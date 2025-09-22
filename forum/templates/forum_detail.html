@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Post {{ post.title }}{% endblock %}
+
+{% block content %}
+<style>
+.answer {
+    background-color: var(--color-bg);
+    border-left: 4px solid var(--color-primary);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 6px;
+    box-shadow: var(--shadow-md);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.answer p {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+    color: var(--color-text);
+}
+</style>
+
+<h1>Post <i>{{ post.title }}</i></h1>
+
+{% if messages %}
+{% for message in messages %}
+<p class="{{message.level_tag}}-message">{{ message }}</p>
+{% endfor %}
+{% endif %}
+
+<div class="artikel-content"><p>{{ post.content|safe }}</p></div>
+<br>
+<p>Erstellt von <a href="{% url 'klimapunkte_view' post.creator.id %}">{{ post.creator }}</a></p>
+<p>Erstellt am: {{ post.date_time|date:"d.m.Y H:i" }}</p>
+
+{% for answer in answers %}
+<div class="answer">
+    <p>{{ answer.content|safe }}</p>
+    <p><small>Antwort von <a href="{% url 'klimapunkte_view' answer.creator.id %}">{{ answer.creator }}</a> am {{ answer.date_time|date:"d.m.Y H:i" }}</small></p>
+</div>
+{% endfor %}
+
+
+<h3>Antworten</h3>
+<form method="post" onsubmit="fillEditor(event)">
+    {% csrf_token %}
+    <div id="content_editor" class="quill-editor"></div>
+    <input type="hidden" name="content">
+
+    <button type="submit">Speichern</button>
+</form>
+
+<!-- Quill CSS -->
+<div class="cookie-blocked" data-requires="quill"
+    data-content='<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />'>
+</div>
+
+<script>
+    let quill;
+    document.addEventListener('DOMContentLoaded', function () {
+        let editor = document.getElementById('content_editor')
+        if (getCookiePreferences().quill) {
+            const script = document.createElement("script");
+            script.src = "https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js";
+            document.body.appendChild(script);
+            script.onload = function () {
+                if (editor) {
+                    quill = new Quill(editor, {
+                        theme: 'snow',
+                        modules: {
+                            toolbar: [
+                                [{ header: [1, 2, false] }],
+                                ['bold', 'italic', 'underline'],
+                                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                ['link']
+                            ]
+                        }
+                    });
+                } else 
+                {
+                    console.warn("Editor not found");
+                }
+            }
+        } else {
+            editor.innerHTML = `<textarea placeholder="Beschreibung" class="quill-editor" style="max-width: 400px; min-width: 400px;"></textarea>`;
+        }
+    });
+
+
+    // Beim Absenden des Formulars
+    function fillEditor(event) {
+        if (getCookiePreferences().quill) {
+            const form = event.target;
+            event.preventDefault();
+            try {
+                var html = quill.root.innerHTML;
+                console.log(html)
+                form.querySelector('input[name=content]').value = html;
+                form.submit();
+            } catch {
+                console.error("Variable Quill not found");
+                alert("Ein interner Fehler ist aufgetreten. Probieren Sie es später bitte erneut!");
+                return false;
+            }
+        }
+    }
+</script>
+
+{% endblock %}

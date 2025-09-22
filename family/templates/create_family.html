@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Family erstellen{% endblock %}
+
+{% block content %}
+<h1>Family erstellen</h1>
+{% if messages %}
+{% for message in messages %}
+<p class="{{message.level_tag}}-message">{{ message }}</p>
+{% endfor %}
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    <small id="familyname-feedback"></small>
+    <input type="text" id="familyname" name="familyname" placeholder="Familyname" required>
+    <input type="password" id="password" name="family_password" placeholder="Passwort" required>
+    <input type="password" id="family_admin_password" name="family_admin_password" placeholder="Admin Passwort" id="family_admin_password" required>
+    <div>
+        <h4>Wir empfehlen folgende Admin-Passwort-Anforderungen, um die Family vor unerlaubter Bearbeitung zu schützen:</h4>
+        <ul class="criteria-list">
+      <li id="length" class="error-message">Mindestens acht Zeichen</li>
+      <li id="uppercase" class="error-message">Mindestens ein Großbuchstabe</li>
+      <li id="lowercase" class="error-message">Mindestens ein Kleinbuchstabe</li>
+      <li id="number" class="error-message">Mindestens eine Zahl</li>
+      <li id="punctuation" class="error-message">Mindestens ein Sonderzeichen</li>
+    </ul>
+  </div>
+    <button type="submit" id="create-button">Family erstellen</button>
+</form>
+<p>Oder <a href="{% url 'join_family' %}">einer bestehenden Family beitreten</a>.</p>
+
+<script>
+    const passwordInput = document.getElementById('family_admin_password')
+    const password_lenght = document.getElementById('length')
+    const uppercase = document.getElementById('uppercase')
+    const lowercase = document.getElementById('lowercase')
+    const number = document.getElementById('number')
+    const punctuation = document.getElementById('punctuation')
+
+    passwordInput.addEventListener('input', function () {
+        let password = this.value;
+
+        password_lenght.className = password.length >= 8 ? "success-message" : "error-message"
+        uppercase.className = /[A-Z]/.test(password) ? "success-message" : "error-message"
+        lowercase.className = /[a-z]/.test(password) ? "success-message" : "error-message"
+        number.className = /\d/.test(password) ? "success-message" : "error-message"
+        punctuation.className = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(password) ? "success-message" : "error-message";
+    });
+
+    document.getElementById('familyname').addEventListener('input', function () {
+        const familyname = this.value;
+        const feedback = document.getElementById('familyname-feedback');
+        const registerButton = document.getElementById('register-button');
+
+        const errorMessage = document.getElementById('register-error');
+        if (errorMessage) {
+            errorMessage.style.display = 'none';
+        }
+
+
+        if (familyname.length > 0) {
+            feedback.textContent = 'Überprüfe, ob Familyname bereits existiert...';
+            feedback.style.color = 'grey';
+            fetch(`/family/check-familyname/?familyname=${encodeURIComponent(familyname)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exists) {
+                        feedback.textContent = 'Familyname bereits vorhanden';
+                        feedback.style.color = 'red';
+                    } else {
+                        feedback.textContent = 'Familyname noch nicht vorhanden';
+                        feedback.style.color = 'green';
+                    }
+                });
+        } else {
+            feedback.textContent = '';
+        }
+    });
+</script>
+
+{% endblock %}

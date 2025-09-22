@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Community beitreten{% endblock %}
+{% block content %}
+<h1>Community beitreten</h1>
+{% if messages %}
+{% for message in messages %}
+<p class="{{message.level_tag}}-message">{{ message }}</p>
+{% endfor %}
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="communityname" placeholder="Communitynname" required>
+    <input type="password" name="community_password" placeholder="Passwort" required>
+    <input type="text" id="familyname" name="familyname" placeholder="Familyname" required>
+    <input type="password" id="family_admin_password" name="family_admin_password" placeholder="Family Admin Passwort" required>
+    <button type="submit">Community beitreten</button>
+</form>
+
+<p>Oder <a href="{% url 'create_community' %}">eine Community gründen</a>.</p>
+
+{% endblock %}

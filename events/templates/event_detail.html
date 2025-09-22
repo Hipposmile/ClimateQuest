@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}Aktion {{ event.name }}{% endblock %}
+
+{% block content %}
+
+<style>
+    .event-form {
+    margin-top: 1em;
+}
+
+    .join-button {
+        background-color: var(--color-primary);
+    }
+
+    .leave-button {
+        background-color: var(--color-notification);
+    }
+</style>
+
+<h1 class="event-title">Event <i>{{ event.name }}</i></h1>
+
+{% if request.user != event.creator %}
+<p class="participant-status">
+    {% if request.user in event.participants.all %}
+    Du bist Teilnehmer dieses Events
+    {% else %}
+    Du bist nicht Teilnehmer dieses Events
+    {% endif %}
+</p>
+{% endif %}
+
+{% if messages %}
+{% for message in messages %}
+<p class="{{ message.level_tag }}-message">{{ message }}</p>
+{% endfor %}
+{% endif %}
+
+<p><strong>Beschreibung:</strong> <div class="event-description">{{ event.description|safe }}</div></p>
+<p><strong>Datum und Uhrzeit (Beginn):</strong> {{ event.date_time|date:"d.m.Y, H:i" }}</p>
+<p><strong>geschätzte Dauer in Minuten:</strong> {{ event.duration }}</p>
+<p><strong>Adresse:</strong> {{ event.adress }}</p>
+
+<p class="{% if request.user == event.creator %}event-creator{% else %}event-user{% endif %}">
+    <strong>Ersteller:</strong> <a href="{% url 'klimapunkte_view' event.creator.id %}">{{ event.creator.username }}</a>
+    {% if request.user == event.creator %}(Du){% endif %}
+</p>
+
+<details class="event-details">
+    <summary>
+        <p><strong>Teilnehmeranzahl:</strong> {{ event.participants_count }}</p>
+    </summary>
+    <ul class="participant-list">
+        {% for participant in event.participants.all %}
+        <li>{{ participant }}</li>
+        {% endfor %}
+    </ul>
+</details>
+
+{% if user.is_authenticated %}
+{% if request.user != event.creator %}
+<form method="post" class="event-form">
+    {% csrf_token %}
+    {% if request.user in event.participants.all %}
+    <button name="become_member" type="submit" class="leave-button">aus Event aussteigen</button>
+    {% else %}
+    <button name="become_member" type="submit" class="join-button">Teilnehmer werden</button>
+    {% endif %}
+</form>
+{% else %}
+<a href="{% url 'edit_event' event.id %}" class="edit-link">Bearbeiten</a>
+{% endif %}
+{% endif %}
+
+<h3 class="section-title">Fragen</h3>
+<div class="comment-section">
+    {% if event.questions.all %}
+    {% for question in event.questions.all %}
+    <div class="comment">
+        <div class="text-wrapper">
+            <div class="question-header">
+                <span class="question-user"><a href="{% url 'klimapunkte_view' question.user.id %}">{{ question.user }}</a></span>
+                <span class="question-date">{{ question.date_time|date:"d.m.Y H:i" }}</span>
+            </div>
+            <div class="question expandable-text blur-enabled">{{ question.question }}</div>
+            <div class="answers">
+                {% for answer in question.answers.all %}
+                <div class="answer-header">
+                    <span class="answer-user"><a href="{% url 'klimapunkte_view' answer.user.id %}">{{ answer.user }}</a></span>
+                    <span class="answer-date">{{ answer.date_time|date:"d.m.Y H:i" }}</span>
+                </div>
+                <div class="answer expandable-text blur-enabled">{{ answer.answer }}</div>
+                {% empty %}
+                <div class="no-answer">Noch keine Antworten.</div>
+                {% endfor %}
+            </div>
+            <button class="toggle-button">Mehr anzeigen</button>
+            <details>
+                <summary>selbst antworten</summary>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="question_id" value="{{ question.id }}">
+                    <input type="text" name="answer" placeholder="Antwort">
+                    <button name="answer_question">Antworten</button>
+                </form>
+            </details>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p class="no-questions"><i>Noch keine Fragen vorhanden</i></p>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const comments = document.querySelectorAll(".comment");
+
+        comments.forEach(comment => {
+            const button = comment.querySelector(".toggle-button");
+            const wrapper = comment.querySelector(".text-wrapper");
+            const expandableElements = comment.querySelectorAll(".expandable-text");
+
+            let shouldBlur = false;
+
+            expandableElements.forEach(el => {
+                const textLength = el.textContent.trim().length;
+                if (textLength > 100) {
+                    shouldBlur = true;
+                    el.classList.add("blur-enabled");
+                } else {
+                    el.classList.remove("blur-enabled");
+                }
+            });
+
+            if (shouldBlur) {
+                button.style.display = "inline-block";
+                button.addEventListener("click", () => {
+                    wrapper.classList.toggle("expanded");
+                    button.textContent = wrapper.classList.contains("expanded") ? "Weniger anzeigen" : "Mehr anzeigen";
+                });
+            } else {
+                button.style.display = "none";
+            }
+        });
+    });
+</script>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="question" placeholder="Frage stellen">
+    <button type="submit" name="ask_question">Frage stellen</button>
+</form>
+{% endblock %}

@@ -1,0 +1,130 @@
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.hashers import check_password
+from django.http import JsonResponse
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.db.models import Sum
+from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+import os
+from django.core.management import call_command
+from django.contrib.auth.models import User
+from .models import *
+from utils.functions import *
+from ClimateQuest.passwords import passwords
+from core.all_messages import all_messages
+
+from datetime import datetime, timedelta, date
+import random
+import string
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+def home(request):
+    klimapunkte_gesamt = 0
+    user_count = 0
+    for user in User.objects.prefetch_related():
+        aktionen = Aktion.objects.filter(user=user)
+        klimapunkte = get_klimapunkte(aktionen)
+        klimapunkte_gesamt += klimapunkte
+        user_count += 1
+    return render(request, './home.html', {'klimapunkte': klimapunkte_gesamt, 'user_count': user_count})
+
+@login_required
+def admin(request):
+    if not request.user.is_staff:
+        messages.error(request, all_messages["admin_access_denied"])
+        return redirect('home')
+    if request.method == 'POST':
+        if 'benachrichtigung' in request.POST:
+            receiver = request.POST.get('receiver')
+            name = request.POST.get('name')
+            msg = request.POST.get('msg')
+
+            if not receiver or not name or not msg:
+                messages.error(request, all_messages["admin_fields_missing"])
+                return redirect('admin')
+            
+            if receiver == 'user':
+                try:
+                    user = User.objects.get(username=name)
+                    createBenachrichtigung(request, msg, user)
+                except User.DoesNotExist:
+                    messages.error(request, all_messages["admin_user_not_found"])
+                    return redirect('admin')
+            elif receiver == 'family-members':
+                try:
+                    family = Family.objects.get(name=name)
+                except Family.DoesNotExist:
+                    messages.error(request, all_messages["admin_family_not_found"])
+                    return redirect('admin')
+                for user in family.members.all():
+                    createBenachrichtigung(request, msg, user)
+            elif receiver == 'community-members':
+                try:
+                    community = Community.objects.get(name=name)
+                except Community.DoesNotExist:
+                    messages.error(request, all_messages["admin_community_not_found"])
+                    return redirect('admin')
+                for family in community.members.all():
+                    for user in family.members.all():
+                        createBenachrichtigung(request, msg, user)
+            else:
+                messages.error(request, all_messages["admin_invalid_receiver"])
+                return redirect('admin')
+        
+        elif 'check_worldwide_ranking' in request.POST:
+            try:
+                worldwide_ranking = Family.objects.get(name='worldwide ranking', chat=False)
+                if check_password(passwords['worldwide_ranking_password'], worldwide_ranking.password) and check_password(passwords['worldwide_ranking_admin_password'], worldwide_ranking.admin_password):
+                    messages.success(request, all_messages["worldwide_ranking_valid"])
+                else:
+                    messages.error(request, all_messages["worldwide_ranking_invalid_passwords"])
+            except Family.DoesNotExist:
+                worldwide_ranking = Family.objects.create(
+                    name='worldwide ranking',
+                    password=passwords['worldwide_ranking_password'],
+                    admin_password=passwords['worldwide_ranking_admin_password'],
+                    chat=False
+                )
+                for user in User.objects.all():
+                    worldwide_ranking.members.add(user)
+                    worldwide_ranking.save()
+                messages.success(request, all_messages["worldwide_ranking_created"])
+        elif 'add_everyone_user_erweitert' in request.POST:
+            for user in User.objects.all():
+                if not UserErweitert.objects.filter(user=user):
+                    UserErweitert.objects.create(user=user)
+            messages.success(request, all_messages["added_everyone_user_erweitert"])
+        else:
+            messages.error(request, all_messages["admin_invalid_action"])
+    return render(request, 'admin.html')
+
+@login_required
+def count_benachrichtigungen(request):
+    benachrichtigungen_count = Benachrichtigung.objects.filter(user=request.user).count()
+    return JsonResponse({'benachrichtigungen_count': benachrichtigungen_count})
+
+@login_required
+def benachrichtigungen_view(request):
+    benachrichtigungen = Benachrichtigung.objects.filter(user=request.user).order_by('-date')
+    return render(request, 'benachrichtigungen.html', {'benachrichtigungen': benachrichtigungen})
+
+@login_required
+def delete_benachrichtigung(request, id):
+    try:
+        Benachrichtigung.objects.get(id=id).delete()
+        messages.success(request, all_messages["notification_deleted"])
+    except Benachrichtigung.DoesNotExist:
+        messages.error(request, all_messages["delete_notification_error"])
+    return redirect('benachrichtigungen_view')
+
+def share(request):
+    url = request.GET.get('url')
+    return render(request, 'share.html', {'url': url})

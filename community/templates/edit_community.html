@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %} {% if community %}Community {{ community.name }} bearbeiten{% else %}Die Community konnte nicht
+geladen werden.{% endif %} {% endblock %}
+
+{% block content %}
+
+<h1>Community <a href="{% url 'community_detail' community.id family.id %}">{{ community.name }}</a> bearbeiten</h1>
+<h3>Eingeloggt mit Family <a href="{% url 'family_detail' family.id%}">{{ family.name }}</a></h3>
+
+{% if messages %}
+{% for message in messages %}
+<p class="{{message.level_tag}}-message">{{ message }}</p>
+{% endfor %}
+{% endif %}
+
+<h3>Benutzernamen ändern</h3>
+<form method="post">
+    {% csrf_token %}
+    <input type="password" name="admin_password" placeholder="Admin Passwort" required>
+    <small id="communityname-feedback"></small>
+    <input type="text" name="new_communityname" id="new_communityname" placeholder="Neuer Communityname" required>
+    <button type="submit" name="change_communityname">Speichern</button>
+</form>
+{% if communityname_error %}<p class="error-message">{{ communityname_error }}</p>{% endif %}
+{% if communityname_success %}<p class="success-message">{{ communityname_success }}</p>{% endif %}
+
+<script>
+    document.getElementById('new_communityname').addEventListener('input', function () {
+        const communityname = this.value;
+        const feedback = document.getElementById('communityname-feedback');
+        const registerButton = document.getElementById('register-button');
+
+        if (communityname.length > 0) {
+            feedback.textContent = 'Überprüfe, ob Communityname bereits existiert...';
+            feedback.style.color = 'grey';
+            fetch(`/community/check-communityname/?communityname=${encodeURIComponent(communityname)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exists) {
+                        feedback.textContent = 'Communityname bereits vorhanden';
+                        feedback.style.color = 'red';
+                    } else {
+                        feedback.textContent = 'Communityname noch nicht vorhanden';
+                        feedback.style.color = 'green';
+                    }
+                });
+        } else {
+            feedback.textContent = '';
+        }
+    });
+</script>
+
+<hr>
+
+<h3>Passwort ändern</h3>
+<form method="post">
+    {% csrf_token %}
+    <input type="password" name="admin_password" placeholder="Admin Passwort" required>
+    <input type="password" name="new_password" placeholder="Neues Passwort" required>
+    <button type="submit" name="change_password">Speichern</button>
+</form>
+{% if password_error %}<p class="error-message">{{ password_error }}</p>{% endif %}
+{% if password_success %}<p class="success-message">{{ password_success }}</p>{% endif %}
+
+<hr>
+
+<h3>Admin Passwort ändern</h3>
+<form method="post">
+    {% csrf_token %}
+    <input type="password" name="current_admin_password" placeholder="aktuelles Admin Passwort" required>
+    <input type="password" name="new_admin_password" id="new_admin_password" placeholder="neues Admin Passwort" required>
+    <div>
+        <h4>Wir empfehlen folgende Admin-Passwort-Anforderungen, um die Community vor unerlaubter Bearbeitung zu
+            schützen:
+        </h4>
+        <ul class="criteria-list">
+            <li id="length" class="error-message">Mindestens acht Zeichen</li>
+            <li id="uppercase" class="error-message">Mindestens ein Großbuchstabe</li>
+            <li id="lowercase" class="error-message">Mindestens ein Kleinbuchstabe</li>
+            <li id="number" class="error-message">Mindestens eine Zahl</li>
+            <li id="punctuation" class="error-message">Mindestens ein Sonderzeichen</li>
+        </ul>
+    </div>
+    <button type="submit" name="change_admin_password">Speichern</button>
+</form>
+<script>
+    const passwordInput = document.getElementById('new_admin_password')
+    const password_lenght = document.getElementById('length')
+    const uppercase = document.getElementById('uppercase')
+    const lowercase = document.getElementById('lowercase')
+    const number = document.getElementById('number')
+    const punctuation = document.getElementById('punctuation')
+
+    passwordInput.addEventListener('input', function () {
+        let password = this.value;
+
+        password_lenght.className = password.length >= 8 ? "success-message" : "error-message"
+        uppercase.className = /[A-Z]/.test(password) ? "success-message" : "error-message"
+        lowercase.className = /[a-z]/.test(password) ? "success-message" : "error-message"
+        number.className = /\d/.test(password) ? "success-message" : "error-message"
+        punctuation.className = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(password) ? "success-message" : "error-message";
+    });
+
+</script>
+{% if admin_password_error %}<p class="error-message">{{ admin_password_error }}</p>{% endif %}
+{% if admin_password_success %}<p class="success-message">{{ admin_password_success }}</p>{% endif %}
+
+<hr>
+
+<h3>Mitglieder entfernen</h3>
+<form method="post">
+    {% csrf_token %}
+    <input type="password" name="admin_password" placeholder="Admin Passwort" required>
+    <input type="password" name="family_name" placeholder="Familyname" required>
+    <button type="submit" name="remove_member">Speichern</button>
+</form>
+{% if remove_error %}<p class="error-message">{{ remove_error }}</p>{% endif %}
+{% if remove_success %}<p class="success-message">{{ remove_success }}</p>{% endif %}
+
+<hr>
+
+<h3>Community verlassen</h3>
+<form method="post" onsubmit="return confirm('Willst du diese Community wirklich verlassen?');">
+    {% csrf_token %}
+    <input type="password" name="family_admin_password" placeholder="Family-Admin-Passwort" required>
+    <button type="submit" name="leave_community" style="color:red;">Diese Community verlassen</button>
+</form>
+{% if leave_error %}<p style="color:red;">{{ leave_error }}</p>{% endif %}
+
+<hr>
+
+<h3>Community löschen</h3>
+<form method="post" onsubmit="return confirm('Willst du diese Community wirklich löschen?');">
+    {% csrf_token %}
+    <input type="password" name="admin_password" placeholder="Admin-Passwort" required>
+    <button type="submit" name="delete_community" style="color:red;">Diese Community löschen</button>
+</form>
+{% if delete_error %}<p style="color:red;">{{ delete_error }}</p>{% endif %}
+
+{% endblock %}

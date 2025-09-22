@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block title %}Aktion bearbeiten{% endblock %}
+
+{% block content %}
+<h1>Aktion bearbeiten</h1>
+
+{% if messages %}
+{% for message in messages %}
+<p class="{{message.level_tag}}-message">{{ message }}</p>
+{% endfor %}
+{% endif %}
+
+{% if error %}
+{% for single_error in error %}
+<p class="error-message">{{ error }}</p>
+{% endfor %}
+{% endif %}
+
+<ul class="action-list">
+    <li class="action-list-container">
+        <p class="action-list-description">Aktion:</p>
+        <p class="action-list-value">{{ aktuelleAktion.aktion.name }}</p>
+
+        {% if aktuelleAktion.date %}
+        <p class="action-list-description">Datum:</p>
+        <p class="action-list-value">{{ aktuelleAktion.date|date:"d.m.Y" }}</p>
+        {% endif %}
+        
+        {% if aktuelleAktion.description %}
+        <p class="action-list-description">Beschreibung:</p>
+        <p class="action-list-value">{{ aktuelleAktion.description }}</p>
+        {% endif %}
+
+        <p class="action-list-description">Klimapunkte:</p>
+        <p class="action-list-value">{{ aktuelleAktion.impact }}</p>
+
+        {% if aktuelleAktion.date %}
+        <p class="action-list-description">{{ aktuelleAktion.aktion.mengeBeschreibung }}</p>
+        <p class="action-list-value">{{ aktuelleAktion.quantity }} {{ aktuelleAktion.einheit }}</p>
+        {% endif %}
+    </li>
+</ul>
+
+<button class="info-btn" id="anmerkung-button" onclick="toggleAnmerkung()" style="display: none;" type="button">?</button>
+<div id="anmerkung-box" class="anmerkung-box" style="display: none;"></div>
+
+<form method="POST">
+    {% csrf_token %}
+    <label for="action_type" class="action-label">Aktionstyp:</label>
+    <select name="action_type" class="action-label" id="action_type" required>
+        <option value="" disabled selected>Aktionstyp auswählen ▾</option>
+        {% for aktion in aktionen %}
+        <option value="{{ aktion.name }}" data-klimapunkte="{{ aktion.klimapunkte }}"
+            data-anmerkung="{{ aktion.anmerkung }}" data-mengebeschreibung="{{ aktion.mengeBeschreibung }}" data-aktiondate="{{ aktion.date }}">{{ aktion.name }}
+        </option>
+        {% endfor %}
+    </select>
+    <br>
+
+    <div id="aktion-formular" style="display: none;">
+        <p id="klimapunkte_anzeige" class="action-label"></p>
+        
+        <label for="action_description" class="action-label">Beschreibung:</label>
+        <input type="text" id="action_description" name="action_description" placeholder="Optional">
+        <br>
+
+        <div id="aktion-optional" style="display: none;">
+            <label for="action_quantity" class="action-label" id="action_quantity_label">Menge:</label>
+            <input type="number" id="action_quantity" name="action_quantity" step="1" min="0" required>
+            <br>
+
+            <p id="impact_anzeige" class="action-label"></p>
+
+            <label for="action_date" class="action-label">Datum:</label>
+            <input type="date" id="action_date" name="action_date" required>
+            <br>
+        </div>
+    </div>
+
+    <button type="submit" name="edit_action">Speichern</button>
+</form>
+
+<script>
+    document.getElementById("action_type").addEventListener("change", function () {
+        const selected = document.querySelector('#action_type').selectedOptions[0];
+        const action_quantity_label = document.getElementById("action_quantity_label");
+        const action_quantity = document.getElementById("action_quantity");
+        const action_date = document.getElementById("action_date");
+        const klimapunkte_anzeige = document.getElementById("klimapunkte_anzeige");
+        const aktion_formular = document.getElementById("aktion-formular")
+
+        const aktion_optional = document.getElementById("aktion-optional")
+
+        const anmerkungBox = document.getElementById('anmerkung-box');
+        const anmerkungButton = document.getElementById('anmerkung-button');
+
+        let klimapunkte = selected.dataset.klimapunkte;
+        let anmerkung = selected.dataset.anmerkung;
+        let mengeBeschreibung = selected.dataset.mengebeschreibung;
+        let aktionDate = selected.dataset.aktiondate;
+
+        aktion_formular.style.display = 'block';
+
+        if (anmerkung != 'None') {
+            anmerkungButton.style.display = 'inline-block';
+            anmerkungBox.textContent = anmerkung;
+        }
+        else {
+            anmerkungButton.style.display = 'none';
+            anmerkungBox.textContent = '';
+            anmerkungBox.style.display = 'none';
+        }
+
+        if (aktionDate == "True") {
+            aktion_optional.style.display = 'block';
+            action_quantity.disabled = false;
+            action_date.disabled = false;
+            action_quantity_label.textContent = mengeBeschreibung;
+            klimapunkte_anzeige.textContent = "Klimapunkte pro " + mengeBeschreibung + ": " + klimapunkte;
+            calculateImpact()
+        }
+        else if (aktionDate == "False") {
+            aktion_optional.style.display = 'none';
+            action_quantity.disabled = true;
+            action_date.disabled = true;
+            klimapunkte_anzeige.textContent = "Klimapunkte: " + klimapunkte;
+        }
+        else {
+            aktion_optional.style.display = 'none';
+        }
+    });
+
+    document.getElementById("action_quantity").addEventListener("input", calculateImpact);
+
+    function calculateImpact() {
+        const selected = document.querySelector('#action_type').selectedOptions[0];
+        const impact_anzeige = document.getElementById("impact_anzeige");
+        let klimapunkte = selected.dataset.klimapunkte;
+        klimapunkte = parseFloat(klimapunkte)
+        let quantity = document.getElementById("action_quantity").value;
+        quantity = parseFloat(quantity)
+
+        let impact = klimapunkte * quantity;
+
+        if (isNaN(impact)) {
+            impact_anzeige.textContent = ""
+        } else {
+            impact_anzeige.textContent = "Insgesamt durch diese Aktion gewonnene Klimapunkte: " + impact
+        }
+    }
+
+    function toggleAnmerkung() {
+        const box = document.getElementById('anmerkung-box');
+        box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    }
+</script>
+
+
+<form method="post" onsubmit="return confirm('Willst du diese Aktion wirklich löschen?');">
+    {% csrf_token %}
+    <button type="submit" name="delete_action" style="color:red;">Diese Aktion löschen</button>
+</form>
+{% endblock %}

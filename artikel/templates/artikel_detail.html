@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Artikel nicht hinzufügen{% endblock %}
+
+{% block content %}
+
+<h1>Artikel <i>{{ artikel.name }}</i></h1>
+
+{% if messages %}
+{% for message in messages %}
+<p class="{{message.level_tag}}-message">{{ message }}</p>
+{% endfor %}
+{% endif %}
+
+<div class="artikel-content"><p>{{ artikel.content|safe }}</p></div>
+<br>
+<p>Erstellt von <a href="{% url 'klimapunkte_view' artikel.creator.id %}">{{ artikel.creator }}</a></p>
+<p>Zuletzt bearbeitet: {{ artikel.date_time|date:"d.m.Y H:i" }}</p>
+
+{% if artikel.creator == request.user %}
+    <p><a href="{% url 'edit_artikel' artikel.id %}">Artikel bearbeiten</a></p>
+{% endif %}
+
+<h3 class="section-title">Kommentare</h3>
+<div class="comment-section">
+    {% if artikel.comments.all %}
+    {% for comment in artikel.comments.all %}
+    <div class="comment">
+        <div class="text-wrapper">
+            <div class="comment-header">
+                <span class="comment-user"><a href="{% url 'klimapunkte_view' comment.user.id %}">{{ comment.user }}</a></span>
+                <span class="comment-date">{{ comment.date_time|date:"d.m.Y H:i" }}</span>
+            </div>
+            <div class="comment-text expandable-text blur-enabled">{{ comment.comment }}</div>
+            <div class="answers">
+                {% for answer in comment.answers.all %}
+                <div class="answer-header">
+                    <span class="answer-user"><a href="{% url 'klimapunkte_view' comment.user.id %}">{{ answer.user }}</a></span>
+                    <span class="answer-date">{{ answer.date_time|date:"d.m.Y H:i" }}</span>
+                </div>
+                <div class="answer expandable-text blur-enabled">{{ answer.answer }}</div>
+                {% empty %}
+                <div class="no-answer">Noch keine Antworten.</div>
+                {% endfor %}
+            </div>
+            <button class="toggle-button">Mehr anzeigen</button>
+            <details>
+                <summary>selbst antworten</summary>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                    <input type="text" name="answer" placeholder="Antwort">
+                    <button name="answer_comment">Antworten</button>
+                </form>
+            </details>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p class="no-comments"><i>Noch keine Kommentare vorhanden</i></p>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const comments = document.querySelectorAll(".comment");
+
+        comments.forEach(comment => {
+            const button = comment.querySelector(".toggle-button");
+            const wrapper = comment.querySelector(".text-wrapper");
+            const expandableElements = comment.querySelectorAll(".expandable-text");
+
+            let shouldBlur = false;
+
+            expandableElements.forEach(el => {
+                const textLength = el.textContent.trim().length;
+                if (textLength > 100) {
+                    shouldBlur = true;
+                    el.classList.add("blur-enabled");
+                } else {
+                    el.classList.remove("blur-enabled");
+                }
+            });
+
+            if (shouldBlur) {
+                button.style.display = "inline-block";
+                button.addEventListener("click", () => {
+                    wrapper.classList.toggle("expanded");
+                    button.textContent = wrapper.classList.contains("expanded") ? "Weniger anzeigen" : "Mehr anzeigen";
+                });
+            } else {
+                button.style.display = "none";
+            }
+        });
+    });
+</script>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="comment" placeholder="Kommentar hinzufügen">
+    <button type="submit" name="add_comment">Kommentar hinzufügen</button>
+</form>
+
+{% endblock %}

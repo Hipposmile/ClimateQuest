@@ -1,0 +1,416 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Startseite{% endblock %}
+
+{% block content %}
+    <style>
+        .video {
+            width: 50%;
+            height: 50%;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            max-width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .video:hover {
+            transform: scale(1.02);
+        }
+
+        #counters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            padding: 2rem;
+            background: var(--color-counters-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 20px;
+        }
+
+        #counters > div {
+            flex: 1 1 300px;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        #counters > div:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        #counters h3 {
+            font-size: 2.5rem;
+            margin: 0.5rem 0;
+            color: var(--color-counters);
+        }
+
+        #counters p {
+            font-size: 1rem;
+            margin: 0.5rem 0;
+            color: var(--color-text);
+        }
+
+        #co2_per_klimapunkt {
+            font-weight: bold;
+            color: var(--color-counters);
+        }
+    </style>
+    <h1>Home</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    {% if user.is_authenticated %}
+        <p>Willkommen, {{ user.username }}!</p>
+    {% else %}
+    {% endif %}
+
+    <input type="hidden" id="user_count" value="{{ user_count }}">
+    <input type="hidden" id="klimapunkte" value="{{ klimapunkte }}">
+
+    <div id="counters">
+        <div id="user_zähler_div">
+            <h3 id="user_zähler">{{ user_count }}</h3>
+            <p> registrierte Nutzer hat diese Plattform bereits.</p>
+        </div>
+
+        <div id="klimapunkte_zähler_div">
+            <h3 id="klimapunkte_zähler">{{ klimapunkte }}</h3>
+            <p> Klimapunkte wurden von all diesen Nutzern zusammen bereits gesammelt.</p>
+        </div>
+
+        <div id="co2_zähler_div">
+            <p>Weil jeder Klimapunkte für
+                <b id="co2_per_klimapunkt"></b> eingesparte CO2e steht, wurden dadurch insgesamt
+            </p>
+            <h3 id="co2_zähler"></h3>
+            <p> Gramm CO2e eingespart</p>
+        </div>
+    </div>
+
+    <style>
+        /*.cards {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 300px;
+            height: 200px;
+            border: 1px solid #f1f1f1;
+            perspective: 1000px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            padding: 10px;
+        }
+
+        .flip-card-front {
+            background-color: #bbb;
+            color: black;
+        }
+
+        .flip-card-back {
+            background-color: dodgerblue;
+            color: white;
+            transform: rotateY(180deg);
+        }*/
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 300px;
+            height: 200px;
+            perspective: 1200px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+            will-change: transform;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s ease;
+            transform-style: preserve-3d;
+            transform-origin: center center;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 1rem;
+            box-sizing: border-box;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flip-card-front {
+            background: var(--color-primary-light);
+            color: var(--color-text);
+        }
+
+        .flip-card-back {
+            background: var(--color-primary);
+            color: var(--color-text);
+            transform: rotateY(180deg);
+        }
+
+    </style>
+    <div class="cards">
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <h3>Unser Ziel</h3>
+                    <img src="{% static 'images/ClimateQuest.png' %}" alt="ClimateQuest Logo">
+                </div>
+                <div class="flip-card-back">
+                    <h1>Unser Ziel</h1>
+                    <p>Wir setzen uns für eine nachhaltige Zukunft ein – durch Bildung, Projekte und globale
+                        Zusammenarbeit.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <h3>Unsere Werte</h3>
+                    <img src="{% static 'images/ClimateQuest.png' %}" alt="Werte">
+                </div>
+                <div class="flip-card-back">
+                    <h1>Unsere Werte</h1>
+                    <p>Transparenz, Mitgefühl, Innovation und Respekt für Mensch und Natur stehen bei uns im
+                        Mittelpunkt.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <h3>Unsere Geschichte</h3>
+                    <img src="{% static 'images/ClimateQuest.png' %}" alt="Geschichte">
+                </div>
+                <div class="flip-card-back">
+                    <h1>Unsere Geschichte</h1>
+                    <p>Gegründet 2012 von engagierten Umweltschützer:innen, wuchs ClimateQuest zu einer internationalen
+                        Bewegung.</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <h3>Unsere Vision</h3>
+                    <img src="{% static 'images/ClimateQuest.png' %}" alt="Vision">
+                </div>
+                <div class="flip-card-back">
+                    <h1>Unsere Vision</h1>
+                    <p>Eine Welt, in der Klimagerechtigkeit Realität ist und jede Stimme zählt – unabhängig von Herkunft
+                        oder Status.</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <h3>Unsere Wirkung</h3>
+                    <img src="{% static 'images/ClimateQuest.png' %}" alt="Wirkung">
+                </div>
+                <div class="flip-card-back">
+                    <h1>Unsere Wirkung</h1>
+                    <p>Über 150.000 Bäume gepflanzt, 300 Workshops weltweit und hunderte lokale Initiativen
+                        unterstützt.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const colors = [
+            'linear-gradient(135deg, #ff6a00 0%, #ee0979 100%)', // Sunset Punch
+            'linear-gradient(135deg, #00f5a0 0%, #00d9f5 100%)', // Neon Mint
+            'linear-gradient(135deg, #f00000 0%, #dc281e 100%)', // Red Blaze
+            'linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%)', // Purple Vibes
+            'linear-gradient(135deg, #fc00ff 0%, #00dbde 100%)', // Cyberpunk
+            'linear-gradient(135deg, #f12711 0%, #f5af19 100%)', // Lava Glow
+            'linear-gradient(135deg, #00c3ff 0%, #ffff1c 100%)', // Acid Pop
+            'linear-gradient(135deg, #ff4e50 0%, #f9d423 100%)', // Miami Heat
+            'linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)', // Soft Coral
+            'linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%)', // Sky Fade
+            'linear-gradient(135deg, #43cea2 0%, #185a9d 100%)', // Ocean Depth
+            'linear-gradient(135deg, #ff6f91 0%, #ffc107 100%)', // Candy Crush
+            'linear-gradient(135deg, #ff00cc 0%, #333399 100%)', // Techno Pulse
+            'linear-gradient(135deg, #00b4db 0%, #0083b0 100%)', // Deep Blue
+            'linear-gradient(135deg, #f7971e 0%, #ffd200 100%)', // Citrus Pop
+            'linear-gradient(135deg, #c6ffdd 0%, #fbd786 100%, #f7797d 100%)', // Aurora
+            'linear-gradient(135deg, #ff512f 0%, #dd2476 100%)', // Flamingo
+            'linear-gradient(135deg, #1f4037 0%, #99f2c8 100%)', // Forest Mist
+            'linear-gradient(135deg, #e65c00 0%, #f9d423 100%)', // Orange Burst
+            'linear-gradient(135deg, #3a1c71 0%, #d76d77 50%, #ffaf7b 100%)', // Galaxy Fade
+            'linear-gradient(135deg, #f9d29d 0%, #ffd8cb 100%)', // Peach Cream
+            'linear-gradient(135deg, #ff0844 0%, #ffb199 100%)', // Strawberry Glow
+            'linear-gradient(135deg, #ff5f6d 0%, #ffc371 100%)', // Sunrise
+            'linear-gradient(135deg, #00f2fe 0%, #4facfe 100%)', // Aqua Beam
+            'linear-gradient(135deg, #7f00ff 0%, #e100ff 100%)', // Violet Shock
+            'linear-gradient(135deg, #f0f2f0 0%, #000c40 100%)', // Monochrome Fade
+            'linear-gradient(135deg, #ff6a00 0%, #ffb347 100%)', // Tangerine Dream
+            'linear-gradient(135deg, #00c9ff 0%, #92fe9d 100%)', // Aqua Lime
+            'linear-gradient(135deg, #fc466b 0%, #3f5efb 100%)', // Royal Pop
+            'linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%)', // Clean Mist
+            'linear-gradient(135deg, #ff00cc 0%, #333399 100%)', // Electric Berry
+            'linear-gradient(135deg, #00c6ff 0%, #0072ff 100%)', // Ice Blue
+            'linear-gradient(135deg, #f9f9f9 0%, #dbe2f1 100%)', // Soft Steel
+            'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)', // Blush
+            'linear-gradient(135deg, #fdfc47 0%, #24fe41 100%)', // Lemon Lime
+            'linear-gradient(135deg, #ff6a00 0%, #ee0979 100%)', // Sunset Punch (repeat for variety)
+            'linear-gradient(135deg, #00f5a0 0%, #00d9f5 100%)', // Neon Mint (repeat)
+            'linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%)', // Purple Vibes (repeat)
+            'linear-gradient(135deg, #fc00ff 0%, #00dbde 100%)', // Cyberpunk (repeat)
+            'linear-gradient(135deg, #f12711 0%, #f5af19 100%)', // Lava Glow (repeat)
+            'linear-gradient(135deg, #00c3ff 0%, #ffff1c 100%)', // Acid Pop (repeat)
+            'linear-gradient(135deg, #ff4e50 0%, #f9d423 100%)', // Miami Heat (repeat)
+            'linear-gradient(135deg, #ff00cc 0%, #333399 100%)', // Techno Pulse (repeat)
+            'linear-gradient(135deg, #3a1c71 0%, #d76d77 50%, #ffaf7b 100%)', // Galaxy Fade (repeat)
+            'linear-gradient(135deg, #7f00ff 0%, #e100ff 100%)', // Violet Shock (repeat)
+            'linear-gradient(135deg, #fc466b 0%, #3f5efb 100%)'  // Royal Pop (repeat)
+        ];
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const cards = document.querySelectorAll('.flip-card');
+            cards.forEach(card => {
+                const cardFront = card.querySelector('.flip-card-front');
+                const cardBack = card.querySelector('.flip-card-back');
+                cardFront.style.background = colors[Math.floor(Math.random() * colors.length)];
+                cardBack.style.background = colors[Math.floor(Math.random() * colors.length)];
+            });
+        });
+
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const minimum_user_count = 1;
+            const minimum_klimapunkte = 1;
+            const minimum_co2 = 1;
+
+            let counters = document.getElementById('counters')
+
+            const co2_per_klimapunkt = 5
+            document.getElementById('co2_per_klimapunkt').textContent = co2_per_klimapunkt;
+
+            let user_count = parseInt(document.getElementById('user_count').value);
+            let klimapunkte = parseInt(document.getElementById('klimapunkte').value);
+
+            const user_zähler = document.getElementById('user_zähler');
+
+            const klimapunkte_zähler = document.getElementById('klimapunkte_zähler');
+
+            const co2_zähler = document.getElementById('co2_zähler');
+
+            let co2 = klimapunkte * co2_per_klimapunkt;
+
+            co2_zähler.textContent = co2
+
+            if (user_count > minimum_user_count && klimapunkte > minimum_klimapunkte && co2 > minimum_co2) {
+                animateCount(user_zähler, user_count);
+                animateCount(klimapunkte_zähler, klimapunkte);
+                animateCount(co2_zähler, co2);
+            } else {
+                counters.style.display = 'none';
+            }
+
+
+        });
+
+        function animateCount(element, endValue, maxDuration = 1500) {
+            let startValue = 0;
+
+            // Berechne Schrittzeit
+            let stepTime = 10; // alle 50ms ein Schritt
+            let steps = Math.floor(maxDuration / stepTime);
+
+            // Wenn zu viele Schritte nötig wären, starte höher
+            if (endValue > steps) {
+                startValue = endValue - steps;
+            }
+
+            let current = startValue;
+            const increment = (endValue - startValue) / steps;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= endValue) {
+                    current = endValue;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current).toLocaleString();
+            }, stepTime);
+        }
+    </script>
+    <h3>Werbevideos</h3>
+    <video src="{% static 'videos/ClimateQuest.mov' %}" class="video" controls></video>
+    <div class="cookie-blocked" data-requires="marketing"
+         data-content='<iframe width="560" height="315" src="https://www.youtube.com/embed/vweVzzeAgyI?si=FqXsA3yQLcXlXbCL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'>
+    </div>
+{% endblock %}

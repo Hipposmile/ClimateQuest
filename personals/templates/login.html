@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<h1>Login</h1>
+{% if messages %}
+{% for message in messages %}
+<p class="{{message.level_tag}}-message">{{ message }}</p>
+{% endfor %}
+{% endif %}
+{% if delete_success %}
+<div class="success-message">{{ delete_success }}</div>
+{% endif %}
+{% if error %}
+<div class="error-message">{{ error }}</div>
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="Benutzername" required>
+    <input type="password" name="password" placeholder="Passwort" required>
+    <button type="submit">Login</button>
+</form>
+<p>Du hast noch kein Konto? <a href="{% url 'register_view' %}">Jetzt registrieren</a></p>
+<p>Benutzername / Passwort vergessen? <a href="{% url 'reset_password' %}">Passwort resetten</a></p>
+<p>E-Mail-Adresse noch nicht verifiziert? <a href="{% url 'verifyEmail' %}">E-Mail-Adresse verifizieren</a></p>
+{% endblock %}

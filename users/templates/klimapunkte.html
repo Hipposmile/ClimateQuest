@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{% if user == request.user %}Meine Klimapunkte{% else %}Klimapunkte von {{ user }}{% endif %}{% endblock %}
+{% block content %}
+<h1>{% if user == request.user %}Meine Klimapunkte{% else %}Klimapunkte von {{ user }}{% endif %}</h1>
+{% if messages %}
+{% for message in messages %}
+<p class="{{message.level_tag}}-message">{{ message }}</p>
+{% endfor %}
+{% endif %}
+<p>Klimapunkte: {{ klimapunkte }}</p>
+<p>Zeitraum: {{ zeitraum }}</p>
+<form method="POST">
+    {% csrf_token %}
+    <select name="zeitraum" id="zeitraum" required>
+        <option value="gesamt">Gesamt</option>
+        <option value="heute">Heute</option>
+        <option value="sieben Tage">7 Tage</option>
+        <option value="dreißig Tage">30 Tage</option>
+        <option value="dreihundertfünfundsechzig Tage">365 Tage</option>
+        <option value="benutzerdefiniert">Benutzerdefiniert</option>
+    </select>
+
+    <input type="hidden" name="start_date" id="start_date" placeholder="Startdatum" value="">
+    <input type="hidden" name="end_date" id="end_date" placeholder="Enddatum" value="">
+
+    <button type="submit">Anwenden</button>
+    <small style="padding: 0%;">Allgemeine Aktionen ohne Datum werden nur bei <i>gesamt</i> in die Berechnung eingezogen</small>
+</form>
+
+<a href="{% url 'level_view' user.id %}">Level ansehen</a>
+
+<script>
+    document.getElementById("zeitraum").addEventListener("change", function () {
+        const startDateInput = document.getElementById("start_date");
+        const endDateInput = document.getElementById("end_date");
+
+        if (this.value === "benutzerdefiniert") {
+            startDateInput.type = "date";
+            endDateInput.type = "date";
+        } else {
+            startDateInput.type = "hidden";
+            endDateInput.type = "hidden";
+        }
+    });
+</script>
+{% endblock %}

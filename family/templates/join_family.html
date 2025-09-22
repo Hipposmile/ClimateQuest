@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Family beitreten{% endblock %}
+{% block content %}
+<h1>Family beitreten</h1>
+{% if messages %}
+{% for message in messages %}
+<p class="{{message.level_tag}}-message">{{ message }}</p>
+{% endfor %}
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="familyname" placeholder="Familyname" required>
+    <input type="password" name="family_password" placeholder="Passwort" required>
+    <button type="submit">Family beitreten</button>
+</form>
+
+<p>Oder <a href="{% url 'create_family' %}">eine Family gründen</a>.</p>
+
+{% endblock %}
