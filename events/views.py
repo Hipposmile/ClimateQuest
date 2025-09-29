@@ -91,13 +91,11 @@ def events_overview(request):
         search_keyword = request.POST.get('search_keyword')
         past_events_visible = request.POST.get('past_events_visible') == 'on'
 
-        # 🛠 Bugfix: all_events korrekt setzen
         if past_events_visible:
             all_events = Event.objects.all()
         else:
             all_events = Event.objects.filter(date_time__gte=timezone.now())
 
-        # 🧭 Mapping für Sortierung
         order_map = {
             "Name": "name",
             "Datum": "date_time",
@@ -160,7 +158,7 @@ def event_detail(request, event_id):
     if request.method == 'POST':
         if 'become_member' in request.POST:
             if request.user == event.creator:
-                messages.success(request, all_messages["user_is_creator"])
+                messages.success(request, all_messages["event__user_is_creator"])
             elif request.user in event.participants.all():
                 event.participants.remove(request.user)
                 messages.success(request, all_messages["left_event"])
@@ -205,10 +203,13 @@ def add_event(request):
         duration = request.POST.get('duration')
         adress = request.POST.get('adress')
 
-        print(description)
+        is_truth = request.POST.get('is_truth') == 'on'
+        if not is_truth:
+            messages.error(request, all_messages["not_is_truth"])
+            return redirect('add_action')
 
         if not name or not description or not date_time or not duration or not adress:
-            messages.error(request, all_messages["fill_all_required_fields"])
+            messages.error(request, all_messages["missing_required_inputs"])
             return redirect('add_event')
         
         description = clean_html(description)
@@ -249,7 +250,7 @@ def edit_event(request, event_id):
         messages.error(request, all_messages["event_not_existing"])
 
     if request.user != event.creator:
-        messages.error(request, all_messages["no_right_to_edit"])
+        messages.error(request, all_messages["not_authorized_to_visit"])
         return redirect('events_overview')
     
     if request.method == 'POST':
@@ -260,8 +261,13 @@ def edit_event(request, event_id):
             duration = request.POST.get('duration')
             adress = request.POST.get('adress')
 
+            is_truth = request.POST.get('is_truth') == 'on'
+            if not is_truth:
+                messages.error(request, all_messages["not_is_truth"])
+                return redirect('add_action')
+
             if not name or not description or not date_time or not duration or not adress:
-                messages.error(request, all_messages["fill_all_required_fields"])
+                messages.error(request, all_messages["missing_required_inputs"])
                 return redirect('edit_event', event_id)
             
             description = clean_html(description)

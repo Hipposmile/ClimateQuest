@@ -7,5 +7,7 @@ urlpatterns = [
     path('benachrichtigungen/', benachrichtigungen_view, name='benachrichtigungen_view'),
     path('delete-benachrichtigung/<int:id>', delete_benachrichtigung, name='delete_benachrichtigung'),
     path('admin/', admin, name='admin_view'),
-    path('share/', share, name='share')
+    path('share/', share, name='share'),
+    path('nutzungsbedingungen/', nutzungsbedingungen, name='nutzungsbedingungen'),
+    path('aktionenTable/', aktionenTable, name='aktionenTable'),
 ]

@@ -39,7 +39,7 @@ def login_view(request):
             next_url = request.POST.get('next') or request.GET.get('next') or 'home'
             return redirect(next_url)
         else:
-            messages.error(request, all_messages["invalid_login_data_2"])
+            messages.error(request, all_messages["invalid_login_data"])
             return redirect('login_view')
     return render(request, './login.html', {'next': request.GET.get('next', '')})
 
@@ -72,9 +72,14 @@ def register_view(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         email = request.POST.get('email')
+        nutzungsbedingungen_accepted = request.POST.get('nutzungsbedingungen_accepted') == 'on'
+
+        if not nutzungsbedingungen_accepted:
+            messages.error(request, all_messages["nutungsbedingungen_not_accepted"])
+            return redirect('login_view')
 
         if User.objects.filter(username=username).exists():
-            messages.error(request, all_messages["username_taken"])
+            messages.error(request, all_messages["username_not_available"])
             return redirect('login_view')
         
         if email == "":
@@ -93,7 +98,7 @@ def register_view(request):
             return redirect('register_view')
 
         if User.objects.filter(email=email).exists():
-            messages.error(request, all_messages["email_taken"])
+            messages.error(request, all_messages["email_not_available"])
             return redirect('register_view')
         
         user = User.objects.create_user(username=username, password=password, email=email)
@@ -113,15 +118,13 @@ def register_view(request):
             fail_silently=False,
             verificationCodeSaved=verificationCodeSaved,
             mailinglist_needless=True,
-            user=user,
-            redirect_error='register_view',
-            register=True,
             fehlermeldung='Fehler beim E-Mail-Versand. Probieren Sie die Registrierung ohne E-Mail und fügen Sie Ihre E-Mail-Adresse später in den Einstellungen hinzu.'
         )
 
         if not mail_output:
+            verificationCodeSaved.delete()
+            user.delete()
             return redirect('register_view')
-
         
         return redirect('verifyEmail')
     
@@ -135,17 +138,17 @@ def verifyEmail(request):
             verificationCodeInput = request.POST.get('verificationCode')
 
             if not username or not password or not verificationCodeInput:
-                messages.error(request, all_messages["fill_all_required_fields"])
+                messages.error(request, all_messages["missing_required_inputs"])
                 return redirect('verifyEmail')
             
             try:
                 user = User.objects.get(username=username)
                 if not check_password(password, user.password):
-                    messages.error(request, all_messages["invalid_login_data_2"])
+                    messages.error(request, all_messages["invalid_login_data"])
                     return redirect('verifyEmail')
 
             except User.DoesNotExist:
-                messages.error(request, all_messages["invalid_login_data_2"])
+                messages.error(request, all_messages["invalid_login_data"])
                 return redirect('verifyEmail')
             
             if not user.email:
@@ -187,17 +190,17 @@ def verifyEmail(request):
             password = request.POST.get('password')
 
             if not username or not password:
-                messages.error(request, all_messages["fill_all_required_fields"])
+                messages.error(request, all_messages["missing_required_inputs"])
                 return redirect('verifyEmail')
             
             try:
                 user = User.objects.get(username=username)
                 if not check_password(password, user.password):
-                    messages.error(request, all_messages["invalid_login_data_2"])
+                    messages.error(request, all_messages["invalid_login_data"])
                     return redirect('verifyEmail')
 
             except User.DoesNotExist:
-                messages.error(request, all_messages["invalid_login_data_2"])
+                messages.error(request, all_messages["invalid_login_data"])
                 return redirect('verifyEmail')
             
             if not user.email:
@@ -221,14 +224,11 @@ def verifyEmail(request):
                     message=f'Bitte geben Sie unter 127.0.0.7/verify-email folgenden Verifizierungscode an: {verificationCode}',
                     recipient_list=[f'{user.email}'],
                     fail_silently=False,
-                    verificationCodeSaved=verificationCode,
                     mailinglist_needless=True,
-                    user=user,
-                    redirect_error='verifyEmail',
-                    register=True,
                     fehlermeldung='Fehler beim E-Mail-Versand. Probieren Sie die Registrierung ohne E-Mail und fügen Sie Ihre E-Mail-Adresse später in den Einstellungen hinzu.'
                 )
                 if not mail_output:
+                    verificationCode.delete()
                     return redirect('verifyEmail')
             except Exception as e:
                 createInternerFehler(request, 'bei verifyEmail - resend ist kein Verifizierungscode vorhanden')
@@ -243,17 +243,17 @@ def verifyEmail(request):
             email = request.POST.get('email')
 
             if not username or not password or not email:
-                messages.error(request, all_messages["fill_all_required_fields"])
+                messages.error(request, all_messages["missing_required_inputs"])
                 return redirect('verifyEmail')
             
             try:
                 user = User.objects.get(username=username)
                 if not check_password(password, user.password):
-                    messages.error(request, all_messages["invalid_login_data_2"])
+                    messages.error(request, all_messages["invalid_login_data"])
                     return redirect('verifyEmail')
 
             except User.DoesNotExist:
-                messages.error(request, all_messages["invalid_login_data_2"])
+                messages.error(request, all_messages["invalid_login_data"])
                 return redirect('verifyEmail')
             
             if not user.email:
@@ -265,7 +265,7 @@ def verifyEmail(request):
                 return redirect('verifyEmail')
             
             if User.objects.filter(email=email).exists():
-                messages.error(request, all_messages["email_taken"])
+                messages.error(request, all_messages["email_not_available"])
                 return redirect('verifyEmail')
             
             user.email = email
@@ -284,14 +284,11 @@ def verifyEmail(request):
                     message=f'Bitte geben Sie unter 127.0.0.7/verify-email folgenden Verifizierungscode an: {verificationCode}',
                     recipient_list=[f'{user.email}'],
                     fail_silently=False,
-                    verificationCodeSaved=verificationCode,
                     mailinglist_needless=True,
-                    user=user,
-                    redirect_error='verifyEmail',
-                    register=True,
                     fehlermeldung='Fehler beim E-Mail-Versand. Probieren Sie die Registrierung ohne E-Mail und fügen Sie Ihre E-Mail-Adresse später in den Einstellungen hinzu.'
                 )
                 if not mail_output:
+                    verificationCode.delete()
                     return redirect('verifyEmail')
             except Exception as e:
                 createInternerFehler(request, 'bei verifyEmail - resend ist kein Verifizierungscode vorhanden')
@@ -314,12 +311,12 @@ def settings_view(request):
             password = request.POST.get('password')
             new_username = request.POST.get('new_username')
             if not check_password(password, request.user.password):
-                messages.error(request, all_messages["password_wrong"])
+                messages.error(request, all_messages["invalid_password"])
             else:
                 if User.objects.filter(username=new_username).exists():
-                    messages.error(request, all_messages["username_taken"])
+                    messages.error(request, all_messages["username_not_available"])
                 elif new_username == request.user.username:
-                    messages.error(request, all_messages["username_is_yours"])
+                    messages.error(request, all_messages["username_belongs_to_you"])
                 else:
                     request.user.username = new_username
                     request.user.save()
@@ -330,7 +327,7 @@ def settings_view(request):
             current_pw = request.POST.get('current_password')
             new_pw = request.POST.get('new_password')
             if not check_password(current_pw, request.user.password):
-                messages.error(request, all_messages["current_password_wrong"])
+                messages.error(request, all_messages["invalid_password"])
             else:
                 request.user.set_password(new_pw)
                 request.user.save()
@@ -342,20 +339,20 @@ def settings_view(request):
             email = request.POST.get('email')
             password = request.POST.get('password')
             if not check_password(password, request.user.password):
-                messages.error(request, all_messages["password_wrong"])
+                messages.error(request, all_messages["invalid_password"])
             else:
                 if not ist_email_gueltig(email):
                     messages.error(request, all_messages["invalid_email"])
                     return redirect('register_view')
 
                 if User.objects.filter(email=email).exists():
-                    messages.error(request, all_messages["email_taken"])
+                    messages.error(request, all_messages["email_not_available"])
                     return redirect('register_view')
             
                 verificationCode = generateVerificationCode()
                 verificationCodeSaved = VerificationCode.objects.create(user=request.user, code=verificationCode)
 
-                send_mail_function(
+                mail_output = send_mail_function(
                     request=request,
                     subject='EcoRise - Ihr Verifizierungscode ist da!',
                     message=f'Bitte geben Sie unter 127.0.0.7/verify-email folgenden Verifizierungscode an: {verificationCode}',
@@ -366,11 +363,14 @@ def settings_view(request):
                     redirect_error='register_view'
                 )
 
-                request.user.email = email
-                request.user.is_active = False
-                request.user.save()
-                createBenachrichtigung(request, all_messages["email_changed"])
-                messages.success(request, all_messages["email_changed"])
+                if not mail_output:
+                    verificationCodeSaved.delete()
+                else:
+                    request.user.email = email
+                    request.user.is_active = False
+                    request.user.save()
+                    createBenachrichtigung(request, all_messages["email_changed"])
+                    messages.success(request, all_messages["email_changed"])
                 return redirect('verifyEmail')
         
         if 'change_email_settings' in request.POST:
@@ -389,7 +389,7 @@ def settings_view(request):
         if 'delete_account' in request.POST:
             password = request.POST.get('password')
             if not check_password(password, request.user.password):
-                messages.error(request, all_messages["password_wrong"])
+                messages.error(request, all_messages["invalid_password"])
             else:
                 contactedUserIds = set()
                 families = getFamiliesOfUser(request.user) or []
@@ -441,7 +441,7 @@ def reset_password(request):
             user.set_password(new_password)
             user.save()
             createBenachrichtigung(request, 'Dein Passwort wurde resettet.', user)
-            messages.success(request, all_messages["password_reset_success"])
+            messages.success(request, all_messages["password_reset_mail_sent"])
             return redirect('login_view')
 
         except Exception as e:

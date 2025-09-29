@@ -1,98 +1,98 @@
 {% extends "base.html" %}
 {% load static %}
 {% load html_decode %}
-{% block title %}{% if user == request.user %}Mein Level{% else %}Level von {{user}}{% endif %}{% endblock %}
+{% block title %}{% if user == request.user %}Mein Level{% else %}Level von {{ user }}{% endif %}{% endblock %}
 {% block content %}
 
-<style>
-    .progress-container {
-        width: 100%;
-        background-color: #e0e0e0; /*Nicht-Variable genehmigt*/
-        border-radius: 8px;
-    }
+    <style>
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0; /*Nicht-Variable genehmigt*/
+            border-radius: 8px;
+        }
 
-    .progress-bar {
-        height: 20px;
-        background-color: #4caf50; /*Nicht-Variable genehmigt*/
-        border-radius: 8px;
-    }
+        .progress-bar {
+            height: 20px;
+            background-color: #4caf50; /*Nicht-Variable genehmigt*/
+            border-radius: 8px;
+        }
 
-    .level-table {
-    width: 100%;
-    max-width: 500px;
-    margin: 2rem auto 0 auto;
-    border-collapse: separate;
-    border-spacing: 0;
-    background: var(--color-bg-light);
-    border-radius: 12px;
-    box-shadow: var(--shadow-md);
-    overflow: hidden;
-}
+        .level-table {
+            width: 100%;
+            max-width: 500px;
+            margin: 2rem auto 0 auto;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--color-bg-light);
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
 
-.level-table th,
-.level-table td {
-    padding: 1rem 1.2rem;
-    text-align: left;
-}
+        .level-table th,
+        .level-table td {
+            padding: 1rem 1.2rem;
+            text-align: left;
+        }
 
-.level-table th {
-    background: var(--color-primary);
-    color: var(--color-text-light);
-    font-weight: 600;
-    font-size: 1.1rem;
-}
+        .level-table th {
+            background: var(--color-primary);
+            color: var(--color-text-light);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
 
-.level-table tr:nth-child(even) td {
-    background: var(--color-bg-dark);
-}
+        .level-table tr:nth-child(even) td {
+            background: var(--color-bg-dark);
+        }
 
-.level-table tr:nth-child(odd) td {
-    background: var(--color-bg-light);
-}
+        .level-table tr:nth-child(odd) td {
+            background: var(--color-bg-light);
+        }
 
-.level-table tr:hover td {
-    background: var(--color-primary-light);
-    color: var(--color-text-light);
-    transition: background 0.2s, color 0.2s;
-}
-</style>
+        .level-table tr:hover td {
+            background: var(--color-primary-light);
+            color: var(--color-text);
+            transition: background 0.2s, color 0.2s;
+        }
+    </style>
 
-<h1>{% if user == request.user %}Mein Level{% else %}Level von {{user}}{% endif %}</h1>
+    <h1>{% if user == request.user %}Mein Level{% else %}Level von {{ user }}{% endif %}</h1>
 
-{% if messages %}
-{% for message in messages %}
-<p class="{{message.level_tag}}-message">{{ message }}</p>
-{% endfor %}
-{% endif %}
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
 
-<p>Klimapunkte: {{ klimapunkte }}</p>
+    <p>Klimapunkte: {{ klimapunkte }}</p>
 
-{% if levelData.info %}
-<p id="info">{{ levelData.info|html_decode }}</p>
-{% else %}
-<p>Du bist im Level: {{ levelData.current_level }}</p>
-<p>Nächstes Level: {{ levelData.next_level }}</p>
-<div class="progress-container">
-    <div class="progress-bar" style="width: {{ levelData.progress_percent }}%;"></div>
-</div>
-<p>{{ levelData.progress_percent }} % zum nächsten Level geschafft</p>
-{% endif %}
-<h3>Liste der Level</h3>
-<table class="level-table">
-    <thead>
+    {% if levelData.info %}
+        <p id="info">{{ levelData.info|html_decode }}</p>
+    {% else %}
+        <p>Du bist im Level: {{ levelData.current_level }}</p>
+        <p>Nächstes Level: {{ levelData.next_level }}</p>
+        <div class="progress-container">
+            <div class="progress-bar" style="width: {{ levelData.progress_percent }}%;"></div>
+        </div>
+        <p>{{ levelData.progress_percent }} % zum nächsten Level geschafft</p>
+    {% endif %}
+    <h3>Liste der Level</h3>
+    <table class="level-table">
+        <thead>
         <tr>
             <th>Beschreibung</th>
             <th>ab Klimapunkten</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         {% for level in levelData.levels %}
-        <tr>
-            <td>{{ level.description }}</td>
-            <td>{{ level.klimapunkte }}</td>
-        </tr>
+            <tr>
+                <td>{{ level.description }}</td>
+                <td>{{ level.klimapunkte }}</td>
+            </tr>
         {% endfor %}
-    </tbody>
-</table>
-<a href="{% url 'klimapunkte_view' user.id %}">Klimapunkte ansehen</a>
+        </tbody>
+    </table>
+    <a href="{% url 'klimapunkte_view' user.id %}">Klimapunkte ansehen</a>
 {% endblock %}

@@ -40,29 +40,29 @@ from django.contrib.auth.hashers import check_password
 from django.db.models import Q
 
 
-def get_community_or_redirect(request, community_id):
+"""def get_community_or_redirect(request, community_id):
     if not community_id:
-        messages.error(request, all_messages["community_id_not_provided"])
+        messages.error(request, all_messages["community_id_missing"])
         return None
     try:
         return Community.objects.prefetch_related('members__members').get(id=community_id)
     except Community.DoesNotExist:
-        messages.error(request, all_messages["community_does_not_exist"])
+        messages.error(request, all_messages["community_not_found"])
         return None
 
 def get_family_or_redirect(request, family_id):
     if not family_id:
-        messages.error(request, all_messages["family_id_missing"])
+        messages.error(request, all_messages["community__family_id_missing"])
         return None
     try:
         return Family.objects.prefetch_related('members').get(id=family_id)
     except Family.DoesNotExist:
-        messages.error(request, all_messages["family_not_found"])
+        messages.error(request, all_messages["community__family_not_found"])
         return None
 
 def is_valid_admin(request, password, actual_password, error_key):
     if not password:
-        messages.error(request, all_messages[error_key])
+        messages.error(request, all_messages["missing_required_inputs"])
         return False
     if not check_password(password, actual_password):
         messages.error(request, all_messages["invalid_admin_password"])
@@ -115,9 +115,9 @@ def handle_remove_member(request, community, family):
         family_to_remove = Family.objects.get(name=family_name)
         community.members.remove(family_to_remove)
         notify_community_users(request, community, f'Die Family {family_to_remove.name} wurde von {request.user} aus der Community {community.name} entfernt')
-        messages.success(request, all_messages["family_removed"])
+        messages.success(request, all_messages["community__family_removed"])
     except Family.DoesNotExist:
-        messages.error(request, all_messages["family_not_found"])
+        messages.error(request, all_messages["community__family_not_found"])
 
 def handle_leave_community(request, community, family):
     password = request.POST.get('family_admin_password')
@@ -142,7 +142,7 @@ def get_family_by_name_and_password(request, name, password, redirect_view):
             raise ValueError
         return family
     except (Family.DoesNotExist, ValueError):
-        messages.error(request, all_messages["invalid_family_credentials"])
+        messages.error(request, all_messages["community__invalid_family_credentials"])
         return redirect(redirect_view)
 
 def get_community_by_name_and_password(request, name, password, redirect_view):
@@ -165,7 +165,7 @@ def create_community(request):
         data = request.POST
         required_fields = ['communityname', 'community_password', 'community_admin_password', 'familyname', 'family_admin_password']
         if not all(data.get(field) for field in required_fields):
-            messages.error(request, all_messages["fill_all_required_fields"])
+            messages.error(request, all_messages["missing_required_inputs"])
             return redirect('create_community')
 
         if Community.objects.filter(name=data['communityname']).exists():
@@ -196,7 +196,7 @@ def join_community(request):
         data = request.POST
         required_fields = ['communityname', 'community_password', 'familyname', 'family_admin_password']
         if not all(data.get(field) for field in required_fields):
-            messages.error(request, all_messages["fill_all_required_fields"])
+            messages.error(request, all_messages["missing_required_inputs"])
             return redirect('join_community')
 
         family = get_family_by_name_and_password(request, data['familyname'], data['family_admin_password'], 'join_community')
@@ -210,7 +210,7 @@ def join_community(request):
             return redirect('join_community')
 
         if family in community.members.all():
-            messages.error(request, all_messages["family_already_in_community"])
+            messages.error(request, all_messages["community__family_already_joined"])
             return redirect('join_community')
 
         if not check_password(data['community_password'], community.password):
@@ -242,19 +242,28 @@ def communities_view(request):
 
 @login_required
 def community_detail(request, community_id, family_id):
-    if not community_id or not family_id:
-        messages.error(request, all_messages["fill_all_required_fields"])
+    if not community_id:
+        messages.error(request, all_messages["community_id_missing"])
+        return redirect('communities_view')
+
+    if not family_id:
+        messages.error(request, all_messages["community__family_id_missing"])
         return redirect('communities_view')
 
     try:
         community = Community.objects.prefetch_related('members__members').get(id=community_id)
+    except Community.DoesNotExist:
+        messages.error(request, all_messages["community_not_found"])
+        return redirect('home')
+
+    try:
         family = Family.objects.prefetch_related('members').get(id=family_id)
-    except (Community.DoesNotExist, Family.DoesNotExist):
-        messages.error(request, all_messages["not_found"])
+    except Family.DoesNotExist:
+        messages.error(request, all_messages["community__family_not_found"])
         return redirect('home')
 
     if request.user not in family.members.all():
-        messages.error(request, all_messages["not_member_of_family"])
+        messages.error(request, all_messages["community__not_member_of_family"])
         return redirect('home')
 
     zeitraum = request.POST.get('zeitraum', 'gesamt')
@@ -305,7 +314,26 @@ def community_detail(request, community_id, family_id):
             'family_members': members
         })
 
-    members_with_klimapunkte_sortiert = sorted(members_with_klimapunkte, key=lambda x: x['klimapunkte'], reverse=True)
+    if filter == "Klimapunkte":
+        sort_key = 'klimapunkte'
+        reverse_sort = True
+    elif filter == "Username":
+        sort_key = 'member__name'
+        reverse_sort = False
+    else:
+        sort_key = 'klimapunkte'
+        reverse_sort = True
+
+    #members_with_klimapunkte_sortiert = sorted(members_with_klimapunkte, key=lambda x: x['klimapunkte'], reverse=True)
+    try:
+        members_with_klimapunkte_sortiert = sorted(
+            members_with_klimapunkte,
+            key=lambda x: x['member'].name if sort_key == 'member__name' else x[sort_key],
+            reverse=reverse_sort
+        )
+    except KeyError:
+        messages.error(request, "Fehler beim Sortieren der Mitglieder.")
+        return redirect('family_detail', family_id)
 
     return render(request, './community_detail.html', {
         'community': community,
@@ -323,7 +351,7 @@ def edit_community(request, community_id, family_id):
         return redirect('community_view')
 
     if request.user not in family.members.all():
-        messages.error(request, all_messages["not_member_of_family"])
+        messages.error(request, all_messages["community__not_member_of_family"])
         return redirect('home')
 
     if request.method == 'POST':
@@ -353,7 +381,7 @@ def chat_community(request, community_id, family_id):
         return redirect('community_view')
 
     if request.user not in family.members.all():
-        messages.error(request, all_messages["not_member_of_family_alt"])
+        messages.error(request, all_messages["community__not_member_of_family"])
         return redirect('home')
 
     if request.method == 'POST':
@@ -370,7 +398,6 @@ def check_communityname(request):
     communityname = request.GET.get('communityname', None)
     exists = Community.objects.filter(name=communityname).exists()
     return JsonResponse({'exists': exists})
-
 """
 @login_required
 def create_community(request):
@@ -382,7 +409,7 @@ def create_community(request):
         family_admin_password = request.POST.get('family_admin_password')
         
         if not community_name or not community_password or not community_admin_password or not family_name or not family_admin_password:
-            messages.error(request, all_messages["missing_required_fields"])
+            messages.error(request, all_messages["missing_required_inputs"])
             return redirect('create_community')
 
         if Community.objects.filter(name=community_name).exists():
@@ -392,10 +419,10 @@ def create_community(request):
         try:
             family = Family.objects.get(name=family_name)
             if not check_password(family_admin_password, family.admin_password):
-                messages.error(request, all_messages["invalid_family_credentials"])
+                messages.error(request, all_messages["community__invalid_family_credentials"])
                 return redirect('create_community')
         except Family.DoesNotExist:
-            messages.error(request, all_messages["invalid_family_credentials"])
+            messages.error(request, all_messages["community__invalid_family_credentials"])
             return redirect('create_community')
 
         community = Community.objects.create(name=community_name, password=community_password, admin_password=community_admin_password)
@@ -418,16 +445,16 @@ def join_community(request):
         family_admin_password = request.POST.get('family_admin_password')
         
         if not community_name or not community_password or not family_name or not family_admin_password:
-            messages.error(request, all_messages["missing_required_fields"])
+            messages.error(request, all_messages["missing_required_inputs"])
             return redirect('join_community')
         
         try:
             family = Family.objects.get(name=family_name)
             if not check_password(family_admin_password, family.admin_password):
-                messages.error(request, all_messages["invalid_family_credentials"])
+                messages.error(request, all_messages["community__invalid_family_credentials"])
                 return redirect('join_community')
         except Family.DoesNotExist:
-            messages.error(request, all_messages["invalid_family_credentials"])
+            messages.error(request, all_messages["community__invalid_family_credentials"])
             return redirect('join_community')
 
         try:
@@ -470,25 +497,25 @@ def communities_view(request):
 @login_required
 def edit_community(request, community_id, family_id):
     if not community_id:
-        messages.error(request, all_messages["community_id_not_provided"])
+        messages.error(request, all_messages["community_id_missing"])
         return redirect('community_view')
     try:
         community = Community.objects.get(id=community_id)
     except Community.DoesNotExist:
-        messages.error(request, all_messages["community_does_not_exist"])
+        messages.error(request, all_messages["community_not_found"])
         return redirect('community_view')
 
     if not family_id:
-        messages.error(request, all_messages["family_id_missing"])
+        messages.error(request, all_messages["community__family_id_missing"])
         return redirect('communities_view')
     try:
         family = Family.objects.get(id=family_id)
     except Family.DoesNotExist:
-        messages.error(request, all_messages["family_not_found"])
+        messages.error(request, all_messages["community__family_not_found"])
         return redirect('communities_view')
 
     if request.user not in family.members.all():
-        messages.error(request, all_messages["not_member_of_family"])
+        messages.error(request, all_messages["community__not_member_of_family"])
         return redirect('home')
 
     if request.method == 'POST':
@@ -498,7 +525,7 @@ def edit_community(request, community_id, family_id):
             communityname = request.POST.get('new_communityname')
 
             if not admin_password or not communityname:
-                messages.error(request, all_messages["admin_password_or_name_missing"])
+                messages.error(request, all_messages["missing_required_inputs"])
             elif not check_password(admin_password, community.admin_password):
                 messages.error(request, all_messages["invalid_admin_password"])
             else:
@@ -514,7 +541,7 @@ def edit_community(request, community_id, family_id):
             password = request.POST.get('new_password')
 
             if not admin_password or not password:
-                messages.error(request, all_messages["password_missing"])
+                messages.error(request, all_messages["missing_required_inputs"])
             elif not check_password(admin_password, community.admin_password):
                 messages.error(request, all_messages["invalid_admin_password"])
             else:
@@ -529,24 +556,24 @@ def edit_community(request, community_id, family_id):
             new_admin_password = request.POST.get('new_admin_password')
 
             if not current_admin_password or not new_admin_password:
-                messages.error(request, all_messages["current_admin_password_missing"])
+                messages.error(request, all_messages["missing_required_inputs"])
             elif not check_password(current_admin_password, community.admin_password):
-                messages.error(request, all_messages["current_admin_password_invalid"])
+                messages.error(request, all_messages["invalid_admin_passord"])
             else:
                 community.admin_password = new_admin_password
                 community.save()
                 for user_to_message in community.user_members()():
                     createBenachrichtigung(request, f'Das Admin-Passwort der Community {community.name} wurde geändert', user_to_message)
-                messages.success(request, all_messages["admin_password_changed"])
+                messages.success(request, all_messages["community_admin_password_changed"])
         
         if 'remove_member' in request.POST:
             admin_password = request.POST.get('admin_password')
             family_name = request.POST.get('family_name')
 
             if not admin_password or not family_name:
-                messages.error(request, all_messages["remove_admin_password_or_family_missing"])
+                messages.error(request, all_messages["missing_required_inputs"])
             elif not check_password(admin_password, community.admin_password):
-                messages.error(request, all_messages["remove_admin_password_invalid"])
+                messages.error(request, all_messages["invalid_admin_password"])
             elif family_name == family.name:
                 community.members.remove(family)
                 for user_to_message in community.user_members():
@@ -559,14 +586,14 @@ def edit_community(request, community_id, family_id):
                 community.members.remove(family_to_remove)
                 for user_to_message in community.user_members():
                     createBenachrichtigung(request, f'Die Family {family.name} wurde von {request.user} aus der Community {community.name} entfernt', user_to_message)
-                messages.success(request, all_messages["family_removed"])
+                messages.success(request, all_messages["community__family_removed"])
         
         if 'leave_community' in request.POST:
             family_admin_password = request.POST.get('family_admin_password')
             if not family_admin_password:
-                messages.error(request, all_messages["delete_admin_password_missing"])
+                messages.error(request, all_messages["missing_required_inputs"])
             elif not check_password(family_admin_password, family.admin_password):
-                messages.error(request, all_messages["delete_admin_password_invalid"])
+                messages.error(request, all_messages["invalid_admin_password"])
             else:
                 community.members.remove(family)
                 for user_to_message in community.user_members():
@@ -578,9 +605,9 @@ def edit_community(request, community_id, family_id):
             admin_password = request.POST.get('admin_password')
 
             if not admin_password:
-                messages.error(request, all_messages["delete_admin_password_missing"])
+                messages.error(request, all_messages["missing_required_inputs"])
             elif not check_password(admin_password, community.admin_password):
-                messages.error(request, all_messages["delete_admin_password_invalid"])
+                messages.error(request, all_messages["invalid_admin_password"])
             else:
                 community.delete()
                 for user_to_message in community.user_members():
@@ -593,25 +620,25 @@ def edit_community(request, community_id, family_id):
 @login_required
 def chat_community(request, community_id, family_id):
     if not community_id:
-        messages.error(request, all_messages["community_id_not_provided"])
+        messages.error(request, all_messages["community_id_missing"])
         return redirect('community_view')
     try:
         community = Community.objects.get(id=community_id)
     except Community.DoesNotExist:
-        messages.error(request, all_messages["community_not_found_alt"])
+        messages.error(request, all_messages["community_not_found"])
         return redirect('community_view')
 
     if not family_id:
-        messages.error(request, all_messages["family_id_not_provided"])
+        messages.error(request, all_messages["community__family_id_missing"])
         return redirect(communities_view)
     try:
         family = Family.objects.get(id=family_id)
     except Family.DoesNotExist:
-        messages.error(request, all_messages["family_not_found_alt"])
+        messages.error(request, all_messages["community__family_not_found"])
         return redirect(communities_view)
 
     if request.user not in family.members.all():
-        messages.error(request, all_messages["not_member_of_family_alt"])
+        messages.error(request, all_messages["community__not_member_of_family"])
         return redirect('home')
     
     if request.method == 'POST':
@@ -622,20 +649,13 @@ def chat_community(request, community_id, family_id):
                 createBenachrichtigung(request, f'Neue Nachricht in Community {community.name} von Family {family.name} / User {request.user}: {msg}', user_to_message)
         return redirect('chat_community', community_id=community.id, family_id=family.id)
     
-    try:
-        msgs = CommunityChatMessage.objects.filter(community_id=community_id)
-    except CommunityChatMessage.DoesNotExist:
-        messages.error(request, all_messages["no_messages_found"])
-        return redirect('chat_community')
+    #try:
+    msgs = CommunityChatMessage.objects.filter(community_id=community_id)
+    #except CommunityChatMessage.DoesNotExist:
+    #    messages.error(request, all_messages["no_messages_found"])
+    #    return redirect('chat_community')
 
     return render(request, 'chat_community.html', {'community': community, 'msgs': msgs, 'family': family})
-
-
-@login_required
-def check_communityname(request):
-    communityname = request.GET.get('communityname', None)
-    exists = Community.objects.filter(name=communityname).exists()
-    return JsonResponse({'exists': exists})
 
 def community_detail(request, community_id, family_id):
     if not community_id:
@@ -648,16 +668,16 @@ def community_detail(request, community_id, family_id):
         return redirect('home')
     
     if not family_id:
-        messages.error(request, all_messages["family_id_missing"])
+        messages.error(request, all_messages["community__family_id_missing"])
         return redirect('communities_view')
     try:
         family = Family.objects.get(id=family_id)
     except Family.DoesNotExist:
-        messages.error(request, all_messages["family_not_found"])
+        messages.error(request, all_messages["community__family_not_found"])
         return redirect('communities_view')
 
     if request.user not in family.members.all():
-        messages.error(request, all_messages["not_member_of_family"])
+        messages.error(request, all_messages["community__not_member_of_family"])
         return redirect('home')
 
     members_with_klimapunkte = []
@@ -666,6 +686,11 @@ def community_detail(request, community_id, family_id):
     zeitraum = 'gesamt'
 
     if request.method == 'POST':
+        filter = request.POST.get('filter')
+        if filter not in ["Klimapunkte", "Familyname"]:
+            messages.error(request, "Ungültiger Filter-Typ")
+            return redirect('community_detail', community_id, family_id)
+
         zeitraum = request.POST.get('zeitraum')
 
         heute = date.today()
@@ -678,7 +703,7 @@ def community_detail(request, community_id, family_id):
             end_datum = request.POST.get('end_date')
 
             if not start_datum or not end_datum:
-                messages.error(request, all_messages["missing_required_fields"])
+                messages.error(request, all_messages["missing_required_inputs"])
                 return redirect('community_detail')
 
             try:
@@ -713,7 +738,7 @@ def community_detail(request, community_id, family_id):
                     klimapunkte = get_klimapunkte(aktionen)
                     klimapunkte_gesamt += klimapunkte
 
-                klimapunkte = klimapunkte_gesamt / family_members.member_count() if family_members.member_count() else 0
+                klimapunkte = klimapunkte_gesamt / community_member.member_count() if community_member.member_count() else 0
 
             elif zeitraum == 'sieben Tage':
                 klimapunkte_gesamt = 0
@@ -722,7 +747,7 @@ def community_detail(request, community_id, family_id):
                     klimapunkte = get_klimapunkte(aktionen)
                     klimapunkte_gesamt += klimapunkte
                 
-                klimapunkte = klimapunkte_gesamt / family_members.member_count() if family_members.member_count() else 0
+                klimapunkte = klimapunkte_gesamt / community_member.member_count() if community_member.member_count() else 0
 
             elif zeitraum == 'dreißig Tage':
                 klimapunkte_gesamt = 0
@@ -731,7 +756,7 @@ def community_detail(request, community_id, family_id):
                     klimapunkte = get_klimapunkte(aktionen)
                     klimapunkte_gesamt += klimapunkte
                 
-                klimapunkte = klimapunkte_gesamt / family_members.member_count() if family_members.member_count() else 0
+                klimapunkte = klimapunkte_gesamt / community_member.member_count() if community_member.member_count() else 0
 
             elif zeitraum == 'dreihundertfünfundsechzig Tage':
                 klimapunkte_gesamt = 0
@@ -740,7 +765,7 @@ def community_detail(request, community_id, family_id):
                     klimapunkte = get_klimapunkte(aktionen)
                     klimapunkte_gesamt += klimapunkte
                 
-                klimapunkte = klimapunkte_gesamt / family_members.member_count() if family_members.member_count() else 0
+                klimapunkte = klimapunkte_gesamt / community_member.member_count() if community_member.member_count() else 0
 
 
             elif zeitraum == 'gesamt':
@@ -750,7 +775,7 @@ def community_detail(request, community_id, family_id):
                     klimapunkte = get_klimapunkte(aktionen)
                     klimapunkte_gesamt += klimapunkte
                 
-                klimapunkte = klimapunkte_gesamt / family_members.member_count() if family_members.member_count() else 0
+                klimapunkte = klimapunkte_gesamt / community_member.member_count() if community_member.member_count() else 0
 
             elif zeitraum == 'benutzerdefiniert':
                 klimapunkte_gesamt = 0
@@ -768,6 +793,7 @@ def community_detail(request, community_id, family_id):
             members_with_klimapunkte.append({'member': community_member, 'klimapunkte': klimapunkte, 'family_members': family_members})
 
     else:
+        filter = "Klimapunkte"
         for community_member in community_members:
             family_members = community_member.members.all()
             klimapunkte_gesamt = 0
@@ -780,6 +806,32 @@ def community_detail(request, community_id, family_id):
             klimapunkte = klimapunkte_gesamt / community_members_count if community_members_count else 0
             members_with_klimapunkte.append({'member': community_member, 'klimapunkte': klimapunkte, 'family_members': family_members})
 
-    members_with_klimapunkte_sortiert = sorted(members_with_klimapunkte, key=lambda x: x['klimapunkte'], reverse=True)
-    return render(request, './community_detail.html', {'community': community, 'family': family, 'members_with_klimapunkte': members_with_klimapunkte_sortiert, 'zeitraum': zeitraum})
-"""
+    if filter == "Klimapunkte":
+        sort_key = 'klimapunkte'
+        reverse_sort = True
+    elif filter == "Familyname":
+        sort_key = 'member__name'  # oder 'member.username', je nach Struktur
+        reverse_sort = False
+    else:
+        sort_key = 'klimapunkte'
+        reverse_sort = True
+
+    print(members_with_klimapunkte)
+    # Sortierung anwenden
+    try:
+        members_with_klimapunkte_sortiert = sorted(
+            members_with_klimapunkte,
+            key=lambda x: x['member'].name if sort_key == 'member__name' else x[sort_key],
+            reverse=reverse_sort
+        )
+    except KeyError:
+        messages.error(request, "Fehler beim Sortieren der Mitglieder.")
+        return redirect('family_detail', family_id)
+
+    return render(request, './community_detail.html', {'community': community, 'family': family, 'members_with_klimapunkte': members_with_klimapunkte_sortiert, 'zeitraum': zeitraum, 'filter': filter})
+
+@login_required
+def check_communityname(request):
+    communityname = request.GET.get('communityname', None)
+    exists = Community.objects.filter(name=communityname).exists()
+    return JsonResponse({'exists': exists})

@@ -3,87 +3,92 @@
 {% block title %}Event {{ event.name }} bearbeiten{% endblock %}
 
 {% block content %}
-<h1>Event {{ event.name }} bearbeiten</h1>
-{% if messages %}
-{% for message in messages %}
-<p class="{{message.level_tag}}-message">{{ message }}</p>
-{% endfor %}
-{% endif %}
+    <h1>Event {{ event.name }} bearbeiten</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
 
-<p><strong>Beschreibung:</strong> {{ event.description|safe }}</p>
-<p><strong>Datum und Uhrzeit (Beginn):</strong> {{ event.date_time|date:"d.m.Y, H:i" }}</p>
-<p><strong>geschätzte Dauer in Minuten:</strong> {{ event.duration }}</p>
-<p><strong>Adresse:</strong> {{ event.adress }}</p>
+    <p><strong>Beschreibung:</strong> {{ event.description|safe }}</p>
+    <p><strong>Datum und Uhrzeit (Beginn):</strong> {{ event.date_time|date:"d.m.Y, H:i" }}</p>
+    <p><strong>geschätzte Dauer in Minuten:</strong> {{ event.duration }}</p>
+    <p><strong>Adresse:</strong> {{ event.adress }}</p>
 
-<form method="post" onsubmit="fillEditor()">
-    {% csrf_token %}
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" placeholder="Name" required>
+    <form method="post" onsubmit="fillEditor()">
+        {% csrf_token %}
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Name" required>
 
-    <label for="description_editor">Beschreibung</label>
-    <div id="description_editor" style="height: 300px;"></div>
-    <input type="hidden" name="description">
+        <label for="description_editor">Beschreibung</label>
+        <div id="description_editor" style="height: 300px;"></div>
+        <input type="hidden" name="description">
 
-    <label for="date_time">Datum und Uhrzeit (Beginn)</label>
-    <input type="datetime-local" id="date_time" name="date_time" required>
+        <label for="date_time">Datum und Uhrzeit (Beginn)</label>
+        <input type="datetime-local" id="date_time" name="date_time" required>
 
-    <label for="duration">geschätze Dauer in Minuten</label>
-    <input type="number" min="0" id="duration" name="duration" placeholder="Dauer" required>
+        <label for="duration">geschätze Dauer in Minuten</label>
+        <input type="number" min="0" id="duration" name="duration" placeholder="Dauer" required>
 
-    <label for="adress">Adresse</label>
-    <input type="text" id="adress" name="adress" placeholder="Adresse" required>
+        <label for="adress">Adresse</label>
+        <input type="text" id="adress" name="adress" placeholder="Adresse" required>
 
-    <button type="submit" name="edit">Speichern</button>
-</form>
-<form method="post" onsubmit="return confirm('Möchtest du dieses Event wirklich löschen?')">
-    {% csrf_token %}
-    <button type="submit" name="delete" style="color: red;">Event löschen</button>
-</form>
+        <label class="custom-checkbox">
+            <input type="checkbox" name="is_truth">
+            <span class="checkmark"></span>
+            <span class="label-text">Ich bestätige, dass alle Angaben der Wahrheit entsprechen und mit den <a href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmen. Außerdem verpflichte ich mich, bei dem Event selbst teilzunehmen.</span>
+        </label>
 
-<!-- Quill CSS -->
-<div class="cookie-blocked" data-requires="quill"
-    data-content='<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />'>
-</div>
+        <button type="submit" name="edit">Speichern</button>
+    </form>
+    <form method="post" onsubmit="return confirm('Möchtest du dieses Event wirklich löschen?')">
+        {% csrf_token %}
+        <button type="submit" name="delete" style="color: red;">Event löschen</button>
+    </form>
+
+    <!-- Quill CSS -->
+    <div class="cookie-blocked" data-requires="quill"
+         data-content='<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />'>
+    </div>
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        let editor = document.getElementById('description_editor')
-        if (getCookiePreferences().quill) {
-            const script = document.createElement("script");
-            script.src = "https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js";
-            document.body.appendChild(script);
-            script.onload = function () {
-                if (editor) {
-                    var quill = new Quill(editor, {
-                        theme: 'snow',
-                        modules: {
-                            toolbar: [
-                                [{ header: [1, 2, false] }],
-                                ['bold', 'italic', 'underline'],
-                                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                                ['link', 'image']
-                            ]
-                        }
-                    });
-                } else 
-                {
-                    console.warn("Editor not found");
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let editor = document.getElementById('description_editor')
+            if (getCookiePreferences().quill) {
+                const script = document.createElement("script");
+                script.src = "https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js";
+                document.body.appendChild(script);
+                script.onload = function () {
+                    if (editor) {
+                        var quill = new Quill(editor, {
+                            theme: 'snow',
+                            modules: {
+                                toolbar: [
+                                    [{header: [1, 2, false]}],
+                                    ['bold', 'italic', 'underline'],
+                                    [{'list': 'ordered'}, {'list': 'bullet'}],
+                                    ['link', 'image']
+                                ]
+                            }
+                        });
+                    } else {
+                        console.warn("Editor not found");
+                    }
                 }
+            } else {
+                editor.innerHTML = `<textarea placeholder="Beschreibung"></textarea>`;
             }
-        } else {
-            editor.innerHTML = `<textarea placeholder="Beschreibung"></textarea>`;
-        }
-    });
+        });
 
 
-    // Beim Absenden des Formulars
-    function fillEditor() {
-        if (getCookiePreferences().quill) {
-            var html = quill.root.innerHTML;
-            document.querySelector('input[name=description]').value = html;
+        // Beim Absenden des Formulars
+        function fillEditor() {
+            if (getCookiePreferences().quill) {
+                var html = quill.root.innerHTML;
+                document.querySelector('input[name=description]').value = html;
+            }
         }
-    }
-</script>
+    </script>
 
 {% endblock %}

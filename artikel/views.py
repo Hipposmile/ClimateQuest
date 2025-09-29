@@ -53,11 +53,16 @@ def artikel_overview(request):
 @login_required
 def add_artikel(request):
     if request.method == 'POST':
+        is_truth = request.POST.get('is_truth') == 'on'
+        if not is_truth:
+            messages.error(request, all_messages["not_is_truth"])
+            return redirect('add_action')
+
         name = request.POST.get('name')
         content = request.POST.get('content')
 
         if not name or not content:
-            messages.error(request, all_messages["fill_all_required_fields"])
+            messages.error(request, all_messages["missing_required_inputs"])
             return redirect('add_artikel')
         
         content = clean_html(content)
@@ -83,15 +88,20 @@ def edit_artikel(request, artikel_id):
         return redirect('artikel_overview')
 
     if artikel.creator != request.user:
-        messages.error(request, all_messages["not_authorized"])
+        messages.error(request, all_messages["not_authorized_to_visit"])
         return redirect('artikel_detail', artikel.id)
 
     if request.method == 'POST':
+        is_truth = request.POST.get('is_truth') == 'on'
+        if not is_truth:
+            messages.error(request, all_messages["not_is_truth"])
+            return redirect('add_action')
+
         name = request.POST.get('name')
         content = request.POST.get('content')
 
         if not name or not content:
-            messages.error(request, all_messages["fill_all_required_fields"])
+            messages.error(request, all_messages["missing_required_inputs"])
             return redirect('edit_artikel', artikel_id=artikel_id)
 
         content = clean_html(content)

@@ -67,7 +67,7 @@ def klimapunkte_view(request, user_id):
             start_datum = request.POST.get('start_date')
             end_datum = request.POST.get('end_date')
             if not start_datum or not end_datum:
-                messages.error(request, all_messages["missing_date_fields"])
+                messages.error(request, all_messages["missing_required_inputs"])
                 return redirect('klimapunkte_view')
             try:
                 start_datum = datetime.strptime(start_datum, '%Y-%m-%d').date()
@@ -79,13 +79,13 @@ def klimapunkte_view(request, user_id):
                     messages.error(request, all_messages["date_in_future"])
                     return redirect('klimapunkte_view')
             except ValueError:
-                messages.error(request, all_messages["invalid_date_format"])
+                messages.error(request, all_messages["invalid_date"])
                 return redirect('klimapunkte_view')
             aktionen = Aktion.objects.filter(user=user, date__range=(start_datum, end_datum))
             klimapunkte = get_klimapunkte(aktionen)
             zeitraum = f'von {start_datum} bis {end_datum}'
         else:
-            messages.error(request, all_messages["invalid_zeitraum"])
+            messages.error(request, all_messages["invalid_time_period"])
             return redirect('klimapunkte_view')
         
         if klimapunkte is None:

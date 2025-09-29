@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Nutzungsbedingungen{% endblock %}
+
+{% block content %}
+    <h1>Nutzungsbedingungen</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <body>
+
+    <h2>1. Allgemeines</h2>
+    <p>Diese App bietet registrierten Nutzern die Möglichkeit, eigene Artikel, Fragen, Antworten, Kommentare
+        und Events zu veröffentlichen sowie Aktionen hinzuzufügen und dafür Punkte zu erhalten. Die Nutzung der App setzt die Einhaltung dieser Nutzungsbedingungen voraus. Bei
+        Verstößen behalten wir uns das Recht vor, Nutzerkonten zu sperren oder zu löschen.</p>
+    <a>Alle Inhalte müssen mit Klimaschutz zu tun haben.</a>
+    <h2>2. Nutzerpflichten</h2>
+
+    <h3>2.1 Aktionen</h3>
+    <ul>
+        <li>Die Angaben müssen <strong>der Wahrheit entsprechen</strong>.</li>
+    </ul>
+
+    <h3>2.2 Artikel</h3>
+    <ul>
+        <li>Alle inhaltlichen Aussagen müssen mit <strong>mindestens zwei seriösen Quellen</strong> übereinstimmen.</li>
+        <li>Quellen müssen transparent angegeben werden (z. B. wissenschaftliche Studien, offizielle Berichte,
+            etablierte Medien).
+        </li>
+    </ul>
+
+    <h3>2.3 Forum</h3>
+    <ul>
+        <li>Fragen müssen <strong>ernst gemeint</strong> sein und einen sachlichen Hintergrund haben.</li>
+        <li>Antworten müssen <strong>wahrheitsgemäß</strong> und <strong>nach bestem Wissen und Gewissen</strong>
+            formuliert sein.
+        </li>
+        <li>Spekulative, irreführende oder beleidigende Inhalte sind untersagt.</li>
+    </ul>
+
+    <h3>2.4 Kommentare</h3>
+    <ul>
+        <li>Kommentare müssen <strong>konstruktiv</strong>, <strong>respektvoll</strong> und <strong>lobend</strong>
+            formuliert sein.
+        </li>
+        <li>Beleidigende, diskriminierende oder herabwürdigende Inhalte sind strikt untersagt.</li>
+    </ul>
+
+    <h3>2.5 Events</h3>
+    <ul>
+        <li>Das Event muss <strong>tatsächlich stattfinden</strong>.</li>
+        <li>Fiktive oder erfundene Events sind nicht erlaubt.</li>
+    </ul>
+
+    <h2>3. Moderation und Sanktionen</h2>
+    <p>Bei Verstößen gegen diese Nutzungsbedingungen behalten wir uns folgende Maßnahmen vor:</p>
+    <ul>
+        <li>Löschung einzelner Inhalte</li>
+        <li>Verwarnung des Nutzers</li>
+        <li>Sperrung oder vollständige Löschung des Nutzerkontos</li>
+    </ul>
+    <p>Andere Nutzer können bei Verstoß gegen die Nutzungsbedingungen jederzeit unter Angabe der Gründe inkl. konkreter Beiträge unter <a href="mailto:info@umweltseite.com?subject=Melden anderes Nutzers aufgrund von Verstößen gegen die Nutzungsbedingungen">info@umweltseite.com</a> gemeldet werden.</p>
+    <p>Die Entscheidung über Sanktionen liegt im Ermessen des Betreibers und erfolgt unter Berücksichtigung der Schwere
+        des Verstoßes.</p>
+
+    <h2>4. Änderungen der Nutzungsbedingungen</h2>
+    <p>Wir behalten uns vor, diese Nutzungsbedingungen bei Bedarf anzupassen. Die jeweils aktuelle Version ist jederzeit
+        unter <a href="{{ request.build_absolute_uri }}">dieser Seite verfügbar</a>.</p>
+{% endblock %}

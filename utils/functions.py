@@ -29,35 +29,19 @@ def generateRandomPassword():
     return ''.join(random.choices(string.ascii_letters + string.digits + string.punctuation, k=12))
 
 def send_mail_function(**kwargs):
-    '''request = kwargs.get('request')
-    redirect_error = kwargs.get('redirect_error')
+    request = kwargs.get('request')
     fehlermeldung = kwargs.get('fehlermeldung', 'Fehler beim E-Mail-Versand')
     subject = kwargs.get('subject')
     message = kwargs.get('message')
     fail_silently = kwargs.get('fail_silently')
-    verificationCodeSaved = kwargs.get('verificationCodeSaved')
     mailinglist_needless = kwargs.get('mailinglist_needless')
-    register = kwargs.get('register')
 
-    if redirect_error is None:
-        redirect_error = 'home'
-
-    # if not request or not subject or not message or not fail_silently:
-    #     createInternerFehler(request, 'Beim E-Mail Versand wurden nicht alle notwendigen Elemente übergeben', fehlermeldung)
     if request is None or subject is None or message is None or fail_silently is None:
         createInternerFehler(request, 'Beim E-Mail Versand wurden nicht alle notwendigen Elemente übergeben', fehlermeldung)
-        if redirect_error:
-            return redirect(redirect_error)
-        else:
-            return False
 
     user = kwargs.get('user')
     if not user:
         createInternerFehler(request, 'Bei send_mail_function wurde kein User übergeben', fehlermeldung)
-        if redirect_error:
-            return redirect(redirect_error)
-        else:
-            return False
 
     recipient_list = kwargs.get('recipient_list')
     if not recipient_list:
@@ -68,7 +52,6 @@ def send_mail_function(**kwargs):
             userErweitert = UserErweitert.objects.get(user=user)
         except UserErweitert.DoesNotExist:
             createInternerFehler(request, f'UserErweitert zu User {user} nicht gefunden', fehlermeldung)
-            return redirect(redirect_error)
         if userErweitert.mailinglist:
             try:
                 html_content = f"""
@@ -91,10 +74,6 @@ def send_mail_function(**kwargs):
                 return True
             except Exception as e:
                 createInternerFehler(request, f'Fehler beim E-Mail-Versand: {e}', fehlermeldung)
-                if redirect_error:
-                    return redirect(redirect_error)
-                else:
-                    return False
                 
     elif mailinglist_needless:
         try:
@@ -118,25 +97,14 @@ def send_mail_function(**kwargs):
             return True
         except Exception as e:
             createInternerFehler(request, f'Fehler beim E-Mail-Versand: {e}', fehlermeldung)
-            
-            if verificationCodeSaved:
-                verificationCodeSaved.delete()
-                if register:
-                    user.delete()
-                    return False
-            
-            if redirect_error:
-                return redirect(redirect_error)
-            else:
-                return False
+            return False
 
     elif user.email == '':
-        # messages.success(request, 'Die Nachricht wurde erfolgreich erstellt, aber da keine E-Mail-Adresse hinterlegt wurde, wurde keine E-Mail versendet. Die Benachrichtigung kann allerdings in dem Benachrichtigungsbereich auf der Webseite eingesehen werden.')
-        pass
+        return True
     else:
-        pass
+        return True
 
-    return False'''
+    return False
     print(kwargs.get('message'))
     return True
     

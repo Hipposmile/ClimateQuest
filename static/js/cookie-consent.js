@@ -59,7 +59,8 @@ styleCookie.textContent = `:root {
     #cookie-banner {
         position: fixed; bottom: 2%; left: 50%;
         transform: translateX(-50%);
-        width: 90%; max-width: 520px;
+        width: 90%; 
+        max-width: 520px;
         background: var(--color-white);
         color: var(--color-text);
         border-radius: 12px;
@@ -67,6 +68,8 @@ styleCookie.textContent = `:root {
         box-shadow: 0 8px 24px var(--color-shadow-light);
         font-family: 'Segoe UI', sans-serif;
         z-index: 9999;
+        max-height: 500px; /* Höhe des Divs, um Scrollen zu ermöglichen */
+        overflow-y: auto;
     }
 
     #cookie-banner a {
@@ -195,7 +198,7 @@ document.head.appendChild(styleCookie);
 const banner = document.createElement('div');
 banner.innerHTML = `<div id="cookie-overlay"></div>
   <div id="cookie-banner">
-    <p><strong>Wir verwenden Cookies</strong> für Funktion, Analyse und Marketing. <a href="#" target="_blank">Mehr erfahren</a>.</p>
+    <p><strong>Wir verwenden Cookies</strong> für Funktion, Analyse und Marketing. <a href="{% static 'rechtliches/datenschutz.pdf' %}" target="_blank">Mehr erfahren</a>.</p>
     <p><strong>Nach Änderung der Cookie-Einstellungen Seite bitte neu laden!</strong></p>
     <div class="buttons">
       <button id="btn-accept">Alle akzeptieren</button>
@@ -204,7 +207,7 @@ banner.innerHTML = `<div id="cookie-overlay"></div>
     </div>
     <div id="settings-panel">
       <p><strong>Cookie-Auswahl:</strong></p>
-      ${Object.entries(cookieCategories).map(([key, { label, explanation, required }]) => `
+      ${Object.entries(cookieCategories).map(([key, {label, explanation, required}]) => `
         <div class="cookie-category">
           <label>
             <input type="checkbox" id="${key}" ${required ? 'disabled checked' : ''}>
@@ -267,6 +270,7 @@ function setConsent(consent) {
     document.body.classList.remove('blocked');
     handleCookieBlocks(consent);
 }
+
 function handleCookieBlocks(consentState) {
     document.querySelectorAll('.cookie-blocked').forEach(el => {
         const type = el.dataset.requires;
@@ -352,8 +356,7 @@ function handleCookieBlocks(consentState) {
                     link.rel = "stylesheet";
                     document.head.appendChild(link);
                     return;
-                }
-                else {
+                } else {
                     console.error("Error matching link")
                 }
             } else {

@@ -39,7 +39,7 @@ def home(request):
 @login_required
 def admin(request):
     if not request.user.is_staff:
-        messages.error(request, all_messages["admin_access_denied"])
+        messages.error(request, all_messages["not_authorized_to_visit"])
         return redirect('home')
     if request.method == 'POST':
         if 'benachrichtigung' in request.POST:
@@ -48,7 +48,7 @@ def admin(request):
             msg = request.POST.get('msg')
 
             if not receiver or not name or not msg:
-                messages.error(request, all_messages["admin_fields_missing"])
+                messages.error(request, all_messages["missing_required_inputs"])
                 return redirect('admin')
             
             if receiver == 'user':
@@ -56,13 +56,13 @@ def admin(request):
                     user = User.objects.get(username=name)
                     createBenachrichtigung(request, msg, user)
                 except User.DoesNotExist:
-                    messages.error(request, all_messages["admin_user_not_found"])
+                    messages.error(request, all_messages["admin__user_not_found"])
                     return redirect('admin')
             elif receiver == 'family-members':
                 try:
                     family = Family.objects.get(name=name)
                 except Family.DoesNotExist:
-                    messages.error(request, all_messages["admin_family_not_found"])
+                    messages.error(request, all_messages["admin__family_not_found"])
                     return redirect('admin')
                 for user in family.members.all():
                     createBenachrichtigung(request, msg, user)
@@ -70,13 +70,13 @@ def admin(request):
                 try:
                     community = Community.objects.get(name=name)
                 except Community.DoesNotExist:
-                    messages.error(request, all_messages["admin_community_not_found"])
+                    messages.error(request, all_messages["admin__community_not_found"])
                     return redirect('admin')
                 for family in community.members.all():
                     for user in family.members.all():
                         createBenachrichtigung(request, msg, user)
             else:
-                messages.error(request, all_messages["admin_invalid_receiver"])
+                messages.error(request, all_messages["admin__invalid_receiver_type"])
                 return redirect('admin')
         
         elif 'check_worldwide_ranking' in request.POST:
@@ -85,6 +85,12 @@ def admin(request):
                 if check_password(passwords['worldwide_ranking_password'], worldwide_ranking.password) and check_password(passwords['worldwide_ranking_admin_password'], worldwide_ranking.admin_password):
                     messages.success(request, all_messages["worldwide_ranking_valid"])
                 else:
+                    worldwide_ranking_password = passwords['worldwide_ranking_password']
+                    worldwide_ranking.password = worldwide_ranking_password
+
+                    worldwide_ranking_admin_password = passwords['worldwide_ranking_admin_password']
+                    worldwide_ranking.admin_password = worldwide_ranking_admin_password
+
                     messages.error(request, all_messages["worldwide_ranking_invalid_passwords"])
             except Family.DoesNotExist:
                 worldwide_ranking = Family.objects.create(
@@ -128,3 +134,11 @@ def delete_benachrichtigung(request, id):
 def share(request):
     url = request.GET.get('url')
     return render(request, 'share.html', {'url': url})
+
+def nutzungsbedingungen(request):
+    return render(request, 'nutzungsbedingungen.html')
+
+def aktionenTable(request):
+    aktionen = AktionenListe.objects.all()
+    print(aktionen)
+    return render(request, 'aktionenTable.html', {'aktionen': aktionen})

@@ -206,7 +206,7 @@ main {
     background-color: var(--color-primary-hover);
 }*/
 
-/*#me-btn {
+.me-btn {
     position: fixed;
     bottom: 2rem;
     right: 2rem;
@@ -228,9 +228,9 @@ main {
     font-size: 0.8rem;
 }
 
-#me-btn:hover {
+.me-btn:hover {
     background-color: var(--color-primary-hover);
-}*/
+}
 
 .dropdown {
     position: relative;
@@ -1032,11 +1032,12 @@ main {
     position: absolute;
     left: 0;
     top: 0;
+
 }
 
 .checkmark {
-    height: 24px;
-    width: 24px;
+    min-height: 24px;
+    min-width: 24px;
     background-color: var(--color-white);
     border: 2px solid var(--color-primary);
     border-radius: 4px;

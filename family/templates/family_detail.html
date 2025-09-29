@@ -1,119 +1,92 @@
 {% extends 'base.html' %}
 
-{% block title %} {% if family %}Family {{ family.name }}{% else %}Die Family konnte nicht geladen werden.{% endif %} {% endblock %}
+{% block title %} {% if family %}Family {{ family.name }}{% else %}Die Family konnte nicht geladen werden.
+{% endif %} {% endblock %}
 
 {% block content %}
+    <h1>Family <i>{{ family.name }}</i></h1>
 
-<style>
-    #me-btn {
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        background-color: var(--color-primary);
-        color: var(--color-white);
-        border: none;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 48px;
-        height: 48px;
-        font-size: 1.5rem;
-        text-decoration: none;
-        cursor: pointer;
-        box-shadow: var(--shadow-md);
-        z-index: 1000;
-        transition: background 0.2s;
-        font-size: 0.8rem;
-    }
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
 
-    #me-btn:hover {
-        background-color: var(--color-primary-hover);
-    }
-</style>
-
-<h1>Family <i>{{ family.name }}</i></h1>
-
-{% if messages %}
-{% for message in messages %}
-<p class="{{message.level_tag}}-message">{{ message }}</p>
-{% endfor %}
-{% endif %}
-
-{% if family.name != 'worldwide ranking' %}
-    {% if member_of_family %}
-        <p><a href="{% url 'edit_family' family.id %}">Bearbeiten</a></p>
-        {% if family.chat %}
-            <p><a href="{% url 'chat_family' family.id %}">Chatten</a></p>
+    {% if family.name != 'worldwide ranking' %}
+        {% if member_of_family %}
+            <p><a href="{% url 'edit_family' family.id %}">Bearbeiten</a></p>
+            {% if family.chat %}
+                <p><a href="{% url 'chat_family' family.id %}">Chatten</a></p>
+            {% else %}
+                <p>Die Chat-Funktion ist für diese Family deaktiviert.</p>
+            {% endif %}
         {% else %}
-            <p>Die Chat-Funktion ist für diese Family deaktiviert.</p>
+            <p>Nur Mitglieder dürfen die Bearbeiten- und Chat-Funktion nutzen.</p>
         {% endif %}
     {% else %}
-        <p>Nur Mitglieder dürfen die Bearbeiten- und Chat-Funktion nutzen.</p>
+        <p>Weder die Chat-Funktion noch die Bearbeiten-Funktion sind für die Family "worldwide ranking"
+            freigeschaltet</p>
     {% endif %}
-{% else %}
-    <p>Weder die Chat-Funktion noch die Bearbeiten-Funktion sind für die Family "worldwide ranking" freigeschaltet</p>
-{% endif %}
 
 
-<form method="POST">
-    {% csrf_token %}
-    <label for="filter">Sortieren nach:</label>
-    <select name="filter" id="filter" required>
-        <option value="Klimapunkte" selected>Klimapunkte</option>
-        <option value="Username">Username</option>
-    </select>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="filter">Sortieren nach:</label>
+        <select name="filter" id="filter" required>
+            <option value="Klimapunkte" selected>Klimapunkte</option>
+            <option value="Username">Username</option>
+        </select>
 
-    <label for="zeitraum">Zeitraum:</label>
-    <select name="zeitraum" id="zeitraum" required>
-        <option value="gesamt" selected>Gesamt</option>
-        <option value="heute">Heute</option>
-        <option value="sieben Tage">7 Tage</option>
-        <option value="dreißig Tage">30 Tage</option>
-        <option value="dreihundertfünfundsechzig Tage">365 Tage</option>
-        <option value="benutzerdefiniert">Benutzerdefiniert</option>
-    </select>
+        <label for="zeitraum">Zeitraum:</label>
+        <select name="zeitraum" id="zeitraum" required>
+            <option value="gesamt" selected>Gesamt</option>
+            <option value="heute">Heute</option>
+            <option value="sieben Tage">7 Tage</option>
+            <option value="dreißig Tage">30 Tage</option>
+            <option value="dreihundertfünfundsechzig Tage">365 Tage</option>
+            <option value="benutzerdefiniert">Benutzerdefiniert</option>
+        </select>
 
-    <input type="hidden" name="start_date" id="start_date" placeholder="Startdatum" value="" required>
-    <input type="hidden" name="end_date" id="end_date" placeholder="Enddatum" value="" required>
+        <input type="hidden" name="start_date" id="start_date" placeholder="Startdatum" value="" required>
+        <input type="hidden" name="end_date" id="end_date" placeholder="Enddatum" value="" required>
 
-    <button type="submit">Anwenden</button>
-    <small style="padding: 0%;">Allgemeine Aktionen ohne Datum werden nur bei <i>gesamt</i> in die Berechnung eingezogen</small>
-</form>
+        <button type="submit">Anwenden</button>
+    </form>
 
-<script>
-    document.getElementById("zeitraum").addEventListener("change", function () {
-        const startDateInput = document.getElementById("start_date");
-        const endDateInput = document.getElementById("end_date");
+    <script>
+        document.getElementById("zeitraum").addEventListener("change", function () {
+            const startDateInput = document.getElementById("start_date");
+            const endDateInput = document.getElementById("end_date");
 
-        if (this.value === "benutzerdefiniert") {
-            startDateInput.type = "date";
-            endDateInput.type = "date";
-        } else {
-            startDateInput.type = "hidden";
-            endDateInput.type = "hidden";
-        }
-    });
-</script>
+            if (this.value === "benutzerdefiniert") {
+                startDateInput.type = "date";
+                endDateInput.type = "date";
+            } else {
+                startDateInput.type = "hidden";
+                endDateInput.type = "hidden";
+            }
+        });
+    </script>
 
-{% if family.name != 'worldwide ranking' %}
-<p>Durchschnittliche Klimapunkte: {{ average_klimapunkte }}</p>
-<p>Gesamte Klimapunkte: {{ total_klimapunkte }}</p>
-{% endif %}
+    {% if family.name != 'worldwide ranking' %}
+        <p>Durchschnittliche Klimapunkte: {{ average_klimapunkte }}</p>
+        <p>Gesamte Klimapunkte: {{ total_klimapunkte }}</p>
+    {% endif %}
 
-<p>Mitglieder: {{ members_count }}</p>
-{% if not error %}
-<p>Zeitraum: {{ zeitraum }}</p>
-<p>Sortiert nach: {{ filter }}</p>
-{% endif %}
-<ul class="klimapunkte-list">
-{% for member in members %}
-    <li class="{% if member.member == user %}klimapunkte_me{% else %}klimapunkte_other{% endif %}" id="{% if member.member == user %}me{% else %}other{% endif %}">
-        <a href="{% url 'klimapunkte_view' member.member.id %}">{{ member.member.username }}</a>
-        <br>
-        <span style="font-size:0.95em; color:#888;">({{ member.klimapunkte }} Klimapunkte)</span>
-    </li>
-{% endfor %}
-</ul>
-<a href="#me" id="me-btn">Zu mir</a>
+    <p>Mitglieder: {{ members_count }}</p>
+    {% if not error %}
+        <p>Zeitraum: {{ zeitraum }}</p>
+        <p>Sortiert nach: {{ filter }}</p>
+    {% endif %}
+    <ul class="klimapunkte-list">
+        {% for member in members %}
+            <li class="{% if member.member == user %}klimapunkte_me{% else %}klimapunkte_other{% endif %}"
+                id="{% if member.member == user %}me{% else %}other{% endif %}">
+                <a href="{% url 'klimapunkte_view' member.member.id %}">{{ member.member.username }}</a>
+                <br>
+                <span style="font-size:0.95em; color:#888;">({{ member.klimapunkte }} Klimapunkte)</span>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="#me" class="me-btn">Zu mir</a>
 {% endblock %}

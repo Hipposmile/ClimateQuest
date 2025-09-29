@@ -3,148 +3,167 @@
 {% block title %}Registrieren{% endblock %}
 
 {% block content %}
-<h1>Registrierung</h1>
-{% if messages %}
-{% for message in messages %}
-<p class="{{message.level_tag}}-message">{{ message }}</p>
-{% endfor %}
-{% endif %}
-<form method="post" onsubmit="register(event)">
-    {% csrf_token %}
-    <small id="username-feedback"></small>
-    <input type="text" name="username" id="username" placeholder="Benutzername" required>
-    <input type="password" name="password" placeholder="Passwort" id="password" required>
-    <small id="email-feedback"></small>
-    <input type="email" name="email" id="email" placeholder="E-Mail (Optional)">
-    <small>Du kannst eine E-Mail-Adresse angeben, um Benachrichtigungen zu erhalten und, falls du deinen Benutzernamen oder dein Passwort vergessen hast, diese zurückzusetzen. Dies ist allerdings optional, du musst es also nicht machen.</small>
-    <div>
-        <h4>Wir empfehlen folgende Passwortanforderungen, um deinen Account vor Hackingangriffen und Accountübernahmenzu schützen:</h4>
-        <ul class="criteria-list">
-            <li id="length" class="error-message">Mindestens acht Zeichen</li>
-            <li id="uppercase" class="error-message">Mindestens ein Großbuchstabe</li>
-            <li id="lowercase" class="error-message">Mindestens ein Kleinbuchstabe</li>
-            <li id="number" class="error-message">Mindestens eine Zahl</li>
-            <li id="punctuation" class="error-message">Mindestens ein Sonderzeichen</li>
-        </ul>
-    </div>
+    <h1>Registrierung</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <form method="post" onsubmit="register(event)">
+        {% csrf_token %}
+        <small id="username-feedback"></small>
+        <input type="text" name="username" id="username" placeholder="Benutzername" required>
+        <input type="password" name="password" placeholder="Passwort" id="password" required>
+        <small id="email-feedback"></small>
+        <input type="email" name="email" id="email" placeholder="E-Mail (Optional)">
+        <small>Du kannst eine E-Mail-Adresse angeben, um Benachrichtigungen zu erhalten und, falls du deinen
+            Benutzernamen oder dein Passwort vergessen hast, diese zurückzusetzen. Dies ist allerdings optional, du
+            musst es also nicht machen.</small>
+        <div>
+            <h4>Wir empfehlen folgende Passwortanforderungen, um deinen Account vor Hackingangriffen und
+                Accountübernahmenzu schützen:</h4>
+            <ul class="criteria-list">
+                <li id="length" class="error-message">Mindestens acht Zeichen</li>
+                <li id="uppercase" class="error-message">Mindestens ein Großbuchstabe</li>
+                <li id="lowercase" class="error-message">Mindestens ein Kleinbuchstabe</li>
+                <li id="number" class="error-message">Mindestens eine Zahl</li>
+                <li id="punctuation" class="error-message">Mindestens ein Sonderzeichen</li>
+            </ul>
+        </div>
 
-    <div id="recaptcha" class="cookie-blocked" data-requires="recaptcha" data-content='<script src="https://www.google.com/recaptcha/api.js?render=6Ld_S6orAAAAANqPdHX27TNVkzL0WmlG_XQhTD2l"></script>'></div>
-    <input type="hidden" name="recaptchaToken" id="recaptchaToken">
-    <button type="submit" id="register-button">Registrieren</button>
-</form>
+        <label class="custom-checkbox">
+            <input type="checkbox" name="nutzungsbedingungen_accepted">
+            <span class="checkmark"></span>
+            <span class="label-text">Ich habe die <a href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> gelesen und akzeptiert.</span>
+        </label>
 
-<p>Bereits registriert? <a href="{% url 'login_view' %}">Zum Login</a></p>
+        <div id="recaptcha" class="cookie-blocked" data-requires="recaptcha"
+             data-content='<script src="https://www.google.com/recaptcha/api.js?render=6Ld_S6orAAAAANqPdHX27TNVkzL0WmlG_XQhTD2l"></script>'></div>
+        <input type="hidden" name="recaptchaToken" id="recaptchaToken">
+        <button type="submit" id="register-button">Registrieren</button>
+    </form>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        if (!getCookiePreferences().recaptcha) {
-            let register_button = document.getElementById('register-button');
-            register_button.disabled = true;
-            register_button.textContent = "Um sich zu registrieren, wird reCAPTCHA benötigt. Bitte akzeptieren Sie diese, um sich zu registrieren.";
-        }
-    });
-    
-    function register(event) {
-        event.preventDefault(); // verhindert sofortiges Abschicken
+    <p>Bereits registriert? <a href="{% url 'login_view' %}">Zum Login</a></p>
 
-        if (!confirm('Dies wird einen neuen Account für dich erstellen. Falls du eine E-Mail-Adresse angegeben hast, wird eine E-Mail an dich gesendet, um diese zu verifizieren. Bis dahin ist dein Account inaktiv, das heißt, du kannst dich noch nicht anmelden. Bei Klicken auf OK wird google reCAPTCHA aktiviert und du stimmst unserer Datenschutzvereinbarung, unseren Nutzungsbedinungen, deren <a>Datenschutzvereinbarung</a> sowie deren Nutzungsbedinungen zu.')) {
-            return false;
-        }
+    <script>
+        let passwordRecommendation = false;
+    </script>
 
-        grecaptcha.ready(function() {
-            grecaptcha.execute('6Ld_S6orAAAAANqPdHX27TNVkzL0WmlG_XQhTD2l', {action: 'register'})
-            .then(function(token) {
-                if (!token) {
-                    console.warn("reCAPTCHA hat kein Token zurückgegeben.");
-                    return false;
-                }
-
-                const input = document.getElementById('recaptchaToken');
-                if (input) {
-                    input.value = token;
-                    // Jetzt das Formular manuell abschicken
-                    event.target.submit();
-                } else {
-                    console.error("recaptchaToken-Element nicht gefunden.");
-                }
-            })
-            .catch(function(error) {
-                console.error("Fehler bei reCAPTCHA:", error);
-            });
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (!getCookiePreferences().recaptcha) {
+                let register_button = document.getElementById('register-button');
+                register_button.disabled = true;
+                register_button.textContent = "Um sich zu registrieren, wird reCAPTCHA benötigt. Bitte akzeptieren Sie diese, um sich zu registrieren.";
+            }
         });
 
-        return false; // verhindert das ursprüngliche Submit
-    }
-</script>
+        function register(event) {
+            event.preventDefault(); // verhindert sofortiges Abschicken
+            if (!passwordRecommendation) {
+                if (!confirm('Das Passwort erfüllt nicht die Passwortanforderungen. Trotzdem fortfahren?')) {
+                    return false;
+                }
+            }
 
-<script>
-    const passwordInput = document.getElementById('password')
-    const password_lenght = document.getElementById('length')
-    const uppercase = document.getElementById('uppercase')
-    const lowercase = document.getElementById('lowercase')
-    const number = document.getElementById('number')
-    const punctuation = document.getElementById('punctuation')
+            grecaptcha.ready(function () {
+                grecaptcha.execute('6Ld_S6orAAAAANqPdHX27TNVkzL0WmlG_XQhTD2l', {action: 'register'})
+                    .then(function (token) {
+                        if (!token) {
+                            console.warn("reCAPTCHA hat kein Token zurückgegeben.");
+                            return false;
+                        }
 
-    passwordInput.addEventListener('input', function () {
-        let password = this.value;
+                        const input = document.getElementById('recaptchaToken');
+                        if (input) {
+                            input.value = token;
+                            // Jetzt das Formular manuell abschicken
+                            event.target.submit();
+                        } else {
+                            console.error("recaptchaToken-Element nicht gefunden.");
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error("Fehler bei reCAPTCHA:", error);
+                    });
+            });
 
-        password_lenght.className = password.length >= 8 ? "success-message" : "error-message"
-        uppercase.className = /[A-Z]/.test(password) ? "success-message" : "error-message"
-        lowercase.className = /[a-z]/.test(password) ? "success-message" : "error-message"
-        number.className = /\d/.test(password) ? "success-message" : "error-message"
-        punctuation.className = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(password) ? "success-message" : "error-message";
-    });
+            return false; // verhindert das ursprüngliche Submit
+        }
+    </script>
 
-    document.getElementById('username').addEventListener('input', function () {
-        const username = this.value;
-        const username_feedback = document.getElementById('username-feedback');
-        const registerButton = document.getElementById('register-button');
+    <script>
+        const passwordInput = document.getElementById('password')
+        const password_lenght = document.getElementById('length')
+        const uppercase = document.getElementById('uppercase')
+        const lowercase = document.getElementById('lowercase')
+        const number = document.getElementById('number')
+        const punctuation = document.getElementById('punctuation')
 
-        if (username.length > 0) {
-            username_feedback.textContent = 'Überprüfe, ob Benutzername bereits existiert...';
-            username_feedback.style.color = 'grey';
-            fetch(`/personals/check-username/?username=${encodeURIComponent(username)}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.exists) {
-                        username_feedback.textContent = 'Benutzername bereits vorhanden';
+        passwordInput.addEventListener('input', function () {
+            let password = this.value;
+
+            password_lenght.className = password.length >= 8 ? "success-message" : "error-message"
+            uppercase.className = /[A-Z]/.test(password) ? "success-message" : "error-message"
+            lowercase.className = /[a-z]/.test(password) ? "success-message" : "error-message"
+            number.className = /\d/.test(password) ? "success-message" : "error-message"
+            punctuation.className = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(password) ? "success-message" : "error-message";
+
+            if (password_lenght.className == "success-message" && uppercase.className == "success-message" && lowercase.className == "success-message" && number.className == "success-message" && punctuation.className == "success-message") {
+                passwordRecommendation = true
+            }
+        });
+
+        document.getElementById('username').addEventListener('input', function () {
+            const username = this.value;
+            const username_feedback = document.getElementById('username-feedback');
+            const registerButton = document.getElementById('register-button');
+
+            if (username.length > 0) {
+                username_feedback.textContent = 'Überprüfe, ob Benutzername bereits existiert...';
+                username_feedback.style.color = 'grey';
+                fetch(`/personals/check-username/?username=${encodeURIComponent(username)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            username_feedback.textContent = 'Benutzername bereits vorhanden';
+                            username_feedback.style.color = 'red';
+                        } else {
+                            username_feedback.textContent = 'Name noch nicht vorhanden';
+                            username_feedback.style.color = 'green';
+                        }
+                    })
+                    .catch(error => {
+                        username_feedback.textContent = `Fehler beim Überprüfen des Benutzernamens: ${error}`;
                         username_feedback.style.color = 'red';
-                    } else {
-                        username_feedback.textContent = 'Name noch nicht vorhanden';
-                        username_feedback.style.color = 'green';
-                    }
-                })
-                .catch(error => {
-                    username_feedback.textContent = `Fehler beim Überprüfen des Benutzernamens: ${error}`;
-                    username_feedback.style.color = 'red';
-                });
-        } else {
-            username_feedback.textContent = '';
-        }
-    });
+                    });
+            } else {
+                username_feedback.textContent = '';
+            }
+        });
 
-    document.getElementById('email').addEventListener('input', function () {
-        const email = this.value;
-        const email_feedback = document.getElementById('email-feedback');
+        document.getElementById('email').addEventListener('input', function () {
+            const email = this.value;
+            const email_feedback = document.getElementById('email-feedback');
 
-        if (email.length > 0) {
-            email_feedback.textContent = 'Überprüfe, ob E-Mail-Adresse bereits existiert...';
-            email_feedback.style.color = 'grey';
-            fetch(`/personals/check-email/?email=${encodeURIComponent(email)}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.exists) {
-                        email_feedback.textContent = 'E-Mail-Adresse bereits vorhanden';
-                        email_feedback.style.color = 'red';
-                    } else {
-                        email_feedback.textContent = 'E-Mail-Adresse noch nicht vorhanden';
-                        email_feedback.style.color = 'green';
-                    }
-                });
-        } else {
-            email_feedback.textContent = '';
-        }
-    });
-</script>
+            if (email.length > 0) {
+                email_feedback.textContent = 'Überprüfe, ob E-Mail-Adresse bereits existiert...';
+                email_feedback.style.color = 'grey';
+                fetch(`/personals/check-email/?email=${encodeURIComponent(email)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            email_feedback.textContent = 'E-Mail-Adresse bereits vorhanden';
+                            email_feedback.style.color = 'red';
+                        } else {
+                            email_feedback.textContent = 'E-Mail-Adresse noch nicht vorhanden';
+                            email_feedback.style.color = 'green';
+                        }
+                    });
+            } else {
+                email_feedback.textContent = '';
+            }
+        });
+    </script>
 
 {% endblock %}

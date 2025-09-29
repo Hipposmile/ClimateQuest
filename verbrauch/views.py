@@ -28,42 +28,46 @@ def add(request):
     aktionen = AktionenListe.objects.all().order_by('name')
 
     if request.method == 'POST':
+        is_truth = request.POST.get('is_truth') == 'on'
+        if not is_truth:
+            messages.error(request, all_messages["not_is_truth"])
+            return redirect('add_action')
+
         action_type = request.POST.get('action_type')
         if not action_type:
-            messages.error(request, all_messages["action_type_missing"])
+            messages.error(request, all_messages["action_name_missing"])
             return redirect('add')
         
         action = AktionenListe.objects.get(name=action_type)
         action_description = request.POST.get('action_description')
         
-        if action.date:
-            action_date_raw = request.POST.get('action_date')
-            if not action_date_raw:
-                messages.error(request, all_messages["date_missing"])
-                return redirect('add')
-            try:
-                action_date = datetime.strptime(action_date_raw, '%Y-%m-%d').date()
-            except ValueError:
-                messages.error(request, all_messages["invalid_date_format"])
-                return redirect('add')
-            if action_date > datetime.now().date():
-                messages.error(request, all_messages["date_in_future"])
-                return redirect('add')
-            
-            action_quantity = request.POST.get('action_quantity')
-            if not action_quantity:
-                messages.error(request, all_messages["quantity_missing"])
-                return redirect('add')
-            try:
-                action_quantity = float(action_quantity)
-                rounded_action_quantity = round(action_quantity, dezimalstellen)
-                action_quantity = rounded_action_quantity
-            except ValueError:
-                messages.error(request, all_messages["invalid_quantity"])
-                return redirect('add')
-            if action_quantity < 0:
-                messages.error(request, all_messages["quantity_must_be_positive"])
-                return redirect('add')
+        action_date_raw = request.POST.get('action_date')
+        if not action_date_raw:
+            messages.error(request, all_messages["missing_required_inputs"])
+            return redirect('add')
+        try:
+            action_date = datetime.strptime(action_date_raw, '%Y-%m-%d').date()
+        except ValueError:
+            messages.error(request, all_messages["invalid_date"])
+            return redirect('add')
+        if action_date > datetime.now().date():
+            messages.error(request, all_messages["date_in_future"])
+            return redirect('add')
+
+        action_quantity = request.POST.get('action_quantity')
+        if not action_quantity:
+            messages.error(request, all_messages["missing_required_inputs"])
+            return redirect('add')
+        try:
+            action_quantity = float(action_quantity)
+            rounded_action_quantity = round(action_quantity, dezimalstellen)
+            action_quantity = rounded_action_quantity
+        except ValueError:
+            messages.error(request, all_messages["action_invalid_quantity"])
+            return redirect('add')
+        if action_quantity < 0:
+            messages.error(request, all_messages["invalid_quantity"])
+            return redirect('add')
         
         aktionExisting = any(aktion.name == action_type for aktion in aktionen)
         if not aktionExisting:
@@ -76,8 +80,8 @@ def add(request):
             aktion=action,
             description=action_description,
             user=request.user,
-            quantity=action_quantity if action.date else None,
-            date=action_date if action.date else None
+            quantity=action_quantity,
+            date=action_date,
         )
         
         new_level = get_level(request.user)
@@ -111,42 +115,46 @@ def edit_action(request, action_id):
 
     if request.method == 'POST':
         if 'edit_action' in request.POST:
+            is_truth = request.POST.get('is_truth') == 'on'
+            if not is_truth:
+                messages.error(request, all_messages["not_is_truth"])
+                return redirect('edit_action', action_id=action_id)
+
             action_type = request.POST.get('action_type')
             if not action_type:
-                messages.error(request, all_messages["action_type_missing"])
+                messages.error(request, all_messages["action_name_missing"])
                 return redirect('edit_action', action_id)
             
             action = AktionenListe.objects.get(name=action_type)
             action_description = request.POST.get('action_description')
             
-            if action.date:
-                action_date_raw = request.POST.get('action_date')
-                if not action_date_raw:
-                    messages.error(request, all_messages["date_missing"])
-                    return redirect('edit_action', action_id)
-                try:
-                    action_date = datetime.strptime(action_date_raw, '%Y-%m-%d').date()
-                except ValueError:
-                    messages.error(request, all_messages["invalid_date_format"])
-                    return redirect('edit_action', action_id)
-                if action_date > datetime.now().date():
-                    messages.error(request, all_messages["date_in_future"])
-                    return redirect('edit_action', action_id)
-                
-                action_quantity = request.POST.get('action_quantity')
-                if not action_quantity:
-                    messages.error(request, all_messages["quantity_missing"])
-                    return redirect('edit_action', action_id)
-                try:
-                    action_quantity = float(action_quantity)
-                    rounded_action_quantity = round(action_quantity, dezimalstellen)
-                    action_quantity = rounded_action_quantity
-                except ValueError:
-                    messages.error(request, all_messages["invalid_quantity"])
-                    return redirect('edit_action', action_id)
-                if action_quantity <= 0:
-                    messages.error(request, all_messages["quantity_must_be_positive"])
-                    return redirect('edit_action', action_id)
+            action_date_raw = request.POST.get('action_date')
+            if not action_date_raw:
+                messages.error(request, all_messages["missing_required_inputs"])
+                return redirect('edit_action', action_id)
+            try:
+                action_date = datetime.strptime(action_date_raw, '%Y-%m-%d').date()
+            except ValueError:
+                messages.error(request, all_messages["invalid_date"])
+                return redirect('edit_action', action_id)
+            if action_date > datetime.now().date():
+                messages.error(request, all_messages["date_in_future"])
+                return redirect('edit_action', action_id)
+
+            action_quantity = request.POST.get('action_quantity')
+            if not action_quantity:
+                messages.error(request, all_messages["missing_required_inputs"])
+                return redirect('edit_action', action_id)
+            try:
+                action_quantity = float(action_quantity)
+                rounded_action_quantity = round(action_quantity, dezimalstellen)
+                action_quantity = rounded_action_quantity
+            except ValueError:
+                messages.error(request, all_messages["invalid_quantity"])
+                return redirect('edit_action', action_id)
+            if action_quantity <= 0:
+                messages.error(request, all_messages["invalid_quantity"])
+                return redirect('edit_action', action_id)
             
             aktionExisting = any(aktion.name == action_type for aktion in aktionen)
             if not aktionExisting:
@@ -158,8 +166,8 @@ def edit_action(request, action_id):
             aktuelleAktion.aktion = action
             aktuelleAktion.description = action_description
             aktuelleAktion.user = request.user
-            aktuelleAktion.quantity = action_quantity if action.date else None
-            aktuelleAktion.date = action_date if action.date else None
+            aktuelleAktion.quantity = action_quantity
+            aktuelleAktion.date = action_date
             aktuelleAktion.save()
 
             new_level = get_level(request.user)

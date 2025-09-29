@@ -55,6 +55,11 @@ def forum_overview(request):
 @login_required
 def add_forum_post(request):
     if request.method == 'POST':
+        is_truth = request.POST.get('is_truth') == 'on'
+        if not is_truth:
+            messages.error(request, all_messages["not_is_truth"])
+            return redirect('add_forum_post')
+
         title = request.POST.get('title')
         content = request.POST.get('content')
 
@@ -76,6 +81,11 @@ def post_detail(request, post_id):
         return redirect('forum_overview')
     
     if request.method == 'POST':
+        is_truth = request.POST.get('is_truth') == 'on'
+        if not is_truth:
+            messages.error(request, all_messages["not_is_truth"])
+            return redirect('add_forum_post')
+
         content = request.POST.get('content')
         if not content:
             messages.error(request, all_messages['fill_all_required_fields'])

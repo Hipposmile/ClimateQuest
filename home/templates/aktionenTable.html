@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Aktionen{% endblock %}
+
+{% block content %}
+    <style>
+        .aktionen-table {
+            width: 100%;
+            max-width: 500px;
+            margin: 2rem auto 0 auto;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--color-bg-light);
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+
+        .aktionen-table th,
+        .aktionen-table td {
+            padding: 1rem 1.2rem;
+            text-align: left;
+        }
+
+        .aktionen-table th {
+            background: var(--color-primary);
+            color: var(--color-text-light);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .aktionen-table tr:nth-child(even) td {
+            background: var(--color-bg-dark);
+        }
+
+        .aktionen-table tr:nth-child(odd) td {
+            background: var(--color-bg-light);
+        }
+
+        .aktionen-table tr:hover td {
+            background: var(--color-primary-light);
+            color: var(--color-text);
+            transition: background 0.2s, color 0.2s;
+        }
+    </style>
+    <h1>Aktionen</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <table class="aktionen-table">
+        <thead>
+        <tr>
+            <th>Aktion</th>
+            <th>Klimapunkte</th>
+            <th>Anmerkung</th>
+            <th>Quelle</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for aktion in aktionen %}
+            <tr>
+                <td>{{ aktion.name }}</td>
+                <td>{{ aktion.klimapunkte }}</td>
+                <td>{{ aktion.anmerkung|safe }}</td>
+                <td>{{ aktion.source|safe }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <p>Ein Klimapunkt steht stellvertretend für einen Kilogramm eingespartes CO2.</p>
+{% endblock %}

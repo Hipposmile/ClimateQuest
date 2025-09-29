@@ -1,4 +1,3 @@
-# templatetags/html_decode.py
 import html
 from django import template
 

@@ -53,56 +53,6 @@
             border-radius: 50%;
             font-weight: bold;
         }
-
-        #darkmode-switch .switch {
-            position: relative;
-            display: inline-block;
-            width: 80px;
-            height: 40px;
-        }
-
-        #darkmode-switch .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        #darkmode-switch .slider {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #f1c40f;
-            border-radius: 40px;
-            transition: background-color 0.4s;
-        }
-
-        #darkmode-switch .slider::before {
-            content: "☀️";
-            position: absolute;
-            width: 32px;
-            height: 32px;
-            left: 4px;
-            top: 4px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            transition: transform 0.4s, content 0.4s, background-color 0.4s;
-        }
-
-        #darkmode-switch input:checked + .slider {
-            background-color: #06080a;
-        }
-
-        #darkmode-switch input:checked + .slider::before {
-            content: "🌙";
-            transform: translateX(40px);
-            background-color: #444;
-        }
     </style>
 </head>
 
@@ -117,9 +67,10 @@
 
 <footer>
     <p id="innerWidth"></p>
+    <p><a href="{% url 'aktionenTable' %}">Alle Aktionen</a></p>
+    <p><a href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a></p>
     <p><a href="{% static 'rechtliches/impressum.pdf' %}" download>Impressum</a></p>
     <p><a href="{% static 'rechtliches/datenschutz.pdf' %}" download>Datenschutz</a></p>
-    <p>&copy; 2025 Verbrauch Dokumentation</p>
 </footer>
 
 <button id="up-btn" title="Nach oben">↑</button>
@@ -142,14 +93,6 @@
                         <ul>
                             <li><a href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a></li>
                             <li><a id="translate_btn">Translate</a></li>
-                            <li>
-                                <div id="darkmode-switch">
-                                    <label class="switch">
-                                        <input id="darkmode-switch-checkbox" type="checkbox">
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
-                            </li>
                         </ul>
                     </details>
                     <hr>
@@ -258,14 +201,6 @@
                     <div class="dropdown-content">
                         <a href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a>
                         <a id="translate_btn">Übersetzen</a>
-                        <a id="darkmode-btn">
-                            <div id="darkmode-switch">
-                                <label class="switch">
-                                    <input id="darkmode-switch-checkbox" type="checkbox">
-                                    <span class="slider"></span>
-                                </label>
-                            </div>    
-                        </a>
                     </div>
                 </div>
 
@@ -280,7 +215,6 @@
                         <a href="{% url 'logout_view' %}">Logout</a>
                         {% if user.is_staff %}
                         <a href="/ClimateQuestAdmin/" target="_blank">Admin-Bereich (I)</a>
-                        <!--Achtung: Hier wird nicht name, sondern die URL verwendet! Bei Änderung der URL muss dieser Link angepasst werden.-->
                         <a href="{% url 'admin_view' %}">Admin-Bereich (II)</a>
                         {% endif %}
                     </div>
@@ -366,112 +300,11 @@
     // Initial rendering
     if (window.innerWidth < 1200) {
         renderMobileNav();
-        /*document.querySelectorAll('*').forEach(el => {
-  const style = window.getComputedStyle(el);
-  const fontSize = style.fontSize;
-
-  // Extrahiere Zahl und Einheit (z. B. "16px" → 16 und "px")
-  const match = fontSize.match(/^([\d.]+)([a-z%]+)$/);
-  if (match) {
-    const value = parseFloat(match[1]);
-    const unit = match[2];
-    const newSize = value * 1.3;
-
-    el.style.fontSize = `${newSize}${unit}`;
-  }
-});
-        console.log("increased font Size")*/
     } else {
         renderDesktopNav();
     }
 
-    document.getElementById('innerWidth').textContent = window.innerWidth;
-</script>
-
-<!-- DarkMode -->
-<script>
-    // 🎨 Farbdefinitionen
-    const darkmodeColors = {
-        '--color-bg': '#222831',
-        '--color-bg-light': '#393e46',
-        '--color-bg-dark': '#23272f',
-        '--color-text': '#f4f6f8',
-        '--color-text-light': '#eeeeee',
-        '--color-primary': '#00adb5',
-        '--color-primary-hover': '#00939c',
-        '--color-primary-light': '#393e46',
-        '--color-accent': '#ff00a2',
-        '--color-white': '#222831',
-        '--color-header-bg': '#23272f',
-        '--color-header-text': '#eeeeee',
-        '--color-muted': '#888',
-        '--color-error': '#e74c3c',
-        '--color-success': '#2ecc71',
-        '--color-shadow-light': 'rgba(0,0,0,0.18)',
-        '--color-shadow-hover': 'rgba(0,0,0,0.28)',
-        '--color-green-dark': '#176d3b',
-        '--color-blue-dark': '#00adb5',
-        '--color-border': '#444',
-        '--color-border-green': '#393e46',
-        '--color-notification': '#ff5722'
-    };
-
-    const lightmodeColors = {
-        '--color-bg': '#f4f6f8',
-        '--color-bg-light': '#f7fafd',
-        '--color-bg-dark': '#e0f7e9',
-        '--color-text': '#333',
-        '--color-text-light': '#ecf0f1',
-        '--color-primary': '#3498db',
-        '--color-primary-hover': '#2980b9',
-        '--color-primary-light': '#e3f0fa',
-        '--color-accent': '#ff00a2',
-        '--color-white': '#ffffff',
-        '--color-header-bg': '#2c3e50',
-        '--color-header-text': '#ecf0f1',
-        '--color-muted': '#888',
-        '--color-error': '#e74c3c',
-        '--color-success': '#2ecc71',
-        '--color-shadow-light': 'rgba(0, 0, 0, 0.06)',
-        '--color-shadow-hover': 'rgba(0, 0, 0, 0.1)',
-        '--radius-lg': '12px',
-        '--shadow-md': '0 2px 10px rgba(0, 0, 0, 0.06)',
-        '--color-green-dark': '#176d3b',
-        '--color-blue-dark': '#34495e',
-        '--color-border': '#ccc',
-        '--color-border-green': '#b2dfdb',
-        '--color-notification': 'red',
-        '--color-counters': '#3a6b4f',
-        '--color-counters-bg': '#f5f9f6'
-    };
-
-
-    // 🎛️ Farben anwenden
-    function setColors(colors) {
-        const root = document.documentElement;
-        Object.entries(colors).forEach(([key, value]) => {
-            root.style.setProperty(key, value);
-        });
-    }
-
-    // 🌙 Initialisierung beim Laden
-    window.addEventListener('DOMContentLoaded', () => {
-        const checkbox = document.getElementById('darkmode-switch-checkbox');
-        const darkmodeEnabled = localStorage.getItem('darkmodeEnabled') === 'true';
-
-        if (checkbox) {
-            checkbox.checked = darkmodeEnabled;
-            setColors(darkmodeEnabled ? darkmodeColors : lightmodeColors);
-
-            checkbox.addEventListener('change', () => {
-                const isDark = checkbox.checked;
-                setColors(isDark ? darkmodeColors : lightmodeColors);
-                localStorage.setItem('darkmodeEnabled', isDark.toString());
-            });
-        } else {
-            console.warn('⚠️ Darkmode-Switch-Checkbox nicht gefunden!');
-        }
-    });
+    document.getElementById('innerWidth').textContent = "innerWidth: " + window.innerWidth;
 </script>
 
 

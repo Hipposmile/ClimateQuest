@@ -12,5 +12,5 @@ urlpatterns = [
     path('reset_password/', reset_password, name='reset_password'),
     path('check-username/', check_username, name='check_username'),
     path('check-email/', check_email, name='check_email'),
-    path('get_email_settings/', get_email_settings, name='get_email_settings')
+    path('get_email_settings/', get_email_settings, name='get_email_settings'),
 ]

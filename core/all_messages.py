@@ -1,108 +1,107 @@
 from django.utils.safestring import mark_safe
 
 all_messages = {
-    # community/views.py
-    "community_exists": "Community mit diesem Namen existiert bereits",
-    "invalid_family_credentials": "Family-Anmeldedaten ungültig",
-    "community_created": "Community erfolgreich erstellt",
-    "family_already_in_community": "Family ist bereits Teil der Community",
-    "community_joined": "Deine Family {family} ist der Commnity {community} beigetreten",
-    "invalid_community_credentials": "Community-Anmeldedaten ungültig",
-    "community_id_missing": "Community ID wurde nicht übergeben",
-    "community_not_found": "Community wurde nicht gefunden",
-    "family_id_missing": "Family ID wurde nicht übergeben.",
-    "family_not_found": "Family wurde nicht gefunden",
-    "not_member_of_family": "Du bist nicht Mitglied der eingeloggten Family.",
-    "invalid_date_range": "Startdatum muss vor Enddatum liegen",
-    "date_in_future": "Datum darf nicht in der Zukunft liegen",
-    "invalid_date": "Ungültiges Datum",
-    "invalid_time_period": "Ungültiger Zeitraum",
-    "community_id_not_provided": "Community ID nicht übergeben",
-    "community_does_not_exist": "Community existiert nicht",
-    "admin_password_or_name_missing": "Passwort oder Communityname fehlt.",
-    "invalid_admin_password": "Passwort ungültig",
-    "community_name_changed": "Communityname erfolgreich geändert.",
-    "password_missing": "Passwort fehlt.",
-    "community_password_changed": "Passwort erfolgreich geändert.",
-    "current_admin_password_missing": "Ein Passwort fehlt.",
-    "current_admin_password_invalid": "Aktuelles Admin-Passwort ungültig.",
-    "admin_password_changed": "Passwort erfolgreich geändert.",
-    "remove_admin_password_or_family_missing": "Admin-Passwort oder Familyname fehlend.",
-    "remove_admin_password_invalid": "Admin-Passwort ungültig.",
-    "family_removed": "Family erfolgreich entfernt.",
-    "family_left_community": "Deine Family hat die Community erfolgreich verlassen.",
-    "delete_admin_password_missing": "Admin-Passwort fehlt.",
-    "delete_admin_password_invalid": "Passwort ungültig",
-    "community_deleted": "Community erfolgreich gelöscht",
-    "community_not_found_alt": "Community nicht gefunden",
-    "family_id_not_provided": "Family ID wurde nicht übergeben.",
-    "family_not_found_alt": "Family wurde nicht gefunden",
-    "not_member_of_family_alt": "Du bist nicht Mitglied der eingeloggten Family.",
-    "no_messages_found": "Keine Nachrichten gefunden",
+    # --------
+    #Allgemein
+    # --------
 
-    # family/views.py
-    "family_exists": "Family mit diesem Namen existiert bereits",
-    "family_name_forbidden": "Du darfst \"worldwide ranking\" nicht als Family verwenden",
-    "family_created": "Family erfolgreich erstellt",
-    "invalid_login_data": "Ungültige Anmeldedaten.",
-    "joined_family": "Du bist der Family {family.name} beigetreten.",
-    "joined_family_success": "Du bist der Family {family.name} beigetreten.",
-    "missing_family_id": "Family ID wurde nicht übergeben",
-    "family_not_found_2": "Family wurde nicht gefunden",
-    "invalid_date_range_2": "Das Startdatum muss vor dem Endatum liegen",
-    "date_in_future_2": "Das Datum darf nicht in der Zukunft liegen",
-    "invalid_date_2": "Ungültiges Datum",
-    "invalid_time_period_2": "Ungültiger Zeitraum",
-    "not_part_of_family": "Du bist nicht Teil der Family {family.name}.",
-    "family_name_or_password_missing": "Passwort oder Familyname fehlt",
-    "invalid_family_admin_password": "Passwort ungültig",
-    "family_name_changed": "Familyname erfolgreich geändert",
-    "admin_password_missing": "Passwort fehlt",
-    "family_password_changed": "Passwort erfolgreich geändert",
-    "current_admin_password_missing_2": "Altes oder neues Admin-Passwort fehlt",
-    "current_admin_password_invalid_2": "Aktuelles Admin-Passwort ungültig",
-    "admin_password_changed_2": "Admin-Passwort erfolgreich geändert",
-    "remove_admin_password_or_username_missing": "Admin-Passwort oder Username fehlend",
-    "remove_admin_password_invalid": "Admin-Passwort ungültig",
-    "user_removed": "User erfolgreich entfernt",
-    "family_left": "Family erfolgreich verlassen",
-    "admin_password_invalid_for_chat": "Admin-Passwort ungültig",
-    "chat_enabled": "Chat für die Family aktiviert",
-    "chat_disabled": "Chat für die Family deaktiviert",
-    "delete_admin_password_missing_2": "Passwort fehlt",
-    "delete_admin_password_invalid_2": "Passwort",
-    "family_deleted": "Family erfolgreich gelöscht",
-    "chat_disabled_for_family": "Der Chat für diese Family ist deaktiviert",
-    "chat_not_enabled_for_worldwide": "Die Chatfunktion bei \"worldwide ranking\" ist nicht freigeschaltet",
-
-    # home/views.py
-    "not_allowed_admin": "Du darfst nicht auf die Admin-Seiten zugreifen",
-    "fill_all_required_fields": "Bitte fülle alle Pflichtfelder aus",
-    "user_not_exist": "User existiert nicht",
-    "family_not_exist": "Family existiert nicht",
-    "community_not_exist": "Community existiert nicht",
-    "invalid_receiver_type": "ungültiger Receiver-Typ",
-    "worldwide_ranking_exists": "Family \"worldwide ranking\" existiert und ist korrekt konfiguriert",
-    "worldwide_ranking_wrong_password": "Family \"worldwide ranking\" existiert, aber die Passwörter sind inkorrekt",
-    "worldwide_ranking_created": "Family \"worldwide ranking\" wurde erstellt und alle User hinzugefügt",
+    "not_authorized_to_visit": "Du hast nicht die Berechtigung, diese Seite zu besuchen.",
+    "missing_required_inputs": "Es fehlen Pflichfelder",
+    "invalid_admin_password": "Ungültiges Admin-Passwort",
     "invalid_action": "Ungültige Aktion",
     "notification_deleted": "Benachrichtigung erfolgreich gelöscht",
     "delete_notification_error": "interner Fehler: Benachrichtigung bereits gelöscht",
     "internal_error": "interner Fehler. Probieren Sie es später erneut",
+    "no_admin_auth": "Du darfst nicht auf die Admin-Funktionen zugreifen",
+    "user_not_exist": "User existiert nicht",
+    "not_is_truth": "Du musst bestätigen, dass alle Angaben der Wahrheit entsprechen",
 
-    # personals/views.py
+    #Zeitraum
+    "invalid_date_range": "Startdatum muss vor Enddatum liegen",
+    "date_in_future": "Datum darf nicht in der Zukunft liegen",
+    "date_in_past": "Datum darf nicht in der Vergangenheit liegen",
+    "invalid_date": "Ungültiges Datum",
+    "invalid_time_period": "Ungültiger Zeitraum",
+
+    #--------
+    #Community
+    #--------
+
+    #Create
+    "community_exists": "Community mit diesem Namen existiert bereits",
+    "community__invalid_family_credentials": "Family-Anmeldedaten ungültig",
+    "community_created": "Community erfolgreich erstellt",
+    "family_already_in_community": "Family ist bereits Teil der Community",
+
+    #Join
+    "community_joined": "Deine Family {family} ist der Commnity {community} beigetreten",
+    "invalid_community_credentials": "Community-Anmeldedaten ungültig",
+
+    #Login
+    "community_id_missing": "Community ID wurde nicht übergeben",
+    "community_not_found": "Community wurde nicht gefunden",
+    "community__family_id_missing": "Family ID wurde nicht übergeben.",
+    "community__family_not_found": "Family wurde nicht gefunden",
+    "community__not_member_of_family": "Du bist nicht Mitglied der eingeloggten Family.",
+
+    #Edit
+    "community_name_changed": "Communityname erfolgreich geändert.",
+    "community_password_changed": "Passwort erfolgreich geändert.",
+    "community_admin_password_changed": "Admin-Passwort erfolgreich geändert.",
+    "community__family_removed": "Family erfolgreich entfernt.",
+    "family_left_community": "Deine Family hat die Community erfolgreich verlassen.",
+    "community_deleted": "Community erfolgreich gelöscht",
+
+    # --------
+    #Family
+    # --------
+
+    #Create
+    "family_exists": "Family mit diesem Namen existiert bereits",
+    "family_name_forbidden": "Du darfst \"worldwide ranking\" nicht als Family verwenden",
+    "family_created": "Family erfolgreich erstellt",
+
+    #Join
+    "invalid_family_credentials": "Ungültige Family-Anmeldedaten.",
+    "family_joined": "Du bist der Family {family.name} beigetreten.",
+    "family_already_joined": "Du bist der Family {family.name} bereits beigetreten.",
+
+    #Login
+    "family_id_missing": "Family ID wurde nicht übergeben",
+    "family_not_found": "Family wurde nicht gefunden",
+    "not_part_of_family": "Du bist nicht Teil der Family {family.name}.",
+
+    #Edit
+    "family_name_changed": "Familyname erfolgreich geändert",
+    "family_password_changed": "Passwort erfolgreich geändert",
+    "family_admin_password_changed": "Admin-Passwort erfolgreich geändert",
+    "family_user_removed": "User erfolgreich entfernt",
+    "family_left": "Family erfolgreich verlassen",
+    "family_chat_enabled": "Chat für die Family aktiviert",
+    "family_chat_disabled": "Chat für die Family deaktiviert",
+    "family_deleted": "Family erfolgreich gelöscht",
+
+    #Allgemein
+    "chat_disabled_for_family": "Der Chat für diese Family ist deaktiviert",
+    "chat_not_enabled_for_worldwide_ranking": "Die Chatfunktion bei \"worldwide ranking\" ist nicht freigeschaltet",
+
+    # --------
+    #Personals
+    # --------
+
+    #Login
     "successfully_signed_up": "Erfolgreich registriert",
     "robot": "Es besteht die Gefahr, dass Sie ein Roboter sind. Bitte versuchen Sie es erneut.",
-    "invalid_login_data_2": mark_safe("Ungültige Anmeldedaten.  Überprüfen Sie diese und vergewissern Sie sich, dass sie bereits Ihre <a href='/personals/verify-email'>E-Mail-Adresse verifiziert haben</a>."), # Wichtig: Bei Änderungen in urls auch dies ändern, da der Link sonst veraltet ist
-    "username_taken": "Benutzername bereits vergeben",
+    "invalid_login_data": mark_safe("Ungültige Anmeldedaten.  Überprüfen Sie diese und vergewissern Sie sich, dass sie bereits Ihre <a href='/personals/verify-email'>E-Mail-Adresse verifiziert haben</a>."),
+    "username_not_available": "Benutzername bereits vergeben",
     "invalid_email": "E-Mail-Adresse ungültig",
-    "email_taken": "E-Mail-Adresse bereits vergeben",
-    "email_verified": "E-Mail-Adresse erfolgreich verifiziert",
-    "password_wrong": "Passwort ist falsch",
-    "username_taken_2": "Benutzername bereits vergeben",
+    "email_not_available": "E-Mail-Adresse bereits vergeben",
+    "nutungsbedingungen_not_accepted": "Du musst die Nutzungsbedingungen akzeptieren",
+
+    #Edit
+    "invalid_password": "Passwort ist falsch",
     "username_belongs_to_you": "Benutzername gehört bereits dir",
     "username_changed": "Benutzername erfolgreich geändert",
-    "current_password_wrong": "Aktuelles Passwort ist falsch",
     "password_changed": "Passwort erfolgreich geändert",
     "email_changed": "E-Mail-Adresse erfolgreich geändert",
     "mailinglist_enabled": "E-Mail Benachrichtigungen aktiviert",
@@ -111,33 +110,36 @@ all_messages = {
     "email_not_found": "E-Mail-Adresse nicht vorhanden",
     "password_reset_mail_sent": "Wir haben Ihnen eine Nachricht mit Ihrem Benutzernamen und einem neuen, zufällig generiertem Passwort geschickt. Melden Sie sich damit an und ändern Sie aus Sicherheitsgründen möglicht bald Ihr Passwort unter \"Profil bearbeiten\".",
     "password_reset_error": "Ein Fehler ist beim Zurücksetzen des Passwortes aufgetreten",
+    "successfully_changed_email": "E-Mail-Adresse erfolgreich geändert. Ein Verifizierungscode wurde an diese Adresse gesendet.",
+
     "no_email_adress_at_verify": "Du hast keine E-Mail-Adresse angegeben und musst daher nichts verifizieren",
     "no_verification_code": "interner Fehler: Dir wurde kein Verifizierungscode zugesendet.",
     "user_is_active_at_verify": "Du bist bereits verifiziert. Logge dich direkt ein.",
     "successfully_sent_email": "E-Mail erfolgreich gesendet",
-    "successfully_changed_email": "E-Mail-Adresse erfolgreich geändert. Ein Verifizierungscode wurde an diese Adresse gesendet.",
+    "email_verified": "E-Mail-Adresse erfolgreich verifiziert",
+    "verification_code_expired": "Verifizierungscode ist abgelaufen",
+    "verification_code_invalid": "Verifizierungscode ungütlig",
+
+    # --------
+    #Aktion
+    # --------
 
     "select_action_type": "Wähle einen Aktionstyp aus",
-    "enter_date": "Gib ein Datum ein",
-    "invalid_date_3": "Ungültiges Datum",
-    "date_in_future_3": "Das Datum darf nicht in der Zukunft liegen",
     "enter_quantity": "Gib eine Menge an",
     "invalid_quantity": "Ungültige Menge",
     "quantity_positive": "Die Menge muss positiv sein",
     "invalid_action_type": "Ungültiger Aktionstyp",
     "action_added": "Aktion erfolgreich hinzugefügt",
-    "action_id_missing": "Action_Id wurde nicht übergeben.",
-    "action_not_exist": "Aktion existiert nicht.",
-    "select_action_type_2": "Bitte wähle einen Aktionstyp aus.",
-    "enter_date_2": "Bitte gib ein Datum ein.",
-    "invalid_date_4": "Ungültiges Datum.",
-    "date_in_future_4": "Das Datum darf nicht in der Zukunft liegen.",
-    "enter_quantity_2": "Bitte gib eine Menge ein.",
-    "invalid_quantity_2": "Ungültige Menge.",
-    "quantity_positive_2": "Die Menge muss positiv sein",
-    "invalid_action_type_2": "Ungültiger Aktionstyp",
+    "action_name_missing": "Name der Aktion wurde nicht übergeben.",
+    "action_id_missing": "ID der Aktion wurde nicht übergeben.",
+    "action_not_found": "Aktion existiert nicht.",
     "action_edited": "Aktion erfolgreich bearbeitet",
     "action_deleted": "Aktion erfolgreich gelöscht",
+    "action_invalid_quantity": "Ungültige Menge",
+
+    # --------
+    #Event
+    # --------
 
     "date_must_be_tomorrow": "Das Datum muss mindestens einen Tag in der Zukunft liegen.",
     "successfully_created_event": "Event erfolgreich erstellt",
@@ -146,26 +148,47 @@ all_messages = {
     "event_not_existing": "Event existiert nicht",
     "left_event": "Erfolgreich aus Event ausgetreten",
     "joined_event": "Dem Event erfolgreich beigetreten",
-    "user_is_creator": "Du bist der Creator dieses Events und kannst daher nicht noch Teilnehmer werden.",
-    "no_right_to_edit": "Du hast keine Berechtigungen, dieses Event zu bearbeiten",
+    "event__user_is_creator": "Du bist der Creator dieses Events und kannst daher nicht noch Teilnehmer werden.",
+    "event__no_right_to_edit": "Du hast keine Berechtigungen, dieses Event zu bearbeiten",
     "successfully_asked_question": "Frage erfolgreich gestellt.",
     "successfully_answered_question": "Frage erfolgreich beantwortet.",
-
-    "successfully_created_artikel": "artikel erfolgreich erstellt",
-    "successfully_edited_artikel": "artikel erfolgreich bearbeitet",
-    "successfully_deleted_artikel": "artikel erfolgreich gelöscht",
-    "artikel_not_existing": "artikel existiert nicht",
-    "left_artikel": "Erfolgreich aus artikel ausgetreten",
-    "joined_artikel": "Dem artikel erfolgreich beigetreten",
-    "user_is_creator": "Du bist der Creator dieses artikels und kannst daher nicht noch Teilnehmer werden.",
-    "no_right_to_edit": "Du hast keine Berechtigungen, dieses artikel zu bearbeiten",
-    "successfully_asked_comment": "Frage erfolgreich gestellt.",
-    "successfully_answered_comment": "Frage erfolgreich beantwortet.",
     "teilnehmeranzahl_search_keyword_not_a_number": "Wenn du nach der Teilnehmeranzahl filterst, muss das Suchwort eine Zahl sein",
 
-    "not_authorized": "Nicht autorisiert",
+    # --------
+    #Artikel
+    # --------
+
+    "successfully_created_artikel": "Artikel erfolgreich erstellt",
+    "successfully_edited_artikel": "Artikel erfolgreich bearbeitet",
+    "successfully_deleted_artikel": "artikel erfolgreich gelöscht",
+    "artikel_not_existing": "Artikel existiert nicht",
+    "left_artikel": "Erfolgreich aus artikel ausgetreten",
+    "joined_artikel": "Dem artikel erfolgreich beigetreten",
+    "artikel__user_is_creator": "Du bist der Creator dieses artikels und kannst daher nicht noch Teilnehmer werden.",
+    "artikel__no_right_to_edit": "Du hast keine Berechtigungen, dieses artikel zu bearbeiten",
+    "successfully_asked_comment": "Kommentar erfolgreich gestellt.",
+    "successfully_answered_comment": "Kommentar erfolgreich beantwortet.",
+
+    # --------
+    #Forum
+    # --------
 
     "post_not_found": "Post nicht gefunden",
 
-    "added_everyone_user_erweitert": "Jedem User wurde ein UserErweitert hinzugefügt, sofern noch nicht vorhanden"
+    # --------
+    #Users
+    # --------
+    "user_not_found": "User nicht gefunden",
+
+    # --------
+    #Admin
+    # --------
+    "admin__user_not_found": "User wurde nicht gefunden",
+    "admin__family_not_found": "Family wurde nicht gefunden",
+    "admin__community_not_found": "Community wurde nicht gefunden",
+    "admin__invalid_receiver_type": "Ungültiger Empfänger-Typ der Nachricht",
+
+    "worldwide_ranking_valid_passwords": "Die Passwörter der Family worldwide_ranking sind aktuell.",
+    "worldwide_ranking_invalid_password": "Die Passwörter der Family worldwide-Ranking waren ungültig und entsprechend der gespeicherten Passwörter geändert.",
+    "added_everyone_user_erweitert": "Jedem User wurde ein UserErweitert hinzugefügt, sofern noch nicht vorhanden",
 }

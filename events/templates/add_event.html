@@ -3,86 +3,91 @@
 {% block title %}Event hinzufügen{% endblock %}
 
 {% block content %}
-<h1>Event hinzufügen</h1>
-{% if messages %}
-{% for message in messages %}
-<p class="{{message.level_tag}}-message">{{ message }}</p>
-{% endfor %}
-{% endif %}
-<form method="post" onsubmit="fillEditor(event)">
-    {% csrf_token %}
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" placeholder="Name" required>
+    <h1>Event hinzufügen</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <form method="post" onsubmit="fillEditor(event)">
+        {% csrf_token %}
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Name" required>
 
-    <label for="description_editor">Beschreibung</label>
-    <div id="description_editor" class="quill-editor"></div>
-    <input type="hidden" name="description">
+        <label for="description_editor">Beschreibung</label>
+        <div id="description_editor" class="quill-editor"></div>
+        <input type="hidden" name="description">
 
-    <label for="date_time">Datum und Uhrzeit (Beginn)</label>
-    <input type="datetime-local" id="date_time" name="date_time" required>
+        <label for="date_time">Datum und Uhrzeit (Beginn)</label>
+        <input type="datetime-local" id="date_time" name="date_time" required>
 
-    <label for="duration">geschätze Dauer in Minuten</label>
-    <input type="number" min="0" id="duration" name="duration" placeholder="Dauer" required>
+        <label for="duration">geschätze Dauer in Minuten</label>
+        <input type="number" min="0" id="duration" name="duration" placeholder="Dauer" required>
 
-    <label for="adress">Adresse</label>
-    <input type="text" id="adress" name="adress" placeholder="Adresse" required>
+        <label for="adress">Adresse</label>
+        <input type="text" id="adress" name="adress" placeholder="Adresse" required>
 
-    <button type="submit">Hinzufügen</button>
-</form>
+        <label class="custom-checkbox">
+            <input type="checkbox" name="is_truth">
+            <span class="checkmark"></span>
+            <span class="label-text">Ich bestätige, dass alle Angaben der Wahrheit entsprechen und mit den <a href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmen. Außerdem verpflichte ich mich, bei dem Event selbst teilzunehmen.</span>
+        </label>
 
-<!-- Quill CSS -->
-<div class="cookie-blocked" data-requires="quill"
-    data-content='<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />'>
-</div>
+        <button type="submit">Hinzufügen</button>
+    </form>
 
-<script>
-    let quill;
-    document.addEventListener('DOMContentLoaded', function () {
-        let editor = document.getElementById('description_editor')
-        if (getCookiePreferences().quill) {
-            const script = document.createElement("script");
-            script.src = "https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js";
-            document.body.appendChild(script);
-            script.onload = function () {
-                if (editor) {
-                    quill = new Quill(editor, {
-                        theme: 'snow',
-                        modules: {
-                            toolbar: [
-                                [{ header: [1, 2, false] }],
-                                ['bold', 'italic', 'underline'],
-                                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                                ['link']
-                            ]
-                        }
-                    });
-                } else 
-                {
-                    console.warn("Editor not found");
+    <!-- Quill CSS -->
+    <div class="cookie-blocked" data-requires="quill"
+         data-content='<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />'>
+    </div>
+
+    <script>
+        let quill;
+        document.addEventListener('DOMContentLoaded', function () {
+            let editor = document.getElementById('description_editor')
+            if (getCookiePreferences().quill) {
+                const script = document.createElement("script");
+                script.src = "https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js";
+                document.body.appendChild(script);
+                script.onload = function () {
+                    if (editor) {
+                        quill = new Quill(editor, {
+                            theme: 'snow',
+                            modules: {
+                                toolbar: [
+                                    [{header: [1, 2, false]}],
+                                    ['bold', 'italic', 'underline'],
+                                    [{'list': 'ordered'}, {'list': 'bullet'}],
+                                    ['link']
+                                ]
+                            }
+                        });
+                    } else {
+                        console.warn("Editor not found");
+                    }
+                }
+            } else {
+                editor.innerHTML = `<textarea placeholder="Beschreibung"></textarea>`;
+            }
+        });
+
+
+        // Beim Absenden des Formulars
+        function fillEditor(event) {
+            if (getCookiePreferences().quill) {
+                const form = event.target;
+                event.preventDefault();
+                try {
+                    var html = quill.root.innerHTML;
+                    console.log(html)
+                    form.querySelector('input[name=description]').value = html;
+                    form.submit();
+                } catch {
+                    console.error("Variable Quill not found");
+                    alert("Ein interner Fehler ist aufgetreten. Probieren Sie es später bitte erneut!");
+                    return false;
                 }
             }
-        } else {
-            editor.innerHTML = `<textarea placeholder="Beschreibung"></textarea>`;
         }
-    });
-
-
-    // Beim Absenden des Formulars
-    function fillEditor(event) {
-        if (getCookiePreferences().quill) {
-            const form = event.target;
-            event.preventDefault();
-            try {
-                var html = quill.root.innerHTML;
-                console.log(html)
-                form.querySelector('input[name=description]').value = html;
-                form.submit();
-            } catch {
-                console.error("Variable Quill not found");
-                alert("Ein interner Fehler ist aufgetreten. Probieren Sie es später bitte erneut!");
-                return false;
-            }
-        }
-    }
-</script>
+    </script>
 {% endblock %}
