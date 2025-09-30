@@ -29,7 +29,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "")
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'umweltseite.com'
+    'umweltseite.com',
+    '152.53.190.210'
 ]
 
 LOGIN_URL = '/personals/login/'
