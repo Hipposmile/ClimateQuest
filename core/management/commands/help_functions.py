@@ -5,7 +5,6 @@ from faker import Faker
 import random
 from django.utils import timezone
 from datetime import timedelta
-from ClimateQuest.passwords import passwords
 from dotenv import load_dotenv
 import os
 load_dotenv()

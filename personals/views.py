@@ -18,7 +18,6 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-from ClimateQuest.passwords import passwords
 
 from .models import *
 from utils.functions import *
