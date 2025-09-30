@@ -33,11 +33,6 @@ urlpatterns = [
     path('forum/', include('forum.urls')),
 ]
 
-#if settings.DEBUG:
-#    urlpatterns += [
-#        path('__debug__/', include(debug_toolbar.urls)),
-#    ]
-
 handler400 = 'core.views.custom_400'
 handler403 = 'core.views.custom_403'
 handler404 = 'core.views.custom_404'

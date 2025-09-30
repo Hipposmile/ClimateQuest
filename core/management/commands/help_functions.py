@@ -6,7 +6,9 @@ import random
 from django.utils import timezone
 from datetime import timedelta
 from ClimateQuest.passwords import passwords
-
+from dotenv import load_dotenv
+import os
+load_dotenv()
 from verbrauch.models import AktionenListe
 from personals.models import Level
 import subprocess
@@ -229,9 +231,9 @@ aktionen_mapping = {
 superuser_username = "admin"
 worldwide_ranking_name = "worldwide ranking"
 
-superuser_password = passwords["superuser_password"]
-worldwide_ranking_password = passwords["worldwide_ranking_password"]
-worldwide_ranking_admin_password = passwords["worldwide_ranking_admin_password"]
+superuser_password = os.environ.get("SUPERUSER_PASSWORD", "")
+worldwide_ranking_password = os.environ.get("WORLDWIDE_RANKING_PASSWORD", "")
+worldwide_ranking_admin_password = os.environ.get("WORLDWIDE_RANKING_ADMIN_PASSWORD", "")
 
 
 class Command(BaseCommand):

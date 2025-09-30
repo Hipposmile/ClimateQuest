@@ -12,8 +12,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
-
+from dotenv import load_dotenv
 from .passwords import *
+
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-xn1bs&mroh!s0bsc$nvm9ob&fhr%_s2k-v9o7xra-we8(k4*3p'
+SECRET_KEY = os.environ.get("SECRET_KEY", "")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -47,12 +49,12 @@ STATICFILES_DIRS = [
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = passwords["email_server"]
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "")
 EMAIL_PORT = 465
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
-EMAIL_HOST_USER = passwords["email_adress"]
-EMAIL_HOST_PASSWORD = passwords['email_host_password']
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
@@ -112,8 +114,12 @@ WSGI_APPLICATION = 'ClimateQuest.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'climatequest',
+        'USER': 'climatequestuser',
+        'PASSWORD': os.environ.get("DB_PASSWORD", ""),
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -167,5 +173,5 @@ INTERNAL_IPS = [
 
 NOCAPTCHA = True
 
-RECAPTCHA_PUBLIC_KEY = passwords['recaptcha_site_key']
-RECAPTCHA_PRIVATE_KEY = passwords['recaptcha_private_key']
+RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUBLIC_KEY", "")
+RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY", "")

@@ -16,7 +16,11 @@ from django.core.management import call_command
 from django.contrib.auth.models import User
 from .models import *
 from utils.functions import *
-from ClimateQuest.passwords import passwords
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from core.all_messages import all_messages
 
 from datetime import datetime, timedelta, date
@@ -82,21 +86,21 @@ def admin(request):
         elif 'check_worldwide_ranking' in request.POST:
             try:
                 worldwide_ranking = Family.objects.get(name='worldwide ranking', chat=False)
-                if check_password(passwords['worldwide_ranking_password'], worldwide_ranking.password) and check_password(passwords['worldwide_ranking_admin_password'], worldwide_ranking.admin_password):
+                if check_password(os.environ.get("WORLDWIDE_RANKING_PASSWORD", ""), worldwide_ranking.password) and check_password(os.environ.get("WORLDWIDE_RANKING_ADMIN_PASSWORD", ""), worldwide_ranking.admin_password):
                     messages.success(request, all_messages["worldwide_ranking_valid"])
                 else:
-                    worldwide_ranking_password = passwords['worldwide_ranking_password']
+                    worldwide_ranking_password = os.environ.get("WORLDWIDE_RANKING_PASSWORD", "")
                     worldwide_ranking.password = worldwide_ranking_password
 
-                    worldwide_ranking_admin_password = passwords['worldwide_ranking_admin_password']
+                    worldwide_ranking_admin_password = os.environ.get("WORLDWIDE_RANKING_ADMIN_PASSWORD", "")
                     worldwide_ranking.admin_password = worldwide_ranking_admin_password
 
                     messages.error(request, all_messages["worldwide_ranking_invalid_passwords"])
             except Family.DoesNotExist:
                 worldwide_ranking = Family.objects.create(
                     name='worldwide ranking',
-                    password=passwords['worldwide_ranking_password'],
-                    admin_password=passwords['worldwide_ranking_admin_password'],
+                    password=os.environ.get("WORLDWIDE_RANKING_PASSWORD", ""),
+                    admin_password=os.environ.get("WORLDWIDE_RANKING_PASSWORD", ""),
                     chat=False
                 )
                 for user in User.objects.all():

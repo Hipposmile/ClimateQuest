@@ -14,6 +14,10 @@ from django.core.exceptions import ValidationError
 from core.all_messages import all_messages
 import requests
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 from ClimateQuest.passwords import passwords
 
 from .models import *
@@ -54,7 +58,7 @@ def register_view(request):
         if not recaptcha_token:
             messages.error(request, "reCAPTCHA-Token fehlt. Bitte versuche es erneut.")
             return redirect('register_view')
-        recaptcha_secret = passwords['recaptcha_secret_key']
+        recaptcha_secret = os.environ.get("RECAPTCHA_PRIVATE_KEY", "")
 
         response = requests.post(
             'https://www.google.com/recaptcha/api/siteverify',
