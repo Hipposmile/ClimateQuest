@@ -198,7 +198,7 @@ document.head.appendChild(styleCookie);
 const banner = document.createElement('div');
 banner.innerHTML = `<div id="cookie-overlay"></div>
   <div id="cookie-banner">
-    <p><strong>Wir verwenden Cookies</strong> für Funktion, Analyse und Marketing. <a href="{% static 'rechtliches/datenschutz.pdf' %}" target="_blank">Mehr erfahren</a>.</p>
+    <p><strong>Wir verwenden Cookies</strong> für Funktion, Analyse und Marketing. <a href="{% static 'rechtliches/Datenschutz.pdf' %}" target="_blank">Mehr erfahren</a>.</p>
     <p><strong>Nach Änderung der Cookie-Einstellungen Seite bitte neu laden!</strong></p>
     <div class="buttons">
       <button id="btn-accept">Alle akzeptieren</button>
