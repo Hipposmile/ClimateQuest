@@ -121,6 +121,7 @@ def register_view(request):
             fail_silently=False,
             verificationCodeSaved=verificationCodeSaved,
             mailinglist_needless=True,
+            user=user,
             fehlermeldung='Fehler beim E-Mail-Versand. Probieren Sie die Registrierung ohne E-Mail und fügen Sie Ihre E-Mail-Adresse später in den Einstellungen hinzu.'
         )
 
@@ -228,6 +229,7 @@ def verifyEmail(request):
                     recipient_list=[f'{user.email}'],
                     fail_silently=False,
                     mailinglist_needless=True,
+                    user=user,
                     fehlermeldung='Fehler beim E-Mail-Versand. Probieren Sie die Registrierung ohne E-Mail und fügen Sie Ihre E-Mail-Adresse später in den Einstellungen hinzu.'
                 )
                 if not mail_output:
@@ -288,6 +290,7 @@ def verifyEmail(request):
                     recipient_list=[f'{user.email}'],
                     fail_silently=False,
                     mailinglist_needless=True,
+                    user=user,
                     fehlermeldung='Fehler beim E-Mail-Versand. Probieren Sie die Registrierung ohne E-Mail und fügen Sie Ihre E-Mail-Adresse später in den Einstellungen hinzu.'
                 )
                 if not mail_output:

@@ -31,7 +31,7 @@
         if (username.length > 0) {
             feedback.textContent = 'Überprüfe, ob Benutzername bereits existiert...';
             feedback.style.color = 'grey';
-            fetch(`/users/check-username/?username=${encodeURIComponent(username)}`)
+            fetch(`/personals/check-username/?username=${encodeURIComponent(username)}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.exists) {
