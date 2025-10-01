@@ -26,11 +26,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'umweltseite.com',
-    '152.53.190.210'
+    '152.53.190.210',
+    'v2202509302489385408.happysrv.de'
 ]
 
 LOGIN_URL = '/personals/login/'
