@@ -304,8 +304,8 @@ class Command(BaseCommand):
                     print("created level")
 
         def reset_database():
-            delete_database()
-            create_database()
+            #delete_database()
+            #create_database()
             create_aktionen()
             create_levels()
             create_superuser()
