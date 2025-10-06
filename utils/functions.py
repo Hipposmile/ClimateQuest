@@ -66,14 +66,14 @@ def send_mail_function(**kwargs):
                 email = EmailMultiAlternatives(
                     subject=subject,
                     body=text_content,
-                    from_email='paul@fraqment.de',
+                    from_email=settings.EMAIL_HOST_USER,
                     to=recipient_list
                 )
                 email.attach_alternative(html_content, "text/html")
                 email.send()
                 return True
             except Exception as e:
-                createInternerFehler(request, f'Fehler beim E-Mail-Versand: {e}', fehlermeldung)
+                createInternerFehler(request, f'Fehler beim E-Mail-Versand an {recipient_list}: {e}', fehlermeldung)
                 
     elif mailinglist_needless:
         try:
@@ -96,7 +96,7 @@ def send_mail_function(**kwargs):
             email.send()
             return True
         except Exception as e:
-            createInternerFehler(request, f'Fehler beim E-Mail-Versand: {e}', fehlermeldung)
+            createInternerFehler(request, f'Fehler beim E-Mail-Versand an {recipient_list}: {e}', fehlermeldung)
             return False
 
     elif user.email == '':
