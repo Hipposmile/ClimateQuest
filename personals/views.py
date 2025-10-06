@@ -247,7 +247,7 @@ def verifyEmail(request):
             password = request.POST.get('password')
             email = request.POST.get('email')
 
-            if not username or not password or not email:
+            if not username or not password:
                 messages.error(request, all_messages["missing_required_inputs"])
                 return redirect('verifyEmail')
             
