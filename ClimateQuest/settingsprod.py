@@ -29,7 +29,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "")
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    'climate-quest.de'
+    'climate-quest.de',
+    'www.climate-quest.de',
 ]
 
 LOGIN_URL = '/personals/login/'
@@ -174,4 +175,4 @@ RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUBLIC_KEY", "")
 RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY", "")
 
 CSRF_COOKIE_SECURE = True  # Nur wenn du HTTPS nutzt
-CSRF_TRUSTED_ORIGINS = ['https://climate-quest.de']
+CSRF_TRUSTED_ORIGINS = ['https://climate-quest.de', 'https://www.climate-quest.de']
