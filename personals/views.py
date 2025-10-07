@@ -269,6 +269,13 @@ def verifyEmail(request):
                 messages.error(request, all_messages["user_is_active_at_verify"])
                 return redirect('verifyEmail')
             
+            if email == "":
+                user.email = email
+                user.is_active = True
+                user.save()
+                messages.success(request, all_messages["deleted_email"])
+                return redirect('login_view')
+            
             if User.objects.filter(email=email).exists():
                 messages.error(request, all_messages["email_not_available"])
                 return redirect('verifyEmail')
@@ -347,6 +354,13 @@ def settings_view(request):
             if not check_password(password, request.user.password):
                 messages.error(request, all_messages["invalid_password"])
             else:
+                if email == "":
+                    request.user.email = email
+                    request.user.save()
+                    createBenachrichtigung(request, all_messages["successfully_changed_email"])
+                    messages.success(request, all_messages["successfully_changed_email"])
+                    return redirect('settings_view')
+
                 if not ist_email_gueltig(email):
                     messages.error(request, all_messages["invalid_email"])
                     return redirect('register_view')

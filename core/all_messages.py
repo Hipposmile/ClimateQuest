@@ -119,6 +119,7 @@ all_messages = {
     "email_verified": "E-Mail-Adresse erfolgreich verifiziert",
     "verification_code_expired": "Verifizierungscode ist abgelaufen",
     "verification_code_invalid": "Verifizierungscode ungütlig",
+    "deleted_email": "E-Mail-Adresse erfolgreich gelöscht und Account aktiviert.",
 
     # --------
     #Aktion

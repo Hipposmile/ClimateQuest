@@ -11,3 +11,6 @@ Family "worldwide ranking" existiert nicht
 Family "worldwide ranking" existiert nicht
 Family "worldwide ranking" existiert nicht
 Family "worldwide ranking" existiert nicht
+Fehler beim E-Mail-Versand an paul@fraqment.de: please run connect() first
+Bei send_mail_function wurde kein User übergeben
+Fehler beim E-Mail-Versand an paul@fraqment.de: please run connect() first
