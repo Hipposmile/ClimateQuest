@@ -89,7 +89,7 @@ def send_mail_function(**kwargs):
             email = EmailMultiAlternatives(
                 subject=subject,
                 body=text_content,
-                from_email='paul@fraqment.de',
+                from_email=settings.EMAIL_HOST_USER,
                 to=[recipient_list]
             )
             email.attach_alternative(html_content, "text/html")
