@@ -31,7 +31,7 @@ def add(request):
         is_truth = request.POST.get('is_truth') == 'on'
         if not is_truth:
             messages.error(request, all_messages["not_is_truth"])
-            return redirect('add_action')
+            return redirect('add')
 
         action_type = request.POST.get('action_type')
         if not action_type:
