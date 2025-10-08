@@ -5,12 +5,21 @@
 {% block content %}
 
 <h1>Mein Profil</h1>
-<p>Willkommen, {{ user.username }}</p>
 {% if messages %}
 {% for message in messages %}
 <p class="{{message.level_tag}}-message">{{ message }}</p>
 {% endfor %}
 {% endif %}
+<p>Willkommen, {{ user.username }}</p>
+<hr>
+<h3>Aktuelle Daten:</h3>
+<ul>
+    <li>Benutzername: {{ user.username }}</li>
+    <li>E-Mail-Adresse: {{ user.email }}</li>
+    <li>Account erstellt am: {{ user.date_joined }}</li>
+    <li>Letzter Login: {{ user.last_login }}</li>
+</ul>
+<hr>
 <!-- Benutzername ändern -->
 <h3>Benutzernamen ändern</h3>
 <form method="post">
