@@ -130,7 +130,7 @@
     {% endif %}
 
     <input type="hidden" id="user_count" value="{{ user_count }}">
-    <input type="hidden" id="klimapunkte" value="{{ klimapunkte }}">
+    <input type="hidden" id="klimapunkte" value="{{ klimapunkte|floatformat:-4 }}">
 
     <div id="counters">
         <div id="user_zähler_div">
@@ -139,7 +139,7 @@
         </div>
 
         <div id="klimapunkte_zähler_div">
-            <h3 id="klimapunkte_zähler">{{ klimapunkte }}</h3>
+            <h3 id="klimapunkte_zähler">{{ klimapunkte|floatformat:-4 }}</h3>
             <p> Klimapunkte wurden von all diesen Nutzern zusammen bereits gesammelt.</p>
         </div>
 

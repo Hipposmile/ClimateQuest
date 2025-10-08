@@ -8,7 +8,7 @@
 <p class="{{message.level_tag}}-message">{{ message }}</p>
 {% endfor %}
 {% endif %}
-<p>Klimapunkte: {{ klimapunkte }}</p>
+<p>Klimapunkte: {{ klimapunkte|floatformat:-4 }}</p>
 <p>Zeitraum: {{ zeitraum }}</p>
 <form method="POST">
     {% csrf_token %}

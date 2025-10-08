@@ -67,7 +67,7 @@
                 id="{% if member.member.name == family.name %}me{% else %}other{% endif %}">
                 <a href="{% url 'family_detail' member.member.id %}">{{ member.member.name }}</a>
                 <br>
-                <span style="font-size:0.95em; color:#888;">(durchschnittlich {{ member.klimapunkte }} Klimapunkte)</span>
+                <span style="font-size:0.95em; color:#888;">(durchschnittlich {{ member.klimapunkte|floatformat:-4 }} Klimapunkte)</span>
             </li>
         {% endfor %}
     </ul>

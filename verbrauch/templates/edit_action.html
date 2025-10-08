@@ -52,7 +52,7 @@
         <select name="action_type" class="action-label" id="action_type" required>
             <option value="" disabled selected>Aktionstyp auswählen ▾</option>
             {% for aktion in aktionen %}
-                <option value="{{ aktion.name }}" data-klimapunkte="{{ aktion.klimapunkte }}"
+                <option value="{{ aktion.name }}" data-klimapunkte="{{ aktion.klimapunkte|floatformat:-4 }}"
                         data-anmerkung="{{ aktion.anmerkung|safe }}"
                         data-mengebeschreibung="{{ aktion.mengeBeschreibung }}"
                         data-aktiondate="{{ aktion.date }}">{{ aktion.name }}</option>

@@ -69,8 +69,8 @@
     </script>
 
     {% if family.name != 'worldwide ranking' %}
-        <p>Durchschnittliche Klimapunkte: {{ average_klimapunkte }}</p>
-        <p>Gesamte Klimapunkte: {{ total_klimapunkte }}</p>
+        <p>Durchschnittliche Klimapunkte: {{ average_klimapunkte|floatformat:-4 }}</p>
+        <p>Gesamte Klimapunkte: {{ total_klimapunkte|floatformat:-4 }}</p>
     {% endif %}
 
     <p>Mitglieder: {{ members_count }}</p>
@@ -84,7 +84,7 @@
                 id="{% if member.member == user %}me{% else %}other{% endif %}">
                 <a href="{% url 'klimapunkte_view' member.member.id %}">{{ member.member.username }}</a>
                 <br>
-                <span style="font-size:0.95em; color:#888;">({{ member.klimapunkte }} Klimapunkte)</span>
+                <span style="font-size:0.95em; color:#888;">({{ member.klimapunkte|floatformat:-4 }} Klimapunkte)</span>
             </li>
         {% endfor %}
     </ul>
