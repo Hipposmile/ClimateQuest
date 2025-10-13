@@ -3,326 +3,326 @@
 {% block title %}Startseite{% endblock %}
 
 {% block content %}
-    <style>
-        #counters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            justify-content: center;
-            padding: 2rem;
-            background: var(--color-counters-bg);
-            border-radius: 12px;
-            box-shadow: var(--shadow-md);
-            font-family: 'Segoe UI', sans-serif;
-            margin: 20px;
-        }
+<style>
+    #counters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        justify-content: center;
+        padding: 2rem;
+        background: var(--color-counters-bg);
+        border-radius: 12px;
+        box-shadow: var(--shadow-md);
+        font-family: 'Segoe UI', sans-serif;
+        margin: 20px;
+    }
 
-        #counters > div {
-            flex: 1 1 300px;
-            background: var(--color-bg);
-            border: 1px solid var(--color-border);
-            border-radius: 10px;
-            padding: 1.5rem;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
+    #counters > div {
+        flex: 1 1 300px;
+        background: var(--color-bg);
+        border: 1px solid var(--color-border);
+        border-radius: 10px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
 
-        #counters > div:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
-        }
+    #counters > div:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-md);
+    }
 
-        #counters h3 {
-            font-size: 2.5rem;
-            margin: 0.5rem 0;
-            color: var(--color-counters);
-        }
+    #counters h3 {
+        font-size: 2.5rem;
+        margin: 0.5rem 0;
+        color: var(--color-counters);
+    }
 
-        #counters p {
-            font-size: 1rem;
-            margin: 0.5rem 0;
-            color: var(--color-text);
-        }
+    #counters p {
+        font-size: 1rem;
+        margin: 0.5rem 0;
+        color: var(--color-text);
+    }
 
-        #co2_per_klimapunkt {
-            font-weight: bold;
-            color: var(--color-counters);
-        }
+    #co2_per_klimapunkt {
+        font-weight: bold;
+        color: var(--color-counters);
+    }
 
-        .cards {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-            padding: 1rem;
-            box-sizing: border-box;
-        }
+    .cards {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+        padding: 1rem;
+        box-sizing: border-box;
+    }
 
-        .flip-card {
-            background-color: transparent;
-            width: 300px;
-            height: 200px;
-            perspective: 1200px;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-            transform-style: preserve-3d;
-            transition: transform 0.3s ease;
-            will-change: transform;
-        }
+    .flip-card {
+        background-color: transparent;
+        width: 300px;
+        height: 200px;
+        perspective: 1200px;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        transform-style: preserve-3d;
+        transition: transform 0.3s ease;
+        will-change: transform;
+    }
 
-        .flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.8s ease;
-            transform-style: preserve-3d;
-            transform-origin: center center;
-        }
+    .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.8s ease;
+        transform-style: preserve-3d;
+        transform-origin: center center;
+    }
 
-        .flip-card:hover .flip-card-inner {
-            transform: rotateY(180deg);
-        }
+    .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+    }
 
-        .flip-card-front,
-        .flip-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-            padding: 0.5rem;
-            box-sizing: border-box;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+    .flip-card-front,
+    .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        padding: 0.5rem;
+        box-sizing: border-box;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 
-        .flip-card-front {
-            background: var(--color-primary-light);
-            color: var(--color-text);
-        }
+    .flip-card-front {
+        background: var(--color-primary-light);
+        color: var(--color-text);
+    }
 
-        .flip-card-front img {
-            max-height: 150px;
-        }
+    .flip-card-front img {
+        max-height: 150px;
+    }
 
-        .flip-card-back {
-            background: var(--color-primary);
-            color: var(--color-text);
-            transform: rotateY(180deg);
-        }
+    .flip-card-back {
+        background: var(--color-primary);
+        color: var(--color-text);
+        transform: rotateY(180deg);
+    }
 
-    </style>
-    <h1>Home</h1>
-    {% if messages %}
-        {% for message in messages %}
-            <p class="{{ message.level_tag }}-message">{{ message }}</p>
-        {% endfor %}
-    {% endif %}
-    {% if user.is_authenticated %}
-        <p>Willkommen, {{ user.username }}!</p>
-    {% else %}
-    {% endif %}
+</style>
+<h1>Home</h1>
+{% if messages %}
+{% for message in messages %}
+<p class="{{ message.level_tag }}-message">{{ message }}</p>
+{% endfor %}
+{% endif %}
+{% if user.is_authenticated %}
+<p>Willkommen, {{ user.username }}!</p>
+{% else %}
+{% endif %}
 
-    <input type="hidden" id="user_count" value="{{ user_count }}">
-    <input type="hidden" id="klimapunkte" value="{{ klimapunkte|floatformat:-4 }}">
+<input type="hidden" id="user_count" value="{{ user_count }}">
+<input type="hidden" id="klimapunkte" value="{{ klimapunkte|floatformat:-4 }}">
 
-    <div id="counters">
-        <div id="user_zähler_div">
-            <h3 id="user_zähler">{{ user_count }}</h3>
-            <p> registrierte Nutzer hat diese Plattform bereits.</p>
-        </div>
+<div id="counters">
+    <div id="user_zähler_div">
+        <h3 id="user_zähler">{{ user_count }}</h3>
+        <p> registrierte Nutzer hat diese Plattform bereits.</p>
+    </div>
 
-        <div id="klimapunkte_zähler_div">
-            <h3 id="klimapunkte_zähler">{{ klimapunkte|floatformat:-4 }}</h3>
-            <p> Klimapunkte wurden von all diesen Nutzern zusammen bereits gesammelt.</p>
-        </div>
+    <div id="klimapunkte_zähler_div">
+        <h3 id="klimapunkte_zähler">{{ klimapunkte|floatformat:-4 }}</h3>
+        <p> Klimapunkte wurden von all diesen Nutzern zusammen bereits gesammelt.</p>
+    </div>
 
-        <div id="co2_zähler_div">
-            <p>Weil jeder Klimapunkte für
-                <b id="co2_per_klimapunkt">1 kg</b> eingespartes CO2 steht, wurden dadurch insgesamt
-            </p>
-            <h3 id="co2_zähler"></h3>
-            <p> Tonnen CO2e eingespart</p>
+    <div id="co2_zähler_div">
+        <p>Weil jeder Klimapunkte für
+            <b id="co2_per_klimapunkt">1 kg</b> eingespartes CO2 steht, wurden dadurch insgesamt
+        </p>
+        <h3 id="co2_zähler"></h3>
+        <p> Tonnen CO2e eingespart</p>
+    </div>
+</div>
+<hr>
+<h3>Wie ClimateQuest funktioniert:</h3>
+<div class="cards">
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front" style="background: linear-gradient(135deg, #00f5a0 0%, #00d9f5 100%);">
+                <h3>Allgemeines</h3>
+                <img src="{% static 'images/ClimateQuest.png' %}" alt="ClimateQuest Logo">
+            </div>
+            <div class="flip-card-back" style="background: linear-gradient(135deg, #00f5a0 0%, #00d9f5 100%);">
+                <h1>Allgemeines</h1>
+                <p>ClimateQuest hat es sich zum Ziel gemacht, möglichst viele Menschen für mehr Klimaschutz zu
+                    begeistern und zu motivieren. </p>
+            </div>
         </div>
     </div>
-    <hr>
-    <h3>Wie ClimateQuest funktioniert:</h3>
-    <div class="cards">
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <div class="flip-card-front" style="background: linear-gradient(135deg, #00f5a0 0%, #00d9f5 100%);">
-                    <h3>Allgemeines</h3>
-                    <img src="{% static 'images/ClimateQuest.png' %}" alt="ClimateQuest Logo">
-                </div>
-                <div class="flip-card-back" style="background: linear-gradient(135deg, #00f5a0 0%, #00d9f5 100%);">
-                    <h1>Allgemeines</h1>
-                    <p>ClimateQuest hat es sich zum Ziel gemacht, möglichst viele Menschen für mehr Klimaschutz zu
-                        begeistern und zu motivieren. </p>
-                </div>
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front" style="background: linear-gradient(135deg, #00c3ff 0%, #ffff1c 100%);">
+                <h3>1. Account anlegen</h3>
+                <img src="{% static 'images/account.png' %}" alt="Allgemeines">
+            </div>
+            <div class="flip-card-back" style="background: linear-gradient(135deg, #00c3ff 0%, #ffff1c 100%);">
+                <h1>1. Account anlegen</h1>
+                <p>Registriere dich <a href="{% url 'register_view' %}">hier</a>.</p>
             </div>
         </div>
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <div class="flip-card-front" style="background: linear-gradient(135deg, #00c3ff 0%, #ffff1c 100%);">
-                    <h3>1. Account anlegen</h3>
-                    <img src="{% static 'images/account.png' %}" alt="Allgemeines">
-                </div>
-                <div class="flip-card-back" style="background: linear-gradient(135deg, #00c3ff 0%, #ffff1c 100%);">
-                    <h1>1. Account anlegen</h1>
-                    <p>Registriere dich <a href="{% url 'register_view' %}">hier</a>.</p>
-                </div>
+    </div>
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front" style="background: linear-gradient(135deg, #ff4e50 0%, #f9d423 100%);">
+                <h3>2. Aktion hinzufügen</h3>
+                <img src="{% static 'images/aktion.png' %}" alt="Aktion">
+            </div>
+            <div class="flip-card-back" style="background: linear-gradient(135deg, #ff4e50 0%, #f9d423 100%);">
+                <h1>2. Aktion hinzufügen</h1>
+                <p>Füge <a href="{% url 'add' %}">hier</a> eine Aktion hinzu und erhalte Klimapunkte.</a></p>
             </div>
         </div>
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <div class="flip-card-front" style="background: linear-gradient(135deg, #ff4e50 0%, #f9d423 100%);">
-                    <h3>2. Aktion hinzufügen</h3>
-                    <img src="{% static 'images/aktion.png' %}" alt="Aktion">
-                </div>
-                <div class="flip-card-back" style="background: linear-gradient(135deg, #ff4e50 0%, #f9d423 100%);">
-                    <h1>2. Aktion hinzufügen</h1>
-                    <p>Füge <a href="{% url 'add' %}">hier</a> eine Aktion hinzu und erhalte Klimapunkte.</a></p>
-                </div>
+    </div>
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front" style="background: linear-gradient(135deg, #ff00cc 0%, #333399 100%);">
+                <h3>3. Level aufsteigen</h3>
+                <img src="{% static 'images/level.png' %}" alt="Level">
+            </div>
+            <div class="flip-card-back" style="background: linear-gradient(135deg, #ff00cc 0%, #333399 100%);">
+                <h1>3. Level aufsteigen</h1>
+                <p>Steige ein {% if user.is_authenticated %}
+                    <a href="{% url 'level_view' request.user.id %}">Level</a>{% else %} Level {% endif %} auf, wenn
+                    du genug Klimapunkte gesammelt hast.</p>
             </div>
         </div>
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <div class="flip-card-front" style="background: linear-gradient(135deg, #ff00cc 0%, #333399 100%);">
-                    <h3>3. Level aufsteigen</h3>
-                    <img src="{% static 'images/level.png' %}" alt="Level">
-                </div>
-                <div class="flip-card-back" style="background: linear-gradient(135deg, #ff00cc 0%, #333399 100%);">
-                    <h1>3. Level aufsteigen</h1>
-                    <p>Steige ein {% if user.is_authenticated %}
-                        <a href="{% url 'level_view' request.user.id %}">Level</a>{% else %} Level {% endif %} auf, wenn
-                        du genug Klimapunkte gesammelt hast.</p>
-                </div>
+    </div>
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front" style="background: linear-gradient(135deg, #ff512f 0%, #dd2476 100%);">
+                <h3>4. In Families vergleichen</h3>
+                <img src="{% static 'images/family.png' %}" alt="Families">
+            </div>
+            <div class="flip-card-back" style="background: linear-gradient(135deg, #ff512f 0%, #dd2476 100%);">
+                <h1>4. In Families vergleichen</h1>
+                <p>Erstelle <a href="{% url 'create_family' %}">hier</a> eine Family und vergleiche dich dort mit
+                    Familie, Freunden oder Kollegen.</p>
             </div>
         </div>
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <div class="flip-card-front" style="background: linear-gradient(135deg, #ff512f 0%, #dd2476 100%);">
-                    <h3>4. In Families vergleichen</h3>
-                    <img src="{% static 'images/family.png' %}" alt="Families">
-                </div>
-                <div class="flip-card-back" style="background: linear-gradient(135deg, #ff512f 0%, #dd2476 100%);">
-                    <h1>4. In Families vergleichen</h1>
-                    <p>Erstelle <a href="{% url 'create_family' %}">hier</a> eine Family und vergleiche dich dort mit
-                        Familie, Freunden oder Kollegen.</p>
-                </div>
+    </div>
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front" style="background: linear-gradient(135deg, #fc00ff 0%, #00dbde 100%);">
+                <h3>5. In Communities vergleichen</h3>
+                <img src="{% static 'images/community.png' %}" alt="Communities">
+            </div>
+            <div class="flip-card-back" style="background: linear-gradient(135deg, #fc00ff 0%, #00dbde 100%);">
+                <h1>5. In Communities vergleichen</h1>
+                <p>Erstelle <a href="{% url 'create_community' %}">hier</a> eine Community aus mehreren Families und
+                    vergleiche dort den Durchschnitt deiner eigenen Family mit dem der anderen.</p>
             </div>
         </div>
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <div class="flip-card-front" style="background: linear-gradient(135deg, #fc00ff 0%, #00dbde 100%);">
-                    <h3>5. In Communities vergleichen</h3>
-                    <img src="{% static 'images/community.png' %}" alt="Communities">
-                </div>
-                <div class="flip-card-back" style="background: linear-gradient(135deg, #fc00ff 0%, #00dbde 100%);">
-                    <h1>5. In Communities vergleichen</h1>
-                    <p>Erstelle <a href="{% url 'create_community' %}">hier</a> eine Community aus mehreren Families und
-                        vergleiche dort den Durchschnitt deiner eigenen Family mit dem der anderen.</p>
-                </div>
+    </div>
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front" style="background: linear-gradient(135deg, #00ff6a 0%, #f7ff00 100%);">
+                <h3>5. Events hinzufügen</h3>
+                <img src="{% static 'images/event.png' %}" alt="Event">
+            </div>
+            <div class="flip-card-back" style="background: linear-gradient(135deg, #00ff6a 0%, #f7ff00 100%);">
+                <h1>5. Events hinzufügen</h1>
+                <p>Füge <a href="{% url 'add_event' %}">hier</a> ein Event hinzu und organisiere so Demos, große
+                    Müllsammelaktionen oder Infoveranstaltungen mit anderen Nutzern.</p>
             </div>
         </div>
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <div class="flip-card-front" style="background: linear-gradient(135deg, #00ff6a 0%, #f7ff00 100%);">
-                    <h3>5. Events hinzufügen</h3>
-                    <img src="{% static 'images/event.png' %}" alt="Event">
-                </div>
-                <div class="flip-card-back" style="background: linear-gradient(135deg, #00ff6a 0%, #f7ff00 100%);">
-                    <h1>5. Events hinzufügen</h1>
-                    <p>Füge <a href="{% url 'add_event' %}">hier</a> ein Event hinzu und organisiere so Demos, große
-                        Müllsammelaktionen oder Infoveranstaltungen mit anderen Nutzern.</p>
-                </div>
+    </div>
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front" style="background: linear-gradient(135deg, #d47300 0%, #bfff00 100%);">
+                <h3>6. Artikel hinzufügen</h3>
+                <img src="{% static 'images/artikel.png' %}" alt="Artikel">
+            </div>
+            <div class="flip-card-back" style="background: linear-gradient(135deg, #d47300 0%, #bfff00 100%);">
+                <h1>6. Artikel hinzufügen</h1>
+                <p>Füge <a href="{% url 'add_artikel' %}">hier</a> einen Artikel hinzu und informiere andere über
+                    Themen, die dir wichtig sind.</p>
             </div>
         </div>
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <div class="flip-card-front" style="background: linear-gradient(135deg, #d47300 0%, #bfff00 100%);">
-                    <h3>6. Artikel hinzufügen</h3>
-                    <img src="{% static 'images/artikel.png' %}" alt="Artikel">
-                </div>
-                <div class="flip-card-back" style="background: linear-gradient(135deg, #d47300 0%, #bfff00 100%);">
-                    <h1>6. Artikel hinzufügen</h1>
-                    <p>Füge <a href="{% url 'add_artikel' %}">hier</a> einen Artikel hinzu und informiere andere über
-                        Themen, die dir wichtig sind.</p>
-                </div>
+    </div>
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front" style="background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);">
+                <h3>7. Im Forum Fragen stellen</h3>
+                <img src="{% static 'images/forum.png' %}" alt="Forum">
+            </div>
+            <div class="flip-card-back" style="background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);">
+                <h1>7. Im Forum Fragen stellen</h1>
+                <p>Frage <a href="{% url 'add_forum_post' %}">hier</a> andere Nutzer, wenn du nicht genau weißt, wie
+                    du bestimmte Dinge organisieren oder machen kannst.</p>
             </div>
         </div>
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <div class="flip-card-front" style="background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);">
-                    <h3>7. Im Forum Fragen stellen</h3>
-                    <img src="{% static 'images/forum.png' %}" alt="Forum">
-                </div>
-                <div class="flip-card-back" style="background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);">
-                    <h1>7. Im Forum Fragen stellen</h1>
-                    <p>Frage <a href="{% url 'add_forum_post' %}">hier</a> andere Nutzer, wenn du nicht genau weißt, wie
-                        du bestimmte Dinge organisieren oder machen kannst.</p>
-                </div>
-            </div>
-        </div>
+    </div>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const user_zähler = document.getElementById('user_zähler');
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const user_zähler = document.getElementById('user_zähler');
 
-                const klimapunkte_zähler = document.getElementById('klimapunkte_zähler');
-                const co2_zähler = document.getElementById('co2_zähler');
+            const klimapunkte_zähler = document.getElementById('klimapunkte_zähler');
+            const co2_zähler = document.getElementById('co2_zähler');
 
-                let user_count = document.getElementById('user_count').value;
-                let klimapunkte = document.getElementById('klimapunkte').value;
+            let user_count = document.getElementById('user_count').value;
+            let klimapunkte = document.getElementById('klimapunkte').value;
 
-                console.log("Users: " + user_count);
-                console.log("Klimapunke: " + klimapunkte);
+            console.log("Users: " + user_count);
+            console.log("Klimapunke: " + klimapunkte);
 
-                //User und Klimapunkte in Floats umwandeln, trotz . und , zur Trennung
-                user_count = formatToFloat(user_count);
-                klimapunkte = formatToFloat(klimapunkte);
+            //User und Klimapunkte in Floats umwandeln, trotz . und , zur Trennung
+            user_count = formatToFloat(user_count);
+            klimapunkte = formatToFloat(klimapunkte);
 
-                let co2 = klimapunkte / 1000;
+            let co2 = klimapunkte / 1000;
 
-                animateCount(user_zähler, user_count);
-                animateCount(klimapunkte_zähler, klimapunkte);
-                animateCount(co2_zähler, co2);
-            });
+            animateCount(user_zähler, user_count);
+            animateCount(klimapunkte_zähler, klimapunkte);
+            animateCount(co2_zähler, co2);
+        });
 
-            function formatToFloat(str) {
-                const normalized = str.replace(/\./g, '').replace(',', '.');
-                return parseFloat(normalized);
+        function formatToFloat(str) {
+            const normalized = str.replace(/\./g, '').replace(',', '.');
+            return parseFloat(normalized);
+        }
+
+        function animateCount(element, endValue, maxDuration = 1500) {
+            let startValue = 0;
+
+            // Berechne Schrittzeit
+            let stepTime = 10; // alle 50ms ein Schritt
+            let steps = Math.floor(maxDuration / stepTime);
+
+            // Wenn zu viele Schritte nötig wären, starte höher
+            if (endValue > steps) {
+                startValue = endValue - steps;
             }
 
-            function animateCount(element, endValue, maxDuration = 1500) {
-                let startValue = 0;
+            let current = startValue;
+            const increment = (endValue - startValue) / steps;
 
-                // Berechne Schrittzeit
-                let stepTime = 10; // alle 50ms ein Schritt
-                let steps = Math.floor(maxDuration / stepTime);
-
-                // Wenn zu viele Schritte nötig wären, starte höher
-                if (endValue > steps) {
-                    startValue = endValue - steps;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= endValue) {
+                    current = endValue;
+                    clearInterval(timer);
                 }
-
-                let current = startValue;
-                const increment = (endValue - startValue) / steps;
-
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= endValue) {
-                        current = endValue;
-                        clearInterval(timer);
-                    }
-                    element.textContent = Math.floor(current).toLocaleString();
-                }, stepTime);
-            }
-        </script>
-{% endblock %}
+                element.textContent = Math.floor(current).toLocaleString();
+            }, stepTime);
+        }
+    </script>
+    {% endblock %}

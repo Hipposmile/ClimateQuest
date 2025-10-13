@@ -12,6 +12,8 @@ from django.core.mail import EmailMultiAlternatives
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 import bleach
+
+from ClimateQuest import settings
 from home.models import *
 from verbrauch.models import *
 from family.models import *
@@ -47,6 +49,9 @@ def send_mail_function(**kwargs):
     if not recipient_list:
         recipient_list = [user.email]
 
+    with open('testlogs.log', 'a') as file:
+        file.write(f'{settingsprod.EMAIL_HOST_USER}\n')
+
     if not mailinglist_needless and user.email != '':
         try:
             userErweitert = UserErweitert.objects.get(user=user)
@@ -66,7 +71,7 @@ def send_mail_function(**kwargs):
                 email = EmailMultiAlternatives(
                     subject=subject,
                     body=text_content,
-                    from_email=settings.EMAIL_HOST_USER,
+                    from_email=settingsprod.EMAIL_HOST_USER,
                     to=recipient_list
                 )
                 email.attach_alternative(html_content, "text/html")
@@ -89,7 +94,7 @@ def send_mail_function(**kwargs):
             email = EmailMultiAlternatives(
                 subject=subject,
                 body=text_content,
-                from_email=settings.EMAIL_HOST_USER,
+                from_email=settingsprod.EMAIL_HOST_USER,
                 to=[recipient_list]
             )
             email.attach_alternative(html_content, "text/html")
@@ -155,7 +160,7 @@ def createBenachrichtigung(request, benachrichtigung, user=None):
     send_mail_function(
         request=request,
         fehlermeldung='Beim Erstellen einer Benachrichtigung ist beim Versenden der E-Mail ein Fehler aufgetreten. Die Benachrichtigung kann nur in dem Benachrichtigungsteil hier auf der Webseite gefunden werden!',
-        subject='EcoRise - neue Benachrichtigung',
+        subject='ClimateQuest - neue Benachrichtigung',
         message=benachrichtigung,
         recipient_list=user.email,
         fail_silently=False,
