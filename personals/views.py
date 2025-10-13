@@ -116,7 +116,7 @@ def register_view(request):
         mail_output = send_mail_function(
             request=request,
             subject='ClimateQuest - Ihr Verifizierungscode ist da!',
-            message=f'Bitte geben Sie unter 127.0.0.7/verify-email folgenden Verifizierungscode an: {verificationCode}',
+            message=f'Bitte geben Sie <a href="https://climate-quest.de/personals/verify-email/">hier</a> folgenden Verifizierungscode an: {verificationCode}',
             recipient_list=email,
             fail_silently=False,
             verificationCodeSaved=verificationCodeSaved,
@@ -225,7 +225,7 @@ def verifyEmail(request):
                 mail_output = send_mail_function(
                     request=request,
                     subject='ClimateQuest - Ihr Verifizierungscode ist da!',
-                    message=f'Bitte geben Sie unter 127.0.0.7/verify-email folgenden Verifizierungscode an: {verificationCode}',
+                    message=f'Bitte geben Sie <a href="https://climate-quest.de/personals/verify-email/">hier</a> folgenden Verifizierungscode an: {verificationCode}',
                     recipient_list=user.email,
                     fail_silently=False,
                     mailinglist_needless=True,
@@ -293,7 +293,7 @@ def verifyEmail(request):
                 mail_output = send_mail_function(
                     request=request,
                     subject='ClimateQuest - Ihr Verifizierungscode ist da!',
-                    message=f'Bitte geben Sie unter 127.0.0.7/verify-email folgenden Verifizierungscode an: {verificationCode}',
+                    message=f'Bitte geben Sie <a href="https://climate-quest.de/personals/verify-email/">hier</a> folgenden Verifizierungscode an: {verificationCode}',
                     recipient_list=user.email,
                     fail_silently=False,
                     mailinglist_needless=True,
@@ -375,7 +375,7 @@ def settings_view(request):
                 mail_output = send_mail_function(
                     request=request,
                     subject='ClimateQuest - Ihr Verifizierungscode ist da!',
-                    message=f'Bitte geben Sie unter 127.0.0.7/verify-email folgenden Verifizierungscode an: {verificationCode}',
+                    message=f'Bitte geben Sie <a href="https://climate-quest.de/personals/verify-email/">hier</a> folgenden Verifizierungscode an: {verificationCode}',
                     recipient_list=email,
                     fail_silently=False,
                     verificationCodeSaved=verificationCodeSaved,
@@ -448,7 +448,7 @@ def reset_password(request):
             request=request,
             redirect_error='reset_password',
             subject='ClimateQuest - Passwort Reset',
-            message=f'Wir haben Ihnen ein neues, zufällig generiertes Passwort erstellt: {new_password} \nMelden Sie sich damit und mit Ihrem Benutzername {user.username} unter 127.0.0.1:8000/login an und ändern Sie aus Sicherheitsgründen möglichst bald unter "Profil bearbeiten" Ihr Passwort.',
+            message=f'Wir haben Ihnen ein neues, zufällig generiertes Passwort erstellt: {new_password} \nMelden Sie sich damit und mit Ihrem Benutzername {user.username} <a href="https://climate-quest.de/personals/login/">hier</a> an und ändern Sie aus Sicherheitsgründen möglichst bald unter "Profil bearbeiten" Ihr Passwort.',
             recipient_list=user.email,
             fail_silently=False,
         )
