@@ -49,9 +49,6 @@ def send_mail_function(**kwargs):
     if not recipient_list:
         recipient_list = [user.email]
 
-    with open('testlogs.log', 'a') as file:
-        file.write(f'{settingsprod.EMAIL_HOST_USER}\n')
-
     if not mailinglist_needless and user.email != '':
         try:
             userErweitert = UserErweitert.objects.get(user=user)
