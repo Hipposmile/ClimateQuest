@@ -13,7 +13,7 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 import bleach
 
-from ClimateQuest import settings
+from ClimateQuest import settingsprod
 from home.models import *
 from verbrauch.models import *
 from family.models import *
