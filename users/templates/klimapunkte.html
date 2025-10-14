@@ -8,7 +8,13 @@
 <p class="{{message.level_tag}}-message">{{ message }}</p>
 {% endfor %}
 {% endif %}
+<input type="hidden" id="klimapunkte" value="{{ klimapunkte|floatformat:-4 }}">
 <p>Klimapunkte: {{ klimapunkte|floatformat:-4 }}</p>
+<p id="co2"></p>
+<script>
+    let co2 = (parseFloat(document.getElementById("klimapunkte").value) / 1000).toFixed(4);
+    document.getElementById("co2").textContent = "Das entspricht " + co2 + " Tonnen eingespartem CO2";
+</script>
 <p>Zeitraum: {{ zeitraum }}</p>
 <form method="POST">
     {% csrf_token %}
