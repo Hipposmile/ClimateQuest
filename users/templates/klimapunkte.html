@@ -12,8 +12,14 @@
 <p>Klimapunkte: {{ klimapunkte|floatformat:-4 }}</p>
 <p id="co2"></p>
 <script>
-    let co2 = (parseFloat(document.getElementById("klimapunkte").value) / 1000).toFixed(4);
+    let klimapunkte = formatToFloat(document.getElementById("klimapunkte").value);
+    let co2 = parseFloat(klimapunkte / 1000);
     document.getElementById("co2").textContent = "Das entspricht " + co2 + " Tonnen eingespartem CO2";
+
+    function formatToFloat(str) {
+        const normalized = str.replace(/\./g, '').replace(',', '.');
+        return parseFloat(normalized);
+    }
 </script>
 <p>Zeitraum: {{ zeitraum }}</p>
 <form method="POST">
