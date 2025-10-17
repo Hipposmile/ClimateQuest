@@ -13,7 +13,7 @@
 <p id="co2"></p>
 <script>
     let klimapunkte = formatToFloat(document.getElementById("klimapunkte").value);
-    let co2 = parseFloat(klimapunkte / 1000);
+    let co2 = Intl.NumberFormat('de-DE', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(klimapunkte / 1000);
     document.getElementById("co2").textContent = "Das entspricht " + co2 + " Tonnen eingespartem CO2";
 
     function formatToFloat(str) {

@@ -288,7 +288,7 @@
             user_count = formatToFloat(user_count);
             klimapunkte = formatToFloat(klimapunkte);
 
-            let co2 = klimapunkte / 1000;
+            let co2 = Math.floor(klimapunkte / 1000);
 
             animateCount(user_zähler, user_count);
             animateCount(klimapunkte_zähler, klimapunkte);

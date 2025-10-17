@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}Share{% endblock %}
 
 {% block content %}
@@ -77,8 +77,45 @@
 .copy {
     background-color: #6c757d; /*Nicht-Variable genehmigt*/
 }
-</style>
 
+.qrcode {
+    background-color: #17a2b8; /*Nicht-Variable genehmigt*/
+}
+
+    #qrcodeDownload {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #0078D7;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin: 10px;
+    }
+
+    #qrcodeDownload:hover {
+      background-color: #005fa3;
+    }
+
+    #qrcodeContainer {
+      display: none; /* Unsichtbar bis QR-Code existiert */
+      margin-top: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: fit-content;
+      align-self: center;
+    }
+
+    #qrcodeContainer canvas {
+      display: block;
+      margin: 0 auto;
+    }
+
+</style>
+<script src="{% static 'js/qrcode.min.js' %}"></script>
 <div class="share-container">
     <h1>Seite teilen</h1>
 
@@ -114,8 +151,10 @@
         </a>
         <button class="share-btn copy" onclick="copyURL('{{ url }}')" title="Link kopieren" id="copy_button">Link
             kopieren</button>
+        <button class="share-btn qrcode" onclick="generateQrCode('{{ url }}')" title="QR-Code erstellen">QR-Code erstellen</button>
     </div>
 </div>
+<div id="qrcodeContainer"><canvas id="qrcode"></canvas></div>
 
 <script>
     function sharePage(url) {
@@ -124,6 +163,35 @@
         } else {
             alert("Teilen wird auf diesem Gerät nicht unterstützt.");
         }
+    }
+
+    function generateQrCode(url) {
+        // Quelle der Bibliothek: https://github.com/davidshimjs/qrcodejs
+        let qrcodeContainer = document.getElementById("qrcodeContainer");
+        qrcodeContainer.innerHTML = ""; // Vorherigen QR-Code entfernen
+        qrcodeContainer.style.display = "block"; // Container sichtbar machen
+        var qrcode = new QRCode(qrcodeContainer, {
+            text: url,
+            width: 400,
+            height: 400,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+        let downloadButton = document.createElement("button");
+        downloadButton.id = "qrcodeDownload";
+        downloadButton.textContent = "Download";
+        downloadButton.addEventListener("click", downloadQrCode);
+        qrcodeContainer.appendChild(downloadButton);
+    }
+
+    function downloadQrCode() {
+        const qrCodeImg = document.querySelector('#qrcodeContainer canvas');
+        const dataUrl = qrCodeImg.toDataURL("image/png");
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = 'qrcode.png';
+        link.click();
     }
 
     function copyURL(url) {
