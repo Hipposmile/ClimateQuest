@@ -24,7 +24,7 @@
         {% endif %}
 
         <p class="action-list-description">Klimapunkte:</p>
-        <p class="action-list-value">{{ action.impact }}</p>
+        <p class="action-list-value">{{ action.impact|floatformat:4 }}</p>
 
         <p class="action-list-description">{{ action.aktion.mengeBeschreibung }}</p>
         <p class="action-list-value">{{ action.quantity }} {{ action.einheit }}</p>

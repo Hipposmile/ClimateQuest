@@ -33,12 +33,10 @@
             {% endif %}
 
             <p class="action-list-description">Klimapunkte:</p>
-            <p class="action-list-value">{{ aktuelleAktion.impact }}</p>
+            <p class="action-list-value">{{ aktuelleAktion.impact|floatformat:4 }}</p>
 
-            {% if aktuelleAktion.date %}
-                <p class="action-list-description">{{ aktuelleAktion.aktion.mengeBeschreibung }}</p>
-                <p class="action-list-value">{{ aktuelleAktion.quantity }} {{ aktuelleAktion.einheit }}</p>
-            {% endif %}
+            <p class="action-list-description">{{ aktuelleAktion.aktion.mengeBeschreibung }}</p>
+            <p class="action-list-value">{{ aktuelleAktion.quantity }} {{ aktuelleAktion.einheit }}</p>
         </li>
     </ul>
 
