@@ -82,4 +82,9 @@
         }
     }
 </script>
+<hr>
+<form method="post" onsubmit="return confirm('Willst du diesen Artikel wirklich löschen?');">
+        {% csrf_token %}
+        <button type="submit" name="delete_artikel" style="color:red;">Diese Aktion löschen</button>
+    </form>
 {% endblock %}

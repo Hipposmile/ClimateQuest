@@ -92,26 +92,34 @@ def edit_artikel(request, artikel_id):
         return redirect('artikel_detail', artikel.id)
 
     if request.method == 'POST':
-        is_truth = request.POST.get('is_truth') == 'on'
-        if not is_truth:
-            messages.error(request, all_messages["not_is_truth"])
-            return redirect('add_action')
+        if 'edit_artikel' in request.POST:
+            is_truth = request.POST.get('is_truth') == 'on'
+            if not is_truth:
+                messages.error(request, all_messages["not_is_truth"])
+                return redirect('add_action')
 
-        name = request.POST.get('name')
-        content = request.POST.get('content')
+            name = request.POST.get('name')
+            content = request.POST.get('content')
 
-        if not name or not content:
-            messages.error(request, all_messages["missing_required_inputs"])
-            return redirect('edit_artikel', artikel_id=artikel_id)
+            if not name or not content:
+                messages.error(request, all_messages["missing_required_inputs"])
+                return redirect('edit_artikel', artikel_id=artikel_id)
 
-        content = clean_html(content)
+            content = clean_html(content)
 
-        artikel.name = name
-        artikel.content = content
-        artikel.save()
+            artikel.name = name
+            artikel.content = content
+            artikel.save()
 
-        messages.success(request, all_messages["successfully_edited_artikel"])
-        return redirect('artikel_detail', artikel_id=artikel.id)
+            messages.success(request, all_messages["successfully_edited_artikel"])
+            return redirect('artikel_detail', artikel_id=artikel.id)
+        elif 'delete_artikel' in request.POST:
+            artikel.delete()
+            messages.success(request, all_messages["successfully_deleted_artikel"])
+            return redirect('artikel_overview')
+        else:
+            messages.error(request, all_messages["internal_error"])
+            return redirect('artikel_overview')
 
     return render(request, 'edit_artikel.html', {'artikel': artikel})
 
