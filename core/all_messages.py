@@ -188,7 +188,7 @@ all_messages = {
     "admin__family_not_found": "Family wurde nicht gefunden",
     "admin__community_not_found": "Community wurde nicht gefunden",
     "admin__invalid_receiver_type": "Ungültiger Empfänger-Typ der Nachricht",
-
+    "user_deleted": "User erfolgreich gelöscht",
     "worldwide_ranking_valid_passwords": "Die Passwörter der Family worldwide_ranking sind aktuell.",
     "worldwide_ranking_invalid_password": "Die Passwörter der Family worldwide-Ranking waren ungültig und entsprechend der gespeicherten Passwörter geändert.",
     "added_everyone_user_erweitert": "Jedem User wurde ein UserErweitert hinzugefügt, sofern noch nicht vorhanden",

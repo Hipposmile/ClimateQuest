@@ -112,8 +112,17 @@ def admin(request):
                 if not UserErweitert.objects.filter(user=user):
                     UserErweitert.objects.create(user=user)
             messages.success(request, all_messages["added_everyone_user_erweitert"])
+        elif 'delete_user' in request.POST:
+            username_to_delete = request.POST.get('username_to_delete')
+            try:
+                user = User.objects.get(username=username_to_delete)
+                user.delete()
+                messages.success(request, all_messages["user_deleted"])
+            except User.DoesNotExist:
+                messages.error(request, all_messages["user_not_found"])
         else:
             messages.error(request, all_messages["admin_invalid_action"])
+            
     return render(request, 'admin.html')
 
 @login_required

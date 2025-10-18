@@ -88,4 +88,11 @@
 </form>
 <hr>
 <p>Folgende Models müssen existieren: Family worldwide ranking, Level ab 0 Klimapunkte, AktionenListe</p>
+<hr>
+<h3>User löschen</h3>
+<form method="post" onsubmit="return confirm('Möchtest du diesen User wirklich löschen? Dies entfernt alle seine Daten!');">
+    {% csrf_token %}
+    <input type="text" name="username_to_delete" placeholder="Username" required />
+    <button type="submit" name="delete_user">Löschen</button>
+</form>
 {% endblock %}
