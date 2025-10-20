@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block meta %}
+    <meta name="description" content="Übersicht aller Artikel bei ClimateQuest. Finden Sie Artikel, die anderen Usern erstellt wurden, und informieren Sie sich über verschiedene Themen zu Klimaschutz.">
+{% endblock %}
+
 {% block title %}Artikel - Übersicht{% endblock %}
 
 {% block content %}
@@ -13,7 +17,8 @@
     {% csrf_token %}
     <div id="search_keyword_div">
         <small>Leer lassen, um alle Artikel anzuzeigen</small>
-        <input type="search" name="search_keyword" placeholder="Suchwort">
+        <label for="search_keyword">Suchwort:</label>
+        <input type="search" id="search_keyword" name="search_keyword" placeholder="Suchwort">
     </div>
     <label for="order_by">Sortieren nach:</label>
     <select name="order_by" required>

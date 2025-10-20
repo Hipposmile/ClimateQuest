@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block meta %}
+    <meta name="description" content="Lesen Sie den Artikel '{{ artikel.name }}' bei ClimateQuest. Hinterlassen Sie Kommentare oder Antworten, um konstruktive Kritik, Fragen oder Anmerkungen hinzuzufügen.">
+{% endblock %}
+
 {% block title %}Artikel nicht hinzufügen{% endblock %}
 
 {% block content %}
@@ -49,7 +53,8 @@
                 <form method="post">
                     {% csrf_token %}
                     <input type="hidden" name="comment_id" value="{{ comment.id }}">
-                    <input type="text" name="answer" placeholder="Antwort">
+                    <label for="answer">Antwort:</label>
+                    <input type="text" id="answer" name="answer" placeholder="Antwort">
                     <button name="answer_comment">Antworten</button>
                 </form>
             </details>
@@ -97,7 +102,8 @@
 
 <form method="post">
     {% csrf_token %}
-    <input type="text" name="comment" placeholder="Kommentar hinzufügen">
+    <label for="comment">Neuen Kommentar hinzufügen:</label>
+    <input type="text" id="comment" name="comment" placeholder="Kommentar hinzufügen">
     <button type="submit" name="add_comment">Kommentar hinzufügen</button>
 </form>
 

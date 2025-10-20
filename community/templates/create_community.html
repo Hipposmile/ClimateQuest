@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% block meta %}
+    <meta name="description" content="Erstellen Sie eine neue Community bei ClimateQuest, um sich mit anderen Familien zu vergleichen und auszutauschen.">
+{% endblock %}
 {% block title %}Community erstellen{% endblock %}
 
 {% block content %}
@@ -20,7 +22,7 @@
     <small id="familyname-feedback"></small>
     <input type="text" id="familyname" name="familyname" placeholder="Familyname" required>
     <input type="password" id="family_admin_password" name="family_admin_password" placeholder="Family Admin Passwort"
-        required>
+        required>q
     <div>
         <h4>Wir empfehlen folgende Admin-Passwort-Anforderungen, um die Community vor unerlaubter Bearbeitung zu schützen:
         </h4>

@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
+
+{% block meta %}
+    <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+
 {% block title %} {% if community %}Chat: Community {{ community.name }}{% else %}Die Community konnte nicht geladen
 werden.{% endif %} {% endblock %}
 
@@ -172,7 +177,8 @@ werden.{% endif %} {% endblock %}
         {% endfor %}
         <form method="post" class="chat-community-form" onsubmit="return true;">
             {% csrf_token %}
-            <input type="text" name="message" placeholder="Nachricht eingeben..." autocomplete="off" required>
+            <label for="message">Nachricht</label>
+            <input type="text" id="message" name="message" placeholder="Nachricht eingeben..." required>
             <button type="submit" name="send">Senden</button>
         </form>
     </div>
