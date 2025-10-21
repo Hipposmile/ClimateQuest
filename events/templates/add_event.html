@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-
+{% block meta %}
+    <meta name="description" content="Füge ein neues Event bei ClimateQuest hinzu, um mehr Leute für große Events wie Demos zu gewinnen.">
+{% endblock %}
 {% block title %}Event hinzufügen{% endblock %}
 
 {% block content %}
@@ -84,7 +86,7 @@
                     form.submit();
                 } catch {
                     console.error("Variable Quill not found");
-                    alert("Ein interner Fehler ist aufgetreten. Probieren Sie es später bitte erneut!");
+                    alert("Ein interner Fehler ist aufgetreten. Probiere es später bitte erneut!");
                     return false;
                 }
             }

@@ -29,6 +29,7 @@ class Event(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     participants = models.ManyToManyField(User, related_name='events')
     questions = models.ManyToManyField(Question, related_name='event', blank=True)
+    last_modified = models.DateTimeField(auto_now=True)
 
     @property
     def participants_count(self):

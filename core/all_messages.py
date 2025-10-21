@@ -11,7 +11,7 @@ all_messages = {
     "invalid_action": "Ungültige Aktion",
     "notification_deleted": "Benachrichtigung erfolgreich gelöscht",
     "delete_notification_error": "interner Fehler: Benachrichtigung bereits gelöscht",
-    "internal_error": "interner Fehler. Probieren Sie es später erneut",
+    "internal_error": "interner Fehler. Probiere es später erneut",
     "no_admin_auth": "Du darfst nicht auf die Admin-Funktionen zugreifen",
     "user_not_exist": "User existiert nicht",
     "not_is_truth": "Du musst bestätigen, dass alle Angaben der Wahrheit entsprechen",
@@ -91,8 +91,8 @@ all_messages = {
 
     #Login
     "successfully_signed_up": "Erfolgreich registriert",
-    "robot": "Es besteht die Gefahr, dass Sie ein Roboter sind. Bitte versuchen Sie es erneut.",
-    "invalid_login_data": mark_safe("Ungültige Anmeldedaten.  Überprüfen Sie diese und vergewissern Sie sich, dass sie bereits Ihre <a href='/personals/verify-email'>E-Mail-Adresse verifiziert haben</a>."),
+    "robot": "Es besteht die Gefahr, dass du ein Roboter bist. Bitte versuche es erneut.",
+    "invalid_login_data": mark_safe("Ungültige Anmeldedaten.  Überprüfe diese und vergewissere dich, dass du bereits deine <a href='/personals/verify-email'>E-Mail-Adresse verifiziert hast</a>."),
     "username_not_available": "Benutzername bereits vergeben",
     "invalid_email": "E-Mail-Adresse ungültig",
     "email_not_available": "E-Mail-Adresse bereits vergeben",
@@ -108,7 +108,7 @@ all_messages = {
     "mailinglist_disabled": "E-Mail Benachrichtigungen deaktiviert",
     "account_deleted": "Account erfolgreich gelöscht",
     "email_not_found": "E-Mail-Adresse nicht vorhanden",
-    "password_reset_mail_sent": "Wir haben Ihnen eine Nachricht mit Ihrem Benutzernamen und einem neuen, zufällig generiertem Passwort geschickt. Melden Sie sich damit an und ändern Sie aus Sicherheitsgründen möglicht bald Ihr Passwort unter \"Profil bearbeiten\".",
+    "password_reset_mail_sent": "Wir haben dir eine Nachricht mit deinem Benutzernamen und einem neuen, zufällig generiertem Passwort geschickt. Melde dich damit an und ändere aus Sicherheitsgründen möglichst bald dein Passwort unter \"Profil bearbeiten\".",
     "password_reset_error": "Ein Fehler ist beim Zurücksetzen des Passwortes aufgetreten",
     "successfully_changed_email": "E-Mail-Adresse erfolgreich geändert. Ein Verifizierungscode wurde an diese Adresse gesendet.",
 

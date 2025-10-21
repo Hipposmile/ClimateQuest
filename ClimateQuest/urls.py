@@ -16,11 +16,59 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
-#import debug_toolbar
+from django.contrib.sitemaps.views import sitemap
+
+from home.sitemaps import *
+from artikel.sitemaps import *
+from events.sitemaps import *
+from forum.sitemaps import *
+from family.sitemaps import *
+from community.sitemaps import *
+from personals.sitemaps import *
+from users.sitemaps import *
+from verbrauch.sitemaps import *
+
+sitemaps = {
+    "home": HomeSitemap(),
+    "nutzungsbedingungen": NutzungsbedingungenSitemap(),
+    "aktionen_table": AktionenTableSitemap(),
+    "share": ShareSitemap(),
+
+    "family_overview": FamilyOverviewSitemap(),
+    "add_family": AddFamilySitemap(),
+    "join_family": JoinFamilySitemap(),
+
+    "community_overview": CommunityOverviewSitemap(),
+    "add_community": AddCommunitySitemap(),
+    "join_community": JoinCommunitySitemap(),
+
+    "login": LoginSitemap(),
+    "register": RegisterSitemap(),
+    "personal_settings": PersonalSettingsSitemap(),
+    "reset_password": ResetPasswordSitemap(),
+    "verify_email": VerifyEmailSitemap(),
+
+    "klimapunkte_view": KlimapunkteViewSitemap(),
+    "level_view": LevelViewSitemap(),
+
+    "add_aktionen": AddAktionenSitemap(),
+    "history": HistorySitemap(),
+
+    "artikel_detail": ArtikelDetailSitemap(),
+    "artikel_overview": ArtikelOverviewSitemap(),
+    "add_artikel": AddArtikelSitemap(),
+
+    "event_detail": EventDetailSitemap(),
+    "events_overview": EventsOverviewSitemap(),
+    "add_event": AddEventSitemap(),
+
+    "forum_post_detail": ForumPostDetailSitemap(),
+    "forum_overview": ForumOverviewSitemap(),
+    "add_forum_post": AddForumPostSitemap(),
+}
 
 urlpatterns = [
+    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap"),
     path('ClimateQuestAdmin/', admin.site.urls),
     path('', include('home.urls')),
     path('personals/', include('personals.urls')),

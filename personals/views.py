@@ -115,14 +115,14 @@ def register_view(request):
 
         mail_output = send_mail_function(
             request=request,
-            subject='ClimateQuest - Ihr Verifizierungscode ist da!',
-            message=f'Bitte geben Sie <a href="https://climate-quest.de/personals/verify-email/">hier</a> folgenden Verifizierungscode an: {verificationCode}',
+            subject='ClimateQuest - dein Verifizierungscode ist da!',
+            message=f'Bitte gib <a href="https://climate-quest.de/personals/verify-email/">hier</a> folgenden Verifizierungscode an: {verificationCode}',
             recipient_list=email,
             fail_silently=False,
             verificationCodeSaved=verificationCodeSaved,
             mailinglist_needless=True,
             user=user,
-            fehlermeldung='Fehler beim E-Mail-Versand. Probieren Sie die Registrierung ohne E-Mail und fügen Sie Ihre E-Mail-Adresse später in den Einstellungen hinzu.'
+            fehlermeldung='Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge deine E-Mail-Adresse später in den Einstellungen hinzu.'
         )
 
         if not mail_output:
@@ -224,13 +224,13 @@ def verifyEmail(request):
                 verificationCode = VerificationCode.objects.get(user=user)
                 mail_output = send_mail_function(
                     request=request,
-                    subject='ClimateQuest - Ihr Verifizierungscode ist da!',
-                    message=f'Bitte geben Sie <a href="https://climate-quest.de/personals/verify-email/">hier</a> folgenden Verifizierungscode an: {verificationCode}',
+                    subject='ClimateQuest - dein Verifizierungscode ist da!',
+                    message=f'Bitte gib <a href="https://climate-quest.de/personals/verify-email/">hier</a> folgenden Verifizierungscode an: {verificationCode}',
                     recipient_list=user.email,
                     fail_silently=False,
                     mailinglist_needless=True,
                     user=user,
-                    fehlermeldung='Fehler beim E-Mail-Versand. Probieren Sie die Registrierung ohne E-Mail und fügen Sie Ihre E-Mail-Adresse später in den Einstellungen hinzu.'
+                    fehlermeldung='Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge deine E-Mail-Adresse später in den Einstellungen hinzu.'
                 )
                 if not mail_output:
                     verificationCode.delete()
@@ -292,13 +292,13 @@ def verifyEmail(request):
                 verificationCode = VerificationCode.objects.get(user=user)
                 mail_output = send_mail_function(
                     request=request,
-                    subject='ClimateQuest - Ihr Verifizierungscode ist da!',
-                    message=f'Bitte geben Sie <a href="https://climate-quest.de/personals/verify-email/">hier</a> folgenden Verifizierungscode an: {verificationCode}',
+                    subject='ClimateQuest - dein Verifizierungscode ist da!',
+                    message=f'Bitte gib <a href="https://climate-quest.de/personals/verify-email/">hier</a> folgenden Verifizierungscode an: {verificationCode}',
                     recipient_list=user.email,
                     fail_silently=False,
                     mailinglist_needless=True,
                     user=user,
-                    fehlermeldung='Fehler beim E-Mail-Versand. Probieren Sie die Registrierung ohne E-Mail und fügen Sie Ihre E-Mail-Adresse später in den Einstellungen hinzu.'
+                    fehlermeldung='Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge deine E-Mail-Adresse später in den Einstellungen hinzu.'
                 )
                 if not mail_output:
                     verificationCode.delete()
@@ -374,8 +374,8 @@ def settings_view(request):
 
                 mail_output = send_mail_function(
                     request=request,
-                    subject='ClimateQuest - Ihr Verifizierungscode ist da!',
-                    message=f'Bitte geben Sie <a href="https://climate-quest.de/personals/verify-email/">hier</a> folgenden Verifizierungscode an: {verificationCode}',
+                    subject='ClimateQuest - dein Verifizierungscode ist da!',
+                    message=f'Bitte gib <a href="https://climate-quest.de/personals/verify-email/">hier</a> folgenden Verifizierungscode an: {verificationCode}',
                     recipient_list=email,
                     fail_silently=False,
                     verificationCodeSaved=verificationCodeSaved,
@@ -448,7 +448,7 @@ def reset_password(request):
             request=request,
             redirect_error='reset_password',
             subject='ClimateQuest - Passwort Reset',
-            message=f'Wir haben Ihnen ein neues, zufällig generiertes Passwort erstellt: {new_password} \nMelden Sie sich damit und mit Ihrem Benutzername {user.username} <a href="https://climate-quest.de/personals/login/">hier</a> an und ändern Sie aus Sicherheitsgründen möglichst bald unter "Profil bearbeiten" Ihr Passwort.',
+            message=f'Wir haben dir ein neues, zufällig generiertes Passwort erstellt: {new_password} \nMelde dich damit und mit deinem Benutzernamen {user.username} <a href="https://climate-quest.de/personals/login/">hier</a> an und ändere aus Sicherheitsgründen möglichst bald unter "Profil bearbeiten" dein Passwort.',
             recipient_list=user.email,
             fail_silently=False,
         )

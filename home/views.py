@@ -146,6 +146,8 @@ def delete_benachrichtigung(request, id):
 
 def share(request):
     url = request.GET.get('url')
+    if url is None:
+        url = "https://climate-quest.de"
     return render(request, 'share.html', {'url': url})
 
 def nutzungsbedingungen(request):

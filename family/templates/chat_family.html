@@ -1,5 +1,11 @@
 {% extends "base.html" %}
+
+{% block meta %}
+    <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+
 {% load static %}
+
 {% block title %} {% if family %}Chat: Family {{ family.name }}{% else %}Die Family konnte nicht geladen werden.{% endif %} {% endblock %}
 
 {% block content %}

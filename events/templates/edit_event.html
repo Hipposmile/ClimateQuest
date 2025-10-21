@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-
+{% block meta %}
+    <meta name="robots" content="noindex, nofollow">
+{% endblock %}
 {% block title %}Event {{ event.name }} bearbeiten{% endblock %}
 
 {% block content %}

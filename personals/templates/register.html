@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block meta %}
+    <meta name="description" content="Registriere dich für ein ClimateQuest Konto, um personalisierte Funktionen zu nutzen und deinen Beitrag im Kampf gegen den Klimawandel zu verfolgen.">
+{% endblock %}
+
 {% block title %}Registrieren{% endblock %}
 
 {% block content %}
@@ -54,7 +58,7 @@
             if (!getCookiePreferences().recaptcha) {
                 let register_button = document.getElementById('register-button');
                 register_button.disabled = true;
-                register_button.textContent = "Um sich zu registrieren, wird reCAPTCHA benötigt. Bitte akzeptieren Sie diese, um sich zu registrieren.";
+                register_button.textContent = "Um sich zu registrieren, wird reCAPTCHA benötigt. Bitte akzeptiere diese, um sich zu registrieren.";
             }
         });
 

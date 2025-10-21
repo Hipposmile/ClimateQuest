@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block meta %}
+    <meta name="description" content="Sieh dir den Post im Forum von ClimateQuest an und lies die Antworten anderer User zu diesem Thema. Antworte selbst auf den Post, um dein Wissen zu teilen.">
+{% endblock %}
+
 {% block title %}Post {{ post.title }}{% endblock %}
 
 {% block content %}
@@ -107,7 +111,7 @@
                     form.submit();
                 } catch {
                     console.error("Variable Quill not found");
-                    alert("Ein interner Fehler ist aufgetreten. Probieren Sie es später bitte erneut!");
+                    alert("Ein interner Fehler ist aufgetreten. Probiere es später bitte erneut!");
                     return false;
                 }
             }

@@ -233,6 +233,7 @@ document.getElementById('btn-accept').addEventListener('click', () => {
         consent[key] = true;
     }
     setConsent(consent);
+    window.location.reload();
 });
 
 document.getElementById('btn-reject').addEventListener('click', () => {
@@ -241,6 +242,7 @@ document.getElementById('btn-reject').addEventListener('click', () => {
         consent[key] = cookieCategories[key].required;
     }
     setConsent(consent);
+    window.location.reload();
 });
 
 document.getElementById('btn-settings').addEventListener('click', () => {
@@ -261,6 +263,7 @@ document.getElementById('btn-save').addEventListener('click', () => {
         consent[key] = cookieCategories[key].required || document.getElementById(key).checked;
     }
     setConsent(consent);
+    window.location.reload();
 });
 
 // 💾 Consent speichern und Banner entfernen
@@ -312,7 +315,7 @@ function handleCookieBlocks(consentState) {
             el.innerHTML = content;
         } else {
             el.innerHTML = `<div style="background:#ccc; padding:15px; border-radius:8px; margin: 15px;">
-        Dieses Element ist blockiert. Bitte '${type}'-Cookies erlauben, um es zu sehen. Evtl. müssen Sie die Seite anschließend neu laden.
+        Dieses Element ist blockiert. Bitte '${type}'-Cookies erlauben, um es zu sehen. Evtl. musst du die Seite anschließend neu laden.
       </div>`;
         }
     });
@@ -364,7 +367,7 @@ function handleCookieBlocks(consentState) {
             }
         } else {
             el.innerHTML = `<div style="background:#ccc; padding:15px; border-radius:8px; margin: 15px;">
-          Dieses Element ist blockiert. Bitte '${type}'-Cookies erlauben, um es zu sehen. Evtl. müssen Sie die Seite anschließend neu laden.
+          Dieses Element ist blockiert. Bitte '${type}'-Cookies erlauben, um es zu sehen. Evtl. musst du die Seite anschließend neu laden.
         </div>`;
         }
     });
