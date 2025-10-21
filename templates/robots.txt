@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /ClimateQuestAdmin/
+Disallow: /admin/
+Disallow: /personals/settings/
+Disallow: /verbrauch/edit/
+Disallow: /family/family/
+Disallow: /community/community/
+Disallow: /events/edit/
+Disallow: /artikel/edit/
+Disallow: /benachrichtigungen/
+Allow: /
+
+Sitemap: https://climate-quest.de/sitemap.xml
