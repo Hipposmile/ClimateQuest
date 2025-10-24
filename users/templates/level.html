@@ -4,7 +4,7 @@
 {% block meta %}
     <meta name="description" content="Sieh dir dein Level bei ClimateQuest an.">
 {% endblock %}
-{% block title %}{% if user == request.user %}Mein Level{% else %}Level von {{ user }}{% endif %}{% endblock %}
+{% block title %}ClimateQuest - {% if user == request.user %}Mein Level{% else %}Level von {{ user }}{% endif %}{% endblock %}
 {% block content %}
 
     <style>

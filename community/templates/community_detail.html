@@ -4,8 +4,7 @@
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 
-{% block title %} {% if community %}Community {{ community.name }}{% else %}Die Community konnte nicht geladen werden.
-{% endif %} {% endblock %}
+{% block title %}ClimateQuest - {% if community %}Community {{ community.name }}{% else %}Die Community konnte nicht geladen werden.{% endif %} {% endblock %}
 
 {% block content %}
     {% if error %}

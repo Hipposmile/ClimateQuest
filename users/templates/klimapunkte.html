@@ -5,7 +5,7 @@
     <meta name="description" content="Guck dir deine Klimapunkte bei ClimateQuest an und erfahre, wie viel CO2 du eingespart hast.">
 {% endblock %}
 
-{% block title %}{% if user == request.user %}Meine Klimapunkte{% else %}Klimapunkte von {{ user }}{% endif %}{% endblock %}
+{% block title %}ClimateQuest - {% if user == request.user %}Meine Klimapunkte{% else %}Klimapunkte von {{ user }}{% endif %}{% endblock %}
 
 {% block content %}
 <h1>{% if user == request.user %}Meine Klimapunkte{% else %}Klimapunkte von {{ user }}{% endif %}</h1>
