@@ -106,7 +106,6 @@
                 event.preventDefault();
                 try {
                     var html = quill.root.innerHTML;
-                    console.log(html)
                     form.querySelector('input[name=content]').value = html;
                     form.submit();
                 } catch {

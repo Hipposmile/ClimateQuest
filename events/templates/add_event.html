@@ -81,7 +81,6 @@
                 event.preventDefault();
                 try {
                     var html = quill.root.innerHTML;
-                    console.log(html)
                     form.querySelector('input[name=description]').value = html;
                     form.submit();
                 } catch {

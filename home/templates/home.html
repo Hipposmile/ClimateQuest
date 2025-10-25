@@ -6,6 +6,7 @@
 {% block title %}ClimateQuest - Startseite{% endblock %}
 
 {% block content %}
+<div class="cookie-blocked" data-requires="trustpilot" data-content="<script src='https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js'></script>"></div>
 <style>
     #counters {
         display: flex;
@@ -119,7 +120,6 @@
         color: var(--color-text);
         transform: rotateY(180deg);
     }
-
 </style>
 <h1>Home</h1>
 {% if messages %}
@@ -131,7 +131,6 @@
 <p>Willkommen, {{ user.username }}!</p>
 {% else %}
 {% endif %}
-
 <input type="hidden" id="user_count" value="{{ user_count }}">
 <input type="hidden" id="klimapunkte" value="{{ klimapunkte|floatformat:-4 }}">
 
@@ -154,6 +153,14 @@
         <p> Tonnen CO2e eingespart</p>
     </div>
 </div>
+<hr>
+{% if user.is_authenticated %}
+<!-- TrustBox widget - Review Collector -->
+<div class="cookie-blocked trustpilot-widget" data-requires="trustpilot" data-locale="de-DE" data-template-id="56278e9abfbbba0bdcd568bc" data-businessunit-id="68fbcb7b4ed74fdfc37990b1" data-style-height="52px" data-style-width="100%" data-token="cab662ec-d2c9-4e2a-a22f-f7b1eabcefdb">
+  <a href="https://de.trustpilot.com/review/climate-quest.de" target="_blank" rel="noopener">Trustpilot</a>
+</div>
+<!-- End TrustBox widget -->
+{% endif %}
 <hr>
 <h3>Wie ClimateQuest funktioniert:</h3>
 <div class="cards">
@@ -283,9 +290,6 @@
 
             let user_count = document.getElementById('user_count').value;
             let klimapunkte = document.getElementById('klimapunkte').value;
-
-            console.log("Users: " + user_count);
-            console.log("Klimapunke: " + klimapunkte);
 
             //User und Klimapunkte in Floats umwandeln, trotz . und , zur Trennung
             user_count = formatToFloat(user_count);

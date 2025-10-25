@@ -29,6 +29,11 @@ const cookieCategories = {
         label: "Quill",
         explanation: "Hiermit kannst du manche Text-Inputs schöner stylen, z.B. fett, kursiv, unterstrichen oder mit Links.",
         required: false
+    },
+    trustpilot: {
+        label: "Trustpilot",
+        explanation: "Ermöglicht die Implementierung von Trustpilot auf der Website.",
+        required: false
     }
 };
 
@@ -280,7 +285,6 @@ function handleCookieBlocks(consentState) {
         const content = el.dataset.content?.trim();
 
         if (consentState[type]) {
-            console.log(content);
 
             // 🔍 <script> extern
             const scriptSrcMatch = content.match(/<script\s+src=["']([^"']+)["']><\/script>/i);
@@ -332,7 +336,6 @@ function handleCookieBlocks(consentState) {
                 // Prüfen, ob es ein externes Skript ist
                 const srcMatch = content.match(/<script\s+src=["']([^"']+)["']><\/script>/i);
                 if (srcMatch) {
-                    console.log(content);
                     const script = document.createElement("script");
                     script.src = srcMatch[1];
                     script.async = true; // optional, je nach Bedarf
