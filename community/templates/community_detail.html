@@ -64,14 +64,33 @@
             }
         });
     </script>
+    <script>
+        let rank = 1;
+        let div_rank;
+        let rank_span;
+    </script>
     <ul class="klimapunkte-list">
         {% for member in members_with_klimapunkte %}
             <li class="{% if member.member.name == family.name %}klimapunkte_me{% else %}klimapunkte_other{% endif %}"
                 id="{% if member.member.name == family.name %}me{% else %}other{% endif %}">
-                <a href="{% url 'family_detail' member.member.id %}">{{ member.member.name }}</a>
+                <span><span style="font-weight: #888;" id="rank_{{member.member.id}}"></span><a href="{% url 'family_detail' member.member.id %}">{{ member.member.name }}</a></span>
                 <br>
                 <span style="font-size:0.95em; color:#888;">(durchschnittlich {{ member.klimapunkte|floatformat:-4 }} Klimapunkte)</span>
             </li>
+            <script>             
+                rank_span = document.getElementById("rank_{{member.member.id}}");
+                console.log(rank_span);
+                rank_span.innerText = rank + ". ";
+                div_rank = rank_span.closest("li");
+                if (rank == 1) {
+                    div_rank.style.borderLeft = "4px solid #FFD700";  // Gold
+                } else if (rank == 2) {
+                    div_rank.style.borderLeft = "4px solid #C0C0C0";  // Silber
+                } else if (rank == 3) {
+                    div_rank.style.borderLeft = "4px solid #CD7F32";  // Bronze
+                }
+                rank ++;
+            </script>
         {% endfor %}
     </ul>
     <a href="#me" class="me-btn">Zu mir</a>
