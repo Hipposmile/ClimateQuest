@@ -85,7 +85,6 @@
 </main>
 
 <footer>
-    <p id="innerWidth"></p>
     <p><a href="{% url 'aktionenTable' %}">Alle Aktionen</a></p>
     <p><a href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a></p>
     <p><a href="{% static 'rechtliches/Impressum.pdf' %}" download>Impressum</a></p>
@@ -322,8 +321,6 @@
     } else {
         renderDesktopNav();
     }
-
-    document.getElementById('innerWidth').textContent = "innerWidth: " + window.innerWidth;
 </script>
 
 
