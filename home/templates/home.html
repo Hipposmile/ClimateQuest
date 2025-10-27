@@ -36,10 +36,11 @@
         box-shadow: var(--shadow-md);
     }
 
-    #counters h3 {
+    #counters .h3_size {
         font-size: 2.5rem;
         margin: 0.5rem 0;
         color: var(--color-counters);
+        font-weight: bold;
     }
 
     #counters p {
@@ -61,6 +62,18 @@
         margin-top: 2rem;
         padding: 1rem;
         box-sizing: border-box;
+    }
+
+    .cards .h1_size {
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+        font-weight: bold;
+    }
+
+    .cards .h3_size {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        font-weight: bold;
     }
 
     .flip-card {
@@ -122,26 +135,33 @@
     }
 </style>
 <h1>Home</h1>
+
 {% if messages %}
 {% for message in messages %}
 <p class="{{ message.level_tag }}-message">{{ message }}</p>
 {% endfor %}
 {% endif %}
+
 {% if user.is_authenticated %}
 <p>Willkommen, {{ user.username }}!</p>
 {% else %}
 {% endif %}
+
+<hr>
+
+<h2>Übersicht</h2>
+
 <input type="hidden" id="user_count" value="{{ user_count }}">
 <input type="hidden" id="klimapunkte" value="{{ klimapunkte|floatformat:-4 }}">
 
 <div id="counters">
     <div id="user_zähler_div">
-        <h3 id="user_zähler">{{ user_count }}</h3>
+        <p class="h3_size" id="user_zähler">{{ user_count }}</p>
         <p> registrierte Nutzer hat diese Plattform bereits.</p>
     </div>
 
     <div id="klimapunkte_zähler_div">
-        <h3 id="klimapunkte_zähler">{{ klimapunkte|floatformat:-4 }}</h3>
+        <p class="h3_size" id="klimapunkte_zähler">{{ klimapunkte|floatformat:-4 }}</p>
         <p> Klimapunkte wurden von all diesen Nutzern zusammen bereits gesammelt.</p>
     </div>
 
@@ -149,10 +169,11 @@
         <p>Weil jeder Klimapunkte für
             <b id="co2_per_klimapunkt">1 kg</b> eingespartes CO2 steht, wurden dadurch insgesamt
         </p>
-        <h3 id="co2_zähler"></h3>
+        <p class="h3_size" id="co2_zähler"></p>
         <p> Tonnen CO2e eingespart</p>
     </div>
 </div>
+
 {% if user.is_authenticated %}
 <hr>
 <!-- TrustBox widget - Review Collector -->
@@ -161,17 +182,18 @@
 </div>
 <!-- End TrustBox widget -->
 {% endif %}
+
 <hr>
-<h3>Wie ClimateQuest funktioniert:</h3>
+<h2>Wie ClimateQuest funktioniert:</h2>
 <div class="cards">
     <div class="flip-card">
         <div class="flip-card-inner">
             <div class="flip-card-front" style="background: linear-gradient(135deg, #00f5a0 0%, #00d9f5 100%);">
-                <h3>Allgemeines</h3>
+                <p class="h3_size">Allgemeines</p>
                 <img src="{% static 'images/ClimateQuest.png' %}" alt="ClimateQuest Logo">
             </div>
             <div class="flip-card-back" style="background: linear-gradient(135deg, #00f5a0 0%, #00d9f5 100%);">
-                <h1>Allgemeines</h1>
+                <p class="h1_size">Allgemeines</p>
                 <p>ClimateQuest hat es sich zum Ziel gemacht, möglichst viele Menschen für mehr Klimaschutz zu
                     begeistern und zu motivieren. </p>
             </div>
@@ -180,11 +202,11 @@
     <div class="flip-card">
         <div class="flip-card-inner">
             <div class="flip-card-front" style="background: linear-gradient(135deg, #00c3ff 0%, #ffff1c 100%);">
-                <h3>1. Account anlegen</h3>
+                <p class="h3_size">1. Account anlegen</p>
                 <img src="{% static 'images/account.png' %}" alt="Allgemeines">
             </div>
             <div class="flip-card-back" style="background: linear-gradient(135deg, #00c3ff 0%, #ffff1c 100%);">
-                <h1>1. Account anlegen</h1>
+                <p class="h1_size">1. Account anlegen</p>
                 <p>Registriere dich <a href="{% url 'register_view' %}">hier</a>.</p>
             </div>
         </div>
@@ -192,11 +214,11 @@
     <div class="flip-card">
         <div class="flip-card-inner">
             <div class="flip-card-front" style="background: linear-gradient(135deg, #ff4e50 0%, #f9d423 100%);">
-                <h3>2. Aktion hinzufügen</h3>
+                <p class="h3_size">2. Aktion hinzufügen</p>
                 <img src="{% static 'images/aktion.png' %}" alt="Aktion">
             </div>
             <div class="flip-card-back" style="background: linear-gradient(135deg, #ff4e50 0%, #f9d423 100%);">
-                <h1>2. Aktion hinzufügen</h1>
+                <p class="h1_size">2. Aktion hinzufügen</p>
                 <p>Füge <a href="{% url 'add' %}">hier</a> eine Aktion hinzu und erhalte Klimapunkte.</a></p>
             </div>
         </div>
@@ -204,11 +226,11 @@
     <div class="flip-card">
         <div class="flip-card-inner">
             <div class="flip-card-front" style="background: linear-gradient(135deg, #ff00cc 0%, #333399 100%);">
-                <h3>3. Level aufsteigen</h3>
+                <p class="h3_size">3. Level aufsteigen</p>
                 <img src="{% static 'images/level.png' %}" alt="Level">
             </div>
             <div class="flip-card-back" style="background: linear-gradient(135deg, #ff00cc 0%, #333399 100%);">
-                <h1>3. Level aufsteigen</h1>
+                <p class="h1_size">3. Level aufsteigen</p>
                 <p>Steige ein {% if user.is_authenticated %}
                     <a href="{% url 'level_view' request.user.id %}">Level</a>{% else %} Level {% endif %} auf, wenn
                     du genug Klimapunkte gesammelt hast.</p>
@@ -218,11 +240,11 @@
     <div class="flip-card">
         <div class="flip-card-inner">
             <div class="flip-card-front" style="background: linear-gradient(135deg, #ff512f 0%, #dd2476 100%);">
-                <h3>4. In Families vergleichen</h3>
+                <p class="h3_size">4. In Families vergleichen</p>
                 <img src="{% static 'images/family.png' %}" alt="Families">
             </div>
             <div class="flip-card-back" style="background: linear-gradient(135deg, #ff512f 0%, #dd2476 100%);">
-                <h1>4. In Families vergleichen</h1>
+                <p class="h1_size">4. In Families vergleichen</p>
                 <p>Erstelle <a href="{% url 'create_family' %}">hier</a> eine Family und vergleiche dich dort mit
                     Familie, Freunden oder Kollegen.</p>
             </div>
@@ -231,11 +253,11 @@
     <div class="flip-card">
         <div class="flip-card-inner">
             <div class="flip-card-front" style="background: linear-gradient(135deg, #fc00ff 0%, #00dbde 100%);">
-                <h3>5. In Communities vergleichen</h3>
+                <p class="h3_size">5. In Communities vergleichen</p>
                 <img src="{% static 'images/community.png' %}" alt="Communities">
             </div>
             <div class="flip-card-back" style="background: linear-gradient(135deg, #fc00ff 0%, #00dbde 100%);">
-                <h1>5. In Communities vergleichen</h1>
+                <p class="h1_size">5. In Communities vergleichen</p>
                 <p>Erstelle <a href="{% url 'create_community' %}">hier</a> eine Community aus mehreren Families und
                     vergleiche dort den Durchschnitt deiner eigenen Family mit dem der anderen.</p>
             </div>
@@ -244,11 +266,11 @@
     <div class="flip-card">
         <div class="flip-card-inner">
             <div class="flip-card-front" style="background: linear-gradient(135deg, #00ff6a 0%, #f7ff00 100%);">
-                <h3>5. Events hinzufügen</h3>
+                <p class="h3_size">5. Events hinzufügen</p>
                 <img src="{% static 'images/event.png' %}" alt="Event">
             </div>
             <div class="flip-card-back" style="background: linear-gradient(135deg, #00ff6a 0%, #f7ff00 100%);">
-                <h1>5. Events hinzufügen</h1>
+                <p class="h1_size">5. Events hinzufügen</p>
                 <p>Füge <a href="{% url 'add_event' %}">hier</a> ein Event hinzu und organisiere so Demos, große
                     Müllsammelaktionen oder Infoveranstaltungen mit anderen Nutzern.</p>
             </div>
@@ -257,11 +279,11 @@
     <div class="flip-card">
         <div class="flip-card-inner">
             <div class="flip-card-front" style="background: linear-gradient(135deg, #d47300 0%, #bfff00 100%);">
-                <h3>6. Artikel hinzufügen</h3>
+                <p class="h3_size">6. Artikel hinzufügen</p>
                 <img src="{% static 'images/artikel.png' %}" alt="Artikel">
             </div>
             <div class="flip-card-back" style="background: linear-gradient(135deg, #d47300 0%, #bfff00 100%);">
-                <h1>6. Artikel hinzufügen</h1>
+                <p class="h1_size">6. Artikel hinzufügen</p>
                 <p>Füge <a href="{% url 'add_artikel' %}">hier</a> einen Artikel hinzu und informiere andere über
                     Themen, die dir wichtig sind.</p>
             </div>
@@ -270,11 +292,11 @@
     <div class="flip-card">
         <div class="flip-card-inner">
             <div class="flip-card-front" style="background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);">
-                <h3>7. Im Forum Fragen stellen</h3>
+                <p class="h3_size">7. Im Forum Fragen stellen</p>
                 <img src="{% static 'images/forum.png' %}" alt="Forum">
             </div>
             <div class="flip-card-back" style="background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);">
-                <h1>7. Im Forum Fragen stellen</h1>
+                <p class="h1_size">7. Im Forum Fragen stellen</p>
                 <p>Frage <a href="{% url 'add_forum_post' %}">hier</a> andere Nutzer, wenn du nicht genau weißt, wie
                     du bestimmte Dinge organisieren oder machen kannst.</p>
             </div>

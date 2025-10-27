@@ -37,9 +37,8 @@ LOGIN_URL = '/personals/login/'
 
 STATIC_URL = '/static/'
 
-"""STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Für collectstatic
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Für eigene Dateien"""
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Für eigene Dateien
 
 
 STATICFILES_DIRS = [
