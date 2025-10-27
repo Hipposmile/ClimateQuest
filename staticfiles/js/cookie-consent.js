@@ -39,18 +39,7 @@ const cookieCategories = {
 
 // 🎨 Styles dynamisch einfügen
 const styleCookie = document.createElement('style');
-styleCookie.textContent = `:root {
-        --color-bg: #f4f6f8;
-        --color-text: #333;
-        --color-primary: #3498db;
-        --color-primary-hover: #2980b9;
-        --color-accent: #ff00a2;
-        --color-white: #ffffff;
-        --color-shadow-light: rgba(0, 0, 0, 0.06);
-        --color-shadow-hover: rgba(0, 0, 0, 0.1);
-        --color-success: #2ecc71;
-        --color-muted: #888;
-    }
+styleCookie.textContent = `
     #cookie-overlay {
         position: fixed; inset: 0;
         background: var(--color-shadow-light);
@@ -202,7 +191,7 @@ document.head.appendChild(styleCookie);
 // 🧱 HTML-Struktur erzeugen
 const banner = document.createElement('div');
 banner.innerHTML = `<div id="cookie-overlay"></div>
-  <div id="cookie-banner">
+  <div role="dialog" aria-label="Cookie-Einstellungen" aria-modal="true" id="cookie-banner">
     <p><strong>Wir verwenden Cookies</strong> für Funktion, Analyse und Marketing. <a href="https://climate-quest.de/static/rechtliches/Datenschutz.pdf">Mehr erfahren</a>.</p>
     <p><strong>Nach Änderung der Cookie-Einstellungen Seite bitte neu laden!</strong></p>
     <div class="buttons">
@@ -384,14 +373,17 @@ window.addEventListener('load', () => {
 });
 
 // 🔁 Reset-Button zum Zurücksetzen
-const resetBtn = document.createElement('button');
-resetBtn.id = 'cookie-reset';
-resetBtn.innerHTML = '&#x1F36A;';
+const resetBtnDiv = document.createElement('div');
+resetBtnDiv.id = 'cookie-reset-div';
+resetBtnDiv.role = "complementary";
+resetBtnDiv.ariaLabel = 'Cookie-Einstellungen anzeigen';
+resetBtnDiv.innerHTML = '<button id="cookie-reset">&#x1F36A;</button>';
+const resetBtn = resetBtnDiv.querySelector('#cookie-reset');
 resetBtn.addEventListener('click', () => {
     localStorage.removeItem('cookieConsent');
     location.reload();
 });
-document.body.appendChild(resetBtn);
+document.body.appendChild(resetBtnDiv);
 
 function getCookiePreferences() {
     const consentString = localStorage.getItem('cookieConsent');
