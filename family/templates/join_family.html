@@ -15,8 +15,10 @@
 {% endif %}
 <form method="post">
     {% csrf_token %}
-    <input type="text" name="familyname" placeholder="Familyname" required>
-    <input type="password" name="family_password" placeholder="Passwort" required>
+    <label for="familyname">Familyname:</label>
+    <input type="text" name="familyname" id="familyname" placeholder="Familyname" required>
+    <label for="family_password">Passwort:</label>
+    <input type="password" name="family_password" id="family_password" placeholder="Passwort" required>
     <button type="submit">Family beitreten</button>
 </form>
 

@@ -39,8 +39,13 @@
             <option value="benutzerdefiniert">Benutzerdefiniert</option>
         </select>
 
-        <input type="hidden" name="start_date" id="start_date" placeholder="Startdatum" value="" required>
-        <input type="hidden" name="end_date" id="end_date" placeholder="Enddatum" value="" required>
+        <div id="hiddenDateDiv" style="display: none;">
+            <label for="start_date">Startdatum:</label>
+            <input type="date" name="start_date" id="start_date" placeholder="Startdatum" value="" required>
+            <label for="end_date">Enddatum:</label>
+            <input type="date" name="end_date" id="end_date" placeholder="Enddatum" value="" required>
+        </div>
+        
 
         <button type="submit">Anwenden</button>
     </form>
@@ -52,15 +57,12 @@
 
     <script>
         document.getElementById("zeitraum").addEventListener("change", function () {
-            const startDateInput = document.getElementById("start_date");
-            const endDateInput = document.getElementById("end_date");
+            const hiddenDateDiv = document.getElementById("hiddenDateDiv");
 
             if (this.value === "benutzerdefiniert") {
-                startDateInput.type = "date";
-                endDateInput.type = "date";
+                hiddenDateDiv.style.display = "block";
             } else {
-                startDateInput.type = "hidden";
-                endDateInput.type = "hidden";
+                hiddenDateDiv.style.display = "none";
             }
         });
     </script>

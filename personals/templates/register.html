@@ -15,9 +15,11 @@
     {% endif %}
     <form method="post" onsubmit="register(event)">
         {% csrf_token %}
+        <label for="username">Benutzername:</label>
         <small id="username-feedback"></small>
         <input type="text" name="username" id="username" placeholder="Benutzername" required>
-        <input type="password" name="password" placeholder="Passwort" id="password" required>
+        <label for="password">Passwort:</label>
+        <input type="password" name="password" id="password" placeholder="Passwort" required>
         <small id="email-feedback"></small>
         <input type="email" name="email" id="email" placeholder="E-Mail (Optional)">
         <small>Du kannst eine E-Mail-Adresse angeben, um Benachrichtigungen zu erhalten und, falls du deinen

@@ -17,23 +17,31 @@
 <h3>E-Mail-Adresse verifizieren</h3>
 <form method="post">
     {% csrf_token %}
-    <input type="text" name="username" placeholder="Username" required>
-    <input type="password" name="password" placeholder="Passwort" required>
-    <input type="password" name="verificationCode" placeholder="Verifizierungscode" required>
+    <label for="username">Benutzername:</label>
+    <input type="text" name="username" id="username" placeholder="Username" required>
+    <label for="password">Passwort:</label>
+    <input type="password" name="password" id="password" placeholder="Passwort" required>
+    <label for="verificationCode">Verifizierungscode:</label>
+    <input type="password" name="verificationCode" id="verificationCode" placeholder="Verifizierungscode" required>
     <button type="submit" name="verify">Bestätigen</button>
 </form>
 <h3>Verifizierungscode erneut senden</h3>
 <form method="post">
     {% csrf_token %}
-    <input type="text" name="username" placeholder="Username" required>
-    <input type="password" name="password" placeholder="Passwort" required>
+    <label for="username">Benutzername:</label>
+    <input type="text" name="username" id="username" placeholder="Username" required>
+    <label for="password">Passwort:</label>
+    <input type="password" name="password" id="password" placeholder="Passwort" required>
     <button type="submit" name="resend">Senden</button>
 </form>
 <h3>neue E-Mail-Adresse angeben</h3>
 <form method="post">
     {% csrf_token %}
-    <input type="text" name="username" placeholder="Username" required>
-    <input type="password" name="password" placeholder="Passwort" required>
+    <label for="username">Benutzername:</label>
+    <input type="text" name="username" id="username" placeholder="Username" required>
+    <label for="password">Passwort:</label>
+    <input type="password" name="password" id="password" placeholder="Passwort" required>
+    <label for="email">Neue E-Mail-Adresse:</label>
     <small id="email-feedback"></small>
     <input type="text" id="email" name="email" placeholder="neue E-Mail-Adresse">
     <button type="submit" name="new_email_adress">Speichern</button>

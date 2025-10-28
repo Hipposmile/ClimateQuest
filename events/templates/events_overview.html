@@ -26,8 +26,9 @@
 <form method="post">
     {% csrf_token %}
     <div id="search_keyword_div">
+        <label for="search_keyword">Suchwort:</label>
         <small>Leer lassen, um alle Events anzuzeigen</small>
-        <input type="search" name="search_keyword" placeholder="Suchwort">
+        <input type="search" name="search_keyword" id="search_keyword" placeholder="Suchwort">
     </div>
     
     <label for="order_by">Sortieren nach:</label>

@@ -177,7 +177,8 @@
     </div>
     <form method="post" class="chat-family-form" onsubmit="return true;">
         {% csrf_token %}
-        <input type="text" name="message" placeholder="Nachricht eingeben..." required>
+        <label for="message">Nachricht eingeben</label>
+        <input type="text" name="message" id="message" placeholder="Nachricht eingeben..." required>
         <button type="submit" name="send">Senden</button>
     </form>
 </div>

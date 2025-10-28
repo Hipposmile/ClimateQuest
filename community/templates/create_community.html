@@ -15,12 +15,17 @@
 <form method="post">
     {% csrf_token %}
     <small id="communityname-feedback"></small>
+    <label for="communityname">Communityname:</label>
     <input type="text" id="communityname" name="communityname" placeholder="Communityname" required>
+    <label for="password">Passwort:</label>
     <input type="password" id="password" name="community_password" placeholder="Passwort" required>
+    <label for="community_admin_password">Admin Passwort:</label>
     <input type="password" id="community_admin_password" name="community_admin_password" placeholder="Admin Passwort"
         id="community_admin_password" required>
+    <label for="familyname">Familyname:</label>
     <small id="familyname-feedback"></small>
     <input type="text" id="familyname" name="familyname" placeholder="Familyname" required>
+    <label for="family_admin_password">Family Admin Passwort:</label>
     <input type="password" id="family_admin_password" name="family_admin_password" placeholder="Family Admin Passwort"
         required>
     <div>

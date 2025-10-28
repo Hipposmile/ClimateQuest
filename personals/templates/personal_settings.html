@@ -28,7 +28,9 @@
 <h3>Benutzernamen ändern</h3>
 <form method="post">
     {% csrf_token %}
-    <input type="password" name="password" placeholder="Passwort" required>
+    <label for="password">Aktuelles Passwort:</label>
+    <input type="password" name="password" id="password" placeholder="Passwort" required>
+    <label for="new_username">Neuer Benutzername:</label>
     <small id="username-feedback"></small>
     <input type="text" name="new_username" id="new_username" placeholder="Neuer Benutzername" required>
     <small>Alle Mitglieder deiner Families und Communities werden darüber benachrichtigt werden.</small>
@@ -67,7 +69,9 @@
 <h3>Passwort ändern</h3>
 <form method="post">
     {% csrf_token %}
-    <input type="password" name="current_password" placeholder="Aktuelles Passwort" required>
+    <label for="current_password">Aktuelles Passwort:</label>
+    <input type="password" name="current_password" id="current_password" placeholder="Aktuelles Passwort" required>
+    <label for="new_password">Neues Passwort:</label>
     <input type="password" name="new_password" id="new_password" placeholder="Neues Passwort" required>
     <div>
         <h4>Wir empfehlen folgende Passwortanforderungen, um deinen Account vor Hackingangriffen und Accountübernahmen
@@ -106,9 +110,11 @@
 <h3>E-Mail-Adresse ändern</h3>
 <form method="post">
     {% csrf_token %}
+    <label for="email">Neue E-Mail-Adresse:</label>
     <small id="email-feedback"></small>
     <input type="email" name="email" id="email" placeholder="neue E-Mail-Adresse">
-    <input type="password" name="password" placeholder="Passwort" required>
+    <label for="password">Passwort:</label>
+    <input type="password" name="password" id="password" placeholder="Passwort" required>
     <small>Dein Account wird so lange inaktiv sein, bis die neue E-Mail-Adresse verifiziert wurde.</small>
     <button type="submit" name="change_email">Ändern</button>
 </form>
@@ -166,7 +172,8 @@
 <h3>Account löschen</h3>
 <form method="post" onsubmit="return confirm('Willst du deinen Account wirklich löschen? Alle Mitglieder deiner Families und Communities werden darüber benachrichtigt werden.');">
     {% csrf_token %}
-    <input type="password" name="password" placeholder="Passwort" required>
+    <label for="password">Passwort:</label>
+    <input type="password" name="password" id="password" placeholder="Passwort" required>
     <small>Alle Mitglieder deiner Families und Communities werden darüber benachrichtigt werden.</small>
     <button type="submit" name="delete_account" style="color:red;">Diesen Account löschen</button>
 </form>

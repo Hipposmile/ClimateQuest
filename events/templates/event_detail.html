@@ -102,7 +102,8 @@
                 <form method="post">
                     {% csrf_token %}
                     <input type="hidden" name="question_id" value="{{ question.id }}">
-                    <input type="text" name="answer" placeholder="Antwort">
+                    <label for="answer">Antwort:</label>
+                    <input type="text" name="answer" id="answer" placeholder="Antwort">
                     <button name="answer_question">Antworten</button>
                 </form>
             </details>
@@ -150,7 +151,8 @@
 
 <form method="post">
     {% csrf_token %}
-    <input type="text" name="question" placeholder="Frage stellen">
+    <label for="question">Frage stellen:</label>
+    <input type="text" name="question" id="question" placeholder="Frage stellen">
     <button type="submit" name="ask_question">Frage stellen</button>
 </form>
 {% endblock %}

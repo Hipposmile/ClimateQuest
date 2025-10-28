@@ -22,8 +22,10 @@
 {% endif %}
 <form method="post">
     {% csrf_token %}
-    <input type="text" name="username" placeholder="Benutzername" required>
-    <input type="password" name="password" placeholder="Passwort" required>
+    <label for="username">Benutzername:</label>
+    <input type="text" name="username" id="username" placeholder="Benutzername" required>
+    <label for="password">Passwort:</label>
+    <input type="password" name="password" id="password" placeholder="Passwort" required>
     <button type="submit">Login</button>
 </form>
 <p>Du hast noch kein Konto? <a href="{% url 'register_view' %}">Jetzt registrieren</a></p>
