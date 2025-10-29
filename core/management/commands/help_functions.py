@@ -65,9 +65,9 @@ aktionen_mapping = {
         "source": "<a href='https://um.baden-wuerttemberg.de/fileadmin/redaktion/m-um/intern/Dateien/Dokumente/2_Presse_und_Service/Publikationen/Klima/Klima-Sparbuechle-barrierefrei.pdf' target='_blank'>Klima Sparbüchle</a>",
     },
 
-    "1 Jahr lang Hafermilch statt Kuhmilch": {
+    "1 Jahr lang Autofahrten kompensieren": {
         "name": "1 Jahr lang Autofahrten kompensieren",
-        "klimapunkte": 54.5,
+        "klimapunkte": 1393,
         "mengeBeschreibung": "Jahre",
         "anmerkung": "",
         "source": "<a href='https://um.baden-wuerttemberg.de/fileadmin/redaktion/m-um/intern/Dateien/Dokumente/2_Presse_und_Service/Publikationen/Klima/Klima-Sparbuechle-barrierefrei.pdf' target='_blank'>Klima Sparbüchle</a>",
@@ -225,6 +225,14 @@ aktionen_mapping = {
         "anmerkung": "",
         "source": "<a href='https://um.baden-wuerttemberg.de/fileadmin/redaktion/m-um/intern/Dateien/Dokumente/2_Presse_und_Service/Publikationen/Klima/Klima-Sparbuechle-barrierefrei.pdf' target='_blank'>Klima Sparbüchle</a>",
     },
+
+    "1.000 kWh erneuerbar heizen": {
+        "name": "1.000 kWh erneuerbar heizen",
+        "klimapunkte": 10,
+        "mengeBeschreibung": "Jahre",
+        "anmerkung": "Im Vergleich zu fossilen Brennstoffen",
+        "source": "<a href='https://uba.co2-rechner.de/de_DE/calculator/housing/' target='_blank'>Umweltbundesamt Klimarechner</a>",
+    },
 }
 
 superuser_username = "admin"
@@ -239,76 +247,42 @@ class Command(BaseCommand):
     help = "Erstellt die Basis-Datenbankeinträge für die Anwendung."
 
     def handle(self, *args, **options):
-        def delete_database():
-            subprocess.call('rm db.sqlite3'.split())
-            subprocess.call('find . -path "*/migrations/*.py" -not -name "__init__.py" -delete'.split())
-            subprocess.call('find . -path "*/migrations/*.pyc" -delete'.split())
-            print("deleted databse")
-
-        def create_database():
-            subprocess.call('python manage.py makemigrations'.split())
-            subprocess.call('python manage.py migrate'.split())
-            print("created databse")
-
-        def create_superuser():
-            if not User.objects.filter(is_superuser=True).exists():
-                User.objects.create_superuser(
-                    username=superuser_username,
-                    password=superuser_password
-                )
-                print("created superuser")
-
-        def create_worldwide_ranking():
-            if not Family.objects.filter(name=worldwide_ranking_name).exists():
-                worldwide_ranking = Family.objects.create(
-                    name=worldwide_ranking_name,
-                    password=worldwide_ranking_password
-                )
-                for user in User.objects.all():
-                    worldwide_ranking.members.add(user)
-                print("created worldwide ranking")
-
         def create_aktionen():
-            if not AktionenListe.objects.all().exists():
-                for aktion in aktionen_mapping:
-                    aktion_name = aktionen_mapping[aktion]["name"]
-                    aktion_klimapunkte = aktionen_mapping[aktion]["klimapunkte"]
-                    aktion_mengeBeschreibung = aktionen_mapping[aktion].get("mengeBeschreibung", None)
-                    aktion_anmerkung = aktionen_mapping[aktion].get("anmerkung", None)
-                    aktion_source = aktionen_mapping[aktion].get("source", None)
+            for aktion in AktionenListe.objects.all():
+                aktion.delete()
 
-                    if aktion_name is None or aktion_klimapunkte is None:
-                        raise ValueError(f"Aktion '{aktion}' fehlt erforderliche Felder.")
+            for aktion in aktionen_mapping:
+                aktion_name = aktionen_mapping[aktion]["name"]
+                aktion_klimapunkte = aktionen_mapping[aktion]["klimapunkte"]
+                aktion_mengeBeschreibung = aktionen_mapping[aktion].get("mengeBeschreibung", None)
+                aktion_anmerkung = aktionen_mapping[aktion].get("anmerkung", None)
+                aktion_source = aktionen_mapping[aktion].get("source", None)
 
-                    AktionenListe.objects.create(
-                        name=aktion_name,
-                        klimapunkte=aktion_klimapunkte,
-                        mengeBeschreibung=aktion_mengeBeschreibung,
-                        anmerkung=aktion_anmerkung if aktion_anmerkung != None else "",
-                        source=aktion_source if aktion_source != None else "",
-                    )
-                    print("created aktion")
+                if aktion_name is None or aktion_klimapunkte is None:
+                    raise ValueError(f"Aktion '{aktion}' fehlt erforderliche Felder.")
+
+                AktionenListe.objects.create(
+                    name=aktion_name,
+                    klimapunkte=aktion_klimapunkte,
+                    mengeBeschreibung=aktion_mengeBeschreibung,
+                    anmerkung=aktion_anmerkung if aktion_anmerkung != None else "",
+                    source=aktion_source if aktion_source != None else "",
+                )
+                print("created aktion")
 
         def create_levels():
-            if not Level.objects.all().exists():
-                for level in level_mapping:
-                    level_description = level
-                    level_klimapunkte = level_mapping[level]
-                    if level_description is None or level_klimapunkte is None:
-                        raise ValueError(f"Level '{level}' fehlt erforderliche Felder.")
+            for level in Level.objects.all():
+                level.delete()
+            for level in level_mapping:
+                level_description = level
+                level_klimapunkte = level_mapping[level]
+                if level_description is None or level_klimapunkte is None:
+                    raise ValueError(f"Level '{level}' fehlt erforderliche Felder.")
 
-                    Level.objects.create(
-                        description=level_description,
-                        klimapunkte=level_klimapunkte
-                    )
-                    print("created level")
+                Level.objects.create(
+                    description=level_description,
+                    klimapunkte=level_klimapunkte
+                )
+                print("created level")
 
-        def reset_database():
-            #delete_database()
-            #create_database()
-            create_aktionen()
-            create_levels()
-            create_superuser()
-            create_worldwide_ranking()
-
-        reset_database()
+        create_aktionen()

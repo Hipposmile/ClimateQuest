@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block meta %}
-    <meta name="description" content="Eine Übersicht über all deine Familien bei ClimateQuest.">
+    <meta name="description" content="Eine Übersicht über all deine Families bei ClimateQuest.">
 {% endblock %}
 
 {% block title %}ClimateQuest - Meine Families{% endblock %}
@@ -57,7 +57,6 @@
 {% endif %}
 {% if families %}
 <section class="families-section">
-    <h2>Meine Families</h2>
     <div class="families-grid">
         {% for family in families %}
         <div class="family-card">
