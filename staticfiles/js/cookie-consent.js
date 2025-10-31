@@ -377,7 +377,7 @@ const resetBtnDiv = document.createElement('div');
 resetBtnDiv.id = 'cookie-reset-div';
 resetBtnDiv.role = "complementary";
 resetBtnDiv.ariaLabel = 'Cookie-Einstellungen anzeigen';
-resetBtnDiv.innerHTML = '<button id="cookie-reset"><p class="emoji">&#x1F36A;</p></button>';
+resetBtnDiv.innerHTML = '<button id="cookie-reset" class="emoji">&#x1F36A;</button>';
 const resetBtn = resetBtnDiv.querySelector('#cookie-reset');
 resetBtn.addEventListener('click', () => {
     localStorage.removeItem('cookieConsent');
