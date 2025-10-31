@@ -759,6 +759,16 @@ main {
     pointer-events: none;
 }
 
+@font-face {
+  font-family: 'OpenMoji';
+  src: url("../fonts/OpenMoji-color-glyf_colr_0.ttf") format('truetype');
+}
+
+.emoji {
+  font-family: 'OpenMoji', sans-serif;
+  font-size: 1em;
+}
+
 /*.chat-community-container {
     max-width: 500px;
     margin: 2rem auto;
@@ -1253,7 +1263,7 @@ summary {
 }
 
 .benachrichtigungen-list li::before {
-    content: "\1F514";
+    content: "\x";
     font-size: 1.2rem;
     color: var(--color-primary);
     margin-right: 0.5rem;

@@ -35,15 +35,14 @@
             top: 2rem;
             right: 2rem;
             background-color: var(--color-primary);
-            color: var(--color-white);
             border: none;
-            border-radius: 50%;
+            border-radius: 10%;
             display: flex;
             justify-content: center;
             align-items: center;
             width: 48px;
             height: 48px;
-            font-size: 2rem;
+            font-size: 1rem;
             cursor: pointer;
             box-shadow: 0 2px 8px var(--color-shadow-light);
             display: none;
@@ -92,7 +91,7 @@
 </footer>
 
 <nav aria-label="Nach oben">
-  <button id="up-btn">&#x2191;</button>
+  <button id="up-btn" class="emoji">&#x2B06;</button>
 </nav>
 <!--Nav-Leist-->
 <script>
@@ -263,7 +262,7 @@
                 </div>
                 <a href="{% url 'benachrichtigungen_view' %}">
                     <div class="benachrichtigung-wrapper">
-                        <span class="icon">&#x1F514;</span>
+                        <span class="icon emoji">&#x1F514;</span>
                         <span id="benachrichtigungen-count" class="count">0</span>
                     </div>
                 </a>

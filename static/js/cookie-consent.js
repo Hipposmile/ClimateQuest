@@ -192,7 +192,7 @@ document.head.appendChild(styleCookie);
 const banner = document.createElement('div');
 banner.innerHTML = `<div id="cookie-overlay"></div>
   <div role="dialog" aria-label="Cookie-Einstellungen" aria-modal="true" id="cookie-banner">
-    <p><strong>Wir verwenden Cookies</strong> für Funktion, Analyse und Marketing. <a href="https://climate-quest.de/static/rechtliches/Datenschutz.pdf">Mehr erfahren</a>.</p>
+    <p><strong>Wir verwenden Cookies</strong> für Funktion, Analyse und Marketing. <a href="../rechtliches/Datenschutz.pdf">Mehr erfahren</a>.</p>
     <p><strong>Nach Änderung der Cookie-Einstellungen Seite bitte neu laden!</strong></p>
     <div class="buttons">
       <button id="btn-accept">Alle akzeptieren</button>
@@ -377,7 +377,7 @@ const resetBtnDiv = document.createElement('div');
 resetBtnDiv.id = 'cookie-reset-div';
 resetBtnDiv.role = "complementary";
 resetBtnDiv.ariaLabel = 'Cookie-Einstellungen anzeigen';
-resetBtnDiv.innerHTML = '<button id="cookie-reset">&#x1F36A;</button>';
+resetBtnDiv.innerHTML = '<button id="cookie-reset" class="emoji">&#x1F36A;</button>';
 const resetBtn = resetBtnDiv.querySelector('#cookie-reset');
 resetBtn.addEventListener('click', () => {
     localStorage.removeItem('cookieConsent');

@@ -79,7 +79,6 @@
 }
 
 .benachrichtigungen-list li::before {
-    content: "\1F514";
     font-size: 1.2rem;
     color: var(--color-primary);
     margin-right: 0.5rem;
@@ -106,9 +105,10 @@
     <ul class="benachrichtigungen-list" id="benachrichtigungen-list-id">
       {% for benachrichtigung in benachrichtigungen %}
         <li>
+        <p class="emoji">&#x1F514;</p>
           <div class="benachrichtigung-inhalt">
             {{ benachrichtigung.benachrichtigung|html_decode }}
-            <a href="{% url 'delete_benachrichtigung' benachrichtigung.id %}">&#x1F5D1;</a>
+            <a href="{% url 'delete_benachrichtigung' benachrichtigung.id %}"><p class="emoji">&#x1F5D1;</p></a>
           </div>
           <div class="benachrichtigung-datum">
             <small>{{ benachrichtigung.date|date:'d.m.Y H:i' }}</small>
