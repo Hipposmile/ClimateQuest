@@ -1,0 +1,11 @@
+*.txt
+!requirements.txt
+!templates/robots.txt
+*.mov
+*.mp4
+Allgemeines/
+test.py
+.env
+*.log
+db.sqlite3
+push.sh

@@ -106,13 +106,7 @@
                         <img src="{% static 'images/ClimateQuest.png' %}" alt="climateQuest Logo" class="logo-img">
                     </a>
                     <hr>
-                    <details>
-                        <summary>Allgemein</summary>
-                        <ul>
-                            <li><a href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a></li>
-                            <li><a id="translate_btn">Translate</a></li>
-                        </ul>
-                    </details>
+                    <li><a href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a></li>
                     <hr>
                     {% if user.is_authenticated %}
                     <details>
@@ -214,13 +208,7 @@
                 <img src="{% static 'images/ClimateQuest.png' %}" alt="climateQuest Logo" class="logo-img">
             </a>
             <nav>
-                <div class="dropdown">
-                    <span class="nav-link inactive-link">Allgemein ▾</span>
-                    <div class="dropdown-content">
-                        <a href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a>
-                        <a id="translate_btn">Übersetzen</a>
-                    </div>
-                </div>
+                <a href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a>
 
                 {% if user.is_authenticated %}
                 <div class="dropdown">
@@ -315,12 +303,16 @@
         });
     };
 
-    // Initial rendering
-    if (window.innerWidth < 1200) {
-        renderMobileNav();
-    } else {
-        renderDesktopNav();
+    function handleResize() {
+        if (window.innerWidth < 1200) {
+            renderMobileNav();
+        } else {
+            renderDesktopNav();
+        }
     }
+    
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('load', handleResize);
 </script>
 
 
@@ -338,53 +330,6 @@
     // Smooth scroll nach oben
     upBtn.addEventListener('click', function () {
         window.scrollTo({top: 0});
-    });
-</script>
-
-<!--Translate-->
-<script>
-    const translate_btn = document.getElementById('translate_btn');
-
-    // Zustand aus localStorage prüfen
-    if (localStorage.getItem('translateEnabled') === 'true') {
-        const script = document.createElement('script');
-        script.src = "{% static 'js/googleTranslate.js' %}";
-        script.onload = () => {
-            if (typeof initGoogleTranslate === 'function') {
-                try {
-                    initGoogleTranslate();
-                } catch (e) {
-                    alert("We're sorry, but this function is not available at the moment. Please use your browser's translation tools or try again later.");
-                }
-                translate_btn.textContent = 'End translation';
-            }
-        };
-        document.head.appendChild(script);
-    }
-
-    translate_btn.addEventListener('click', function () {
-        const isEnabled = localStorage.getItem('translateEnabled') === 'true';
-
-        const script = document.createElement('script');
-        script.src = "{% static 'js/googleTranslate.js' %}";
-        script.onload = () => {
-            if (isEnabled) {
-                if (typeof removeGoogleTranslate === 'function') {
-                    removeGoogleTranslate();
-                    translate_btn.textContent = 'Translate';
-                }
-            } else {
-                if (typeof initGoogleTranslate === 'function') {
-                    try {
-                        initGoogleTranslate();
-                    } catch (e) {
-                        alert("We're sorry, but this function is not available at the moment. Please use your browser's translation tools or try again later.");
-                    }
-                    translate_btn.textContent = 'End translation';
-                }
-            }
-        };
-        document.head.appendChild(script);
     });
 </script>
 

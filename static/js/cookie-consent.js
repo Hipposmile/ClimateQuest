@@ -20,11 +20,6 @@ const cookieCategories = {
         explanation: "Wird zur Registrierung benötigt.",
         required: false
     },
-    translate: {
-        label: "translate",
-        explanation: "Wird zur Übersetzung benötigt.",
-        required: false
-    },
     quill: {
         label: "Quill",
         explanation: "Hiermit kannst du manche Text-Inputs schöner stylen, z.B. fett, kursiv, unterstrichen oder mit Links.",

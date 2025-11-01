@@ -48,16 +48,13 @@
     </button>
     <div id="anmerkung-box" class="anmerkung-box" style="display: none;"></div>
 
-    <form method="POST">
+    <form method="POST" onsubmit="return validateNumber(event)">
         {% csrf_token %}
         <label for="action_type" class="action-label">Aktionstyp:</label>
         <select name="action_type" class="action-label" id="action_type" required>
             <option value="" disabled selected>Aktionstyp auswählen ▾</option>
             {% for aktion in aktionen %}
-                <option value="{{ aktion.name }}" data-klimapunkte="{{ aktion.klimapunkte|floatformat:-4 }}"
-                        data-anmerkung="{{ aktion.anmerkung|safe }}"
-                        data-mengebeschreibung="{{ aktion.mengeBeschreibung }}"
-                        data-aktiondate="{{ aktion.date }}">{{ aktion.name }}</option>
+                <option value="{{ aktion.name }}" data-klimapunkte="{{ aktion.klimapunkte|floatformat:-4 }}" data-anmerkung="{{ aktion.anmerkung|safe }}" data-mengebeschreibung="{{ aktion.mengeBeschreibung }}" data-aktiondate="{{ aktion.date }}">{{ aktion.name }}</option>
             {% endfor %}
         </select>
         <br/>
@@ -69,7 +66,7 @@
         <br/>
 
         <label for="action_quantity" class="action-label" id="action_quantity_label">Menge:</label>
-        <input type="number" id="action_quantity" name="action_quantity" min="0" required/>
+        <input type="text" id="action_quantity" name="action_quantity" required/>
         <br/>
 
         <p id="impact_anzeige" class="action-label"></p>
@@ -88,6 +85,39 @@
     </form>
 
     <script>
+        function submit(event) {
+            const form = event.target;
+            event.preventDefault(); // Verhindert das sofortige Absenden des Formulars
+            const quantityInput = document.getElementById('action_quantity');
+            let quantity = quantityInput.value.trim();
+            quantity = validateNumber(quantity);
+            if (quantity !== false) {
+                document.getElementById('action_quantity').value = quantity;
+                form.submit(); // Sendet das Formular ab
+            } else {
+                alert('Bitte geben Sie eine gültige, positive Zahl ohne Sonderzeichen (Ausnahme: Komma) für die Menge ein.');
+                return false;
+            }
+        }
+
+        function validateNumber(input) {
+            input = input.toString();
+            if (input == "" || input.includes('.')) {
+                return false;
+            }
+            input = input.replace(',', '.');
+            try {
+                input = parseFloat(input);
+            } catch (e) {
+                console.warn(e);
+                return false;
+            }
+            if (input <= 0) {
+                return false;
+            }
+            return input;
+        }
+
         document.getElementById('action_type').addEventListener('change', function () {
             const selected = document.querySelector('#action_type').selectedOptions[0];
 
@@ -96,7 +126,6 @@
 
             const klimapunkte_anzeige = document.getElementById('klimapunkte_anzeige');
             const action_quantity_label = document.getElementById('action_quantity_label');
-
 
             let anmerkung = selected.dataset.anmerkung;
             let klimapunkte = selected.dataset.klimapunkte;
@@ -107,7 +136,7 @@
             klimapunkte_anzeige.textContent = 'Klimapunkte pro ' + mengeBeschreibung + ': ' + klimapunkte;
             calculateImpact();
 
-            if (anmerkung != 'None') {
+            if (anmerkung != '') {
                 anmerkungButton.style.display = 'inline-block';
                 anmerkungBox.textContent = anmerkung;
             } else {
@@ -115,30 +144,39 @@
                 anmerkungBox.textContent = '';
                 anmerkungBox.style.display = 'none';
             }
-        });
+        })
 
-        document.getElementById('action_quantity').addEventListener('input', calculateImpact)
+        document.getElementById('action_quantity').addEventListener('input', calculateImpact);
 
         function calculateImpact() {
-            const selected = document.querySelector('#action_type').selectedOptions[0]
-            const impact_anzeige = document.getElementById('impact_anzeige')
-            let klimapunkte = selected.dataset.klimapunkte
-            klimapunkte = parseFloat(klimapunkte)
-            let quantity = document.getElementById('action_quantity').value
-            quantity = parseFloat(quantity)
+            const selected = document.querySelector('#action_type').selectedOptions[0];
+            const impact_anzeige = document.getElementById('impact_anzeige');
 
-            let impact = klimapunkte * quantity
+            let klimapunkte = selected.dataset.klimapunkte;
+            klimapunkte = validateNumber(klimapunkte);
+
+            const quantityInput = document.getElementById('action_quantity');
+            let quantity = quantityInput.value.trim();
+            quantity = validateNumber(quantity);
+
+            if (quantity === false) {
+                impact_anzeige.textContent = '';
+                return;
+            }
+
+            let impact = klimapunkte * quantity;
 
             if (isNaN(impact)) {
-                impact_anzeige.textContent = ''
+                impact_anzeige.textContent = '';
             } else {
-                impact_anzeige.textContent = 'Insgesamt durch diese Aktion gewonnene Klimapunkte: ' + impact
+                impact = Intl.NumberFormat('de-DE', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(impact);
+                impact_anzeige.textContent = 'Insgesamt durch diese Aktion gewonnene Klimapunkte: ' + impact;
             }
         }
 
         function toggleAnmerkung() {
-            const box = document.getElementById('anmerkung-box')
-            box.style.display = box.style.display === 'none' ? 'block' : 'none'
+            const box = document.getElementById('anmerkung-box');
+            box.style.display = box.style.display === 'none' ? 'block' : 'none';
         }
     </script>
 

@@ -385,6 +385,7 @@ def settings_view(request):
 
                 if not mail_output:
                     verificationCodeSaved.delete()
+                    return redirect('settings_view')
                 else:
                     request.user.email = email
                     request.user.is_active = False
