@@ -248,27 +248,33 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         def create_aktionen():
-            for aktion in AktionenListe.objects.all():
-                aktion.delete()
+            done_aktionen = []
+            for aktion_key, aktion_data in aktionen_mapping.items():
+                if AktionenListe.objects.filter(name=aktion_data["name"]).exists():
+                    aktion_instance = AktionenListe.objects.get(name=aktion_data["name"])
+                    if aktion_instance.name != aktion_data["name"]:
+                        aktion_instance.name = aktion_data["name"]
+                    if aktion_instance.klimapunkte != aktion_data["klimapunkte"]:
+                        aktion_instance.klimapunkte = aktion_data["klimapunkte"]
+                    if aktion_instance.mengeBeschreibung != aktion_data["mengeBeschreibung"]:
+                        aktion_instance.mengeBeschreibung = aktion_data["mengeBeschreibung"]
+                    if aktion_instance.anmerkung != aktion_data["anmerkung"]:
+                        aktion_instance.anmerkung = aktion_data["anmerkung"]
+                    if aktion_instance.source != aktion_data["source"]:
+                        aktion_instance.source = aktion_data["source"]
+                    aktion_instance.save()
+                    done_aktionen.append(aktion_key)
 
-            for aktion in aktionen_mapping:
-                aktion_name = aktionen_mapping[aktion]["name"]
-                aktion_klimapunkte = aktionen_mapping[aktion]["klimapunkte"]
-                aktion_mengeBeschreibung = aktionen_mapping[aktion].get("mengeBeschreibung", None)
-                aktion_anmerkung = aktionen_mapping[aktion].get("anmerkung", None)
-                aktion_source = aktionen_mapping[aktion].get("source", None)
+            for aktion_key, aktion_data in aktionen_mapping.items():
+                if aktion_key not in done_aktionen:
+                    AktionenListe.objects.create(
+                        name=aktion_data["name"],
+                        klimapunkte=aktion_data["klimapunkte"],
+                        mengeBeschreibung=aktion_data["mengeBeschreibung"],
+                        anmerkung=aktion_data["anmerkung"] or "",
+                        source=aktion_data["source"] or "",
+                    )
 
-                if aktion_name is None or aktion_klimapunkte is None:
-                    raise ValueError(f"Aktion '{aktion}' fehlt erforderliche Felder.")
-
-                AktionenListe.objects.create(
-                    name=aktion_name,
-                    klimapunkte=aktion_klimapunkte,
-                    mengeBeschreibung=aktion_mengeBeschreibung,
-                    anmerkung=aktion_anmerkung if aktion_anmerkung != None else "",
-                    source=aktion_source if aktion_source != None else "",
-                )
-                print("created aktion")
 
         def create_levels():
             for level in Level.objects.all():
