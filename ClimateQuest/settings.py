@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'artikel',
     'events',
     'forum',
+    'presents',
 ]
 
 MIDDLEWARE = [

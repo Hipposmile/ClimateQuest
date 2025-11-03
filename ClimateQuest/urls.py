@@ -81,6 +81,7 @@ urlpatterns = [
     path('events/', include('events.urls')),
     path('artikel/', include('artikel.urls')),
     path('forum/', include('forum.urls')),
+    path('presents/', include('presents.urls')),
 ]
 
 handler400 = 'core.views.custom_400'

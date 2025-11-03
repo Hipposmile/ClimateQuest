@@ -192,4 +192,12 @@ all_messages = {
     "worldwide_ranking_valid_passwords": "Die Passwörter der Family worldwide_ranking sind aktuell.",
     "worldwide_ranking_invalid_password": "Die Passwörter der Family worldwide-Ranking waren ungültig und entsprechend der gespeicherten Passwörter geändert.",
     "added_everyone_user_erweitert": "Jedem User wurde ein UserErweitert hinzugefügt, sofern noch nicht vorhanden",
+
+    # --------
+    #Presents
+    # --------
+    "present_created": "Geschenkseite erfolgreich erstellt",
+    "present_not_found": "Geschenkseite nicht gefunden",
+    "congratulation_added": "Glückwunschnachricht erfolgreich hinzugefügt",
+    "present_deleted": "Geschenkseite erfolgreich gelöscht",
 }

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Geschenke Übersicht{% endblock %}
+
+{% block content %}
+<h1>Geschenke Übersicht</h1>
+{% if messages %}
+{% for message in messages %}
+<p class="{{ message.level_tag }}-message">{{ message }}</p>
+{% endfor %}
+{% endif %}
+<form method="POST">
+    {% csrf_token %}
+    <label for="recipient_name">Name des / der Beschenkten:</label>
+    <input type="text" id="recipient_name" name="recipient_name" required>
+    <button type="submit">Geschenk erstellen</button>
+</form>
+{% endblock %}

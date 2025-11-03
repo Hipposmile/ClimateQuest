@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load html_range %}
+
+{% block title %}Geschenke Übersicht{% endblock %}
+
+{% block content %}
+<style>
+.congratulation-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #f9f9f9;
+}
+
+.congratulation-card h5 {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.congratulation-card p {
+    margin: 0;
+}
+
+.candles-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+</style>
+<script src="{% static 'js/confetti.js' %}"></script>
+<h1>Geschenkseite für {{ present.recipient }}</h1>
+{% if messages %}
+{% for message in messages %}
+<p class="{{ message.level_tag }}-message">{{ message }}</p>
+{% endfor %}
+{% endif %}
+<form method="POST">
+    {% csrf_token %}
+    <label for="msg">Nachricht:</label>
+    <input type="text" id="msg" name="msg" required>
+
+    <label for="congratulator">Mein Name:</label>
+    <input type="text" id="congratulator" name="congratulator" required>
+
+    <button type="submit" name="add_congratulation">Botschaft erstellen</button>
+</form>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit" name="light_candle">Kerze anzünden</button>
+</form>
+<p>Erstellt von <a href="{% url 'klimapunkte_view' present.creator.id %}">{{ present.creator }}</a> am {{ present.created_at|date:"d.m.Y" }}</p>
+<p>{{ present.candles }} angezündete Kerzen</p>
+
+<div class="candles-container">
+    {% for _ in present.candles|html_range %}
+        <img src="{% static 'images/candle.png' %}" alt="Candle" style="width:24px; height:48px;"/>
+    {% endfor %}
+</div>
+
+<p>{{ present.congratulation_count }} gepostete Glückwünsche</p>
+    <div class="congratulations-list">
+    {% for congratulation in present.congratulations.all %}
+        <div class="congratulation-card">
+            <div class="congratulation-card-body">
+                <p class="congratulation-card-title">
+                    Von <i>{{ congratulation.congratulator }}</i> am {{ congratulation.created_at|date:"d.m.Y" }}
+                </p>
+                <hr>
+                <p class="congratulation-card-text">{{ congratulation.message }}</p>
+            </div>
+        </div>
+    {% empty %}
+        <div class="">
+            Es wurden noch keine Glückwünsche hinterlassen.
+        </div>
+    {% endfor %}
+</div>
+<script>
+    startConfetti();
+
+    const backgroundColors = [
+    "#D6EAF8", // Baby Blue
+    "#D5F5E3", // Mint Cream
+    "#FDEDEC", // Lavender Blush
+    "#FFE5B4", // Peach Puff
+    "#BFD9EA", // Powder Blue
+    "#FADADD", // Pale Rose
+    "#E6DAF0", // Light Lilac
+    "#E8F6EF", // Honeydew
+    "#FFFACD", // Lemon Chiffon
+    "#FFE4E1", // Misty Rose
+    "#AFEEEE", // Pale Turquoise
+    "#FAD6A5", // Light Apricot
+    "#D0F0F7", // Ice Blue
+    "#F7C6C7", // Soft Coral
+    "#E3E4FA", // Pale Lavender
+    "#DFF2E1", // Light Pistachio
+    "#F7E7CE", // Champagne Mist
+    "#C5D0E6", // Light Periwinkle
+    "#FAD1E6", // Cotton Candy
+    "#DCECFB"  // Pale Sky
+    ];
+
+    congratulations = document.body.querySelectorAll('.congratulation-card');
+    congratulations.forEach(card => {
+        card.style.backgroundColor = backgroundColors[Math.floor(Math.random() * backgroundColors.length)];
+    });
+</script>
+{% endblock %}
