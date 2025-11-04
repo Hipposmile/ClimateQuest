@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block meta %}
+    <meta name="description" content="Die Datenschutzerklärung von ClimateQuest.">
+{% endblock %}
+{% block title %}ClimateQuest - Datenschutzerklärung{% endblock %}
+
+{% block content %}
+    <h1>Datenschutzerklärung</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <body>
+
+    <p>Fraqment Film GbR</p>
+    <p>Reichenbachstr. 12</p>
+    <p>80469 München</p>
+    <br>
+    <p>Telefon: +49 89 99954892</p>
+    <br>
+    <p>E-Mail: info@fragment.com</p>
+    <br>
+    <h2>Vertreten durch</h2>
+    <p>Götz Hudelmaier</p>
+    <p>David Purviance</p>
+    <br>
+    <h2>Kontakt</h2>
+    <p>E-Mail: kontakt@climate-quest.de</p>
+    <br>
+    <h2>Haftungsausschluss</h2>
+    <p>Der Webseitenbetreiber übernimmt keinerlei Haftung für den Wahrheitsgehalt der hochgeladenen Artikel, Events und Forumbeiträge, da sie von Nutzern erstellt wurden. Sollten diese nicht mit Nutzungsbedingungen übereinstimmen oder falsch sein, können Sie dies jederzeit unter Angabe der URL sowie einer Begründung unter kontakt@climate-quest.de melden, woraufhin der Inhalt geprüft und ggf. gelöscht wird. Dies kann allerdings einige Zeit dauern.</p>
+    <br>
+    <h2>Quellen</h2>
+    <ul>
+        <li>Emojis: <a href="https://openmoji.org">OpenMoji</a>, lizenziert unter <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Es wurden keine Änderungen vorgenommen</li>
+        <li>Bilder: <a href="https://pixabay.com">Pixabay</a></li>
+        <li>Musik: <a href="https://udio.com">Udio</a> (AI-generiert, eigene Prompts)</li>
+    </ul>
+
+    <h2>Änderungen dieses Impressums</h2>
+    <p>Wir behalten uns vor, dieses Impressum anzupassen, um es an geänderte rechtliche Rahmenbedingungen oder bei Änderungen der Dienstleistung anzupassen. Die aktuelle Version ist stets unter <a href="{% url 'impressum' %}">dieser URL</a> zu finden.</p>
+
+{% endblock %}

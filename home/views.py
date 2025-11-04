@@ -157,3 +157,9 @@ def aktionenTable(request):
     aktionen = AktionenListe.objects.all()
     print(aktionen)
     return render(request, 'aktionenTable.html', {'aktionen': aktionen})
+
+def datenschutz(request):
+    return render(request, 'datenschutz.html')
+
+def impressum(request):
+    return render(request, 'impressum.html')

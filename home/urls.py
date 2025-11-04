@@ -9,5 +9,7 @@ urlpatterns = [
     path('admin/', admin, name='admin_view'),
     path('share/', share, name='share'),
     path('nutzungsbedingungen/', nutzungsbedingungen, name='nutzungsbedingungen'),
+    path('datenschutz/', datenschutz, name='datenschutz'),
+    path('impressum/', impressum, name='impressum'),
     path('aktionenTable/', aktionenTable, name='aktionenTable'),
 ]

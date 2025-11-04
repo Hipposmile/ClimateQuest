@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block meta %}
+    <meta name="description" content="Die Datenschutzerklärung von ClimateQuest.">
+{% endblock %}
+{% block title %}ClimateQuest - Datenschutzerklärung{% endblock %}
+
+{% block content %}
+    <h1>Datenschutzerklärung</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <body>
+
+    <h2>1. Verantwortliche</h2>
+    <p>Verantwortlich für die Datenverarbeitung im Rahmen dieser App ist: Siehe <a href="{% url 'impressum' %}">Impressum</a></p>
+
+    <h2>2. Allgemeine Hinweise zur Datenverarbeitung</h2>
+    <p>Wir verarbeiten personenbezogene Daten der Nutzer nur, soweit dies zur Bereitstellung einer funktionsfähigen App sowie unserer Inhalte und Leistungen erforderlich ist. Die Verarbeitung erfolgt auf Grundlage der Datenschutz-Grundverordnung (DSGVO) und des Telekommunikation-Digitaldienste-Datenschutz-Gesetzes (TDDDG).</p>
+
+    <h2>3. Rechtsgrundlagen der Datenverarbeitung</h2>
+    <p>Die Verarbeitung personenbezogener Daten erfolgt auf Basis folgender Rechtsgrundlagen:</p>
+    <ul>
+        <li>Art. 6 Abs. 1 lit. a DSGVO (Einwilligung)</li>
+        <li>Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse, z. B. Schutz vor Missbrauch oder Verbesserung der App)</li>
+    </ul>
+
+    <h2>4. Eingesetzte Dienste und Drittanbieter</h2>
+
+    <h3>4.1 YouTube (Google LLC)</h3>
+    <p>Unsere App bindet eventuell Videos über die Plattform YouTube ein. Beim Laden eines Videos wird eine Verbindung zu den Servern von YouTube hergestellt. Dabei können personenbezogene Daten wie IP-Adresse, Geräteinformationen und Nutzungsverhalten übertragen werden.</p>
+    <p>Die Einbindung erfolgt erst nach aktiver Zustimmung des Nutzers.</p>
+    <p>Datenschutzerklärung von Google (YouTube): <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></p>
+
+    <h3>4.2 Google reCAPTCHA (Google LLC)</h3>
+    <p>Zur Absicherung gegen automatisierte Zugriffe verwenden wir Google reCAPTCHA. Dabei werden Nutzerdaten wie IP-Adresse, Mausbewegungen und ggf. weitere technische Merkmale an Google übermittelt.</p>
+    <p>Die Einbindung erfolgt erst nach aktiver Zustimmung des Nutzers.</p>
+    <p>Datenschutzerklärung von Google (reCAPTCHA): <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></p>
+
+    <h3>4.3 Quill (Instructure Inc.)</h3>
+    <p>Wir verwenden Quill als Rich-Text-Editor zur Eingabe von Inhalten. Quill selbst verarbeitet keine personenbezogenen Daten, jedoch können durch die Nutzung personenbezogene Inhalte eingegeben und gespeichert werden.</p>
+    <p>Die Einbindung erfolgt erst nach aktiver Zustimmung des Nutzers.</p>
+    <p>Datenschutzerklärung von Quill: <a href="https://quilljs.com/" target="_blank">https://quilljs.com/</a></p>
+
+    <h3>4.4 Verwendung von localStorage</h3>
+    <p>Unsere App verwendet den sogenannten localStorage Ihres Browsers zur Speicherung bestimmter Einstellungen, um die Benutzerfreundlichkeit zu verbessern und Ihre Einwilligungen zu dokumentieren.</p>
+    <h4>Zweck der Speicherung</h5>
+    <ul>
+        <li>Cookie-Einstellungen: Ihre Auswahl bezüglich der Verwendung von Cookies und Drittanbieterdiensten wird lokal gespeichert, damit Sie bei erneutem Besuch der App nicht erneut gefragt werden.</li>
+    </ul>
+    <h4>Speicherdauer</h4>
+    <p>Die im localStorage gespeicherten Daten bleiben gespeichert, bis Sie die Cookie-Einstellungen verändern oder den localStorage bzw. den Browser Cache manuell löschen.</p>
+    <h4>Hinweis</h4>
+    <p>localStorage speichert Daten ausschließlich auf Ihrem Endgerät. Es erfolgt keine automatische Übertragung dieser Informationen an unsere Server oder Dritte.</p>
+
+    <h2>5. Speicherdauer</h2>
+    <p>Personenbezogene Daten werden gelöscht, sobald der Zweck der Speicherung entfällt, sofern keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
+
+    <h2>6. Betroffenenrechte</h2>
+    <p>Nutzer haben das Recht auf:</p>
+    <ul>
+        <li>Auskunft über die gespeicherten Daten (Art. 15 DSGVO)</li>
+        <li>Berichtigung unrichtiger Daten (Art. 16 DSGVO)</li>
+        <li>Löschung der Daten (Art. 17 DSGVO)</li>
+        <li>Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+        <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
+        <li>Widerruf erteilter Einwilligungen (Art. 7 Abs. 3 DSGVO)</li>
+        <li>Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)</li>
+    </ul>
+
+    <h2>Kontakt für Datenschutzfragen</h2>
+    <p>Für Datenschutzanliegen wenden Sie sich bitte an: Siehe <a href="{% url 'impressum' %}">Impressum</a></p>
+
+    <h2>Änderungen dieser Datenschutzerklärung</h2>
+    <p>Wir behalten uns vor, diese Datenschutzerklärung anzupassen, um sie an geänderte rechtliche Rahmenbedingungen oder bei Änderungen der Dienstleistung anzupassen. Die aktuelle Version ist stets unter <a href="{% url 'datenschutz' %}">dieser URL</a> zu finden.</p>
+{% endblock %}

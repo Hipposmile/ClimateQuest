@@ -75,7 +75,6 @@
 </head>
 
 <body>
-<div id="google_translate_element"></div>
 <header id="header">
 </header>
 
@@ -86,8 +85,8 @@
 <footer>
     <p><a href="{% url 'aktionenTable' %}">Alle Aktionen</a></p>
     <p><a href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a></p>
-    <p><a href="{% static 'rechtliches/Impressum.pdf' %}" download>Impressum</a></p>
-    <p><a href="{% static 'rechtliches/Datenschutz.pdf' %}" download>Datenschutz</a></p>
+    <p><a href="{% url 'impressum' %}">Impressum</a></p>
+    <p><a href="{% url 'datenschutz' %}">Datenschutz</a></p>
 </footer>
 
 <nav aria-label="Nach oben">
