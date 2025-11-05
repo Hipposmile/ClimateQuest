@@ -92,7 +92,7 @@ all_messages = {
     #Login
     "successfully_signed_up": "Erfolgreich registriert",
     "robot": "Es besteht die Gefahr, dass du ein Roboter bist. Bitte versuche es erneut.",
-    "invalid_login_data": mark_safe("Ungültige Anmeldedaten.  Überprüfe diese und vergewissere dich, dass du bereits deine <a href='/personals/verify-email'>E-Mail-Adresse verifiziert hast</a>."),
+    "invalid_login_data": "Ungültige Anmeldedaten.",
     "username_not_available": "Benutzername bereits vergeben",
     "invalid_email": "E-Mail-Adresse ungültig",
     "email_not_available": "E-Mail-Adresse bereits vergeben",
@@ -189,7 +189,9 @@ all_messages = {
     "admin__user_not_found": "User wurde nicht gefunden",
     "admin__family_not_found": "Family wurde nicht gefunden",
     "admin__community_not_found": "Community wurde nicht gefunden",
+    "admin__event_not_found": "Event wurde nicht gefunden",
     "admin__invalid_receiver_type": "Ungültiger Empfänger-Typ der Nachricht",
+    "admin__successfully_sent_notification": "Benachrichtigung erfolgreich an alle Empfänger gesendet",
     "user_deleted": "User erfolgreich gelöscht",
     "worldwide_ranking_valid_passwords": "Die Passwörter der Family worldwide_ranking sind aktuell.",
     "worldwide_ranking_invalid_password": "Die Passwörter der Family worldwide-Ranking waren ungültig und entsprechend der gespeicherten Passwörter geändert.",

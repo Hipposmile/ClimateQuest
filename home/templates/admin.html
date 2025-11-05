@@ -20,8 +20,8 @@
         <option value="user" selected>User</option>
         <option value="family-members">Family-Members</option>
         <option value="community-members">Community-Members</option>
+        <option value="event-participants">Event-Teilnehmer</option>
     </select>
-    <small id="feedback"></small>
     <label for="name">Name:</label>
     <input type="text" name="name" id="name" placeholder="Username" required />
     <label for="msg">Nachricht:</label>
@@ -33,48 +33,14 @@
     document.getElementById('receiver').addEventListener('change', function () {
         const receiver = this.value;
         const nameInput = document.getElementById('name');
-        const feedback = document.getElementById('feedback');
         if (receiver == 'user') {
             nameInput.placeholder = 'Username';
         } else if (receiver == 'family-members') {
             nameInput.placeholder = 'Family-Name';
         } else if (receiver == 'community-members') {
             nameInput.placeholder = 'Community-Name';
-        }
-    });
-
-    document.getElementById('name').addEventListener('input', function () {
-        const name = this.value;
-        let receiver = document.querySelector('select[name="receiver"]').value;
-        const feedback = document.getElementById('feedback');
-        let url;
-        let variableName;
-        if (receiver == 'user') {
-            url = '/check-username/';
-            variableName = 'username';
-        } else if (receiver == 'family-members') {
-            url = '/check-familyname/';
-            variableName = 'familyname';
-        } else if (receiver == 'community-members') {
-            url = '/check-communityname/';
-            variableName = 'communityname';
-        }
-        if (name.length > 0) {
-            feedback.textContent = 'Überprüfe, ob Name vorhanden ist...';
-            feedback.style.color = 'grey';
-            fetch(`/personals/check-username/?username=${encodeURIComponent(name)}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.exists) {
-                        feedback.textContent = 'Name vorhanden';
-                        feedback.style.color = 'green';
-                    } else {
-                        feedback.textContent = 'Name nicht vorhanden';
-                        feedback.style.color = 'red';
-                    }
-                });
-        } else {
-            feedback.textContent = '';
+        } else if (receiver == 'event-participants') {
+            nameInput.placeholder = 'Event-Id';
         }
     });
 </script>
@@ -91,14 +57,5 @@
     {% csrf_token %}
     <small>Dies wird überprüfen, ob jedem User ein UserErweitert zugewiesen wurde, und nötigenfalls eines erstellen.</small>
     <button type="submit" name="add_everyone_user_erweitert">Überprüfen</button>
-</form>
-<hr>
-<p>Folgende Models müssen existieren: Family worldwide ranking, Level ab 0 Klimapunkte, AktionenListe</p>
-<hr>
-<h3>User löschen</h3>
-<form method="post" onsubmit="return confirm('Möchtest du diesen User wirklich löschen? Dies entfernt alle seine Daten!');">
-    {% csrf_token %}
-    <input type="text" name="username_to_delete" placeholder="Username" required />
-    <button type="submit" name="delete_user">Löschen</button>
 </form>
 {% endblock %}

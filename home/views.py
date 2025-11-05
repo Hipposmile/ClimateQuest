@@ -15,6 +15,7 @@ import os
 from django.core.management import call_command
 from django.contrib.auth.models import User
 from .models import *
+from events.models import *
 from utils.functions import *
 import os
 from dotenv import load_dotenv
@@ -59,6 +60,7 @@ def admin(request):
                 try:
                     user = User.objects.get(username=name)
                     createBenachrichtigung(request, msg, user)
+                    messages.success(request, all_messages["admin__successfully_sent_notification"])
                 except User.DoesNotExist:
                     messages.error(request, all_messages["admin__user_not_found"])
                     return redirect('admin')
@@ -70,6 +72,7 @@ def admin(request):
                     return redirect('admin')
                 for user in family.members.all():
                     createBenachrichtigung(request, msg, user)
+                messages.success(request, all_messages["admin__successfully_sent_notification"])
             elif receiver == 'community-members':
                 try:
                     community = Community.objects.get(name=name)
@@ -79,6 +82,20 @@ def admin(request):
                 for family in community.members.all():
                     for user in family.members.all():
                         createBenachrichtigung(request, msg, user)
+                messages.success(request, all_messages["admin__successfully_sent_notification"])
+            elif receiver == 'event-participants':
+                print("Sending to event participants")
+                try:
+                    event = Event.objects.get(id=name)
+                except Event.DoesNotExist:
+                    messages.error(request, all_messages["admin__event_not_found"])
+                    return redirect('admin')
+                print(event)
+                for participant in event.participants.all():
+                    createBenachrichtigung(request, msg, participant)
+                    print(participant.username)
+
+                messages.success(request, all_messages["admin__successfully_sent_notification"])
             else:
                 messages.error(request, all_messages["admin__invalid_receiver_type"])
                 return redirect('admin')
