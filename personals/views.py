@@ -357,18 +357,18 @@ def settings_view(request):
                 if email == "":
                     request.user.email = email
                     request.user.save()
-                    createBenachrichtigung(request, all_messages["successfully_changed_email"])
-                    messages.success(request, all_messages["successfully_changed_email"])
+                    createBenachrichtigung(request, all_messages["successfully_changed_email_no_email"])
+                    messages.success(request, all_messages["successfully_changed_email_no_email"])
                     return redirect('settings_view')
 
                 if not ist_email_gueltig(email):
                     messages.error(request, all_messages["invalid_email"])
-                    return redirect('register_view')
+                    return redirect('settings_view')
 
                 if User.objects.filter(email=email).exists():
                     messages.error(request, all_messages["email_not_available"])
-                    return redirect('register_view')
-            
+                    return redirect('settings_view')
+
                 verificationCode = generateVerificationCode()
                 verificationCodeSaved = VerificationCode.objects.create(user=request.user, code=verificationCode)
 
@@ -390,7 +390,6 @@ def settings_view(request):
                     request.user.email = email
                     request.user.is_active = False
                     request.user.save()
-                    createBenachrichtigung(request, all_messages["email_changed"])
                     messages.success(request, all_messages["email_changed"])
                 return redirect('verifyEmail')
         

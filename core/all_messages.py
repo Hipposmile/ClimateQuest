@@ -111,6 +111,8 @@ all_messages = {
     "password_reset_mail_sent": "Wir haben dir eine Nachricht mit deinem Benutzernamen und einem neuen, zufällig generiertem Passwort geschickt. Melde dich damit an und ändere aus Sicherheitsgründen möglichst bald dein Passwort unter \"Profil bearbeiten\".",
     "password_reset_error": "Ein Fehler ist beim Zurücksetzen des Passwortes aufgetreten",
     "successfully_changed_email": "E-Mail-Adresse erfolgreich geändert. Ein Verifizierungscode wurde an diese Adresse gesendet.",
+    "successfully_changed_email_no_email": "E-Mail-Adresse erfolgreich geändert. Du hast jetzt keine E-Mail Adresse mehr hinterlegt und musst daher nichts verifizieren.",
+
 
     "no_email_adress_at_verify": "Du hast keine E-Mail-Adresse angegeben und musst daher nichts verifizieren",
     "no_verification_code": "interner Fehler: Dir wurde kein Verifizierungscode zugesendet.",

@@ -20,7 +20,27 @@ class NutzungsbedingungenSitemap(Sitemap):
 
     def location(self, item):
         return reverse(item)
-    
+
+class DatenschutzSitemap(Sitemap):
+    changefreq = "yearly"
+    priority = 0.5
+
+    def items(self):
+        return ['datenschutz']
+
+    def location(self, item):
+        return reverse(item)
+
+class ImpressumSitemap(Sitemap):
+    changefreq = "yearly"
+    priority = 0.5
+
+    def items(self):
+        return ['impressum']
+
+    def location(self, item):
+        return reverse(item)
+
 class AktionenTableSitemap(Sitemap):
     changefreq = "monthly"
     priority = 0.5

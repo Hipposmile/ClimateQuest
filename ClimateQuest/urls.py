@@ -28,6 +28,7 @@ from community.sitemaps import *
 from personals.sitemaps import *
 from users.sitemaps import *
 from verbrauch.sitemaps import *
+from presents.sitemaps import *
 
 sitemaps = {
     "home": HomeSitemap(),
@@ -66,6 +67,9 @@ sitemaps = {
     "forum_post_detail": ForumPostDetailSitemap(),
     "forum_overview": ForumOverviewSitemap(),
     "add_forum_post": AddForumPostSitemap(),
+
+    "presents_overview": PresentsOverviewSitemap(),
+    "add_present": AddPresentSitemap(),
 }
 
 urlpatterns = [
