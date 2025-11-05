@@ -10,19 +10,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta property="og:title" content="ClimateQuest">
-    <meta property="og:description" content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
+    <meta property="og:description"
+        content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
     <meta property="og:image" content="https://climate-quest.de/static/images/SocialMediaPreview.jpg">
     <meta property="og:url" content="{{ request.build_absolute_uri}}">
     <meta property="og:type" content="website">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ClimateQuest">
-    <meta name="twitter:description" content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
+    <meta name="twitter:description"
+        content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
     <meta name="twitter:image" content="https://climate-quest.de/static/images/SocialMediaPreview.jpg">
 
-    <meta name="description" content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
+    <meta name="description"
+        content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
     <meta name="robots" content="index, follow">
-    
+
     <title>{% block title %}ClimateQuest{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -75,29 +78,105 @@
 </head>
 
 <body>
-<header id="header">
-</header>
+    <header id="header">
+        <a href="/" class="logo-link">
+            <img src="{% static 'images/ClimateQuest.png' %}" alt="climateQuest Logo" class="logo-img">
+        </a>
+        <nav>
+            <a href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a>
 
-<main>
-    {% block content %}{% endblock %}
-</main>
+            {% if user.is_authenticated %}
+            <div class="dropdown">
+                <span class="nav-link inactive-link">Konto ▾</span>
+                <div class="dropdown-content">
+                    <p>{{ user.username }}</p>
+                    <a href="{% url 'level_view' request.user.id %}">Level</a>
+                    <a href="{% url 'klimapunkte_view' request.user.id %}">Klimapunkte</a>
+                    <a href="{% url 'settings_view' %}">Profil bearbeiten</a>
+                    <a href="{% url 'presents_overview' %}">Geschenke</a>
+                    <a href="{% url 'logout_view' %}">Logout</a>
+                    {% if user.is_staff %}
+                    <a href="/ClimateQuestAdmin/" target="_blank">Admin-Bereich (I)</a>
+                    <a href="{% url 'admin_view' %}">Admin-Bereich (II)</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="dropdown">
+                <span class="nav-link inactive-link">Verbrauch ▾</span>
+                <div class="dropdown-content">
+                    <a href="{% url 'add' %}">Aktion hinzufügen</a>
+                    <a href="{% url 'history' %}">Verbrauchshistorie</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <span class="nav-link inactive-link">Family ▾</span>
+                <div class="dropdown-content">
+                    <a href="{% url 'create_family' %}">Family erstellen</a>
+                    <a href="{% url 'join_family' %}">Family beitreten</a>
+                    <a href="{% url 'families_view' %}">Meine Families</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <span class="nav-link inactive-link">Community ▾</span>
+                <div class="dropdown-content">
+                    <a href="{% url 'create_community' %}">Community erstellen</a>
+                    <a href="{% url 'join_community' %}">Community beitreten</a>
+                    <a href="{% url 'communities_view' %}">Meine Communities</a>
+                </div>
+            </div>
+            <a href="{% url 'benachrichtigungen_view' %}">
+                <div class="benachrichtigung-wrapper">
+                    <span class="icon emoji">&#x1F514;</span>
+                    <span id="benachrichtigungen-count" class="count">0</span>
+                </div>
+            </a>
+            {% else %}
+            <a href="{% url 'login_view' %}">Login</a>
+            {% endif %}
+            <div class="dropdown">
+                <span class="nav-link inactive-link">Events ▾</span>
+                <div class="dropdown-content">
+                    {% if user.is_authenticated %}<a href="{% url 'add_event' %}">Event hinzufügen</a>{% endif %}
+                    <a href="{% url 'events_overview' %}">Überblick</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <span class="nav-link inactive-link">Artikel ▾</span>
+                <div class="dropdown-content">
+                    {% if user.is_authenticated %}<a href="{% url 'add_artikel' %}">Artikel hinzufügen</a>{% endif %}
+                    <a href="{% url 'artikel_overview' %}">Überblick</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <span class="nav-link inactive-link">Forum ▾</span>
+                <div class="dropdown-content">
+                    {% if user.is_authenticated %}<a href="{% url 'add_forum_post' %}">Beitrag hinzufügen</a>{% endif %}
+                    <a href="{% url 'forum_overview' %}">Überblick</a>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-<footer>
-    <p><a href="{% url 'aktionenTable' %}">Alle Aktionen</a></p>
-    <p><a href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a></p>
-    <p><a href="{% url 'impressum' %}">Impressum</a></p>
-    <p><a href="{% url 'datenschutz' %}">Datenschutz</a></p>
-</footer>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
 
-<nav aria-label="Nach oben">
-  <button id="up-btn" class="emoji">&#x2B06;</button>
-</nav>
-<!--Nav-Leist-->
-<script>
-    const header = document.getElementById('header');
+    <footer>
+        <p><a href="{% url 'aktionenTable' %}">Alle Aktionen</a></p>
+        <p><a href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a></p>
+        <p><a href="{% url 'impressum' %}">Impressum</a></p>
+        <p><a href="{% url 'datenschutz' %}">Datenschutz</a></p>
+    </footer>
 
-    const renderMobileNav = () => {
-        header.innerHTML = `<button id="openSidebar">☰ Menü öffnen</button>
+    <nav aria-label="Nach oben">
+        <button id="up-btn" class="emoji">&#x2B06;</button>
+    </nav>
+    <!--Nav-Leist-->
+    <script>
+        const header = document.getElementById('header');
+
+        const renderMobileNav = () => {
+            header.innerHTML = `<button id="openSidebar">☰ Menü öffnen</button>
             <div id="sidebar">
                 <button id="closeSidebar">×</button>
                 <nav>
@@ -195,146 +274,157 @@
                 </nav>
             </div>`;
 
-        const sidebar = document.getElementById('sidebar');
-        const openBtn = document.getElementById('openSidebar');
-        const closeBtn = document.getElementById('closeSidebar');
+            const sidebar = document.getElementById('sidebar');
+            const openBtn = document.getElementById('openSidebar');
+            const closeBtn = document.getElementById('closeSidebar');
 
-        openBtn.addEventListener('click', () => sidebar.classList.add('active'));
-        closeBtn.addEventListener('click', () => sidebar.classList.remove('active'));
-    };
+            openBtn.addEventListener('click', () => sidebar.classList.add('active'));
+            closeBtn.addEventListener('click', () => sidebar.classList.remove('active'));
+        };
 
-    const renderDesktopNav = () => {
-        header.innerHTML = `<a href="/" class="logo-link">
-                <img src="{% static 'images/ClimateQuest.png' %}" alt="climateQuest Logo" class="logo-img">
-            </a>
-            <nav>
-                <a href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a>
-
-                {% if user.is_authenticated %}
-                <div class="dropdown">
-                    <span class="nav-link inactive-link">Konto ▾</span>
-                    <div class="dropdown-content">
-                        <p>{{ user.username }}</p>
-                        <a href="{% url 'level_view' request.user.id %}">Level</a>
-                        <a href="{% url 'klimapunkte_view' request.user.id %}">Klimapunkte</a>
-                        <a href="{% url 'settings_view' %}">Profil bearbeiten</a>
-                        <a href="{% url 'presents_overview' %}">Geschenke</a>
-                        <a href="{% url 'logout_view' %}">Logout</a>
-                        {% if user.is_staff %}
-                        <a href="/ClimateQuestAdmin/" target="_blank">Admin-Bereich (I)</a>
-                        <a href="{% url 'admin_view' %}">Admin-Bereich (II)</a>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <span class="nav-link inactive-link">Verbrauch ▾</span>
-                    <div class="dropdown-content">
-                        <a href="{% url 'add' %}">Aktion hinzufügen</a>
-                        <a href="{% url 'history' %}">Verbrauchshistorie</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <span class="nav-link inactive-link">Family ▾</span>
-                    <div class="dropdown-content">
-                        <a href="{% url 'create_family' %}">Family erstellen</a>
-                        <a href="{% url 'join_family' %}">Family beitreten</a>
-                        <a href="{% url 'families_view' %}">Meine Families</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <span class="nav-link inactive-link">Community ▾</span>
-                    <div class="dropdown-content">
-                        <a href="{% url 'create_community' %}">Community erstellen</a>
-                        <a href="{% url 'join_community' %}">Community beitreten</a>
-                        <a href="{% url 'communities_view' %}">Meine Communities</a>
-                    </div>
-                </div>
-                <a href="{% url 'benachrichtigungen_view' %}">
-                    <div class="benachrichtigung-wrapper">
-                        <span class="icon emoji">&#x1F514;</span>
-                        <span id="benachrichtigungen-count" class="count">0</span>
-                    </div>
+        const renderDesktopNavComplete = () => {
+            header.innerHTML = `
+                <a href="/" class="logo-link">
+                    <img src="{% static 'images/ClimateQuest.png' %}" alt="climateQuest Logo" class="logo-img">
                 </a>
-                {% else %}
-                <a href="{% url 'login_view' %}">Login</a>
-                {% endif %}
-                <div class="dropdown">
-                    <span class="nav-link inactive-link">Events ▾</span>
-                    <div class="dropdown-content">
-                        {% if user.is_authenticated %}<a href="{% url 'add_event' %}">Event hinzufügen</a>{% endif %}
-                        <a href="{% url 'events_overview' %}">Überblick</a>
+                <nav>
+                    <a href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a>
+
+                    {% if user.is_authenticated %}
+                    <div class="dropdown">
+                        <span class="nav-link inactive-link">Konto ▾</span>
+                        <div class="dropdown-content">
+                            <p>{{ user.username }}</p>
+                            <a href="{% url 'level_view' request.user.id %}">Level</a>
+                            <a href="{% url 'klimapunkte_view' request.user.id %}">Klimapunkte</a>
+                            <a href="{% url 'settings_view' %}">Profil bearbeiten</a>
+                            <a href="{% url 'presents_overview' %}">Geschenke</a>
+                            <a href="{% url 'logout_view' %}">Logout</a>
+                            {% if user.is_staff %}
+                            <a href="/ClimateQuestAdmin/" target="_blank">Admin-Bereich (I)</a>
+                            <a href="{% url 'admin_view' %}">Admin-Bereich (II)</a>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
-                <div class="dropdown">
-                    <span class="nav-link inactive-link">Artikel ▾</span>
-                    <div class="dropdown-content">
-                        {% if user.is_authenticated %}<a href="{% url 'add_artikel' %}
-            ">Artikel hinzufügen</a>{% endif %}
-                        <a href="{% url 'artikel_overview' %}">Überblick</a>
+                    <div class="dropdown">
+                        <span class="nav-link inactive-link">Verbrauch ▾</span>
+                        <div class="dropdown-content">
+                            <a href="{% url 'add' %}">Aktion hinzufügen</a>
+                            <a href="{% url 'history' %}">Verbrauchshistorie</a>
+                        </div>
                     </div>
-                </div>
-                <div class="dropdown">
-                    <span class="nav-link inactive-link">Forum ▾</span>
-                    <div class="dropdown-content">
-                        {% if user.is_authenticated %}<a href="{% url 'add_forum_post' %}
-            ">Beitrag hinzufügen</a>{% endif %}
-                        <a href="{% url 'forum_overview' %}">Überblick</a>
+                    <div class="dropdown">
+                        <span class="nav-link inactive-link">Family ▾</span>
+                        <div class="dropdown-content">
+                            <a href="{% url 'create_family' %}">Family erstellen</a>
+                            <a href="{% url 'join_family' %}">Family beitreten</a>
+                            <a href="{% url 'families_view' %}">Meine Families</a>
+                        </div>
                     </div>
-                </div>
-            </nav>`;
-
-        const dropdown = document.querySelector('.dropdown');
-        const toggle = dropdown.querySelector('.nav-link');
-        const content = dropdown.querySelector('.dropdown-content');
-
-        // Öffnen/Schließen bei Klick auf Button
-        toggle.addEventListener('click', (e) => {
-            e.stopPropagation(); // Verhindert, dass das Dokument den Klick sieht
-            content.classList.toggle('visible');
-        });
-
-        // Schließen bei Klick irgendwo anders
-        document.addEventListener('click', () => {
-            content.classList.remove('visible');
-        });
-
-        // Optional: Klick im Menü soll nicht schließen
-        content.addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
-    };
-
-    function handleResize() {
-        if (window.innerWidth < 1200) {
-            renderMobileNav();
-        } else {
+                    <div class="dropdown">
+                        <span class="nav-link inactive-link">Community ▾</span>
+                        <div class="dropdown-content">
+                            <a href="{% url 'create_community' %}">Community erstellen</a>
+                            <a href="{% url 'join_community' %}">Community beitreten</a>
+                            <a href="{% url 'communities_view' %}">Meine Communities</a>
+                        </div>
+                    </div>
+                    <a href="{% url 'benachrichtigungen_view' %}">
+                        <div class="benachrichtigung-wrapper">
+                            <span class="icon emoji">&#x1F514;</span>
+                            <span id="benachrichtigungen-count" class="count">0</span>
+                        </div>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'login_view' %}">Login</a>
+                    {% endif %}
+                    <div class="dropdown">
+                        <span class="nav-link inactive-link">Events ▾</span>
+                        <div class="dropdown-content">
+                            {% if user.is_authenticated %}<a href="{% url 'add_event' %}">Event hinzufügen</a>{% endif %}
+                            <a href="{% url 'events_overview' %}">Überblick</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <span class="nav-link inactive-link">Artikel ▾</span>
+                        <div class="dropdown-content">
+                            {% if user.is_authenticated %}<a href="{% url 'add_artikel' %}">Artikel hinzufügen</a>{% endif %}
+                            <a href="{% url 'artikel_overview' %}">Überblick</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <span class="nav-link inactive-link">Forum ▾</span>
+                        <div class="dropdown-content">
+                            {% if user.is_authenticated %}<a href="{% url 'add_forum_post' %}">Beitrag hinzufügen</a>{% endif %}
+                            <a href="{% url 'forum_overview' %}">Überblick</a>
+                        </div>
+                    </div>
+                </nav>
+            `;
             renderDesktopNav();
         }
-    }
-    
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('load', handleResize);
-</script>
 
+        const renderDesktopNav = () => {
+            const dropdown = document.querySelector('.dropdown');
+            const toggle = dropdown.querySelector('.nav-link');
+            const content = dropdown.querySelector('.dropdown-content');
 
-<!--Up-Button-->
-<script>
-    // Button ein-/ausblenden beim Scrollen
-    const upBtn = document.getElementById('up-btn');
-    window.addEventListener('scroll', function () {
-        if (window.scrollY > 10) {
-            upBtn.style.display = 'block';
-        } else {
-            upBtn.style.display = 'none';
+            // Öffnen/Schließen bei Klick auf Button
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation(); // Verhindert, dass das Dokument den Klick sieht
+                content.classList.toggle('visible');
+            });
+
+            // Schließen bei Klick irgendwo anders
+            document.addEventListener('click', () => {
+                content.classList.remove('visible');
+            });
+
+            // Optional: Klick im Menü soll nicht schließen
+            content.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        };
+
+        function handleResize() {
+            if (window.innerWidth < 1200) {
+                renderMobileNav();
+            } else {
+                renderDesktopNavComplete();
+            }
         }
-    });
-    // Smooth scroll nach oben
-    upBtn.addEventListener('click', function () {
-        window.scrollTo({top: 0});
-    });
-</script>
 
-{% if user.is_authenticated %}
+        function handleLoad() {
+            if (window.innerWidth < 1200) {
+                renderMobileNav();
+            } else {
+                renderDesktopNav();
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+        window.addEventListener('load', handleLoad);
+    </script>
+
+
+    <!--Up-Button-->
+    <script>
+        // Button ein-/ausblenden beim Scrollen
+        const upBtn = document.getElementById('up-btn');
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 10) {
+                upBtn.style.display = 'block';
+            } else {
+                upBtn.style.display = 'none';
+            }
+        });
+        // Smooth scroll nach oben
+        upBtn.addEventListener('click', function () {
+            window.scrollTo({ top: 0 });
+        });
+    </script>
+
+    {% if user.is_authenticated %}
     <script>
         function ladeBenachrichtigungenAnzahl() {
             fetch('/count-benachrichtigungen/')
@@ -345,24 +435,29 @@
                 .then(data => {
                     const countSpan = document.getElementById('benachrichtigungen-count');
                     let benachrichtigungen_count = data.benachrichtigungen_count
+                    if (!countSpan) {
+                        console.error("Element #benachrichtigungen-count nicht gefunden.");
+                        return false;
+                    }
                     if (benachrichtigungen_count != 0) {
-                        if (countSpan) {
-                            countSpan.textContent = data.benachrichtigungen_count;
-                        } else {
-                            console.warn("Element #benachrichtigungen-count nicht gefunden.");
-                        }
+                        countSpan.textContent = data.benachrichtigungen_count;
                     } else {
                         countSpan.style.display = 'none';
                     }
+                    return true;
                 })
                 .catch(error => {
                     console.error('Fehler beim Laden der Benachrichtigungen:', error);
+                    return false;
                 });
         }
 
-        document.addEventListener('DOMContentLoaded', ladeBenachrichtigungenAnzahl);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            ladeBenachrichtigungenAnzahl();
+        });
     </script>
-{% endif %}
+    {% endif %}
 </body>
 
 </html>
