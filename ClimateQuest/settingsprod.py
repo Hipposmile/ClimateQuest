@@ -177,3 +177,22 @@ RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY", "")
 
 CSRF_COOKIE_SECURE = True  # Nur wenn du HTTPS nutzt
 CSRF_TRUSTED_ORIGINS = ['https://climate-quest.de', 'https://www.climate-quest.de']
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',  # Nur Fehler (z. B. 500er) werden geloggt
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'django_errors.log'),
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
