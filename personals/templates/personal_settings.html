@@ -20,7 +20,7 @@
 <ul>
     <li>Benutzername: {{ user.username }}</li>
     <li>E-Mail-Adresse: {{ user.email }}</li>
-    <li>E-Mail-Adresse verifiziert: {{ user.usererweitert.mail_verified|yesno:"Ja,Nein" }}{% if user.usererweitert.mail_verified == False %} | <a href="{% url 'resend_verification_email' %}">Bestätigungs-E-Mail erneut senden</a>{% endif %}</li>
+    <li>E-Mail-Adresse verifiziert: {{ user.usererweitert.mail_verified|yesno:"Ja,Nein" }}{% if user.usererweitert.mail_verified == False and user.email != '' %} | <a href="{% url 'resend_verification_email' %}">Bestätigungs-E-Mail erneut senden</a>{% endif %}</li>
     <li>Account erstellt am: {{ user.date_joined }}</li>
     <li>Letzter Login: {{ user.last_login }}</li>
 </ul>

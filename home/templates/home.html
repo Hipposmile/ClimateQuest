@@ -146,9 +146,8 @@
 {% if user.is_authenticated %}
 <p>Willkommen, {{ user.username }}!</p>
 
-{% if user.usererweitert.mail_verified == False %}
-<p>Bitte bestätige deine E-Mail-Adresse, um alle Funktionen nutzen zu können.</p>
-<p>Falls du keine Verifizierungsemail erhalten hast, <a href="{% url 'resend_verification_email' %}">lasse dir eine neue senden.</a></p>
+{% if user.usererweitert.mail_verified == False and user.email != '' %}
+<p>Bitte bestätige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. Falls du keine Verifizierungsemail erhalten hast, <a href="{% url 'resend_verification_email' %}">lasse dir eine neue senden.</a></p>
 {% endif %}
 
 {% endif %}
