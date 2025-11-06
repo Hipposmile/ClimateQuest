@@ -44,7 +44,10 @@ def send_mail_function(**kwargs):
 
     user = kwargs.get('user')
     if not user:
-        createInternerFehler(request, 'Bei send_mail_function wurde kein User übergeben', fehlermeldung)
+        try:
+            user = request.user
+        except Exception:
+            createInternerFehler(request, 'Bei send_mail_function wurde kein User übergeben', fehlermeldung)
 
     recipient_list = kwargs.get('recipient_list')
     if not recipient_list:

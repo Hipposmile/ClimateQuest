@@ -380,7 +380,8 @@ def settings_view(request):
                     fail_silently=False,
                     verificationCodeSaved=verificationCodeSaved,
                     mailinglist_needless=True,
-                    redirect_error='register_view'
+                    redirect_error='register_view',
+                    user=request.user,
                 )
 
                 if not mail_output:
