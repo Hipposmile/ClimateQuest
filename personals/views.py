@@ -159,12 +159,11 @@ def activate(request, uidb64, token):
         UserErweitert.objects.filter(user=user).update(mail_verified=True)
         user.save()
         messages.success(request, all_messages["email_verified"])
+        logout(request)
         return redirect('login_view')
     else:
         messages.error(request, all_messages["invalid_verification_link"])
-        if user.is_authenticated:
-            return redirect('settings_view')
-        return redirect('login_view')
+        return redirect('settings_view')
 
 def resend_verification_email(request):
     if not request.user.is_authenticated:
