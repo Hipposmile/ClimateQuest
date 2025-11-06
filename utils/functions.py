@@ -52,12 +52,15 @@ def send_mail_function(**kwargs):
     recipient_list = kwargs.get('recipient_list')
     if not recipient_list:
         recipient_list = [user.email]
+    
 
     if not mailinglist_needless and user.email != '':
         try:
             userErweitert = UserErweitert.objects.get(user=user)
         except UserErweitert.DoesNotExist:
             createInternerFehler(request, f'UserErweitert zu User {user} nicht gefunden', fehlermeldung)
+        if userErweitert.mail_verified == False:
+            return True
         if userErweitert.mailinglist:
             try:
                 html_content = f"""
@@ -110,10 +113,7 @@ def send_mail_function(**kwargs):
     else:
         return True
 
-    return False
-    print(kwargs.get('message'))
-    return True
-    
+    return False    
 
 def get_level(user):
     aktionen = Aktion.objects.filter(user=user)

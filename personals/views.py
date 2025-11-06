@@ -29,8 +29,22 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-def generateVerificationCode():
-    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+from django.utils.encoding import force_bytes
+from .tokens import email_verification_token
+from django.urls import reverse
+from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_decode
+from django.contrib.auth import get_user_model
+from django.http import HttpResponse
+
+def generate_verification_link(request):
+    user = request.user
+    uid = urlsafe_base64_encode(force_bytes(user.pk))
+    token = email_verification_token.make_token(user)
+    activation_link = request.build_absolute_uri(
+        reverse('activate', kwargs={'uidb64': uid, 'token': token})
+    )
+    return activation_link
 
 def login_view(request):
     if request.method == 'POST':
@@ -86,12 +100,13 @@ def register_view(request):
             return redirect('login_view')
         
         if email == "":
-            User.objects.create_user(username=username, password=password, is_active=1)
+            User.objects.create_user(username=username, password=password)
+            actionsAfterRegistration(request, user)
+            UserErweitert.objects.filter(user=user).update(mail_verified=True)
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
-                actionsAfterRegistration(request, user)
-                messages.success(request, all_messages['successfully_signed_up'])
+                messages.success(request, all_messages['successfully_signed_up_email_not_verified'])
                 return redirect('home')
             createInternerFehler(request, 'bei Registrierung existiert Nutzer nicht')
             return redirect('register_view')
@@ -105,217 +120,76 @@ def register_view(request):
             return redirect('register_view')
         
         user = User.objects.create_user(username=username, password=password, email=email)
-        user.is_active = False
-        user.save()
     
-        verificationCode = generateVerificationCode()
-        verificationCodeSaved = VerificationCode.objects.create(user=user, code=verificationCode)
-
         actionsAfterRegistration(request, user)
+        UserErweitert.objects.filter(user=user).update(mail_verified=False)
+        user_authenticated = authenticate(username=username, password=password)
+        if user_authenticated:
+            login(request, user)
+            messages.success(request, all_messages['successfully_signed_up'])
+        else:
+            createInternerFehler(request, 'bei Registrierung existiert Nutzer nicht')
+            return redirect('register_view')
+        
+        activation_link = generate_verification_link(request)
 
-        mail_output = send_mail_function(
+        send_mail_function(
             request=request,
-            subject='ClimateQuest - dein Verifizierungscode ist da!',
-            message=f'Bitte gib <a href="https://climate-quest.de/personals/verify-email/">hier</a> folgenden Verifizierungscode an: {verificationCode}',
+            subject='ClimateQuest - dein Aktivierungscode ist da!',
+            message=f'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: {activation_link}',
             recipient_list=email,
             fail_silently=False,
-            verificationCodeSaved=verificationCodeSaved,
             mailinglist_needless=True,
             user=user,
             fehlermeldung='Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge deine E-Mail-Adresse später in den Einstellungen hinzu.'
         )
-
-        if not mail_output:
-            verificationCodeSaved.delete()
-            user.delete()
-            return redirect('register_view')
         
-        return redirect('verifyEmail')
+        return redirect('home')
     
     return render(request, './register.html')
 
-def verifyEmail(request):
-    if request.method == 'POST':
-        if 'verify' in request.POST:
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            verificationCodeInput = request.POST.get('verificationCode')
+def activate(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = get_user_model().objects.get(pk=uid)
+    except Exception:
+        user = None
 
-            if not username or not password or not verificationCodeInput:
-                messages.error(request, all_messages["missing_required_inputs"])
-                return redirect('verifyEmail')
-            
-            try:
-                user = User.objects.get(username=username)
-                if not check_password(password, user.password):
-                    messages.error(request, all_messages["invalid_login_data"])
-                    return redirect('verifyEmail')
+    if user and email_verification_token.check_token(user, token):
+        UserErweitert.objects.filter(user=user).update(mail_verified=True)
+        user.save()
+        messages.success(request, all_messages["email_verified"])
+        return redirect('login_view')
+    else:
+        messages.error(request, all_messages["invalid_verification_link"])
+        if user.is_authenticated:
+            return redirect('settings_view')
+        return redirect('login_view')
 
-            except User.DoesNotExist:
-                messages.error(request, all_messages["invalid_login_data"])
-                return redirect('verifyEmail')
-            
-            if not user.email:
-                messages.error(request, all_messages["no_email_adress_at_verify"])
-                return redirect('verifyEmail')
-            
-            if user.is_active:
-                messages.error(request, all_messages["user_is_active_at_verify"])
-                return redirect('verifyEmail')
-            
-            try:
-                VerificationCode.objects.get(user=user)
-            except VerificationCode.DoesNotExist:
-                messages.error(request, all_messages["no_verification_code"])
-                return redirect('verifyEmail')
+def resend_verification_email(request):
+    if not request.user.is_authenticated:
+        messages.error(request, all_messages["login_required"])
+        return redirect('login_view')
 
-            try:
-                verificationCode = VerificationCode.objects.get(code=verificationCodeInput, user=user)
-                if verificationCode.isValid():
-                    user.is_active = True
-                    user.save()
-                    verificationCode.delete()
-                    user = authenticate(username=username, password=password)
-                    if user:
-                        login(request, user)
-                        messages.success(request, all_messages["email_verified"])
-                        return redirect('home')
-                    else:
-                        createInternerFehler(request, 'User existiert nach Registrierung nicht')
-                else:
-                    verificationCode.delete()
-                    messages.error(request, all_messages["verification_code_expired"])
-                    return redirect('verifyEmail')
-            except VerificationCode.DoesNotExist:
-                messages.error(request, all_messages["verification_code_invalid"])
-                return redirect('verifyEmail')
-        elif 'resend' in request.POST:
-            username = request.POST.get('username')
-            password = request.POST.get('password')
+    if request.user.email == "":
+        messages.error(request, all_messages["no_email_to_verify"])
+        return redirect('settings_view')
 
-            if not username or not password:
-                messages.error(request, all_messages["missing_required_inputs"])
-                return redirect('verifyEmail')
-            
-            try:
-                user = User.objects.get(username=username)
-                if not check_password(password, user.password):
-                    messages.error(request, all_messages["invalid_login_data"])
-                    return redirect('verifyEmail')
+    activation_link = generate_verification_link(request)
 
-            except User.DoesNotExist:
-                messages.error(request, all_messages["invalid_login_data"])
-                return redirect('verifyEmail')
-            
-            if not user.email:
-                messages.error(request, all_messages["no_email_adress_at_verify"])
-                return redirect('verifyEmail')
-            
-            if user.is_active:
-                messages.error(request, all_messages["user_is_active_at_verify"])
-                return redirect('verifyEmail')
-            
-            try:
-                VerificationCode.objects.get(user=user)
-            except VerificationCode.DoesNotExist:
-                VerificationCode.objects.create(verificationCode=generateVerificationCode(), user=user)
-            
-            try:
-                verificationCode = VerificationCode.objects.get(user=user)
-                mail_output = send_mail_function(
-                    request=request,
-                    subject='ClimateQuest - dein Verifizierungscode ist da!',
-                    message=f'Bitte gib <a href="https://climate-quest.de/personals/verify-email/">hier</a> folgenden Verifizierungscode an: {verificationCode}',
-                    recipient_list=user.email,
-                    fail_silently=False,
-                    mailinglist_needless=True,
-                    user=user,
-                    fehlermeldung='Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge deine E-Mail-Adresse später in den Einstellungen hinzu.'
-                )
-                if not mail_output:
-                    verificationCode.delete()
-                    return redirect('verifyEmail')
-            except Exception as e:
-                createInternerFehler(request, 'bei verifyEmail - resend ist kein Verifizierungscode vorhanden')
-                messages.error(request, all_messages["internal_error"])
-                return redirect('verifyEmail')
-            
-            messages.success(request, all_messages["successfully_sent_email"])
+    send_mail_function(
+        request=request,
+        subject='ClimateQuest - dein Aktivierungscode ist da!',
+        message=f'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: {activation_link}',
+        recipient_list=request.user.email,
+        fail_silently=False,
+        mailinglist_needless=True,
+        user=request.user,
+        fehlermeldung='Fehler beim E-Mail-Versand. Probiere es später erneut.'
+    )
 
-        elif 'new_email_adress' in request.POST:
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            email = request.POST.get('email')
-
-            if not username or not password:
-                messages.error(request, all_messages["missing_required_inputs"])
-                return redirect('verifyEmail')
-            
-            try:
-                user = User.objects.get(username=username)
-                if not check_password(password, user.password):
-                    messages.error(request, all_messages["invalid_login_data"])
-                    return redirect('verifyEmail')
-
-            except User.DoesNotExist:
-                messages.error(request, all_messages["invalid_login_data"])
-                return redirect('verifyEmail')
-            
-            if not user.email:
-                messages.error(request, all_messages["no_email_adress_at_verify"])
-                return redirect('verifyEmail')
-            
-            if user.is_active:
-                messages.error(request, all_messages["user_is_active_at_verify"])
-                return redirect('verifyEmail')
-            
-            if email == "":
-                user.email = email
-                user.is_active = True
-                user.save()
-                messages.success(request, all_messages["deleted_email"])
-                return redirect('login_view')
-            
-            if User.objects.filter(email=email).exists():
-                messages.error(request, all_messages["email_not_available"])
-                return redirect('verifyEmail')
-            
-            user.email = email
-            user.save()
-
-            try:
-                VerificationCode.objects.get(user=user)
-            except VerificationCode.DoesNotExist:
-                VerificationCode.objects.create(verificationCode=generateVerificationCode(), user=user)
-            
-            try:
-                verificationCode = VerificationCode.objects.get(user=user)
-                mail_output = send_mail_function(
-                    request=request,
-                    subject='ClimateQuest - dein Verifizierungscode ist da!',
-                    message=f'Bitte gib <a href="https://climate-quest.de/personals/verify-email/">hier</a> folgenden Verifizierungscode an: {verificationCode}',
-                    recipient_list=user.email,
-                    fail_silently=False,
-                    mailinglist_needless=True,
-                    user=user,
-                    fehlermeldung='Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge deine E-Mail-Adresse später in den Einstellungen hinzu.'
-                )
-                if not mail_output:
-                    verificationCode.delete()
-                    return redirect('verifyEmail')
-            except Exception as e:
-                createInternerFehler(request, 'bei verifyEmail - resend ist kein Verifizierungscode vorhanden')
-                messages.error(request, all_messages["internal_error"])
-                return redirect('verifyEmail')
-            
-            messages.success(request, all_messages["successfully_changed_email"])
-            return redirect('verifyEmail')
-
-        else:
-            messages.error(request, all_messages["internal_error"])
-            return redirect('verifyEmail')
-            
-    return render(request, 'verify_email.html')
+    messages.success(request, all_messages["verification_email_resent"])
+    return redirect('settings_view')
 
 @login_required
 def settings_view(request):
@@ -369,30 +243,27 @@ def settings_view(request):
                     messages.error(request, all_messages["email_not_available"])
                     return redirect('settings_view')
 
-                verificationCode = generateVerificationCode()
-                verificationCodeSaved = VerificationCode.objects.create(user=request.user, code=verificationCode)
+                activation_link = generate_verification_link(request)
 
                 mail_output = send_mail_function(
                     request=request,
-                    subject='ClimateQuest - dein Verifizierungscode ist da!',
-                    message=f'Bitte gib <a href="https://climate-quest.de/personals/verify-email/">hier</a> folgenden Verifizierungscode an: {verificationCode}',
+                    subject='ClimateQuest - dein Aktivierungscode ist da!',
+                    message=f'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: {activation_link}',
                     recipient_list=email,
                     fail_silently=False,
-                    verificationCodeSaved=verificationCodeSaved,
                     mailinglist_needless=True,
                     redirect_error='register_view',
                     user=request.user,
                 )
 
                 if not mail_output:
-                    verificationCodeSaved.delete()
                     return redirect('settings_view')
                 else:
                     request.user.email = email
-                    request.user.is_active = False
                     request.user.save()
+                    UserErweitert.objects.filter(user=request.user).update(mail_verified=False)
                     messages.success(request, all_messages["email_changed"])
-                return redirect('verifyEmail')
+                return redirect('settings_view')
         
         if 'change_email_settings' in request.POST:
             mailinglist = request.POST.get('mailinglist') == 'on'
@@ -453,10 +324,6 @@ def reset_password(request):
             recipient_list=user.email,
             fail_silently=False,
         )
-
-        if not user.is_active:
-            user.is_active = True
-            user.save()
 
         try:
             user.set_password(new_password)

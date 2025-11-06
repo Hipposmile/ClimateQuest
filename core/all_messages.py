@@ -91,12 +91,14 @@ all_messages = {
 
     #Login
     "successfully_signed_up": "Erfolgreich registriert",
+    "successfully_signed_up_email_not_verified": "Erfolgreich registriert, aber E-Mail-Adresse noch nicht verifiziert.",
     "robot": "Es besteht die Gefahr, dass du ein Roboter bist. Bitte versuche es erneut.",
     "invalid_login_data": "Ungültige Anmeldedaten.",
     "username_not_available": "Benutzername bereits vergeben",
     "invalid_email": "E-Mail-Adresse ungültig",
     "email_not_available": "E-Mail-Adresse bereits vergeben",
     "nutungsbedingungen_not_accepted": "Du musst die Nutzungsbedingungen akzeptieren",
+    "invalid_verification_link": "Ungültiger Verifizierungslink",
 
     #Edit
     "invalid_password": "Passwort ist falsch",
@@ -112,16 +114,10 @@ all_messages = {
     "password_reset_error": "Ein Fehler ist beim Zurücksetzen des Passwortes aufgetreten",
     "successfully_changed_email": "E-Mail-Adresse erfolgreich geändert. Ein Verifizierungscode wurde an diese Adresse gesendet.",
     "successfully_changed_email_no_email": "E-Mail-Adresse erfolgreich geändert. Du hast jetzt keine E-Mail Adresse mehr hinterlegt und musst daher nichts verifizieren.",
-
-
-    "no_email_adress_at_verify": "Du hast keine E-Mail-Adresse angegeben und musst daher nichts verifizieren",
-    "no_verification_code": "interner Fehler: Dir wurde kein Verifizierungscode zugesendet.",
+    "no_email_to_verify": "Du hast keine E-Mail-Adresse angegeben und musst daher nichts verifizieren",
     "user_is_active_at_verify": "Du bist bereits verifiziert. Logge dich direkt ein.",
-    "successfully_sent_email": "E-Mail erfolgreich gesendet",
     "email_verified": "E-Mail-Adresse erfolgreich verifiziert",
-    "verification_code_expired": "Verifizierungscode ist abgelaufen",
-    "verification_code_invalid": "Verifizierungscode ungütlig",
-    "deleted_email": "E-Mail-Adresse erfolgreich gelöscht und Account aktiviert.",
+    "verification_email_resent": "Verifizierungs-E-Mail erfolgreich erneut gesendet",
 
     # --------
     #Aktion

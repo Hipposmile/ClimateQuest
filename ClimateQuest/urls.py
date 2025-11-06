@@ -48,7 +48,6 @@ sitemaps = {
     "register": RegisterSitemap(),
     "personal_settings": PersonalSettingsSitemap(),
     "reset_password": ResetPasswordSitemap(),
-    "verify_email": VerifyEmailSitemap(),
 
     "klimapunkte_view": KlimapunkteViewSitemap(),
     "level_view": LevelViewSitemap(),

@@ -5,20 +5,10 @@ from django.contrib.auth.hashers import make_password
 from django.utils import timezone
 from datetime import timedelta
 
-class VerificationCode(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    code = models.CharField(max_length=6)
-    created_at = models.DateTimeField(default=timezone.now)
-
-    def isValid(self):
-        return timezone.now() < self.created_at + timedelta(hours=24)
-    
-    def __str__(self):
-        return self.code
-
 class UserErweitert(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
     mailinglist = models.BooleanField(default=True)
+    mail_verified = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username

@@ -40,13 +40,3 @@ class ResetPasswordSitemap(Sitemap):
 
     def location(self, item):
         return reverse(item)
-
-class VerifyEmailSitemap(Sitemap):
-    changefreq = "yearly"
-    priority = 0.5
-
-    def items(self):
-        return ['verifyEmail']
-
-    def location(self, item):
-        return reverse(item)
