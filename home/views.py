@@ -14,10 +14,12 @@ from django.core.exceptions import ValidationError
 import os
 from django.core.management import call_command
 from django.contrib.auth.models import User
+from django.utils import timezone
 from .models import *
 from events.models import *
 from utils.functions import *
 import os
+from utils.functions import *
 from dotenv import load_dotenv
 
 load_dotenv()

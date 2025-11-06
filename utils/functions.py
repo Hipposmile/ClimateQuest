@@ -12,7 +12,8 @@ from django.core.mail import EmailMultiAlternatives
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 import bleach
-
+from django.utils import timezone
+import traceback
 from ClimateQuest import settingsprod
 from home.models import *
 from verbrauch.models import *
@@ -145,10 +146,41 @@ def get_klimapunkte(aktionen):
     klimapunkte = sum(aktion.impact for aktion in aktionen)
     return klimapunkte
 
-def createInternerFehler(request, beschreibung, fehlermeldung='interner Fehler'):
-    messages.error(request, fehlermeldung)
-    with open('errors.log', 'a') as file:
-        file.write(f'{beschreibung}\n')
+def createInternerFehler(request, exception=None):
+    def sanitize_post_data(post_data):
+        return {
+            k: ('***' if 'password' in k.lower() or 'token' in k.lower() else v)
+            for k, v in post_data.items()
+        }
+
+    def sanitize_cookies(cookies):
+        return {k: '***' for k in cookies}
+
+    def extract_files(files):
+        return {k: f.name for k, f in files.items()}
+
+    def extract_meta(meta):
+        # Nur HTTP-Header, keine IP-Adresse oder andere sensible Felder
+        return {k: v for k, v in meta.items() if k.startswith('HTTP_')}
+
+    error_message = {
+        'timestamp': timezone.now().isoformat(),
+        'method': request.method,
+        'path': request.path,
+        'full_path': request.get_full_path(),
+        'user': str(request.user) if request.user.is_authenticated else 'Anonymous',
+        'GET': request.GET.dict(),
+        'POST': sanitize_post_data(request.POST.dict()),
+        'COOKIES': sanitize_cookies(request.COOKIES),
+        'FILES': extract_files(request.FILES),
+        'META': extract_meta(request.META),
+    }
+
+    if exception:
+        error_message['exception'] = str(exception)
+        error_message['traceback'] = traceback.format_exc()
+
+    return error_message
 
 def createBenachrichtigung(request, benachrichtigung, user=None):
     if user is None:
