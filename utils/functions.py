@@ -146,7 +146,7 @@ def get_klimapunkte(aktionen):
     klimapunkte = sum(aktion.impact for aktion in aktionen)
     return klimapunkte
 
-def createInternerFehler(request, exception=None):
+def createInternerFehler(request, beschreibung, fehlermeldung="interner Fehler", exception=None):
     def sanitize_post_data(post_data):
         return {
             k: ('***' if 'password' in k.lower() or 'token' in k.lower() else v)
@@ -174,13 +174,16 @@ def createInternerFehler(request, exception=None):
         'COOKIES': sanitize_cookies(request.COOKIES),
         'FILES': extract_files(request.FILES),
         'META': extract_meta(request.META),
+        'beschreibung': beschreibung
     }
 
     if exception:
         error_message['exception'] = str(exception)
         error_message['traceback'] = traceback.format_exc()
 
-    return error_message
+    messages.error(request, fehlermeldung)
+    with open('errors.log', 'a') as file:
+        file.write(f'{error_message}\n\n')
 
 def createBenachrichtigung(request, benachrichtigung, user=None):
     if user is None:
