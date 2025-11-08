@@ -68,7 +68,7 @@
         {% endfor %}
     {% endif %}
 
-    <p>Klimapunkte: {{ klimapunkte|floatformat:-4 }}</p>
+    <p>Klimapunkte: {{ levelData.klimapunkte|floatformat:-4 }}</p>
 
     {% if levelData.info %}
         <p id="info">{{ levelData.info|html_decode }}</p>
