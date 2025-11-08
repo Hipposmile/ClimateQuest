@@ -241,7 +241,13 @@ def settings_view(request):
                 if User.objects.filter(email=email).exists():
                     messages.error(request, all_messages["email_not_available"])
                     return redirect('settings_view')
+                
+                old_email = request.user.email
 
+                request.user.email = email
+                request.user.save()
+                UserErweitert.objects.filter(user=request.user).update(mail_verified=False)
+                
                 activation_link = generate_verification_link(request)
 
                 mail_output = send_mail_function(
@@ -256,11 +262,11 @@ def settings_view(request):
                 )
 
                 if not mail_output:
+                    request.user.email = old_email
+                    request.user.save()
+                    UserErweitert.objects.filter(user=request.user).update(mail_verified=True)
                     return redirect('settings_view')
                 else:
-                    request.user.email = email
-                    request.user.save()
-                    UserErweitert.objects.filter(user=request.user).update(mail_verified=False)
                     messages.success(request, all_messages["email_changed"])
                 return redirect('settings_view')
         
