@@ -135,7 +135,7 @@ def register_view(request):
 
         send_mail_function(
             request=request,
-            subject='ClimateQuest - dein Aktivierungscode ist da!',
+            subject='ClimateQuest - dein Aktivierungslink ist da!',
             message=f'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: {activation_link}',
             recipient_list=email,
             fail_silently=False,
@@ -178,7 +178,7 @@ def resend_verification_email(request):
 
     send_mail_function(
         request=request,
-        subject='ClimateQuest - dein Aktivierungscode ist da!',
+        subject='ClimateQuest - dein Aktivierungslink ist da!',
         message=f'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: {activation_link}',
         recipient_list=request.user.email,
         fail_silently=False,
@@ -246,7 +246,7 @@ def settings_view(request):
 
                 mail_output = send_mail_function(
                     request=request,
-                    subject='ClimateQuest - dein Aktivierungscode ist da!',
+                    subject='ClimateQuest - dein Aktivierungslink ist da!',
                     message=f'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: {activation_link}',
                     recipient_list=email,
                     fail_silently=False,
