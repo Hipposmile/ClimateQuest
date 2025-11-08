@@ -76,7 +76,7 @@ def send_mail_function(**kwargs):
                     subject=subject,
                     body=text_content,
                     from_email=settingsprod.EMAIL_HOST_USER,
-                    to=recipient_list
+                    to=[recipient_list]
                 )
                 email.attach_alternative(html_content, "text/html")
                 email.send()
