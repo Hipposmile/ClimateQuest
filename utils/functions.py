@@ -183,8 +183,8 @@ def createInternerFehler(request, beschreibung, fehlermeldung="interner Fehler",
     if exception:
         error_message['exception'] = str(exception)
         error_message['traceback'] = traceback.format_exc()
-
-    messages.error(request, fehlermeldung)
+    if request:
+        messages.error(request, fehlermeldung)
     with open('logs/errors.log', 'a') as file:
         file.write(f'{error_message}\n\n')
 

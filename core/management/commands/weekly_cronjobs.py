@@ -9,8 +9,13 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         def create_reminder():
             for user in User.objects.all():
-                if not Aktion.objects.filter(user=user, date__gte=timezone.now().date() - timedelta(days=7)).exists():
-                    createBenachrichtigung(request=None, benachrichtigung=f"Hey {user.username}, du hast in der letzten Woche keine einzige Aktion eingetragen! Ändere das und schütze nicht nur das Klima, sondern steige auch in den Rankings deiner Families und Communities sowie in deinem Level auf!", user=user)
+                try:
+                    if not Aktion.objects.filter(user=user, date__gte=timezone.now().date() - timedelta(days=7)).exists():
+                        createBenachrichtigung(request=None, benachrichtigung=f"Hey {user.username}, du hast in der letzten Woche keine einzige Aktion eingetragen! Ändere das und schütze nicht nur das Klima, sondern steige auch in den Rankings deiner Families und Communities sowie in deinem Level auf!", user=user)
+                except Exception as e:
+                    createInternerFehler(request=None, beschreibung=f'Cronjob: Create Reminder for User: {user}: Exception: {e}')
 
         def main():
             create_reminder()
+        
+        main()
