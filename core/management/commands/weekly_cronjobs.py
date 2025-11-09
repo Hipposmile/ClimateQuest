@@ -13,7 +13,9 @@ class Command(BaseCommand):
                     if not Aktion.objects.filter(user=user, date__gte=timezone.now().date() - timedelta(days=7)).exists():
                         createBenachrichtigung(request=None, benachrichtigung=f"Hey {user.username}, du hast in der letzten Woche keine einzige Aktion eingetragen! Ändere das und schütze nicht nur das Klima, sondern steige auch in den Rankings deiner Families und Communities sowie in deinem Level auf!", user=user)
                 except Exception as e:
-                    createInternerFehler(request=None, beschreibung=f'Cronjob: Create Reminder for User: {user}: Exception: {e}')
+                    error_message = f'Cronjob: {timezone.now().isoformat()} Create Reminder for User: {user}: Exception: {e}'
+                    with open('logs/errors.log', 'a') as file:
+                        file.write(f'{error_message}\n\n')
 
         def main():
             create_reminder()
