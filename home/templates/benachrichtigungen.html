@@ -107,7 +107,7 @@
         <li>
         <p class="emoji">&#x1F514;</p>
           <div class="benachrichtigung-inhalt">
-            {{ benachrichtigung.benachrichtigung|html_decode }}
+            <p>{{ benachrichtigung.benachrichtigung|safe }}</p>
             <a href="{% url 'delete_benachrichtigung' benachrichtigung.id %}"><p class="emoji">&#x1F5D1;</p></a>
           </div>
           <div class="benachrichtigung-datum">

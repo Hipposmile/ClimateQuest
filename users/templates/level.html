@@ -71,7 +71,7 @@
     <p>Klimapunkte: {{ levelData.klimapunkte|floatformat:-4 }}</p>
 
     {% if levelData.info %}
-        <p id="info">{{ levelData.info|html_decode }}</p>
+        <p id="info">{{ levelData.info|safe }}</p>
     {% else %}
         <p>Du bist im Level: {{ levelData.current_level }}</p>
         <p>Nächstes Level: {{ levelData.next_level }}</p>

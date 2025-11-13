@@ -86,7 +86,7 @@ def add(request):
         
         new_level = get_level(request.user)
         if old_level['level_number'] < new_level['level_number']:
-            createBenachrichtigung(request, f'Du hast eine neue Aktion vom Typen {action_type} erstellt und bist so ins Level {new_level["current_level"].description} aufgestiegen. <p class="emoji">&#129395;</p>', request.user)
+            createBenachrichtigung(request, f'Du hast eine neue Aktion vom Typen {action_type} erstellt und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#1F973;</span>', request.user)
         else:
             createBenachrichtigung(request, f'Du hast eine neue Aktion vom Typen {action_type} erstellt.', request.user)
 
@@ -172,9 +172,9 @@ def edit_action(request, action_id):
 
             new_level = get_level(request.user)
             if old_level['level_number'] < new_level['level_number']:
-                createBenachrichtigung(request, f'Du hast eine Aktion vom Typen {action_type} bearbeitet und bist so ins Level {new_level["current_level"].description} aufgestiegen. <p class="emoji">&#x1F973;</p>', request.user)
+                createBenachrichtigung(request, f'Du hast eine Aktion vom Typen {action_type} bearbeitet und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>', request.user)
             elif old_level['level_number'] > new_level['level_number']:
-                createBenachrichtigung(request, f'Du hast eine Aktion vom Typen {action_type} bearbeitet, hast dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <p class="emoji">&#x1F622;</p>', request.user)
+                createBenachrichtigung(request, f'Du hast eine Aktion vom Typen {action_type} bearbeitet, hast dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>', request.user)
             else:
                 createBenachrichtigung(request, f'Du hast eine Aktion vom Typen {action_type} bearbeitet', request.user)
 
@@ -187,7 +187,7 @@ def edit_action(request, action_id):
             aktuelleAktion.delete()
             new_level = get_level(request.user)
             if old_level['level_number'] > new_level['level_number']:
-                createBenachrichtigung(request, f'Du hast eine Aktion vom Typen {action_type} gelöscht, hast dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <p class="emoji">&#x1F622;</p>', request.user)
+                createBenachrichtigung(request, f'Du hast eine Aktion vom Typen {action_type} gelöscht, hast dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>', request.user)
             else:
                 createBenachrichtigung(request, f'Du hast eine Aktion vom Typen {action_type} gelöscht', request.user)
             messages.success(request, all_messages["action_deleted"])

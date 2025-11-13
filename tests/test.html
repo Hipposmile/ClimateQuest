@@ -2,70 +2,170 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Scroll-Effekt</title>
+  <title>Image Changer Fullscreen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body, html {
+        body {
       margin: 0;
-      padding: 0;
-      height: 200vh; /* genug Platz zum Scrollen */
       font-family: sans-serif;
+      background-color: #111;
+      color: #eee;
     }
 
-    .hero {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: url('IMG_2713.HEIC') center/cover no-repeat;
-      transition: opacity 1s ease;
-      z-index: -1;
-    }
-
-    .text-section {
-      margin-top: 120vh;
-      padding: 50px;
-      font-size: 2em;
-      opacity: 0;
-      transition: opacity 1s ease;
+    nav {
+      height: 60px;
+      background-color: #222;
       color: white;
+      display: flex;
+      align-items: center;
+      padding: 0 1rem;
+      font-size: 1.2rem;
     }
 
-    .text-visible {
+    #slider {
+      position: relative;
+      width: 100%;
+      height: 70vh; /* 70% der Bildschirmhöhe */
+      margin-top: 20px; /* Abstand zur Nav */
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #000;
+    }
+
+    #slider img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: none;
+    }
+
+    #slider img.active {
+      display: block;
+    }
+
+    .nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 3rem;
+      background: rgba(0,0,0,0.4);
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      z-index: 10;
+      transition: background 0.3s;
+    }
+
+    .nav-button:hover {
+      background: rgba(0,0,0,0.7);
+    }
+
+    #prev { left: 20px; }
+    #next { right: 20px; }
+
+    /* Responsiv für kleinere Geräte */
+    @media (max-width: 600px) {
+      .nav-button {
+        font-size: 2rem;
+        padding: 0.3rem 0.6rem;
+      }
+    }
+
+    /* Weiterer Inhalt */
+    .content {
+      padding: 2rem;
+      background-color: #1a1a1a;
+    }
+    
+    .slider-heading {
+  position: absolute;
+  top: 80px; /* Abstand zur Nav */
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  font-size: 3rem;
+  color: white;
+  opacity: 0;
+  animation: fadeUp 1.2s ease-out forwards;
+  z-index: 20;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  pointer-events: none;
+}
+
+/* Animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Für kleinere Bildschirme: Überschrift im Flow */
+@media (max-width: 600px) {
+  .slider-heading {
+    position: static;
+    transform: none;
+    text-align: center;
+    font-size: 2rem;
+    margin: 20px 0;
+    animation: fadeUpMobile 1.2s ease-out forwards;
+  }
+
+  @keyframes fadeUpMobile {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
       opacity: 1;
+      transform: translateY(0);
     }
+  }
+}
 
-    .hero.fade-out {
-      opacity: 0.9;
-    }
   </style>
 </head>
 <body>
 
-  <div class="hero" id="hero"></div>
+<nav>📷 Meine Galerie</nav>
+<h1 class="slider-heading">Willkommen in der Galerie</h1>
 
-  <div class="text-section" id="text">
-    Willkommen bei Climate Quest! 🌱<br>
-    Gemeinsam gestalten wir die Zukunft.
-  </div>
+<div id="slider">
+  <button id="prev" class="nav-button">&lt;</button>
+  <button id="next" class="nav-button">&gt;</button>
+  <img src="../static/images/nature/lake.jpg" class="active" alt="Bild 1">
+  <img src="../static/images/nature/forest.jpg" alt="Bild 2">
+  <img src="../static/images/nature/flowers.HEIC" alt="Bild 3">
+</div>
 
-  <script>
-    const hero = document.getElementById('hero');
-    const text = document.getElementById('text');
+<h1>Home</h1>
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi repudiandae distinctio enim harum. Illum perferendis alias odit sunt nobis error rem nemo, velit veniam, adipisci aut nulla excepturi? Neque, quidem.</p>
 
-    window.addEventListener('scroll', () => {
-      const textTop = text.getBoundingClientRect().top;
-      const windowHeight = window.innerHeight;
+<script>
+  const images = document.querySelectorAll('#slider img');
+  let current = 0;
 
-      if (textTop < windowHeight) {
-        text.classList.add('text-visible');
-        hero.classList.add('fade-out');
-      } else {
-        text.classList.remove('text-visible');
-        hero.classList.remove('fade-out');
-      }
+  function showImage(index) {
+    images.forEach((img, i) => {
+      img.classList.toggle('active', i === index);
     });
-  </script>
+  }
+
+  document.getElementById('prev').addEventListener('click', () => {
+    current = (current - 1 + images.length) % images.length;
+    showImage(current);
+  });
+
+  document.getElementById('next').addEventListener('click', () => {
+    current = (current + 1) % images.length;
+    showImage(current);
+  });
+</script>
 
 </body>
-</html>
