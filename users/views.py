@@ -102,3 +102,32 @@ def level_view(request, user_id):
 
     levelData = get_level(user)
     return render(request, './level.html', {'levelData': levelData, 'user': user})
+
+def users_overview(request):
+    if request.method == 'POST':
+        search_keyword = request.POST.get('search_keyword')
+        users = User.objects.filter(username__icontains=search_keyword)
+        return render(request, 'users_overview.html', {'users': users})
+    return render(request, 'users_overview.html')
+
+def user_detail(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        messages.error(request, all_messages["user_not_found"])
+        return redirect('users_overview')
+    
+    userErweitert = UserErweitert.objects.get(user=user)
+    if user != request.user:
+        msgs = ChatMessage.objects.filter(sender=request.user, receiver=user)
+    else:
+        msgs = ChatMessage.objects.filter(receiver=user)
+
+    if request.method == 'POST':
+        msg = request.POST.get('msg')
+        ChatMessage.objects.create(message=msg, sender=request.user, receiver=user)
+        messages.success(request, all_messages["msg_created"])
+        return redirect('user_detail', user_id)
+    
+    return render(request, './user_detail.html', {'userErweitert': userErweitert, 'msgs': msgs})
+    

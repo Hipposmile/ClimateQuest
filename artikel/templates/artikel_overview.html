@@ -59,7 +59,7 @@
         <p><strong>Zuletzt bearbeitet:</strong> <span class="event-date" data-date="{{ single_artikel.date_time|date:'c' }}">{{ single_artikel.date_time|date:"d.m.Y, H:i" }}</span></p>
 
         {% elif ordered_by == 'Ersteller' %}
-        <p><strong>Ersteller:</strong> <a href="{% url 'klimapunkte_view' single_artikel.creator.id %}">{{ single_artikel.creator.username }}</a> {% if request.user == single_artikel.creator %}(Du){% endif %}</p>
+        <p><strong>Ersteller:</strong> <a href="{% url 'user_detail' single_artikel.creator.id %}">{{ single_artikel.creator.username }}</a> {% if request.user == single_artikel.creator %}(Du){% endif %}</p>
         {% endif %}
     </div>
 
@@ -72,7 +72,7 @@
                     data-date="{{ single_artikel.date_time|date:'c' }}">{{ single_artikel.date_time|date:"d.m.Y, H:i" }}</span></p>
             {% endif %}
             {% if ordered_by != 'Ersteller' %}
-            <p><strong>Ersteller:</strong> <a href="{% url 'klimapunkte_view' single_artikel.creator.id %}">{{ single_artikel.creator.username }}</a> {% if request.user == single_artikel.creator %}(Du){% endif %}</p>
+            <p><strong>Ersteller:</strong> <a href="{% url 'user_detail' single_artikel.creator.id %}">{{ single_artikel.creator.username }}</a> {% if request.user == single_artikel.creator %}(Du){% endif %}</p>
             {% endif %}
         </div>
     </details>

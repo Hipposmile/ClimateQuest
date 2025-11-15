@@ -56,7 +56,7 @@
     {% csrf_token %}
     <button type="submit" name="light_candle">Kerze anzünden</button>
 </form>
-<p>Erstellt von <a href="{% url 'klimapunkte_view' present.creator.id %}">{{ present.creator }}</a> am {{ present.created_at|date:"d.m.Y" }}</p>
+<p>Erstellt von <a href="{% url 'user_detail' present.creator.id %}">{{ present.creator }}</a> am {{ present.created_at|date:"d.m.Y" }}</p>
 <p>{{ present.candles }} angezündete Kerzen</p>
 
 <div class="candles-container">

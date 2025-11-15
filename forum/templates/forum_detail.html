@@ -35,13 +35,13 @@
 
     <div class="artikel-content"><p>{{ post.content|safe }}</p></div>
     <br>
-    <p>Erstellt von <a href="{% url 'klimapunkte_view' post.creator.id %}">{{ post.creator }}</a></p>
+    <p>Erstellt von <a href="{% url 'user_detail' post.creator.id %}">{{ post.creator }}</a></p>
     <p>Erstellt am: {{ post.date_time|date:"d.m.Y H:i" }}</p>
 
     {% for answer in answers %}
         <div class="answer">
             <p>{{ answer.content|safe }}</p>
-            <p><small>Antwort von <a href="{% url 'klimapunkte_view' answer.creator.id %}">{{ answer.creator }}</a>
+            <p><small>Antwort von <a href="{% url 'user_detail' answer.creator.id %}">{{ answer.creator }}</a>
                 am {{ answer.date_time|date:"d.m.Y H:i" }}</small></p>
         </div>
     {% endfor %}

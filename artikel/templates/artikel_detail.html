@@ -18,7 +18,8 @@
 
 <div class="artikel-content"><p>{{ artikel.content|safe }}</p></div>
 <br>
-<p>Erstellt von <a href="{% url 'klimapunkte_view' artikel.creator.id %}">{{ artikel.creator }}</a></p>
+<p>Erstellt von <a href="{% url 'user_detail' artikel.creator.id %}">{{ artikel.creator }}</a></p>
+{% if artikel.creator.is_superuser %}<p><span class="emoji">&#x1F4A1;</span> Ein offizieller Artikel von ClimateQuest</p>{% endif %}
 <p>Zuletzt bearbeitet: {{ artikel.date_time|date:"d.m.Y H:i" }}</p>
 
 {% if artikel.creator == request.user %}
@@ -32,14 +33,14 @@
     <div class="comment">
         <div class="text-wrapper">
             <div class="comment-header">
-                <span class="comment-user"><a href="{% url 'klimapunkte_view' comment.user.id %}">{{ comment.user }}</a></span>
+                <span class="comment-user"><a href="{% url 'user_detail' comment.user.id %}">{{ comment.user }}</a></span>
                 <span class="comment-date">{{ comment.date_time|date:"d.m.Y H:i" }}</span>
             </div>
             <div class="comment-text expandable-text blur-enabled">{{ comment.comment }}</div>
             <div class="answers">
                 {% for answer in comment.answers.all %}
                 <div class="answer-header">
-                    <span class="answer-user"><a href="{% url 'klimapunkte_view' comment.user.id %}">{{ answer.user }}</a></span>
+                    <span class="answer-user"><a href="{% url 'user_detail' comment.user.id %}">{{ answer.user }}</a></span>
                     <span class="answer-date">{{ answer.date_time|date:"d.m.Y H:i" }}</span>
                 </div>
                 <div class="answer expandable-text blur-enabled">{{ answer.answer }}</div>

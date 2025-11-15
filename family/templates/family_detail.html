@@ -92,7 +92,7 @@
         {% for member in members %}
             <li class="{% if member.member == user %}klimapunkte_me{% else %}klimapunkte_other{% endif %}"
                 id="{% if member.member == user %}me{% else %}other{% endif %}">
-                <span><span style="font-weight: #888;" id="rank_{{member.member.id}}"></span><a href="{% url 'klimapunkte_view' member.member.id %}">{{ member.member.username }}</a></span>
+                <span><span style="font-weight: #888;" id="rank_{{member.member.id}}"></span><a href="{% url 'user_detail' member.member.id %}">{{ member.member.username }}</a></span>
                 <br>
                 <span style="font-size:0.95em; color:#888;">({{ member.klimapunkte|floatformat:-4 }} Klimapunkte)</span>
             </li>

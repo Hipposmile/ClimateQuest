@@ -1,183 +1,265 @@
 {% extends "base.html" %}
 
 {% block meta %}
-   <meta name="robots" content="noindex, nofollow">
+    <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 
 {% block title %}ClimateQuest - Mein Profil{% endblock %}
 
 {% block content %}
 
-<h1>Mein Profil</h1>
-{% if messages %}
-{% for message in messages %}
-<p class="{{message.level_tag}}-message">{{ message }}</p>
-{% endfor %}
-{% endif %}
-<p>Willkommen, {{ user.username }}</p>
-<hr>
-<h3>Aktuelle Daten:</h3>
-<ul>
-    <li>Benutzername: {{ user.username }}</li>
-    <li>E-Mail-Adresse: {{ user.email }}</li>
-    <li>E-Mail-Adresse verifiziert: {{ user.usererweitert.mail_verified|yesno:"Ja,Nein" }}{% if user.usererweitert.mail_verified == False and user.email != '' %} | <a href="{% url 'resend_verification_email' %}">Bestätigungs-E-Mail erneut senden</a>{% endif %}</li>
-    <li>Account erstellt am: {{ user.date_joined }}</li>
-    <li>Letzter Login: {{ user.last_login }}</li>
-</ul>
-<hr>
-<!-- Benutzername ändern -->
-<h3>Benutzernamen ändern</h3>
-<form method="post">
-    {% csrf_token %}
-    <label for="password">Aktuelles Passwort:</label>
-    <input type="password" name="password" id="password" placeholder="Passwort" required>
-    <label for="new_username">Neuer Benutzername:</label>
-    <small id="username-feedback"></small>
-    <input type="text" name="new_username" id="new_username" placeholder="Neuer Benutzername" required>
-    <small>Alle Mitglieder deiner Families und Communities werden darüber benachrichtigt werden.</small>
-    <button type="submit" name="change_username">Speichern</button>
-</form>
+    <h1>Mein Profil</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <p>Willkommen, {{ user.username }}</p>
+    <hr>
+    <h3>Aktuelle Daten:</h3>
+    <ul>
+        <li>Benutzername: {{ user.username }}</li>
+        <li>E-Mail-Adresse: {{ user.email }}</li>
+        <li>E-Mail-Adresse verifiziert: {{ user.usererweitert.mail_verified|yesno:"Ja,Nein" }}
+            {% if user.usererweitert.mail_verified == False and user.email != '' %} |
+                <a href="{% url 'resend_verification_email' %}">Bestätigungs-E-Mail erneut senden</a>{% endif %}
+        </li>
+        <li>Account erstellt am: {{ user.date_joined }}</li>
+        <li>Letzter Login: {{ user.last_login }}</li>
+        <li><a href="{% url 'user_detail' request.user.id %}">Zur öffentlichen Accountseite</a></li>
+    </ul>
+    <hr>
+    <!-- Benutzername ändern -->
+    <h3>Benutzernamen ändern</h3>
+    <form method="post">
+        {% csrf_token %}
+        <label for="password">Aktuelles Passwort:</label>
+        <input type="password" name="password" id="password" placeholder="Passwort" required>
+        <label for="new_username">Neuer Benutzername:</label>
+        <small id="username-feedback"></small>
+        <input type="text" name="new_username" id="new_username" placeholder="Neuer Benutzername" required>
+        <small>Alle Mitglieder deiner Families und Communities werden darüber benachrichtigt werden.</small>
+        <button type="submit" name="change_username">Speichern</button>
+    </form>
 
-<script>
-    document.getElementById('new_username').addEventListener('input', function () {
-        const username = this.value;
-        const feedback = document.getElementById('username-feedback');
-        const registerButton = document.getElementById('register-button');
+    <script>
+        document.getElementById('new_username').addEventListener('input', function () {
+            const username = this.value;
+            const feedback = document.getElementById('username-feedback');
+            const registerButton = document.getElementById('register-button');
 
-        if (username.length > 0) {
-            feedback.textContent = 'Überprüfe, ob Benutzername bereits existiert...';
-            feedback.style.color = 'grey';
-            fetch(`/personals/check-username/?username=${encodeURIComponent(username)}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.exists) {
-                        feedback.textContent = 'Benutzername bereits vorhanden';
-                        feedback.style.color = 'red';
-                    } else {
-                        feedback.textContent = 'Name noch nicht vorhanden';
-                        feedback.style.color = 'green';
-                    }
-                });
-        } else {
-            feedback.textContent = '';
-        }
-    });
-</script>
+            if (username.length > 0) {
+                feedback.textContent = 'Überprüfe, ob Benutzername bereits existiert...';
+                feedback.style.color = 'grey';
+                fetch(`/personals/check-username/?username=${encodeURIComponent(username)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            feedback.textContent = 'Benutzername bereits vorhanden';
+                            feedback.style.color = 'red';
+                        } else {
+                            feedback.textContent = 'Name noch nicht vorhanden';
+                            feedback.style.color = 'green';
+                        }
+                    });
+            } else {
+                feedback.textContent = '';
+            }
+        });
+    </script>
 
-<hr>
+    <hr>
 
-<!-- Passwort ändern -->
-<h3>Passwort ändern</h3>
-<form method="post">
-    {% csrf_token %}
-    <label for="current_password">Aktuelles Passwort:</label>
-    <input type="password" name="current_password" id="current_password" placeholder="Aktuelles Passwort" required>
-    <label for="new_password">Neues Passwort:</label>
-    <input type="password" name="new_password" id="new_password" placeholder="Neues Passwort" required>
-    <div>
-        <h4>Wir empfehlen folgende Passwortanforderungen, um deinen Account vor Hackingangriffen und Accountübernahmen
-            zu schützen:</h4>
-        <ul class="criteria-list">
-            <li id="length" class="error-message">Mindestens acht Zeichen</li>
-            <li id="uppercase" class="error-message">Mindestens ein Großbuchstabe</li>
-            <li id="lowercase" class="error-message">Mindestens ein Kleinbuchstabe</li>
-            <li id="number" class="error-message">Mindestens eine Zahl</li>
-            <li id="punctuation" class="error-message">Mindestens ein Sonderzeichen</li>
-        </ul>
+    <!-- Passwort ändern -->
+    <h3>Passwort ändern</h3>
+    <form method="post">
+        {% csrf_token %}
+        <label for="current_password">Aktuelles Passwort:</label>
+        <input type="password" name="current_password" id="current_password" placeholder="Aktuelles Passwort" required>
+        <label for="new_password">Neues Passwort:</label>
+        <input type="password" name="new_password" id="new_password" placeholder="Neues Passwort" required>
+        <div>
+            <h4>Wir empfehlen folgende Passwortanforderungen, um deinen Account vor Hackingangriffen und
+                Accountübernahmen
+                zu schützen:</h4>
+            <ul class="criteria-list">
+                <li id="length" class="error-message">Mindestens acht Zeichen</li>
+                <li id="uppercase" class="error-message">Mindestens ein Großbuchstabe</li>
+                <li id="lowercase" class="error-message">Mindestens ein Kleinbuchstabe</li>
+                <li id="number" class="error-message">Mindestens eine Zahl</li>
+                <li id="punctuation" class="error-message">Mindestens ein Sonderzeichen</li>
+            </ul>
+        </div>
+        <button type="submit" name="change_password">Ändern</button>
+    </form>
+    <script>
+        const passwordInput = document.getElementById('new_password')
+        const password_lenght = document.getElementById('length')
+        const uppercase = document.getElementById('uppercase')
+        const lowercase = document.getElementById('lowercase')
+        const number = document.getElementById('number')
+        const punctuation = document.getElementById('punctuation')
+
+        passwordInput.addEventListener('input', function () {
+            let password = this.value;
+
+            password_lenght.className = password.length >= 8 ? "success-message" : "error-message"
+            uppercase.className = /[A-Z]/.test(password) ? "success-message" : "error-message"
+            lowercase.className = /[a-z]/.test(password) ? "success-message" : "error-message"
+            number.className = /\d/.test(password) ? "success-message" : "error-message"
+            punctuation.className = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(password) ? "success-message" : "error-message";
+        });
+
+    </script>
+    <hr>
+
+    <h3>E-Mail-Adresse ändern</h3>
+    <form method="post">
+        {% csrf_token %}
+        <label for="email">Neue E-Mail-Adresse:</label>
+        <small>Leer lassen, um die E-Mail Adresse zu löschen und keine mehr hinterlegt zu haben</small>
+        <small id="email-feedback"></small>
+        <input type="email" name="email" id="email" placeholder="neue E-Mail-Adresse">
+        <label for="password">Passwort:</label>
+        <input type="password" name="password" id="password" placeholder="Passwort" required>
+        <small>Dein Account wird so lange inaktiv sein, bis die neue E-Mail-Adresse verifiziert wurde.</small>
+        <button type="submit" name="change_email">Ändern</button>
+    </form>
+    <script>
+        document.getElementById('email').addEventListener('input', function () {
+            const email = this.value;
+            const email_feedback = document.getElementById('email-feedback');
+
+            if (email.length > 0) {
+                fetch(`/personals/check-email/?email=${encodeURIComponent(email)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            email_feedback.textContent = 'E-Mail-Adresse bereits vorhanden';
+                            email_feedback.style.color = 'red';
+                        } else {
+                            email_feedback.textContent = 'E-Mail-Adresse noch nicht vorhanden';
+                            email_feedback.style.color = 'green';
+                        }
+                    });
+            } else {
+                email_feedback.textContent = '';
+            }
+        });
+    </script>
+    <hr>
+
+    <h3>E-Mail Einstellungen</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <label class="custom-checkbox">
+            <input type="checkbox" name="mailinglist" id="mailinglist_checkbox">
+            <span class="checkmark"></span>
+            <span class="label-text">Benachrichtigungen per E-Mail erhalten</span>
+        </label>
+        <button type="submit" name="change_email_settings">Speichern</button>
+    </form>
+
+    <script>
+        const mailinglist_checkbox = document.getElementById('mailinglist_checkbox');
+        fetch(`/personals/get_email_settings`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.mailinglist) {
+                    mailinglist_checkbox.checked = true;
+                } else {
+                    mailinglist_checkbox.checked = false;
+                }
+            })
+    </script>
+    <hr>
+
+    <!--Statement ändern!-->
+    <h3>Statement ändern</h3>
+    <form method="post" onsubmit="fillEditor(event)">
+        {% csrf_token %}
+        <label for="content_editor">Statement</label>
+        <div id="content_editor" class="quill-editor">{{ user.usererweitert.statement|safe }}</div>
+        <input type="hidden" name="statement">
+
+        <button type="submit" name="change_statement">Speichern</button>
+    </form>
+
+    <!-- Quill CSS -->
+    <div class="cookie-blocked" data-requires="quill"
+         data-content='<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />'>
     </div>
-    <button type="submit" name="change_password">Ändern</button>
-</form>
-<script>
-    const passwordInput = document.getElementById('new_password')
-    const password_lenght = document.getElementById('length')
-    const uppercase = document.getElementById('uppercase')
-    const lowercase = document.getElementById('lowercase')
-    const number = document.getElementById('number')
-    const punctuation = document.getElementById('punctuation')
 
-    passwordInput.addEventListener('input', function () {
-        let password = this.value;
-
-        password_lenght.className = password.length >= 8 ? "success-message" : "error-message"
-        uppercase.className = /[A-Z]/.test(password) ? "success-message" : "error-message"
-        lowercase.className = /[a-z]/.test(password) ? "success-message" : "error-message"
-        number.className = /\d/.test(password) ? "success-message" : "error-message"
-        punctuation.className = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(password) ? "success-message" : "error-message";
-    });
-
-</script>
-<hr>
-
-<h3>E-Mail-Adresse ändern</h3>
-<form method="post">
-    {% csrf_token %}
-    <label for="email">Neue E-Mail-Adresse:</label>
-    <small>Leer lassen, um die E-Mail Adresse zu löschen und keine mehr hinterlegt zu haben</small>
-    <small id="email-feedback"></small>
-    <input type="email" name="email" id="email" placeholder="neue E-Mail-Adresse">
-    <label for="password">Passwort:</label>
-    <input type="password" name="password" id="password" placeholder="Passwort" required>
-    <small>Dein Account wird so lange inaktiv sein, bis die neue E-Mail-Adresse verifiziert wurde.</small>
-    <button type="submit" name="change_email">Ändern</button>
-</form>
-<script>
-    document.getElementById('email').addEventListener('input', function () {
-        const email = this.value;
-        const email_feedback = document.getElementById('email-feedback');
-
-        if (email.length > 0) {
-            fetch(`/personals/check-email/?email=${encodeURIComponent(email)}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.exists) {
-                        email_feedback.textContent = 'E-Mail-Adresse bereits vorhanden';
-                        email_feedback.style.color = 'red';
+    <script>
+        let quill;
+        document.addEventListener('DOMContentLoaded', function () {
+            let editor = document.getElementById('content_editor')
+            if (getCookiePreferences().quill) {
+                const script = document.createElement("script");
+                script.src = "https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js";
+                document.body.appendChild(script);
+                script.onload = function () {
+                    if (editor) {
+                        quill = new Quill(editor, {
+                            theme: 'snow',
+                            modules: {
+                                toolbar: [
+                                    [{header: [1, 2, false]}],
+                                    ['bold', 'italic', 'underline'],
+                                    [{'list': 'ordered'}, {'list': 'bullet'}],
+                                    ['link']
+                                ]
+                            }
+                        });
                     } else {
-                        email_feedback.textContent = 'E-Mail-Adresse noch nicht vorhanden';
-                        email_feedback.style.color = 'green';
+                        console.warn("Editor not found");
                     }
-                });
-        } else {
-            email_feedback.textContent = '';
+                }
+            } else {
+                editor.innerHTML = `<textarea value="{{ user.usererweitert.statement|safe }}" class="quill-editor" style="max-width: 400px; min-width: 400px;"></textarea>`;
+            }
+        });
+
+
+        // Beim Absenden des Formulars
+        function fillEditor(event) {
+            if (getCookiePreferences().quill) {
+                const form = event.target;
+                event.preventDefault();
+                try {
+                    var html = quill.root.innerHTML;
+                    form.querySelector('input[name=statement]').value = html;
+
+                    // Button-Wert manuell setzen
+                    const btn = form.querySelector('button[name=change_statement]');
+                    if (btn) {
+                        const hidden = document.createElement('input');
+                        hidden.type = 'hidden';
+                        hidden.name = btn.name;
+                        hidden.value = btn.value || btn.textContent;
+                        form.appendChild(hidden);
+                    }
+
+                    form.submit();
+                } catch {
+                    console.error("Variable Quill not found");
+                    alert("Ein interner Fehler ist aufgetreten. Probiere es später bitte erneut!");
+                    return false;
+                }
+            }
         }
-    });
-</script>
-<hr>
+    </script>
 
-<h3>E-Mail Einstellungen</h3>
-<form method="POST">
-    {% csrf_token %}
-    <label class="custom-checkbox">
-        <input type="checkbox" name="mailinglist" id="mailinglist_checkbox">
-        <span class="checkmark"></span>
-        <span class="label-text">Benachrichtigungen per E-Mail erhalten</span>
-    </label>
-    <button type="submit" name="change_email_settings">Speichern</button>
-</form>
-
-<script>
-    const mailinglist_checkbox = document.getElementById('mailinglist_checkbox');
-    fetch(`/personals/get_email_settings`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.mailinglist) {
-                mailinglist_checkbox.checked = true;
-            }
-            else {
-                mailinglist_checkbox.checked = false;
-            }
-        })
-</script>
-<hr>
-
-<!-- Account löschen -->
-<h3>Account löschen</h3>
-<form method="post" onsubmit="return confirm('Willst du deinen Account wirklich löschen? Alle Mitglieder deiner Families und Communities werden darüber benachrichtigt werden.');">
-    {% csrf_token %}
-    <label for="password">Passwort:</label>
-    <input type="password" name="password" id="password" placeholder="Passwort" required>
-    <small>Alle Mitglieder deiner Families und Communities werden darüber benachrichtigt werden.</small>
-    <button type="submit" name="delete_account" style="color:red;">Diesen Account löschen</button>
-</form>
+    <hr>
+    <!-- Account löschen -->
+    <h3>Account löschen</h3>
+    <form method="post"
+          onsubmit="return confirm('Willst du deinen Account wirklich löschen? Alle Mitglieder deiner Families und Communities werden darüber benachrichtigt werden.');">
+        {% csrf_token %}
+        <label for="password">Passwort:</label>
+        <input type="password" name="password" id="password" placeholder="Passwort" required>
+        <small>Alle Mitglieder deiner Families und Communities werden darüber benachrichtigt werden.</small>
+        <button type="submit" name="delete_account" style="color:red;">Diesen Account löschen</button>
+    </form>
 
 {% endblock %}

@@ -9,6 +9,7 @@ class UserErweitert(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
     mailinglist = models.BooleanField(default=True)
     mail_verified = models.BooleanField(default=False)
+    statement = models.TextField(default="Hallo. Ich benutze ClimateQuest.")
 
     def __str__(self):
         return self.user.username

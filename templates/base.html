@@ -94,6 +94,7 @@
                     <a href="{% url 'klimapunkte_view' request.user.id %}">Klimapunkte</a>
                     <a href="{% url 'settings_view' %}">Profil bearbeiten</a>
                     <a href="{% url 'presents_overview' %}">Geschenke</a>
+                    <a href="{% url 'users_overview' %}">User</a>
                     <a href="{% url 'logout_view' %}">Logout</a>
                     {% if user.is_staff %}
                     <a href="/ClimateQuestAdmin/" target="_blank">Admin-Bereich (I)</a>

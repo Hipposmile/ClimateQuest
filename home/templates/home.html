@@ -54,32 +54,6 @@
         color: var(--color-counters);
     }
 
-    .home-btns {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .home-btn {
-        background-color: #2ECC71;
-        color: white;
-        font-size: 18px;
-        font-weight: bold;
-        padding: 14px 28px;
-        border: none;
-        border-radius: 30px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin: 20px;
-    }
-
-    .home-btn:hover {
-        background-color: #27AE60;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        transform: scale(1.05);
-    }
-
     .video {
         width: 50%;
         height: 50%;
@@ -205,7 +179,7 @@
 <div id="slider">
   <button id="prev" class="nav-button emoji">&lt;</button>
   <button id="next" class="nav-button emoji">&gt;</button>
-  <img src="{% static 'images/nature/flowers.HEIC' %}" class="active" alt="Bild von Blumen">
+  <img src="{% static 'images/nature/flowers.png' %}" class="active" alt="Bild von Blumen">
   <img src="{% static 'images/nature/lake.jpg' %}" alt="Bild eines Bergsees">
   <img src="{% static 'images/nature/forest.jpg' %}" alt="Bild eines Waldes">
 </div>
@@ -244,7 +218,7 @@
     erhalten hast, <a href="{% url 'resend_verification_email' %}">lasse dir eine neue senden.</a></p>
 {% endif %}
 {% else %}
-<div class="home-btns"><a href="{% url 'register_view' %}"><button class="home-btn">Jetzt registrieren!</button></a></div>
+<div class="btns"><a href="{% url 'register_view' %}"><button class="btn">Jetzt registrieren!</button></a></div>
 {% endif %}
 
 <hr>
@@ -286,13 +260,13 @@
 <!-- End TrustBox widget -->
 <hr>
 {% endif %}
-<div class="home-btns">
-    <a href="https://climate-quest.de/artikel/artikel_detail/3"><button class="home-btn">Wie ClimateQuest funktioniert</button></a>
+<div class="btns">
+    <a href="https://climate-quest.de/artikel/artikel_detail/3"><button class="btn">Wie ClimateQuest funktioniert</button></a>
     {% if user.is_authenticated %}
-        <a href="{% url 'add' %}"><button class="home-btn">Aktion hinzufügen</button></a>
+        <a href="{% url 'add' %}"><button class="btn">Aktion hinzufügen</button></a>
         {% if not request.user.families.count > 1 %}
-            <a href="{% url 'create_family' %}"><button class="home-btn">Family gründen</button></a>
-            <a href="{% url 'join_family' %}"><button class="home-btn">Family beitreten</button></a>
+            <a href="{% url 'create_family' %}"><button class="btn">Family gründen</button></a>
+            <a href="{% url 'join_family' %}"><button class="btn">Family beitreten</button></a>
         {% endif %}
     {% endif %}
 

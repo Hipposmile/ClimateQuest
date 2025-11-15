@@ -1,88 +1,97 @@
 {% extends "base.html" %}
 
 {% block meta %}
-    <meta name="description" content="Sieh dir die Übersicht aller Posts im Forum von ClimateQuest an. Finde Antworten zu deinen Fragen zur Klimakrise oder zur Organisation und Durchführung von Aktionen zum Klima-Themen.">
+    <meta name="description"
+          content="Sieh dir die Übersicht aller Posts im Forum von ClimateQuest an. Finde Antworten zu deinen Fragen zur Klimakrise oder zur Organisation und Durchführung von Aktionen zum Klima-Themen.">
 {% endblock %}
 
 {% block title %}ClimateQuest - Forum-Übersicht{% endblock %}
 
 {% block content %}
 
-<h1>Forum-Übersicht</h1>
+    <h1>Forum-Übersicht</h1>
 
-{% if messages %}
-{% for message in messages %}
-<p class="{{message.level_tag}}-message">{{ message }}</p>
-{% endfor %}
-{% endif %}
-<form method="post">
-    {% csrf_token %}
-    <div id="search_keyword_div">
-        <label for="search_keyword">Suchwort:</label>
-        <small>Leer lassen, um alle Artikel anzuzeigen</small>
-        <input type="search" name="search_keyword" id="search_keyword" placeholder="Suchwort">
-    </div>
-    <label for="order_by">Sortieren nach:</label>
-    <select name="order_by" required>
-        <option value="Titel" selected>Titel</option>
-        <option value="Ersteller">Ersteller</option>
-        <option value="Erstellt am">Erstellt am</option>
-        {% if user.is_authenticated %}
-        <option value="von mir erstellte Posts">von mir erstellte Posts</option>
-        {% endif %}
-    </select>
-    
-    <button type="submit">Anwenden</button>
-</form>
-<script>
-    search_keyword = document.querySelector('input[name=search_keyword]');
-    order_by = document.querySelector('select[name=order_by]');
-    search_keyword_div = document.getElementById('search_keyword_div');
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
 
-    order_by.addEventListener('change', function () {
-        if (order_by.value == "von mir erstellte Posts") {
-            search_keyword_div.style.display = "none";
-        } else {
-            search_keyword_div.style.display = "block";
-        }
-    });
-</script>
-<p>Sortiert nach: {{ ordered_by }}</p>
-{% if search_keyword %}
-<p>Suchwort: {{ search_keyword }}</p>
-{% endif %}
-{% if forum_posts %}
-{% for post in forum_posts %}
-<section
-    class="event-card{% if request.user == post.creator %} event-card-creator{% endif %}">
-    <div class="event-main">
-        <h2 class="event-title">{{ post.title }}</h2>
-        {% if ordered_by == 'Erstellt am' %}
-        <p><strong>Erstellt am:</strong> <span class="event-date" data-date="{{ post.date_time|date:'c' }}">{{ post.date_time|date:"d.m.Y, H:i" }}</span></p>
-
-        {% elif ordered_by == 'Ersteller' %}
-        <p><strong>Ersteller:</strong> <a href="{% url 'klimapunkte_view' post.creator.id %}">{{ post.creator.username }}</a> {% if request.user == post.creator %}(Du){% endif %}</p>
-        {% endif %}
-    </div>
-
-    <details class="event-details">
-        <summary>mehr</summary>
-        <div class="event-extra">
-            </p>
-            {% if ordered_by != 'Erstellt am' %}
-            <p><strong>Erstellt am:</strong> <span class="event-date"
-                    data-date="{{ post.date_time|date:'c' }}">{{ post.date_time|date:"d.m.Y, H:i" }}</span></p>
-            {% endif %}
-            {% if ordered_by != 'Ersteller' %}
-            <p><strong>Ersteller:</strong> <a href="{% url 'klimapunkte_view' post.creator.id %}">{{ post.creator.username }}</a> {% if request.user == post.creator %}(Du){% endif %}</p>
-            {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div id="search_keyword_div">
+            <label for="search_keyword">Suchwort:</label>
+            <small>Leer lassen, um alle Artikel anzuzeigen</small>
+            <input type="search" name="search_keyword" id="search_keyword" placeholder="Suchwort">
         </div>
-    </details>
+        <label for="order_by">Sortieren nach:</label>
+        <select name="order_by" required>
+            <option value="Titel" selected>Titel</option>
+            <option value="Ersteller">Ersteller</option>
+            <option value="Erstellt am">Erstellt am</option>
+            {% if user.is_authenticated %}
+                <option value="von mir erstellte Posts">von mir erstellte Posts</option>
+            {% endif %}
+        </select>
 
-    <a class="event-link" href="{% url 'post_detail' post.id %}">Details ansehen</a>
-</section>
-{% endfor %}
-{% else %}
-<p><i>Es gibt derzeit keine Posts mit diesem Filter.</i></p>
-{% endif %}
+        <button type="submit">Anwenden</button>
+    </form>
+    <script>
+        search_keyword = document.querySelector('input[name=search_keyword]');
+        order_by = document.querySelector('select[name=order_by]');
+        search_keyword_div = document.getElementById('search_keyword_div');
+
+        order_by.addEventListener('change', function () {
+            if (order_by.value == "von mir erstellte Posts") {
+                search_keyword_div.style.display = "none";
+            } else {
+                search_keyword_div.style.display = "block";
+            }
+        });
+    </script>
+    <p>Sortiert nach: {{ ordered_by }}</p>
+    {% if search_keyword %}
+        <p>Suchwort: {{ search_keyword }}</p>
+    {% endif %}
+    {% if forum_posts %}
+        {% for post in forum_posts %}
+            <section
+                    class="event-card{% if request.user == post.creator %} event-card-creator{% endif %}">
+                <div class="event-main">
+                    <h2 class="event-title">{{ post.title }}</h2>
+                    {% if ordered_by == 'Erstellt am' %}
+                        <p><strong>Erstellt am:</strong> <span class="event-date"
+                                                               data-date="{{ post.date_time|date:'c' }}">{{ post.date_time|date:"d.m.Y, H:i" }}</span>
+                        </p>
+
+                    {% elif ordered_by == 'Ersteller' %}
+                        <p><strong>Ersteller:</strong> <a
+                                href="{% url 'user_detail' post.creator.id %}">{{ post.creator.username }}</a>
+                            {% if request.user == post.creator %}(Du){% endif %}</p>
+                    {% endif %}
+                </div>
+
+                <details class="event-details">
+                    <summary>mehr</summary>
+                    <div class="event-extra">
+                        </p>
+                        {% if ordered_by != 'Erstellt am' %}
+                            <p><strong>Erstellt am:</strong> <span class="event-date"
+                                                                   data-date="{{ post.date_time|date:'c' }}">{{ post.date_time|date:"d.m.Y, H:i" }}</span>
+                            </p>
+                        {% endif %}
+                        {% if ordered_by != 'Ersteller' %}
+                            <p><strong>Ersteller:</strong> <a
+                                    href="{% url 'user_detail' post.creator.id %}">{{ post.creator.username }}</a>
+                                {% if request.user == post.creator %}(Du){% endif %}</p>
+                        {% endif %}
+                    </div>
+                </details>
+
+                <a class="event-link" href="{% url 'post_detail' post.id %}">Details ansehen</a>
+            </section>
+        {% endfor %}
+    {% else %}
+        <p><i>Es gibt derzeit keine Posts mit diesem Filter.</i></p>
+    {% endif %}
 {% endblock %}

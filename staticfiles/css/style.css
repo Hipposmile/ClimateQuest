@@ -1772,3 +1772,29 @@ summary {
     margin-bottom: 10px !important;
 }
 
+.btns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+}
+
+.btn {
+    background-color: #2ECC71;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 20px;
+}
+
+.btn:hover {
+    background-color: #27AE60;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+}
+

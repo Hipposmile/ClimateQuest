@@ -44,7 +44,7 @@
 <p><strong>Adresse:</strong> {{ event.adress }}</p>
 
 <p class="{% if request.user == event.creator %}event-creator{% else %}event-user{% endif %}">
-    <strong>Ersteller:</strong> <a href="{% url 'klimapunkte_view' event.creator.id %}">{{ event.creator.username }}</a>
+    <strong>Ersteller:</strong> <a href="{% url 'user_detail' event.creator.id %}">{{ event.creator.username }}</a>
     {% if request.user == event.creator %}(Du){% endif %}
 </p>
 
@@ -81,14 +81,14 @@
     <div class="comment">
         <div class="text-wrapper">
             <div class="question-header">
-                <span class="question-user"><a href="{% url 'klimapunkte_view' question.user.id %}">{{ question.user }}</a></span>
+                <span class="question-user"><a href="{% url 'user_detail' question.user.id %}">{{ question.user }}</a></span>
                 <span class="question-date">{{ question.date_time|date:"d.m.Y H:i" }}</span>
             </div>
             <div class="question expandable-text blur-enabled">{{ question.question }}</div>
             <div class="answers">
                 {% for answer in question.answers.all %}
                 <div class="answer-header">
-                    <span class="answer-user"><a href="{% url 'klimapunkte_view' answer.user.id %}">{{ answer.user }}</a></span>
+                    <span class="answer-user"><a href="{% url 'user_detail' answer.user.id %}">{{ answer.user }}</a></span>
                     <span class="answer-date">{{ answer.date_time|date:"d.m.Y H:i" }}</span>
                 </div>
                 <div class="answer expandable-text blur-enabled">{{ answer.answer }}</div>

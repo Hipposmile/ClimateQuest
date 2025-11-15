@@ -115,6 +115,7 @@ all_messages = {
     "successfully_changed_email": "E-Mail-Adresse erfolgreich geändert. Ein Aktivierungslink wurde an diese Adresse gesendet.",
     "successfully_changed_email_no_email": "E-Mail-Adresse erfolgreich geändert. Du hast jetzt keine E-Mail Adresse mehr hinterlegt und musst daher nichts verifizieren.",
     "no_email_to_verify": "Du hast keine E-Mail-Adresse angegeben und musst daher nichts verifizieren",
+    "successfully_changed_statement": "Du hast erfolgreich dein Statement geupdated.",
     "user_is_active_at_verify": "Du bist bereits verifiziert. Logge dich direkt ein.",
     "email_verified": "E-Mail-Adresse erfolgreich verifiziert",
     "verification_email_resent": "Verifizierungs-E-Mail erfolgreich erneut gesendet",
@@ -178,6 +179,7 @@ all_messages = {
     #Users
     # --------
     "user_not_found": "User nicht gefunden",
+    "msg_created": "Nachricht erfolgreich gesendet",
 
     # --------
     #Admin

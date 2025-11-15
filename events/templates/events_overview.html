@@ -95,7 +95,7 @@
         <p><strong>Adresse:</strong> {{ event.adress }}</p>
 
         {% elif ordered_by == 'Ersteller' %}
-        <p><strong>Ersteller:</strong> <a href="{% url 'klimapunkte_view' event.creator.id %}">{{ event.creator.username }}</a> {% if request.user == event.creator %}(Du){% endif %}</p>
+        <p><strong>Ersteller:</strong> <a href="{% url 'user_detail' event.creator.id %}">{{ event.creator.username }}</a> {% if request.user == event.creator %}(Du){% endif %}</p>
 
         {% elif ordered_by == 'Teilnehmeranzahl' %}
         <details class="event-details">
@@ -128,7 +128,7 @@
             <p><strong>Adresse:</strong> {{ event.adress }}</p>
             {% endif %}
             {% if ordered_by != 'Ersteller' %}
-            <p><strong>Ersteller:</strong> <a href="{% url 'klimapunkte_view' event.creator.id %}">{{ event.creator.username }}</a> {% if request.user == event.creator %}(Du){% endif %}</p>
+            <p><strong>Ersteller:</strong> <a href="{% url 'user_detail' event.creator.id %}">{{ event.creator.username }}</a> {% if request.user == event.creator %}(Du){% endif %}</p>
             {% endif %}
             {% if ordered_by != 'Teilnehmeranzahl' %}
             <details class="event-details">

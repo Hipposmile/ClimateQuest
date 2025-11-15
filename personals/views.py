@@ -100,7 +100,7 @@ def register_view(request):
             return redirect('login_view')
         
         if email == "":
-            User.objects.create_user(username=username, password=password)
+            user = User.objects.create_user(username=username, password=password)
             actionsAfterRegistration(request, user)
             UserErweitert.objects.filter(user=user).update(mail_verified=True)
             user = authenticate(username=username, password=password)
@@ -206,7 +206,7 @@ def settings_view(request):
                 else:
                     request.user.username = new_username
                     request.user.save()
-                    createBenachrichtigung(request, 'Dein Benutzername wurde geändert.', request.user)
+                    createBenachrichtigung(request, 'Du hast deinen Benutzernamen geändert.', request.user)
                     messages.success(request, all_messages["username_changed"])
 
         if 'change_password' in request.POST:
@@ -218,7 +218,7 @@ def settings_view(request):
                 request.user.set_password(new_pw)
                 request.user.save()
                 update_session_auth_hash(request, request.user)
-                createBenachrichtigung(request, 'Dein Passwort wurde geändert.', request.user)
+                createBenachrichtigung(request, 'Du hast dein Passwort geändert.', request.user)
                 messages.success(request, all_messages["password_changed"])
         
         if 'change_email' in request.POST:
@@ -267,6 +267,7 @@ def settings_view(request):
                     UserErweitert.objects.filter(user=request.user).update(mail_verified=True)
                     return redirect('settings_view')
                 else:
+                    createBenachrichtigung(request, "Du hast deine E-Mail Adresse geändert.")
                     messages.success(request, all_messages["email_changed"])
                 return redirect('settings_view')
         
@@ -282,6 +283,20 @@ def settings_view(request):
                 messages.success(request, all_messages["mailinglist_enabled"])
             else:
                 messages.success(request, all_messages["mailinglist_disabled"])
+            createBenachrichtigung(request, "Du hast deine Mail-Einstellungen geändert")
+            return redirect('settings_view')
+
+        if 'change_statement' in request.POST:
+            statement = request.POST.get('statement')
+            try:
+                userErweitert = UserErweitert.objects.get(user=request.user)
+            except UserErweitert.DoesNotExist:
+                createInternerFehler(request, f'UserErweitert zu User {request.user} existiert nicht')
+            userErweitert.statement = statement
+            userErweitert.save()
+            messages.success(request, all_messages["successfully_changed_statement"])
+            createBenachrichtigung(request, all_messages["successfully_changed_statement"])
+            return redirect('settings_view')
 
         if 'delete_account' in request.POST:
             password = request.POST.get('password')
@@ -333,7 +348,7 @@ def reset_password(request):
         try:
             user.set_password(new_password)
             user.save()
-            createBenachrichtigung(request, 'Dein Passwort wurde resettet.', user)
+            createBenachrichtigung(request, 'Du hast dein Passwort resettet.', user)
             messages.success(request, all_messages["password_reset_mail_sent"])
             return redirect('login_view')
 
