@@ -40,4 +40,4 @@ class Command(BaseCommand):
                     user=user
                 )
 
-        save_users()
+        add_users()

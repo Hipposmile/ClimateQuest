@@ -178,7 +178,7 @@ RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY", "")
 CSRF_COOKIE_SECURE = True  # Nur wenn du HTTPS nutzt
 CSRF_TRUSTED_ORIGINS = ['https://climate-quest.de', 'https://www.climate-quest.de']
 
-"""LOGGING = {
+LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
@@ -202,4 +202,4 @@ CSRF_TRUSTED_ORIGINS = ['https://climate-quest.de', 'https://www.climate-quest.d
             'propagate': True,
         },
     },
-}"""
+}
