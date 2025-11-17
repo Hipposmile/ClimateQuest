@@ -59,13 +59,11 @@ def add(request):
             messages.error(request, all_messages["missing_required_inputs"])
             return redirect('add')
         try:
-            action_quantity = float(action_quantity)
-            rounded_action_quantity = round(action_quantity, dezimalstellen)
-            action_quantity = rounded_action_quantity
+            action_quantity = validateNumber(action_quantity, dezimalstellen)
         except ValueError:
             messages.error(request, all_messages["action_invalid_quantity"])
             return redirect('add')
-        if action_quantity < 0:
+        if action_quantity < 0 or action_quantity is False:
             messages.error(request, all_messages["invalid_quantity"])
             return redirect('add')
         
@@ -146,13 +144,11 @@ def edit_action(request, action_id):
                 messages.error(request, all_messages["missing_required_inputs"])
                 return redirect('edit_action', action_id)
             try:
-                action_quantity = float(action_quantity)
-                rounded_action_quantity = round(action_quantity, dezimalstellen)
-                action_quantity = rounded_action_quantity
+                action_quantity = validateNumber(action_quantity, dezimalstellen)
             except ValueError:
-                messages.error(request, all_messages["invalid_quantity"])
+                messages.error(request, all_messages["action_invalid_quantity"])
                 return redirect('edit_action', action_id)
-            if action_quantity <= 0:
+            if action_quantity < 0 or action_quantity is False:
                 messages.error(request, all_messages["invalid_quantity"])
                 return redirect('edit_action', action_id)
             
@@ -194,3 +190,17 @@ def edit_action(request, action_id):
             return redirect('history')
 
     return render(request, './edit_action.html', {'aktionen': aktionen, 'aktuelleAktion': aktuelleAktion})
+
+def validateNumber(number, dezimalstellen):
+    if not number:
+        return False
+    try:
+        number = float(number)
+    except ValueError:
+        number = number.replace(",", ".")
+        try:
+            number = float(number)
+        except ValueError:
+            return False
+    return round(number, dezimalstellen)
+

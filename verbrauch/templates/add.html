@@ -22,7 +22,7 @@
     </button>
     <div id="anmerkung-box" class="anmerkung-box" style="display: none;"></div>
 
-    <form method="POST" onsubmit="return validateNumber(event)">
+    <form method="POST">
         {% csrf_token %}
         <label for="action_type" class="action-label">Aktionstyp:</label>
         <select name="action_type" class="action-label" id="action_type" required>
@@ -59,21 +59,6 @@
     </form>
 
     <script>
-        function submit(event) {
-            const form = event.target;
-            event.preventDefault(); // Verhindert das sofortige Absenden des Formulars
-            const quantityInput = document.getElementById('action_quantity');
-            let quantity = quantityInput.value.trim();
-            quantity = validateNumber(quantity);
-            if (quantity !== false) {
-                document.getElementById('action_quantity').value = quantity;
-                form.submit(); // Sendet das Formular ab
-            } else {
-                alert('Bitte geben Sie eine gültige, positive Zahl ohne Sonderzeichen (Ausnahme: Komma) für die Menge ein.');
-                return false;
-            }
-        }
-
         function validateNumber(input) {
             input = input.toString();
             if (input == "" || input.includes('.')) {
