@@ -84,7 +84,7 @@ def add(request):
         
         new_level = get_level(request.user)
         if old_level['level_number'] < new_level['level_number']:
-            createBenachrichtigung(request, f'Du hast eine neue Aktion vom Typen {action_type} erstellt und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#1F973;</span>', request.user)
+            createBenachrichtigung(request, f'Du hast eine neue Aktion vom Typen {action_type} erstellt und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>', request.user)
         else:
             createBenachrichtigung(request, f'Du hast eine neue Aktion vom Typen {action_type} erstellt.', request.user)
 
