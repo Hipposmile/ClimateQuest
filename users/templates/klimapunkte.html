@@ -2,64 +2,71 @@
 {% load static %}
 
 {% block meta %}
-    <meta name="description" content="Guck dir deine Klimapunkte bei ClimateQuest an und erfahre, wie viel CO2 du eingespart hast.">
+    <meta name="description"
+          content="Guck dir deine Klimapunkte bei ClimateQuest an und erfahre, wie viel CO2 du eingespart hast.">
 {% endblock %}
 
-{% block title %}ClimateQuest - {% if user == request.user %}Meine Klimapunkte{% else %}Klimapunkte von {{ user }}{% endif %}{% endblock %}
+{% block title %}ClimateQuest - {% if user == request.user %}Meine Klimapunkte{% else %}Klimapunkte von {{ user }}
+{% endif %}{% endblock %}
 
 {% block content %}
-<h1>{% if user == request.user %}Meine Klimapunkte{% else %}Klimapunkte von {{ user }}{% endif %}</h1>
-{% if messages %}
-{% for message in messages %}
-<p class="{{message.level_tag}}-message">{{ message }}</p>
-{% endfor %}
-{% endif %}
-<input type="hidden" id="klimapunkte" value="{{ klimapunkte|floatformat:-4 }}">
-<p>Klimapunkte: {{ klimapunkte|floatformat:-4 }}</p>
-<p id="co2"></p>
-<script>
-    let klimapunkte = formatToFloat(document.getElementById("klimapunkte").value);
-    let co2 = Intl.NumberFormat('de-DE', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(klimapunkte / 1000);
-    document.getElementById("co2").textContent = "Das entspricht " + co2 + " Tonnen eingespartem CO2";
+    <h1>{% if user == request.user %}Meine Klimapunkte{% else %}Klimapunkte von {{ user }}{% endif %}</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <input type="hidden" id="klimapunkte" value="{{ klimapunkte|floatformat:-4 }}">
+    <p>Klimapunkte: <b>{{ klimapunkte|floatformat:-4 }}</b></p>
+    <p id="co2"></p>
+    <script>
+        let klimapunkte = formatToFloat(document.getElementById("klimapunkte").value);
+        let co2 = Intl.NumberFormat('de-DE', {
+            minimumFractionDigits: 4,
+            maximumFractionDigits: 4
+        }).format(klimapunkte / 1000);
+        document.getElementById("co2").innerHTML = "Das entspricht <b>" + co2 + "</b> Tonnen eingespartem CO2";
 
-    function formatToFloat(str) {
-        const normalized = str.replace(/\./g, '').replace(',', '.');
-        return parseFloat(normalized);
-    }
-</script>
-<p>Zeitraum: {{ zeitraum }}</p>
-<form method="POST">
-    {% csrf_token %}
-    <select name="zeitraum" id="zeitraum" required>
-        <option value="gesamt">Gesamt</option>
-        <option value="heute">Heute</option>
-        <option value="sieben Tage">7 Tage</option>
-        <option value="dreißig Tage">30 Tage</option>
-        <option value="dreihundertfünfundsechzig Tage">365 Tage</option>
-        <option value="benutzerdefiniert">Benutzerdefiniert</option>
-    </select>
-
-    <div id="hiddenDateDiv">
-        <label for="start_date">Startdatum:</label>
-        <input type="hidden" name="start_date" id="start_date" placeholder="Startdatum" value="">
-        <label for="end_date">Enddatum:</label>
-        <input type="hidden" name="end_date" id="end_date" placeholder="Enddatum" value="">
-    </div>
-
-    <button type="submit">Anwenden</button>
-</form>
-
-<a href="{% url 'user_detail' user.id %}">Userseite ansehen</a>
-
-<script>
-    document.getElementById("zeitraum").addEventListener("change", function () {
-        const hiddenDateDiv = document.getElementById("hiddenDateDiv");
-
-        if (this.value === "benutzerdefiniert") {
-            hiddenDateDiv.style.display = "block";
-        } else {
-            hiddenDateDiv.style.display = "none";
+        function formatToFloat(str) {
+            const normalized = str.replace(/\./g, '').replace(',', '.');
+            return parseFloat(normalized);
         }
-    });
-</script>
+    </script>
+    <p>Außerdem wurden <b>{{ aktionen_klimapunkte }}</b> Klimapunkte durch das Schreiben von Artikeln verdient.</p>
+    <p>Insgesamt wurden also bereits <b>{{ klimapunkte_total }}</b> Klimapunkte gesammelt.</p>
+    <p>Zeitraum: {{ zeitraum }}</p>
+    <form method="POST">
+        {% csrf_token %}
+        <select name="zeitraum" id="zeitraum" required>
+            <option value="gesamt">Gesamt</option>
+            <option value="heute">Heute</option>
+            <option value="sieben Tage">7 Tage</option>
+            <option value="dreißig Tage">30 Tage</option>
+            <option value="dreihundertfünfundsechzig Tage">365 Tage</option>
+            <option value="benutzerdefiniert">Benutzerdefiniert</option>
+        </select>
+
+        <div id="hiddenDateDiv">
+            <label for="start_date">Startdatum:</label>
+            <input type="hidden" name="start_date" id="start_date" placeholder="Startdatum" value="">
+            <label for="end_date">Enddatum:</label>
+            <input type="hidden" name="end_date" id="end_date" placeholder="Enddatum" value="">
+        </div>
+
+        <button type="submit">Anwenden</button>
+    </form>
+
+    <a href="{% url 'user_detail' user.id %}">Userseite ansehen</a>
+
+    <script>
+        document.getElementById("zeitraum").addEventListener("change", function () {
+            const hiddenDateDiv = document.getElementById("hiddenDateDiv");
+
+            if (this.value === "benutzerdefiniert") {
+                hiddenDateDiv.style.display = "block";
+            } else {
+                hiddenDateDiv.style.display = "none";
+            }
+        });
+    </script>
 {% endblock %}

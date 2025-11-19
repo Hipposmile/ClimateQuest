@@ -44,7 +44,7 @@ def artikel_overview(request):
             else:
                 artikel = artikel
             artikel = artikel.order_by(order_by)
-    else: 
+    else:
         ordered_by = "Name"
         artikel = all_artikel.order_by('name')
 
@@ -64,7 +64,7 @@ def add_artikel(request):
         if not name or not content:
             messages.error(request, all_messages["missing_required_inputs"])
             return redirect('add_artikel')
-        
+
         content = clean_html(content)
 
         Artikel.objects.create(
@@ -129,8 +129,8 @@ def artikel_detail(request, artikel_id):
     except Artikel.DoesNotExist:
         messages.error(request, all_messages["artikel_not_existing"])
         return redirect('artikel_overview')
-    
-    if request.method == 'POST':        
+
+    if request.method == 'POST':
         if 'add_comment' in request.POST:
             comment_text = request.POST.get('comment')
             comment = Comment.objects.create(comment=comment_text, user=request.user)
@@ -138,7 +138,7 @@ def artikel_detail(request, artikel_id):
 
             messages.success(request, all_messages["successfully_asked_comment"])
             return redirect('artikel_detail', artikel_id)
-        
+
         elif 'answer_comment' in request.POST:
             comment_id = request.POST.get('comment_id')
             try:
@@ -155,4 +155,25 @@ def artikel_detail(request, artikel_id):
             messages.success(request, all_messages["successfully_answered_comment"])
             return redirect('artikel_detail', artikel_id)
 
-    return render(request, 'artikel_detail.html', {'artikel': artikel})
+    has_liked = False
+    if request.user.is_authenticated:
+        if request.user in artikel.like.all():
+            has_liked = True
+
+    return render(request, 'artikel_detail.html', {'artikel': artikel, 'has_liked': has_liked})
+
+@login_required
+def add_like(request, artikel_id):
+    try:
+        artikel = Artikel.objects.get(id=artikel_id)
+        if request.user in artikel.like.all():
+            artikel.like.remove(request.user)
+            messages.success(request, all_messages["successfully_removed_like"])
+        else:
+            artikel.like.add(request.user)
+            messages.success(request, all_messages["successfully_added_like"])
+        artikel.save()
+        return redirect('artikel_detail', artikel_id)
+    except Artikel.DoesNotExist:
+        messages.error(request, all_messages["artikel_not_existing"])
+        return redirect('artikel_overview')

@@ -91,7 +91,11 @@ def klimapunkte_view(request, user_id):
         if klimapunkte is None:
             klimapunkte = 0
 
-    return render(request, './klimapunkte.html', {'klimapunkte': klimapunkte, 'zeitraum': zeitraum, 'user': user})
+    aktionen_klimapunkte = get_klimapunkte_from_likes(user)
+
+    klimapunkte_total = klimapunkte + aktionen_klimapunkte
+
+    return render(request, './klimapunkte.html', {'klimapunkte': klimapunkte, 'aktionen_klimapunkte': aktionen_klimapunkte, 'klimapunkte_total': klimapunkte_total, 'zeitraum': zeitraum, 'user': user})
 
 def level_view(request, user_id):
     try:

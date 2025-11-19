@@ -8,6 +8,52 @@
 {% block title %}ClimateQuest - Artikel {{ artikel.name }}{% endblock %}
 
 {% block content %}
+    <style>
+        .like-button {
+            display: inline-block;
+        }
+
+        .like-action {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            border: 2px solid #ccc;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .like-action:hover {
+            background-color: #e6f0ff;
+            border-color: #007bff;
+        }
+
+        .like-icon {
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .like-count {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Zustand: schon geliked */
+        .like-button.liked .like-action {
+            background-color: #28a745;
+            border-color: #28a745;
+            color: #fff;
+        }
+
+        .like-button.liked .like-count {
+            color: #fff;
+            font-weight: bold;
+        }
+
+    </style>
 
     <h1>Artikel <i>{{ artikel.name }}</i></h1>
 
@@ -23,6 +69,17 @@
     {% if artikel.creator.is_superuser %}
         <p><span class="emoji">&#x1F4A1;</span> Ein offizieller Artikel von ClimateQuest</p>{% endif %}
     <p>Zuletzt bearbeitet: {{ artikel.date_time|date:"d.m.Y H:i" }}</p>
+
+    <div class="like-button {% if has_liked %}liked{% endif %}">
+        <form action="{% url 'add_like_artikel' artikel.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="like-action">
+                <span class="like-icon emoji">&#x1F44D;</span>
+                <span class="like-count">{{ artikel.like_count }}</span>
+            </button>
+        </form>
+    </div>
+
 
     {% if artikel.creator == request.user %}
         <p><a href="{% url 'edit_artikel' artikel.id %}">Artikel bearbeiten</a></p>

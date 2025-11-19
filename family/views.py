@@ -340,7 +340,8 @@ def family_detail(request, family_id):
             
             if klimapunkte is None:
                 klimapunkte = 0
-            
+
+            klimapunkte += get_klimapunkte_from_likes(member)
             members_with_klimapunkte.append({'member': member, 'klimapunkte': klimapunkte})
 
     else:
@@ -348,6 +349,7 @@ def family_detail(request, family_id):
         for member in members:
             aktionen = Aktion.objects.filter(user=member)
             klimapunkte = get_klimapunkte(aktionen)
+            klimapunkte += get_klimapunkte_from_likes(member)
             members_with_klimapunkte.append({'member': member, 'klimapunkte': klimapunkte})
     
     if filter == "Klimapunkte":

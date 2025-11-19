@@ -39,6 +39,7 @@ def home(request):
     for user in User.objects.prefetch_related():
         aktionen = Aktion.objects.filter(user=user)
         klimapunkte = get_klimapunkte(aktionen)
+        klimapunkte += get_klimapunkte_from_likes(user)
         klimapunkte_gesamt += klimapunkte
         user_count += 1
     return render(request, './home.html', {'klimapunkte': klimapunkte_gesamt, 'user_count': user_count})

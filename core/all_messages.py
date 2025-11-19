@@ -168,6 +168,8 @@ all_messages = {
     "artikel__no_right_to_edit": "Du hast keine Berechtigungen, dieses artikel zu bearbeiten",
     "successfully_asked_comment": "Kommentar erfolgreich gestellt.",
     "successfully_answered_comment": "Kommentar erfolgreich beantwortet.",
+    "successfully_added_like": "Du hast den Artikel erfolgreich geliket.",
+    "successfully_removed_like": "Du hast den Like zum Artikel erfolgreich entfernt.",
 
     # --------
     #Forum

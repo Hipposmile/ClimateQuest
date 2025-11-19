@@ -1,326 +1,346 @@
 {% extends "base.html" %}
 {% load static %}
 {% block meta %}
-<meta name="description"
-    content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
+    <meta name="description"
+          content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
 {% endblock %}
 {% block title %}ClimateQuest - Startseite{% endblock %}
 
 {% block content %}
-<style>
-    #counters {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
-        justify-content: center;
-        padding: 2rem;
-        background: var(--color-counters-bg);
-        border-radius: 12px;
-        box-shadow: var(--shadow-md);
-        font-family: 'Segoe UI', sans-serif;
-        margin: 20px;
-    }
-
-    #counters>div {
-        flex: 1 1 300px;
-        background: var(--color-bg);
-        border: 1px solid var(--color-border);
-        border-radius: 10px;
-        padding: 1.5rem;
-        text-align: center;
-        transition: transform 0.3s ease;
-    }
-
-    #counters>div:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-md);
-    }
-
-    #counters .h3_size {
-        font-size: 2.5rem;
-        margin: 0.5rem 0;
-        color: var(--color-counters);
-        font-weight: bold;
-    }
-
-    #counters p {
-        font-size: 1rem;
-        margin: 0.5rem 0;
-        color: var(--color-text);
-    }
-
-    #co2_per_klimapunkt {
-        font-weight: bold;
-        color: var(--color-counters);
-    }
-
-    .video {
-        width: 50%;
-        height: 50%;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        max-width: 100%;
-        transition: transform 0.3s ease;
-    }
-
-    .video:hover {
-        transform: scale(1.02);
-    }
-
-    #slider {
-      position: relative;
-      width: 100%;
-      height: 70vh; /* 70% der Bildschirmhöhe */
-      margin-top: 20px; /* Abstand zur Nav */
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #000;
-    }
-
-    #slider img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      display: none;
-    }
-
-    #slider img.active {
-      display: block;
-    }
-
-    .nav-button {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 3rem;
-      background: rgba(0,0,0,0.4);
-      color: white;
-      border: none;
-      cursor: pointer;
-      padding: 0.5rem 1rem;
-      z-index: 10;
-      transition: background 0.3s;
-    }
-
-    .nav-button:hover {
-      background: rgba(0,0,0,0.7);
-    }
-
-    #prev { left: 20px; }
-    #next { right: 20px; }
-
-    /* Responsiv für kleinere Geräte */
-    @media (max-width: 600px) {
-      .nav-button {
-        font-size: 2rem;
-        padding: 0.3rem 0.6rem;
-      }
-    }
-
-    /* Weiterer Inhalt */
-    .content {
-      padding: 2rem;
-    }
-    
-    .slider-heading {
-  position: absolute;
-  color: white;
-  text-align: center;
-  top: 160px; /* Abstand zur Nav */
-  left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  font-size: 3rem;
-  opacity: 0;
-  animation: fadeUp 1.2s ease-out forwards;
-  z-index: 20;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-  pointer-events: none;
-}
-
-/* Animation */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-}
-
-/* Für kleinere Bildschirme: Überschrift im Flow */
-@media (max-width: 600px) {
-  .slider-heading {
-    position: static;
-    transform: none;
-    text-align: center;
-    font-size: 2rem;
-    margin: 20px 0;
-    animation: fadeUpMobile 1.2s ease-out forwards;
-    color: var(--color-text);
-  }
-
-  @keyframes fadeUpMobile {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-}
-</style>
-<h1 class="slider-heading">ClimateQuest - Motivation für mehr Klimaschutz</h1>
-<div id="slider">
-  <button id="prev" class="nav-button emoji">&lt;</button>
-  <button id="next" class="nav-button emoji">&gt;</button>
-  <img src="{% static 'images/nature/flowers.png' %}" class="active" alt="Bild von Blumen">
-  <img src="{% static 'images/nature/lake.jpg' %}" alt="Bild eines Bergsees">
-  <img src="{% static 'images/nature/forest.jpg' %}" alt="Bild eines Waldes">
-</div>
-<script>
-  const images = document.querySelectorAll('#slider img');
-  let current = 0;
-
-  function showImage(index) {
-    images.forEach((img, i) => {
-      img.classList.toggle('active', i === index);
-    });
-  }
-
-  document.getElementById('prev').addEventListener('click', () => {
-    current = (current - 1 + images.length) % images.length;
-    showImage(current);
-  });
-
-  document.getElementById('next').addEventListener('click', () => {
-    current = (current + 1) % images.length;
-    showImage(current);
-  });
-</script>
-
-<hr>
-{% if messages %}
-{% for message in messages %}
-<p class="{{ message.level_tag }}-message">{{ message }}</p>
-{% endfor %}
-{% endif %}
-{% if user.is_authenticated %}
-<p>Willkommen, {{ user.username }}!</p>
-
-{% if user.usererweitert.mail_verified == False and user.email != '' %}
-<p>Bitte bestätige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. Falls du keine Verifizierungsemail
-    erhalten hast, <a href="{% url 'resend_verification_email' %}">lasse dir eine neue senden.</a></p>
-{% endif %}
-{% else %}
-<div class="btns"><a href="{% url 'register_view' %}"><button class="btn">Jetzt registrieren!</button></a></div>
-{% endif %}
-
-<hr>
-
-<h2>Übersicht</h2>
-
-<input type="hidden" id="user_count" value="{{ user_count }}">
-<input type="hidden" id="klimapunkte" value="{{ klimapunkte|floatformat:-4 }}">
-
-<div id="counters">
-    <div id="user_zähler_div">
-        <p class="h3_size" id="user_zähler">{{ user_count }}</p>
-        <p> registrierte Nutzer hat diese Plattform bereits.</p>
-    </div>
-
-    <div id="klimapunkte_zähler_div">
-        <p class="h3_size" id="klimapunkte_zähler">{{ klimapunkte|floatformat:-4 }}</p>
-        <p> Klimapunkte wurden von all diesen Nutzern zusammen bereits gesammelt.</p>
-    </div>
-
-    <div id="co2_zähler_div">
-        <p>Weil jeder Klimapunkte für
-            <b id="co2_per_klimapunkt">1 kg</b> eingespartes CO2 steht, wurden dadurch insgesamt
-        </p>
-        <p class="h3_size" id="co2_zähler"></p>
-        <p> Tonnen CO2e eingespart</p>
-    </div>
-</div>
-
-<hr>
-{% if user.is_authenticated %}
-<div class="cookie-blocked" data-requires="trustpilot" data-content="<script src='https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js'></script>"></div>
-<!-- TrustBox widget - Review Collector -->
-<div class="cookie-blocked trustpilot-widget" data-requires="trustpilot" data-locale="de-DE"
-    data-template-id="56278e9abfbbba0bdcd568bc" data-businessunit-id="68fbcb7b4ed74fdfc37990b1" data-style-height="52px"
-    data-style-width="100%" data-token="cab662ec-d2c9-4e2a-a22f-f7b1eabcefdb">
-    <a href="https://de.trustpilot.com/review/climate-quest.de" target="_blank" rel="noopener">Trustpilot</a>
-</div>
-<!-- End TrustBox widget -->
-<hr>
-{% endif %}
-<div class="btns">
-    <a href="{% url 'artikel_detail' 1 %}"><button class="btn">Wie ClimateQuest funktioniert</button></a>
-    {% if user.is_authenticated %}
-        <a href="{% url 'add' %}"><button class="btn">Aktion hinzufügen</button></a>
-        {% if not request.user.families.count > 1 %}
-            <a href="{% url 'create_family' %}"><button class="btn">Family gründen</button></a>
-            <a href="{% url 'join_family' %}"><button class="btn">Family beitreten</button></a>
-        {% endif %}
-    {% endif %}
-
-</div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const user_zähler = document.getElementById('user_zähler');
-
-        const klimapunkte_zähler = document.getElementById('klimapunkte_zähler');
-        const co2_zähler = document.getElementById('co2_zähler');
-
-        let user_count = document.getElementById('user_count').value;
-        let klimapunkte = document.getElementById('klimapunkte').value;
-
-        //User und Klimapunkte in Floats umwandeln, trotz . und , zur Trennung
-        user_count = formatToFloat(user_count);
-        klimapunkte = formatToFloat(klimapunkte);
-
-        let co2 = Math.floor(klimapunkte / 1000);
-
-        animateCount(user_zähler, user_count);
-        animateCount(klimapunkte_zähler, klimapunkte);
-        animateCount(co2_zähler, co2);
-    });
-
-    function formatToFloat(str) {
-        const normalized = str.replace(/\./g, '').replace(',', '.');
-        return parseFloat(normalized);
-    }
-
-    function animateCount(element, endValue, maxDuration = 1500) {
-        let startValue = 0;
-
-        // Berechne Schrittzeit
-        let stepTime = 10; // alle 50ms ein Schritt
-        let steps = Math.floor(maxDuration / stepTime);
-
-        // Wenn zu viele Schritte nötig wären, starte höher
-        if (endValue > steps) {
-            startValue = endValue - steps;
+    <style>
+        #counters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            padding: 2rem;
+            background: var(--color-counters-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 20px;
         }
 
-        let current = startValue;
-        const increment = (endValue - startValue) / steps;
+        #counters > div {
+            flex: 1 1 300px;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
 
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= endValue) {
-                current = endValue;
-                clearInterval(timer);
+        #counters > div:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        #counters .h3_size {
+            font-size: 2.5rem;
+            margin: 0.5rem 0;
+            color: var(--color-counters);
+            font-weight: bold;
+        }
+
+        #counters p {
+            font-size: 1rem;
+            margin: 0.5rem 0;
+            color: var(--color-text);
+        }
+
+        #co2_per_klimapunkt {
+            font-weight: bold;
+            color: var(--color-counters);
+        }
+
+        .video {
+            width: 50%;
+            height: 50%;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            max-width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .video:hover {
+            transform: scale(1.02);
+        }
+
+        #slider {
+            position: relative;
+            width: 100%;
+            height: 70vh; /* 70% der Bildschirmhöhe */
+            margin-top: 20px; /* Abstand zur Nav */
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+        }
+
+        #slider img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+
+        #slider img.active {
+            display: block;
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 3rem;
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            z-index: 10;
+            transition: background 0.3s;
+        }
+
+        .nav-button:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        #prev {
+            left: 20px;
+        }
+
+        #next {
+            right: 20px;
+        }
+
+        /* Responsiv für kleinere Geräte */
+        @media (max-width: 600px) {
+            .nav-button {
+                font-size: 2rem;
+                padding: 0.3rem 0.6rem;
             }
-            element.textContent = Math.floor(current).toLocaleString();
-        }, stepTime);
-    }
-</script>
+        }
+
+        /* Weiterer Inhalt */
+        .content {
+            padding: 2rem;
+        }
+
+        .slider-heading {
+            position: absolute;
+            color: white;
+            text-align: center;
+            top: 160px; /* Abstand zur Nav */
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            font-size: 3rem;
+            opacity: 0;
+            animation: fadeUp 1.2s ease-out forwards;
+            z-index: 20;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+            pointer-events: none;
+        }
+
+        /* Animation */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        /* Für kleinere Bildschirme: Überschrift im Flow */
+        @media (max-width: 600px) {
+            .slider-heading {
+                position: static;
+                transform: none;
+                text-align: center;
+                font-size: 2rem;
+                margin: 20px 0;
+                animation: fadeUpMobile 1.2s ease-out forwards;
+                color: var(--color-text);
+            }
+
+            @keyframes fadeUpMobile {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
+    </style>
+    <h1 class="slider-heading">ClimateQuest - Motivation für mehr Klimaschutz</h1>
+    <div id="slider">
+        <button id="prev" class="nav-button emoji">&lt;</button>
+        <button id="next" class="nav-button emoji">&gt;</button>
+        <img src="{% static 'images/nature/flowers.png' %}" class="active" alt="Bild von Blumen">
+        <img src="{% static 'images/nature/lake.jpg' %}" alt="Bild eines Bergsees">
+        <img src="{% static 'images/nature/forest.jpg' %}" alt="Bild eines Waldes">
+    </div>
+    <script>
+        const images = document.querySelectorAll('#slider img');
+        let current = 0;
+
+        function showImage(index) {
+            images.forEach((img, i) => {
+                img.classList.toggle('active', i === index);
+            });
+        }
+
+        document.getElementById('prev').addEventListener('click', () => {
+            current = (current - 1 + images.length) % images.length;
+            showImage(current);
+        });
+
+        document.getElementById('next').addEventListener('click', () => {
+            current = (current + 1) % images.length;
+            showImage(current);
+        });
+    </script>
+
+    <hr>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    {% if user.is_authenticated %}
+        <p>Willkommen, {{ user.username }}!</p>
+
+        <p>Tipp: Wenn andere Nutzer Artikel liken, die du selbst geschrieben hast, erhältst du Klimapunkte! Schreibe also selbst einen guten Artikel, um mehr Klimapunkte zu erhalten!</p>
+
+        {% if user.usererweitert.mail_verified == False and user.email != '' %}
+            <p>Bitte bestätige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. Falls du keine
+                Verifizierungsemail
+                erhalten hast, <a href="{% url 'resend_verification_email' %}">lasse dir eine neue senden.</a></p>
+        {% endif %}
+    {% else %}
+        <div class="btns"><a href="{% url 'register_view' %}">
+            <button class="btn">Jetzt registrieren!</button>
+        </a></div>
+    {% endif %}
+
+    <hr>
+
+    <h2>Übersicht</h2>
+
+    <input type="hidden" id="user_count" value="{{ user_count }}">
+    <input type="hidden" id="klimapunkte" value="{{ klimapunkte|floatformat:-4 }}">
+
+    <div id="counters">
+        <div id="user_zähler_div">
+            <p class="h3_size" id="user_zähler">{{ user_count }}</p>
+            <p> registrierte Nutzer hat diese Plattform bereits.</p>
+        </div>
+
+        <div id="klimapunkte_zähler_div">
+            <p class="h3_size" id="klimapunkte_zähler">{{ klimapunkte|floatformat:-4 }}</p>
+            <p> Klimapunkte wurden von all diesen Nutzern zusammen bereits gesammelt.</p>
+        </div>
+
+        <div id="co2_zähler_div">
+            <p>Weil jeder Klimapunkte ungefähr für
+                <b id="co2_per_klimapunkt">1 kg</b> eingespartes CO2 steht, wurden dadurch insgesamt
+            </p>
+            <p class="h3_size" id="co2_zähler"></p>
+            <p> Tonnen CO2e eingespart</p>
+        </div>
+    </div>
+
+    <hr>
+    {% if user.is_authenticated %}
+        <div class="cookie-blocked" data-requires="trustpilot"
+             data-content="<script src='https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js'></script>"></div>
+        <!-- TrustBox widget - Review Collector -->
+        <div class="cookie-blocked trustpilot-widget" data-requires="trustpilot" data-locale="de-DE"
+             data-template-id="56278e9abfbbba0bdcd568bc" data-businessunit-id="68fbcb7b4ed74fdfc37990b1"
+             data-style-height="52px"
+             data-style-width="100%" data-token="cab662ec-d2c9-4e2a-a22f-f7b1eabcefdb">
+            <a href="https://de.trustpilot.com/review/climate-quest.de" target="_blank" rel="noopener">Trustpilot</a>
+        </div>
+        <!-- End TrustBox widget -->
+        <hr>
+    {% endif %}
+    <div class="btns">
+        <a href="{% url 'artikel_detail' 1 %}">
+            <button class="btn">Wie ClimateQuest funktioniert</button>
+        </a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'add' %}">
+                <button class="btn">Aktion hinzufügen</button>
+            </a>
+            {% if not request.user.families.count > 1 %}
+                <a href="{% url 'create_family' %}">
+                    <button class="btn">Family gründen</button>
+                </a>
+                <a href="{% url 'join_family' %}">
+                    <button class="btn">Family beitreten</button>
+                </a>
+            {% endif %}
+        {% endif %}
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const user_zähler = document.getElementById('user_zähler');
+
+            const klimapunkte_zähler = document.getElementById('klimapunkte_zähler');
+            const co2_zähler = document.getElementById('co2_zähler');
+
+            let user_count = document.getElementById('user_count').value;
+            let klimapunkte = document.getElementById('klimapunkte').value;
+
+            //User und Klimapunkte in Floats umwandeln, trotz . und , zur Trennung
+            user_count = formatToFloat(user_count);
+            klimapunkte = formatToFloat(klimapunkte);
+
+            let co2 = Math.floor(klimapunkte / 1000);
+
+            animateCount(user_zähler, user_count);
+            animateCount(klimapunkte_zähler, klimapunkte);
+            animateCount(co2_zähler, co2);
+        });
+
+        function formatToFloat(str) {
+            const normalized = str.replace(/\./g, '').replace(',', '.');
+            return parseFloat(normalized);
+        }
+
+        function animateCount(element, endValue, maxDuration = 1500) {
+            let startValue = 0;
+
+            // Berechne Schrittzeit
+            let stepTime = 10; // alle 50ms ein Schritt
+            let steps = Math.floor(maxDuration / stepTime);
+
+            // Wenn zu viele Schritte nötig wären, starte höher
+            if (endValue > steps) {
+                startValue = endValue - steps;
+            }
+
+            let current = startValue;
+            const increment = (endValue - startValue) / steps;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= endValue) {
+                    current = endValue;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current).toLocaleString();
+            }, stepTime);
+        }
+    </script>
 {% endblock %}

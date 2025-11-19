@@ -15,6 +15,7 @@ import bleach
 from django.utils import timezone
 import traceback
 from ClimateQuest import settingsprod
+from artikel.models import Artikel
 from home.models import *
 from verbrauch.models import *
 from family.models import *
@@ -119,6 +120,7 @@ def get_level(user):
     aktionen = Aktion.objects.filter(user=user)
     # Klimapunkte abrufen
     klimapunkte = get_klimapunkte(aktionen)
+    klimapunkte += get_klimapunkte_from_likes(user)
 
     # Alle Level sortiert abrufen
     levels = Level.objects.order_by('klimapunkte')
@@ -244,3 +246,13 @@ def clean_html(html):
         strip=True
     )
     return bleach.linkify(cleaned, callbacks=[bleach.callbacks.nofollow])
+
+def get_klimapunkte_from_likes(user):
+    klimapunkte_per_like = 0.1
+    artikel = Artikel.objects.filter(creator=user)
+    klimapunkte = 0
+    for single_artikel in artikel:
+        likes = single_artikel.like_count()
+        klimapunkte_artikel = likes * klimapunkte_per_like
+        klimapunkte += klimapunkte_artikel
+    return klimapunkte
