@@ -21,6 +21,8 @@ class Command(BaseCommand):
 
 
         def add_users():
+            for user in User.objects.all():
+                user.delete()
             with open("users.json", "r", encoding="utf-8") as f:
                 users_dict = json.load(f)
 
