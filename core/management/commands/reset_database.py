@@ -5,6 +5,8 @@ from django.core.serializers.json import DjangoJSONEncoder
 
 from personals.models import UserErweitert
 
+import sys
+
 
 class Command(BaseCommand):
     help = "Speichert alle User in einem externen Dictionary und trägt sie anschließend wieder ein."
@@ -43,9 +45,17 @@ class Command(BaseCommand):
         def main():
             user_input = input('save users (s) / add users (a): ')
             if user_input == 's':
-                save_users()
+                confirm = input('this will save all users from database to users.json. Continue? (y/n): ')
+                if confirm == 'y':
+                    save_users()
+                else:
+                    sys.exit()
             elif user_input == 'a':
-                add_users()
+                confirm = input('this will delete all users from database and add the ones from users.json. Continue? (y/n): ')
+                if confirm == 'y':
+                    add_users()
+                else:
+                    sys.exit()
             else:
                 print('Unbekannte Eingabe')
                 main()
