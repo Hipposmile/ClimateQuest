@@ -40,4 +40,14 @@ class Command(BaseCommand):
                     user=user
                 )
 
-        add_users()
+        def main():
+            input = input('save users (s) / add users (a): ')
+            if input == 's':
+                save_users()
+            elif input == 'a':
+                add_users()
+            else:
+                print('Unbekannte Eingabe')
+                main()
+
+        main()
