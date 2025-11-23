@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block meta %}
-    <meta name="description" content="Füge ein neues Event bei ClimateQuest hinzu, um mehr Leute für große Events wie Demos zu gewinnen.">
+    <meta name="description"
+          content="Füge ein neues Event bei ClimateQuest hinzu, um mehr Leute für große Events wie Demos zu gewinnen.">
 {% endblock %}
 {% block title %}ClimateQuest - Event hinzufügen{% endblock %}
 
@@ -32,7 +33,8 @@
         <label class="custom-checkbox">
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
-            <span class="label-text">Ich bestätige, dass alle Angaben der Wahrheit entsprechen und mit den <a href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmen. Außerdem verpflichte ich mich, bei dem Event selbst teilzunehmen.</span>
+            <span class="label-text">Ich bestätige, dass alle Angaben der Wahrheit entsprechen und mit den <a
+                    href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmen. Außerdem verpflichte ich mich, bei dem Event selbst teilzunehmen.</span>
         </label>
 
         <button type="submit">Hinzufügen</button>
@@ -44,6 +46,14 @@
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000);
+            const formatted = tomorrow.toISOString().slice(0, 16); // YYYY-MM-DDTHH:MM
+            let dateInput = document.getElementById('date_time');
+            dateInput.min = formatted;
+            dateInput.value = formatted;
+        });
+
         let quill;
         document.addEventListener('DOMContentLoaded', function () {
             let editor = document.getElementById('description_editor')

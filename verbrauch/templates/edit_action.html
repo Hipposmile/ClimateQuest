@@ -52,27 +52,27 @@
         {% csrf_token %}
         <label for="action_type" class="action-label">Aktionstyp:</label>
         <select name="action_type" class="action-label" id="action_type" required>
-            <option value="" disabled selected>Aktionstyp auswählen ▾</option>
+            <option value="" disabled>Aktionstyp auswählen ▾</option>
             {% for aktion in aktionen %}
-                <option value="{{ aktion.name }}" data-klimapunkte="{{ aktion.klimapunkte|floatformat:-4 }}" data-anmerkung="{{ aktion.anmerkung|safe }}" data-mengebeschreibung="{{ aktion.mengeBeschreibung }}" data-aktiondate="{{ aktion.date }}">{{ aktion.name }}</option>
+                <option value="{{ aktion.name }}" data-klimapunkte="{{ aktion.klimapunkte|floatformat:-4 }}" data-anmerkung="{{ aktion.anmerkung|safe }}" data-mengebeschreibung="{{ aktion.mengeBeschreibung }}" {% if aktion == aktuelleAktion.aktion %}selected{% endif %}>{{ aktion.name }}</option>
             {% endfor %}
         </select>
         <br/>
 
         <p id="klimapunkte_anzeige" class="action-label"></p>
 
-        <label for="action_description" class="action-label">Beschreibung:</label>
-        <input type="text" id="action_description" name="action_description" placeholder="Optional"/>
+        <label for="action_description" class="action-label">Beschreibung (optional):</label>
+        <input type="text" id="action_description" name="action_description" value="{{ aktuelleAktion.description }}" placeholder="Optional"/>
         <br/>
 
         <label for="action_quantity" class="action-label" id="action_quantity_label">Menge:</label>
-        <input type="text" id="action_quantity" name="action_quantity" required/>
+        <input type="text" id="action_quantity" name="action_quantity" value="{{ aktuelleAktion.quantity }}" required/>
         <br/>
 
         <p id="impact_anzeige" class="action-label"></p>
 
         <label for="action_date" class="action-label">Datum:</label>
-        <input type="date" id="action_date" name="action_date" required/>
+        <input type="date" id="action_date" name="action_date" value="{{ aktuelleAktion.date|date:"Y-m-d" }}" required/>
         <br/>
 
         <label class="custom-checkbox">
@@ -85,6 +85,12 @@
     </form>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const today = new Date().toISOString().split("T")[0];
+            let dateInput = document.getElementById('action_date');
+            dateInput.setAttribute('max', today);
+        });
+
         function submit(event) {
             const form = event.target;
             event.preventDefault(); // Verhindert das sofortige Absenden des Formulars

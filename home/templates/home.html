@@ -218,7 +218,8 @@
     {% if user.is_authenticated %}
         <p>Willkommen, {{ user.username }}!</p>
 
-        <p>Tipp: Wenn andere Nutzer Artikel liken, die du selbst geschrieben hast, erhältst du Klimapunkte! Schreibe also selbst einen guten Artikel, um mehr Klimapunkte zu erhalten!</p>
+        <p>Tipp: Wenn andere Nutzer Artikel liken, die du selbst geschrieben hast, erhältst du Klimapunkte! Schreibe
+            also selbst einen guten Artikel, um mehr Klimapunkte zu erhalten!</p>
 
         {% if user.usererweitert.mail_verified == False and user.email != '' %}
             <p>Bitte bestätige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. Falls du keine
@@ -262,14 +263,20 @@
     {% if user.is_authenticated %}
         <div class="cookie-blocked" data-requires="trustpilot"
              data-content="<script src='https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js'></script>"></div>
-        <!-- TrustBox widget - Review Collector -->
-        <div class="cookie-blocked trustpilot-widget" data-requires="trustpilot" data-locale="de-DE"
+        <div id="trustpilot-div"></div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                if (getCookiePreferences().trustpilot) {
+                    let trustpilotDiv = document.getElementById('trustpilot-div');
+                    trustpilotDiv.innerHTML = `<div class="trustpilot-widget" data-requires="trustpilot" data-locale="de-DE"
              data-template-id="56278e9abfbbba0bdcd568bc" data-businessunit-id="68fbcb7b4ed74fdfc37990b1"
              data-style-height="52px"
              data-style-width="100%" data-token="cab662ec-d2c9-4e2a-a22f-f7b1eabcefdb">
             <a href="https://de.trustpilot.com/review/climate-quest.de" target="_blank" rel="noopener">Trustpilot</a>
-        </div>
-        <!-- End TrustBox widget -->
+        </div>`;
+                }
+            });
+        </script>
         <hr>
     {% endif %}
     <div class="btns">

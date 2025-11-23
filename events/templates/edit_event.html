@@ -5,12 +5,14 @@
 {% block title %}ClimateQuest - Event {{ event.name }} bearbeiten{% endblock %}
 
 {% block content %}
-    <h1>Event {{ event.name }} bearbeiten</h1>
+    <h1>Event <i>{{ event.name }}</i> bearbeiten</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message }}</p>
         {% endfor %}
     {% endif %}
+
+    <input type="hidden" id="durationHidden" value="{{ event.duration }}">
 
     <p><strong>Beschreibung:</strong> {{ event.description|safe }}</p>
     <p><strong>Datum und Uhrzeit (Beginn):</strong> {{ event.date_time|date:"d.m.Y, H:i" }}</p>
@@ -20,25 +22,28 @@
     <form method="post" onsubmit="fillEditor()">
         {% csrf_token %}
         <label for="name">Name</label>
-        <input type="text" id="name" name="name" placeholder="Name" required>
+        <input type="text" id="name" name="name" placeholder="Name" value="{{ event.name }}" required>
 
         <label for="description_editor">Beschreibung</label>
-        <div id="description_editor" style="height: 300px;"></div>
+        <div id="description_editor" style="height: 300px;">{{ event.description|safe }}</div>
         <input type="hidden" name="description">
 
         <label for="date_time">Datum und Uhrzeit (Beginn)</label>
-        <input type="datetime-local" id="date_time" name="date_time" required>
+        <input type="datetime-local" id="date_time" name="date_time" value="{{ event.date_time|date:"d.m.Y, H:i" }}"
+               required>
 
         <label for="duration">geschätze Dauer in Minuten</label>
-        <input type="number" min="0" id="duration" name="duration" placeholder="Dauer" required>
+        <input type="number" min="0" id="duration" name="duration" placeholder="Dauer"
+               required>
 
         <label for="adress">Adresse</label>
-        <input type="text" id="adress" name="adress" placeholder="Adresse" required>
+        <input type="text" id="adress" name="adress" placeholder="Adresse" value="{{ event.adress }}" required>
 
         <label class="custom-checkbox">
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
-            <span class="label-text">Ich bestätige, dass alle Angaben der Wahrheit entsprechen und mit den <a href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmen. Außerdem verpflichte ich mich, bei dem Event selbst teilzunehmen.</span>
+            <span class="label-text">Ich bestätige, dass alle Angaben der Wahrheit entsprechen und mit den <a
+                    href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmen. Außerdem verpflichte ich mich, bei dem Event selbst teilzunehmen.</span>
         </label>
 
         <button type="submit" name="edit">Speichern</button>
@@ -55,6 +60,23 @@
 
 
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000);
+            const formatted = tomorrow.toISOString().slice(0, 16); // YYYY-MM-DDTHH:MM
+            let dateInput = document.getElementById('date_time');
+            dateInput.min = formatted;
+
+            let duration = document.getElementById('durationHidden').value;
+            let durationInput = document.getElementById('duration');
+            duration = formatToFloat(duration);
+            durationInput.value = duration;
+        });
+
+        function formatToFloat(str) {
+            const normalized = str.replace(/\./g, '').replace(',', '.');
+            return parseFloat(normalized);
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             let editor = document.getElementById('description_editor')
             if (getCookiePreferences().quill) {

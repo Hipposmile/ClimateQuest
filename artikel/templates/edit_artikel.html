@@ -22,10 +22,10 @@
 <form method="post" onsubmit="fillEditor(event)">
     {% csrf_token %}
     <label for="name">Name</label>
-    <input type="text" name="name" id="name" placeholder="Name">
+    <input type="text" name="name" id="name" placeholder="Name" value="{{ artikel.name }}">
 
     <label for="content_editor">Beschreibung</label>
-    <div id="content_editor" class="quill-editor"></div>
+    <div id="content_editor" class="quill-editor">{{ artikel.content|safe }}</div>
     <input type="hidden" name="content">
 
     <button type="submit">Speichern</button>
