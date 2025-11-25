@@ -4,7 +4,8 @@
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 
-{% block title %}ClimateQuest - {% if community %}Community {{ community.name }}{% else %}Die Community konnte nicht geladen werden.{% endif %} {% endblock %}
+{% block title %}ClimateQuest - {% if community %}Community {{ community.name }}{% else %}Die Community konnte nicht
+    geladen werden.{% endif %} {% endblock %}
 
 {% block content %}
     {% if error %}
@@ -24,12 +25,6 @@
 
     <form method="POST">
         {% csrf_token %}
-        <label for="filter">Sortieren nach:</label>
-        <select name="filter" id="filter" required>
-            <option value="Klimapunkte" selected>Klimapunkte</option>
-            <option value="Familyname">Familyname</option>
-        </select>
-
         <select name="zeitraum" id="zeitraum" required>
             <option value="gesamt" selected>Gesamt</option>
             <option value="heute">Heute</option>
@@ -41,18 +36,16 @@
 
         <div id="hiddenDateDiv" style="display: none;">
             <label for="start_date">Startdatum:</label>
-            <input type="date" name="start_date" id="start_date" placeholder="Startdatum" value="" required>
+            <input type="date" name="start_date" id="start_date" placeholder="Startdatum" value="">
             <label for="end_date">Enddatum:</label>
-            <input type="date" name="end_date" id="end_date" placeholder="Enddatum" value="" required>
+            <input type="date" name="end_date" id="end_date" placeholder="Enddatum" value="">
         </div>
-        
 
         <button type="submit">Anwenden</button>
     </form>
 
     {% if not error %}
         <p>Zeitraum: {{ zeitraum }}</p>
-        <p>Sortiert nach: {{ filter }}</p>
     {% endif %}
 
     <script>
@@ -75,11 +68,12 @@
         {% for member in members_with_klimapunkte %}
             <li class="{% if member.member.name == family.name %}klimapunkte_me{% else %}klimapunkte_other{% endif %}"
                 id="{% if member.member.name == family.name %}me{% else %}other{% endif %}">
-                <span><span style="font-weight: #888;" id="rank_{{member.member.id}}"></span><a href="{% url 'family_detail' member.member.id %}">{{ member.member.name }}</a></span>
+                <span><span style="font-weight: #888;" id="rank_{{ member.member.id }}"></span><a
+                        href="{% url 'family_detail' member.member.id %}">{{ member.member.name }}</a></span>
                 <br>
                 <span style="font-size:0.95em; color:#888;">(durchschnittlich {{ member.klimapunkte|floatformat:-4 }} Klimapunkte)</span>
             </li>
-            <script>             
+            <script>
                 rank_span = document.getElementById("rank_{{member.member.id}}");
                 rank_span.innerText = rank + ". ";
                 div_rank = rank_span.closest("li");
@@ -90,7 +84,7 @@
                 } else if (rank == 3) {
                     div_rank.style.borderLeft = "4px solid #CD7F32";  // Bronze
                 }
-                rank ++;
+                rank++;
             </script>
         {% endfor %}
     </ul>

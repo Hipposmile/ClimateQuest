@@ -17,15 +17,11 @@
     {% endif %}
 
     {% if family.name != 'worldwide ranking' %}
-        {% if member_of_family %}
-            <p><a href="{% url 'edit_family' family.id %}">Bearbeiten</a></p>
-            {% if family.chat %}
-                <p><a href="{% url 'chat_family' family.id %}">Chatten</a></p>
-            {% else %}
-                <p>Die Chat-Funktion ist für diese Family deaktiviert.</p>
-            {% endif %}
+        <p><a href="{% url 'edit_family' family.id %}">Bearbeiten</a></p>
+        {% if family.chat %}
+            <p><a href="{% url 'chat_family' family.id %}">Chatten</a></p>
         {% else %}
-            <p>Nur Mitglieder dürfen die Bearbeiten- und Chat-Funktion nutzen.</p>
+            <p>Die Chat-Funktion ist für diese Family deaktiviert.</p>
         {% endif %}
     {% else %}
         <p>Weder die Chat-Funktion noch die Bearbeiten-Funktion sind für die Family "worldwide ranking"
@@ -35,15 +31,8 @@
 
     <form method="POST">
         {% csrf_token %}
-        <label for="filter">Sortieren nach:</label>
-        <select name="filter" id="filter" required>
-            <option value="Klimapunkte" selected>Klimapunkte</option>
-            <option value="Username">Username</option>
-        </select>
-
-        <label for="zeitraum">Zeitraum:</label>
         <select name="zeitraum" id="zeitraum" required>
-            <option value="gesamt" selected>Gesamt</option>
+            <option value="gesamt">Gesamt</option>
             <option value="heute">Heute</option>
             <option value="sieben Tage">7 Tage</option>
             <option value="dreißig Tage">30 Tage</option>
@@ -51,11 +40,11 @@
             <option value="benutzerdefiniert">Benutzerdefiniert</option>
         </select>
 
-        <div id="hiddenDateDiv" style="display: none;">
+        <div id="hiddenDateDiv" style="display: none">
             <label for="start_date">Startdatum:</label>
-            <input type="date" name="start_date" id="start_date" placeholder="Startdatum" value="" required>
+            <input type="date" name="start_date" id="start_date" placeholder="Startdatum" value="">
             <label for="end_date">Enddatum:</label>
-            <input type="date" name="end_date" id="end_date" placeholder="Enddatum" value="" required>
+            <input type="date" name="end_date" id="end_date" placeholder="Enddatum" value="">
         </div>
 
         <button type="submit">Anwenden</button>
@@ -81,7 +70,6 @@
     <p>Mitglieder: {{ members_count }}</p>
     {% if not error %}
         <p>Zeitraum: {{ zeitraum }}</p>
-        <p>Sortiert nach: {{ filter }}</p>
     {% endif %}
     <script>
         let rank = 1;
@@ -92,11 +80,12 @@
         {% for member in members %}
             <li class="{% if member.member == user %}klimapunkte_me{% else %}klimapunkte_other{% endif %}"
                 id="{% if member.member == user %}me{% else %}other{% endif %}">
-                <span><span style="font-weight: #888;" id="rank_{{member.member.id}}"></span><a href="{% url 'user_detail' member.member.id %}">{{ member.member.username }}</a></span>
+                <span><span style="font-weight: #888;" id="rank_{{ member.member.id }}"></span><a
+                        href="{% url 'user_detail' member.member.id %}">{{ member.member.username }}</a></span>
                 <br>
                 <span style="font-size:0.95em; color:#888;">({{ member.klimapunkte|floatformat:-4 }} Klimapunkte)</span>
             </li>
-            <script>             
+            <script>
                 rank_span = document.getElementById("rank_{{member.member.id}}");
                 rank_span.innerText = rank + ". ";
                 div_rank = rank_span.closest("li");
@@ -107,7 +96,7 @@
                 } else if (rank == 3) {
                     div_rank.style.borderLeft = "4px solid #CD7F32";  // Bronze
                 }
-                rank ++;
+                rank++;
             </script>
         {% endfor %}
     </ul>

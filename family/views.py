@@ -259,10 +259,6 @@ def family_detail(request, family_id):
     except Family.DoesNotExist:
         messages.error(request, all_messages["family_not_found"])
         return redirect('home')
-
-    member_of_family = True
-    if request.user not in family.members.all():
-        member_of_family = False
     
     members_with_klimapunkte = []
     members = family.members.all()
@@ -270,11 +266,6 @@ def family_detail(request, family_id):
     zeitraum = 'gesamt'
 
     if request.method == 'POST':
-        filter = request.POST.get('filter')
-        if filter not in ["Klimapunkte", "Username"]:
-            messages.error(request, "Ungültiger Filter-Typ")
-            return redirect('family_detail', family_id)
-
         zeitraum = request.POST.get('zeitraum')
 
         heute = date.today()
@@ -305,7 +296,7 @@ def family_detail(request, family_id):
                 messages.error(request, all_messages["invalid_date"])
                 return redirect('family_detail', family_id)
 
-            zeitraum_text = f'von {start_datum} bis {end_datum}'
+            zeitraum_text = f'von {start_datum.strftime('%d.%m.%Y')} bis {end_datum.strftime('%d.%m.%Y')}'
 
         elif zeitraum not in ['heute', 'sieben Tage', 'dreißig Tage', 'dreihundertfünfundsechzig Tage', 'gesamt']:
             messages.error(request, all_messages["invalid_time_period"])
@@ -345,29 +336,19 @@ def family_detail(request, family_id):
             members_with_klimapunkte.append({'member': member, 'klimapunkte': klimapunkte})
 
     else:
-        filter = "Klimapunkte"
         for member in members:
             aktionen = Aktion.objects.filter(user=member)
             klimapunkte = get_klimapunkte(aktionen)
             klimapunkte += get_klimapunkte_from_likes(member)
             members_with_klimapunkte.append({'member': member, 'klimapunkte': klimapunkte})
-    
-    if filter == "Klimapunkte":
-        sort_key = 'klimapunkte'
-        reverse_sort = True
-    elif filter == "Username":
-        sort_key = 'member__username'  # oder 'member.username', je nach Struktur
-        reverse_sort = False
-    else:
-        sort_key = 'klimapunkte'
-        reverse_sort = True
 
     # Sortierung anwenden
     try:
+        print(members_with_klimapunkte)
         members_with_klimapunkte_sortiert = sorted(
             members_with_klimapunkte,
-            key=lambda x: x['member'].username if sort_key == 'member__username' else x[sort_key],
-            reverse=reverse_sort
+            key=lambda x: x['klimapunkte'],
+            reverse=True
         )
     except KeyError:
         messages.error(request, "Fehler beim Sortieren der Mitglieder.")
@@ -383,8 +364,6 @@ def family_detail(request, family_id):
         'average_klimapunkte': average_klimapunkte,
         'total_klimapunkte': total_klimapunkte,
         'members_count': members_count,
-        'member_of_family': member_of_family,
-        'filter': filter
     })
 
 @login_required
