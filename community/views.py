@@ -379,7 +379,7 @@ def community_detail(request, community_id, family_id):
                 messages.error(request, all_messages["invalid_date"])
                 return redirect('community_detail', family_id, community_id)
 
-            zeitraum_text = f'von {start_datum.strftime('%d.%m.%Y')} bis {end_datum.strftime('%d.%m.%Y')}'
+            zeitraum_text = f"von {start_datum.strftime('%d.%m.%Y')} bis {end_datum.strftime('%d.%m.%Y')}"
 
         elif zeitraum not in ['heute', 'sieben Tage', 'dreißig Tage', 'dreihundertfünfundsechzig Tage', 'gesamt']:
             messages.error(request, all_messages["invalid_time_period"])
