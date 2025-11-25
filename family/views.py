@@ -296,7 +296,7 @@ def family_detail(request, family_id):
                 messages.error(request, all_messages["invalid_date"])
                 return redirect('family_detail', family_id)
 
-            zeitraum_text = f'von {start_datum.strftime('%d.%m.%Y')} bis {end_datum.strftime('%d.%m.%Y')}'
+            zeitraum_text = f"von {start_datum.strftime('%d.%m.%Y')} bis {end_datum.strftime('%d.%m.%Y')}"
 
         elif zeitraum not in ['heute', 'sieben Tage', 'dreißig Tage', 'dreihundertfünfundsechzig Tage', 'gesamt']:
             messages.error(request, all_messages["invalid_time_period"])
