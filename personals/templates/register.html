@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block meta %}
-    <meta name="description" content="Registriere dich für ein ClimateQuest Konto, um personalisierte Funktionen zu nutzen und deinen Beitrag im Kampf gegen den Klimawandel zu verfolgen.">
+    <meta name="description"
+          content="Registriere dich für ein ClimateQuest Konto, um personalisierte Funktionen zu nutzen und deinen Beitrag im Kampf gegen den Klimawandel zu verfolgen.">
 {% endblock %}
 
 {% block title %}ClimateQuest - Registrieren{% endblock %}
@@ -18,14 +19,18 @@
         <label for="username">Benutzername:</label>
         <small id="username-feedback"></small>
         <input type="text" name="username" id="username" placeholder="Benutzername" required>
+
         <label for="password">Passwort:</label>
+        <a id="showPassword" style="color: red">Passwort anzeigen</a>
         <input type="password" name="password" id="password" placeholder="Passwort" required>
+
         <label for="email">E-Mail-Adresse:</label>
         <small id="email-feedback"></small>
         <input type="email" name="email" id="email" placeholder="E-Mail (Optional)">
         <small>Du kannst eine E-Mail-Adresse angeben, um Benachrichtigungen zu erhalten und, falls du deinen
             Benutzernamen oder dein Passwort vergessen hast, diese zurückzusetzen. Dies ist allerdings optional, du
             musst es also nicht machen.</small>
+
         <div>
             <h4>Wir empfehlen folgende Passwortanforderungen, um deinen Account vor Hackingangriffen und
                 Accountübernahmenzu schützen:</h4>
@@ -172,5 +177,21 @@
             }
         });
     </script>
+    <script>
+        const showPassword = document.getElementById('showPassword');
+        let password = document.getElementById('password');
+        showPassword.addEventListener('mousedown', function () {
+            password.type = 'text';
+        });
+        showPassword.addEventListener('mouseup', function () {
+            password.type = 'password';
+        });
 
+        showPassword.addEventListener('touchstart', function () {
+            password.type = 'text';
+        });
+        showPassword.addEventListener('touchend', function () {
+            password.type = 'password';
+        });
+    </script>
 {% endblock %}
