@@ -344,6 +344,7 @@ def reset_password(request):
             message=f'Wir haben dir ein neues, zufällig generiertes Passwort erstellt: {new_password} \nMelde dich damit und mit deinem Benutzernamen {user.username} <a href="https://climate-quest.de/personals/login/">hier</a> an und ändere aus Sicherheitsgründen möglichst bald unter "Profil bearbeiten" dein Passwort.',
             recipient_list=user.email,
             fail_silently=False,
+            user=user,
         )
 
         try:
