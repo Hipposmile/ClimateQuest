@@ -27,10 +27,12 @@ import string
 
 dezimalstellen = 2
 
+
 # messages don´t use core.all_messages here because this would complicate everything
 
 def generateRandomPassword():
     return ''.join(random.choices(string.ascii_letters + string.digits + string.punctuation, k=12))
+
 
 def send_mail_function(**kwargs):
     request = kwargs.get('request')
@@ -41,7 +43,8 @@ def send_mail_function(**kwargs):
     mailinglist_needless = kwargs.get('mailinglist_needless')
 
     if request is None or subject is None or message is None or fail_silently is None:
-        createInternerFehler(request, 'Beim E-Mail Versand wurden nicht alle notwendigen Elemente übergeben', fehlermeldung)
+        createInternerFehler(request, 'Beim E-Mail Versand wurden nicht alle notwendigen Elemente übergeben',
+                             fehlermeldung)
 
     user = kwargs.get('user')
     if not user:
@@ -53,7 +56,6 @@ def send_mail_function(**kwargs):
     recipient_list = kwargs.get('recipient_list')
     if not recipient_list:
         recipient_list = [user.email]
-    
 
     if not mailinglist_needless and user.email != '':
         try:
@@ -65,12 +67,65 @@ def send_mail_function(**kwargs):
         if userErweitert.mailinglist:
             try:
                 html_content = f"""
-                    <html>
-                        <body>
-                            <h1>{subject}</h1>
-                            <p>{message}</p>
-                        </body>
-                    </html>
+                    <!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>{subject}</title>
+    <style>
+      body {{
+        margin: 0; padding: 0;
+        background: #f5f7fa;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: #1f2937;
+        line-height: 1.5;
+      }}
+      .container {{
+        max-width: 600px;
+        margin: 24px auto;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        overflow: hidden;
+      }}
+      .header {{
+        padding: 20px 24px;
+        border-bottom: 1px solid #e5e7eb;
+      }}
+      .header h1 {{
+        font-size: 20px;
+        margin: 0;
+        color: #14532d; /* kräftiges Grün */
+      }}
+      .content {{
+        padding: 24px;
+        font-size: 16px;
+      }}
+      .footer {{
+        padding: 16px 24px;
+        border-top: 1px solid #e5e7eb;
+        font-size: 12px;
+        color: #6b7280;
+        background: #f9fafb;
+      }}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>{subject}</h1>
+      </div>
+      <div class="content">
+        {message}
+      </div>
+      <div class="footer">
+        <p>Du erhältst diese E-Mail, weil du <i>Benachrichtigungen auch per E-Mail erhalten</i> aktiviert hast <a href="https://climate-quest.de/personals/settings/#mailinglist_checkbox">Hier abmelden</a>.</p>
+        <p><a href="https://climate-quest.de/impressum/">Impressum</a> • <a href="https://climate-quest.de/datenschutz/">Datenschutz</a></p>
+      </div>
+    </div>
+  </body>
+</html>
                 """
                 text_content = message
                 email = EmailMultiAlternatives(
@@ -84,17 +139,70 @@ def send_mail_function(**kwargs):
                 return True
             except Exception as e:
                 createInternerFehler(request, f'Fehler beim E-Mail-Versand an {recipient_list}: {e}', fehlermeldung)
-                
+
     elif mailinglist_needless:
         try:
             html_content = f"""
-                <html>
-                    <body>
-                        <h1>{subject}</h1>
-                        <p>{message}</p>
-                    </body>
-                </html>
-            """
+                                <!doctype html>
+            <html lang="de">
+              <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width">
+                <title>{subject}</title>
+                <style>
+                  body {{
+                    margin: 0; padding: 0;
+                    background: #f5f7fa;
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                    color: #1f2937;
+                    line-height: 1.5;
+                  }}
+                  .container {{
+                    max-width: 600px;
+                    margin: 24px auto;
+                    background: #ffffff;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+                    overflow: hidden;
+                  }}
+                  .header {{
+                    padding: 20px 24px;
+                    border-bottom: 1px solid #e5e7eb;
+                  }}
+                  .header h1 {{
+                    font-size: 20px;
+                    margin: 0;
+                    color: #14532d; /* kräftiges Grün */
+                  }}
+                  .content {{
+                    padding: 24px;
+                    font-size: 16px;
+                  }}
+                  .footer {{
+                    padding: 16px 24px;
+                    border-top: 1px solid #e5e7eb;
+                    font-size: 12px;
+                    color: #6b7280;
+                    background: #f9fafb;
+                  }}
+                </style>
+              </head>
+              <body>
+                <div class="container">
+                  <div class="header">
+                    <h1>{subject}</h1>
+                  </div>
+                  <div class="content">
+                    {message}
+                  </div>
+                  <div class="footer">
+                    <p>Du erhältst diese E-Mail, weil du <i>Benachrichtigungen auch per E-Mail erhalten</i> aktiviert hast <a href="https://climate-quest.de/personals/settings/#mailinglist_checkbox">Hier abmelden</a>.</p>
+                    <p><a href="https://climate-quest.de/impressum/">Impressum</a> • <a href="https://climate-quest.de/datenschutz/">Datenschutz</a></p>
+                  </div>
+                </div>
+              </body>
+            </html>
+                            """
             text_content = message
             email = EmailMultiAlternatives(
                 subject=subject,
@@ -114,7 +222,8 @@ def send_mail_function(**kwargs):
     else:
         return True
 
-    return False    
+    return False
+
 
 def get_level(user):
     aktionen = Aktion.objects.filter(user=user)
@@ -143,13 +252,19 @@ def get_level(user):
                 level_number = i + 1
             else:
                 level_number = i + 1
-                return {'info': f'Du hast das höchste Level bereits erreicht: {current_level.description} <span class="emoji">&#x129395;</span>', 'current_level': current_level, 'levels': levels, 'klimapunkte': klimapunkte, 'level_number': level_number}
-             
-    return {'current_level': current_level, 'next_level': next_level, 'progress_percent': progress_percent, 'levels': levels, 'klimapunkte': klimapunkte, 'level_number': level_number}
+                return {
+                    'info': f'Du hast das höchste Level bereits erreicht: {current_level.description} <span class="emoji">&#x129395;</span>',
+                    'current_level': current_level, 'levels': levels, 'klimapunkte': klimapunkte,
+                    'level_number': level_number}
+
+    return {'current_level': current_level, 'next_level': next_level, 'progress_percent': progress_percent,
+            'levels': levels, 'klimapunkte': klimapunkte, 'level_number': level_number}
+
 
 def get_klimapunkte(aktionen):
     klimapunkte = sum(aktion.impact for aktion in aktionen)
     return klimapunkte
+
 
 def createInternerFehler(request, beschreibung, fehlermeldung="interner Fehler", exception=None):
     def sanitize_post_data(post_data):
@@ -189,6 +304,7 @@ def createInternerFehler(request, beschreibung, fehlermeldung="interner Fehler",
     with open('logs/errors.log', 'a') as file:
         file.write(f'{error_message}\n\n')
 
+
 def createBenachrichtigung(request, benachrichtigung, user=None):
     if user is None:
         user = request.user
@@ -203,12 +319,14 @@ def createBenachrichtigung(request, benachrichtigung, user=None):
         user=user
     )
 
+
 def ist_email_gueltig(email):
     try:
         validate_email(email)
         return True
     except ValidationError:
         return False
+
 
 def check_worldwide_ranking_exists(request):
     try:
@@ -217,9 +335,11 @@ def check_worldwide_ranking_exists(request):
     except Family.DoesNotExist:
         createInternerFehler(request, 'Family "worldwide ranking" existiert nicht')
         return False
-    
+
+
 def getFamiliesOfUser(user):
     return Family.objects.filter(members=user).order_by('name')
+
 
 def getCommunitiesOfUser(user):
     # Hole die IDs der Familien des aktuellen Nutzers
@@ -238,6 +358,7 @@ ALLOWED_ATTRIBUTES = {
     'a': ['href', 'target', 'rel']
 }
 
+
 def clean_html(html):
     cleaned = bleach.clean(
         html,
@@ -246,6 +367,7 @@ def clean_html(html):
         strip=True
     )
     return bleach.linkify(cleaned, callbacks=[bleach.callbacks.nofollow])
+
 
 def get_klimapunkte_from_likes(user):
     klimapunkte_per_like = 0.1
