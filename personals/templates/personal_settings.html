@@ -72,7 +72,7 @@
 
     <!-- Passwort ändern -->
     <h3>Passwort ändern</h3>
-    <form method="post">
+    <form method="post" onsubmit="register(event)">
         {% csrf_token %}
         <label for="current_password">Aktuelles Passwort:</label>
         <input type="password" name="current_password" id="current_password" placeholder="Aktuelles Passwort" required>
@@ -94,6 +94,9 @@
         <button type="submit" name="change_password">Ändern</button>
     </form>
     <script>
+        let passwordRecommendation = false;
+    </script>
+    <script>
         const passwordInput = document.getElementById('new_password')
         const password_lenght = document.getElementById('length')
         const uppercase = document.getElementById('uppercase')
@@ -109,12 +112,27 @@
             lowercase.className = /[a-z]/.test(password) ? "success-message" : "error-message"
             number.className = /\d/.test(password) ? "success-message" : "error-message"
             punctuation.className = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(password) ? "success-message" : "error-message";
+
+            if (password_lenght.className == "success-message" && uppercase.className == "success-message" && lowercase.className == "success-message" && number.className == "success-message" && punctuation.className == "success-message") {
+                passwordRecommendation = true
+            }
         });
 
     </script>
     <script>
+        function register(event) {
+            event.preventDefault(); // verhindert sofortiges Abschicken
+            if (!passwordRecommendation) {
+                if (!confirm('Das Passwort erfüllt nicht die Passwortanforderungen. Trotzdem fortfahren?')) {
+                    return false;
+                }
+            }
+            event.target.submit()
+        }
+    </script>
+    <script>
         const showPassword = document.getElementById('showPassword');
-        let password = document.getElementById('password');
+        let password = document.getElementById('new_password');
         showPassword.addEventListener('mousedown', function () {
             password.type = 'text';
         });
