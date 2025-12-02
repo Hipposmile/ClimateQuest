@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.hashers import check_password
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -208,11 +207,12 @@ def settings_view(request):
                     request.user.save()
                     createBenachrichtigung(request, 'Du hast deinen Benutzernamen geändert.', request.user)
                     messages.success(request, all_messages["username_changed"])
+            return redirect('settings_view')
 
         if 'change_password' in request.POST:
             current_pw = request.POST.get('current_password')
             new_pw = request.POST.get('new_password')
-            if not check_password(current_pw, request.user.password):
+            if not request.user.check_password(current_pw):
                 messages.error(request, all_messages["invalid_password"])
             else:
                 request.user.set_password(new_pw)
@@ -220,11 +220,12 @@ def settings_view(request):
                 update_session_auth_hash(request, request.user)
                 createBenachrichtigung(request, 'Du hast dein Passwort geändert.', request.user)
                 messages.success(request, all_messages["password_changed"])
+            return redirect('settings_view')
         
         if 'change_email' in request.POST:
             email = request.POST.get('email')
             password = request.POST.get('password')
-            if not check_password(password, request.user.password):
+            if not request.user.check_password(password):
                 messages.error(request, all_messages["invalid_password"])
             else:
                 if email == "":
@@ -300,7 +301,7 @@ def settings_view(request):
 
         if 'delete_account' in request.POST:
             password = request.POST.get('password')
-            if not check_password(password, request.user.password):
+            if not request.user.check_password(password):
                 messages.error(request, all_messages["invalid_password"])
             else:
                 contactedUserIds = set()

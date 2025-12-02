@@ -127,7 +127,18 @@
                     return false;
                 }
             }
-            event.target.submit()
+                // ensure the server receives which button was used (when submitting via JS the
+                // clicked button's name/value is not included, so append it manually)
+                const form = event.target;
+                const btn = form.querySelector('button[name=change_password]');
+                if (btn) {
+                    const hidden = document.createElement('input');
+                    hidden.type = 'hidden';
+                    hidden.name = btn.name;
+                    hidden.value = btn.value || btn.textContent;
+                    form.appendChild(hidden);
+                }
+                form.submit()
         }
     </script>
     <script>
