@@ -77,6 +77,7 @@
         <label for="current_password">Aktuelles Passwort:</label>
         <input type="password" name="current_password" id="current_password" placeholder="Aktuelles Passwort" required>
         <label for="new_password">Neues Passwort:</label>
+        <a id="showPassword" style="color: red">Passwort anzeigen</a>
         <input type="password" name="new_password" id="new_password" placeholder="Neues Passwort" required>
         <div>
             <h4>Wir empfehlen folgende Passwortanforderungen, um deinen Account vor Hackingangriffen und
@@ -110,6 +111,23 @@
             punctuation.className = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(password) ? "success-message" : "error-message";
         });
 
+    </script>
+    <script>
+        const showPassword = document.getElementById('showPassword');
+        let password = document.getElementById('password');
+        showPassword.addEventListener('mousedown', function () {
+            password.type = 'text';
+        });
+        showPassword.addEventListener('mouseup', function () {
+            password.type = 'password';
+        });
+
+        showPassword.addEventListener('touchstart', function () {
+            password.type = 'text';
+        });
+        showPassword.addEventListener('touchend', function () {
+            password.type = 'password';
+        });
     </script>
     <hr>
 
