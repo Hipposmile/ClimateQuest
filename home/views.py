@@ -1,37 +1,30 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.hashers import check_password
-from django.http import JsonResponse
-from django.contrib.auth.models import User
-from django.contrib import messages
-from django.db.models import Sum
-from django.core.mail import send_mail
-from django.core.mail import EmailMultiAlternatives
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
 import os
-from django.core.management import call_command
+
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.core.mail import EmailMultiAlternatives
+from django.core.mail import send_mail
+from django.core.management import call_command
+from django.core.validators import validate_email
+from django.db.models import Sum
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
 from django.utils import timezone
-from .models import *
+from dotenv import load_dotenv
+
 from events.models import *
 from utils.functions import *
-import os
-from utils.functions import *
-from dotenv import load_dotenv
 
 load_dotenv()
 
 from core.all_messages import all_messages
 
-from datetime import datetime, timedelta, date
-import random
-import string
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 
 def home(request):
     klimapunkte_gesamt = 0

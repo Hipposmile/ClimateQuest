@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect
-from .models import *
-from core.all_messages import all_messages
 from django.contrib import messages
+from django.shortcuts import render, redirect
+
+from core.all_messages import all_messages
+from .models import *
+
 
 # Create your views here.
 def presents_overview(request):

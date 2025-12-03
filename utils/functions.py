@@ -1,29 +1,29 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.hashers import check_password
-from django.http import JsonResponse
-from django.contrib.auth.models import User
-from django.contrib import messages
-from django.db.models import Sum
-from django.core.mail import send_mail
-from django.core.mail import EmailMultiAlternatives
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
-import bleach
-from django.utils import timezone
-import traceback
-from ClimateQuest import settingsprod
-from artikel.models import Artikel
-from home.models import *
-from verbrauch.models import *
-from family.models import *
-from community.models import *
-from personals.models import *
-from datetime import datetime, timedelta, date
 import random
 import string
+import traceback
+
+import bleach
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.core.mail import EmailMultiAlternatives
+from django.core.mail import send_mail
+from django.core.validators import validate_email
+from django.db.models import Sum
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
+from django.utils import timezone
+
+from ClimateQuest import settingsprod
+from artikel.models import Artikel
+from community.models import *
+from home.models import *
+from personals.models import *
+from verbrauch.models import *
 
 dezimalstellen = 2
 

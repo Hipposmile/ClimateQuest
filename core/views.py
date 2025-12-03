@@ -1,5 +1,7 @@
 from django.shortcuts import render
+
 from utils.functions import *
+
 
 # Create your views here.
 def custom_400(request, exception):

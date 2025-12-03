@@ -1,43 +1,34 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.hashers import check_password
-from django.http import JsonResponse
-from django.contrib.auth.models import User
+from datetime import datetime, timedelta, date
+
 from django.contrib import messages
-from django.db.models import Sum
-from django.core.mail import send_mail
-from django.core.mail import EmailMultiAlternatives
-from django.core.validators import validate_email
+from django.contrib import messages
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.core.mail import EmailMultiAlternatives
+from django.core.mail import send_mail
+from django.core.validators import validate_email
+from django.db.models import Q
+from django.db.models import Q
+from django.db.models import Sum
 from django.db.models import Sum, Q
-from datetime import date, timedelta, datetime
+from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
+from django.shortcuts import redirect
+from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect
 
 from core.all_messages import all_messages
-from .models import *
 from utils.functions import *
 from verbrauch.models import *
-
-from datetime import datetime, timedelta, date
-import random
-import string
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-
-from django.contrib import messages
-from django.shortcuts import redirect
-from django.db.models import Q
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.hashers import check_password
-
-from django.shortcuts import render, redirect
-from django.http import JsonResponse, HttpResponseRedirect
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.hashers import check_password
-from django.db.models import Q
 
 
 @login_required

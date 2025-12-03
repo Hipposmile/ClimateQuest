@@ -28,7 +28,7 @@
     <div id="content_editor" class="quill-editor">{{ artikel.content|safe }}</div>
     <input type="hidden" name="content">
 
-    <button type="submit">Speichern</button>
+    <button type="submit" name="edit_artikel">Speichern</button>
 </form>
 
 <!-- Quill CSS -->
@@ -88,6 +88,6 @@
 <hr>
 <form method="post" onsubmit="return confirm('Willst du diesen Artikel wirklich löschen?');">
         {% csrf_token %}
-        <button type="submit" name="delete_artikel" style="color:red;">Diese Aktion löschen</button>
+        <button type="submit" name="delete_artikel" style="color:red;">Diesen Artikel löschen</button>
     </form>
 {% endblock %}
