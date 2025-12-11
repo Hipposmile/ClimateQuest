@@ -169,8 +169,8 @@
             <div class="chat-user-message {% if msg.sender == request.user %}me{% else %}other{% endif %}">
                 <div class="chat-user-bubble">
                     {{ msg.message }}
-                    <span class="chat-user-meta">{{ msg.sender.username }}</span>
-                    <span class="chat-user-meta">{{ msg.erstellt_am|date:"d.m.Y H:i" }}</span>
+                    <span class="chat-user-meta"><a class="chat-user-meta" href="{% url 'user_detail' msg.sender.id %}">{{ msg.sender.username }}</a></span>
+                    <span class="chat-user-meta">{{ msg.created_at|date:"d.m.Y H:i" }}</span>
                 </div>
             </div>
         {% empty %}

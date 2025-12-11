@@ -175,7 +175,7 @@ NOCAPTCHA = True
 RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUBLIC_KEY", "")
 RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY", "")
 
-CSRF_COOKIE_SECURE = True  # Nur wenn du HTTPS nutzt
+CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = ['https://climate-quest.de', 'https://www.climate-quest.de']
 
 LOGGING = {
