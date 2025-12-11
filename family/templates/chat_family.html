@@ -167,7 +167,7 @@
         <div class="chat-family-message {% if msg.user == user %}me{% else %}other{% endif %}">
             <div class="chat-family-bubble">
                 {{ msg.message }}
-                <span class="chat-family-meta">{{ msg.user.username }}</span>
+                <span class="chat-family-meta"><a href="{% url 'user_detail' msg.user.id %}" class="chat-family-meta"></a>{{ msg.user.username }}</span>
                 <span class="chat-family-meta">{{ msg.erstellt_am|date:"d.m.Y H:i" }}</span>
             </div>
         </div>
