@@ -51,7 +51,10 @@ all_messages = {
     "community__family_removed": "Family erfolgreich entfernt.",
     "family_left_community": "Deine Family hat die Community erfolgreich verlassen.",
     "community_deleted": "Community erfolgreich gelöscht",
+    "community_chat_enabled": "Chat für die Community aktiviert",
+    "community_chat_disabled": "Chat für die Community deaktiviert",
 
+    "chat_disabled_for_community": "Der Chat für diese Community ist deaktiviert",
     # --------
     #Family
     # --------

@@ -250,6 +250,19 @@ def edit_community(request, community_id, family_id):
                 messages.success(request, all_messages["family_left_community"])
                 return redirect('home')
 
+        if 'change_chat_settings' in request.POST:
+            admin_password = request.POST.get('admin_password')
+            if not check_password(admin_password, community.admin_password):
+                messages.error(request, all_messages["invalid_admin_password"])
+            else:
+                chat_enabled = request.POST.get('chat_checkbox') == 'on'
+                community.chat = chat_enabled
+                community.save()
+                if chat_enabled:
+                    messages.success(request, all_messages["community_chat_enabled"])
+                else:
+                    messages.success(request, all_messages["community_chat_disabled"])
+
         if 'delete_community' in request.POST:
             admin_password = request.POST.get('admin_password')
 
@@ -279,6 +292,10 @@ def chat_community(request, community_id, family_id):
         messages.error(request, all_messages["community_not_found"])
         return redirect('community_view')
 
+    if not community.chat:
+        messages.error(request, all_messages["chat_disabled_for_community"])
+        return redirect('community_detail', community_id=community_id, family_id=family_id)
+
     if not family_id:
         messages.error(request, all_messages["community__family_id_missing"])
         return redirect(communities_view)
@@ -302,11 +319,7 @@ def chat_community(request, community_id, family_id):
                                        user_to_message)
         return redirect('chat_community', community_id=community.id, family_id=family.id)
 
-    # try:
     msgs = CommunityChatMessage.objects.filter(community_id=community_id)
-    # except CommunityChatMessage.DoesNotExist:
-    #    messages.error(request, all_messages["no_messages_found"])
-    #    return redirect('chat_community')
 
     return render(request, 'chat_community.html', {'community': community, 'msgs': msgs, 'family': family})
 

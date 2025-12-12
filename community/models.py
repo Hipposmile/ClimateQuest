@@ -11,6 +11,7 @@ class Community(models.Model):
     password = models.CharField(max_length=100)
     admin_password = models.CharField(max_length=100)
     members = models.ManyToManyField(Family, related_name='communities')
+    chat = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name

@@ -220,15 +220,15 @@ def edit_family(request, family_id):
         if 'change_chat_settings' in request.POST:
             admin_password = request.POST.get('admin_password')
             if not check_password(admin_password, family.admin_password):
-                messages.error(request, all_messages["admin_password_invalid_for_chat"])
+                messages.error(request, all_messages["invalid_admin_password"])
             else:
                 chat_enabled = request.POST.get('chat_checkbox') == 'on'
                 family.chat = chat_enabled
                 family.save()
                 if chat_enabled:
-                    messages.success(request, all_messages["chat_enabled"])
+                    messages.success(request, all_messages["family_chat_enabled"])
                 else:
-                    messages.success(request, all_messages["chat_disabled"])
+                    messages.success(request, all_messages["family_chat_disabled"])
 
         if 'delete_family' in request.POST:
             admin_password = request.POST.get('admin_password')
