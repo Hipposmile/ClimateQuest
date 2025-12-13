@@ -56,7 +56,7 @@ def add_artikel(request):
         is_truth = request.POST.get('is_truth') == 'on'
         if not is_truth:
             messages.error(request, all_messages["not_is_truth"])
-            return redirect('add_action')
+            return redirect('add_artikel')
 
         name = request.POST.get('name')
         content = request.POST.get('content')
@@ -96,7 +96,7 @@ def edit_artikel(request, artikel_id):
             is_truth = request.POST.get('is_truth') == 'on'
             if not is_truth:
                 messages.error(request, all_messages["not_is_truth"])
-                return redirect('add_action')
+                return redirect('edit_artikel', artikel_id=artikel_id)
 
             name = request.POST.get('name')
             content = request.POST.get('content')

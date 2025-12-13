@@ -202,7 +202,7 @@ def add_event(request):
         is_truth = request.POST.get('is_truth') == 'on'
         if not is_truth:
             messages.error(request, all_messages["not_is_truth"])
-            return redirect('add_action')
+            return redirect('add_event')
 
         if not name or not description or not date_time or not duration or not adress:
             messages.error(request, all_messages["missing_required_inputs"])
@@ -260,7 +260,7 @@ def edit_event(request, event_id):
             is_truth = request.POST.get('is_truth') == 'on'
             if not is_truth:
                 messages.error(request, all_messages["not_is_truth"])
-                return redirect('add_action')
+                return redirect('edit_event', event_id)
 
             if not name or not description or not date_time or not duration or not adress:
                 messages.error(request, all_messages["missing_required_inputs"])
