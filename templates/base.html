@@ -11,25 +11,25 @@
 
     <meta property="og:title" content="ClimateQuest">
     <meta property="og:description"
-        content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
-    <meta property="og:image" content="https://climate-quest.de/static/images/SocialMediaPreview.png">
-    <meta property="og:url" content="{{ request.build_absolute_uri}}">
+          content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
+    <meta property="og:image" content="https://climate-quest.de/static/icons/SocialMediaPreview.png">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:type" content="website">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ClimateQuest">
     <meta name="twitter:description"
-        content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
-    <meta name="twitter:image" content="https://climate-quest.de/static/images/SocialMediaPreview.png">
+          content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
+    <meta name="twitter:image" content="https://climate-quest.de/static/icons/SocialMediaPreview.png">
 
     <meta name="description"
-        content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
+          content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
     <meta name="robots" content="index, follow">
 
     <title>{% block title %}ClimateQuest{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'icons/favicon.ico' %}" type="image/x-icon">
     <script src="{% static 'js/cookie-consent.js' %}" defer></script>
 
     <style>
@@ -78,14 +78,14 @@
 </head>
 
 <body>
-    <header id="header">
-        <a href="/" class="logo-link">
-            <img src="{% static 'images/ClimateQuest.png' %}" alt="climateQuest Logo" class="logo-img">
-        </a>
-        <nav>
-            <a href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a>
+<header id="header">
+    <a href="/" class="logo-link">
+        <img src="{% static 'icons/ClimateQuest.png' %}" alt="climateQuest Logo" class="logo-img">
+    </a>
+    <nav>
+        <a href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a>
 
-            {% if user.is_authenticated %}
+        {% if user.is_authenticated %}
             <div class="dropdown">
                 <span class="nav-link inactive-link">Konto ▾</span>
                 <div class="dropdown-content">
@@ -97,8 +97,8 @@
                     <a href="{% url 'users_overview' %}">User</a>
                     <a href="{% url 'logout_view' %}">Logout</a>
                     {% if user.is_staff %}
-                    <a href="/ClimateQuestAdmin/" target="_blank">Admin-Bereich (I)</a>
-                    <a href="{% url 'admin_view' %}">Admin-Bereich (II)</a>
+                        <a href="/ClimateQuestAdmin/" target="_blank">Admin-Bereich (I)</a>
+                        <a href="{% url 'admin_view' %}">Admin-Bereich (II)</a>
                     {% endif %}
                 </div>
             </div>
@@ -131,59 +131,59 @@
                     <span id="benachrichtigungen-count" class="count">0</span>
                 </div>
             </a>
-            {% else %}
+        {% else %}
             <a href="{% url 'login_view' %}">Login</a>
-            {% endif %}
-            <div class="dropdown">
-                <span class="nav-link inactive-link">Events ▾</span>
-                <div class="dropdown-content">
-                    {% if user.is_authenticated %}<a href="{% url 'add_event' %}">Event hinzufügen</a>{% endif %}
-                    <a href="{% url 'events_overview' %}">Überblick</a>
-                </div>
+        {% endif %}
+        <div class="dropdown">
+            <span class="nav-link inactive-link">Events ▾</span>
+            <div class="dropdown-content">
+                {% if user.is_authenticated %}<a href="{% url 'add_event' %}">Event hinzufügen</a>{% endif %}
+                <a href="{% url 'events_overview' %}">Überblick</a>
             </div>
-            <div class="dropdown">
-                <span class="nav-link inactive-link">Artikel ▾</span>
-                <div class="dropdown-content">
-                    {% if user.is_authenticated %}<a href="{% url 'add_artikel' %}">Artikel hinzufügen</a>{% endif %}
-                    <a href="{% url 'artikel_overview' %}">Überblick</a>
-                </div>
+        </div>
+        <div class="dropdown">
+            <span class="nav-link inactive-link">Artikel ▾</span>
+            <div class="dropdown-content">
+                {% if user.is_authenticated %}<a href="{% url 'add_artikel' %}">Artikel hinzufügen</a>{% endif %}
+                <a href="{% url 'artikel_overview' %}">Überblick</a>
             </div>
-            <div class="dropdown">
-                <span class="nav-link inactive-link">Forum ▾</span>
-                <div class="dropdown-content">
-                    {% if user.is_authenticated %}<a href="{% url 'add_forum_post' %}">Beitrag hinzufügen</a>{% endif %}
-                    <a href="{% url 'forum_overview' %}">Überblick</a>
-                </div>
+        </div>
+        <div class="dropdown">
+            <span class="nav-link inactive-link">Forum ▾</span>
+            <div class="dropdown-content">
+                {% if user.is_authenticated %}<a href="{% url 'add_forum_post' %}">Beitrag hinzufügen</a>{% endif %}
+                <a href="{% url 'forum_overview' %}">Überblick</a>
             </div>
-        </nav>
-    </header>
-
-    <main>
-        {% block content %}{% endblock %}
-    </main>
-
-    <footer>
-        <p><a href="{% url 'artikel_detail' 2 %}">ClimateQuest unterstützen</a></p>
-        <p><a href="{% url 'aktionenTable' %}">Alle Aktionen</a></p>
-        <p><a href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a></p>
-        <p><a href="{% url 'impressum' %}">Impressum</a></p>
-        <p><a href="{% url 'datenschutz' %}">Datenschutz</a></p>
-    </footer>
-
-    <nav aria-label="Nach oben">
-        <button id="up-btn" class="emoji">&#x2B06;</button>
+        </div>
     </nav>
-    <!--Nav-Leist-->
-    <script>
-        const header = document.getElementById('header');
+</header>
 
-        const renderMobileNav = () => {
-            header.innerHTML = `<button id="openSidebar">☰ Menü öffnen</button>
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    <p><a href="{% url 'artikel_detail' 2 %}">ClimateQuest unterstützen</a></p>
+    <p><a href="{% url 'aktionenTable' %}">Alle Aktionen</a></p>
+    <p><a href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a></p>
+    <p><a href="{% url 'impressum' %}">Impressum</a></p>
+    <p><a href="{% url 'datenschutz' %}">Datenschutz</a></p>
+</footer>
+
+<nav aria-label="Nach oben">
+    <button id="up-btn" class="emoji">&#x2B06;</button>
+</nav>
+<!--Nav-Leist-->
+<script>
+    const header = document.getElementById('header');
+
+    const renderMobileNav = () => {
+        header.innerHTML = `<button id="openSidebar">☰ Menü öffnen</button>
             <div id="sidebar">
                 <button id="closeSidebar">×</button>
                 <nav>
                     <a href="/" class="logo-link">
-                        <img src="{% static 'images/ClimateQuest.png' %}" alt="climateQuest Logo" class="logo-img">
+                        <img src="{% static 'icons/ClimateQuest.png' %}" alt="climateQuest Logo" class="logo-img">
                     </a>
                     <hr>
                     <li><a href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a></li>
@@ -197,6 +197,7 @@
                             <li><a href="{% url 'klimapunkte_view' request.user.id %}">Klimapunkte</a></li>
                             <li><a href="{% url 'settings_view' %}">Profil bearbeiten</a></li>
                             <li><a href="{% url 'presents_overview' %}">Geschenke</a></li>
+                            <li><a href="{% url 'users_overview' %}">User</a></li>
                             <li><a href="{% url 'logout_view' %}">Logout</a></li>
                             {% if user.is_staff %}
                             <li><a href="/ClimateQuestAdmin/" target="_blank">Admin-Bereich (I)</a></li>
@@ -251,7 +252,8 @@
                     <details>
                         <summary>Events</summary>
                         <ul>
-                            <li>{% if user.is_authenticated %}<a href="{% url 'add_event' %}">Event hinzufügen</a>{% endif %}</li>
+                            <li>{% if user.is_authenticated %}<a href="{% url 'add_event' %}
+            ">Event hinzufügen</a>{% endif %}</li>
                             <li><a href="{% url 'events_overview' %}">Überblick</a></li>
                         </ul>
                     </details>
@@ -259,7 +261,8 @@
                     <details>
                         <summary>Artikel</summary>
                         <ul>
-                            <li>{% if user.is_authenticated %}<a href="{% url 'add_artikel' %}">Artikel hinzufügen</a>{% endif %}</li>
+                            <li>{% if user.is_authenticated %}<a href="{% url 'add_artikel' %}
+            ">Artikel hinzufügen</a>{% endif %}</li>
                             <li><a href="{% url 'artikel_overview' %}">Überblick</a></li>
                         </ul>
                     </details>
@@ -267,7 +270,8 @@
                     <details>
                         <summary>Forum</summary>
                         <ul>
-                            <li>{% if user.is_authenticated %}<a href="{% url 'add_forum_post' %}">Post hinzufügen</a>{% endif %}</li>
+                            <li>{% if user.is_authenticated %}<a href="{% url 'add_forum_post' %}
+            ">Post hinzufügen</a>{% endif %}</li>
                             <li><a href="{% url 'forum_overview' %}">Überblick</a></li>
                         </ul>
                     </details>
@@ -275,18 +279,18 @@
                 </nav>
             </div>`;
 
-            const sidebar = document.getElementById('sidebar');
-            const openBtn = document.getElementById('openSidebar');
-            const closeBtn = document.getElementById('closeSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const openBtn = document.getElementById('openSidebar');
+        const closeBtn = document.getElementById('closeSidebar');
 
-            openBtn.addEventListener('click', () => sidebar.classList.add('active'));
-            closeBtn.addEventListener('click', () => sidebar.classList.remove('active'));
-        };
+        openBtn.addEventListener('click', () => sidebar.classList.add('active'));
+        closeBtn.addEventListener('click', () => sidebar.classList.remove('active'));
+    };
 
-        const renderDesktopNavComplete = () => {
-            header.innerHTML = `
+    const renderDesktopNavComplete = () => {
+        header.innerHTML = `
                 <a href="/" class="logo-link">
-                    <img src="{% static 'images/ClimateQuest.png' %}" alt="climateQuest Logo" class="logo-img">
+                    <img src="{% static 'icons/ClimateQuest.png' %}" alt="climateQuest Logo" class="logo-img">
                 </a>
                 <nav>
                     <a href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a>
@@ -342,90 +346,93 @@
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Events ▾</span>
                         <div class="dropdown-content">
-                            {% if user.is_authenticated %}<a href="{% url 'add_event' %}">Event hinzufügen</a>{% endif %}
+                            {% if user.is_authenticated %}<a href="{% url 'add_event' %}
+            ">Event hinzufügen</a>{% endif %}
                             <a href="{% url 'events_overview' %}">Überblick</a>
                         </div>
                     </div>
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Artikel ▾</span>
                         <div class="dropdown-content">
-                            {% if user.is_authenticated %}<a href="{% url 'add_artikel' %}">Artikel hinzufügen</a>{% endif %}
+                            {% if user.is_authenticated %}<a href="{% url 'add_artikel' %}
+            ">Artikel hinzufügen</a>{% endif %}
                             <a href="{% url 'artikel_overview' %}">Überblick</a>
                         </div>
                     </div>
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Forum ▾</span>
                         <div class="dropdown-content">
-                            {% if user.is_authenticated %}<a href="{% url 'add_forum_post' %}">Beitrag hinzufügen</a>{% endif %}
+                            {% if user.is_authenticated %}<a href="{% url 'add_forum_post' %}
+            ">Beitrag hinzufügen</a>{% endif %}
                             <a href="{% url 'forum_overview' %}">Überblick</a>
                         </div>
                     </div>
                 </nav>
             `;
+        renderDesktopNav();
+    }
+
+    const renderDesktopNav = () => {
+        const dropdown = document.querySelector('.dropdown');
+        const toggle = dropdown.querySelector('.nav-link');
+        const content = dropdown.querySelector('.dropdown-content');
+
+        // Öffnen/Schließen bei Klick auf Button
+        toggle.addEventListener('click', (e) => {
+            e.stopPropagation(); // Verhindert, dass das Dokument den Klick sieht
+            content.classList.toggle('visible');
+        });
+
+        // Schließen bei Klick irgendwo anders
+        document.addEventListener('click', () => {
+            content.classList.remove('visible');
+        });
+
+        // Optional: Klick im Menü soll nicht schließen
+        content.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    };
+
+    function handleResize() {
+        if (window.innerWidth < 1200) {
+            renderMobileNav();
+        } else {
+            renderDesktopNavComplete();
+        }
+    }
+
+    function handleLoad() {
+        if (window.innerWidth < 1200) {
+            renderMobileNav();
+        } else {
             renderDesktopNav();
         }
+    }
 
-        const renderDesktopNav = () => {
-            const dropdown = document.querySelector('.dropdown');
-            const toggle = dropdown.querySelector('.nav-link');
-            const content = dropdown.querySelector('.dropdown-content');
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('load', handleLoad);
+</script>
 
-            // Öffnen/Schließen bei Klick auf Button
-            toggle.addEventListener('click', (e) => {
-                e.stopPropagation(); // Verhindert, dass das Dokument den Klick sieht
-                content.classList.toggle('visible');
-            });
 
-            // Schließen bei Klick irgendwo anders
-            document.addEventListener('click', () => {
-                content.classList.remove('visible');
-            });
-
-            // Optional: Klick im Menü soll nicht schließen
-            content.addEventListener('click', (e) => {
-                e.stopPropagation();
-            });
-        };
-
-        function handleResize() {
-            if (window.innerWidth < 1200) {
-                renderMobileNav();
-            } else {
-                renderDesktopNavComplete();
-            }
+<!--Up-Button-->
+<script>
+    // Button ein-/ausblenden beim Scrollen
+    const upBtn = document.getElementById('up-btn');
+    window.addEventListener('scroll', function () {
+        if (window.scrollY > 10) {
+            upBtn.style.display = 'block';
+        } else {
+            upBtn.style.display = 'none';
         }
+    });
+    // Smooth scroll nach oben
+    upBtn.addEventListener('click', function () {
+        window.scrollTo({top: 0});
+    });
+</script>
 
-        function handleLoad() {
-            if (window.innerWidth < 1200) {
-                renderMobileNav();
-            } else {
-                renderDesktopNav();
-            }
-        }
-
-        window.addEventListener('resize', handleResize);
-        window.addEventListener('load', handleLoad);
-    </script>
-
-
-    <!--Up-Button-->
-    <script>
-        // Button ein-/ausblenden beim Scrollen
-        const upBtn = document.getElementById('up-btn');
-        window.addEventListener('scroll', function () {
-            if (window.scrollY > 10) {
-                upBtn.style.display = 'block';
-            } else {
-                upBtn.style.display = 'none';
-            }
-        });
-        // Smooth scroll nach oben
-        upBtn.addEventListener('click', function () {
-            window.scrollTo({ top: 0 });
-        });
-    </script>
-
-    {% if user.is_authenticated %}
+{% if user.is_authenticated %}
     <script>
         function ladeBenachrichtigungenAnzahl() {
             fetch('/count-benachrichtigungen/')
@@ -458,7 +465,13 @@
             ladeBenachrichtigungenAnzahl();
         });
     </script>
-    {% endif %}
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("{% static 'pwa/service-worker.js' %}", {scope: "/"})
+                .then(() => console.log("Service Worker registriert"));
+        }
+    </script>
+{% endif %}
 </body>
 
 </html>

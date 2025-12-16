@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic import TemplateView
+from rest_framework.authtoken.views import obtain_auth_token
 
 from home.sitemaps import *
 from artikel.sitemaps import *
@@ -85,6 +86,10 @@ urlpatterns = [
     path('artikel/', include('artikel.urls')),
     path('forum/', include('forum.urls')),
     path('presents/', include('presents.urls')),
+
+    path('api/auth/token/', obtain_auth_token),
+    path('api/artikel/', include('artikel.api_urls')),
+    path('api/personals/', include('personals.api_urls')),
 ]
 
 handler400 = 'core.views.custom_400'
