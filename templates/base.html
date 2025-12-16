@@ -193,7 +193,7 @@
                         <img src="{% static 'icons/ClimateQuest.png' %}" alt="climateQuest Logo" class="logo-img">
                     </a>
                     <hr>
-                    <li><a href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a></li>
+                    <a href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a>
                     <hr>
                     {% if user.is_authenticated %}
                     <details>
@@ -471,12 +471,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             ladeBenachrichtigungenAnzahl();
         });
-    </script>
-    <script>
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("{% static 'pwa/service-worker.js' %}", {scope: "/"})
-                .then(() => console.log("Service Worker registriert"));
-        }
     </script>
 {% endif %}
 </body>
