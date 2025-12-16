@@ -32,6 +32,8 @@
     <link rel="icon" href="{% static 'icons/favicon.ico' %}" type="image/x-icon">
     <script src="{% static 'js/cookie-consent.js' %}" defer></script>
 
+    <link rel="manifest" href="{% static 'pwa/manifest.json' %}">
+
     <style>
         #up-btn {
             position: fixed;
@@ -78,6 +80,11 @@
 </head>
 
 <body>
+<script>
+    if (typeof navigator.serviceWorker !== 'undefined') {
+        navigator.serviceWorker.register('{% static 'pwa/sw.js' %}')
+    }
+</script>
 <header id="header">
     <a href="/" class="logo-link">
         <img src="{% static 'icons/ClimateQuest.png' %}" alt="climateQuest Logo" class="logo-img">
