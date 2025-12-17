@@ -135,3 +135,11 @@ def user_detail(request, user_id):
         return redirect('user_detail', user_id)
 
     return render(request, './user_detail.html', {'userErweitert': userErweitert, 'msgs': msgs})
+
+@login_required
+def klimapunkte_me(request):
+    return redirect('klimapunkte_view', request.user.id)
+
+@login_required
+def level_me(request):
+    return redirect('level_view', request.user.id)

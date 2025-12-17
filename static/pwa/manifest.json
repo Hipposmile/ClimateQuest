@@ -2,13 +2,13 @@
   "background_color": "#ffffff",
   "description": "Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.",
   "dir": "ltr",
-  "display": "standalone",
+  "display": "fullscreen",
   "name": "ClimateQuest",
   "orientation": "any",
-  "scope": "/",
+  "scope": "https://climate-quest.de",
   "short_name": "ClimateQuest",
   "start_url": "/",
-  "theme_color": "#0099ff",
+  "theme_color": "#0433ff",
   "icons": [
     {
       "src": "../icons/AppImages/windows11/SmallTile.scale-100.png",
@@ -457,6 +457,59 @@
     {
       "src": "../icons/AppImages/ios/1024.png",
       "sizes": "1024x1024"
+    }
+  ],
+  "id": "qQZ&lt;u0*hjXM}#`NR.4ht[9Ig&gt;B(7rY",
+  "categories": ["education", "games", "lifestyle"],
+  "lang": "de",
+  "shortcuts": [
+    {
+      "name": "Aktion hinzufügen",
+      "short_name": "Aktion",
+      "description": "Neue Klimaschutz-Aktion hinzufügen",
+      "url": "https://climate-quest.de/verbrauch/add/"
+    },
+    {
+      "name": "Meine Families",
+      "short_name": "Families",
+      "description": "Übersicht deiner Familiengruppen",
+      "url": "https://climate-quest.de/family/families/"
+    },
+    {
+      "name": "Meine Communities",
+      "short_name": "Communities",
+      "description": "Übersicht deiner Communities",
+      "url": "https://climate-quest.de/community/communities/"
+    },
+    {
+      "name": "Level",
+      "short_name": "Level",
+      "description": "Dein aktuelles Level anzeigen",
+      "url": "https://climate-quest.de/users/klimapunkte/me"
+    },
+    {
+      "name": "Klimapunkte",
+      "short_name": "Punkte",
+      "description": "Deine gesammelten Klimapunkte",
+      "url": "https://climate-quest.de/users/klimapunkte/me"
+    },
+    {
+      "name": "Events Überblick",
+      "short_name": "Events",
+      "description": "Alle Events im Überblick",
+      "url": "https://climate-quest.de/events/overview/"
+    },
+    {
+      "name": "Artikel Überblick",
+      "short_name": "Artikel",
+      "description": "Alle Artikel im Überblick",
+      "url": "https://climate-quest.de/artikel/artikel_overview/"
+    },
+    {
+      "name": "Forum Überblick",
+      "short_name": "Forum",
+      "description": "Alle Forums-Beiträge im Überblick",
+      "url": "https://climate-quest.de/forum/forum_overview/"
     }
   ]
 }
