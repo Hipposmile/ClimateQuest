@@ -485,13 +485,13 @@
       "name": "Level",
       "short_name": "Level",
       "description": "Dein aktuelles Level anzeigen",
-      "url": "https://climate-quest.de/users/klimapunkte/me"
+      "url": "https://climate-quest.de/users/klimapunkte/me/"
     },
     {
       "name": "Klimapunkte",
       "short_name": "Punkte",
       "description": "Deine gesammelten Klimapunkte",
-      "url": "https://climate-quest.de/users/klimapunkte/me"
+      "url": "https://climate-quest.de/users/klimapunkte/me/"
     },
     {
       "name": "Events Überblick",

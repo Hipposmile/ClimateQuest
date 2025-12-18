@@ -85,6 +85,81 @@
         navigator.serviceWorker.register('{% static 'pwa/sw.js' %}')
     }
 </script>
+<style>
+    #pwaNav {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        display: flex;
+        gap: 8px;
+        z-index: 9998;
+    }
+
+    #pwaNav button {
+        padding: 3px 7px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        background: var(--color-primary);
+        color: #fff;
+        cursor: pointer;
+    }
+
+    #pwaNav button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+</style>
+
+<script>
+    function createPwaNav() {
+        const isStandalone =
+            window.matchMedia('(display-mode: standalone)').matches ||
+            window.navigator.standalone === true;
+
+        if (isStandalone) {
+            // Container erstellen
+            const nav = document.createElement('div');
+            nav.id = 'pwaNav';
+
+            // Back-Button
+            const backBtn = document.createElement('button');
+            backBtn.textContent = '⬅️';
+            backBtn.className = 'emoji';
+            backBtn.onclick = () => {
+                if (window.history.length > 1) {
+                    window.history.back();
+                }
+            };
+
+            // Reload-Btn
+            const reloadBtn = document.createElement('button');
+            reloadBtn.textContent = '🔄';
+            reloadBtn.className = 'emoji';
+            reloadBtn.onclick = () => {
+                if (window.history.length > 1) {
+                    window.location.reload();
+                }
+            };
+
+            // Forward-Button
+            const forwardBtn = document.createElement('button');
+            forwardBtn.textContent = '➡️';
+            forwardBtn.className = 'emoji';
+            forwardBtn.onclick = () => {
+                window.history.forward();
+            };
+
+            nav.appendChild(backBtn);
+            nav.appendChild(reloadBtn);
+            nav.appendChild(forwardBtn);
+            document.body.appendChild(nav);
+        }
+    }
+
+    // Beim Laden prüfen
+    document.addEventListener('DOMContentLoaded', createPwaNav);
+</script>
 <header id="header">
     <a href="/" class="logo-link">
         <img src="{% static 'icons/ClimateQuest.png' %}" alt="climateQuest Logo" class="logo-img">
@@ -185,7 +260,8 @@
     const header = document.getElementById('header');
 
     const renderMobileNav = () => {
-        header.innerHTML = `<button id="openSidebar">☰ Menü öffnen</button>
+        header.innerHTML = `
+        <div id="openSidebarDiv"><button id="openSidebar">☰</button></div>
             <div id="sidebar">
                 <button id="closeSidebar">×</button>
                 <nav>

@@ -6,7 +6,7 @@
     --color-text-light: #ecf0f1;
     --color-primary: #0433ff;
     --color-primary-hover: #0099ff;
-    --color-primary-light: #e3f0fa; 
+    --color-primary-light: #e3f0fa;
     --color-accent: #000000;
     --color-white: #ffffff;
     --color-header-bg: #2c3e50;
@@ -277,6 +277,11 @@ main {
     opacity: 0.6;
 }
 
+#openSidebarDiv {
+    display: flex;
+    justify-content: flex-end;
+}
+
 #openSidebar {
     background-color: var(--color-primary);
     border: none;
@@ -453,13 +458,13 @@ main {
 }
 
 @font-face {
-  font-family: 'OpenMoji';
-  src: url("../fonts/OpenMoji-color-glyf_colr_0.ttf") format('truetype');
+    font-family: 'OpenMoji';
+    src: url("../fonts/OpenMoji-color-glyf_colr_0.ttf") format('truetype');
 }
 
 .emoji {
-  font-family: 'OpenMoji', sans-serif;
-  font-size: 1em;
+    font-family: 'OpenMoji', sans-serif;
+    font-size: 1em;
 }
 
 /*In mehreren Dateien vorhanden*/
@@ -592,11 +597,11 @@ main {
     transform: rotate(45deg);
 }
 
-input[type="checkbox"]:checked~.checkmark::after {
+input[type="checkbox"]:checked ~ .checkmark::after {
     display: block;
 }
 
-input[type="checkbox"]:checked~.checkmark {
+input[type="checkbox"]:checked ~ .checkmark {
     background-color: var(--color-primary);
 }
 
