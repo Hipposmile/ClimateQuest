@@ -30,6 +30,8 @@ from users.sitemaps import *
 from verbrauch.sitemaps import *
 from presents.sitemaps import *
 
+from core.views import send_push
+
 sitemaps = {
     "home": HomeSitemap(),
     "nutzungsbedingungen": NutzungsbedingungenSitemap(),
@@ -86,8 +88,11 @@ urlpatterns = [
     path('forum/', include('forum.urls')),
     path('presents/', include('presents.urls')),
     path('core/', include('core.urls')),
+
+    # Notifications
     path('sw.js', TemplateView.as_view(template_name='sw.js', content_type='application/x-javascript')),
     path('webpush/', include('webpush.urls')),
+    path('send_push/', send_push),
 ]
 
 handler400 = 'core.views.custom_400'
