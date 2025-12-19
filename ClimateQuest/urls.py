@@ -86,6 +86,7 @@ urlpatterns = [
     path('forum/', include('forum.urls')),
     path('presents/', include('presents.urls')),
     path('core/', include('core.urls')),
+    path('sw.js', TemplateView.as_view(template_name='sw.js', content_type='application/x-javascript'))
 ]
 
 handler400 = 'core.views.custom_400'
