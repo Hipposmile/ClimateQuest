@@ -1,10 +1,13 @@
 const registerSw = async () => {
     if ('serviceWorker' in navigator) {
-        const reg = await navigator.serviceWorker.register('/sw.js');
-        initialiseState(reg)
+        await navigator.serviceWorker.register('/sw.js');
 
+        // WICHTIG: Auf aktiven SW warten
+        const reg = await navigator.serviceWorker.ready;
+
+        initialiseState(reg);
     } else {
-        showNotAllowed("You can't send push notifications ☹️😢")
+        showNotAllowed("You can't send push notifications ☹️😢");
     }
 };
 
