@@ -38,8 +38,7 @@ def home(request):
    user = request.user
    return render(request, './test.html', {user: user, 'vapid_key': vapid_key})
 
-#@require_POST
-#@csrf_exempt
+@require_POST
 def send_push(request):
     try:
         body = request.body
@@ -51,6 +50,7 @@ def send_push(request):
         user_id = data['id']
         user = get_object_or_404(User, pk=user_id)
         payload = {'head': data['head'], 'body': data['body']}
+        breakpoint()
         send_user_notification(user=user, payload=payload, ttl=1000)
 
         return JsonResponse(status=200, data={"message": "Web push successful"})
