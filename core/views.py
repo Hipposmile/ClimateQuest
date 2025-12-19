@@ -41,6 +41,7 @@ def home(request):
 @require_POST
 @csrf_exempt
 def send_push(request):
+    breakpoint()
     try:
         body = request.body
         data = json.loads(body)
