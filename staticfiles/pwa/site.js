@@ -6,6 +6,7 @@ pushForm.addEventListener('submit', async function (e) {
     const input = this[0];
     const textarea = this[1];
     const button = this[2];
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     errorMsg.innerText = '';
 
     const head = input.value;
@@ -21,6 +22,7 @@ pushForm.addEventListener('submit', async function (e) {
             method: 'POST',
             body: JSON.stringify({head, body, id}),
             headers: {
+                "X-CSRFToken": csrftoken,
                 'content-type': 'application/json'
             }
         });
@@ -34,13 +36,11 @@ pushForm.addEventListener('submit', async function (e) {
             button.innerText = 'Something broke 😢..  Try again?';
             button.disabled = false;
         }
-    }
-    else {
+    } else {
         let error;
-        if (!head || !body){
+        if (!head || !body) {
             error = 'Please ensure you complete the form 🙏🏾'
-        }
-        else if (!id){
+        } else if (!id) {
             error = "Are you sure you're logged in? 🤔. Make sure! 👍🏼"
         }
         errorMsg.innerText = error;

@@ -93,6 +93,7 @@
 <body>
 <div>
     <form id="send-push__form" method="POST">
+        {% csrf_token %}
         <h3 class="header">Send a push notification</h3>
         <p class="error"></p>
         <input type="text" name="head" placeholder="Header: Your favorite airline 😍">
