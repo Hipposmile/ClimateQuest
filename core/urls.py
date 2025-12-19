@@ -1,5 +1,5 @@
-from django.urls import path, include
-from .views import home, send_push
+from django.urls import path
+from .views import home
 
 urlpatterns = [
     path('', home),
