@@ -30,8 +30,6 @@ from users.sitemaps import *
 from verbrauch.sitemaps import *
 from presents.sitemaps import *
 
-from core.views import send_push
-
 sitemaps = {
     "home": HomeSitemap(),
     "nutzungsbedingungen": NutzungsbedingungenSitemap(),
