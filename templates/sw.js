@@ -1,4 +1,4 @@
-/*importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
 
 const CACHE = "pwabuilder-page";
 
@@ -41,7 +41,7 @@ self.addEventListener('fetch', (event) => {
       }
     })());
   }
-});*/
+});
 
 self.addEventListener('push', function (event) {
     console.log("receiving push")
@@ -56,7 +56,6 @@ self.addEventListener('push', function (event) {
     event.waitUntil(
         self.registration.showNotification(head, {
             body: body,
-            icon: 'https://i.imgur.com/MZM3K5w.png'
         })
     );
 });
