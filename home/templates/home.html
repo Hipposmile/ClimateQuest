@@ -226,7 +226,7 @@
                 Verifizierungsemail
                 erhalten hast, <a href="{% url 'resend_verification_email' %}">lasse dir eine neue senden.</a></p>
         {% endif %}
-        <a href="https://climate-quest.de/core/">Test Notification</a>
+        <a href="{% url 'send_push' %}">Test Notification</a>
     {% else %}
         <div class="btns"><a href="{% url 'register_view' %}">
             <button class="btn">Jetzt registrieren!</button>
