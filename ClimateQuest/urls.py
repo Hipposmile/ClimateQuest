@@ -89,7 +89,6 @@ urlpatterns = [
     # Notifications
     path('sw.js', TemplateView.as_view(template_name='sw.js', content_type='application/x-javascript')),
     path('webpush/', include('webpush.urls')),
-    path('send_push/', send_push),
 ]
 
 handler400 = 'core.views.custom_400'
