@@ -1,18 +1,10 @@
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from django.http import JsonResponse
-from django.contrib.auth.models import User
-from django.contrib import messages
-from django.db.models import Count
-
-
-from django.utils import timezone
-from datetime import timedelta
-
 from core.all_messages import all_messages
-from .models import *
 from utils.functions import *
+from .models import *
+
 
 # Create your views here.
 def artikel_overview(request):
