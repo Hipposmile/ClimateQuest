@@ -1,13 +1,10 @@
-from django.contrib import messages
-from django.contrib.auth.models import User
 from django.db.models import Count
-from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from django.utils import timezone
 
 from core.all_messages import all_messages
 from utils.functions import *
 from .models import *
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 """def events_overview(request):
