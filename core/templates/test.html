@@ -92,6 +92,11 @@
 
 <body>
 <div>
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color: white">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
     <form id="send-push__form" method="POST">
         <h3 class="header">Send a push notification</h3>
         <p class="error"></p>
