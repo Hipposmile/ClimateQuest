@@ -39,7 +39,6 @@ def home(request):
    return render(request, './test.html', {user: user, 'vapid_key': vapid_key})
 
 @require_POST
-@csrf_exempt
 def send_push(request):
     try:
         body = request.body

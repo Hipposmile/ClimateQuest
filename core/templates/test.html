@@ -98,7 +98,8 @@
             <p style="color: white">{{ message }}</p>
         {% endfor %}
     {% endif %}
-    <form id="send-push__form" method="POST">
+    <form id="send-push__form">
+        {% csrf_token %}
         <h3 class="header">Send a push notification</h3>
         <p class="error"></p>
         <input type="text" name="head" placeholder="Header: Your favorite airline 😍">

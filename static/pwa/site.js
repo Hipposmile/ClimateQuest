@@ -6,6 +6,7 @@ pushForm.addEventListener('submit', async function (e) {
     const input = this[0];
     const textarea = this[1];
     const button = this[2];
+    const csrf_token = document.querySelector(name='csrfmiddlewaretoken');
     errorMsg.innerText = '';
 
     const head = input.value;
@@ -21,6 +22,7 @@ pushForm.addEventListener('submit', async function (e) {
             method: 'POST',
             body: JSON.stringify({head, body, id}),
             headers: {
+                'X-CSRFToken': csrf_token,
                 'content-type': 'application/json'
             }
         });
