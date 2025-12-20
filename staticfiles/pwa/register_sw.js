@@ -27,7 +27,18 @@ const initialiseState = (reg) => {
         showNotAllowed("Push isn't allowed in your browser 🤔");
         return
     }
-    subscribe(reg);
+    if (Notification.permission === 'default') {
+        Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+                console.log("Notification permission granted");
+                subscribe(reg);
+            } else {
+                showNotAllowed('You prevented us from showing notifications ☹️🤔');
+            }
+        });
+    } else if (Notification.permission === 'granted') {
+        subscribe(reg);
+    }
 }
 
 const showNotAllowed = (message) => {

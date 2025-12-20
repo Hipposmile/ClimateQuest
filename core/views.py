@@ -36,7 +36,7 @@ def home(request):
    webpush_settings = getattr(settings, 'WEBPUSH_SETTINGS', {})
    vapid_key = webpush_settings.get('VAPID_PUBLIC_KEY')
    user = request.user
-   return render(request, './test.html', {'user': user, 'vapid_key': vapid_key})
+   return render(request, './test.html', {user: user, 'vapid_key': vapid_key})
 
 @require_POST
 @csrf_exempt
@@ -54,5 +54,5 @@ def send_push(request):
         send_user_notification(user=user, payload=payload, ttl=1000)
 
         return JsonResponse(status=200, data={"message": "Web push successful"})
-    except Exception as e:
-        return JsonResponse(status=500, data={"message": f"An error occurred: {str(e)}"})
+    except TypeError:
+        return JsonResponse(status=500, data={"message": "An error occurred"})
