@@ -22,7 +22,6 @@ pushForm.addEventListener('submit', async function (e) {
             method: 'POST',
             body: JSON.stringify({head, body, id}),
             headers: {
-                'X-CSRFToken': csrf_token,
                 'content-type': 'application/json'
             }
         });
