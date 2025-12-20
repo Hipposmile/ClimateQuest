@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMultiAlternatives
 from django.core.validators import validate_email
+from webpush import send_user_notification
 
 from ClimateQuest import settingsprod
 from artikel.models import Artikel
@@ -14,7 +15,6 @@ from community.models import *
 from home.models import *
 from personals.models import *
 from verbrauch.models import *
-from core.views import send_push
 
 dezimalstellen = 2
 
@@ -309,9 +309,18 @@ def createBenachrichtigung(request, benachrichtigung, user=None):
         fail_silently=False,
         user=user
     )
-    res = send_push(benachrichtigung=benachrichtigung, user=user)
-    if res.status_code == 500:
+    res = send_push_2(benachrichtigung=benachrichtigung, user=user)
+    if res == 500:
         createInternerFehler(request, "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.", "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.")
+
+def send_push_2(benachrichtigung, user, head="Neue Benachrichtigung"):
+    try:
+        payload = {'head': head, 'body': benachrichtigung}
+        send_user_notification(user=user, payload=payload, ttl=1000)
+
+        return 200
+    except TypeError:
+        return 500
 
 
 

@@ -36,8 +36,6 @@ def home(request):
    user = request.user
    return render(request, './test.html', {user: user, 'vapid_key': vapid_key})
 
-@require_POST
-@csrf_exempt
 def send_push(benachrichtigung, user, head="Neue Benachrichtigung"):
     try:
         payload = {'head': head, 'body': benachrichtigung}
