@@ -127,18 +127,18 @@
                     return false;
                 }
             }
-                // ensure the server receives which button was used (when submitting via JS the
-                // clicked button's name/value is not included, so append it manually)
-                const form = event.target;
-                const btn = form.querySelector('button[name=change_password]');
-                if (btn) {
-                    const hidden = document.createElement('input');
-                    hidden.type = 'hidden';
-                    hidden.name = btn.name;
-                    hidden.value = btn.value || btn.textContent;
-                    form.appendChild(hidden);
-                }
-                form.submit()
+            // ensure the server receives which button was used (when submitting via JS the
+            // clicked button's name/value is not included, so append it manually)
+            const form = event.target;
+            const btn = form.querySelector('button[name=change_password]');
+            if (btn) {
+                const hidden = document.createElement('input');
+                hidden.type = 'hidden';
+                hidden.name = btn.name;
+                hidden.value = btn.value || btn.textContent;
+                form.appendChild(hidden);
+            }
+            form.submit()
         }
     </script>
     <script>
@@ -295,6 +295,22 @@
                 }
             }
         }
+    </script>
+
+    <hr>
+    <form>
+        <button onclick="Notification.requestPermission().then(permission => {if (permission === 'granted') {console.log('Notification permission granted');subscribe(reg);}});">
+            Einstellungen zum Senden von Benachrichtigungen an das Gerät ändern.
+        </button>
+        <p id="notification_settings"></p>
+    </form>
+    <script>
+    p = document.getElementById('notification_settings');
+    if (Notification.permission === 'denied') {
+        p.innerHTML = "Aktuell sind die Benachrichtigungen <b>deaktiviert.</b>"
+    } else{
+        p.innerHTML = "Aktuell sind die Benachrichtigungen <b>aktiviert.</b>"
+    }
     </script>
 
     <hr>

@@ -4,19 +4,9 @@ import traceback
 
 import bleach
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.hashers import check_password
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMultiAlternatives
-from django.core.mail import send_mail
 from django.core.validators import validate_email
-from django.db.models import Sum
-from django.http import JsonResponse
-from django.shortcuts import render, redirect
-from django.utils import timezone
 
 from ClimateQuest import settingsprod
 from artikel.models import Artikel
@@ -24,6 +14,7 @@ from community.models import *
 from home.models import *
 from personals.models import *
 from verbrauch.models import *
+from core.views import send_push
 
 dezimalstellen = 2
 
@@ -318,6 +309,10 @@ def createBenachrichtigung(request, benachrichtigung, user=None):
         fail_silently=False,
         user=user
     )
+    res = send_push(benachrichtigung=benachrichtigung, user=user)
+    if res.status_code == 500:
+        createInternerFehler(request, "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.", "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.")
+
 
 
 def ist_email_gueltig(email):
