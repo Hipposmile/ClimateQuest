@@ -1,4 +1,6 @@
 from utils.functions import createInternerFehler
+from django.shortcuts import render
+
 
 # Create your views here.
 def custom_400(request, exception):
@@ -18,29 +20,3 @@ def custom_500(request):
 def custom_503(request, exception=None):
     createInternerFehler(request, 'Dienst nicht verfügbar (503)')
     return render(request, '503.html', status=503)
-
-# Notifications
-from django.http.response import JsonResponse
-from django.views.decorators.http import require_GET, require_POST
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.models import User
-from django.views.decorators.csrf import csrf_exempt
-from webpush import send_user_notification
-import json
-from django.conf import settings
-
-@require_GET
-def home(request):
-   webpush_settings = getattr(settings, 'WEBPUSH_SETTINGS', {})
-   vapid_key = webpush_settings.get('VAPID_PUBLIC_KEY')
-   user = request.user
-   return render(request, './test.html', {user: user, 'vapid_key': vapid_key})
-
-def send_push(benachrichtigung, user, head="Neue Benachrichtigung"):
-    try:
-        payload = {'head': head, 'body': benachrichtigung}
-        send_user_notification(user=user, payload=payload, ttl=1000)
-
-        return JsonResponse(status=200, data={"message": "Web push successful"})
-    except TypeError:
-        return JsonResponse(status=500, data={"message": "An error occurred"})
