@@ -106,6 +106,7 @@
                   placeholder="Body: Your flight has been cancelled 😱😱😱"></textarea>
         <button>Send Me</button>
     </form>
+    <button onclick="if (Notification.permission === 'default') {Notification.requestPermission().then(permission => {if (permission === 'granted') {console.log('Notification permission granted');subscribe(reg);} else {showNotAllowed('You prevented us from showing notifications ☹️🤔');}});}">request permission</button>
 </div>
 </body>
 </html>
