@@ -30,7 +30,6 @@ from django.views.decorators.csrf import csrf_exempt
 from webpush import send_user_notification
 import json
 from django.conf import settings
-from django.contrib import messages
 
 @require_GET
 def home(request):
@@ -53,8 +52,6 @@ def send_push(request):
         user = get_object_or_404(User, pk=user_id)
         payload = {'head': data['head'], 'body': data['body']}
         send_user_notification(user=user, payload=payload, ttl=1000)
-
-        messages.success(request, 'Push sent successfully')
 
         return JsonResponse(status=200, data={"message": "Web push successful"})
     except TypeError:

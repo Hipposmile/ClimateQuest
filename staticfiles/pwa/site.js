@@ -25,6 +25,7 @@ pushForm.addEventListener('submit', async function (e) {
             }
         });
         if (res.status === 200) {
+            console.log(res.data)
             button.innerText = 'Send another 😃!';
             button.disabled = false;
             input.value = '';
