@@ -24,14 +24,15 @@ pushForm.addEventListener('submit', async function (e) {
                 'content-type': 'application/json'
             }
         });
+        const data = await res.json();
         if (res.status === 200) {
-            console.log(res.data)
+            console.log(data)
             button.innerText = 'Send another 😃!';
             button.disabled = false;
             input.value = '';
             textarea.value = '';
         } else {
-            errorMsg.innerText = res.message;
+            errorMsg.innerText = data.message || 'An error occurred';
             button.innerText = 'Something broke 😢..  Try again?';
             button.disabled = false;
         }

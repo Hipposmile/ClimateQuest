@@ -23,7 +23,7 @@ const initialiseState = (reg) => {
         showNotAllowed('You prevented us from showing notifications ☹️🤔');
         return
     }
-    if (!'PushManager' in window) {
+    if (!('PushManager' in window)) {
         showNotAllowed("Push isn't allowed in your browser 🤔");
         return
     }
