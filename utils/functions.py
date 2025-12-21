@@ -244,7 +244,7 @@ def get_level(user):
             else:
                 level_number = i + 1
                 return {
-                    'info': f'Du hast das höchste Level bereits erreicht: {current_level.description} <span class="emoji">&#x129395;</span>',
+                    'info': f'Du hast das höchste Level bereits erreicht: {current_level.description} <span class="emoji">&#x1F973;</span>',
                     'current_level': current_level, 'levels': levels, 'klimapunkte': klimapunkte,
                     'level_number': level_number}
 

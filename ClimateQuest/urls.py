@@ -89,6 +89,9 @@ urlpatterns = [
     # Notifications
     path('sw.js', TemplateView.as_view(template_name='sw.js', content_type='application/x-javascript')),
     path('webpush/', include('webpush.urls')),
+
+    # Hot Reload
+    path("__reload__/", include("django_browser_reload.urls")),
 ]
 
 handler400 = 'core.views.custom_400'

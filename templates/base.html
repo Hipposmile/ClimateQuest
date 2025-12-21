@@ -7,7 +7,11 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ClimateQuest">
+    <meta name="theme-color" content="#0433ff">
 
     <meta property="og:title" content="ClimateQuest">
     <meta property="og:description"
@@ -37,22 +41,31 @@
     <style>
         #up-btn {
             position: fixed;
-            top: 2rem;
-            right: 2rem;
+            top: max(2rem, calc(2rem + var(--safe-area-inset-top)));
+            right: max(2rem, calc(2rem + var(--safe-area-inset-right)));
             background-color: var(--color-primary);
             border: none;
-            border-radius: 10%;
+            border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 48px;
-            height: 48px;
-            font-size: 1rem;
+            width: 56px;
+            height: 56px;
+            font-size: 1.2rem;
             cursor: pointer;
-            box-shadow: 0 2px 8px var(--color-shadow-light);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             display: none;
             z-index: 1000;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            -webkit-appearance: none;
+            appearance: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        #up-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
 
         #up-btn:hover {
@@ -75,6 +88,188 @@
             padding: 2px 6px;
             border-radius: 50%;
             font-weight: bold;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        /* iOS Bottom Tab Bar Improvements */
+        .tabbar {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: space-around;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+            color: white;
+            z-index: 999;
+            padding-bottom: max(0px, var(--safe-area-inset-bottom));
+        }
+
+        .tab-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 11px;
+            color: #999;
+            transition: color 0.2s ease;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        .tab-item:active {
+            opacity: 0.6;
+        }
+
+        .tab-item.active {
+            color: #007aff;
+        }
+
+        .tab-icon {
+            font-size: 24px;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .tab-label {
+            max-width: 80%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+        }
+
+        /* Mobile Menu Modal */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            display: none;
+            z-index: 9998;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            display: flex;
+            align-items: flex-end;
+            opacity: 1;
+        }
+
+        .mobile-menu-modal {
+            background-color: var(--color-white);
+            border-radius: 20px 20px 0 0;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 2rem 1rem;
+            padding-bottom: max(2rem, calc(2rem + var(--safe-area-inset-bottom)));
+            animation: slideUp 0.3s ease;
+            position: relative;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            min-width: 44px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-menu-modal h2 {
+            margin: 0 0 1.5rem 0;
+            font-size: 1.4rem;
+            color: var(--color-text);
+            padding-right: 2rem;
+        }
+
+        .mobile-menu-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .mobile-menu-nav a {
+            display: block;
+            padding: 1rem;
+            color: var(--color-primary);
+            text-decoration: none;
+            font-size: 1rem;
+            border-bottom: 1px solid var(--color-shadow-light);
+            transition: background-color 0.2s ease, color 0.2s ease;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+
+        .mobile-menu-nav a:active {
+            background-color: var(--color-primary-light);
+            color: var(--color-primary);
+        }
+
+        .mobile-menu-nav a:last-of-type {
+            border-bottom: none;
+        }
+
+        .mobile-menu-nav hr {
+            border: none;
+            border-top: 1px solid var(--color-shadow-light);
+            margin: 0.5rem 0;
+        }
+        /* Strukturierte Abschnitte für Mehr-Menü */
+        .mobile-menu-section {
+            padding: 0.25rem 0 0.5rem 0;
+        }
+
+        .mobile-menu-section-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-text);
+            padding: 0.5rem 1rem;
+        }
+
+        .mobile-menu-sub {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--color-primary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            border-bottom: 1px solid var(--color-shadow-light);
+            transition: background-color 0.18s ease, color 0.18s ease;
+            min-height: 44px;
+        }
+
+        .mobile-menu-sub:active {
+            background-color: var(--color-primary-light);
+            color: var(--color-primary);
         }
     </style>
 </head>
@@ -88,21 +283,35 @@
 <style>
     #pwaNav {
         position: fixed;
-        top: 10px;
-        left: 10px;
+        top: max(10px, calc(10px + var(--safe-area-inset-top)));
+        left: max(10px, calc(10px + var(--safe-area-inset-left)));
         display: flex;
         gap: 8px;
         z-index: 9998;
     }
 
     #pwaNav button {
-        padding: 3px 7px;
-        font-size: 16px;
+        padding: 8px 12px;
+        font-size: 18px;
         border: none;
-        border-radius: 4px;
-        background: var(--color-primary);
-        color: #fff;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--color-primary);
         cursor: pointer;
+        min-width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-appearance: none;
+        appearance: none;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.2s ease;
+    }
+
+    #pwaNav button:active {
+        transform: scale(0.95);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     }
 
     #pwaNav button:disabled {
@@ -124,8 +333,7 @@
 
             // Back-Button
             const backBtn = document.createElement('button');
-            backBtn.textContent = '⬅️';
-            backBtn.className = 'emoji';
+            backBtn.innerHTML = '<span class="emoji">&#x2B05;&#xFE0F;</span>';
             backBtn.onclick = () => {
                 if (window.history.length > 1) {
                     window.history.back();
@@ -134,8 +342,7 @@
 
             // Reload-Btn
             const reloadBtn = document.createElement('button');
-            reloadBtn.textContent = '🔄';
-            reloadBtn.className = 'emoji';
+            reloadBtn.innerHTML = '<span class="emoji">&#x1F504;</span>';
             reloadBtn.onclick = () => {
                 if (window.history.length > 1) {
                     window.location.reload();
@@ -144,8 +351,7 @@
 
             // Forward-Button
             const forwardBtn = document.createElement('button');
-            forwardBtn.textContent = '➡️';
-            forwardBtn.className = 'emoji';
+            forwardBtn.innerHTML = '<span class="emoji">&#x27A1;&#xFE0F;</span>';
             forwardBtn.onclick = () => {
                 window.history.forward();
             };
@@ -261,113 +467,181 @@
 
     const renderMobileNav = () => {
         header.innerHTML = `
-        <div id="openSidebarDiv"><button id="openSidebar">☰</button></div>
-            <div id="sidebar">
-                <button id="closeSidebar">×</button>
-                <nav>
-                    <a href="/" class="logo-link">
-                        <img src="{% static 'icons/ClimateQuest.png' %}" alt="climateQuest Logo" class="logo-img">
-                    </a>
-                    <hr>
-                    <a href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a>
-                    <hr>
-                    {% if user.is_authenticated %}
-                    <details>
-                        <summary>Konto</summary>
-                        <ul>
-                            <li><p>{{ user.username }}</p></li>
-                            <li><a href="{% url 'level_view' request.user.id %}">Level</a></li>
-                            <li><a href="{% url 'klimapunkte_view' request.user.id %}">Klimapunkte</a></li>
-                            <li><a href="{% url 'settings_view' %}">Profil bearbeiten</a></li>
-                            <li><a href="{% url 'presents_overview' %}">Geschenke</a></li>
-                            <li><a href="{% url 'users_overview' %}">User</a></li>
-                            <li><a href="{% url 'logout_view' %}">Logout</a></li>
-                            {% if user.is_staff %}
-                            <li><a href="/ClimateQuestAdmin/" target="_blank">Admin-Bereich (I)</a></li>
-                            <li><a href="{% url 'admin_view' %}">Admin-Bereich (II)</a></li>
-                            {% endif %}
-                        </ul>
-                    </details>
-                    <hr>
-                    <details>
-                        <summary>Verbrauch</summary>
-                        <ul>
-                            <li><a href="{% url 'add' %}">Aktion hinzufügen</a></li>
-                            <li><a href="{% url 'history' %}">Verbrauchshistorie</a></li>
-                        </ul>
-                    </details>
-                    <hr>
-                    <details>
-                        <summary>Family</summary>
-                        <ul>
-                            <li><a href="{% url 'create_family' %}">Family erstellen</a></li>
-                            <li><a href="{% url 'join_family' %}">Family beitreten</a></li>
-                            <li><a href="{% url 'families_view' %}">Meine Families</a></li>
-                        </ul>
-                    </details>
-                    <hr>
-                    <details>
-                        <summary>Community</summary>
-                        <ul>
-                            <li><a href="{% url 'create_community' %}">Community erstellen</a></li>
-                            <li><a href="{% url 'join_community' %}">Community beitreten</a></li>
-                            <li><a href="{% url 'communities_view' %}">Meine Communities</a></li>
-                        </ul>
-                    </details>
-                    <hr>
-                    <a href="{% url 'benachrichtigungen_view' %}">
-                        <div class="benachrichtigung-wrapper">
-                            <span class="icon">Benachrichtigungen</span>
-                            <span id="benachrichtigungen-count" class="count">?</span>
-                        </div>
-                    </a>
-                    <hr>
-                    {% else %}
-                    <details>
-                        <summary>Login</summary>
-                        <ul>
-                            <li><a href="{% url 'login_view' %}">Login</a></li>
-                            <li><a href="{% url 'login_view' %}">Registrieren</a></li>
-                        </ul>
-                    </details>
-                    <hr>
-                    {% endif %}
-                    <details>
-                        <summary>Events</summary>
-                        <ul>
-                            <li>{% if user.is_authenticated %}<a href="{% url 'add_event' %}
-            ">Event hinzufügen</a>{% endif %}</li>
-                            <li><a href="{% url 'events_overview' %}">Überblick</a></li>
-                        </ul>
-                    </details>
-                    <hr>
-                    <details>
-                        <summary>Artikel</summary>
-                        <ul>
-                            <li>{% if user.is_authenticated %}<a href="{% url 'add_artikel' %}
-            ">Artikel hinzufügen</a>{% endif %}</li>
-                            <li><a href="{% url 'artikel_overview' %}">Überblick</a></li>
-                        </ul>
-                    </details>
-                    <hr>
-                    <details>
-                        <summary>Forum</summary>
-                        <ul>
-                            <li>{% if user.is_authenticated %}<a href="{% url 'add_forum_post' %}
-            ">Post hinzufügen</a>{% endif %}</li>
-                            <li><a href="{% url 'forum_overview' %}">Überblick</a></li>
-                        </ul>
-                    </details>
-                    <hr>
+        <nav class="tabbar">
+            {% if user.is_authenticated %}
+            <a href="/" class="tab-item">
+                <span class="tab-icon"><span class="emoji">&#x1F3E0;</span></span>
+                <span class="tab-label">Home</span>
+            </a>
+            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="verbrauch">
+                <span class="tab-icon"><span class="emoji">&#x1F4CA;</span></span>
+                <span class="tab-label">Verbrauch</span>
+            </a>
+            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="family">
+                <span class="tab-icon"><span class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span></span>
+                <span class="tab-label">Family</span>
+            </a>
+            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="community">
+                <span class="tab-icon"><span class="emoji">&#x1F465;</span></span>
+                <span class="tab-label">Community</span>
+            </a>
+            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="more">
+                <span class="tab-icon"><span class="emoji">&#x22EF;</span></span>
+                <span class="tab-label">Mehr</span>
+            </a>
+            {% else %}
+            <a href="/" class="tab-item">
+                <span class="tab-icon"><span class="emoji">&#x1F3E0;</span></span>
+                <span class="tab-label">Home</span>
+            </a>
+            <a href="{% url 'artikel_overview' %}" class="tab-item">
+                <span class="tab-icon"><span class="emoji">&#x1F4F0;</span></span>
+                <span class="tab-label">Artikel</span>
+            </a>
+            <a href="{% url 'events_overview' %}" class="tab-item">
+                <span class="tab-icon"><span class="emoji">&#x1F5C5;</span></span>
+                <span class="tab-label">Events</span>
+            </a>
+            <a href="{% url 'forum_overview' %}" class="tab-item">
+                <span class="tab-icon"><span class="emoji">&#x1F4AC;</span></span>
+                <span class="tab-label">Forum</span>
+            </a>
+            <a href="{% url 'login_view' %}" class="tab-item">
+                <span class="tab-icon"><span class="emoji">&#x1F510;</span></span>
+                <span class="tab-label">Login</span>
+            </a>
+            {% endif %}
+        </nav>
+
+        {% if user.is_authenticated %}
+        <!-- Modals für Mobile Menus -->
+        <!-- Verbrauch Menu -->
+        <div class="mobile-menu-overlay" data-menu="verbrauch">
+            <div class="mobile-menu-modal">
+                <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
+                <h2><span class="emoji">&#x1F4CA;</span> Verbrauch</h2>
+                <nav class="mobile-menu-nav">
+                    <a href="{% url 'add' %}"><span class="emoji">&#x2795;</span> Aktion hinzufügen</a>
+                    <a href="{% url 'history' %}"><span class="emoji">&#x1F4DC;</span> Verbrauchshistorie</a>
                 </nav>
-            </div>`;
+            </div>
+        </div>
 
-        const sidebar = document.getElementById('sidebar');
-        const openBtn = document.getElementById('openSidebar');
-        const closeBtn = document.getElementById('closeSidebar');
+        <!-- Family Menu -->
+        <div class="mobile-menu-overlay" data-menu="family">
+            <div class="mobile-menu-modal">
+                <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
+                <h2><span class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span> Family</h2>
+                <nav class="mobile-menu-nav">
+                    <a href="{% url 'create_family' %}"><span class="emoji">&#x2795;</span> Family erstellen</a>
+                    <a href="{% url 'join_family' %}"><span class="emoji">&#x1F91D;</span> Family beitreten</a>
+                    <a href="{% url 'families_view' %}"><span class="emoji">&#x1F440;</span> Meine Families</a>
+                </nav>
+            </div>
+        </div>
 
-        openBtn.addEventListener('click', () => sidebar.classList.add('active'));
-        closeBtn.addEventListener('click', () => sidebar.classList.remove('active'));
+        <!-- Community Menu -->
+        <div class="mobile-menu-overlay" data-menu="community">
+            <div class="mobile-menu-modal">
+                <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
+                <h2><span class="emoji">&#x1F465;</span> Community</h2>
+                <nav class="mobile-menu-nav">
+                    <a href="{% url 'create_community' %}"><span class="emoji">&#x2795;</span> Community erstellen</a>
+                    <a href="{% url 'join_community' %}"><span class="emoji">&#x1F91D;</span> Community beitreten</a>
+                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F440;</span> Meine Communities</a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Mehr Menu -->
+        <div class="mobile-menu-overlay" data-menu="more">
+            <div class="mobile-menu-modal">
+                <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
+                <h2><span class="emoji">&#x22EF;</span> Menü</h2>
+                <nav class="mobile-menu-nav">
+                    <div class="mobile-menu-section">
+                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F4F0;</span> Artikel</div>
+                        <a class="mobile-menu-sub" href="{% url 'artikel_overview' %}">Überblick</a>
+                        {% if user.is_authenticated %}
+                        <a class="mobile-menu-sub" href="{% url 'add_artikel' %}">Artikel hinzufügen</a>
+                        {% endif %}
+                    </div>
+
+                    <div class="mobile-menu-section">
+                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F5C5;</span> Events</div>
+                        <a class="mobile-menu-sub" href="{% url 'events_overview' %}">Überblick</a>
+                        {% if user.is_authenticated %}
+                        <a class="mobile-menu-sub" href="{% url 'add_event' %}">Event erstellen</a>
+                        {% endif %}
+                    </div>
+
+                    <div class="mobile-menu-section">
+                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F4AC;</span> Forum</div>
+                        <a class="mobile-menu-sub" href="{% url 'forum_overview' %}">Überblick</a>
+                        {% if user.is_authenticated %}
+                        <a class="mobile-menu-sub" href="{% url 'add_forum_post' %}">Beitrag hinzufügen</a>
+                        {% endif %}
+                    </div>
+
+                    <div class="mobile-menu-section">
+                        <div class="mobile-menu-section-title"><span class="emoji">&#x2699;&#xFE0F;</span> Account</div>
+                        <a class="mobile-menu-sub" href="{% url 'settings_view' %}">Einstellungen</a>
+                        <a class="mobile-menu-sub" href="{% url 'benachrichtigungen_view' %}">Benachrichtigungen</a>
+                        <a class="mobile-menu-sub" href="{% url 'level_view' request.user.id %}">Mein Level</a>
+                        <a class="mobile-menu-sub" href="{% url 'klimapunkte_view' request.user.id %}">Klimapunkte</a>
+                    </div>
+
+                    <div class="mobile-menu-section">
+                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F381;</span> Extras</div>
+                        <a class="mobile-menu-sub" href="{% url 'presents_overview' %}">Geschenke</a>
+                        <a class="mobile-menu-sub" href="{% url 'users_overview' %}">Benutzer</a>
+                        <a class="mobile-menu-sub" href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}">Teilen</a>
+                        <a class="mobile-menu-sub" href="{% url 'logout_view' %}">Logout</a>
+                        {% if user.is_superuser %}
+                        <hr>
+                        <a class="mobile-menu-sub" href="/ClimateQuestAdmin/" target="_blank">Admin</a>
+                        <a class="mobile-menu-sub" href="{% url 'admin_view' %}">Admin (II)</a>
+                        {% endif %}
+                    </div>
+                </nav>
+            </div>
+        </div>
+        {% endif %}
+        `;
+
+        // Setup Mobile Menu Triggers
+        const menuTriggers = document.querySelectorAll('.mobile-menu-trigger');
+        const menuOverlays = document.querySelectorAll('.mobile-menu-overlay');
+        const closeButtons = document.querySelectorAll('.mobile-menu-close');
+
+        menuTriggers.forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                const menuType = trigger.dataset.menu;
+                const overlay = document.querySelector(`.mobile-menu-overlay[data-menu="${menuType}"]`);
+                if (overlay) {
+                    overlay.classList.add('active');
+                }
+            });
+        });
+
+        closeButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const overlay = btn.closest('.mobile-menu-overlay');
+                if (overlay) {
+                    overlay.classList.remove('active');
+                }
+            });
+        });
+
+        menuOverlays.forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.classList.remove('active');
+                }
+            });
+        });
     };
 
     const renderDesktopNavComplete = () => {

@@ -141,7 +141,7 @@ styleCookie.textContent = `
     }
 
     #cookie-reset {
-        position: fixed; bottom: 20px; left: 20px;
+        position: fixed; bottom: 60px; left: 20px;
         padding: 10px 16px;
         background-color: var(--color-accent);
         color: var(--color-white);
