@@ -79,21 +79,24 @@
             background-color: #000;
         }
 
-        #slider img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
+        #slider picture {
             display: none;
         }
 
-        #slider img.active {
+        #slider picture.active {
+            display: block;
+        }
+
+        #slider img {
+            width: 100%;
+            height: auto;
             display: block;
         }
 
         .nav-button {
             position: absolute;
             top: 50%;
-            transform: translateY(-50%);
+            /*transform: translateY(-50%);*/
             font-size: 3rem;
             background: rgba(0, 0, 0, 0.4);
             color: white;
@@ -184,7 +187,7 @@
     <div id="slider">
         <button id="prev" class="nav-button emoji">&lt;</button>
         <button id="next" class="nav-button emoji">&gt;</button>
-        <picture>
+        <picture class="active">
             <source type="image/avif" srcset="
                     {% static 'images/nature/flowers/flowers-320.avif' %} 320w,
                     {% static 'images/nature/flowers/flowers-640.avif' %} 640w,
@@ -194,7 +197,7 @@
             >
 
             <source type="image/webp" srcset="
-                    {% static 'images/nature/flowers/flowers-320.avif' %} 320w,
+                    {% static 'images/nature/flowers/flowers-320.webp' %} 320w,
                     {% static 'images/nature/flowers/flowers-640.webp' %} 640w,
                     {% static 'images/nature/flowers/flowers-1280.webp' %} 1280w,
                     {% static 'images/nature/flowers/flowers-1920.webp' %} 1920w
@@ -213,14 +216,14 @@
             >
 
             <source type="image/webp" srcset="
-                    {% static 'images/nature/lake/lake-320.avif' %} 320w,
+                    {% static 'images/nature/lake/lake-320.webp' %} 320w,
                     {% static 'images/nature/lake/lake-640.webp' %} 640w,
                     {% static 'images/nature/lake/lake-1280.webp' %} 1280w,
                     {% static 'images/nature/lake/lake-1920.webp' %} 1920w
                     " sizes="100vw"
             >
 
-            <img src="{% static 'images/nature/lake/lake-fallback.jpg' %}" alt="Blumen">
+            <img src="{% static 'images/nature/lake/lake-fallback.jpg' %}" alt="See">
         </picture>
         <picture>
             <source type="image/avif" srcset="
@@ -232,18 +235,18 @@
             >
 
             <source type="image/webp" srcset="
-                    {% static 'images/nature/forest/forest-320.avif' %} 320w,
+                    {% static 'images/nature/forest/forest-320.webp' %} 320w,
                     {% static 'images/nature/forest/forest-640.webp' %} 640w,
                     {% static 'images/nature/forest/forest-1280.webp' %} 1280w,
                     {% static 'images/nature/forest/forest-1920.webp' %} 1920w
                     " sizes="100vw"
             >
 
-            <img src="{% static 'images/nature/forest/forest-fallback.jpg' %}" alt="Blumen">
+            <img src="{% static 'images/nature/forest/forest-fallback.jpg' %}" alt="Wald">
         </picture>
     </div>
     <script>
-        const images = document.querySelectorAll('#slider img');
+        const images = document.querySelectorAll('#slider picture');
         let current = 0;
 
         function showImage(index) {
