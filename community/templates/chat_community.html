@@ -5,189 +5,209 @@
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 
-{% block title %}ClimateQuest - {% if community %}Chat: Community {{ community.name }}{% else %}Die Community konnte nicht geladen werden.{% endif %} {% endblock %}
+{% block title %}ClimateQuest - {% if community %}Chat: Community {{ community.name }}{% else %}Die Community konnte
+    nicht geladen werden.{% endif %} {% endblock %}
 
 {% block content %}
-<style>
-    .chat-community-container {
-        max-width: 500px;
-        margin: 2rem auto;
-        background: var(--color-white);
-        border-radius: 12px;
-        box-shadow: var(--shadow-md);
-        padding: 1.5rem 1rem 1rem 1rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1.2rem;
-        position: relative;
-    }
-
-    .chat-community-messages {
-        display: flex;
-        flex-direction: column;
-        gap: 0.7rem;
-        min-height: 200px;
-        max-height: 350px;
-        overflow-y: auto;
-        margin-bottom: 1rem;
-    }
-
-    .chat-community-message {
-        display: flex;
-        align-items: flex-end;
-    }
-
-    .chat-community-message.me {
-        justify-content: flex-end;
-    }
-
-    .chat-community-message.other {
-        justify-content: flex-start;
-    }
-
-    .chat-community-bubble {
-        max-width: 70%;
-        padding: 0.75rem 1.1rem;
-        border-radius: 18px;
-        font-size: 1rem;
-        line-height: 1.4;
-        background: var(--color-bg);
-        color: var(--color-header-bg);
-        box-shadow: var(--shadow-md);
-        word-break: break-word;
-        position: relative;
-    }
-
-    .chat-community-message.me .chat-community-bubble {
-        background: var(--color-primary);
-        color: var(--color-white);
-        border-bottom-right-radius: 4px;
-        border-bottom-left-radius: 18px;
-        border-top-left-radius: 18px;
-        border-top-right-radius: 18px;
-    }
-
-    .chat-community-message.other .chat-community-bubble {
-        background: var(--color-primary-light);
-        color: var(--color-primary);
-        border-bottom-left-radius: 4px;
-        border-bottom-right-radius: 18px;
-        border-top-right-radius: 18px;
-        border-top-left-radius: 18px;
-    }
-
-    .chat-community-message.system .chat-community-bubble {
-        background: #f4f6f8; /*Nicht-Variable genehmigt*/
-        color: var(--color-text);
-        border-bottom-left-radius: 4px;
-        border-bottom-right-radius: 18px;
-        border-top-right-radius: 18px;
-        border-top-left-radius: 18px;
-    }
-
-    .chat-community-meta {
-        display: block;
-        font-size: 0.85em;
-        color: var(--color-muted);
-        margin-top: 0.3em;
-        text-align: right;
-    }
-
-    .chat-community-empty {
-        text-align: center;
-        color: var(--color-muted);
-        font-style: italic;
-        margin: 2rem 0;
-    }
-
-    .chat-community-form {
-        display: flex;
-        gap: 0.5rem;
-        align-items: center;
-        background: var(--color-bg);
-        border-radius: 8px;
-        padding: 0.7rem 1rem;
-        box-shadow: var(--shadow-md);
-    }
-
-    .chat-community-form input[type="text"] {
-        flex: 1;
-        border: 1px solid var(--color-border);
-        border-radius: 4px;
-        padding: 0.7rem;
-        font-size: 1rem;
-        margin-bottom: 0;
-    }
-
-    .chat-community-form button {
-        width: auto;
-        padding: 0.7rem 1.1rem;
-        background-color: var(--color-primary);
-        border: none;
-        color: var(--color-white);
-        font-size: 1.1rem;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background 0.2s;
-    }
-
-    .chat-community-form button:hover {
-        background-color: var(--color-primary-hover);
-    }
-</style>
-
-<h1>Chat: Community <a href="{% url 'community_detail' community.id family.id %}">{{ community.name }}</a></h1>
-<h3>Eingeloggt mit Family <a href="{% url 'family_detail' family.id%}">{{ family.name }}</a></h3>
-
-{% if messages %}
-{% for message in messages %}
-<p class="{{message.level_tag}}-message">{{ message }}</p>
-{% endfor %}
-{% endif %}
-
-<div class="chat-community-container">
-    <button type="button" class="chat-refresh-btn" onclick="location.reload()" title="Chat aktualisieren">
-        <img src="{% static 'images/refresh.png' %}" alt="Aktualisieren">
-    </button>
-    <div class="chat-community-messages">
-        <div class="chat-community-message system">
-            <div class="chat-community-bubble">
-                Ich werde morgen um 15:00 am See Müll sammeln gehen. Wer will mitmachen?
-                <span class="chat-community-meta">Beispiel</span>
-            </div>
-        </div>
-        <div class="chat-community-message system">
-            <div class="chat-community-bubble">
-                Wir machen eine Challenge: Wer schafft es von heute bis nächste Woche Sonntag am meisten Klimapunkte
-                zu sammeln?
-                <span class="chat-community-meta">Beispiel</span>
-            </div>
-        </div>
-        {% for msg in msgs %}
-        <div class="chat-community-message {% if msg.user == user %}me{% else %}other{% endif %}">
-            <div class="chat-community-bubble">
-                {{ msg.message }}
-                <span class="chat-community-meta"><a href="{% url 'user_detail' msg.user.id %}" class="chat-community-meta">{{ msg.user.username }}</a> aus Family {{ msg.family.name }}</span>
-                <span class="chat-community-meta">{{ msg.erstellt_am|date:"d.m.Y H:i" }}</span>
-            </div>
-        </div>
-        {% empty %}
-        <div class="chat-community-empty">Noch keine Nachrichten.</div>
-        {% endfor %}
-        <form method="post" class="chat-community-form" onsubmit="return true;">
-            {% csrf_token %}
-            <label for="message">Nachricht</label>
-            <input type="text" id="message" name="message" placeholder="Nachricht eingeben..." required>
-            <button type="submit" name="send">Senden</button>
-        </form>
-    </div>
-</div>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var chatContainer = document.querySelector('.chat-community-messages');
-        if (chatContainer) {
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+    <style>
+        .chat-community-container {
+            max-width: 500px;
+            margin: 2rem auto;
+            background: var(--color-white);
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem 1rem 1rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            position: relative;
         }
-    });
-</script>
+
+        .chat-community-messages {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            min-height: 200px;
+            max-height: 350px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+
+        .chat-community-message {
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .chat-community-message.me {
+            justify-content: flex-end;
+        }
+
+        .chat-community-message.other {
+            justify-content: flex-start;
+        }
+
+        .chat-community-bubble {
+            max-width: 70%;
+            padding: 0.75rem 1.1rem;
+            border-radius: 18px;
+            font-size: 1rem;
+            line-height: 1.4;
+            background: var(--color-bg);
+            color: var(--color-header-bg);
+            box-shadow: var(--shadow-md);
+            word-break: break-word;
+            position: relative;
+        }
+
+        .chat-community-message.me .chat-community-bubble {
+            background: var(--color-primary);
+            color: var(--color-white);
+            border-bottom-right-radius: 4px;
+            border-bottom-left-radius: 18px;
+            border-top-left-radius: 18px;
+            border-top-right-radius: 18px;
+        }
+
+        .chat-community-message.other .chat-community-bubble {
+            background: var(--color-primary-light);
+            color: var(--color-primary);
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 18px;
+            border-top-right-radius: 18px;
+            border-top-left-radius: 18px;
+        }
+
+        .chat-community-message.system .chat-community-bubble {
+            background: #f4f6f8; /*Nicht-Variable genehmigt*/
+            color: var(--color-text);
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 18px;
+            border-top-right-radius: 18px;
+            border-top-left-radius: 18px;
+        }
+
+        .chat-community-meta {
+            display: block;
+            font-size: 0.85em;
+            color: var(--color-muted);
+            margin-top: 0.3em;
+            text-align: right;
+        }
+
+        .chat-community-empty {
+            text-align: center;
+            color: var(--color-muted);
+            font-style: italic;
+            margin: 2rem 0;
+        }
+
+        .chat-community-form {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            background: var(--color-bg);
+            border-radius: 8px;
+            padding: 0.7rem 1rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .chat-community-form input[type="text"] {
+            flex: 1;
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            padding: 0.7rem;
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+
+        .chat-community-form button {
+            width: auto;
+            padding: 0.7rem 1.1rem;
+            background-color: var(--color-primary);
+            border: none;
+            color: var(--color-white);
+            font-size: 1.1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .chat-community-form button:hover {
+            background-color: var(--color-primary-hover);
+        }
+    </style>
+
+    <h1>Chat: Community <a href="{% url 'community_detail' community.id family.id %}">{{ community.name }}</a></h1>
+    <h3>Eingeloggt mit Family <a href="{% url 'family_detail' family.id %}">{{ family.name }}</a></h3>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <div class="chat-community-container">
+        <button type="button" class="chat-refresh-btn" onclick="location.reload()" title="Chat aktualisieren">
+            <picture>
+                <source type="image/avif" srcset="
+                    {% static 'images/refresh/refresh-320.avif' %} 320w,
+                    {% static 'images/refresh/refresh-640.avif' %} 640w,
+                    {% static 'images/refresh/refresh-1280.avif' %} 1280w,
+                    {% static 'images/refresh/refresh-1920.avif' %} 1920w
+                    " sizes="100vw"
+                >
+
+                <source type="image/webp" srcset="
+                    {% static 'images/refresh/refresh-320.avif' %} 320w,
+                    {% static 'images/refresh/refresh-640.webp' %} 640w,
+                    {% static 'images/refresh/refresh-1280.webp' %} 1280w,
+                    {% static 'images/refresh/refresh-1920.webp' %} 1920w
+                    " sizes="100vw"
+                >
+
+                <img src="{% static 'images/refresh/refresh-fallback.png' %}" alt="Refresh">
+            </picture>
+        </button>
+        <div class="chat-community-messages">
+            <div class="chat-community-message system">
+                <div class="chat-community-bubble">
+                    Ich werde morgen um 15:00 am See Müll sammeln gehen. Wer will mitmachen?
+                    <span class="chat-community-meta">Beispiel</span>
+                </div>
+            </div>
+            <div class="chat-community-message system">
+                <div class="chat-community-bubble">
+                    Wir machen eine Challenge: Wer schafft es von heute bis nächste Woche Sonntag am meisten Klimapunkte
+                    zu sammeln?
+                    <span class="chat-community-meta">Beispiel</span>
+                </div>
+            </div>
+            {% for msg in msgs %}
+                <div class="chat-community-message {% if msg.user == user %}me{% else %}other{% endif %}">
+                    <div class="chat-community-bubble">
+                        {{ msg.message }}
+                        <span class="chat-community-meta"><a href="{% url 'user_detail' msg.user.id %}"
+                                                             class="chat-community-meta">{{ msg.user.username }}</a> aus Family {{ msg.family.name }}</span>
+                        <span class="chat-community-meta">{{ msg.erstellt_am|date:"d.m.Y H:i" }}</span>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="chat-community-empty">Noch keine Nachrichten.</div>
+            {% endfor %}
+            <form method="post" class="chat-community-form" onsubmit="return true;">
+                {% csrf_token %}
+                <label for="message">Nachricht</label>
+                <input type="text" id="message" name="message" placeholder="Nachricht eingeben..." required>
+                <button type="submit" name="send">Senden</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var chatContainer = document.querySelector('.chat-community-messages');
+            if (chatContainer) {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+        });
+    </script>
 {% endblock %}

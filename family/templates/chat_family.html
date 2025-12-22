@@ -148,7 +148,25 @@
 
 <div class="chat-family-container">
     <button type="button" class="chat-refresh-btn" onclick="location.reload()" title="Chat aktualisieren">
-        <img src="{% static 'images/refresh.png' %}" alt="Aktualisieren">
+        <picture>
+                <source type="image/avif" srcset="
+                    {% static 'images/refresh/refresh-320.avif' %} 320w,
+                    {% static 'images/refresh/refresh-640.avif' %} 640w,
+                    {% static 'images/refresh/refresh-1280.avif' %} 1280w,
+                    {% static 'images/refresh/refresh-1920.avif' %} 1920w
+                    " sizes="100vw"
+                >
+
+                <source type="image/webp" srcset="
+                    {% static 'images/refresh/refresh-320.avif' %} 320w,
+                    {% static 'images/refresh/refresh-640.webp' %} 640w,
+                    {% static 'images/refresh/refresh-1280.webp' %} 1280w,
+                    {% static 'images/refresh/refresh-1920.webp' %} 1920w
+                    " sizes="100vw"
+                >
+
+                <img src="{% static 'images/refresh/refresh-fallback.png' %}" alt="Refresh">
+            </picture>
     </button>
     <div class="chat-family-messages">
         <div class="chat-family-message system">
