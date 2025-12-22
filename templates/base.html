@@ -244,6 +244,7 @@
             border-top: 1px solid var(--color-shadow-light);
             margin: 0.5rem 0;
         }
+
         /* Strukturierte Abschnitte für Mehr-Menü */
         .mobile-menu-section {
             padding: 0.25rem 0 0.5rem 0;
@@ -499,7 +500,7 @@
                 <span class="tab-label">Artikel</span>
             </a>
             <a href="{% url 'events_overview' %}" class="tab-item">
-                <span class="tab-icon"><span class="emoji">&#x1F5C5;</span></span>
+                <span class="tab-icon"><span class="emoji">&#x1F389;</span></span>
                 <span class="tab-label">Events</span>
             </a>
             <a href="{% url 'forum_overview' %}" class="tab-item">
@@ -568,7 +569,7 @@
                     </div>
 
                     <div class="mobile-menu-section">
-                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F5C5;</span> Events</div>
+                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F389;</span> Events</div>
                         <a class="mobile-menu-sub" href="{% url 'events_overview' %}">Überblick</a>
                         {% if user.is_authenticated %}
                         <a class="mobile-menu-sub" href="{% url 'add_event' %}">Event erstellen</a>
@@ -595,7 +596,8 @@
                         <div class="mobile-menu-section-title"><span class="emoji">&#x1F381;</span> Extras</div>
                         <a class="mobile-menu-sub" href="{% url 'presents_overview' %}">Geschenke</a>
                         <a class="mobile-menu-sub" href="{% url 'users_overview' %}">Benutzer</a>
-                        <a class="mobile-menu-sub" href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}">Teilen</a>
+                        <a class="mobile-menu-sub" href="{% url 'share' %}?url=
+            {{ request.build_absolute_uri|urlencode }}">Teilen</a>
                         <a class="mobile-menu-sub" href="{% url 'logout_view' %}">Logout</a>
                         {% if user.is_superuser %}
                         <hr>
