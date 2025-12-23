@@ -1,89 +1,47 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        }
-
-        /* Bottom-Bar an den unteren Rand fixieren */
-        .tabbar {
-            position: fixed;
-            left: 0;
-            right: 0;
-            top: 0;
-
-            display: flex;
-            justify-content: space-around;
-            border-top: 1px solid #ddd;
-
-            background: #c3c3c3;
-            height: 60px; /* ähnlich iOS-Höhe */
-        }
-
-        /* Jeder Tab */
-        .tab-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            text-decoration: none;
-            color: #444;
-            font-size: 11px; /* typische TabBar-Schrift */
-        }
-
-        /* Aktiver Tab */
-        .tab-item.active {
-            color: #007aff; /* iOS Blau */
-        }
-
-        /* Icon oben */
-        .tab-icon {
-            font-size: 22px;
-            line-height: 1;
-        }
-
-        /* Label darunter, mit Abschneiden */
-        .tab-label {
-            max-width: 80%; /* oder feste Breite z.B. 70px */
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            text-align: center;
-            margin-top: 2px;
-        }
-
-    </style>
+    <title>Ladebalken</title>
+    <style></style>
 </head>
 <body>
-<nav class="tabbar">
-    <a href="#" id="home" class="tab-item">
-        <span class="tab-icon">🏠</span>
-        <span class="tab-label">Home</span>
-    </a>
-    <a href="#" id="search" class="tab-item">
-        <span class="tab-icon">🔍</span>
-        <span class="tab-label">Suche</span>
-    </a>
-    <a href="#" id="star" class="tab-item">
-        <span class="tab-icon">⭐</span>
-        <span class="tab-label">Sehr langer Text der abgeschnitten wird</span>
-    </a>
-    <a href="#" id="settings" class="tab-item">
-        <span class="tab-icon">⚙️</span>
-        <span class="tab-label">Einstellungen</span>
-    </a>
-</nav>
-<script>let currentPage = "search";</script>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium deleniti exercitationem, harum hic illo inventore labore laudantium maxime modi quas quasi quod repellat, repellendus reprehenderit sequi voluptas voluptates! Quo.</p>
+<img src="../static/images/refresh/refresh-fallback.png">
+<img src="../static/images/candle/candle-fallback.png">
+
+
+<div id="loader">
+    <div id="bar"></div>
+</div>
+
 <script>
-    let currentTab = document.querySelector('.tabbar').querySelector(`#${currentPage}`);
-    currentTab.classList.add('active');
+    const bar = document.getElementById('bar');
+    document.addEventListener("DOMContentLoaded", () => {
+        bar.style.width = "50%";
+    });
+    window.addEventListener("load", () => {
+        bar.style.width = "100%";
+    });
 </script>
+
+<style>
+    #loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 400px;
+        background: #ddd;
+    }
+
+    #bar {
+        height: 100%;
+        width: 0%;
+        background: #4a90e2;
+        transition: width .2s ease;
+    }
+</style>
 </body>
 </html>
