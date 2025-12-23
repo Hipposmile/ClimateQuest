@@ -183,6 +183,12 @@
             }
         }
     </style>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+        <hr>
+    {% endif %}
     <h1 class="slider-heading">ClimateQuest - Motivation für mehr Klimaschutz</h1>
     <div id="slider">
         <button id="prev" class="nav-button emoji">&lt;</button>
@@ -265,13 +271,7 @@
             showImage(current);
         });
     </script>
-
     <hr>
-    {% if messages %}
-        {% for message in messages %}
-            <p class="{{ message.level_tag }}-message">{{ message }}</p>
-        {% endfor %}
-    {% endif %}
     {% if user.is_authenticated %}
         <p>Willkommen, {{ user.username }}!</p>
 

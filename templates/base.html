@@ -368,9 +368,7 @@
     document.addEventListener('DOMContentLoaded', createPwaNav);
 </script>
 <header id="header">
-    <a href="/" class="logo-link">
-        <img src="{% static 'icons/ClimateQuest.png' %}" alt="climateQuest Logo" class="logo-img">
-    </a>
+    <a href="/" class="logo-link" id="logo-link-desktop"></a>
     <nav>
         <a href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a>
 
@@ -734,6 +732,27 @@
     }
 
     const renderDesktopNav = () => {
+        let logo_link = document.getElementById('logo-link-desktop');
+        logo_link.innerHTML = `<picture>
+                <source type="image/avif" srcset="
+                    {% static 'icons/ClimateQuest-320.avif' %} 320w,
+                    {% static 'icons/ClimateQuest-640.avif' %} 640w,
+                    {% static 'icons/ClimateQuest-1280.avif' %} 1280w,
+                    {% static 'icons/ClimateQuest-1920.avif' %} 1920w
+                    " sizes="100vw"
+                >
+
+                <source type="image/webp" srcset="
+                    {% static 'icons/ClimateQuest-320.webp' %} 320w,
+                    {% static 'icons/ClimateQuest-640.webp' %} 640w,
+                    {% static 'icons/ClimateQuest-1280.webp' %} 1280w,
+                    {% static 'icons/ClimateQuest-1920.webp' %} 1920w
+                    " sizes="100vw"
+                >
+
+                <img src="{% static 'icons/ClimateQuest-fallback.png' %}" alt="ClimateQuestLogo" class="logo-img">
+            </picture>`;
+
         const dropdown = document.querySelector('.dropdown');
         const toggle = dropdown.querySelector('.nav-link');
         const content = dropdown.querySelector('.dropdown-content');

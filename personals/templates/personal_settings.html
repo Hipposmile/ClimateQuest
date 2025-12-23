@@ -299,7 +299,7 @@
 
     <hr>
     <form>
-        <button onclick="Notification.requestPermission().then(permission => {if (permission === 'granted') {console.log('Notification permission granted');subscribe(reg);}});">
+        <button onclick="if (Notification.permission === 'default') {Notification.requestPermission().then(permission => {if (permission === 'granted') {console.log('Notification permission granted');subscribe(reg);}});}">
             Einstellungen zum Senden von Benachrichtigungen an das Gerät ändern.
         </button>
         <p id="notification_settings"></p>
