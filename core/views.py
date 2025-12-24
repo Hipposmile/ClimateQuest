@@ -3,22 +3,22 @@ from django.shortcuts import render
 
 
 # Create your views here.
-def custom_400(request, exception):
+def custom_400(request, exception=None):
     createInternerFehler(request, f'400 Error: {exception}')
     return render(request, '400.html', status=400)
 
-def custom_403(request, exception):
+def custom_403(request, exception=None):
     createInternerFehler(request, f'403 Error: {exception}')
     return render(request, '403.html', status=403)
 
-def csrf_error(request, exception):
+def csrf_error(request, exception=None):
     createInternerFehler(request, f'CSRF Error: {exception}')
     return render(request, 'csrf.html', status=500)
 
-def custom_404(request, exception):
+def custom_404(request, exception=None):
     return render(request, '404.html', status=404)
 
-def custom_500(request, exception):
+def custom_500(request, exception=None):
     createInternerFehler(request, f'Interner Serverfehler (500): {exception}')
     return render(request, '500.html', status=500)
 
