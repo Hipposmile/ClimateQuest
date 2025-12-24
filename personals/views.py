@@ -85,11 +85,11 @@ def register_view(request):
 
         if not nutzungsbedingungen_accepted:
             messages.error(request, all_messages["nutungsbedingungen_not_accepted"])
-            return redirect('login_view')
+            return redirect('register_view')
 
         if User.objects.filter(username=username).exists():
             messages.error(request, all_messages["username_not_available"])
-            return redirect('login_view')
+            return redirect('register_view')
         
         if email == "":
             user = User.objects.create_user(username=username, password=password)
