@@ -4,8 +4,9 @@
 *.mov
 *.mp4
 Allgemeines/
-test.py
+tests/
 .env
 *.log
 db.sqlite3
 push.sh
+staticfiles/
