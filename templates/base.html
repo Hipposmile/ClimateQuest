@@ -276,11 +276,6 @@
 </head>
 
 <body>
-<script>
-    if (typeof navigator.serviceWorker !== 'undefined') {
-        navigator.serviceWorker.register('{% static 'pwa/sw.js' %}')
-    }
-</script>
 <style>
     #pwaNav {
         position: fixed;
@@ -845,6 +840,8 @@
             ladeBenachrichtigungenAnzahl();
         });
     </script>
+
+    <script src="{% static '/pwa/register_sw.js' %}"></script>
 {% endif %}
 </body>
 
