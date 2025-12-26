@@ -11,5 +11,5 @@ urlpatterns = [
     path('nutzungsbedingungen/', nutzungsbedingungen, name='nutzungsbedingungen'),
     path('datenschutz/', datenschutz, name='datenschutz'),
     path('impressum/', impressum, name='impressum'),
-    path('aktionenTable/', aktionenTable, name='aktionenTable'),
+    path('aktionenTable/', actions_table, name='aktionenTable'),
 ]

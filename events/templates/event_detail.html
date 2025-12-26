@@ -39,8 +39,8 @@
         {% endfor %}
     {% endif %}
 
-    <p><strong>Beschreibung:</strong>
-    <div class="event-description">{{ event.description|safe }}</div></p>
+    <p><strong>Beschreibung:</strong></p>
+    <div class="event-description">{{ event.description|safe }}</div>
     <p><strong>Datum und Uhrzeit (Beginn):</strong> {{ event.date_time|date:"d.m.Y, H:i" }}</p>
     <p><strong>geschätzte Dauer in Minuten:</strong> {{ event.duration }}</p>
     <p><strong>Adresse:</strong> {{ event.adress }}</p>

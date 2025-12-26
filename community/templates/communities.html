@@ -45,6 +45,10 @@
     font-size: 0.95rem;
     margin: 0.5rem 0 1rem;
 }
+
+.family-select {
+    margin: 20px;
+}
 </style>
 
 <h1>Meine Communities</h1>
@@ -67,7 +71,8 @@
         <div class="community-card">
             <h3>{{ item.community.name }}</h3>
             <p>Mitglieder: {{ item.community.members.count }}</p>
-            <select class="family-select" data-community-id="{{ item.community.id }}">
+            <label for="family-select">Family zum Login auswählen: </label>
+            <select class="family-select" id="family-select" data-community-id="{{ item.community.id }}">
                 <option value="" disabled selected>Family zum Login auswählen ▾</option>
                 {% for family in item.families %}
                 <option value="{{ family.id }}">{{ family.name }}</option>

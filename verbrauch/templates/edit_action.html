@@ -24,23 +24,23 @@
     <ul class="action-list">
         <li class="action-list-container">
             <p class="action-list-description">Aktion:</p>
-            <p class="action-list-value">{{ aktuelleAktion.aktion.name }}</p>
+            <p class="action-list-value">{{ current_action.aktion.name }}</p>
 
-            {% if aktuelleAktion.date %}
+            {% if current_action.date %}
                 <p class="action-list-description">Datum:</p>
-                <p class="action-list-value">{{ aktuelleAktion.date|date:"d.m.Y" }}</p>
+                <p class="action-list-value">{{ current_action.date|date:"d.m.Y" }}</p>
             {% endif %}
 
-            {% if aktuelleAktion.description %}
+            {% if current_action.description %}
                 <p class="action-list-description">Beschreibung:</p>
-                <p class="action-list-value">{{ aktuelleAktion.description }}</p>
+                <p class="action-list-value">{{ current_action.description }}</p>
             {% endif %}
 
             <p class="action-list-description">Klimapunkte:</p>
-            <p class="action-list-value">{{ aktuelleAktion.impact|floatformat:4 }}</p>
+            <p class="action-list-value">{{ current_action.impact|floatformat:4 }}</p>
 
-            <p class="action-list-description">{{ aktuelleAktion.aktion.mengeBeschreibung }}</p>
-            <p class="action-list-value">{{ aktuelleAktion.quantity }} {{ aktuelleAktion.einheit }}</p>
+            <p class="action-list-description">{{ current_action.aktion.mengeBeschreibung }}</p>
+            <p class="action-list-value">{{ current_action.quantity }} {{ current_action.einheit }}</p>
         </li>
     </ul>
 
@@ -54,7 +54,7 @@
         <select name="action_type" class="action-label" id="action_type" required>
             <option value="" disabled>Aktionstyp auswählen ▾</option>
             {% for aktion in aktionen %}
-                <option value="{{ aktion.name }}" data-klimapunkte="{{ aktion.klimapunkte|floatformat:-4 }}" data-anmerkung="{{ aktion.anmerkung|safe }}" data-mengebeschreibung="{{ aktion.mengeBeschreibung }}" {% if aktion == aktuelleAktion.aktion %}selected{% endif %}>{{ aktion.name }}</option>
+                <option value="{{ aktion.name }}" data-klimapunkte="{{ aktion.klimapunkte|floatformat:-4 }}" data-anmerkung="{{ aktion.anmerkung|safe }}" data-mengebeschreibung="{{ aktion.mengeBeschreibung }}" {% if aktion == current_action.aktion %}selected{% endif %}>{{ aktion.name }}</option>
             {% endfor %}
         </select>
         <br/>
@@ -62,17 +62,17 @@
         <p id="klimapunkte_anzeige" class="action-label"></p>
 
         <label for="action_description" class="action-label">Beschreibung (optional):</label>
-        <input type="text" id="action_description" name="action_description" value="{{ aktuelleAktion.description }}" placeholder="Optional"/>
+        <input type="text" id="action_description" name="action_description" value="{{ current_action.description }}" placeholder="Optional"/>
         <br/>
 
         <label for="action_quantity" class="action-label" id="action_quantity_label">Menge:</label>
-        <input type="text" id="action_quantity" name="action_quantity" value="{{ aktuelleAktion.quantity }}" required/>
+        <input type="text" id="action_quantity" name="action_quantity" value="{{ current_action.quantity }}" required/>
         <br/>
 
         <p id="impact_anzeige" class="action-label"></p>
 
         <label for="action_date" class="action-label">Datum:</label>
-        <input type="date" id="action_date" name="action_date" value="{{ aktuelleAktion.date|date:"Y-m-d" }}" required/>
+        <input type="date" id="action_date" name="action_date" value="{{ current_action.date|date:"Y-m-d" }}" required/>
         <br/>
 
         <label class="custom-checkbox">

@@ -4,7 +4,7 @@
     <meta name="description" content="Suchen Sie nach bestimmten Usern von ClimateQuest">
 {% endblock %}
 
-{% block title %}ClimateQuest - User {{ userErweitert.user.username }}{% endblock %}
+{% block title %}ClimateQuest - User {{ user_expanded.user.username }}{% endblock %}
 
 {% block content %}
     <style>
@@ -60,28 +60,19 @@
         .chat-user-message.me .chat-user-bubble {
             background: var(--color-primary);
             color: var(--color-white);
-            border-bottom-right-radius: 4px;
-            border-bottom-left-radius: 18px;
-            border-top-left-radius: 18px;
-            border-top-right-radius: 18px;
+            border-radius: 18px 18px 4px 18px;
         }
 
         .chat-user-message.other .chat-user-bubble {
             background: var(--color-primary-light);
             color: var(--color-primary);
-            border-bottom-left-radius: 4px;
-            border-bottom-right-radius: 18px;
-            border-top-right-radius: 18px;
-            border-top-left-radius: 18px;
+            border-radius: 18px 18px 18px 4px;
         }
 
         .chat-user-message.system .chat-user-bubble {
             background: #f4f6f8; /*Nicht-Variable genehmigt*/
             color: var(--color-text);
-            border-bottom-left-radius: 4px;
-            border-bottom-right-radius: 18px;
-            border-top-right-radius: 18px;
-            border-top-left-radius: 18px;
+            border-radius: 18px 18px 18px 4px;
         }
 
         .chat-user-meta {
@@ -135,7 +126,7 @@
         }
     </style>
 
-    <h1>User {{ userErweitert.user.username }}</h1>
+    <h1>User {{ user_expanded.user.username }}</h1>
 
     {% if messages %}
         {% for message in messages %}
@@ -144,15 +135,15 @@
     {% endif %}
 
     <div class="btns">
-        <a href="{% url 'klimapunkte_view' userErweitert.user.id %}">
+        <a href="{% url 'klimapunkte_view' user_expanded.user.id %}">
             <button class="btn">Klimapunkte</button>
         </a>
-        <a href="{% url 'level_view' userErweitert.user.id %}">
+        <a href="{% url 'level_view' user_expanded.user.id %}">
             <button class="btn">Level</button>
         </a>
     </div>
     <h2>Statement</h2>
-    <div class="artikel-content"><p>{{ userErweitert.statement|safe }}</p></div>
+    <div class="artikel-content"><p>{{ user_expanded.statement|safe }}</p></div>
 
 
     <div class="chat-user-container">

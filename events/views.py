@@ -5,6 +5,7 @@ from core.all_messages import all_messages
 from utils.functions import *
 from .models import *
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 
 # Create your views here.
 """def events_overview(request):
@@ -287,14 +288,14 @@ def edit_event(request, event_id):
 
 
             for participant in event.participants.all():
-                createBenachrichtigung(request, f'Ein Event, bei dem du Teilnehmer bist und das jetzt {name} heißt, wurde bearbeitet.', participant)
+                create_notification(request, f'Ein Event, bei dem du Teilnehmer bist und das jetzt {name} heißt, wurde bearbeitet.', participant)
             
             messages.success(request, all_messages["successfully_edited_event"])
             return redirect('event_detail', event_id)
         
         elif 'delete' in request.POST:
             for participant in event.participants.all():
-                createBenachrichtigung(request, f'Das Event {event.name}, bei dem du Teilnehmer bist, wurde gelöscht', participant)
+                create_notification(request, f'Das Event {event.name}, bei dem du Teilnehmer bist, wurde gelöscht', participant)
             event.delete()
             messages.success(request, all_messages["successfully_deleted_event"])
             return redirect('events_overview')

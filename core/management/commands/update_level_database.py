@@ -1,17 +1,9 @@
 from django.core.management.base import BaseCommand
-from django.contrib.auth.models import User
-from family.models import *
-from faker import Faker
-import random
-from django.utils import timezone
-from datetime import timedelta
 from dotenv import load_dotenv
-import os
+from faker import Faker
+
 load_dotenv()
-from verbrauch.models import AktionenListe
 from personals.models import Level
-import subprocess
-from django.utils.safestring import mark_safe
 
 level_mapping = {
     "blutiger Anfänger": 0,

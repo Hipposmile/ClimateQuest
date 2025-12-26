@@ -1,17 +1,6 @@
 from datetime import datetime, timedelta, date
 
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.hashers import check_password
-from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
-from django.core.mail import EmailMultiAlternatives
-from django.core.mail import send_mail
-from django.core.validators import validate_email
-from django.db.models import Sum
-from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 from core.all_messages import all_messages
@@ -33,9 +22,9 @@ def klimapunkte_view(request, user_id):
 
     if request.method == 'POST':
         heute = date.today()
-        siebenTage = date.today() - timedelta(days=7)
-        dreißigTage = date.today() - timedelta(days=30)
-        dreihundertfünfundsechzigTage = date.today() - timedelta(days=365)
+        seven_days = date.today() - timedelta(days=7)
+        thirty_days = date.today() - timedelta(days=30)
+        threehundertsixtyfive_days = date.today() - timedelta(days=365)
 
         zeitraum = request.POST.get('zeitraum')
 
@@ -44,15 +33,15 @@ def klimapunkte_view(request, user_id):
             klimapunkte = get_klimapunkte(aktionen)
 
         elif zeitraum == 'sieben Tage':
-            aktionen = Aktion.objects.filter(user=user, date__gte=siebenTage)
+            aktionen = Aktion.objects.filter(user=user, date__gte=seven_days)
             klimapunkte = get_klimapunkte(aktionen)
 
         elif zeitraum == 'dreißig Tage':
-            aktionen = Aktion.objects.filter(user=user, date__gte=dreißigTage)
+            aktionen = Aktion.objects.filter(user=user, date__gte=thirty_days)
             klimapunkte = get_klimapunkte(aktionen)
 
         elif zeitraum == 'dreihundertfünfundsechzig Tage':
-            aktionen = Aktion.objects.filter(user=user, date__gte=dreihundertfünfundsechzigTage)
+            aktionen = Aktion.objects.filter(user=user, date__gte=threehundertsixtyfive_days)
             klimapunkte = get_klimapunkte(aktionen)
 
         elif zeitraum == 'gesamt':
@@ -103,8 +92,8 @@ def level_view(request, user_id):
         messages.error(request, all_messages["user_not_found"])
         return redirect('home')
 
-    levelData = get_level(user)
-    return render(request, './level.html', {'levelData': levelData, 'user': user})
+    level_data = get_level(user)
+    return render(request, './level.html', {'level_data': level_data, 'user': user})
 
 
 def users_overview(request):
@@ -122,7 +111,7 @@ def user_detail(request, user_id):
         messages.error(request, all_messages["user_not_found"])
         return redirect('users_overview')
 
-    userErweitert = UserErweitert.objects.get(user=user)
+    user_expanded = UserErweitert.objects.get(user=user)
     if user != request.user:
         msgs = ChatMessage.objects.filter(sender=request.user, receiver=user)
     else:
@@ -134,7 +123,7 @@ def user_detail(request, user_id):
         messages.success(request, all_messages["msg_created"])
         return redirect('user_detail', user_id)
 
-    return render(request, './user_detail.html', {'userErweitert': userErweitert, 'msgs': msgs})
+    return render(request, './user_detail.html', {'user_expanded': user_expanded, 'msgs': msgs})
 
 @login_required
 def klimapunkte_me(request):

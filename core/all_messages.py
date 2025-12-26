@@ -1,5 +1,3 @@
-from django.utils.safestring import mark_safe
-
 all_messages = {
     # --------
     #Allgemein

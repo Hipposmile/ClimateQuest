@@ -1,17 +1,6 @@
 from datetime import datetime
 
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.hashers import check_password
-from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
-from django.core.mail import EmailMultiAlternatives
-from django.core.mail import send_mail
-from django.core.validators import validate_email
-from django.db.models import Sum
-from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 from core.all_messages import all_messages
@@ -54,7 +43,7 @@ def add(request):
             messages.error(request, all_messages["missing_required_inputs"])
             return redirect('add')
         try:
-            action_quantity = validateNumber(action_quantity, dezimalstellen)
+            action_quantity = validate_number(action_quantity, dezimalstellen)
         except ValueError:
             messages.error(request, all_messages["action_invalid_quantity"])
             return redirect('add')
@@ -62,8 +51,8 @@ def add(request):
             messages.error(request, all_messages["invalid_quantity"])
             return redirect('add')
         
-        aktionExisting = any(aktion.name == action_type for aktion in aktionen)
-        if not aktionExisting:
+        aktion_existing = any(aktion.name == action_type for aktion in aktionen)
+        if not aktion_existing:
             messages.error(request, all_messages["invalid_action_type"])
             return redirect('add')
         
@@ -79,9 +68,9 @@ def add(request):
         
         new_level = get_level(request.user)
         if old_level['level_number'] < new_level['level_number']:
-            createBenachrichtigung(request, f'Du hast eine neue Aktion vom Typen {action_type} erstellt und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>', request.user)
+            create_notification(request, f'Du hast eine neue Aktion vom Typen {action_type} erstellt und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>', request.user)
         else:
-            createBenachrichtigung(request, f'Du hast eine neue Aktion vom Typen {action_type} erstellt.', request.user)
+            create_notification(request, f'Du hast eine neue Aktion vom Typen {action_type} erstellt.', request.user)
 
         messages.success(request, all_messages["action_added"])
         return redirect('history')
@@ -99,7 +88,7 @@ def edit_action(request, action_id):
         messages.error(request, all_messages["action_id_missing"])
         return redirect('history')
     try:
-        aktuelleAktion = Aktion.objects.get(id=action_id, user=request.user)
+        current_action = Aktion.objects.get(id=action_id, user=request.user)
     except Aktion.DoesNotExist:
         messages.error(request, all_messages["action_not_found"])
         return redirect('history')
@@ -139,7 +128,7 @@ def edit_action(request, action_id):
                 messages.error(request, all_messages["missing_required_inputs"])
                 return redirect('edit_action', action_id)
             try:
-                action_quantity = validateNumber(action_quantity, dezimalstellen)
+                action_quantity = validate_number(action_quantity, dezimalstellen)
             except ValueError:
                 messages.error(request, all_messages["action_invalid_quantity"])
                 return redirect('edit_action', action_id)
@@ -147,46 +136,46 @@ def edit_action(request, action_id):
                 messages.error(request, all_messages["invalid_quantity"])
                 return redirect('edit_action', action_id)
             
-            aktionExisting = any(aktion.name == action_type for aktion in aktionen)
-            if not aktionExisting:
+            action_existing = any(aktion.name == action_type for aktion in aktionen)
+            if not action_existing:
                 messages.error(request, all_messages["invalid_action_type"])
                 return redirect('edit_action', action_id)
 
             old_level = get_level(request.user)
 
-            aktuelleAktion.aktion = action
-            aktuelleAktion.description = action_description
-            aktuelleAktion.user = request.user
-            aktuelleAktion.quantity = action_quantity
-            aktuelleAktion.date = action_date
-            aktuelleAktion.save()
+            current_action.aktion = action
+            current_action.description = action_description
+            current_action.user = request.user
+            current_action.quantity = action_quantity
+            current_action.date = action_date
+            current_action.save()
 
             new_level = get_level(request.user)
             if old_level['level_number'] < new_level['level_number']:
-                createBenachrichtigung(request, f'Du hast eine Aktion vom Typen {action_type} bearbeitet und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>', request.user)
+                create_notification(request, f'Du hast eine Aktion vom Typen {action_type} bearbeitet und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>', request.user)
             elif old_level['level_number'] > new_level['level_number']:
-                createBenachrichtigung(request, f'Du hast eine Aktion vom Typen {action_type} bearbeitet, hast dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>', request.user)
+                create_notification(request, f'Du hast eine Aktion vom Typen {action_type} bearbeitet, hast dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>', request.user)
             else:
-                createBenachrichtigung(request, f'Du hast eine Aktion vom Typen {action_type} bearbeitet', request.user)
+                create_notification(request, f'Du hast eine Aktion vom Typen {action_type} bearbeitet', request.user)
 
             messages.success(request, all_messages["action_edited"])
             return redirect('history')
         
         if 'delete_action' in request.POST:
             old_level = get_level(request.user)
-            action_type = aktuelleAktion.aktion.name
-            aktuelleAktion.delete()
+            action_type = current_action.aktion.name
+            current_action.delete()
             new_level = get_level(request.user)
             if old_level['level_number'] > new_level['level_number']:
-                createBenachrichtigung(request, f'Du hast eine Aktion vom Typen {action_type} gelöscht, hast dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>', request.user)
+                create_notification(request, f'Du hast eine Aktion vom Typen {action_type} gelöscht, hast dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>', request.user)
             else:
-                createBenachrichtigung(request, f'Du hast eine Aktion vom Typen {action_type} gelöscht', request.user)
+                create_notification(request, f'Du hast eine Aktion vom Typen {action_type} gelöscht', request.user)
             messages.success(request, all_messages["action_deleted"])
             return redirect('history')
 
-    return render(request, './edit_action.html', {'aktionen': aktionen, 'aktuelleAktion': aktuelleAktion})
+    return render(request, './edit_action.html', {'aktionen': aktionen, 'current_action': current_action})
 
-def validateNumber(number, dezimalstellen):
+def validate_number(number, input_decimals):
     if not number:
         return False
     try:
@@ -197,5 +186,5 @@ def validateNumber(number, dezimalstellen):
             number = float(number)
         except ValueError:
             return False
-    return round(number, dezimalstellen)
+    return round(number, input_decimals)
 

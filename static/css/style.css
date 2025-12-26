@@ -35,8 +35,8 @@
     --safe-area-inset-top: env(safe-area-inset-top, 0px);
     --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
 
-    /* iOS Typography */
-    --font-family-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-family-system: system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 html {
@@ -180,8 +180,7 @@ form button:disabled {
 
 footer {
     text-align: center;
-    padding: 1.5rem;
-    padding-bottom: max(1.5rem, calc(1.5rem + var(--safe-area-inset-bottom)));
+    padding: 1.5rem 1.5rem max(1.5rem, calc(1.5rem + var(--safe-area-inset-bottom)));
     color: var(--color-muted);
     font-size: 0.9rem;
     margin-top: 2rem;
@@ -197,9 +196,7 @@ a:hover {
 }
 
 main {
-    padding: 2rem;
-    padding-left: max(2rem, calc(2rem + var(--safe-area-inset-left)));
-    padding-right: max(2rem, calc(2rem + var(--safe-area-inset-right)));
+    padding: 2rem max(2rem, calc(2rem + var(--safe-area-inset-right))) 2rem max(2rem, calc(2rem + var(--safe-area-inset-left)));
 }
 
 .error-message {
@@ -212,11 +209,6 @@ main {
     color: var(--color-success);
     font-weight: 500;
     margin-bottom: 1rem;
-}
-
-.logo {
-    color: var(--color-white);
-    text-decoration: none;
 }
 
 .me-btn {
@@ -232,7 +224,6 @@ main {
     align-items: center;
     width: 48px;
     height: 48px;
-    font-size: 1.5rem;
     text-decoration: none;
     cursor: pointer;
     box-shadow: 0 2px 8px var(--color-shadow-light);
@@ -315,93 +306,6 @@ main {
     opacity: 0.6;
 }
 
-#openSidebarDiv {
-    display: flex;
-    justify-content: flex-end;
-}
-
-#openSidebar {
-    background-color: var(--color-primary);
-    border: none;
-}
-
-#sidebar {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 100vw;
-    height: 100vh;
-    background-color: var(--color-header-bg);
-    color: var(--color-header-text);
-    transition: right 0.4s ease;
-    z-index: 9999;
-    padding: 2rem;
-    overflow-y: auto;
-    box-shadow: var(--shadow-md);
-    display: flex;
-    flex-direction: column;
-    padding: max(5px, var(--safe-area-inset-top)) 5px 5px max(5px, var(--safe-area-inset-left));
-    font-size: 1.2rem;
-}
-
-#sidebar.active {
-    right: 0;
-}
-
-#sidebar button#closeSidebar {
-    background: none;
-    border: none;
-    color: var(--color-header-text);
-    font-size: 2rem;
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    cursor: pointer;
-}
-
-#sidebar nav {
-    margin-top: 3rem;
-}
-
-#sidebar details {
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-}
-
-#sidebar summary {
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-    color: var(--color-primary-light);
-}
-
-#sidebar ul {
-    list-style: none;
-    padding-left: 1rem;
-    margin-top: 0.5rem;
-}
-
-#sidebar li {
-    margin: 0.5rem 0;
-}
-
-#sidebar a {
-    color: var(--color-header-text);
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.2s ease;
-}
-
-#sidebar a:hover {
-    color: var(--color-primary-hover);
-}
-
-.h1_size {
-    font-size: 1.6rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
-}
-
 .h3_size {
     font-size: 1rem;
     margin-bottom: 1rem;
@@ -410,7 +314,6 @@ main {
 
 /*In mehreren Dateien vorhanden*/
 .card-btn {
-    display: inline-block;
     padding: 0.75rem 1.5rem;
     background-color: var(--color-primary);
     color: var(--color-white);
@@ -1019,8 +922,7 @@ summary {
 
     /* Main content adjustments for mobile */
     main {
-        padding: 1rem max(1rem, calc(1rem + var(--safe-area-inset-left))) 1rem max(1rem, calc(1rem + var(--safe-area-inset-right)));
-        padding-bottom: calc(70px + 1rem + var(--safe-area-inset-bottom));
+        padding: 1rem max(1rem, calc(1rem + var(--safe-area-inset-left))) calc(70px + 1rem + var(--safe-area-inset-bottom)) max(1rem, calc(1rem + var(--safe-area-inset-right)));
     }
 
     /* Form optimizations */
@@ -1058,11 +960,6 @@ summary {
 
     .h1_size {
         font-size: 1.4rem;
-    }
-
-    /* Smoother scrolling */
-    html {
-        -webkit-scroll-behavior: smooth;
     }
 
     /* Better card spacing on mobile */

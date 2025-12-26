@@ -1,6 +1,7 @@
 from django.contrib import admin
+
 from .models import Event, Question, Answer
-from django.contrib.auth.models import User
+
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('name', 'date_time', 'creator')

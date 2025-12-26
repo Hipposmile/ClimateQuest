@@ -21,7 +21,7 @@ dezimalstellen = 2
 
 # messages don´t use core.all_messages here because this would complicate everything
 
-def generateRandomPassword():
+def generate_random_password():
     return ''.join(random.choices(string.ascii_letters + string.digits + string.punctuation, k=12))
 
 
@@ -34,15 +34,15 @@ def send_mail_function(**kwargs):
     mailinglist_needless = kwargs.get('mailinglist_needless')
 
     if request is None or subject is None or message is None or fail_silently is None:
-        createInternerFehler(request, 'Beim E-Mail Versand wurden nicht alle notwendigen Elemente übergeben',
-                             fehlermeldung)
+        create_internal_error(request, 'Beim E-Mail Versand wurden nicht alle notwendigen Elemente übergeben',
+                              fehlermeldung)
 
     user = kwargs.get('user')
     if not user:
         try:
             user = request.user
         except Exception:
-            createInternerFehler(request, 'Bei send_mail_function wurde kein User übergeben', fehlermeldung)
+            create_internal_error(request, 'Bei send_mail_function wurde kein User übergeben', fehlermeldung)
 
     recipient_list = kwargs.get('recipient_list')
     if not recipient_list:
@@ -50,12 +50,12 @@ def send_mail_function(**kwargs):
 
     if not mailinglist_needless and user.email != '':
         try:
-            userErweitert = UserErweitert.objects.get(user=user)
+            user_erweitert = UserErweitert.objects.get(user=user)
         except UserErweitert.DoesNotExist:
-            createInternerFehler(request, f'UserErweitert zu User {user} nicht gefunden', fehlermeldung)
-        if userErweitert.mail_verified == False:
+            create_internal_error(request, f'UserErweitert zu User {user} nicht gefunden', fehlermeldung)
+        if not userErweitert.mail_verified:
             return True
-        if userErweitert.mailinglist:
+        if user_erweitert.mailinglist:
             try:
                 html_content = f"""
                     <!doctype html>
@@ -129,7 +129,7 @@ def send_mail_function(**kwargs):
                 email.send()
                 return True
             except Exception as e:
-                createInternerFehler(request, f'Fehler beim E-Mail-Versand an {recipient_list}: {e}', fehlermeldung)
+                create_internal_error(request, f'Fehler beim E-Mail-Versand an {recipient_list}: {e}', fehlermeldung)
 
     elif mailinglist_needless:
         try:
@@ -205,7 +205,7 @@ def send_mail_function(**kwargs):
             email.send()
             return True
         except Exception as e:
-            createInternerFehler(request, f'Fehler beim E-Mail-Versand an {recipient_list}: {e}', fehlermeldung)
+            create_internal_error(request, f'Fehler beim E-Mail-Versand an {recipient_list}: {e}', fehlermeldung)
             return False
 
     elif user.email == '':
@@ -257,7 +257,7 @@ def get_klimapunkte(aktionen):
     return klimapunkte
 
 
-def createInternerFehler(request, beschreibung, fehlermeldung="interner Fehler", exception=None):
+def create_internal_error(request, beschreibung, fehlermeldung="interner Fehler", exception=None):
     def sanitize_post_data(post_data):
         return {
             k: ('***' if 'password' in k.lower() or 'token' in k.lower() else v)
@@ -296,22 +296,22 @@ def createInternerFehler(request, beschreibung, fehlermeldung="interner Fehler",
         file.write(f'{error_message}\n\n')
 
 
-def createBenachrichtigung(request, benachrichtigung, user=None):
+def create_notification(request, notification, user=None):
     if user is None:
         user = request.user
-    Benachrichtigung.objects.create(benachrichtigung=benachrichtigung, user=user)
+    Benachrichtigung.objects.create(benachrichtigung=notification, user=user)
     send_mail_function(
         request=request,
         fehlermeldung='Beim Erstellen einer Benachrichtigung ist beim Versenden der E-Mail ein Fehler aufgetreten. Die Benachrichtigung kann nur in dem Benachrichtigungsteil hier auf der Webseite gefunden werden!',
         subject='ClimateQuest - neue Benachrichtigung',
-        message=benachrichtigung,
+        message=notification,
         recipient_list=user.email,
         fail_silently=False,
         user=user
     )
-    res = send_push_2(benachrichtigung=benachrichtigung, user=user)
+    res = send_push_2(benachrichtigung=notification, user=user)
     if res == 500:
-        createInternerFehler(request, "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.", "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.")
+        create_internal_error(request, "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.", "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.")
 
 def send_push_2(benachrichtigung, user, head="Neue Benachrichtigung"):
     try:
@@ -337,17 +337,17 @@ def check_worldwide_ranking_exists(request):
         Family.objects.get(name='worldwide ranking')
         return True
     except Family.DoesNotExist:
-        createInternerFehler(request, 'Family "worldwide ranking" existiert nicht')
+        create_internal_error(request, 'Family "worldwide ranking" existiert nicht')
         return False
 
 
-def getFamiliesOfUser(user):
+def get_families_of_user(user):
     return Family.objects.filter(members=user).order_by('name')
 
 
-def getCommunitiesOfUser(user):
+def get_communities_of_user(user):
     # Hole die IDs der Familien des aktuellen Nutzers
-    user_families = getFamiliesOfUser(user)
+    user_families = get_families_of_user(user)
 
     # Verwende diese IDs zum Filtern der Communities
     communities = Community.objects.filter(members__id__in=user_families).distinct().order_by('name')

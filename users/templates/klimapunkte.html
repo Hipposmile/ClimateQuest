@@ -37,6 +37,7 @@
     <p>Zeitraum: {{ zeitraum }}</p>
     <form method="POST">
         {% csrf_token %}
+        <label for="zeitraum">Zeitraum</label>
         <select name="zeitraum" id="zeitraum" required>
             <option value="gesamt">Gesamt</option>
             <option value="heute">Heute</option>

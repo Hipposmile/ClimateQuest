@@ -54,19 +54,6 @@
             color: var(--color-counters);
         }
 
-        .video {
-            width: 50%;
-            height: 50%;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            max-width: 100%;
-            transition: transform 0.3s ease;
-        }
-
-        .video:hover {
-            transform: scale(1.02);
-        }
-
         #slider {
             position: relative;
             width: 100%;
@@ -119,17 +106,12 @@
             right: 20px;
         }
 
-        /* Responsiv für kleinere Geräte */
+        /* Responsiv für kleinere Geraete */
         @media (max-width: 600px) {
             .nav-button {
                 font-size: 2rem;
                 padding: 0.3rem 0.6rem;
             }
-        }
-
-        /* Weiterer Inhalt */
-        .content {
-            padding: 2rem;
         }
 
         .slider-heading {
@@ -160,7 +142,7 @@
         }
 
         /* Für kleinere Bildschirme: Überschrift im Flow */
-        @media (max-width: 600px) {
+        @media (max-width: 1200px) {
             .slider-heading {
                 position: static;
                 transform: none;
@@ -275,11 +257,11 @@
     {% if user.is_authenticated %}
         <p>Willkommen, {{ user.username }}!</p>
 
-        <p>Tipp: Wenn andere Nutzer Artikel liken, die du selbst geschrieben hast, erhältst du Klimapunkte! Schreibe
+        <p>Tipp: Wenn andere Nutzer Artikel liken, die du selbst geschrieben hast, erhaeltst du Klimapunkte! Schreibe
             also selbst einen guten Artikel, um mehr Klimapunkte zu erhalten!</p>
 
         {% if user.usererweitert.mail_verified == False and user.email != '' %}
-            <p>Bitte bestätige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. Falls du keine
+            <p>Bitte bestaetige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. Falls du keine
                 Verifizierungsemail
                 erhalten hast, <a href="{% url 'resend_verification_email' %}">lasse dir eine neue senden.</a></p>
         {% endif %}
@@ -297,21 +279,21 @@
     <input type="hidden" id="klimapunkte" value="{{ klimapunkte|floatformat:-4 }}">
 
     <div id="counters">
-        <div id="user_zähler_div">
-            <p class="h3_size" id="user_zähler">{{ user_count }}</p>
+        <div id="user_zaehler_div">
+            <p class="h3_size" id="user_zaehler">{{ user_count }}</p>
             <p> registrierte Nutzer hat diese Plattform bereits.</p>
         </div>
 
-        <div id="klimapunkte_zähler_div">
-            <p class="h3_size" id="klimapunkte_zähler">{{ klimapunkte|floatformat:-4 }}</p>
+        <div id="klimapunkte_zaehler_div">
+            <p class="h3_size" id="klimapunkte_zaehler">{{ klimapunkte|floatformat:-4 }}</p>
             <p> Klimapunkte wurden von all diesen Nutzern zusammen bereits gesammelt.</p>
         </div>
 
-        <div id="co2_zähler_div">
-            <p>Weil jeder Klimapunkte ungefähr für
-                <b id="co2_per_klimapunkt">1 kg</b> eingespartes CO2 steht, wurden dadurch insgesamt
+        <div id="co2_zaehler_div">
+            <p>Weil jeder Klimapunkte ungefaehr für
+                <b id="co2_per_klimapunkt">1 kg</b> eingespartes CO₂ steht, wurden dadurch insgesamt
             </p>
-            <p class="h3_size" id="co2_zähler"></p>
+            <p class="h3_size" id="co2_zaehler"></p>
             <p> Tonnen CO2e eingespart</p>
         </div>
     </div>
@@ -358,23 +340,22 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const user_zähler = document.getElementById('user_zähler');
+            const user_zaehler = document.getElementById('user_zaehler');
 
-            const klimapunkte_zähler = document.getElementById('klimapunkte_zähler');
-            const co2_zähler = document.getElementById('co2_zähler');
+            const klimapunkte_zaehler = document.getElementById('klimapunkte_zaehler');
+            const co2_zaehler = document.getElementById('co2_zaehler');
 
             let user_count = document.getElementById('user_count').value;
             let klimapunkte = document.getElementById('klimapunkte').value;
 
-            //User und Klimapunkte in Floats umwandeln, trotz . und , zur Trennung
             user_count = formatToFloat(user_count);
             klimapunkte = formatToFloat(klimapunkte);
 
             let co2 = Math.floor(klimapunkte / 1000);
 
-            animateCount(user_zähler, user_count);
-            animateCount(klimapunkte_zähler, klimapunkte);
-            animateCount(co2_zähler, co2);
+            animateCount(user_zaehler, user_count);
+            animateCount(klimapunkte_zaehler, klimapunkte);
+            animateCount(co2_zaehler, co2);
         });
 
         function formatToFloat(str) {
@@ -389,7 +370,7 @@
             let stepTime = 10; // alle 50ms ein Schritt
             let steps = Math.floor(maxDuration / stepTime);
 
-            // Wenn zu viele Schritte nötig wären, starte höher
+            // Wenn zu viele Schritte nötig waeren, starte höher
             if (endValue > steps) {
                 startValue = endValue - steps;
             }

@@ -1,11 +1,9 @@
-from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.auth.hashers import make_password
-
+from django.db import models
 from django.utils import timezone
-from datetime import timedelta
 
-# Verbrauch 
+
+# Verbrauch
 class AktionenListe(models.Model):
     name = models.CharField(max_length=100, unique=True)
     klimapunkte = models.FloatField()
@@ -29,7 +27,3 @@ class Aktion(models.Model):
 
     def __str__(self):
         return f"{self.aktion.name} ({self.user})"
-
-
-    def __str__(self):
-        return self.description

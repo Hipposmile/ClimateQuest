@@ -29,6 +29,7 @@
 
     <form method="POST">
         {% csrf_token %}
+        <label for="zeitraum">Zeitraum auswählen</label>
         <select name="zeitraum" id="zeitraum" required>
             <option value="gesamt" selected>Gesamt</option>
             <option value="heute">Heute</option>
@@ -72,7 +73,7 @@
         {% for member in members_with_klimapunkte %}
             <li class="{% if member.member.name == family.name %}klimapunkte_me{% else %}klimapunkte_other{% endif %}"
                 id="{% if member.member.name == family.name %}me{% else %}other{% endif %}">
-                <span><span style="font-weight: #888;" id="rank_{{ member.member.id }}"></span><a
+                <span><span style="color: #888;" id="rank_{{ member.member.id }}"></span><a
                         href="{% url 'family_detail' member.member.id %}">{{ member.member.name }}</a></span>
                 <br>
                 <span style="font-size:0.95em; color:#888;">(durchschnittlich {{ member.klimapunkte|floatformat:-4 }} Klimapunkte)</span>

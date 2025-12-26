@@ -15,8 +15,7 @@
 {% endif %}
 <h3>Benachrichtigung erstellen</h3>
 <form method="post" onsubmit="return confirm('Möchtest du diese Benachrichtigung wirklich erstellen?');">
-    {% csrf_token %}
-    <select name="receiver" id="receiver">
+    <label for="receiver">{% csrf_token %}</label><select name="receiver" id="receiver">
         <option value="user" selected>User</option>
         <option value="family-members">Family-Members</option>
         <option value="community-members">Community-Members</option>

@@ -1,21 +1,9 @@
 import os
 
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
-from django.contrib.auth.models import User
-from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
-from django.core.mail import EmailMultiAlternatives
-from django.core.mail import send_mail
-from django.core.management import call_command
-from django.core.validators import validate_email
-from django.db.models import Sum
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from django.utils import timezone
 from dotenv import load_dotenv
 
 from events.models import *
@@ -55,7 +43,7 @@ def admin(request):
             if receiver == 'user':
                 try:
                     user = User.objects.get(username=name)
-                    createBenachrichtigung(request, msg, user)
+                    create_notification(request, msg, user)
                     messages.success(request, all_messages["admin__successfully_sent_notification"])
                 except User.DoesNotExist:
                     messages.error(request, all_messages["admin__user_not_found"])
@@ -67,7 +55,7 @@ def admin(request):
                     messages.error(request, all_messages["admin__family_not_found"])
                     return redirect('admin')
                 for user in family.members.all():
-                    createBenachrichtigung(request, msg, user)
+                    create_notification(request, msg, user)
                 messages.success(request, all_messages["admin__successfully_sent_notification"])
             elif receiver == 'community-members':
                 try:
@@ -77,7 +65,7 @@ def admin(request):
                     return redirect('admin')
                 for family in community.members.all():
                     for user in family.members.all():
-                        createBenachrichtigung(request, msg, user)
+                        create_notification(request, msg, user)
                 messages.success(request, all_messages["admin__successfully_sent_notification"])
             elif receiver == 'event-participants':
                 print("Sending to event participants")
@@ -88,7 +76,7 @@ def admin(request):
                     return redirect('admin')
                 print(event)
                 for participant in event.participants.all():
-                    createBenachrichtigung(request, msg, participant)
+                    create_notification(request, msg, participant)
                     print(participant.username)
 
                 messages.success(request, all_messages["admin__successfully_sent_notification"])
@@ -166,7 +154,7 @@ def share(request):
 def nutzungsbedingungen(request):
     return render(request, 'nutzungsbedingungen.html')
 
-def aktionenTable(request):
+def actions_table(request):
     aktionen = AktionenListe.objects.all()
     print(aktionen)
     return render(request, 'aktionenTable.html', {'aktionen': aktionen})
