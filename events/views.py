@@ -5,77 +5,7 @@ from core.all_messages import all_messages
 from utils.functions import *
 from .models import *
 from django.contrib.auth.decorators import login_required
-from datetime import datetime
-
-# Create your views here.
-"""def events_overview(request):
-    if request.method == 'POST':
-        already_ordered = False
-        
-        ordered_by = request.POST.get('order_by')
-        search_keyword = request.POST.get('search_keyword')
-
-        past_events_visible = request.POST.get('past_events_visible') == 'on'
-
-        if past_events_visible:
-            all_events = Event.objects
-        else:
-            Event.objects.filter(date_time__lt=timezone.now())
-        if ordered_by == "Name":
-            order_by = "name"
-        elif ordered_by == "Datum":
-            order_by = "date_time"
-        elif ordered_by == "Dauer":
-            order_by = "duration"
-        elif ordered_by == "Adresse":
-            order_by = "adress"
-        elif ordered_by == "Ersteller":
-            order_by = "creator"
-        elif ordered_by == "Teilnehmeranzahl":
-            try:
-                search_keyword = int(search_keyword)
-            except ValueError:
-                messages.error(request, all_messages["teilnehmeranzahl_search_keyword_not_a_number"])
-                return redirect('events_overview')
-            if search_keyword:
-                events = all_events.annotate(num_participants=Count('participants')).filter(num_participants__icontains=search_keyword).order_by('-num_participants')
-            else:
-                events = all_events.annotate(num_participants=Count('participants')).order_by('-num_participants')
-            already_ordered = True
-        elif ordered_by == "von mir erstellte Events":
-            if request.user.is_authenticated:
-                events = Event.objects.filter(creator=request.user)
-                already_ordered = True
-            else:
-                ordered_by = "Name"
-                order_by = "name"
-
-        elif ordered_by == "Events, bei denen ich Teilnehmer bin":
-            if request.user.is_authenticated:
-                events = all_events.filter(participants=request.user)
-                already_ordered = True
-            else:
-                ordered_by = "Name"
-                order_by = "name"
-        else:
-            ordered_by = "Name"
-            order_by = "name"
-        
-        if not already_ordered:
-            if search_keyword:
-                events = all_events.all().filter(**{f"{order_by}__icontains": search_keyword}).order_by(order_by)
-            else:
-                events = all_events.all().order_by(order_by)
-            already_ordered = True
-
-    else:
-        ordered_by = "Name"
-        search_keyword = None
-        past_events_visible = False
-        events = Event.objects.all().order_by("name")
-
-    return render(request, './events_overview.html', {'ordered_by': ordered_by, "search_keyword": search_keyword, "past_events_visible": past_events_visible, 'events': events})
-"""
+from datetime import datetime, timedelta
 
 def events_overview(request):
     if request.method == 'POST':

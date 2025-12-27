@@ -874,6 +874,7 @@ summary {
 .quill-editor {
     height: 300px !important;
     margin-bottom: 10px !important;
+    resize: none;
 }
 
 .btns {

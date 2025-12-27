@@ -63,25 +63,24 @@
                     }
                 }
             } else {
-                editor.innerHTML = `<textarea placeholder="Beschreibung" class="quill-editor" style="max-width: 400px; min-width: 400px;"></textarea>`;
+                editor.innerHTML = `<textarea placeholder="Beschreibung" class="quill-editor" id="textarea-content" style="width: 100%;"></textarea>`;
             }
         });
 
-
-        // Beim Absenden des Formulars
         function fillEditor(event) {
+            const form = event.target;
+            event.preventDefault();
             if (getCookiePreferences().quill) {
-                const form = event.target;
-                event.preventDefault();
                 try {
-                    var html = quill.root.innerHTML;
-                    form.querySelector('input[name=content]').value = html;
+                    form.querySelector('input[name=content]').value = quill.root.innerHTML;
                     form.submit();
                 } catch {
                     console.error("Variable Quill not found");
                     alert("Ein interner Fehler ist aufgetreten. Probiere es später bitte erneut!");
                     return false;
                 }
+            } else {
+                form.querySelector('input[name=content]').value = document.getElementById('textarea-content');
             }
         }
     </script>

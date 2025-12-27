@@ -47,8 +47,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000);
-            const formatted = tomorrow.toISOString().slice(0, 16); // YYYY-MM-DDTHH:MM
+            const day_after_tomorrow = new Date(Date.now() + 48 * 60 * 60 * 1000);
+            const formatted = day_after_tomorrow.toISOString().slice(0, 16); // YYYY-MM-DDTHH:MM
             let dateInput = document.getElementById('date_time');
             dateInput.min = formatted;
             dateInput.value = formatted;
@@ -79,25 +79,24 @@
                     }
                 }
             } else {
-                editor.innerHTML = `<textarea placeholder="Beschreibung"></textarea>`;
+                editor.innerHTML = `<textarea placeholder="Beschreibung" class="quill-editor" id="textarea-description" style="width: 100%;"></textarea>`;
             }
         });
 
-
-        // Beim Absenden des Formulars
         function fillEditor(event) {
+            const form = event.target;
+            event.preventDefault();
             if (getCookiePreferences().quill) {
-                const form = event.target;
-                event.preventDefault();
                 try {
-                    var html = quill.root.innerHTML;
-                    form.querySelector('input[name=description]').value = html;
+                    form.querySelector('input[name=description]').value = quill.root.innerHTML;
                     form.submit();
                 } catch {
                     console.error("Variable Quill not found");
                     alert("Ein interner Fehler ist aufgetreten. Probiere es später bitte erneut!");
                     return false;
                 }
+            } else {
+                form.querySelector('input[name=description]').value = document.getElementById('textarea-description');
             }
         }
     </script>
