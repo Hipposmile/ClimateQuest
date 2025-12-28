@@ -178,7 +178,7 @@ LOGGING = {
 
 # STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
-CSRF_FAILURE_VIEW = "core.views.csrf_error_view"
+CSRF_FAILURE_VIEW = "core.views.csrf_error"
 
 STORAGES = {
     'staticfiles': {

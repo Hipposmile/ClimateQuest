@@ -10,3 +10,4 @@ tests/
 db.sqlite3
 push.sh
 staticfiles/
+.pylintrc
