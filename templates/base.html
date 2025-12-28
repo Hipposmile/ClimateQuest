@@ -823,6 +823,8 @@
         content.addEventListener('click', (e) => {
             e.stopPropagation();
         });
+
+        ladeBenachrichtigungenAnzahl();
     }
 
     function handleResize() {
@@ -899,11 +901,6 @@
                     return false;
                 });
         }
-
-
-        document.addEventListener('DOMContentLoaded', () => {
-            ladeBenachrichtigungenAnzahl();
-        });
     </script>
 
     <script src="{% static 'pwa/register_sw.js' %}"></script>
