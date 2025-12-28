@@ -53,7 +53,7 @@ def send_mail_function(**kwargs):
             user_erweitert = UserErweitert.objects.get(user=user)
         except UserErweitert.DoesNotExist:
             create_internal_error(request, f'UserErweitert zu User {user} nicht gefunden', fehlermeldung)
-        if not userErweitert.mail_verified:
+        if not user_erweitert.mail_verified:
             return True
         if user_erweitert.mailinglist:
             try:
