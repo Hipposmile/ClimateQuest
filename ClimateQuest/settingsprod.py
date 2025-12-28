@@ -41,6 +41,8 @@ INTERNAL_IPS = [
 CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = ['https://climate-quest.de', 'https://www.climate-quest.de']
 
+ADMINS = [("Paul", "paul@fraqment.de")]
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -57,10 +59,15 @@ LOGGING = {
             'filename': os.path.join(BASE_DIR, 'logs', 'django_errors.log'),
             'formatter': 'timestamped',
         },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,   # optional: HTML‑Mail mit Traceback
+        },
     },
     'loggers': {
         'django': {
-            'handlers': ['file'],
+            'handlers': ['file', 'mail_admins'],
             'level': 'ERROR',
             'propagate': True,
         },

@@ -1,6 +1,7 @@
 import random
 import string
 import traceback
+import logging
 
 import bleach
 from django.contrib import messages
@@ -16,10 +17,9 @@ from home.models import *
 from personals.models import *
 from verbrauch.models import *
 
-dezimalstellen = 2
+dezimalstellen = 4
 
-
-# messages don´t use core.all_messages here because this would complicate everything
+logger = logging.getLogger("django")
 
 def generate_random_password():
     return ''.join(random.choices(string.ascii_letters + string.digits + string.punctuation, k=12))
@@ -292,6 +292,9 @@ def create_internal_error(request, beschreibung, fehlermeldung="interner Fehler"
         error_message['exception'] = str(exception)
         error_message['traceback'] = traceback.format_exc()
     messages.error(request, fehlermeldung)
+
+    logging.error(error_message)
+
     with open('logs/errors.log', 'a') as file:
         file.write(f'{error_message}\n\n')
 
@@ -309,11 +312,11 @@ def create_notification(request, notification, user=None):
         fail_silently=False,
         user=user
     )
-    res = send_push_2(benachrichtigung=notification, user=user)
+    res = send_push(benachrichtigung=notification, user=user)
     if res == 500:
         create_internal_error(request, "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.", "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.")
 
-def send_push_2(benachrichtigung, user, head="Neue Benachrichtigung"):
+def send_push(benachrichtigung, user, head="Neue Benachrichtigung"):
     try:
         payload = {'head': head, 'body': benachrichtigung}
         send_user_notification(user=user, payload=payload, ttl=1000)
