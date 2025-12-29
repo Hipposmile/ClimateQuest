@@ -26,6 +26,7 @@
 
         <label for="description_editor">Beschreibung</label>
         <div id="description_editor" style="height: 300px;">{{ event.description|safe }}</div>
+        <small>Wenn du die Quill-Cookies abgelehnt hast, können Design-Elemente nicht richtig angezeigt werden. Stattdessen wirst du seltsame Tags wie &lt;p&gt; sehen.</small>
         <input type="hidden" name="description">
 
         <label for="date_time">Datum und Uhrzeit (Beginn)</label>
@@ -101,7 +102,7 @@
                     }
                 }
             } else {
-                editor.innerHTML = `<textarea placeholder="Beschreibung"></textarea>`;
+                editor.innerHTML = `<textarea placeholder="Beschreibung" class="quill-editor" id="textarea-description" style="width: 100%;">{{ event.description }}</textarea>`;
             }
         });
 
