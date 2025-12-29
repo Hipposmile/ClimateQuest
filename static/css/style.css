@@ -904,15 +904,12 @@ summary {
 }
 
 
-/* iOS Mobile Optimizations */
-@media (max-width: 768px) {
-    /* Prevent tap highlight */
+@media (max-width: 1200px) {
     button, a, input[type="button"], input[type="submit"], .card-btn {
         -webkit-tap-highlight-color: transparent;
         -webkit-touch-callout: none;
     }
 
-    /* Better touch targets (min 44x44px) */
     button, .card-btn, .tab-item, a[role="button"] {
         min-height: 44px;
         min-width: 44px;
@@ -921,12 +918,10 @@ summary {
         justify-content: center;
     }
 
-    /* Main content adjustments for mobile */
     main {
         padding: 1rem max(1rem, calc(1rem + var(--safe-area-inset-left))) calc(70px + 1rem + var(--safe-area-inset-bottom)) max(1rem, calc(1rem + var(--safe-area-inset-right)));
     }
 
-    /* Form optimizations */
     form {
         border-radius: 16px;
         margin: 1rem auto;
@@ -941,12 +936,11 @@ summary {
     form input[type="search"],
     form select,
     form textarea {
-        font-size: 16px; /* Prevent iOS zoom on input focus */
+        font-size: 16px;
         border-radius: 12px;
         padding: 1rem;
     }
 
-    /* Larger text for readability */
     body {
         font-size: 16px;
     }
@@ -963,7 +957,6 @@ summary {
         font-size: 1.4rem;
     }
 
-    /* Better card spacing on mobile */
     .action-list-container,
     .event-card,
     .comment,
@@ -973,33 +966,27 @@ summary {
         border-radius: 16px;
     }
 
-    /* Improved dropdown for touch */
     .dropdown {
         position: relative;
     }
 
-    /* Better visibility on mobile for lists */
     .klimapunkte-list {
         max-width: 100%;
         padding: 0 1rem;
     }
 }
 
-/* iPhone notch support */
 @supports (padding: max(0px)) {
-    /* Header with notch support */
     header {
         padding-left: max(1rem, var(--safe-area-inset-left));
         padding-right: max(1rem, var(--safe-area-inset-right));
     }
 
-    /* Footer with home indicator support */
     footer {
         padding-bottom: max(1rem, calc(1rem + var(--safe-area-inset-bottom)));
     }
 }
 
-/* Improve button interactions */
 button:active,
 .card-btn:active,
 .tab-item:active,
@@ -1007,7 +994,6 @@ a:active {
     opacity: 0.7;
 }
 
-/* Disable iOS default styling */
 input[type="button"],
 input[type="submit"],
 input[type="reset"],

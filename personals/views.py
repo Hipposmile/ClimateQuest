@@ -267,6 +267,10 @@ def settings_view(request):
 
         if 'change_email_settings' in request.POST:
             mailinglist = request.POST.get('mailinglist') == 'on'
+            password = request.POST.get('password')
+            if not request.user.check_password(password):
+                messages.error(request, all_messages["invalid_password"])
+                return redirect('settings_view')
             try:
                 user_erweitert = UserErweitert.objects.get(user=request.user)
             except UserErweitert.DoesNotExist:
@@ -282,6 +286,10 @@ def settings_view(request):
 
         if 'change_statement' in request.POST:
             statement = request.POST.get('statement')
+            password = request.POST.get('password')
+            if not request.user.check_password(password):
+                messages.error(request, all_messages["invalid_password"])
+                return redirect('settings_view')
             try:
                 user_erweitert = UserErweitert.objects.get(user=request.user)
             except UserErweitert.DoesNotExist:

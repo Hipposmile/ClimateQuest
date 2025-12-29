@@ -163,12 +163,12 @@
     <h3>E-Mail-Adresse ändern</h3>
     <form method="post">
         {% csrf_token %}
+        <label for="password">Passwort:</label>
+        <input type="password" name="password" id="password" placeholder="Passwort" required>
         <label for="email">Neue E-Mail-Adresse:</label>
         <small>Leer lassen, um die E-Mail Adresse zu löschen und keine mehr hinterlegt zu haben</small>
         <small id="email-feedback"></small>
         <input type="email" name="email" id="email" placeholder="neue E-Mail-Adresse">
-        <label for="password">Passwort:</label>
-        <input type="password" name="password" id="password" placeholder="Passwort" required>
         <small>Dein Account wird so lange inaktiv sein, bis die neue E-Mail-Adresse verifiziert wurde.</small>
         <button type="submit" name="change_email">Ändern</button>
     </form>
@@ -199,6 +199,8 @@
     <h3>E-Mail Einstellungen</h3>
     <form method="POST">
         {% csrf_token %}
+        <label for="password">Passwort:</label>
+        <input type="password" name="password" id="password" placeholder="Passwort" required>
         <label class="custom-checkbox">
             <input type="checkbox" name="mailinglist" id="mailinglist_checkbox">
             <span class="checkmark"></span>
@@ -225,10 +227,11 @@
     <h3>Statement ändern</h3>
     <form method="post" onsubmit="fillEditor(event)">
         {% csrf_token %}
+        <label for="password">Passwort:</label>
+        <input type="password" name="password" id="password" placeholder="Passwort" required>
         <label for="content_editor">Statement</label>
         <div id="content_editor" class="quill-editor">{{ user.usererweitert.statement|safe }}</div>
         <input type="hidden" name="statement">
-
         <button type="submit" name="change_statement">Speichern</button>
     </form>
 
@@ -295,22 +298,6 @@
                 }
             }
         }
-    </script>
-
-    <hr>
-    <form>
-        <button onclick="if (Notification.permission === 'default') {Notification.requestPermission().then(permission => {if (permission === 'granted') {console.log('Notification permission granted');subscribe(reg);}});}">
-            Einstellungen zum Senden von Benachrichtigungen an das Gerät ändern.
-        </button>
-        <p id="notification_settings"></p>
-    </form>
-    <script>
-    p = document.getElementById('notification_settings');
-    if (Notification.permission === 'denied') {
-        p.innerHTML = "Aktuell sind die Benachrichtigungen <b>deaktiviert.</b>"
-    } else{
-        p.innerHTML = "Aktuell sind die Benachrichtigungen <b>aktiviert.</b>"
-    }
     </script>
 
     <hr>
