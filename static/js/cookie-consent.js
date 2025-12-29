@@ -141,7 +141,9 @@ styleCookie.textContent = `
     }
 
     #cookie-reset {
-        position: fixed; bottom: 60px; left: 20px;
+        position: fixed; 
+        top: max(2rem, calc(2rem + var(--safe-area-inset-top)));
+        left: max(2rem, calc(2rem + var(--safe-area-inset-right)));
         padding: 10px 16px;
         background-color: var(--color-accent);
         color: var(--color-white);
@@ -149,7 +151,7 @@ styleCookie.textContent = `
         border-radius: 6px;
         font-weight: 600;
         cursor: pointer;
-        z-index: 99;
+        z-index: 1000;
         box-shadow: 0 4px 12px var(--color-shadow-light);
     }
     
