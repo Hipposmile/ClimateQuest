@@ -30,6 +30,8 @@
           content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
     <meta name="robots" content="index, follow">
 
+    <meta name="vapid-key" content="{{ vapid_public_key }}">
+
     <title>{% block title %}ClimateQuest{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -906,5 +908,4 @@
     <script src="{% static 'pwa/register_sw.js' %}"></script>
 {% endif %}
 </body>
-
 </html>

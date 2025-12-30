@@ -4,10 +4,12 @@
 *.mov
 *.mp4
 Allgemeines/
-tests/
 .env
 *.log
 db.sqlite3
 push.sh
 staticfiles/
 .pylintrc
+tests/
+test.html
+test.py
