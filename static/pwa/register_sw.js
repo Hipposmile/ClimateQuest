@@ -1,5 +1,5 @@
 const getCsrfMiddlewareToken = () => {
-    return document.querySelector('input[name="csrfmiddlewaretoken"]');
+    return document.querySelector('input[name="csrfmiddlewaretoken"]').value;
 }
 
 const registerSw = async () => {
@@ -35,9 +35,9 @@ const initialiseState = (reg) => {
 }
 
 const showNotAllowed = (message) => {
-    const button = document.querySelector('form>button');
-    button.innerHTML = `${message}`;
-    button.setAttribute('disabled', 'true');
+    //const button = document.querySelector('form>button');
+    //button.innerHTML = `${message}`;
+    //button.setAttribute('disabled', 'true');
 };
 
 function urlB64ToUint8Array(base64String) {
@@ -75,7 +75,8 @@ const subscribe = async (reg) => {
 const sendSubData = async (subscription) => {
     console.log("sending sub data")
     const browser = navigator.userAgent.match(/(firefox|msie|chrome|safari|trident)/ig)[0].toLowerCase();
-    const csrfmiddlwaretoken = getCsrfMiddlewareToken();
+    const token = getCsrfMiddlewareToken();
+    console.log(token)
     const data = {
         status_type: 'subscribe',
         subscription: subscription.toJSON(),
@@ -87,7 +88,7 @@ const sendSubData = async (subscription) => {
         body: JSON.stringify(data),
         headers: {
             'content-type': 'application/json',
-            'X-CSRF-Token': csrfmiddlwaretoken,
+            'X-CSRF-Token': token,
         },
         credentials: "include"
     });

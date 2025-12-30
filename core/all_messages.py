@@ -121,6 +121,7 @@ all_messages = {
     "email_verified": "E-Mail-Adresse erfolgreich verifiziert",
     "verification_email_resent": "Verifizierungs-E-Mail erfolgreich erneut gesendet",
 
+
     # --------
     #Aktion
     # --------

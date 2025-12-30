@@ -523,9 +523,17 @@
 </nav>
 <!--Nav-Leist-->
 <script>
+    let timeoutId;
+
     const header = document.getElementById('header');
 
     const renderMobileNavComplete = () => {
+        try {
+            clearTimeout(timeoutId);
+        } catch (error) {
+            console.log("No timeout to clear!")
+        }
+
         header.innerHTML = `
         <nav class="tabbar">
             {% if user.is_authenticated %}
@@ -827,7 +835,7 @@
             e.stopPropagation();
         });
         {% if user.is_authenticated %}
-        ladeBenachrichtigungenAnzahl();
+            ladeBenachrichtigungenAnzahl();
         {% endif %}
     }
 
@@ -885,7 +893,7 @@
                     let benachrichtigungen_count = data.benachrichtigungen_count;
                     if (!countSpan) {
                         console.error("Element #benachrichtigungen-count nicht gefunden.");
-                        setTimeout(function () {
+                        timeoutId = setTimeout(function () {
                             tries++;
                             if (tries < maxTries) {
                                 ladeBenachrichtigungenAnzahl();

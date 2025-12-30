@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMultiAlternatives
 from django.core.validators import validate_email
+from django.shortcuts import redirect
 from webpush import send_user_notification
 
 from ClimateQuest import settingsprod
@@ -22,8 +23,7 @@ dezimalstellen = 4
 logger = logging.getLogger("django")
 
 def generate_random_password():
-    return ''.join(random.choices(string.ascii_letters + string.digits + string.punctuation, k=12))
-
+    return ''.join(random.choices(string.ascii_letters + string.digits + string.punctuation.replace('"', ''), k=12)) # Removes " so string can´t be interrupted
 
 def send_mail_function(**kwargs):
     request = kwargs.get('request')
@@ -46,7 +46,7 @@ def send_mail_function(**kwargs):
 
     recipient_list = kwargs.get('recipient_list')
     if not recipient_list:
-        recipient_list = [user.email]
+        recipient_list = user.email
 
     if not mailinglist_needless and user.email != '':
         try:
@@ -187,7 +187,6 @@ def send_mail_function(**kwargs):
                     {message}
                   </div>
                   <div class="footer">
-                    <p>Du erhältst diese E-Mail, weil du <i>Benachrichtigungen auch per E-Mail erhalten</i> aktiviert hast <a href="https://climate-quest.de/personals/settings/#mailinglist_checkbox">Hier abmelden</a>.</p>
                     <p><a href="https://climate-quest.de/impressum/">Impressum</a> • <a href="https://climate-quest.de/datenschutz/">Datenschutz</a></p>
                   </div>
                 </div>

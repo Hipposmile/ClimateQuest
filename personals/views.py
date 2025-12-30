@@ -251,7 +251,6 @@ def settings_view(request):
                     recipient_list=email,
                     fail_silently=False,
                     mailinglist_needless=True,
-                    redirect_error='register_view',
                     user=request.user,
                 )
 
@@ -335,34 +334,37 @@ def settings_view(request):
 def reset_password(request):
     if request.method == 'POST':
         email = request.POST.get('email')
-        user = User.objects.get(email=email)
 
-        if not user:
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
             messages.error(request, all_messages["email_not_found"])
             return redirect('reset_password')
 
         new_password = generate_random_password()
 
-        send_mail_function(
+        output = send_mail_function(
             request=request,
-            redirect_error='reset_password',
             subject='ClimateQuest - Passwort Reset',
-            message=f'Wir haben dir ein neues, zufällig generiertes Passwort erstellt: {new_password} \nMelde dich damit und mit deinem Benutzernamen {user.username} <a href="https://climate-quest.de/personals/login/">hier</a> an und ändere aus Sicherheitsgründen möglichst bald unter "Profil bearbeiten" dein Passwort.',
+            message=f'Wir haben dir ein neues, zufällig generiertes Passwort erstellt: <b>{new_password}</b> \nMelde dich damit und mit deinem Benutzernamen <b>{user.username}</b> <a href="https://climate-quest.de/personals/login/">hier</a> an und ändere aus Sicherheitsgründen möglichst bald unter "Profil bearbeiten" dein Passwort.',
             recipient_list=user.email,
             fail_silently=False,
             user=user,
         )
 
-        try:
-            user.set_password(new_password)
-            user.save()
-            create_notification(request, 'Du hast dein Passwort resettet.', user)
-            messages.success(request, all_messages["password_reset_mail_sent"])
-            return redirect('login_view')
+        if output:
+            try:
+                user.set_password(new_password)
+                user.save()
+                create_notification(request, 'Du hast dein Passwort resettet.', user)
+                messages.success(request, all_messages["password_reset_mail_sent"])
+                return redirect('login_view')
 
-        except Exception as e:
-            create_internal_error(request, f'Fehler beim Zurücksetzen des Passworts: {e}',
-                                  all_messages["password_reset_error"])
+            except Exception as e:
+                create_internal_error(request, f'Fehler beim Zurücksetzen des Passworts: {e}',
+                                      all_messages["password_reset_error"])
+                return redirect('reset_password')
+        else:
             return redirect('reset_password')
 
     return render(request, 'reset_password.html')
