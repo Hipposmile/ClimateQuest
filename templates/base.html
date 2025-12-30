@@ -358,6 +358,7 @@
     // Beim Laden prüfen
     document.addEventListener('DOMContentLoaded', createPwaNav);
 </script>
+{% csrf_token %}
 <header id="header">
     <nav class="tabbar">
         {% if user.is_authenticated %}
@@ -825,8 +826,9 @@
         content.addEventListener('click', (e) => {
             e.stopPropagation();
         });
-
+        {% if user.is_authenticated %}
         ladeBenachrichtigungenAnzahl();
+        {% endif %}
     }
 
     function handleResize() {

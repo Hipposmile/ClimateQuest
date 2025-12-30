@@ -1,3 +1,7 @@
+const getCsrfMiddlewareToken = () => {
+    return document.querySelector('input[name="csrfmiddlewaretoken"]');
+}
+
 const registerSw = async () => {
     console.log("registering sw")
     if ('serviceWorker' in navigator) {
@@ -69,7 +73,9 @@ const subscribe = async (reg) => {
 };
 
 const sendSubData = async (subscription) => {
+    console.log("sending sub data")
     const browser = navigator.userAgent.match(/(firefox|msie|chrome|safari|trident)/ig)[0].toLowerCase();
+    const csrfmiddlwaretoken = getCsrfMiddlewareToken();
     const data = {
         status_type: 'subscribe',
         subscription: subscription.toJSON(),
@@ -80,7 +86,8 @@ const sendSubData = async (subscription) => {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            'X-CSRF-Token': csrfmiddlwaretoken,
         },
         credentials: "include"
     });
@@ -89,7 +96,8 @@ const sendSubData = async (subscription) => {
 };
 
 const handleResponse = (res) => {
-    console.log(res.status);
+    console.log(`Response Status: ${res.status}`);
+    console.log(`Response: ${res}`);
 };
 
 registerSw();
