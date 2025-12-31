@@ -499,14 +499,14 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F464;</span> Profil</h2>
                 <nav class="mobile-menu-nav">
-                    <a href="{% url 'create_community' %}"><span class="emoji">&#x1F514;</span> Benachrichtigungen</a>
-                    <a href="{% url 'join_community' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
-                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F4B0;</span> Klimapunkte</a>
-                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
+                    <a href="{% url 'benachrichtigungen_view' %}"><span class="emoji">&#x1F514;</span> Benachrichtigungen</a>
+                    <a href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
+                    <a href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span> Klimapunkte</a>
+                    <a href="{% url 'users_overview' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
                         User</a>
-                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F381;</span> Geschenke</a>
-                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x2699;</span> Einstellungen</a>
-                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F44B;</span> Logout</a>
+                    <a href="{% url 'presents_overview' %}"><span class="emoji">&#x1F381;</span> Geschenke</a>
+                    <a href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span> Einstellungen</a>
+                    <a href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span> Logout</a>
                     {% if user.is_superuser %}
                         <hr>
                         <a class="mobile-menu-sub" href="/ClimateQuestAdmin/" target="_blank">Admin</a>
@@ -678,14 +678,14 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F464;</span> Profil</h2>
                 <nav class="mobile-menu-nav">
-                    <a href="{% url 'create_community' %}"><span class="emoji">&#x1F514;</span> Benachrichtigungen</a>
-                    <a href="{% url 'join_community' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
-                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F4B0;</span> Klimapunkte</a>
-                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
+                    <a href="{% url 'benachrichtigungen_view' %}"><span class="emoji">&#x1F514;</span> Benachrichtigungen</a>
+                    <a href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
+                    <a href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span> Klimapunkte</a>
+                    <a href="{% url 'users_overview' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
                         User</a>
-                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F381;</span> Geschenke</a>
-                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x2699;</span> Einstellungen</a>
-                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F44B;</span> Logout</a>
+                    <a href="{% url 'presents_overview' %}"><span class="emoji">&#x1F381;</span> Geschenke</a>
+                    <a href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span> Einstellungen</a>
+                    <a href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span> Logout</a>
                     {% if user.is_superuser %}
                         <hr>
                         <a class="mobile-menu-sub" href="/ClimateQuestAdmin/" target="_blank">Admin</a>
