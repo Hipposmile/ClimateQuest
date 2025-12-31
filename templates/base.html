@@ -189,7 +189,7 @@
             position: absolute;
             top: 1rem;
             right: 1rem;
-            background: none;
+            background: #8f8f8f;
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
@@ -275,11 +275,19 @@
 <style>
     #pwaNav {
         position: fixed;
-        top: max(10px, calc(10px + var(--safe-area-inset-top)));
+        top: max(25px, calc(25px + var(--safe-area-inset-top)));
         left: max(10px, calc(10px + var(--safe-area-inset-left)));
         display: flex;
+        pointer-events: none;
+        opacity: 0;
         gap: 8px;
         z-index: 9998;
+        transition: opacity 200ms ease-in-out;
+    }
+
+    #pwaNav.open {
+        pointer-events: auto;
+        opacity: 1;
     }
 
     #pwaNav button {
@@ -310,6 +318,30 @@
         opacity: 0.5;
         cursor: not-allowed;
     }
+
+    #pwaNavToggle {
+        position: fixed;
+        top: max(0px, var(--safe-area-inset-top));
+        left: max(10px, calc(10px + var(--safe-area-inset-left)));
+        background: rgba(255, 255, 255, 0.9);
+        color: black;
+        height: 10px;
+        width: 20px;
+        z-index: 9997;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transform: rotate(180deg);
+        padding: 5px;
+        transition: transform 200ms ease-in-out;
+        border-radius: 5px;
+
+    }
+
+    #pwaNavToggle.open {
+        transform: rotate(0);
+    }
 </style>
 
 <script>
@@ -319,9 +351,20 @@
             window.navigator.standalone === true;
 
         if (isStandalone) {
+            // Auf- / Zuklapper erstellen
+            const navToggle = document.createElement('div');
+            navToggle.id = 'pwaNavToggle';
+            navToggle.innerHTML = '^';
+            document.body.appendChild(navToggle);
+
             // Container erstellen
             const nav = document.createElement('div');
             nav.id = 'pwaNav';
+
+            navToggle.addEventListener('click', function () {
+                nav.classList.toggle("open");
+                navToggle.classList.toggle("open");
+            })
 
             // Back-Button
             const backBtn = document.createElement('button');
@@ -379,9 +422,13 @@
                 <span class="tab-icon"><span class="emoji">&#x1F465;</span></span>
                 <span class="tab-label">Community</span>
             </a>
-            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="more">
-                <span class="tab-icon"><span class="emoji">&#x22EF;</span></span>
-                <span class="tab-label">Mehr</span>
+            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="profile">
+                <span class="tab-icon"><span class="emoji">&#x1F464;</span></span>
+                <span class="tab-label">Profil</span>
+            </a>
+            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="education">
+                <span class="tab-icon"><span class="emoji">&#x1F393;</span></span>
+                <span class="tab-label">Bildung</span>
             </a>
         {% else %}
             <a href="/" class="tab-item">
@@ -447,11 +494,33 @@
             </div>
         </div>
 
-        <!-- Mehr Menu -->
-        <div class="mobile-menu-overlay" data-menu="more">
+        <div class="mobile-menu-overlay" data-menu="profile">
             <div class="mobile-menu-modal">
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
-                <h2><span class="emoji">&#x22EF;</span> Menü</h2>
+                <h2><span class="emoji">&#x1F464;</span> Profil</h2>
+                <nav class="mobile-menu-nav">
+                    <a href="{% url 'create_community' %}"><span class="emoji">&#x1F514;</span> Benachrichtigungen</a>
+                    <a href="{% url 'join_community' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
+                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F4B0;</span> Klimapunkte</a>
+                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
+                        User</a>
+                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F381;</span> Geschenke</a>
+                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x2699;</span> Einstellungen</a>
+                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F44B;</span> Logout</a>
+                    {% if user.is_superuser %}
+                        <hr>
+                        <a class="mobile-menu-sub" href="/ClimateQuestAdmin/" target="_blank">Admin</a>
+                        <a class="mobile-menu-sub" href="{% url 'admin_view' %}">Admin (II)</a>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+
+        <!-- Mehr Menu -->
+        <div class="mobile-menu-overlay" data-menu="education">
+            <div class="mobile-menu-modal">
+                <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
+                <h2><span class="emoji">&#x1F393;</span> Bildung</h2>
                 <nav class="mobile-menu-nav">
                     <div class="mobile-menu-section">
                         <div class="mobile-menu-section-title"><span class="emoji">&#x1F4F0;</span> Artikel</div>
@@ -474,28 +543,6 @@
                         <a class="mobile-menu-sub" href="{% url 'forum_overview' %}">Überblick</a>
                         {% if user.is_authenticated %}
                             <a class="mobile-menu-sub" href="{% url 'add_forum_post' %}">Beitrag hinzufügen</a>
-                        {% endif %}
-                    </div>
-
-                    <div class="mobile-menu-section">
-                        <div class="mobile-menu-section-title"><span class="emoji">&#x2699;&#xFE0F;</span> Account</div>
-                        <a class="mobile-menu-sub" href="{% url 'settings_view' %}">Einstellungen</a>
-                        <a class="mobile-menu-sub" href="{% url 'benachrichtigungen_view' %}">Benachrichtigungen</a>
-                        <a class="mobile-menu-sub" href="{% url 'level_view' request.user.id %}">Mein Level</a>
-                        <a class="mobile-menu-sub" href="{% url 'klimapunkte_view' request.user.id %}">Klimapunkte</a>
-                    </div>
-
-                    <div class="mobile-menu-section">
-                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F381;</span> Extras</div>
-                        <a class="mobile-menu-sub" href="{% url 'presents_overview' %}">Geschenke</a>
-                        <a class="mobile-menu-sub" href="{% url 'users_overview' %}">Benutzer</a>
-                        <a class="mobile-menu-sub" href="{% url 'share' %}?url=
-            {{ request.build_absolute_uri|urlencode }}">Teilen</a>
-                        <a class="mobile-menu-sub" href="{% url 'logout_view' %}">Logout</a>
-                        {% if user.is_superuser %}
-                            <hr>
-                            <a class="mobile-menu-sub" href="/ClimateQuestAdmin/" target="_blank">Admin</a>
-                            <a class="mobile-menu-sub" href="{% url 'admin_view' %}">Admin (II)</a>
                         {% endif %}
                     </div>
                 </nav>
@@ -536,7 +583,7 @@
 
         header.innerHTML = `
         <nav class="tabbar">
-            {% if user.is_authenticated %}
+        {% if user.is_authenticated %}
             <a href="/" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F3E0;</span></span>
                 <span class="tab-label">Home</span>
@@ -546,18 +593,23 @@
                 <span class="tab-label">Verbrauch</span>
             </a>
             <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="family">
-                <span class="tab-icon"><span class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span></span>
+                <span class="tab-icon"><span
+                        class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span></span>
                 <span class="tab-label">Family</span>
             </a>
             <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="community">
                 <span class="tab-icon"><span class="emoji">&#x1F465;</span></span>
                 <span class="tab-label">Community</span>
             </a>
-            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="more">
-                <span class="tab-icon"><span class="emoji">&#x22EF;</span></span>
-                <span class="tab-label">Mehr</span>
+            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="profile">
+                <span class="tab-icon"><span class="emoji">&#x1F464;</span></span>
+                <span class="tab-label">Profil</span>
             </a>
-            {% else %}
+            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="education">
+                <span class="tab-icon"><span class="emoji">&#x1F393;</span></span>
+                <span class="tab-label">Bildung</span>
+            </a>
+        {% else %}
             <a href="/" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F3E0;</span></span>
                 <span class="tab-label">Home</span>
@@ -578,10 +630,10 @@
                 <span class="tab-icon"><span class="emoji">&#x1F510;</span></span>
                 <span class="tab-label">Login</span>
             </a>
-            {% endif %}
-        </nav>
+        {% endif %}
+    </nav>
 
-        {% if user.is_authenticated %}
+    {% if user.is_authenticated %}
         <!-- Modals für Mobile Menus -->
         <!-- Verbrauch Menu -->
         <div class="mobile-menu-overlay" data-menu="verbrauch">
@@ -621,17 +673,39 @@
             </div>
         </div>
 
-        <!-- Mehr Menu -->
-        <div class="mobile-menu-overlay" data-menu="more">
+        <div class="mobile-menu-overlay" data-menu="profile">
             <div class="mobile-menu-modal">
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
-                <h2><span class="emoji">&#x22EF;</span> Menü</h2>
+                <h2><span class="emoji">&#x1F464;</span> Profil</h2>
+                <nav class="mobile-menu-nav">
+                    <a href="{% url 'create_community' %}"><span class="emoji">&#x1F514;</span> Benachrichtigungen</a>
+                    <a href="{% url 'join_community' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
+                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F4B0;</span> Klimapunkte</a>
+                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
+                        User</a>
+                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F381;</span> Geschenke</a>
+                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x2699;</span> Einstellungen</a>
+                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F44B;</span> Logout</a>
+                    {% if user.is_superuser %}
+                        <hr>
+                        <a class="mobile-menu-sub" href="/ClimateQuestAdmin/" target="_blank">Admin</a>
+                        <a class="mobile-menu-sub" href="{% url 'admin_view' %}">Admin (II)</a>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+
+        <!-- Mehr Menu -->
+        <div class="mobile-menu-overlay" data-menu="education">
+            <div class="mobile-menu-modal">
+                <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
+                <h2><span class="emoji">&#x1F393;</span> Bildung</h2>
                 <nav class="mobile-menu-nav">
                     <div class="mobile-menu-section">
                         <div class="mobile-menu-section-title"><span class="emoji">&#x1F4F0;</span> Artikel</div>
                         <a class="mobile-menu-sub" href="{% url 'artikel_overview' %}">Überblick</a>
                         {% if user.is_authenticated %}
-                        <a class="mobile-menu-sub" href="{% url 'add_artikel' %}">Artikel hinzufügen</a>
+                            <a class="mobile-menu-sub" href="{% url 'add_artikel' %}">Artikel hinzufügen</a>
                         {% endif %}
                     </div>
 
@@ -639,7 +713,7 @@
                         <div class="mobile-menu-section-title"><span class="emoji">&#x1F389;</span> Events</div>
                         <a class="mobile-menu-sub" href="{% url 'events_overview' %}">Überblick</a>
                         {% if user.is_authenticated %}
-                        <a class="mobile-menu-sub" href="{% url 'add_event' %}">Event erstellen</a>
+                            <a class="mobile-menu-sub" href="{% url 'add_event' %}">Event erstellen</a>
                         {% endif %}
                     </div>
 
@@ -647,35 +721,13 @@
                         <div class="mobile-menu-section-title"><span class="emoji">&#x1F4AC;</span> Forum</div>
                         <a class="mobile-menu-sub" href="{% url 'forum_overview' %}">Überblick</a>
                         {% if user.is_authenticated %}
-                        <a class="mobile-menu-sub" href="{% url 'add_forum_post' %}">Beitrag hinzufügen</a>
-                        {% endif %}
-                    </div>
-
-                    <div class="mobile-menu-section">
-                        <div class="mobile-menu-section-title"><span class="emoji">&#x2699;&#xFE0F;</span> Account</div>
-                        <a class="mobile-menu-sub" href="{% url 'settings_view' %}">Einstellungen</a>
-                        <a class="mobile-menu-sub" href="{% url 'benachrichtigungen_view' %}">Benachrichtigungen</a>
-                        <a class="mobile-menu-sub" href="{% url 'level_view' request.user.id %}">Mein Level</a>
-                        <a class="mobile-menu-sub" href="{% url 'klimapunkte_view' request.user.id %}">Klimapunkte</a>
-                    </div>
-
-                    <div class="mobile-menu-section">
-                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F381;</span> Extras</div>
-                        <a class="mobile-menu-sub" href="{% url 'presents_overview' %}">Geschenke</a>
-                        <a class="mobile-menu-sub" href="{% url 'users_overview' %}">Benutzer</a>
-                        <a class="mobile-menu-sub" href="{% url 'share' %}?url=
-            {{ request.build_absolute_uri|urlencode }}">Teilen</a>
-                        <a class="mobile-menu-sub" href="{% url 'logout_view' %}">Logout</a>
-                        {% if user.is_superuser %}
-                        <hr>
-                        <a class="mobile-menu-sub" href="/ClimateQuestAdmin/" target="_blank">Admin</a>
-                        <a class="mobile-menu-sub" href="{% url 'admin_view' %}">Admin (II)</a>
+                            <a class="mobile-menu-sub" href="{% url 'add_forum_post' %}">Beitrag hinzufügen</a>
                         {% endif %}
                     </div>
                 </nav>
             </div>
         </div>
-        {% endif %}
+    {% endif %}
         `;
         renderMobileNav();
     };
