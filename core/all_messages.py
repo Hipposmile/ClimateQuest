@@ -172,6 +172,7 @@ all_messages = {
     "successfully_answered_comment": "Kommentar erfolgreich beantwortet.",
     "successfully_added_like": "Du hast den Artikel erfolgreich geliket.",
     "successfully_removed_like": "Du hast den Like zum Artikel erfolgreich entfernt.",
+    "likes_search_keyword_not_a_number": "Wenn du nach Likes filterst, muss das Suchwort eine Zahl sein",
 
     # --------
     #Forum

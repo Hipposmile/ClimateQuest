@@ -1,42 +1,43 @@
 {% extends "base.html" %}
 {% load static %}
 {% block meta %}
-    <meta name="description" content="Sieh dir deine Verbrauchshistorie bei ClimateQuest an und analysiere deine Aktionen zur Reduzierung deines CO2-Fußabdrucks.">
+    <meta name="description"
+          content="Sieh dir deine Verbrauchshistorie bei ClimateQuest an und analysiere deine Aktionen zur Reduzierung deines CO2-Fußabdrucks.">
 {% endblock %}
 {% block title %}ClimateQuest - Verbrauchshistorie{% endblock %}
 {% block content %}
-<h1>Verbrauchshistorie</h1>
-{% if messages %}
-{% for message in messages %}
-<p class="{{message.level_tag}}-message">{{ message }}</p>
-{% endfor %}
-{% endif %}
-{% if actions %}
-<ul class="action-list">
-    {% for action in actions %}
-    <li class="action-list-container">
-        <p class="action-list-description">Aktion:</p>
-        <p class="action-list-value">{{ action.aktion.name }}</p>
+    <h1>Verbrauchshistorie</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    {% if actions %}
+        <ul class="action-list">
+            {% for action in actions %}
+                <li class="action-list-container">
+                    <p class="action-list-description">Aktion:</p>
+                    <p class="action-list-value">{{ action.aktion.name }}</p>
 
-        <p class="action-list-description">Datum:</p>
-        <p class="action-list-value">{{ action.date|date:"d.m.Y" }}</p>
+                    <p class="action-list-description">Datum:</p>
+                    <p class="action-list-value">{{ action.date|date:"d.m.Y" }}</p>
 
-        {% if action.description %}
-        <p class="action-list-description">Beschreibung:</p>
-        <p class="action-list-value">{{ action.description }}</p>
-        {% endif %}
+                    {% if action.description %}
+                        <p class="action-list-description">Beschreibung:</p>
+                        <p class="action-list-value">{{ action.description }}</p>
+                    {% endif %}
 
-        <p class="action-list-description">Klimapunkte:</p>
-        <p class="action-list-value">{{ action.impact|floatformat:4 }}</p>
+                    <p class="action-list-description">Klimapunkte:</p>
+                    <p class="action-list-value">{{ action.impact|floatformat:4 }}</p>
 
-        <p class="action-list-description">{{ action.aktion.mengeBeschreibung }}</p>
-        <p class="action-list-value">{{ action.quantity }} {{ action.einheit }}</p>
+                    <p class="action-list-description">{{ action.aktion.mengeBeschreibung }}</p>
+                    <p class="action-list-value">{{ action.quantity }} {{ action.einheit }}</p>
 
-        <a href="{% url 'edit_action' action.id %}">Bearbeiten</a>
-    </li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>Keine Aktionen gefunden.</p>
-{% endif %}
+                    <a href="{% url 'edit_action' action.id %}">Bearbeiten</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Keine Aktionen gefunden.</p>
+    {% endif %}
 {% endblock %}

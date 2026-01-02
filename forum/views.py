@@ -22,6 +22,9 @@ def forum_overview(request):
         if ordered_by == "von mir erstellte Posts":
             forum_posts = forum_posts.filter(creator=request.user)
             already_ordered = True
+        if ordered_by == "von mir beantwortete Posts":
+            forum_posts = ForumPost.objects.filter(answers__creator=request.user).distinct()
+            already_ordered = True
         if ordered_by == "Erstellt am":
             if search_keyword:
                 forum_posts = forum_posts.filter(**{f"date_time__icontains": search_keyword})

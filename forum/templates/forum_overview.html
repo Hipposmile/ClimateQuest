@@ -31,6 +31,7 @@
             <option value="Erstellt am">Erstellt am</option>
             {% if user.is_authenticated %}
                 <option value="von mir erstellte Posts">von mir erstellte Posts</option>
+                <option value="von mir beantwortete Posts">von mir beantwortete Posts</option>
             {% endif %}
         </select>
 
@@ -42,7 +43,7 @@
         search_keyword_div = document.getElementById('search_keyword_div');
 
         order_by.addEventListener('change', function () {
-            if (order_by.value == "von mir erstellte Posts") {
+            if (order_by.value === "von mir erstellte Posts" || order_by.value === "von mir beantwortete Posts") {
                 search_keyword_div.style.display = "none";
             } else {
                 search_keyword_div.style.display = "block";

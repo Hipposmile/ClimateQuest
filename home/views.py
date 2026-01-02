@@ -7,6 +7,8 @@ from django.shortcuts import render, redirect
 from dotenv import load_dotenv
 
 from events.models import *
+from forum.models import *
+from verbrauch.models import *
 from utils.functions import *
 
 load_dotenv()
@@ -28,12 +30,16 @@ def home(request):
 def dashboard(request):
     if not request.user.is_authenticated:
         return redirect('home')
-    klimapunkte = get_all_klimapunkte_from_user(request.user)
-    level = get_level(request.user)['current_level']
-    families = get_families_of_user(request.user)
 
-    # Verwende diese IDs zum Filtern der Communities
-    communities = Community.objects.filter(members__id__in=families).distinct().order_by('name')
+    aktionen = Aktion.objects.filter(user=request.user).order_by('date')[:2]
+
+    klimapunkte = get_all_klimapunkte_from_user(request.user)
+
+    level = get_level(request.user)['current_level']
+
+    families = get_families_of_user(request.user).order_by('name')[:2]
+
+    communities = Community.objects.filter(members__id__in=families).distinct().order_by('name')[:2]
 
     communities_with_user_families = []
 
@@ -41,7 +47,18 @@ def dashboard(request):
         families_in_community = community.members.all()  # alle Families in dieser Community
         families_user_belongs_to = families_in_community & families  # Schnittmenge
         communities_with_user_families.append({'community': community, 'families': families_user_belongs_to})
-    return render(request, './dashboard.html', {'klimapunkte': klimapunkte, 'level': level, 'families': families, 'communities_with_user_families': communities_with_user_families})
+
+    families = families[:2]
+
+    created_events = Event.objects.filter(creator=request.user, date_time__gte=timezone.now()).order_by('-date_time')[:2]
+    events = request.user.events.filter(date_time__gte=timezone.now()).order_by('-date_time')[:2]
+
+    created_artikel = Artikel.objects.filter(creator=request.user).order_by('-date_time')[:2]
+    artikel = request.user.artikel_like.all().order_by('-date_time')[:2]
+
+    created_forum_posts = ForumPost.objects.filter(creator=request.user).order_by('-date_time')[:2]
+    forum_posts = ForumPost.objects.filter(answers__creator=request.user).distinct().order_by('-date_time')[:2]
+    return render(request, './dashboard.html', {'aktionen': aktionen, 'klimapunkte': klimapunkte, 'level': level, 'families': families, 'communities_with_user_families': communities_with_user_families, 'created_events': created_events, 'events': events, 'created_artikel': created_artikel, 'artikel': artikel, 'created_forum_posts': created_forum_posts, 'forum_posts': forum_posts})
 
 @login_required
 def admin(request):

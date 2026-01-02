@@ -5,14 +5,55 @@
 {% block title %}ClimateQuest - Dashboard{% endblock %}
 
 {% block content %}
-    <style>
-
-    </style>
     <a href="{% url 'home' %}" class="redirect-link">
         <span>Zur Homepage</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <h1 style="margin-top: 0;">Dashboard</h1>
+    <p>Es werden jeweils nur die ersten zwei Einträge angezeigt.</p>
+    <a href="{% url 'user_detail' request.user.id %}" class="redirect-link">
+        <span>Zur öffentlichen Profilseite</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+    <h2>Aktionen</h2>
+    {% if aktionen %}
+        <ul class="action-list">
+            {% for aktion in aktionen %}
+                <li class="action-list-container">
+                    <p class="action-list-description">Aktion:</p>
+                    <p class="action-list-value">{{ aktion.aktion.name }}</p>
+
+                    <p class="action-list-description">Datum:</p>
+                    <p class="action-list-value">{{ aktion.date|date:"d.m.Y" }}</p>
+
+                    {% if aktion.description %}
+                        <p class="action-list-description">Beschreibung:</p>
+                        <p class="action-list-value">{{ aktion.description }}</p>
+                    {% endif %}
+
+                    <p class="action-list-description">Klimapunkte:</p>
+                    <p class="action-list-value">{{ aktion.impact|floatformat:4 }}</p>
+
+                    <p class="action-list-description">{{ aktion.aktion.mengeBeschreibung }}</p>
+                    <p class="action-list-value">{{ aktion.quantity }} {{ aktion.einheit }}</p>
+
+                    <a href="{% url 'edit_action' aktion.id %}">Bearbeiten</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Keine Aktionen gefunden.</p>
+    {% endif %}
+    <a href="{% url 'history' %}" class="redirect-link">
+        <span>Zur Verbrauchshistorie</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+    <br>
+    <a href="{% url 'add' %}" class="redirect-link">
+        <span>Aktion hinzufügen</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+
     <h2>Klimapunkte</h2>
     <p>Du hast bereits {{ klimapunkte }} Klimapunkte gesammelt</p>
     <a href="{% url 'klimapunkte_me' %}" class="redirect-link">
@@ -202,6 +243,293 @@
 
     <a href="{% url 'communities_view' %}" class="redirect-link">
         <span>Zu den Communities</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+
+    <style>
+        .event-date-relative {
+            font-weight: 100;
+            filter: grayscale(100%);
+            margin-bottom: 5px;
+        }
+
+        .event-date-relative::before {
+            content: "📅 ";
+            margin-right: 4px;
+        }
+    </style>
+
+    <h2>von mir erstellte Events</h2>
+    {% if created_events %}
+        {% for created_event in created_events %}
+            <section
+                    class="event-card{% if request.user in created_event.participants.all %} event-card-participant{% elif request.user == created_event.creator %} event-card-creator{% endif %}">
+                <div class="event-main">
+                    <h3 class="event-title">{{ created_event.name }}</h3>
+                    <span class="event-date-relative"></span>
+                </div>
+
+                <details class="event-details">
+                    <summary>mehr</summary>
+                    <div class="event-extra">
+                        <p class="description"><strong>Beschreibung:</strong></p>
+                        <div class="event-description">{{ created_event.description|safe }}</div>
+                        <p><strong>Datum und Uhrzeit (Beginn):</strong> <span class="event-date"
+                                                                              data-date="{{ created_event.date_time|date:'c' }}">{{ created_event.date_time|date:"d.m.Y, H:i" }}</span>
+                        </p>
+                        <p><strong>Dauer in Minuten:</strong> {{ created_event.duration }}</p>
+                        <p><strong>Adresse:</strong> {{ created_event.adress }}</p>
+                        <p><strong>Ersteller:</strong> <a
+                                href="{% url 'user_detail' created_event.creator.id %}">{{ created_event.creator.username }}</a>
+                            {% if request.user == created_event.creator %}(Du){% endif %}</p>
+                        <details class="event-details">
+                            <summary>
+                                <p><strong>Teilnehmeranzahl:</strong> {{ created_event.participants_count }}</p>
+                            </summary>
+                            <ul class="participant-list">
+                                {% for participant in created_event.participants.all %}
+                                    <li>{{ participant }}</li>
+                                {% endfor %}
+                            </ul>
+                        </details>
+                    </div>
+                </details>
+                <a class="event-link" href="{% url 'event_detail' created_event.id %}">Details ansehen</a>
+            </section>
+        {% endfor %}
+    {% else %}
+        <p>Derzeit nimmst du an keinen Events teil</p>
+    {% endif %}
+
+    <a href="{% url 'events_overview' %}" class="redirect-link">
+        <span>Zu den Events</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+
+    <h2>Events, bei denen ich teilnehme</h2>
+    {% if events %}
+        {% for event in events %}
+            <section
+                    class="event-card{% if request.user in event.participants.all %} event-card-participant{% elif request.user == event.creator %} event-card-creator{% endif %}">
+                <div class="event-main">
+                    <h2 class="event-title">{{ event.name }}</h2>
+                    <span class="event-date-relative"></span>
+                </div>
+
+                <details class="event-details">
+                    <summary>mehr</summary>
+                    <div class="event-extra">
+                        <p class="description"><strong>Beschreibung:</strong></p>
+                        <div class="event-description">{{ event.description|safe }}</div>
+                        <p><strong>Datum und Uhrzeit (Beginn):</strong> <span class="event-date"
+                                                                              data-date="{{ event.date_time|date:'c' }}">{{ event.date_time|date:"d.m.Y, H:i" }}</span>
+                        </p>
+                        <p><strong>Dauer in Minuten:</strong> {{ event.duration }}</p>
+                        <p><strong>Adresse:</strong> {{ event.adress }}</p>
+                        <p><strong>Ersteller:</strong> <a
+                                href="{% url 'user_detail' event.creator.id %}">{{ event.creator.username }}</a>
+                            {% if request.user == event.creator %}(Du){% endif %}</p>
+                        <details class="event-details">
+                            <summary>
+                                <p><strong>Teilnehmeranzahl:</strong> {{ event.participants_count }}</p>
+                            </summary>
+                            <ul class="participant-list">
+                                {% for participant in event.participants.all %}
+                                    <li>{{ participant }}</li>
+                                {% endfor %}
+                            </ul>
+                        </details>
+                    </div>
+                </details>
+                <a class="event-link" href="{% url 'event_detail' event.id %}">Details ansehen</a>
+            </section>
+        {% endfor %}
+    {% else %}
+        <p>Derzeit nimmst du an keinen Events teil</p>
+    {% endif %}
+
+    <a href="{% url 'events_overview' %}" class="redirect-link">
+        <span>Zu den Events</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+
+    <script>
+        function getLabel(dateStr) {
+            const now = new Date();
+            const target = new Date(dateStr);
+
+            // Nur Datum vergleichen, keine Uhrzeit
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const targetDay = new Date(target.getFullYear(), target.getMonth(), target.getDate());
+
+            const diffDays = Math.round((targetDay - today) / (1000 * 60 * 60 * 24));
+
+            if (diffDays < 0) return "vergangen";
+            if (diffDays === 0) return "heute";
+            if (diffDays === 1) return "morgen";
+            if (diffDays === 2) return "übermorgen";
+            if (diffDays <= 7) return "innerhalb der nächsten Woche";
+            if (diffDays <= 30) return "innerhalb der nächsten 30 Tage";
+            if (diffDays <= 365) return "innerhalb des nächsten Jahres";
+            return "noch über ein Jahr entfernt";
+        }
+
+        document.querySelectorAll('.event-card').forEach(div => {
+            const dateSpan = div.querySelector('.event-date');
+            const labelSpan = div.querySelector('.event-date-relative');
+            const dateStr = dateSpan.dataset.date;
+
+            const label = getLabel(dateStr);
+            labelSpan.textContent = label;
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const descriptions = document.querySelectorAll(".description");
+
+            descriptions.forEach(description => {
+                const button = description.querySelector(".toggle-button");
+
+                let shouldBlur = false;
+
+                const textLength = description.textContent.trim().length;
+                if (textLength > 100) {
+                    shouldBlur = true;
+                    description.classList.add("blur-enabled");
+                } else {
+                    description.classList.remove("blur-enabled");
+                }
+            });
+        });
+    </script>
+
+    <h2>von mir erstellte Artikel</h2>
+    {% if created_artikel %}
+        {% for single_created_artikel in created_artikel %}
+            <section
+                    class="event-card{% if request.user == single_created_artikel.creator %} event-card-creator{% endif %}">
+                <div class="event-main">
+                    <h3 class="event-title">{{ single_created_artikel.name }}</h3>
+                </div>
+
+                <details class="event-details">
+                    <summary>mehr</summary>
+                    <div class="event-extra">
+                        <p><strong>Zuletzt bearbeitet:</strong> <span class="event-date"
+                                                                      data-date="{{ single_created_artikel.date_time|date:'c' }}">{{ single_created_artikel.date_time|date:"d.m.Y, H:i" }}</span>
+                        </p>
+                        <p><strong>Ersteller:</strong> <a
+                                href="{% url 'user_detail' single_created_artikel.creator.id %}">{{ single_created_artikel.creator.username }}</a>
+                            {% if request.user == single_created_artikel.creator %}(Du){% endif %}</p>
+                        <p><strong>Likes:</strong> {{ single_created_artikel.like_count }}</p>
+                    </div>
+                </details>
+                <a class="event-link" href="{% url 'artikel_detail' single_created_artikel.id %}">Details ansehen</a>
+            </section>        {% endfor %}
+    {% else %}
+        <p>Derzeit hast du keine Artikel erstellt</p>
+    {% endif %}
+
+    <a href="{% url 'artikel_overview' %}" class="redirect-link">
+        <span>Zu den Artikeln</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+
+    <h2>von mir gelikte Artikel</h2>
+    {% if artikel %}
+        {% for single_artikel in artikel %}
+            <section
+                    class="event-card{% if request.user == single_artikel.creator %} event-card-creator{% endif %}">
+                <div class="event-main">
+                    <h3 class="event-title">{{ single_artikel.name }}</h3>
+                </div>
+
+                <details class="event-details">
+                    <summary>mehr</summary>
+                    <div class="event-extra">
+                        <p><strong>Zuletzt bearbeitet:</strong> <span class="event-date"
+                                                                      data-date="{{ single_artikel.date_time|date:'c' }}">{{ single_artikel.date_time|date:"d.m.Y, H:i" }}</span>
+                        </p>
+                        <p><strong>Ersteller:</strong> <a
+                                href="{% url 'user_detail' single_artikel.creator.id %}">{{ single_artikel.creator.username }}</a>
+                            {% if request.user == single_artikel.creator %}(Du){% endif %}</p>
+                        <p><strong>Likes:</strong> {{ single_artikel.like_count }}</p>
+                    </div>
+                </details>
+                <a class="event-link" href="{% url 'artikel_detail' single_artikel.id %}">Details ansehen</a>
+            </section>
+        {% endfor %}
+    {% else %}
+        <p>Derzeit hast du keine Artikel geliket</p>
+    {% endif %}
+
+    <a href="{% url 'artikel_overview' %}" class="redirect-link">
+        <span>Zu den Artikeln</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+
+    <h2>von mir erstellte Forumsbeiträge</h2>
+    {% if created_forum_posts %}
+        {% for created_post in created_forum_posts %}
+            <section
+                    class="event-card{% if request.user == created_post.creator %} event-card-creator{% endif %}">
+                <div class="event-main">
+                    <h3 class="event-title">{{ created_post.title }}</h3>
+                </div>
+
+                <details class="event-details">
+                    <summary>mehr</summary>
+                    <div class="event-extra">
+                        <p><strong>Erstellt am:</strong> <span class="event-date"
+                                                               data-date="{{ created_post.date_time|date:'c' }}">{{ created_post.date_time|date:"d.m.Y, H:i" }}</span>
+                        </p>
+                        <p><strong>Ersteller:</strong> <a
+                                href="{% url 'user_detail' created_post.creator.id %}">{{ created_post.creator.username }}</a>
+                            {% if request.user == created_post.creator %}(Du){% endif %}</p>
+                    </div>
+                </details>
+
+                <a class="event-link" href="{% url 'post_detail' created_post.id %}">Details ansehen</a>
+            </section>
+        {% endfor %}
+    {% else %}
+        <p>Derzeit hast du keine Forumsbeiträge erstellt</p>
+    {% endif %}
+
+    <a href="{% url 'forum_overview' %}" class="redirect-link">
+        <span>Zum Forum</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+
+    <h2>von mir beantwortete Forumsbeiträge</h2>
+    {% if forum_posts %}
+        {% for post in forum_posts %}
+            <section
+                    class="event-card{% if request.user == post.creator %} event-card-creator{% endif %}">
+                <div class="event-main">
+                    <h3 class="event-title">{{ post.title }}</h3>
+                </div>
+
+                <details class="event-details">
+                    <summary>mehr</summary>
+                    <div class="event-extra">
+                        <p><strong>Erstellt am:</strong> <span class="event-date"
+                                                               data-date="{{ post.date_time|date:'c' }}">{{ post.date_time|date:"d.m.Y, H:i" }}</span>
+                        </p>
+                        <p><strong>Ersteller:</strong> <a
+                                href="{% url 'user_detail' post.creator.id %}">{{ post.creator.username }}</a>
+                            {% if request.user == post.creator %}(Du){% endif %}</p>
+                    </div>
+                </details>
+
+                <a class="event-link" href="{% url 'post_detail' post.id %}">Details ansehen</a>
+            </section>
+        {% endfor %}
+    {% else %}
+        <p>Derzeit hast du keine Forumsbeiträge beantwortet</p>
+    {% endif %}
+
+    <a href="{% url 'forum_overview' %}" class="redirect-link">
+        <span>Zum Forum</span>
         <span class="redirect-link-icon">→</span>
     </a>
 {% endblock %}

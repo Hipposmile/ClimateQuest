@@ -30,11 +30,12 @@ def events_overview(request):
         order_by = order_map.get(ordered_by, "name")
 
         if ordered_by == "Teilnehmeranzahl":
-            try:
-                search_keyword = int(search_keyword)
-            except ValueError:
-                messages.error(request, all_messages["teilnehmeranzahl_search_keyword_not_a_number"])
-                return redirect('events_overview')
+            if search_keyword:
+                try:
+                    search_keyword = int(search_keyword)
+                except ValueError:
+                    messages.error(request, all_messages["teilnehmeranzahl_search_keyword_not_a_number"])
+                    return redirect('events_overview')
 
             events = all_events.annotate(num_participants=Count('participants'))
             if search_keyword:

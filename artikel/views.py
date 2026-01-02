@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.shortcuts import render, redirect
 
 from core.all_messages import all_messages
@@ -9,7 +10,7 @@ from .models import *
 # Create your views here.
 def artikel_overview(request):
     all_artikel = Artikel.objects.all()
-    artikel = all_artikel.order_by('name')
+    # artikel = all_artikel.order_by('name')
     search_keyword = None
     if request.method == 'POST':
         already_ordered = False
@@ -21,20 +22,36 @@ def artikel_overview(request):
         }
         order_by = order_map.get(ordered_by, "name")
         if ordered_by == "von mir erstellte Artikel":
-            artikel = artikel.filter(creator=request.user)
+            artikel = all_artikel.filter(creator=request.user)
+            already_ordered = True
+        if ordered_by == "von mir gelikte Artikel":
+            artikel = request.user.artikel_like.all()
             already_ordered = True
         if ordered_by == "Zuletzt bearbeitet":
             if search_keyword:
-                artikel = artikel.filter(**{f"date_time__icontains": search_keyword})
+                artikel = all_artikel.filter(**{f"date_time__icontains": search_keyword})
             else:
-                artikel = artikel
+                artikel = all_artikel
             artikel = artikel.order_by("-date_time")
+            already_ordered = True
+        if ordered_by == "Likes":
+            if search_keyword:
+                try:
+                    search_keyword = int(search_keyword)
+                except ValueError:
+                    messages.error(request, all_messages["likes_search_keyword_not_a_number"])
+                    return redirect('artikel_overview')
+
+            artikel = all_artikel.annotate(num_likes=Count('like'))
+            if search_keyword:
+                artikel = artikel.filter(num_likes__icontains=search_keyword)
+            artikel = artikel.order_by('-num_likes')
             already_ordered = True
         if not already_ordered:
             if search_keyword:
-                artikel = artikel.filter(**{f"{order_by}__icontains": search_keyword})
+                artikel = all_artikel.filter(**{f"{order_by}__icontains": search_keyword})
             else:
-                artikel = artikel
+                artikel = all_artikel
             artikel = artikel.order_by(order_by)
     else:
         ordered_by = "Name"
