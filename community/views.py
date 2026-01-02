@@ -134,13 +134,17 @@ def edit_community(request, community_id, family_id):
 
     if request.user not in family.members.all():
         messages.error(request, all_messages["community__not_member_of_family"])
-        return redirect('home')
+        return redirect('dashboard')
 
     if request.method == 'POST':
 
         if 'change_communityname' in request.POST:
             admin_password = request.POST.get('admin_password')
             communityname = request.POST.get('new_communityname')
+
+            if Community.objects.filter(name=communityname).exists():
+                messages.error(request, all_messages["community_exists"])
+                return redirect('create_community')
 
             if not admin_password or not communityname:
                 messages.error(request, all_messages["missing_required_inputs"])
@@ -203,7 +207,7 @@ def edit_community(request, community_id, family_id):
                                            f'Die Family {family.name} wurde von {request.user} aus der Community {community.name} entfernt',
                                         user_to_message)
                 messages.success(request, all_messages["family_left_community"])
-                return redirect('home')
+                return redirect('dashboard')
             else:
                 family_to_remove = Family.objects.get(name=family_name)
                 community = Community.objects.get(id=community_id)
@@ -227,7 +231,7 @@ def edit_community(request, community_id, family_id):
                                            f'Die Family {family.name} wurde von {request.user} aus der Community {community.name} entfernt',
                                         user_to_message)
                 messages.success(request, all_messages["family_left_community"])
-                return redirect('home')
+                return redirect('dashboard')
 
         if 'change_chat_settings' in request.POST:
             admin_password = request.POST.get('admin_password')
@@ -255,7 +259,7 @@ def edit_community(request, community_id, family_id):
                                         user_to_message)
                 community.delete()
                 messages.success(request, all_messages["community_deleted"])
-                return redirect('home')
+                return redirect('dashboard')
 
     return render(request, 'edit_community.html', {"community": community, "family": family})
 
@@ -286,7 +290,7 @@ def chat_community(request, community_id, family_id):
 
     if request.user not in family.members.all():
         messages.error(request, all_messages["community__not_member_of_family"])
-        return redirect('home')
+        return redirect('dashboard')
 
     if request.method == 'POST':
         msg = request.POST.get('message')
@@ -311,7 +315,7 @@ def community_detail(request, community_id, family_id):
         community = Community.objects.get(id=community_id)
     except Community.DoesNotExist:
         messages.error(request, all_messages["community_not_found"])
-        return redirect('home')
+        return redirect('dashboard')
 
     if not family_id:
         messages.error(request, all_messages["community__family_id_missing"])
@@ -324,7 +328,7 @@ def community_detail(request, community_id, family_id):
 
     if request.user not in family.members.all():
         messages.error(request, all_messages["community__not_member_of_family"])
-        return redirect('home')
+        return redirect('dashboard')
 
     members_with_klimapunkte = []
     community_members = community.members.all()

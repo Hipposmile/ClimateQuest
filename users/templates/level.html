@@ -68,17 +68,17 @@
         {% endfor %}
     {% endif %}
 
-    <p>Klimapunkte: {{ levelt_date.klimapunkte|floatformat:-4 }}</p>
+    <p>Klimapunkte: {{ level_data.klimapunkte|floatformat:-4 }}</p>
 
-    {% if levelt_date.info %}
-        <p id="info">{{ levelt_date.info|safe }}</p>
+    {% if level_data.info %}
+        <p id="info">{{ level_data.info|safe }}</p>
     {% else %}
-        <p>Du bist im Level: {{ levelt_date.current_level }}</p>
-        <p>Nächstes Level: {{ levelt_date.next_level }}</p>
+        <p>Du bist im Level: {{ level_data.current_level }}</p>
+        <p>Nächstes Level: {{ level_data.next_level }}</p>
         <div class="progress-container">
-            <div class="progress-bar" style="width: {{ levelt_date.progress_percent }}%;"></div>
+            <div class="progress-bar" style="width: {{ level_data.progress_percent }}%;"></div>
         </div>
-        <p>{{ levelt_date.progress_percent }} % zum nächsten Level geschafft</p>
+        <p>{{ level_data.progress_percent }} % zum nächsten Level geschafft</p>
     {% endif %}
     <h3>Liste der Level</h3>
     <table class="level-table">
@@ -89,7 +89,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for level in levelt_date.levels %}
+        {% for level in level_data.levels %}
             <tr>
                 <td>{{ level.description }}</td>
                 <td>{{ level.klimapunkte }}</td>

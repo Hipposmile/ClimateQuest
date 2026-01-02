@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+
+{% block meta %}{% endblock %}
+
+{% block title %}ClimateQuest - Dashboard{% endblock %}
+
+{% block content %}
+    <style>
+
+    </style>
+    <a href="{% url 'home' %}" class="redirect-link">
+        <span>Zur Homepage</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+    <h1 style="margin-top: 0;">Dashboard</h1>
+    <h2>Klimapunkte</h2>
+    <p>Du hast bereits {{ klimapunkte }} Klimapunkte gesammelt</p>
+    <a href="{% url 'klimapunkte_me' %}" class="redirect-link">
+        <span>Zu den Klimapunkten</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+    <h2>Level</h2>
+    <p>Du bist im Level {{ level }}</p>
+    <a href="{% url 'level_me' %}" class="redirect-link">
+        <span>Zu den Levels</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+
+    <h2>Families</h2>
+    <style>
+        .families-section {
+            max-width: 960px;
+            margin: 2rem auto;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .families-section h2 {
+            font-size: 1.8rem;
+            color: var(--color-header-bg);
+            margin-bottom: 1.5rem;
+        }
+
+        .families-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            padding: 0;
+        }
+
+        .family-card {
+            background-color: var(--color-white);
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem;
+            text-align: left;
+        }
+
+        .family-card h3 {
+            margin-top: 0;
+            font-size: 1.3rem;
+            color: var(--color-blue-dark);
+        }
+
+        .family-card p {
+            color: var(--color-muted);
+            font-size: 0.95rem;
+            margin: 0.5rem 0 1rem;
+        }
+    </style>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    {% if families %}
+        <section class="families-section">
+            <div class="families-grid">
+                {% for family in families %}
+                    <div class="family-card">
+                        <h3>{{ family.name }}</h3>
+                        <p>Mitglieder: {{ family.members.count }}</p>
+                        <a href="{% url 'family_detail' family.id %}" class="card-btn">Details ansehen</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+    {% else %}
+        <p>Du bist keiner Family beigetreten.</p>
+    {% endif %}
+    <a href="{% url 'families_view' %}" class="redirect-link">
+        <span>Zu den Families</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+
+
+    <style>
+        .communities-section {
+            max-width: 960px;
+            margin: 2rem auto;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .communities-section h2 {
+            font-size: 1.8rem;
+            color: var(--color-header-bg);
+            margin-bottom: 1.5rem;
+        }
+
+        .communities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            padding: 0;
+        }
+
+        .community-card {
+            background-color: var(--color-white);
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem;
+            text-align: left;
+        }
+
+        .community-card h3 {
+            margin-top: 0;
+            font-size: 1.3rem;
+            color: var(--color-blue-dark);
+        }
+
+        .community-card p {
+            color: var(--color-muted);
+            font-size: 0.95rem;
+            margin: 0.5rem 0 1rem;
+        }
+
+        .family-select {
+            margin: 20px;
+        }
+    </style>
+
+    <h2>Communities</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    {% if communities_with_user_families %}
+        <script>
+            let family_select;
+            let community_detail_link;
+            let communityId;
+            let familyId;
+        </script>
+        <section class="communities-section">
+            <div class="communities-grid">
+                {% for item in communities_with_user_families %}
+                    <div class="community-card">
+                        <h3>{{ item.community.name }}</h3>
+                        <p>Mitglieder: {{ item.community.members.count }}</p>
+                        <label for="family-select">Family zum Login auswählen: </label>
+                        <select class="family-select" id="family-select" data-community-id="{{ item.community.id }}">
+                            <option value="" disabled selected>Family zum Login auswählen ▾</option>
+                            {% for family in item.families %}
+                                <option value="{{ family.id }}">{{ family.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <a href="#" class="card-btn disabled-link community-detail-link"
+                           data-community-id="{{ item.community.id }}">Details ansehen</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const selects = document.querySelectorAll('.family-select');
+
+                selects.forEach(select => {
+                    const communityId = select.dataset.communityId;
+                    const detailLink = document.querySelector(`.community-detail-link[data-community-id="${communityId}"]`);
+
+                    select.addEventListener('change', function () {
+                        const familyId = this.value;
+                        if (familyId) {
+                            detailLink.href = `/community/community/${communityId}/${familyId}/`;
+                            detailLink.classList.remove('disabled-link');
+                        } else {
+                            detailLink.href = '#';
+                            detailLink.classList.add('disabled-link');
+                        }
+                    });
+                });
+            });
+        </script>
+    {% else %}
+        <p>Du bist keiner Community beigetreten.</p>
+    {% endif %}
+
+    <a href="{% url 'communities_view' %}" class="redirect-link">
+        <span>Zu den Communities</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+{% endblock %}

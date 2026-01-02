@@ -50,8 +50,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('login_view')
-
+    return redirect('home')
 
 def register_view(request):
     if request.method == 'POST':
@@ -96,7 +95,7 @@ def register_view(request):
             if user:
                 login(request, user)
                 messages.success(request, all_messages['successfully_signed_up_email_not_verified'])
-                return redirect('home')
+                return redirect('dashboard')
             create_internal_error(request, 'bei Registrierung existiert Nutzer nicht')
             return redirect('register_view')
 
@@ -133,7 +132,7 @@ def register_view(request):
             fehlermeldung='Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge deine E-Mail-Adresse später in den Einstellungen hinzu.'
         )
 
-        return redirect('home')
+        return redirect('dashboard')
 
     return render(request, './register.html')
 
@@ -149,10 +148,10 @@ def activate(request, uidb64, token):
         UserErweitert.objects.filter(user=user).update(mail_verified=True)
         user.save()
         messages.success(request, all_messages["email_verified"])
-        return redirect('home')
+        return redirect('dashboard')
     else:
         messages.error(request, all_messages["invalid_verification_link"])
-        return redirect('home')
+        return redirect('dashboard')
 
 
 @login_required

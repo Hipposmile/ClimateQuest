@@ -14,7 +14,7 @@ def klimapunkte_view(request, user_id):
         user = User.objects.get(id=user_id)
     except User.DoesNotExist:
         messages.error(request, all_messages["user_not_found"])
-        return redirect('home')
+        return redirect('dashboard')
 
     zeitraum = 'gesamt'
     aktionen = Aktion.objects.filter(user=user)
@@ -90,7 +90,7 @@ def level_view(request, user_id):
         user = User.objects.get(id=user_id)
     except User.DoesNotExist:
         messages.error(request, all_messages["user_not_found"])
-        return redirect('home')
+        return redirect('dashboard')
 
     level_data = get_level(user)
     return render(request, './level.html', {'level_data': level_data, 'user': user})

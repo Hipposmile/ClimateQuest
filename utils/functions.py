@@ -246,9 +246,15 @@ def get_level(user):
                     'current_level': current_level, 'levels': levels, 'klimapunkte': klimapunkte,
                     'level_number': level_number}
 
-    return {'current_level': current_level, 'next_level': next_level, 'progress_percent': progress_percent,
+    return {'current_level': current_level.description, 'next_level': next_level.description, 'progress_percent': progress_percent,
             'levels': levels, 'klimapunkte': klimapunkte, 'level_number': level_number}
 
+
+def get_all_klimapunkte_from_user(user):
+    aktionen = Aktion.objects.filter(user=user)
+    klimapunkte = get_klimapunkte(aktionen)
+    klimapunkte += get_klimapunkte_from_likes(user)
+    return klimapunkte
 
 def get_klimapunkte(aktionen):
     klimapunkte = sum(aktion.impact for aktion in aktionen)

@@ -3,6 +3,7 @@ from .views import *
 
 urlpatterns = [
     path('', home, name='home'),
+    path('dashboard/', dashboard, name='dashboard'),
     path('count-benachrichtigungen/', count_benachrichtigungen, name='count_benachrichtigungen'),
     path('benachrichtigungen/', benachrichtigungen_view, name='benachrichtigungen_view'),
     path('delete-benachrichtigung/<int:id>', delete_benachrichtigung, name='delete_benachrichtigung'),

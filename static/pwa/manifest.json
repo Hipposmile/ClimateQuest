@@ -7,7 +7,7 @@
   "orientation": "any",
   "scope": "https://climate-quest.de",
   "short_name": "ClimateQuest",
-  "start_url": "/",
+  "start_url": "/dashboard/",
   "theme_color": "#0433ff",
   "icons": [
     {

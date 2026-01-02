@@ -214,8 +214,8 @@ main {
 
 .me-btn {
     position: fixed;
-    bottom: 60px;
-    right: 2rem;
+    bottom: max(65px, calc(65px + var(--safe-area-inset-bottom)));
+    right: max(20px, calc(20px + var(--safe-area-inset-right)));
     background-color: var(--color-primary);
     color: var(--color-white);
     border: none;
@@ -232,6 +232,13 @@ main {
     transition: background 0.2s;
     font-size: 0.8rem;
 }
+
+@media (min-width: 1200px) {
+    .me-btn {
+        bottom: max(20px, calc(20px + var(--safe-area-inset-bottom)));
+    }
+}
+
 
 .me-btn:hover {
     background-color: var(--color-primary-hover);
@@ -896,6 +903,7 @@ summary {
     cursor: pointer;
     transition: all 0.3s ease;
     margin: 20px;
+    text-decoration: none;
 }
 
 .btn:hover {
@@ -1001,4 +1009,28 @@ input[type="reset"],
 input[type="file"]::-webkit-file-upload-button {
     -webkit-appearance: none;
     appearance: none;
+}
+
+.redirect-link {
+    color: #8f8f8f;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 17px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.redirect-link:hover {
+    color: #2a7f62;
+}
+
+.redirect-link-icon {
+    font-size: 20px;
+    transition: transform 0.2s ease;
+}
+
+.redirect-link:hover .redirect-link-icon {
+    transform: translateX(4px);
 }

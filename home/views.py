@@ -25,11 +25,29 @@ def home(request):
         user_count += 1
     return render(request, './home.html', {'klimapunkte': klimapunkte_gesamt, 'user_count': user_count})
 
+def dashboard(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    klimapunkte = get_all_klimapunkte_from_user(request.user)
+    level = get_level(request.user)['current_level']
+    families = get_families_of_user(request.user)
+
+    # Verwende diese IDs zum Filtern der Communities
+    communities = Community.objects.filter(members__id__in=families).distinct().order_by('name')
+
+    communities_with_user_families = []
+
+    for community in communities:
+        families_in_community = community.members.all()  # alle Families in dieser Community
+        families_user_belongs_to = families_in_community & families  # Schnittmenge
+        communities_with_user_families.append({'community': community, 'families': families_user_belongs_to})
+    return render(request, './dashboard.html', {'klimapunkte': klimapunkte, 'level': level, 'families': families, 'communities_with_user_families': communities_with_user_families})
+
 @login_required
 def admin(request):
     if not request.user.is_staff:
         messages.error(request, all_messages["not_authorized_to_visit"])
-        return redirect('home')
+        return redirect('dashboard')
     if request.method == 'POST':
         if 'benachrichtigung' in request.POST:
             receiver = request.POST.get('receiver')

@@ -71,16 +71,16 @@ def join_family(request):
 def chat_family(request, family_id):
     if not family_id:
         messages.error(request, all_messages["family_id_missing"])
-        return redirect('home')
+        return redirect('dashboard')
     try:
         family = Family.objects.get(id=family_id)
     except Family.DoesNotExist:
         messages.error(request, all_messages["family_not_found"])
-        return redirect('home')
+        return redirect('dashboard')
 
     if family.name == 'worldwide ranking':
         messages.error(request, all_messages["chat_not_enabled_for_worldwide"])
-        return redirect('home')
+        return redirect('dashboard')
     
     if not family.chat:
         messages.error(request, all_messages["chat_disabled_for_family"])
@@ -88,7 +88,7 @@ def chat_family(request, family_id):
 
     if request.user not in family.members.all():
         messages.error(request, all_messages["not_part_of_family"].format(family=family))
-        return redirect('home')
+        return redirect('dashboard')
     
     if request.method == 'POST':
         msg = request.POST.get('message')
@@ -98,11 +98,7 @@ def chat_family(request, family_id):
                 create_notification(request, f'Neue Nachricht in Family {family.name} von User {request.user}: {msg}', user_to_message)
         return redirect('chat_family', family_id=family.id)
     
-    #try:
     msgs = FamilyChatMessage.objects.filter(family=family)
-    #except FamilyChatMessage.DoesNotExist:
-    #    messages.error(request, all_messages["no_messages_found"])
-    #    return redirect('home')
 
     return render(request, 'chat_family.html', {'family': family, 'msgs': msgs})
 
@@ -115,26 +111,30 @@ def families_view(request):
 def edit_family(request, family_id):
     if not family_id:
         messages.error(request, all_messages["family_id_missing"])
-        return redirect('home')
+        return redirect('dashboard')
     try:
         family = Family.objects.get(id=family_id)
     except Family.DoesNotExist:
         messages.error(request, all_messages["family_not_found"])
-        return redirect('home')
+        return redirect('dashboard')
 
     if family.name == 'worldwide ranking':
         messages.error(request, all_messages["family_name_forbidden"])
-        return redirect('home')
+        return redirect('dashboard')
     
     if request.user not in family.members.all():
         messages.error(request, all_messages["not_part_of_family"].format(family=family))
-        return redirect('home')
+        return redirect('dashboard')
 
     if request.method == 'POST':
 
         if 'change_familyname' in request.POST:
             admin_password = request.POST.get('admin_password')
             familyname = request.POST.get('new_familyname')
+
+            if Family.objects.filter(name=familyname).exists():
+                messages.error(request, all_messages["family_exists"])
+                return redirect('create_family')
 
             if not admin_password or not familyname:
                 messages.error(request, all_messages["missing_required_inputs"])
@@ -190,7 +190,7 @@ def edit_family(request, family_id):
                 family.members.remove(request.user)
                 create_notification(request, f'Du hast die Family {family.name} verlassen', request.user)
                 messages.success(request, all_messages["family_left"])
-                return redirect('home')
+                return redirect('dashboard')
             else:
                 user = User.objects.get(username=username)
                 family = Family.objects.get(id=family_id)
@@ -206,7 +206,7 @@ def edit_family(request, family_id):
             family.members.remove(request.user)
             create_notification(request, f'Du hast die Family {family.name} verlassen', request.user)
             messages.success(request, all_messages["family_left"])
-            return redirect('home')
+            return redirect('dashboard')
 
         if 'change_chat_settings' in request.POST:
             admin_password = request.POST.get('admin_password')
@@ -232,7 +232,7 @@ def edit_family(request, family_id):
                     create_notification(request, f'Family {family.name} wurde von User {request.user} gelöscht.', user_to_message)
                 family.delete()
                 messages.success(request, all_messages["family_deleted"])
-                return redirect('home')
+                return redirect('dashboard')
 
     return render(request, 'edit_family.html', {'family': family})
 
@@ -240,12 +240,12 @@ def edit_family(request, family_id):
 def family_detail(request, family_id):
     if not family_id:
         messages.error(request, all_messages["family_id_missing"])
-        return redirect('home')
+        return redirect('dashboard')
     try:
         family = Family.objects.get(id=family_id)
     except Family.DoesNotExist:
         messages.error(request, all_messages["family_not_found"])
-        return redirect('home')
+        return redirect('dashboard')
     
     members_with_klimapunkte = []
     members = family.members.all()

@@ -142,8 +142,8 @@ styleCookie.textContent = `
 
     #cookie-reset {
         position: fixed; 
-        top: max(2rem, calc(2rem + var(--safe-area-inset-top)));
-        left: max(2rem, calc(2rem + var(--safe-area-inset-right)));
+        bottom: max(65px, calc(65px + var(--safe-area-inset-bottom)));
+        left: max(20px, calc(20px + var(--safe-area-inset-left)));
         padding: 10px 16px;
         background-color: var(--color-accent);
         color: var(--color-white);
@@ -153,6 +153,12 @@ styleCookie.textContent = `
         cursor: pointer;
         z-index: 1000;
         box-shadow: 0 4px 12px var(--color-shadow-light);
+    }
+    
+    @media (min-width: 1200px) {
+        #cookie-reset {
+            bottom: max(20px, calc(20px + var(--safe-area-inset-bottom)));
+        }
     }
     
     #cookie-reset:hover {

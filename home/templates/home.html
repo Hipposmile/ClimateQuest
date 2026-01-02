@@ -83,7 +83,6 @@
         .nav-button {
             position: absolute;
             top: 50%;
-            /*transform: translateY(-50%);*/
             font-size: 3rem;
             background: rgba(0, 0, 0, 0.4);
             color: white;
@@ -106,8 +105,7 @@
             right: 20px;
         }
 
-        /* Responsiv für kleinere Geraete */
-        @media (max-width: 600px) {
+        @media (max-width: 1200px) {
             .nav-button {
                 font-size: 2rem;
                 padding: 0.3rem 0.6rem;
@@ -170,6 +168,12 @@
             <p class="{{ message.level_tag }}-message">{{ message }}</p>
         {% endfor %}
         <hr>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'dashboard' %}" class="redirect-link">
+            <span>Zum Dashboard</span>
+            <span class="redirect-link-icon">→</span>
+        </a>
     {% endif %}
     <h1 class="slider-heading">ClimateQuest - Motivation für mehr Klimaschutz</h1>
     <div id="slider">
