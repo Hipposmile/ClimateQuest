@@ -456,10 +456,8 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F464;</span> Profil</h2>
                 <nav class="mobile-menu-nav">
-                    <a href="{% url 'dashboard' %}"><span class="emoji">&#x1F514;</span>
-                        Dashboard</a>
-                    <a href="{% url 'home' %}"><span class="emoji">&#x1F514;</span>
-                        Home</a>
+                    <a href="{% url 'dashboard' %}"><span class="emoji">&#x1F5A5;</span> Dashboard</a>
+                    <a href="{% url 'home' %}"><span class="emoji">&#x1F3E1;</span> Home</a>
                     <a href="{% url 'benachrichtigungen_view' %}"><span class="emoji">&#x1F514;</span>
                         Benachrichtigungen</a>
                     <a href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
@@ -577,11 +575,11 @@
         }
 
         header.innerHTML = `
-        <nav class="tabbar">
+            <nav class="tabbar">
         {% if user.is_authenticated %}
-            <a href="/" class="tab-item">
-                <span class="tab-icon"><span class="emoji">&#x1F3E0;</span></span>
-                <span class="tab-label">Home</span>
+            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="profile">
+                <span class="tab-icon"><span class="emoji">&#x1F464;</span></span>
+                <span class="tab-label">Profil</span>
             </a>
             <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="verbrauch">
                 <span class="tab-icon"><span class="emoji">&#x1F4CA;</span></span>
@@ -595,10 +593,6 @@
             <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="community">
                 <span class="tab-icon"><span class="emoji">&#x1F465;</span></span>
                 <span class="tab-label">Community</span>
-            </a>
-            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="profile">
-                <span class="tab-icon"><span class="emoji">&#x1F464;</span></span>
-                <span class="tab-label">Profil</span>
             </a>
             <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="education">
                 <span class="tab-icon"><span class="emoji">&#x1F393;</span></span>
@@ -629,8 +623,30 @@
     </nav>
 
     {% if user.is_authenticated %}
-        <!-- Modals für Mobile Menus -->
-        <!-- Verbrauch Menu -->
+        <div class="mobile-menu-overlay" data-menu="profile">
+            <div class="mobile-menu-modal">
+                <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
+                <h2><span class="emoji">&#x1F464;</span> Profil</h2>
+                <nav class="mobile-menu-nav">
+                    <a href="{% url 'dashboard' %}"><span class="emoji">&#x1F5A5;</span> Dashboard</a>
+                    <a href="{% url 'home' %}"><span class="emoji">&#x1F3E1;</span> Home</a>
+                    <a href="{% url 'benachrichtigungen_view' %}"><span class="emoji">&#x1F514;</span>
+                        Benachrichtigungen</a>
+                    <a href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
+                    <a href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span> Klimapunkte</a>
+                    <a href="{% url 'users_overview' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
+                        User</a>
+                    <a href="{% url 'presents_overview' %}"><span class="emoji">&#x1F381;</span> Geschenke</a>
+                    <a href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span> Einstellungen</a>
+                    <a href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span> Logout</a>
+                    {% if user.is_superuser %}
+                        <a href="/ClimateQuestAdmin/" target="_blank"><span class="emoji">&#x1F451;</span> Admin (I)</a>
+                        <a href="{% url 'admin_view' %}"><span class="emoji">&#x1F451;</span> Admin (II)</a>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+
         <div class="mobile-menu-overlay" data-menu="verbrauch">
             <div class="mobile-menu-modal">
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
@@ -642,7 +658,6 @@
             </div>
         </div>
 
-        <!-- Family Menu -->
         <div class="mobile-menu-overlay" data-menu="family">
             <div class="mobile-menu-modal">
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
@@ -655,7 +670,6 @@
             </div>
         </div>
 
-        <!-- Community Menu -->
         <div class="mobile-menu-overlay" data-menu="community">
             <div class="mobile-menu-modal">
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
@@ -668,29 +682,6 @@
             </div>
         </div>
 
-        <div class="mobile-menu-overlay" data-menu="profile">
-            <div class="mobile-menu-modal">
-                <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
-                <h2><span class="emoji">&#x1F464;</span> Profil</h2>
-                <nav class="mobile-menu-nav">
-                    <a href="{% url 'benachrichtigungen_view' %}"><span class="emoji">&#x1F514;</span> Benachrichtigungen</a>
-                    <a href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
-                    <a href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span> Klimapunkte</a>
-                    <a href="{% url 'users_overview' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
-                        User</a>
-                    <a href="{% url 'presents_overview' %}"><span class="emoji">&#x1F381;</span> Geschenke</a>
-                    <a href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span> Einstellungen</a>
-                    <a href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span> Logout</a>
-                    {% if user.is_superuser %}
-                        <hr>
-                        <a class="mobile-menu-sub" href="/ClimateQuestAdmin/" target="_blank">Admin</a>
-                        <a class="mobile-menu-sub" href="{% url 'admin_view' %}">Admin (II)</a>
-                    {% endif %}
-                </nav>
-            </div>
-        </div>
-
-        <!-- Mehr Menu -->
         <div class="mobile-menu-overlay" data-menu="education">
             <div class="mobile-menu-modal">
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
