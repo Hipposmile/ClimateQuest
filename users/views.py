@@ -131,7 +131,7 @@ def user_detail(request, user_id):
         else:
             reason = request.POST.get('reason')
             report_user(request, user, request.user, reason)
-            messages.success(request, all_messages["msg_sent"])
+            messages.success(request, all_messages["reported_user"])
 
     return render(request, './user_detail.html', {'user_expanded': user_expanded, 'msgs': msgs})
 
