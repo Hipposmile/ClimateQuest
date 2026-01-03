@@ -261,7 +261,7 @@ def get_klimapunkte(aktionen):
     return klimapunkte
 
 
-def create_internal_error(request, beschreibung, fehlermeldung="interner Fehler", exception=None):
+def create_internal_error(request, beschreibung, fehlermeldung="interner Fehler", exception=None, throw_exception=True):
     def sanitize_post_data(post_data):
         return {
             k: ('***' if 'password' in k.lower() or 'token' in k.lower() else v)
@@ -295,7 +295,9 @@ def create_internal_error(request, beschreibung, fehlermeldung="interner Fehler"
     if exception:
         error_message['exception'] = str(exception)
         error_message['traceback'] = traceback.format_exc()
-    messages.error(request, fehlermeldung)
+
+    if throw_exception:
+        messages.error(request, fehlermeldung)
 
     logging.error(error_message)
 

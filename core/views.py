@@ -19,7 +19,7 @@ def custom_404(request, exception=""):
     return render(request, '404.html', status=404)
 
 def custom_500(request, exception=""):
-    create_internal_error(request, f'Interner Serverfehler (500): {exception}')
+    create_internal_error(request, f'Interner Serverfehler (500): {exception}', '', None, False)
     return render(request, '500.html', status=500)
 
 def custom_503(request, exception=""):

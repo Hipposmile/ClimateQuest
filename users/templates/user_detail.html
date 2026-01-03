@@ -196,7 +196,7 @@
     <form method="post" onsubmit="return confirm('Bist du sicher, dass du diesen User melden möchtest.');">
         {% csrf_token %}
         <label for="reason">Begründung</label>
-        <textarea id="reason" class="quill-editor"></textarea>
+        <textarea id="reason" name="reason" class="quill-editor"></textarea>
         <button id="report_user" name="report_user" type="submit" style="color: red;">User melden</button>
         <p>Dies wird eine Nachricht mit folgenden Daten an ClimateQuest senden:</p>
         <ul>

@@ -128,7 +128,7 @@ def user_detail(request, user_id):
             ChatMessage.objects.create(message=msg, sender=request.user, receiver=user)
             messages.success(request, all_messages["msg_created"])
             return redirect('user_detail', user_id)
-        else:
+        elif 'report_user' in request.POST:
             reason = request.POST.get('reason')
             report_user(request, user, request.user, reason)
             messages.success(request, all_messages["reported_user"])
