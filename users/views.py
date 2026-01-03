@@ -116,7 +116,9 @@ def user_detail(request, user_id):
 
     user_expanded = UserErweitert.objects.get(user=user)
     if user != request.user:
-        msgs = ChatMessage.objects.filter(sender=request.user, receiver=user)
+        msgs1 = ChatMessage.objects.filter(sender=request.user, receiver=user)
+        msgs2 = ChatMessage.objects.filter(sender=user, receiver=request.user)
+        msgs = msgs1.union(msgs2).order_by('created_at')
     else:
         msgs = ChatMessage.objects.filter(receiver=user)
 

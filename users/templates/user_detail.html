@@ -126,7 +126,7 @@
         }
     </style>
 
-    <h1>User {{ user_expanded.user.username }}</h1>
+    <h1>User {{ user_expanded.user.username }} {% if request.user == user %}(Du){% endif %}</h1>
 
     {% if messages %}
         {% for message in messages %}
@@ -179,7 +179,7 @@
                 <div class="chat-user-bubble">
                     {{ msg.message }}
                     <span class="chat-user-meta"><a class="chat-user-meta"
-                                                    href="{% url 'user_detail' msg.sender.id %}">{{ msg.sender.username }}</a></span>
+                                                    href="{% if msg.sender == request.user %}{% url 'user_detail' msg.receiver.id %}{% else %}{% url 'user_detail' msg.sender.id %}{% endif %}">{% if msg.sender == request.user %}an {{ msg.receiver.username }}{% else %}von {{ msg.sender.username }}{% endif %}</a></span>
                     <span class="chat-user-meta">{{ msg.created_at|date:"d.m.Y H:i" }}</span>
                 </div>
             </div>
