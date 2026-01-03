@@ -115,25 +115,13 @@ def user_detail(request, user_id):
         return redirect('users_overview')
 
     user_expanded = UserErweitert.objects.get(user=user)
-    if user != request.user:
-        msgs1 = ChatMessage.objects.filter(sender=request.user, receiver=user)
-        msgs2 = ChatMessage.objects.filter(sender=user, receiver=request.user)
-        msgs = msgs1.union(msgs2).order_by('created_at')
-    else:
-        msgs = ChatMessage.objects.filter(receiver=user)
 
     if request.method == 'POST':
-        if 'send_message' in request.POST:
-            msg = request.POST.get('msg')
-            ChatMessage.objects.create(message=msg, sender=request.user, receiver=user)
-            messages.success(request, all_messages["msg_created"])
-            return redirect('user_detail', user_id)
-        elif 'report_user' in request.POST:
-            reason = request.POST.get('reason')
-            report_user(request, user, request.user, reason)
-            messages.success(request, all_messages["reported_user"])
+        reason = request.POST.get('reason')
+        report_user(request, user, request.user, reason)
+        messages.success(request, all_messages["reported_user"])
 
-    return render(request, './user_detail.html', {'user_expanded': user_expanded, 'msgs': msgs})
+    return render(request, './user_detail.html', {'user_expanded': user_expanded})
 
 
 @login_required

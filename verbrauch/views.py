@@ -75,9 +75,6 @@ def add(request):
             create_notification(request,
                                 f'Du hast eine neue Aktion vom Typen {action_type} erstellt und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>',
                                 request.user)
-        else:
-            create_notification(request, f'Du hast eine neue Aktion vom Typen {action_type} erstellt.', request.user)
-
         messages.success(request, all_messages["action_added"])
         return redirect('history')
 

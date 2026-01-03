@@ -145,54 +145,7 @@
     <h2>Statement</h2>
     <div class="artikel-content"><p>{{ user_expanded.statement|safe }}</p></div>
 
-
-    <div class="chat-user-container">
-        <button type="button" class="chat-refresh-btn" onclick="location.reload()" title="Chat aktualisieren">
-            <picture>
-                <source type="image/avif" srcset="
-                    {% static 'images/refresh/refresh-320.avif' %} 320w,
-                    {% static 'images/refresh/refresh-640.avif' %} 640w,
-                    {% static 'images/refresh/refresh-1280.avif' %} 1280w,
-                    {% static 'images/refresh/refresh-1920.avif' %} 1920w
-                    " sizes="100vw"
-                >
-
-                <source type="image/webp" srcset="
-                    {% static 'images/refresh/refresh-320.avif' %} 320w,
-                    {% static 'images/refresh/refresh-640.webp' %} 640w,
-                    {% static 'images/refresh/refresh-1280.webp' %} 1280w,
-                    {% static 'images/refresh/refresh-1920.webp' %} 1920w
-                    " sizes="100vw"
-                >
-
-                <img src="{% static 'images/refresh/refresh-fallback.png' %}" alt="Refresh">
-            </picture>
-        </button>
-        <div class="chat-user-message system">
-            <div class="chat-user-bubble">
-                Ich habe eine Family gegründet. Tritt bei! username: xyz; Passwort: xyz
-                <span class="chat-user-meta">Beispiel</span>
-            </div>
-        </div>
-        {% for msg in msgs %}
-            <div class="chat-user-message {% if msg.sender == request.user %}me{% else %}other{% endif %}">
-                <div class="chat-user-bubble">
-                    {{ msg.message }}
-                    <span class="chat-user-meta"><a class="chat-user-meta"
-                                                    href="{% if msg.sender == request.user %}{% url 'user_detail' msg.receiver.id %}{% else %}{% url 'user_detail' msg.sender.id %}{% endif %}">{% if msg.sender == request.user %}an {{ msg.receiver.username }}{% else %}von {{ msg.sender.username }}{% endif %}</a></span>
-                    <span class="chat-user-meta">{{ msg.created_at|date:"d.m.Y H:i" }}</span>
-                </div>
-            </div>
-        {% empty %}
-            <div class="chat-user-empty">Noch keine Nachrichten.</div>
-        {% endfor %}
-    </div>
-    <form method="post" class="chat-user-form">
-        {% csrf_token %}
-        <label for="msg">Nachricht eingeben</label>
-        <input type="text" name="msg" id="msg" placeholder="Nachricht eingeben..." required>
-        <button type="submit" name="send_message">Senden</button>
-    </form>
+    <h2>User melden</h2>
     <form method="post" onsubmit="return confirm('Bist du sicher, dass du diesen User melden möchtest.');">
         {% csrf_token %}
         <label for="reason">Begründung</label>

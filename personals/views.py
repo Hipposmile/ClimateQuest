@@ -52,6 +52,7 @@ def logout_view(request):
     logout(request)
     return redirect('home')
 
+
 def register_view(request):
     if request.method == 'POST':
         # reCAPTCHA
@@ -195,7 +196,6 @@ def settings_view(request):
                 else:
                     request.user.username = new_username
                     request.user.save()
-                    create_notification(request, 'Du hast deinen Benutzernamen geändert.', request.user)
                     messages.success(request, all_messages["username_changed"])
             return redirect('settings_view')
 
@@ -208,7 +208,6 @@ def settings_view(request):
                 request.user.set_password(new_pw)
                 request.user.save()
                 update_session_auth_hash(request, request.user)
-                create_notification(request, 'Du hast dein Passwort geändert.', request.user)
                 messages.success(request, all_messages["password_changed"])
             return redirect('settings_view')
 
@@ -221,7 +220,6 @@ def settings_view(request):
                 if email == "":
                     request.user.email = email
                     request.user.save()
-                    create_notification(request, all_messages["successfully_changed_email_no_email"])
                     messages.success(request, all_messages["successfully_changed_email_no_email"])
                     return redirect('settings_view')
 
@@ -256,7 +254,6 @@ def settings_view(request):
                     UserErweitert.objects.filter(user=request.user).update(mail_verified=True)
                     return redirect('settings_view')
                 else:
-                    create_notification(request, "Du hast deine E-Mail Adresse geändert.")
                     messages.success(request, all_messages["email_changed"])
                 return redirect('settings_view')
 
@@ -276,7 +273,6 @@ def settings_view(request):
                 messages.success(request, all_messages["mailinglist_enabled"])
             else:
                 messages.success(request, all_messages["mailinglist_disabled"])
-            create_notification(request, "Du hast deine Mail-Einstellungen geändert")
             return redirect('settings_view')
 
         if 'change_statement' in request.POST:
@@ -292,7 +288,6 @@ def settings_view(request):
             user_erweitert.statement = statement
             user_erweitert.save()
             messages.success(request, all_messages["successfully_changed_statement"])
-            create_notification(request, all_messages["successfully_changed_statement"])
             return redirect('settings_view')
 
         if 'delete_account' in request.POST:
@@ -309,7 +304,7 @@ def settings_view(request):
                             if user.id not in contacted_user_ids:
                                 contacted_user_ids.add(user.id)
                                 create_notification(request,
-                                                    f'User {request.user.username}, mit dem / der du zusammen in einer Family oder Community bist, hat den eigenen Account gelöscht. Von {request.user.username} gesendete Nachrichten werden auch gelöscht.',
+                                                    f'User {request.user.username}, mit dem / der du zusammen in einer Family warst, hat den eigenen Account gelöscht. Von {request.user.username} gesendete Nachrichten werden auch gelöscht.',
                                                     user)
                 for community in communities:
                     for family in community.members.all():
@@ -317,7 +312,7 @@ def settings_view(request):
                             if user.id not in contacted_user_ids:
                                 contacted_user_ids.add(user.id)
                                 create_notification(request,
-                                                    f'User {request.user.username}, mit dem du zusammen in einer Family oder Community bist, hat seinen Account gelöscht. Nachrichten von ihm werden auch gelöscht.',
+                                                    f'User {request.user.username}, mit dem du zusammen in einer Community warst, hat seinen Account gelöscht. Nachrichten von ihm werden auch gelöscht.',
                                                     user)
                 request.user.delete()
                 logout(request)
@@ -351,7 +346,6 @@ def reset_password(request):
             try:
                 user.set_password(new_password)
                 user.save()
-                create_notification(request, 'Du hast dein Passwort resettet.', user)
                 messages.success(request, all_messages["password_reset_mail_sent"])
                 return redirect('login_view')
 
