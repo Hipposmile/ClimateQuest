@@ -14,6 +14,13 @@ class AktionenListe(models.Model):
     def __str__(self):
         return self.name
 
+class Category(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    actions = models.ManyToManyField(AktionenListe, related_name='category')
+
+    def __str__(self):
+        return self.name
+
 class Aktion(models.Model):
     description = models.CharField(max_length=500, blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

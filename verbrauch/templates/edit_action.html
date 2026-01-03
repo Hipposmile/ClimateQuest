@@ -48,21 +48,17 @@
     </button>
     <div id="anmerkung-box" class="anmerkung-box" style="display: none;"></div>
 
-    <form method="POST" onsubmit="return validateNumber(event)">
+    <form method="POST">
         {% csrf_token %}
-        <label for="action_type" class="action-label">Aktionstyp:</label>
-        <select name="action_type" class="action-label" id="action_type" required>
-            <option value="" disabled>Aktionstyp auswählen ▾</option>
-            {% for aktion in aktionen %}
-                <option value="{{ aktion.name }}" data-klimapunkte="{{ aktion.klimapunkte|floatformat:-4 }}" data-anmerkung="{{ aktion.anmerkung|safe }}" data-mengebeschreibung="{{ aktion.mengeBeschreibung }}" {% if aktion == current_action.aktion %}selected{% endif %}>{{ aktion.name }}</option>
-            {% endfor %}
-        </select>
-        <br/>
+        <label for="action_type">Ausgewähltes Element:</label>
+        <input type="text" id="action_type" name="action_type" value="{{ current_action.aktion.name }}" data-name="{{ current_action.aktion.name }}" data-klimapunkte="{{ current_action.impact|floatformat:-4 }}" data-anmerkung="{{ current_action.anmerkung }}" data-mengebeschreibung="{{ current_action.mengeBeschreibung }}" readonly>
+
+        <button type="button" id="openModal">Element auswählen</button>
 
         <p id="klimapunkte_anzeige" class="action-label"></p>
 
-        <label for="action_description" class="action-label">Beschreibung (optional):</label>
-        <input type="text" id="action_description" name="action_description" value="{{ current_action.description }}" placeholder="Optional"/>
+        <label for="action_description" class="action-label">Beschreibung:</label>
+        <input type="text" id="action_description" name="action_description" placeholder="Optional" value="{{ current_action.description }}"/>
         <br/>
 
         <label for="action_quantity" class="action-label" id="action_quantity_label">Menge:</label>
@@ -78,37 +74,309 @@
         <label class="custom-checkbox">
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
-            <span class="label-text">Ich bestätige, dass alle Angaben der Wahrheit entsprechen und mit den <a href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmen.</span>
+            <span class="label-text">Ich bestätige, dass alle Angaben der Wahrheit entsprechen und mit den <a
+                    href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmen.</span>
         </label>
 
         <button type="submit" name="edit_action">Speichern</button>
     </form>
 
+    <div id="modal" class="modal">
+        <div class="modal-content">
+
+            <div id="page-categories">
+                <h2>Kategorien</h2>
+                <ul>
+                    {% for category in categories %}
+                        <li>
+                            <button class="category-btn"
+                                    data-categoryid="{{ category.id }}">{{ category.name }}</button>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div id="page-items" style="display:none;">
+                <h2 id="items-title"></h2>
+                <ul id="items-list"></ul>
+                <button id="backToCategories">Zurück</button>
+            </div>
+
+            <button class="closeModal" id="closeModal"><span class="emoji">&#x2717;</span></button>
+
+        </div>
+    </div>
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(3px);
+            z-index: 9999;
+            padding: 1.5rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background: var(--color-white);
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem;
+            border-radius: 16px;
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+            z-index: 10000;
+            box-shadow: var(--shadow-md);
+            animation: slideUp 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .modal-content h2 {
+            color: var(--color-text);
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .modal-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .modal-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .modal-content button {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background-color: var(--color-white);
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .modal-content button:hover {
+            background-color: var(--color-bg-light);
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+            box-shadow: 0 2px 8px rgba(4, 51, 255, 0.1);
+        }
+
+        .modal-content button:active {
+            transform: scale(0.98);
+        }
+
+        .category-btn,
+        .item-btn {
+            width: 100%;
+        }
+
+        #backToCategories {
+            background-color: var(--color-bg);
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+            margin-top: 1rem;
+        }
+
+        #backToCategories:hover {
+            background-color: var(--color-bg-light);
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .closeModal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 50%;
+            width: 10px !important;
+            height: 10px !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--color-text);
+            font-size: 1.3rem;
+            transition: all 0.2s ease;
+            padding: 0;
+            z-index: 10001;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .closeModal:hover {
+            background-color: var(--color-error);
+            color: var(--color-white);
+            border-color: var(--color-error);
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 1200px) {
+            .modal-content {
+                max-width: 70%;
+                border-radius: 16px;
+                max-height: 90vh;
+            }
+
+            .modal {
+                padding: 1rem;
+            }
+        }
+    </style>
+
     <script>
+        const data = {
+            {% for category in categories %}
+                "{{ category.id }}": {
+                    name: "{{ category.name }}",
+                    actions: [
+                        {% for action in category.actions.all %}
+                            {
+                                id: "{{ action.id }}",
+                                name: "{{ action.name }}",
+                                klimapunkte: "{{ action.klimapunkte|floatformat:-4 }}",
+                                anmerkung: "{{ action.anmerkung|safe }}",
+                                mengebeschreibung: "{{ action.mengeBeschreibung }}"
+                            },
+                        {% endfor %}
+                    ]
+                },
+            {% endfor %}
+        };
+    </script>
+
+    <script>
+        const modal = document.getElementById("modal");
+        const openModal = document.getElementById("openModal");
+        const closeModal = document.getElementById("closeModal");
+
+        const pageCategories = document.getElementById("page-categories");
+        const pageItems = document.getElementById("page-items");
+        const itemsTitle = document.getElementById("items-title");
+        const itemsList = document.getElementById("items-list");
+        const backToCategories = document.getElementById("backToCategories");
+
+        const selectedItemInput = document.getElementById("action_type");
+
+        // Modal öffnen
+        openModal.onclick = (e) => {
+            e.preventDefault();
+            modal.classList.add("active");
+        };
+
+        // Modal schließen
+        closeModal.onclick = (e) => {
+            e.preventDefault();
+            modal.classList.remove("active");
+        };
+
+        // Modal auch bei Klick auf Hintergrund schließen
+        modal.onclick = (e) => {
+            if (e.target === modal) {
+                modal.classList.remove("active");
+            }
+        };
+
+        // Kategorien anklicken
+        document.querySelectorAll(".category-btn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                const categoryId = btn.dataset.categoryid;
+                const category = data[categoryId];
+
+                // Titel setzen
+                itemsTitle.textContent = "Wähle eine Aktion aus: " + category.name;
+
+                // Aktionen anzeigen
+                itemsList.innerHTML = "";
+                category.actions.forEach(action => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `<button class="item-btn" data-id="${action.id}" data-name="${action.name}" data-klimapunkte="${action.klimapunkte}" data-anmerkung="${action.anmerkung}" data-mengebeschreibung="${action.mengebeschreibung}">${action.name}</button>`;
+                    itemsList.appendChild(li);
+                });
+
+                // Seiten wechseln
+                pageCategories.style.display = "none";
+                pageItems.style.display = "block";
+            });
+        });
+
+        // Aktion auswählen
+        itemsList.addEventListener("click", (e) => {
+            if (e.target.classList.contains("item-btn")) {
+                e.preventDefault();
+                selectedItemInput.value = e.target.textContent;
+                selectedItemInput.dataset.name = e.target.dataset.name;
+                selectedItemInput.dataset.klimapunkte = e.target.dataset.klimapunkte;
+                selectedItemInput.dataset.anmerkung = e.target.dataset.anmerkung;
+                selectedItemInput.dataset.mengebeschreibung = e.target.dataset.mengebeschreibung;
+                changeActionType();
+                modal.classList.remove("active");
+                pageItems.style.display = "none";
+                pageCategories.style.display = "block";
+            }
+        });
+
+        // Zurück zu Kategorien
+        backToCategories.onclick = (e) => {
+            e.preventDefault();
+            pageItems.style.display = "none";
+            pageCategories.style.display = "block";
+        };
+
         document.addEventListener('DOMContentLoaded', function () {
             const today = new Date().toISOString().split("T")[0];
             let dateInput = document.getElementById('action_date');
             dateInput.setAttribute('max', today);
         });
 
-        function submit(event) {
-            const form = event.target;
-            event.preventDefault(); // Verhindert das sofortige Absenden des Formulars
-            const quantityInput = document.getElementById('action_quantity');
-            let quantity = quantityInput.value.trim();
-            quantity = validateNumber(quantity);
-            if (quantity !== false) {
-                document.getElementById('action_quantity').value = quantity;
-                form.submit(); // Sendet das Formular ab
-            } else {
-                alert('Bitte geben Sie eine gültige, positive Zahl ohne Sonderzeichen (Ausnahme: Komma) für die Menge ein.');
-                return false;
-            }
-        }
-
         function validateNumber(input) {
             input = input.toString();
-            if (input == "" || input.includes('.')) {
+            if (input === "" || input.includes('.')) {
                 return false;
             }
             input = input.replace(',', '.');
@@ -124,8 +392,8 @@
             return input;
         }
 
-        document.getElementById('action_type').addEventListener('change', function () {
-            const selected = document.querySelector('#action_type').selectedOptions[0];
+        function changeActionType() {
+            const action_type = document.getElementById('action_type');
 
             const anmerkungBox = document.getElementById('anmerkung-box');
             const anmerkungButton = document.getElementById('anmerkung-button');
@@ -133,16 +401,18 @@
             const klimapunkte_anzeige = document.getElementById('klimapunkte_anzeige');
             const action_quantity_label = document.getElementById('action_quantity_label');
 
-            let anmerkung = selected.dataset.anmerkung;
-            let klimapunkte = selected.dataset.klimapunkte;
-            let mengeBeschreibung = selected.dataset.mengebeschreibung;
+            let anmerkung = action_type.dataset.anmerkung;
+            let klimapunkte = action_type.dataset.klimapunkte;
+            let mengeBeschreibung = action_type.dataset.mengebeschreibung;
+
+            console.log("menge Beschreibung: " + mengeBeschreibung);
 
 
             action_quantity_label.textContent = mengeBeschreibung;
             klimapunkte_anzeige.textContent = 'Klimapunkte pro ' + mengeBeschreibung + ': ' + klimapunkte;
             calculateImpact();
 
-            if (anmerkung != '') {
+            if (anmerkung !== '') {
                 anmerkungButton.style.display = 'inline-block';
                 anmerkungBox.textContent = anmerkung;
             } else {
@@ -150,15 +420,15 @@
                 anmerkungBox.textContent = '';
                 anmerkungBox.style.display = 'none';
             }
-        })
+        }
 
         document.getElementById('action_quantity').addEventListener('input', calculateImpact);
 
         function calculateImpact() {
-            const selected = document.querySelector('#action_type').selectedOptions[0];
+            const action_type = document.getElementById('action_type');
             const impact_anzeige = document.getElementById('impact_anzeige');
 
-            let klimapunkte = selected.dataset.klimapunkte;
+            let klimapunkte = action_type.dataset.klimapunkte;
             klimapunkte = validateNumber(klimapunkte);
 
             const quantityInput = document.getElementById('action_quantity');
@@ -175,7 +445,10 @@
             if (isNaN(impact)) {
                 impact_anzeige.textContent = '';
             } else {
-                impact = Intl.NumberFormat('de-DE', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(impact);
+                impact = Intl.NumberFormat('de-DE', {
+                    minimumFractionDigits: 4,
+                    maximumFractionDigits: 4
+                }).format(impact);
                 impact_anzeige.textContent = 'Insgesamt durch diese Aktion gewonnene Klimapunkte: ' + impact;
             }
         }
@@ -184,6 +457,10 @@
             const box = document.getElementById('anmerkung-box');
             box.style.display = box.style.display === 'none' ? 'block' : 'none';
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+           changeActionType();
+        });
     </script>
 
 

@@ -29,8 +29,8 @@ def send_mail_function(**kwargs):
     fehlermeldung = kwargs.get('fehlermeldung', 'Fehler beim E-Mail-Versand')
     subject = kwargs.get('subject')
     message = kwargs.get('message')
-    fail_silently = kwargs.get('fail_silently')
-    mailinglist_needless = kwargs.get('mailinglist_needless')
+    fail_silently = kwargs.get('fail_silently', False)
+    mailinglist_needless = kwargs.get('mailinglist_needless', False)
 
     if request is None or subject is None or message is None or fail_silently is None:
         create_internal_error(request, 'Beim E-Mail Versand wurden nicht alle notwendigen Elemente übergeben',
@@ -313,7 +313,6 @@ def create_notification(request, notification, user=None):
         subject='ClimateQuest - neue Benachrichtigung',
         message=notification,
         recipient_list=user.email,
-        fail_silently=False,
         user=user
     )
     res = send_push(benachrichtigung=notification, user=user)

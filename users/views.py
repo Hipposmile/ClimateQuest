@@ -85,6 +85,7 @@ def klimapunkte_view(request, user_id):
                    'klimapunkte_total': klimapunkte_total, 'zeitraum': zeitraum, 'user': user})
 
 
+@login_required
 def level_view(request, user_id):
     try:
         user = User.objects.get(id=user_id)
@@ -96,6 +97,7 @@ def level_view(request, user_id):
     return render(request, './level.html', {'level_data': level_data, 'user': user})
 
 
+@login_required
 def users_overview(request):
     if request.method == 'POST':
         search_keyword = request.POST.get('search_keyword')
@@ -104,6 +106,7 @@ def users_overview(request):
     return render(request, 'users_overview.html')
 
 
+@login_required
 def user_detail(request, user_id):
     try:
         user = User.objects.get(id=user_id)
@@ -118,17 +121,43 @@ def user_detail(request, user_id):
         msgs = ChatMessage.objects.filter(receiver=user)
 
     if request.method == 'POST':
-        msg = request.POST.get('msg')
-        ChatMessage.objects.create(message=msg, sender=request.user, receiver=user)
-        messages.success(request, all_messages["msg_created"])
-        return redirect('user_detail', user_id)
+        if 'send_message' in request.POST:
+            msg = request.POST.get('msg')
+            ChatMessage.objects.create(message=msg, sender=request.user, receiver=user)
+            messages.success(request, all_messages["msg_created"])
+            return redirect('user_detail', user_id)
+        else:
+            reason = request.POST.get('reason')
+            report_user(request, user, request.user, reason)
+            messages.success(request, all_messages["msg_sent"])
 
     return render(request, './user_detail.html', {'user_expanded': user_expanded, 'msgs': msgs})
+
 
 @login_required
 def klimapunkte_me(request):
     return redirect('klimapunkte_view', request.user.id)
 
+
 @login_required
 def level_me(request):
     return redirect('level_view', request.user.id)
+
+
+def report_user(request, reported_user, reporting_user, reason):
+    admin = User.objects.get(is_superuser=True, is_staff=True, username='admin')
+    send_mail_function(
+        request=request,
+        subject=f"User {reported_user.username} wurde von {reporting_user.username} gemeldet",
+        message=f"""
+            <h2>Gemeldeter User</h2>
+            <p>Username: {reported_user.username}</p>
+            <p>ID: {reported_user.id}</p>
+            <h2>Meldender User</h2>
+            <p>Username: {reporting_user.username}</p>
+            <p>ID: {reporting_user.id}</p>
+            <h2>Begründung</h2>
+            <p>{reason}</p>
+        """,
+        user=admin,
+    )

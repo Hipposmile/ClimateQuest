@@ -185,6 +185,7 @@ all_messages = {
     # --------
     "user_not_found": "User nicht gefunden",
     "msg_created": "Nachricht erfolgreich gesendet",
+    "reported_user": "Der User wurde erfolgreich gemeldet.",
 
     # --------
     #Admin

@@ -10,6 +10,7 @@ from utils.functions import *
 @login_required
 def add(request):
     aktionen = AktionenListe.objects.all().order_by('name')
+    categories = Category.objects.all().order_by('name')
 
     if request.method == 'POST':
         is_truth = request.POST.get('is_truth') == 'on'
@@ -21,10 +22,13 @@ def add(request):
         if not action_type:
             messages.error(request, all_messages["action_name_missing"])
             return redirect('add')
-        
-        action = AktionenListe.objects.get(name=action_type)
+
+        try:
+            action = AktionenListe.objects.get(name=action_type)
+        except AktionenListe.DoesNotExist:
+            messages.error(request, all_messages["action_not_found"])
         action_description = request.POST.get('action_description')
-        
+
         action_date_raw = request.POST.get('action_date')
         if not action_date_raw:
             messages.error(request, all_messages["missing_required_inputs"])
@@ -50,12 +54,12 @@ def add(request):
         if action_quantity < 0 or action_quantity is False:
             messages.error(request, all_messages["invalid_quantity"])
             return redirect('add')
-        
+
         aktion_existing = any(aktion.name == action_type for aktion in aktionen)
         if not aktion_existing:
             messages.error(request, all_messages["invalid_action_type"])
             return redirect('add')
-        
+
         old_level = get_level(request.user)
 
         Aktion.objects.create(
@@ -65,22 +69,26 @@ def add(request):
             quantity=action_quantity,
             date=action_date,
         )
-        
+
         new_level = get_level(request.user)
         if old_level['level_number'] < new_level['level_number']:
-            create_notification(request, f'Du hast eine neue Aktion vom Typen {action_type} erstellt und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>', request.user)
+            create_notification(request,
+                                f'Du hast eine neue Aktion vom Typen {action_type} erstellt und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>',
+                                request.user)
         else:
             create_notification(request, f'Du hast eine neue Aktion vom Typen {action_type} erstellt.', request.user)
 
         messages.success(request, all_messages["action_added"])
         return redirect('history')
 
-    return render(request, './add.html', {'aktionen': aktionen})
+    return render(request, './add.html', {'categories': categories})
+
 
 @login_required
 def history(request):
     actions = Aktion.objects.filter(user=request.user).order_by('-date')
     return render(request, './history.html', {'actions': actions})
+
 
 @login_required
 def edit_action(request, action_id):
@@ -92,8 +100,9 @@ def edit_action(request, action_id):
     except Aktion.DoesNotExist:
         messages.error(request, all_messages["action_not_found"])
         return redirect('history')
-    
-    aktionen = AktionenListe.objects.all().order_by('name')  
+
+    aktionen = AktionenListe.objects.all().order_by('name')
+    categories = Category.objects.all().order_by('name')
 
     if request.method == 'POST':
         if 'edit_action' in request.POST:
@@ -106,10 +115,13 @@ def edit_action(request, action_id):
             if not action_type:
                 messages.error(request, all_messages["action_name_missing"])
                 return redirect('edit_action', action_id)
-            
-            action = AktionenListe.objects.get(name=action_type)
+
+            try:
+                action = AktionenListe.objects.get(name=action_type)
+            except AktionenListe.DoesNotExist:
+                messages.error(request, all_messages["action_not_found"])
             action_description = request.POST.get('action_description')
-            
+
             action_date_raw = request.POST.get('action_date')
             if not action_date_raw:
                 messages.error(request, all_messages["missing_required_inputs"])
@@ -135,7 +147,7 @@ def edit_action(request, action_id):
             if action_quantity < 0 or action_quantity is False:
                 messages.error(request, all_messages["invalid_quantity"])
                 return redirect('edit_action', action_id)
-            
+
             action_existing = any(aktion.name == action_type for aktion in aktionen)
             if not action_existing:
                 messages.error(request, all_messages["invalid_action_type"])
@@ -152,28 +164,35 @@ def edit_action(request, action_id):
 
             new_level = get_level(request.user)
             if old_level['level_number'] < new_level['level_number']:
-                create_notification(request, f'Du hast eine Aktion vom Typen {action_type} bearbeitet und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>', request.user)
+                create_notification(request,
+                                    f'Du hast eine Aktion vom Typen {action_type} bearbeitet und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>',
+                                    request.user)
             elif old_level['level_number'] > new_level['level_number']:
-                create_notification(request, f'Du hast eine Aktion vom Typen {action_type} bearbeitet, hast dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>', request.user)
+                create_notification(request,
+                                    f'Du hast eine Aktion vom Typen {action_type} bearbeitet, hast dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>',
+                                    request.user)
             else:
                 create_notification(request, f'Du hast eine Aktion vom Typen {action_type} bearbeitet', request.user)
 
             messages.success(request, all_messages["action_edited"])
             return redirect('history')
-        
+
         if 'delete_action' in request.POST:
             old_level = get_level(request.user)
             action_type = current_action.aktion.name
             current_action.delete()
             new_level = get_level(request.user)
             if old_level['level_number'] > new_level['level_number']:
-                create_notification(request, f'Du hast eine Aktion vom Typen {action_type} gelöscht, hast dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>', request.user)
+                create_notification(request,
+                                    f'Du hast eine Aktion vom Typen {action_type} gelöscht, hast dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>',
+                                    request.user)
             else:
                 create_notification(request, f'Du hast eine Aktion vom Typen {action_type} gelöscht', request.user)
             messages.success(request, all_messages["action_deleted"])
             return redirect('history')
 
-    return render(request, './edit_action.html', {'aktionen': aktionen, 'current_action': current_action})
+    return render(request, './edit_action.html', {'categories': categories, 'current_action': current_action})
+
 
 def validate_number(number, input_decimals):
     if not number:
@@ -187,4 +206,3 @@ def validate_number(number, input_decimals):
         except ValueError:
             return False
     return round(number, input_decimals)
-

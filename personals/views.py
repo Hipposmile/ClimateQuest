@@ -126,7 +126,6 @@ def register_view(request):
             subject='ClimateQuest - dein Aktivierungslink ist da!',
             message=f'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: {activation_link}',
             recipient_list=email,
-            fail_silently=False,
             mailinglist_needless=True,
             user=user,
             fehlermeldung='Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge deine E-Mail-Adresse später in den Einstellungen hinzu.'
@@ -171,7 +170,6 @@ def resend_verification_email(request):
         subject='ClimateQuest - dein Aktivierungslink ist da!',
         message=f'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: {activation_link}',
         recipient_list=request.user.email,
-        fail_silently=False,
         mailinglist_needless=True,
         user=request.user,
         fehlermeldung='Fehler beim E-Mail-Versand. Probiere es später erneut.'
@@ -248,7 +246,6 @@ def settings_view(request):
                     subject='ClimateQuest - dein Aktivierungslink ist da!',
                     message=f'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: {activation_link}',
                     recipient_list=email,
-                    fail_silently=False,
                     mailinglist_needless=True,
                     user=request.user,
                 )
@@ -347,7 +344,6 @@ def reset_password(request):
             subject='ClimateQuest - Passwort Reset',
             message=f'Wir haben dir ein neues, zufällig generiertes Passwort erstellt: <b>{new_password}</b> \nMelde dich damit und mit deinem Benutzernamen <b>{user.username}</b> <a href="https://climate-quest.de/personals/login/">hier</a> an und ändere aus Sicherheitsgründen möglichst bald unter "Profil bearbeiten" dein Passwort.',
             recipient_list=user.email,
-            fail_silently=False,
             user=user,
         )
 

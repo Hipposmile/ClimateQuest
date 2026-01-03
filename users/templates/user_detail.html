@@ -187,11 +187,29 @@
             <div class="chat-user-empty">Noch keine Nachrichten.</div>
         {% endfor %}
     </div>
-    <form method="post" class="chat-user-form" onsubmit="return true;">
+    <form method="post" class="chat-user-form">
         {% csrf_token %}
         <label for="msg">Nachricht eingeben</label>
         <input type="text" name="msg" id="msg" placeholder="Nachricht eingeben..." required>
-        <button type="submit" name="send">Senden</button>
+        <button type="submit" name="send_message">Senden</button>
     </form>
-    </div>
+    <form method="post" onsubmit="return confirm('Bist du sicher, dass du diesen User melden möchtest.');">
+        {% csrf_token %}
+        <label for="reason">Begründung</label>
+        <textarea id="reason" class="quill-editor"></textarea>
+        <button id="report_user" name="report_user" type="submit" style="color: red;">User melden</button>
+        <p>Dies wird eine Nachricht mit folgenden Daten an ClimateQuest senden:</p>
+        <ul>
+            <li>Dein Userprofil</li>
+            <li>Das Userprofil, welches du meldest</li>
+            <li>Deine Begründung</li>
+        </ul>
+        <p>Wenn du einen User wegen von ihm erstellten Content meldest, füge bitte alle für das Auffinden dieses
+            Contents relevanten Informationen wie die URL hinzu.</p>
+        <p>Durch das Melden eines Users erhältst du selbst keine Vorteile.</p>
+        <p>User können vor allem wegen Verstößen gegen die Nutzungsbedingungen gemeldet werden.</p>
+
+        <p style="color: red">Wenn du User willkürlich und ohne konkrete Begründung meldest, ist auch dies ein Verstoß gegen die
+            Nutzungsbedingungen.</p>
+    </form>
 {% endblock %}

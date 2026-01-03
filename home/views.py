@@ -191,7 +191,6 @@ def nutzungsbedingungen(request):
 
 def actions_table(request):
     aktionen = AktionenListe.objects.all()
-    print(aktionen)
     return render(request, 'aktionenTable.html', {'aktionen': aktionen})
 
 def datenschutz(request):
