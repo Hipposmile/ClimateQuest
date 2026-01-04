@@ -87,5 +87,6 @@ def post_detail(request, post_id):
         clean_html(content)
 
         Answer.objects.create(content=content, creator=request.user, forum_post=post)
+        create_notification(request, "Deine Forumsfrage wurde beantwortet", post.creator)
         return redirect('post_detail', post_id=post_id)
     return render(request, './forum_detail.html', {'post': post, 'answers': post.answers.all()})

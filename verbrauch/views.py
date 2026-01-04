@@ -168,8 +168,6 @@ def edit_action(request, action_id):
                 create_notification(request,
                                     f'Du hast eine Aktion vom Typen {action_type} bearbeitet, hast dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>',
                                     request.user)
-            else:
-                create_notification(request, f'Du hast eine Aktion vom Typen {action_type} bearbeitet', request.user)
 
             messages.success(request, all_messages["action_edited"])
             return redirect('history')
@@ -183,8 +181,6 @@ def edit_action(request, action_id):
                 create_notification(request,
                                     f'Du hast eine Aktion vom Typen {action_type} gelöscht, hast dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>',
                                     request.user)
-            else:
-                create_notification(request, f'Du hast eine Aktion vom Typen {action_type} gelöscht', request.user)
             messages.success(request, all_messages["action_deleted"])
             return redirect('history')
 

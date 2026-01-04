@@ -258,25 +258,12 @@
         });
     </script>
     <hr>
-    {% if user.is_authenticated %}
-        <p>Willkommen, {{ user.username }}!</p>
-
-        <p>Tipp: Wenn andere Nutzer Artikel liken, die du selbst geschrieben hast, erhaeltst du Klimapunkte! Schreibe
-            also selbst einen guten Artikel, um mehr Klimapunkte zu erhalten!</p>
-
-        {% if user.usererweitert.mail_verified == False and user.email != '' %}
-            <p>Bitte bestaetige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. Falls du keine
-                Verifizierungsemail
-                erhalten hast, <a href="{% url 'resend_verification_email' %}">lasse dir eine neue senden.</a></p>
-        {% endif %}
-    {% else %}
+    {% if not user.is_authenticated %}
         <div class="btns"><a href="{% url 'register_view' %}">
             <button class="btn">Jetzt registrieren!</button>
         </a></div>
+        <hr>
     {% endif %}
-
-    <hr>
-
     <h2>Übersicht</h2>
 
     <input type="hidden" id="user_count" value="{{ user_count }}">
@@ -294,7 +281,7 @@
         </div>
 
         <div id="co2_zaehler_div">
-            <p>Weil jeder Klimapunkte ungefaehr für
+            <p>Weil jeder Klimapunkte ungefähr für
                 <b id="co2_per_klimapunkt">1 kg</b> eingespartes CO₂ steht, wurden dadurch insgesamt
             </p>
             <p class="h3_size" id="co2_zaehler"></p>

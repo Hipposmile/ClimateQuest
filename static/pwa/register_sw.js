@@ -27,6 +27,9 @@ const initialiseState = (reg) => {
         showNotAllowed('You prevented us from showing notifications ☹️🤔');
         return
     }
+    if (Notification.permission === 'default') {
+        Notification.requestPermission();
+    }
     if (!('PushManager' in window)) {
         showNotAllowed("Push isn't allowed in your browser 🤔");
         return

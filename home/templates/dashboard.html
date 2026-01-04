@@ -10,6 +10,39 @@
         <span class="redirect-link-icon">→</span>
     </a>
     <h1 style="margin-top: 0;">Dashboard</h1>
+    <p>Willkommen, {{ user.username }}!</p>
+
+    {% if user.usererweitert.mail_verified == False and user.email != '' %}
+        <p>Bitte bestaetige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. Falls du keine
+            Verifizierungsemail
+            erhalten hast, <a href="{% url 'resend_verification_email' %}">lasse dir eine neue senden.</a></p>
+    {% endif %}
+    <div id="request_permission"></div>
+
+    <script>
+        async function requestPermission() {
+            if (Notification.permission === 'default') {
+                const div = document.getElementById('request_permission');
+                div.innerHTML = `
+                    <button id="reqBtn" class="btn">Benachrichtigungen anfordern</button>
+                    <p>Über Push-Benachrichtigungen können wir dir Mitteilungen direkt an dieses Gerät senden.</p>
+                    <br>
+                `;
+
+                document.getElementById('reqBtn').addEventListener('click', () => {
+                    Notification.requestPermission();
+                    console.log("requested permission");
+                    div.style.display = 'none';
+                });
+            }
+        }
+        requestPermission();
+    </script>
+
+    <p>Tipp: Wenn andere Nutzer Artikel liken, die du selbst geschrieben hast, erhaeltst du Klimapunkte! Schreibe also
+        selbst einen guten Artikel, um mehr Klimapunkte zu erhalten!</p>
+
+    <br>
     <p>Es werden jeweils nur die ersten zwei Einträge angezeigt.</p>
     <a href="{% url 'user_detail' request.user.id %}" class="redirect-link">
         <span>Zur öffentlichen Profilseite</span>
