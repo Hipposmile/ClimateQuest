@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'django_browser_reload',
+    'django_crontab',
     'webpush',
     'core',
     'home',
@@ -135,3 +136,7 @@ STORAGES = {
         'BACKEND': 'servestatic.storage.CompressedManifestStaticFilesStorage'
     }
 }
+
+CRONJOBS = [
+    '0 12 * * 0', 'core.views.create_reminder', '>> /logs/django_errors.log'
+]
