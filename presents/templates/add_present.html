@@ -16,7 +16,7 @@
 <form method="POST">
     {% csrf_token %}
     <label for="recipient_name">Name des / der Beschenkten:</label>
-    <input type="text" id="recipient_name" name="recipient_name" required>
+    <input type="text" id="recipient_name" name="recipient_name" maxlength="100" required>
     <button type="submit">Geschenk erstellen</button>
 </form>
 {% endblock %}

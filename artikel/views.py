@@ -57,7 +57,9 @@ def artikel_overview(request):
         ordered_by = "Name"
         artikel = all_artikel.order_by('name')
 
-    return render(request, 'artikel_overview.html', {'artikel': artikel, 'ordered_by': ordered_by, 'search_keyword': search_keyword})
+    return render(request, 'artikel_overview.html',
+                  {'artikel': artikel, 'ordered_by': ordered_by, 'search_keyword': search_keyword})
+
 
 @login_required
 def add_artikel(request):
@@ -69,6 +71,10 @@ def add_artikel(request):
 
         name = request.POST.get('name')
         content = request.POST.get('content')
+
+        if len(name) > 100:
+            messages.error(request, all_messages["input_too_long"])
+            return redirect('add_artikel')
 
         if not name or not content:
             messages.error(request, all_messages["missing_required_inputs"])
@@ -87,6 +93,7 @@ def add_artikel(request):
         return redirect('artikel_overview')
 
     return render(request, 'add_artikel.html')
+
 
 @login_required
 def edit_artikel(request, artikel_id):
@@ -110,6 +117,10 @@ def edit_artikel(request, artikel_id):
             name = request.POST.get('name')
             content = request.POST.get('content')
 
+            if len(name) > 100:
+                messages.error(request, all_messages["input_too_long"])
+                return redirect('add_artikel')
+
             if not name or not content:
                 messages.error(request, all_messages["missing_required_inputs"])
                 return redirect('edit_artikel', artikel_id=artikel_id)
@@ -131,6 +142,7 @@ def edit_artikel(request, artikel_id):
             return redirect('artikel_overview')
 
     return render(request, 'edit_artikel.html', {'artikel': artikel})
+
 
 def artikel_detail(request, artikel_id):
     try:
@@ -170,6 +182,7 @@ def artikel_detail(request, artikel_id):
             has_liked = True
 
     return render(request, 'artikel_detail.html', {'artikel': artikel, 'has_liked': has_liked})
+
 
 @login_required
 def add_like(request, artikel_id):

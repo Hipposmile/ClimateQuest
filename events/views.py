@@ -7,6 +7,7 @@ from .models import *
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
 
+
 def events_overview(request):
     if request.method == 'POST':
         already_ordered = False
@@ -73,13 +74,14 @@ def events_overview(request):
         'events': events
     })
 
+
 def event_detail(request, event_id):
     try:
         event = Event.objects.get(id=event_id)
     except Event.DoesNotExist:
         messages.error(request, all_messages["event_not_existing"])
         return redirect('events_overview')
-    
+
     if request.method == 'POST':
         if 'become_member' in request.POST:
             if request.user == event.creator:
@@ -92,7 +94,7 @@ def event_detail(request, event_id):
                 messages.success(request, all_messages["joined_event"])
 
             return redirect('event_detail', event_id)
-        
+
         elif 'ask_question' in request.POST:
             question_text = request.POST.get('question')
             question = Question.objects.create(question=question_text, user=request.user)
@@ -100,7 +102,7 @@ def event_detail(request, event_id):
 
             messages.success(request, all_messages["successfully_asked_question"])
             return redirect('event_detail', event_id)
-        
+
         elif 'answer_question' in request.POST:
             question_id = request.POST.get('question_id')
             try:
@@ -119,6 +121,7 @@ def event_detail(request, event_id):
 
     return render(request, './event_detail.html', {'event': event})
 
+
 @login_required
 def add_event(request):
     if request.method == 'POST':
@@ -133,10 +136,14 @@ def add_event(request):
             messages.error(request, all_messages["not_is_truth"])
             return redirect('add_event')
 
+        if len(name) > 100 or len(adress) > 100:
+            messages.error(request, all_messages["input_too_long"])
+            return redirect('add_event')
+
         if not name or not description or not date_time or not duration or not adress:
             messages.error(request, all_messages["missing_required_inputs"])
             return redirect('add_event')
-        
+
         description = clean_html(description)
 
         try:
@@ -145,13 +152,13 @@ def add_event(request):
         except ValueError:
             messages.error(request, all_messages["invalid_date"])
             return redirect('add_event')
-        
+
         tomorrow = timezone.now() + timedelta(days=1)
 
         if date_time < tomorrow:
             messages.error(request, all_messages["date_must_be_tomorrow"])
             return redirect('add_event')
-        
+
         Event.objects.create(
             name=name,
             description=description,
@@ -164,8 +171,8 @@ def add_event(request):
         messages.success(request, all_messages["successfully_created_event"])
         return redirect('events_overview')
 
-
     return render(request, './add_event.html')
+
 
 @login_required
 def edit_event(request, event_id):
@@ -177,7 +184,7 @@ def edit_event(request, event_id):
     if request.user != event.creator:
         messages.error(request, all_messages["not_authorized_to_visit"])
         return redirect('events_overview')
-    
+
     if request.method == 'POST':
         if 'edit' in request.POST:
             name = request.POST.get('name')
@@ -191,10 +198,14 @@ def edit_event(request, event_id):
                 messages.error(request, all_messages["not_is_truth"])
                 return redirect('edit_event', event_id)
 
+            if len(name) > 100 or len(adress) > 100:
+                messages.error(request, all_messages["input_too_long"])
+                return redirect('edit_event', event_id)
+
             if not name or not description or not date_time or not duration or not adress:
                 messages.error(request, all_messages["missing_required_inputs"])
                 return redirect('edit_event', event_id)
-            
+
             description = clean_html(description)
 
             try:
@@ -203,13 +214,13 @@ def edit_event(request, event_id):
             except ValueError:
                 messages.error(request, all_messages["invalid_date"])
                 return redirect('edit_event', event_id)
-            
+
             tomorrow = timezone.now() + timedelta(days=1)
 
             if date_time < tomorrow:
                 messages.error(request, all_messages["date_must_be_tomorrow"])
                 return redirect('edit_event', event_id)
-            
+
             event.name = name
             event.description = description
             event.date_time = date_time
@@ -217,22 +228,23 @@ def edit_event(request, event_id):
             event.adress = adress
             event.save()
 
-
             for participant in event.participants.all():
-                create_notification(request, f'Ein Event, bei dem du Teilnehmer bist und das jetzt {name} heißt, wurde bearbeitet.', participant)
-            
+                create_notification(request,
+                                    f'Ein Event, bei dem du Teilnehmer bist und das jetzt {name} heißt, wurde bearbeitet.',
+                                    participant)
+
             messages.success(request, all_messages["successfully_edited_event"])
             return redirect('event_detail', event_id)
-        
+
         elif 'delete' in request.POST:
             for participant in event.participants.all():
-                create_notification(request, f'Das Event {event.name}, bei dem du Teilnehmer bist, wurde gelöscht', participant)
+                create_notification(request, f'Das Event {event.name}, bei dem du Teilnehmer bist, wurde gelöscht',
+                                    participant)
             event.delete()
             messages.success(request, all_messages["successfully_deleted_event"])
             return redirect('events_overview')
-        
+
         else:
             messages.success(request, all_messages["internal_error"])
-
 
     return render(request, './edit_event.html', {'event': event})

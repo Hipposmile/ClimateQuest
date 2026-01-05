@@ -21,7 +21,7 @@ class Comment(models.Model):
         return self.comment
     
 class Artikel(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=100)
     content = models.TextField()
     comments = models.ManyToManyField(Comment, related_name='artikel', blank=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)

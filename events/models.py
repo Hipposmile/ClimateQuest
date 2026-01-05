@@ -21,9 +21,9 @@ class Question(models.Model):
         return self.question
 
 class Event(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=100)
     description = models.TextField()
-    adress = models.CharField(max_length=200)
+    adress = models.CharField(max_length=100)
     date_time = models.DateTimeField()
     duration = models.FloatField()
     creator = models.ForeignKey(User, on_delete=models.CASCADE)

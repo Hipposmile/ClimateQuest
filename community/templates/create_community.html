@@ -16,12 +16,12 @@
     {% csrf_token %}
     <small id="communityname-feedback"></small>
     <label for="communityname">Communityname:</label>
-    <input type="text" id="communityname" name="communityname" placeholder="Communityname" required>
+    <input type="text" id="communityname" name="communityname" placeholder="Communityname" maxlength="100" required>
     <label for="password">Passwort:</label>
-    <input type="password" id="password" name="community_password" placeholder="Passwort" required>
+    <input type="password" id="password" name="community_password" placeholder="Passwort" maxlength="100" required>
     <label for="community_admin_password">Admin Passwort:</label>
-    <input type="password" id="community_admin_password" name="community_admin_password" placeholder="Admin Passwort"
-        id="community_admin_password" required>
+    <input type="password" name="community_admin_password" placeholder="Admin Passwort"
+           id="community_admin_password" maxlength="100" required>
     <label for="familyname">Familyname:</label>
     <small id="familyname-feedback"></small>
     <input type="text" id="familyname" name="familyname" placeholder="Familyname" required>

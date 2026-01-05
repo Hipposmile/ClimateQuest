@@ -71,6 +71,10 @@ def admin(request):
             name = request.POST.get('name')
             msg = request.POST.get('msg')
 
+            if len(msg) > 100:
+                messages.error(request, all_messages["too_long_input"])
+                return redirect('admin')
+
             if not receiver or not name or not msg:
                 messages.error(request, all_messages["missing_required_inputs"])
                 return redirect('admin')

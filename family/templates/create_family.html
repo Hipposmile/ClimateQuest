@@ -18,11 +18,11 @@
     {% csrf_token %}
     <label for="familyname">Familyname:</label>
     <small id="familyname-feedback"></small>
-    <input type="text" id="familyname" name="familyname" placeholder="Familyname" required>
+    <input type="text" id="familyname" name="familyname" placeholder="Familyname" maxlength="100" required>
     <label for="password">Passwort:</label>
-    <input type="password" id="password" name="family_password" placeholder="Passwort" required>
+    <input type="password" id="password" name="family_password" placeholder="Passwort" maxlength="100" required>
     <label for="family_admin_password">Admin Passwort:</label>
-    <input type="password" id="family_admin_password" name="family_admin_password" placeholder="Admin Passwort" id="family_admin_password" required>
+    <input type="password" id="family_admin_password" name="family_admin_password" placeholder="Admin Passwort" maxlength="100" required>
     <div>
         <h4>Wir empfehlen folgende Admin-Passwort-Anforderungen, um die Family vor unerlaubter Bearbeitung zu schützen:</h4>
         <ul class="criteria-list">

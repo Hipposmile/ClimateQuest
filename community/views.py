@@ -23,6 +23,9 @@ def create_community(request):
             messages.error(request, all_messages["missing_required_inputs"])
             return redirect('create_community')
 
+        if len(community_name) > 100 or len(community_password) > 100 or len(community_password) > 100:
+            messages.error(request, all_messages["too_short_input"])
+
         if Community.objects.filter(name=community_name).exists():
             messages.error(request, all_messages["community_exists"])
             return redirect('create_community')
@@ -142,6 +145,10 @@ def edit_community(request, community_id, family_id):
             admin_password = request.POST.get('admin_password')
             communityname = request.POST.get('new_communityname')
 
+            if len(communityname) > 100:
+                messages.error(request, all_messages["too_long_input"])
+                return redirect('edit_family', community_id, family_id)
+
             if Community.objects.filter(name=communityname).exists():
                 messages.error(request, all_messages["community_exists"])
                 return redirect('create_community')
@@ -164,6 +171,10 @@ def edit_community(request, community_id, family_id):
             admin_password = request.POST.get('admin_password')
             password = request.POST.get('new_password')
 
+            if len(password) > 100:
+                messages.error(request, all_messages["too_long_input"])
+                return redirect('edit_community', community_id, family_id)
+
             if not admin_password or not password:
                 messages.error(request, all_messages["missing_required_inputs"])
             elif not check_password(admin_password, community.admin_password):
@@ -179,6 +190,10 @@ def edit_community(request, community_id, family_id):
         if 'change_admin_password' in request.POST:
             current_admin_password = request.POST.get('current_admin_password')
             new_admin_password = request.POST.get('new_admin_password')
+
+            if len(new_admin_password) > 100:
+                messages.error(request, all_messages["too_long_input"])
+                return redirect('edit_community', community_id, family_id)
 
             if not current_admin_password or not new_admin_password:
                 messages.error(request, all_messages["missing_required_inputs"])

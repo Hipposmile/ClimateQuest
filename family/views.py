@@ -22,6 +22,10 @@ def create_family(request):
             messages.error(request, all_messages["missing_required_inputs"])
             return redirect('create_family')
 
+        if len(family_name) > 100 or len(family_password) > 100 or len(family_admin_password) > 100:
+            messages.error(request, all_messages["too_long_input"])
+            return redirect('create_family')
+
         if Family.objects.filter(name=family_name).exists():
             messages.error(request, all_messages["family_exists"])
             return redirect('create_family')
@@ -127,7 +131,6 @@ def edit_family(request, family_id):
         return redirect('dashboard')
 
     if request.method == 'POST':
-
         if 'change_familyname' in request.POST:
             admin_password = request.POST.get('admin_password')
             familyname = request.POST.get('new_familyname')
@@ -135,6 +138,10 @@ def edit_family(request, family_id):
             if Family.objects.filter(name=familyname).exists():
                 messages.error(request, all_messages["family_exists"])
                 return redirect('create_family')
+
+            if len(familyname) > 100:
+                messages.error(request, all_messages["too_long_input"])
+                return redirect('edit_family', family_id)
 
             if not admin_password or not familyname:
                 messages.error(request, all_messages["missing_required_inputs"])
@@ -152,6 +159,10 @@ def edit_family(request, family_id):
             admin_password = request.POST.get('admin_password')
             password = request.POST.get('new_password')
 
+            if len(password) > 100:
+                messages.error(request, all_messages["too_long_input"])
+                return redirect('edit_family', family_id)
+
             if not admin_password or not password:
                 messages.error(request, all_messages["missing_required_inputs"])
             elif not check_password(admin_password, family.admin_password):
@@ -166,6 +177,10 @@ def edit_family(request, family_id):
         if 'change_admin_password' in request.POST:
             current_admin_password = request.POST.get('current_admin_password')
             new_admin_password = request.POST.get('new_admin_password')
+
+            if len(new_admin_password) > 100:
+                messages.error(request, all_messages["too_long_input"])
+                return redirect('edit_family', family_id)
 
             if not current_admin_password or not new_admin_password:
                 messages.error(request, all_messages["missing_required_inputs"])

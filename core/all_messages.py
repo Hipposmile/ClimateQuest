@@ -13,6 +13,7 @@ all_messages = {
     "no_admin_auth": "Du darfst nicht auf die Admin-Funktionen zugreifen",
     "user_not_exist": "User existiert nicht",
     "not_is_truth": "Du musst bestätigen, dass alle Angaben der Wahrheit entsprechen",
+    "too_long_input": "Ein oder mehrere Input-Felder sind zu lang",
 
     #Zeitraum
     "invalid_date_range": "Startdatum muss vor Enddatum liegen",
@@ -98,7 +99,8 @@ all_messages = {
     "username_not_available": "Benutzername bereits vergeben",
     "invalid_email": "E-Mail-Adresse ungültig",
     "email_not_available": "E-Mail-Adresse bereits vergeben",
-    "nutungsbedingungen_not_accepted": "Du musst die Nutzungsbedingungen akzeptieren",
+    "nutzungsbedingungen_not_accepted": "Du musst die Nutzungsbedingungen akzeptieren",
+    "datenschutz_not_accepted": "Du musst die Datenschutzerklärung akzeptieren",
     "invalid_verification_link": "Ungültiger Verifizierungslink",
 
     #Edit

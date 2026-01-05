@@ -56,6 +56,10 @@ def add_forum_post(request):
         title = request.POST.get('title')
         content = request.POST.get('content')
 
+        if len(title) > 100:
+            messages.error(request, all_messages["input_too_long"])
+            return redirect('add_forum_post')
+
         if not title or not content:
             messages.error(request, all_messages['fill_all_required_fields'])
             return redirect('add_forum_post')

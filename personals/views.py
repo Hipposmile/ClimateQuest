@@ -79,9 +79,15 @@ def register_view(request):
         password = request.POST.get('password')
         email = request.POST.get('email')
         nutzungsbedingungen_accepted = request.POST.get('nutzungsbedingungen_accepted') == 'on'
+        datenschutz_accepted = request.POST.get('datenschutz_accepted') == 'on'
+
 
         if not nutzungsbedingungen_accepted:
-            messages.error(request, all_messages["nutungsbedingungen_not_accepted"])
+            messages.error(request, all_messages["nutzungsbedingungen_not_accepted"])
+            return redirect('register_view')
+
+        if not datenschutz_accepted:
+            messages.error(request, all_messages["datenschutz_not_accepted"])
             return redirect('register_view')
 
         if User.objects.filter(username=username).exists():

@@ -13,6 +13,9 @@ def presents_overview(request):
 def add_present(request):
     if request.method == 'POST':
         recipient = request.POST.get('recipient_name')
+        if len(recipient) > 100:
+            messages.error(request, all_messages["input_too_long"])
+            return redirect('add_present')
         present = Present.objects.create(
             recipient=recipient,
             creator=request.user
@@ -32,6 +35,9 @@ def present_detail(request, present_secret_key):
         if 'add_congratulation' in request.POST:
             message = request.POST.get('msg')
             congratulator = request.POST.get('congratulator')
+            if len(congratulator) > 100:
+                messages.error(request, all_messages["input_too_long"])
+                return redirect('present_detail', present.secret_key)
             congratulation = Congratulation.objects.create(
                 message=message,
                 congratulator=congratulator

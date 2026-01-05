@@ -20,7 +20,7 @@
     <form method="post" onsubmit="fillEditor(event)">
         {% csrf_token %}
         <label for="title">Titel</label>
-        <input type="text" name="title" id="title" placeholder="Titel" required>
+        <input type="text" name="title" id="title" placeholder="Titel" maxlength="100" required>
 
         <label for="content_editor">Inhalt</label>
         <div id="content_editor" class="quill-editor"></div>
