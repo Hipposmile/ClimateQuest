@@ -13,8 +13,8 @@
     <p>Willkommen, {{ user.username }}!</p>
 
     {% if user.usererweitert.mail_verified == False and user.email != '' %}
-        <p>Bitte bestaetige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. Falls du keine
-            Verifizierungsemail
+        <p>Bitte bestätige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. Falls du keine
+            Verifizierungsmail
             erhalten hast, <a href="{% url 'resend_verification_email' %}">lasse dir eine neue senden.</a></p>
     {% endif %}
     <div id="request_permission"></div>
@@ -88,10 +88,6 @@
         <span class="redirect-link-icon">→</span>
     </a>
     <br>
-    <a href="{% url 'customize_chart_settings' %}" class="redirect-link">
-        <span>Statistiken generieren</span>
-        <span class="redirect-link-icon">→</span>
-    </a>
 
     <h2>Klimapunkte</h2>
     <p>Du hast bereits {{ klimapunkte }} Klimapunkte gesammelt</p>
