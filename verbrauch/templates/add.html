@@ -391,7 +391,7 @@
             klimapunkte_anzeige.textContent = 'Klimapunkte pro ' + mengeBeschreibung + ': ' + klimapunkte;
             calculateImpact();
 
-            if (anmerkung !== '') {
+            if (anmerkung !== '' || anmerkung !== '-') {
                 anmerkungButton.style.display = 'inline-block';
                 anmerkungBox.textContent = anmerkung;
             } else {
