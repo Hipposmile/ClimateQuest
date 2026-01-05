@@ -51,9 +51,8 @@ body {
     padding: 0;
     color: var(--color-text);
     transition: all 0.3s ease;
-    -webkit-user-select: none;
-    user-select: none;
-    -webkit-touch-callout: none;
+    -webkit-user-select: text;
+    user-select: text;
     position: relative;
     overflow-x: hidden;
 }
@@ -83,6 +82,10 @@ button {
 button:active {
     transform: scale(0.95);
     opacity: 0.8;
+}
+
+p h1 h2 h3 h4 span label thead tbody {
+    cursor: text;
 }
 
 a {
