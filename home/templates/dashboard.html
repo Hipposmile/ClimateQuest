@@ -36,10 +36,11 @@
                 });
             }
         }
+
         requestPermission();
     </script>
 
-    <p>Tipp: Wenn andere Nutzer Artikel liken, die du selbst geschrieben hast, erhaeltst du Klimapunkte! Schreibe also
+    <p>Tipp: Wenn andere Nutzer Artikel liken, die du selbst geschrieben hast, erhältst du Klimapunkte! Schreibe also
         selbst einen guten Artikel, um mehr Klimapunkte zu erhalten!</p>
 
     <br>
@@ -84,6 +85,11 @@
     <br>
     <a href="{% url 'add' %}" class="redirect-link">
         <span>Aktion hinzufügen</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+    <br>
+    <a href="{% url 'customize_chart_settings' %}" class="redirect-link">
+        <span>Statistiken generieren</span>
         <span class="redirect-link-icon">→</span>
     </a>
 
@@ -391,7 +397,6 @@
             const now = new Date();
             const target = new Date(dateStr);
 
-            // Nur Datum vergleichen, keine Uhrzeit
             const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
             const targetDay = new Date(target.getFullYear(), target.getMonth(), target.getDate());
 
