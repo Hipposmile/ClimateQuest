@@ -8,6 +8,7 @@ class AktionenListe(models.Model):
     name = models.CharField(max_length=100, unique=True)
     klimapunkte = models.FloatField()
     mengeBeschreibung = models.CharField(max_length=100)
+    mengeBeschreibungSingular = models.CharField(max_length=100, default=mengeBeschreibung)
     anmerkung = models.CharField(max_length=500)
     source = models.CharField(max_length=1000)
 
@@ -22,7 +23,7 @@ class Category(models.Model):
         return self.name
 
 class Aktion(models.Model):
-    description = models.CharField(max_length=500, blank=True, null=True)
+    description = models.CharField(max_length=200, blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     quantity = models.FloatField()
     aktion = models.ForeignKey(AktionenListe, on_delete=models.CASCADE)

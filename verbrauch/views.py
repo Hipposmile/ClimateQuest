@@ -27,7 +27,10 @@ def add(request):
             action = AktionenListe.objects.get(name=action_type)
         except AktionenListe.DoesNotExist:
             messages.error(request, all_messages["action_not_found"])
+
         action_description = request.POST.get('action_description')
+        if len(action_description) > 200:
+            messages.error(request, all_messages["too_long_input"])
 
         action_date_raw = request.POST.get('action_date')
         if not action_date_raw:
@@ -117,7 +120,10 @@ def edit_action(request, action_id):
                 action = AktionenListe.objects.get(name=action_type)
             except AktionenListe.DoesNotExist:
                 messages.error(request, all_messages["action_not_found"])
+
             action_description = request.POST.get('action_description')
+            if len(action_description) > 200:
+                messages.error(request, all_messages["too_long_input"])
 
             action_date_raw = request.POST.get('action_date')
             if not action_date_raw:

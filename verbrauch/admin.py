@@ -5,7 +5,7 @@ admin.site.register(Aktion)
 
 @admin.register(AktionenListe)
 class AktionenListeAdmin(admin.ModelAdmin):
-    list_display = ("name", "klimapunkte", "mengeBeschreibung", "anmerkung")
+    list_display = ("name", "klimapunkte", "mengeBeschreibung", "mengeBeschreibungSingular", "anmerkung")
     search_fields = ("name", "mengeBeschreibung", "anmerkung")
     list_filter = ("klimapunkte",)
     ordering = ("name",)
