@@ -3,14 +3,12 @@ const getCsrfMiddlewareToken = () => {
 }
 
 const registerSw = async () => {
-    console.log("registering sw")
     if ('serviceWorker' in navigator) {
         await navigator.serviceWorker.register('/sw.js');
 
         // WICHTIG: Auf aktiven SW warten
         const reg = await navigator.serviceWorker.ready;
 
-        console.log("registered sw");
         initialiseState(reg);
     } else {
         showNotAllowed("You can't send push notifications ☹️😢");
@@ -18,7 +16,6 @@ const registerSw = async () => {
 };
 
 const initialiseState = (reg) => {
-    console.log("initializing State")
     if (!reg.showNotification) {
         showNotAllowed('Showing notifications isn\'t supported ☹️😢');
         return
@@ -76,10 +73,8 @@ const subscribe = async (reg) => {
 };
 
 const sendSubData = async (subscription) => {
-    console.log("sending sub data")
     const browser = navigator.userAgent.match(/(firefox|msie|chrome|safari|trident)/ig)[0].toLowerCase();
     const token = getCsrfMiddlewareToken();
-    console.log(token)
     const data = {
         status_type: 'subscribe',
         subscription: subscription.toJSON(),
@@ -100,8 +95,7 @@ const sendSubData = async (subscription) => {
 };
 
 const handleResponse = (res) => {
-    console.log(`Response Status: ${res.status}`);
-    console.log(`Response: ${res}`);
+
 };
 
 registerSw();

@@ -44,13 +44,10 @@ self.addEventListener('fetch', (event) => {
 });
 
 self.addEventListener('push', function (event) {
-    console.log("receiving push")
     const eventInfo = event.data.text();
     const data = JSON.parse(eventInfo);
     const head = data.head || 'New Notification 🕺🕺';
     const body = data.body || 'This is default content. Your notification didn\'t have one 🙄🙄';
-
-    console.log(`received data: ${head}, ${body}`)
 
     // Keep the service worker alive until the notification is created.
     event.waitUntil(
