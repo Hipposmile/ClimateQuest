@@ -264,7 +264,7 @@
                                 anmerkung: "{{ action.anmerkung|safe }}",
                                 mengebeschreibung: "{{ action.mengeBeschreibung }}",
                                 mengebeschreibungsingular: "{{ action.mengeBeschreibungSingular }}",
-                                source: "{{ action.source|safe }}",
+                                source: `{{ action.source|safe }}`,
                                 categories: "{% for action_category in action.category.all %}{{ action_category }}{% if not forloop.last %}, {% endif %}{% endfor %}"
                             },
                         {% endfor %}
