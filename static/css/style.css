@@ -382,6 +382,7 @@ main {
 .action-label {
     font-weight: 500;
     color: var(--color-text);
+    margin-bottom: 5px;
 }
 
 /*In mehreren Dateien vorhanden*/

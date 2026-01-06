@@ -44,6 +44,8 @@
         </li>
     </ul>
 
+    <p id="source-label" class="action-label"></p>
+
     <button class="info-btn" id="anmerkung-button" onclick="toggleAnmerkung()" style="display: none;" type="button">?
     </button>
     <div id="anmerkung-box" class="anmerkung-box" style="display: none;"></div>
@@ -51,14 +53,26 @@
     <form method="POST">
         {% csrf_token %}
         <label for="action_type">Ausgewähltes Element:</label>
-        <input type="text" id="action_type" name="action_type" value="{{ current_action.aktion.name }}" data-name="{{ current_action.aktion.name }}" data-klimapunkte="{{ current_action.impact|floatformat:-4 }}" data-anmerkung="{{ current_action.anmerkung }}" data-mengebeschreibung="{{ current_action.mengeBeschreibung }}" readonly>
+        <input type="text" id="action_type" name="action_type" value="{{ current_action.aktion.name }}"
+               data-name="{{ current_action.aktion.name }}"
+               data-klimapunkte="{{ current_action.impact|floatformat:-4 }}"
+               data-anmerkung="{{ current_action.anmerkung }}"
+               data-mengebeschreibung="{{ current_action.aktion.mengeBeschreibung }}"
+               data-source="{{ current_action.aktion.source }}"
+               data-categories="{% for action_category in current_action.aktion.category.all %}{{ action_category }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+               readonly>
 
         <button type="button" id="openModal">Element auswählen</button>
 
+        <br>
+        <br>
+        <p id="categories-label" class="action-label"></p>
         <p id="klimapunkte_anzeige" class="action-label"></p>
+        <br>
 
         <label for="action_description" class="action-label">Beschreibung:</label>
-        <input type="text" id="action_description" name="action_description" placeholder="Optional" value="{{ current_action.description }}"/>
+        <input type="text" id="action_description" name="action_description" placeholder="Optional"
+               value="{{ current_action.description }}"/>
         <br/>
 
         <label for="action_quantity" class="action-label" id="action_quantity_label">Menge:</label>
@@ -280,7 +294,9 @@
                                 name: "{{ action.name }}",
                                 klimapunkte: "{{ action.klimapunkte|floatformat:-4 }}",
                                 anmerkung: "{{ action.anmerkung|safe }}",
-                                mengebeschreibung: "{{ action.mengeBeschreibung }}"
+                                mengebeschreibung: "{{ action.mengeBeschreibung }}",
+                                source: "{{ action.source|safe }}",
+                                categories: "{% for action_category in action.category.all %}{{ action_category }}{% if not forloop.last %}, {% endif %}{% endfor %}"
                             },
                         {% endfor %}
                     ]
@@ -335,7 +351,7 @@
                 itemsList.innerHTML = "";
                 category.actions.forEach(action => {
                     const li = document.createElement("li");
-                    li.innerHTML = `<button class="item-btn" data-id="${action.id}" data-name="${action.name}" data-klimapunkte="${action.klimapunkte}" data-anmerkung="${action.anmerkung}" data-mengebeschreibung="${action.mengebeschreibung}">${action.name}</button>`;
+                    li.innerHTML = `<button class="item-btn" data-id="${action.id}" data-name="${action.name}" data-klimapunkte="${action.klimapunkte}" data-anmerkung="${action.anmerkung}" data-mengebeschreibung="${action.mengebeschreibung}" data-source="${action.source}" data-categories="${action.categories}">${action.name}</button>`;
                     itemsList.appendChild(li);
                 });
 
@@ -354,6 +370,8 @@
                 selectedItemInput.dataset.klimapunkte = e.target.dataset.klimapunkte;
                 selectedItemInput.dataset.anmerkung = e.target.dataset.anmerkung;
                 selectedItemInput.dataset.mengebeschreibung = e.target.dataset.mengebeschreibung;
+                selectedItemInput.dataset.source = e.target.dataset.source;
+                selectedItemInput.dataset.categories = e.target.dataset.categories;
                 changeActionType();
                 modal.classList.remove("active");
                 pageItems.style.display = "none";
@@ -401,15 +419,20 @@
             const klimapunkte_anzeige = document.getElementById('klimapunkte_anzeige');
             const action_quantity_label = document.getElementById('action_quantity_label');
 
+            const sourceLabel = document.getElementById('source-label');
+            const categoryLabel = document.getElementById('categories-label');
+
             let anmerkung = action_type.dataset.anmerkung;
             let klimapunkte = action_type.dataset.klimapunkte;
             let mengeBeschreibung = action_type.dataset.mengebeschreibung;
+            let source = action_type.dataset.source;
+            let categories = action_type.dataset.categories;
 
-            console.log("menge Beschreibung: " + mengeBeschreibung);
-
+            sourceLabel.innerHTML = `Quelle: ${source}`;
+            categoryLabel.textContent = `Kategorien: ${categories}`;
 
             action_quantity_label.textContent = mengeBeschreibung;
-            klimapunkte_anzeige.textContent = 'Klimapunkte pro ' + mengeBeschreibung + ': ' + klimapunkte;
+            klimapunkte_anzeige.textContent = `Klimapunkte pro ${mengeBeschreibung}: ${klimapunkte}`;
             calculateImpact();
 
             if (anmerkung !== '') {
@@ -459,7 +482,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function () {
-           changeActionType();
+            changeActionType();
         });
     </script>
 
