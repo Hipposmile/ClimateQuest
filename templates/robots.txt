@@ -2,7 +2,7 @@ User-agent: *
 Disallow: /ClimateQuestAdmin/
 Disallow: /admin/
 Disallow: /personals/settings/
-Disallow: /verbrauch/edit/
+Disallow: /aktionen/edit/
 Disallow: /family/family/
 Disallow: /community/community/
 Disallow: /events/edit/

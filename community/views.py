@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 
 from core.all_messages import all_messages
 from utils.functions import *
-from verbrauch.models import *
+from aktionen.models import *
 
 
 @login_required
@@ -321,7 +321,7 @@ def chat_community(request, community_id, family_id):
 
     return render(request, 'chat_community.html', {'community': community, 'msgs': msgs, 'family': family})
 
-
+@login_required
 def community_detail(request, community_id, family_id):
     if not community_id:
         messages.error(request, all_messages["community_id_missing"])

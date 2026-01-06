@@ -27,7 +27,7 @@ from family.sitemaps import *
 from community.sitemaps import *
 from personals.sitemaps import *
 from users.sitemaps import *
-from verbrauch.sitemaps import *
+from aktionen.sitemaps import *
 from presents.sitemaps import *
 
 sitemaps = {
@@ -77,7 +77,7 @@ urlpatterns = [
     path('ClimateQuestAdmin/', admin.site.urls),
     path('', include('home.urls')),
     path('personals/', include('personals.urls')),
-    path('verbrauch/', include('verbrauch.urls')),
+    path('aktionen/', include('aktionen.urls')),
     path('community/', include('community.urls')),
     path('family/', include('family.urls')),
     path('users/', include('users.urls')),

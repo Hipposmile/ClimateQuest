@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 from events.models import *
 from forum.models import *
-from verbrauch.models import *
+from aktionen.models import *
 from utils.functions import *
 
 load_dotenv()

@@ -2,8 +2,6 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
-
-# Verbrauch
 class AktionenListe(models.Model):
     name = models.CharField(max_length=100, unique=True)
     klimapunkte = models.FloatField()

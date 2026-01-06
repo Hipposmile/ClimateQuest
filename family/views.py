@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 
 from core.all_messages import all_messages
 from utils.functions import *
-from verbrauch.models import *
+from aktionen.models import *
 from .models import *
 
 
@@ -112,6 +112,7 @@ def families_view(request):
     families = get_families_of_user(request.user)
     return render(request, './families.html', {'families': families})
 
+@login_required
 def edit_family(request, family_id):
     if not family_id:
         messages.error(request, all_messages["family_id_missing"])

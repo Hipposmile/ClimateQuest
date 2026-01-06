@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'core',
     'home',
     'personals',
-    'verbrauch',
+    'aktionen',
     'family',
     'community',
     'users',

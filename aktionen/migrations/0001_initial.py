@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
                 ('quantity', models.FloatField()),
                 ('date', models.DateField(default=django.utils.timezone.now)),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('aktion', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='verbrauch.aktionenliste')),
+                ('aktion', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='aktionen.aktionenliste')),
             ],
         ),
     ]

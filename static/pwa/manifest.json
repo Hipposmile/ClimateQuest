@@ -467,7 +467,7 @@
       "name": "Aktion hinzufügen",
       "short_name": "Aktion",
       "description": "Neue Klimaschutz-Aktion hinzufügen",
-      "url": "https://climate-quest.de/verbrauch/add/"
+      "url": "https://climate-quest.de/aktionen/add/"
     },
     {
       "name": "Meine Families",

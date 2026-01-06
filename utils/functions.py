@@ -15,7 +15,7 @@ from artikel.models import Artikel
 from community.models import *
 from home.models import *
 from personals.models import *
-from verbrauch.models import *
+from aktionen.models import *
 
 dezimalstellen = 4
 
