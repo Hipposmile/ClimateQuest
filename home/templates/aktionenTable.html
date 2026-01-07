@@ -82,7 +82,7 @@
                 <tr>
                     <td>{{ aktion.name }}</td>
                     <td>{{ aktion.klimapunkte }}</td>
-                    <td>{{ aktion.anmerkung|safe }}</td>
+                    <td>{% if aktion.anmerkung != "-" %}{{ aktion.anmerkung|safe }}{% endif %}</td>
                     <td>{{ aktion.source|safe }}</td>
                     <td>
                         {% for category in aktion.category.all %}

@@ -259,13 +259,13 @@
                         {% for action in category.actions.all %}
                             {
                                 id: "{{ action.id }}",
-                                name: "{{ action.name }}",
-                                klimapunkte: "{{ action.klimapunkte|floatformat:-4 }}",
-                                anmerkung: "{{ action.anmerkung|safe }}",
-                                mengebeschreibung: "{{ action.mengeBeschreibung }}",
-                                mengebeschreibungsingular: "{{ action.mengeBeschreibungSingular }}",
+                                name: `{{ action.name }}`,
+                                klimapunkte: `{{ action.klimapunkte|floatformat:-4 }}`,
+                                anmerkung: `{{ action.anmerkung|safe }}`,
+                                mengebeschreibung: `{{ action.mengeBeschreibung }}`,
+                                mengebeschreibungsingular: `{{ action.mengeBeschreibungSingular }}`,
                                 source: `{{ action.source|safe }}`,
-                                categories: "{% for action_category in action.category.all %}{{ action_category }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+                                categories: `{% for action_category in action.category.all %}{{ action_category }}{% if not forloop.last %}, {% endif %}{% endfor %}`
                             },
                         {% endfor %}
                     ]
