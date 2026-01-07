@@ -318,7 +318,7 @@
                 itemsList.innerHTML = "";
                 category.actions.forEach(action => {
                     const li = document.createElement("li");
-                    li.innerHTML = `<button class="item-btn" data-id="${action.id}" data-name="${action.name}" data-klimapunkte="${action.klimapunkte}" data-anmerkung="${action.anmerkung}" data-mengebeschreibung="${action.mengebeschreibung}" data-mengebeschreibungsingular="${action.mengebeschreibungsingular}" data-source="${action.source}" data-categories="${action.categories}">${action.name}</button>`;
+                    li.innerHTML = `<button class='item-btn' data-id='${action.id}' data-name='${action.name}' data-klimapunkte='${action.klimapunkte}' data-anmerkung='${action.anmerkung}' data-mengebeschreibung='${action.mengebeschreibung}' data-mengebeschreibungsingular='${action.mengebeschreibungsingular}' data-source='${action.source}' data-categories='${action.categories}'>${action.name}</button>`;
                     itemsList.appendChild(li);
                 });
 
