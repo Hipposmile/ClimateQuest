@@ -231,7 +231,8 @@
         <input type="password" name="password" id="password" placeholder="Passwort" required>
         <label for="content_editor">Statement</label>
         <div id="content_editor" class="quill-editor">{{ user.usererweitert.statement|safe }}</div>
-        <small>Wenn du die Quill-Cookies abgelehnt hast, können Design-Elemente nicht richtig angezeigt werden. Stattdessen wirst du seltsame Tags wie &lt;p&gt; sehen.</small>
+        <small>Wenn du die Quill-Cookies abgelehnt hast, können Design-Elemente nicht richtig angezeigt werden.
+            Stattdessen wirst du seltsame Tags wie &lt;p&gt; sehen.</small>
         <input type="hidden" name="statement">
         <button type="submit" name="change_statement">Speichern</button>
     </form>
@@ -305,12 +306,19 @@
     <!-- Account löschen -->
     <h3 id="delete_h3">Account löschen</h3>
     <form method="post"
-          onsubmit="return confirm('Willst du deinen Account wirklich löschen? Alle Mitglieder deiner Families und Communities werden darüber benachrichtigt werden.');">
+          onsubmit="return confirm('Willst du deinen Account wirklich löschen?');">
         {% csrf_token %}
         <label for="password">Passwort:</label>
         <input type="password" name="password" id="password" placeholder="Passwort" required>
-        <small>Alle Mitglieder deiner Families und Communities werden darüber benachrichtigt werden.</small>
         <button type="submit" name="delete_account" style="color:red;">Diesen Account löschen</button>
+        <p>Dadurch werden alle mit deinem Konto verknüpften Daten wie Aktionen oder Chat-Nachrichten gelöscht. Alle
+            Mitglieder deiner Families und Communities werden darüber benachrichtigt werden.</p>
     </form>
+
+    <h3 id="deletesingledata_h3">Löschen einzelner Daten</h3>
+    <p>Wenn du nur einige mit deinem Konto verknüpften Daten löschen möchtest, wende dich bitte an <a
+            href="mailto:climate-quest.de?subject:Anforderung zum Löschen bestimmter Daten">kontakt@climate-quest.de</a>.
+        Nenne hier bitte die konkreten Daten, welche du löschen möchtest. Wenn sich die Daten über die Webseite bereits
+        löschen lassen, werden diese auch tatsächlich gelöscht und als Backup maximal 14 Tage gespeichert. </p>
 
 {% endblock %}
