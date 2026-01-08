@@ -30,7 +30,7 @@
     </ul>
     <hr>
     <!-- Benutzername ändern -->
-    <h3>Benutzernamen ändern</h3>
+    <h3 id="username_h3">Benutzernamen ändern</h3>
     <form method="post">
         {% csrf_token %}
         <label for="password">Aktuelles Passwort:</label>
@@ -71,7 +71,7 @@
     <hr>
 
     <!-- Passwort ändern -->
-    <h3>Passwort ändern</h3>
+    <h3 id="password_h3">Passwort ändern</h3>
     <form method="post" onsubmit="register(event)">
         {% csrf_token %}
         <label for="current_password">Aktuelles Passwort:</label>
@@ -160,7 +160,7 @@
     </script>
     <hr>
 
-    <h3>E-Mail-Adresse ändern</h3>
+    <h3 id="email_h3">E-Mail-Adresse ändern</h3>
     <form method="post">
         {% csrf_token %}
         <label for="password">Passwort:</label>
@@ -196,7 +196,7 @@
     </script>
     <hr>
 
-    <h3>E-Mail Einstellungen</h3>
+    <h3 id="mailsettings_h3">E-Mail Einstellungen</h3>
     <form method="POST">
         {% csrf_token %}
         <label for="password">Passwort:</label>
@@ -224,7 +224,7 @@
     <hr>
 
     <!--Statement ändern!-->
-    <h3>Statement ändern</h3>
+    <h3 id="statement_h3">Statement ändern</h3>
     <form method="post" onsubmit="fillEditor(event)">
         {% csrf_token %}
         <label for="password">Passwort:</label>
@@ -303,7 +303,7 @@
 
     <hr>
     <!-- Account löschen -->
-    <h3>Account löschen</h3>
+    <h3 id="delete_h3">Account löschen</h3>
     <form method="post"
           onsubmit="return confirm('Willst du deinen Account wirklich löschen? Alle Mitglieder deiner Families und Communities werden darüber benachrichtigt werden.');">
         {% csrf_token %}

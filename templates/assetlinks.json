@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "de.climate_quest.climatequest",
+        "sha256_cert_fingerprints": ["E5:CE:86:FF:69:A8:4D:C5:91:6E:AD:1D:51:D3:03:1A:0A:8C:C5:CE:BA:C9:3B:E0:94:C5:B8:F8:63:26:91:A6"]
+      }
+    }]

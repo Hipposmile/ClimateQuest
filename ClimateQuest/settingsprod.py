@@ -38,8 +38,13 @@ INTERNAL_IPS = [
     'https://climate-quest.de', 'https://www.climate-quest.de'
 ]
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = ['https://climate-quest.de', 'https://www.climate-quest.de']
+
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
 
 ADMINS = [("Paul", "paul@fraqment.de")]
 
@@ -62,7 +67,7 @@ LOGGING = {
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
-            'include_html': True,   # optional: HTML‑Mail mit Traceback
+            'include_html': True,  # optional: HTML‑Mail mit Traceback
         },
     },
     'loggers': {

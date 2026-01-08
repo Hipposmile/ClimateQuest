@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% load static %}
+{% block meta %}
+    <meta name="description" content="Unterstütze ClimateQuest, indem du die mobilen Apps testest.">
+{% endblock %}
+{% block title %}ClimateQuest - Tester/-innen{% endblock %}
+
+{% block content %}
+    <style>
+        .accordion {
+            width: 100%;
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+            padding: 18px 20px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        .accordion-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .accordion-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .accordion-meta {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+
+        /* --- Toggle Button --- */
+        .accordion-toggle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: #0f172a;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: transform 0.25s ease, background 0.25s ease;
+        }
+
+        .accordion-toggle:hover {
+            background: #0057ff;
+        }
+
+        .accordion-toggle::before,
+        .accordion-toggle::after {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            transition: transform 0.25s ease;
+        }
+
+        .accordion-toggle::before {
+            transform: rotate(0deg);
+        }
+
+        .accordion-toggle::after {
+            transform: rotate(90deg);
+        }
+
+        /* --- X Zustand --- */
+        .accordion.open .accordion-toggle {
+            background: #e11d48;
+            transform: rotate(180deg);
+        }
+
+        .accordion.open .accordion-toggle:hover {
+            background: #b30229;
+        }
+
+        .accordion.open .accordion-toggle::before {
+            transform: rotate(45deg);
+        }
+
+        .accordion.open .accordion-toggle::after {
+            transform: rotate(-45deg);
+        }
+
+        /* --- Content Wrapper --- */
+
+        .accordion-content-wrapper {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.35s ease;
+        }
+
+        .accordion-content {
+            padding: 14px 0 14px 0;
+            color: #4b5563;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 12px;
+        }
+    </style>
+    <h1>Tester/-innen</h1>
+    <p>Du möchtest ClimateQuest unterstützen? Dann teste die mobile ClimateQuest App! Sie ist momentan weder im
+        PlayStore noch im AppStore verfügbar, aber damit dies klappt, müssen zuvor Tests durchgeführt werden. Indem du
+        eine Testerin oder ein Tester wirst, kannst du uns also helfen, ClimateQuest in den PlayStore bzw. den AppStore
+        zu bringen.</p>
+
+    <div class="accordion">
+        <div class="accordion-header">
+            <div>
+                <div class="accordion-title">Google</div>
+                <div class="accordion-meta">Klicke hier, wenn du ein Android-Handy verwendest</div>
+            </div>
+            <button class="accordion-toggle" aria-expanded="false"
+                    aria-controls="accordionContent">
+                <span></span>
+            </button>
+        </div>
+
+        <div class="accordion-content-wrapper">
+            <div class="accordion-content">
+                Um die Android-App in den Google Play Store zu laden, muss zuvor ein sogenannter „geschlossener Test“
+            </div>
+        </div>
+    </div>
+    <div class="accordion">
+        <div class="accordion-header">
+            <div>
+                <div class="accordion-title">Apple</div>
+                <div class="accordion-meta">Klicke hier, wenn ud ein iOS-Handy verwendest</div>
+            </div>
+            <button class="accordion-toggle" aria-expanded="false"
+                    aria-controls="accordionContent">
+                <span></span>
+            </button>
+        </div>
+
+        <div class="accordion-content-wrapper">
+            <div class="accordion-content">
+                Hier kannst du beliebigen Inhalt einfügen – Text, Links, Listen oder sogar Bilder.
+                Das Ausklappfeld ist bewusst minimalistisch gehalten, damit du es leicht an dein eigenes Design anpassen
+                kannst.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll(".accordion").forEach((accordion) => {
+            const toggleBtn = accordion.querySelector(".accordion-toggle");
+            const contentWrapper = accordion.querySelector(".accordion-content-wrapper");
+
+            function setMaxHeight(open) {
+                if (open) {
+                    const content = contentWrapper.firstElementChild;
+                    contentWrapper.style.maxHeight = content.scrollHeight + "px";
+                } else {
+                    contentWrapper.style.maxHeight = "0px";
+                }
+            }
+
+            toggleBtn.addEventListener("click", () => {
+                const isOpen = accordion.classList.toggle("open");
+                toggleBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+                setMaxHeight(isOpen);
+            });
+
+            // Höhe bei Fenster-Resize aktualisieren
+            window.addEventListener("resize", () => {
+                if (accordion.classList.contains("open")) {
+                    setMaxHeight(true);
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

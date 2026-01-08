@@ -85,9 +85,11 @@ urlpatterns = [
     path('artikel/', include('artikel.urls')),
     path('forum/', include('forum.urls')),
     path('presents/', include('presents.urls')),
+    path('pages/', include('pages.urls')),
 
     # Notifications
     path('sw.js', TemplateView.as_view(template_name='sw.js', content_type='application/x-javascript')),
+    path('.well-known/assetlinks.json', TemplateView.as_view(template_name='assetlinks.json', content_type='application/json')),
     path('webpush/', include('webpush.urls')),
 
     # Hot Reload
