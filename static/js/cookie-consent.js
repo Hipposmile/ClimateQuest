@@ -32,9 +32,9 @@ const cookieCategories = {
     }
 };
 
-// 🎨 Styles dynamisch einfügen
-const styleCookie = document.createElement('style');
-styleCookie.textContent = `
+function addStyle() {
+    const styleCookie = document.createElement('style');
+    styleCookie.textContent = `
     #cookie-overlay {
         position: fixed; inset: 0;
         background: var(--color-shadow-light);
@@ -164,104 +164,99 @@ styleCookie.textContent = `
     #cookie-reset:hover {
         background-color: var(--color-accent);
     }
-
-    body.blocked {
-  overflow: hidden;
-  background-color: #868484ff; /* Optional: dunkler Hintergrund */
+    
+    /* Overlay als Schleier */
+    #cookie-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4); /* ← Rauchiger Schleier */
+        z-index: 9998;
+        animation: fadeIn 0.3s ease-in-out;
+        pointer-events: auto; /* ← wichtig: erlaubt Interaktion mit dem Banner */
+    }
+      
+    
+    /* Banner bleibt interaktiv */
+    #cookie-banner {
+        z-index: 9999; /* ← über dem Overlay */
+    }
+    
+    #cookie-reset:hover {
+        background-color: var(--color-accent); /* Fix: fehlender Wert */
+    }`;
+    document.head.appendChild(styleCookie);
 }
 
-/* Overlay als Schleier */
-#cookie-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4); /* ← Rauchiger Schleier */
-  z-index: 9998;
-  animation: fadeIn 0.3s ease-in-out;
-  pointer-events: auto; /* ← wichtig: erlaubt Interaktion mit dem Banner */
-}
-  
-
-/* Banner bleibt interaktiv */
-#cookie-banner {
-  z-index: 9999; /* ← über dem Overlay */
-}
-
-#cookie-reset:hover {
-  background-color: var(--color-accent); /* Fix: fehlender Wert */
-}`;
-document.head.appendChild(styleCookie);
-
-// 🧱 HTML-Struktur erzeugen
-const banner = document.createElement('div');
-banner.innerHTML = `<div id="cookie-overlay"></div>
-  <div role="dialog" aria-label="Cookie-Einstellungen" aria-modal="true" id="cookie-banner">
-    <p><strong>Wir verwenden Cookies</strong> für Funktion, Analyse und Marketing. <a href="../rechtliches/Datenschutz.pdf">Mehr erfahren</a>.</p>
-    <p>Durch das Akzeptieren der Cookies bestätigst du, dass du volljährig bist oder dass eine erziehungsberechtigte Person diese Einwilligung erteilt hat.</p>
-    <div class="buttons">
-      <button id="btn-accept">Alle akzeptieren</button>
-      <button id="btn-reject">Alle ablehnen</button>
-      <button id="btn-settings">Genauere Einstellungen</button>
-    </div>
-    <div id="settings-panel">
-      <p><strong>Cookie-Auswahl:</strong></p>
-      ${Object.entries(cookieCategories).map(([key, {label, explanation, required}]) => `
-        <div class="cookie-category">
-          <label>
-            <input type="checkbox" id="${key}" ${required ? 'disabled checked' : ''}>
-            ${label}
-          </label>
-          ${!required ? `
-            <button class="toggle-expl" data-target="${key}-expl">Erklärung anzeigen</button>
-            <span class="explanation" id="${key}-expl">${explanation}</span>
-          ` : `<span class="explanation">${explanation}</span>`}
+function addCookieBanner() {
+    const banner = document.createElement('div');
+    banner.innerHTML = `<div id="cookie-overlay"></div>
+      <div role="dialog" aria-label="Cookie-Einstellungen" aria-modal="true" id="cookie-banner">
+        <p><strong>Wir verwenden Cookies</strong> für Funktion, Analyse und Marketing. <a href="../rechtliches/Datenschutz.pdf">Mehr erfahren</a>.</p>
+        <p>Durch das Akzeptieren der Cookies bestätigst du, dass du volljährig bist oder dass eine erziehungsberechtigte Person diese Einwilligung erteilt hat.</p>
+        <div class="buttons">
+          <button id="btn-accept">Alle akzeptieren</button>
+          <button id="btn-reject">Alle ablehnen</button>
+          <button id="btn-settings">Genauere Einstellungen</button>
         </div>
-      `).join('')}
-      <button id="btn-save">Einstellungen speichern</button>
-    </div>
-  </div>`;
-document.body.appendChild(banner);
-
-// document.body.classList.add('blocked');
+        <div id="settings-panel">
+          <p><strong>Cookie-Auswahl:</strong></p>
+          ${Object.entries(cookieCategories).map(([key, {label, explanation, required}]) => `
+            <div class="cookie-category">
+              <label>
+                <input type="checkbox" id="${key}" ${required ? 'disabled checked' : ''}>
+                ${label}
+              </label>
+              ${!required ? `
+                <button class="toggle-expl" data-target="${key}-expl">Erklärung anzeigen</button>
+                <span class="explanation" id="${key}-expl">${explanation}</span>
+              ` : `<span class="explanation">${explanation}</span>`}
+            </div>
+          `).join('')}
+          <button id="btn-save">Einstellungen speichern</button>
+        </div>
+      </div>`;
+    document.body.appendChild(banner);
 
 // 🧩 Eventhandler definieren
-document.getElementById('btn-accept').addEventListener('click', () => {
-    const consent = {};
-    for (const key in cookieCategories) {
-        consent[key] = true;
-    }
-    setConsent(consent);
-    window.location.reload();
-});
-
-document.getElementById('btn-reject').addEventListener('click', () => {
-    const consent = {};
-    for (const key in cookieCategories) {
-        consent[key] = cookieCategories[key].required;
-    }
-    setConsent(consent);
-    window.location.reload();
-});
-
-document.getElementById('btn-settings').addEventListener('click', () => {
-    const panel = document.getElementById('settings-panel');
-    panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
-});
-
-document.querySelectorAll('.toggle-expl').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const expl = document.getElementById(btn.dataset.target);
-        expl.style.display = expl.style.display === 'block' ? 'none' : 'block';
+    document.getElementById('btn-accept').addEventListener('click', () => {
+        const consent = {};
+        for (const key in cookieCategories) {
+            consent[key] = true;
+        }
+        setConsent(consent);
+        window.location.reload();
     });
-});
 
-document.getElementById('btn-save').addEventListener('click', () => {
-    const consent = {};
-    for (const key in cookieCategories) {
-        consent[key] = cookieCategories[key].required || document.getElementById(key).checked;
-    }
-    setConsent(consent);
-    window.location.reload();
-});
+    document.getElementById('btn-reject').addEventListener('click', () => {
+        const consent = {};
+        for (const key in cookieCategories) {
+            consent[key] = cookieCategories[key].required;
+        }
+        setConsent(consent);
+        window.location.reload();
+    });
+
+    document.getElementById('btn-settings').addEventListener('click', () => {
+        const panel = document.getElementById('settings-panel');
+        panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+    });
+
+    document.querySelectorAll('.toggle-expl').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const expl = document.getElementById(btn.dataset.target);
+            expl.style.display = expl.style.display === 'block' ? 'none' : 'block';
+        });
+    });
+
+    document.getElementById('btn-save').addEventListener('click', () => {
+        const consent = {};
+        for (const key in cookieCategories) {
+            consent[key] = cookieCategories[key].required || document.getElementById(key).checked;
+        }
+        setConsent(consent);
+        window.location.reload();
+    });
+}
 
 // 💾 Consent speichern und Banner entfernen
 function setConsent(consent) {
@@ -269,52 +264,6 @@ function setConsent(consent) {
     ['cookie-banner', 'cookie-overlay'].forEach(id => document.getElementById(id)?.remove());
     document.body.classList.remove('blocked');
     handleCookieBlocks(consent);
-}
-
-function handleCookieBlocks(consentState) {
-    document.querySelectorAll('.cookie-blocked').forEach(el => {
-        const type = el.dataset.requires;
-        const content = el.dataset.content?.trim();
-
-        if (consentState[type]) {
-
-            // 🔍 <script> extern
-            const scriptSrcMatch = content.match(/<script\s+src=["']([^"']+)["']><\/script>/i);
-            if (scriptSrcMatch) {
-                const script = document.createElement("script");
-                script.src = scriptSrcMatch[1];
-                script.async = true;
-                document.body.appendChild(script);
-                return;
-            }
-
-            // 🔍 <script> inline
-            const inlineScriptMatch = content.match(/<script>([\s\S]*?)<\/script>/i);
-            if (inlineScriptMatch) {
-                const script = document.createElement("script");
-                script.textContent = inlineScriptMatch[1];
-                document.body.appendChild(script);
-                return;
-            }
-
-            // 🔍 <link> Stylesheet
-            const linkMatch = content.match(/<link\s+[^>]*href=["']([^"']+)["'][^>]*rel=["']stylesheet["'][^>]*>/i);
-            if (linkMatch) {
-                const link = document.createElement("link");
-                link.href = linkMatch[1];
-                link.rel = "stylesheet";
-                document.head.appendChild(link);
-                return;
-            }
-
-            // 🧼 Fallback: HTML direkt einfügen
-            el.innerHTML = content;
-        } else {
-            el.innerHTML = `<div style="background:#ccc; padding:15px; border-radius:8px; margin: 15px;">
-        Dieses Element ist blockiert. Bitte '${type}'-Cookies erlauben, um es zu sehen. Evtl. musst du die Seite anschließend neu laden.
-      </div>`;
-        }
-    });
 }
 
 // 🚫 Blockierte Inhalte je nach Consent anzeigen
@@ -372,23 +321,34 @@ function handleCookieBlocks(consentState) {
 // 🔄 Consent beim Laden prüfen
 window.addEventListener('load', () => {
     const consent = localStorage.getItem('cookieConsent');
-    if (consent) setConsent(JSON.parse(consent));
+    if (consent) {
+        setConsent(JSON.parse(consent))
+    } else {
+        addCookieBanner();
+    }
 });
 
-// 🔁 Reset-Button zum Zurücksetzen
-const resetBtnDiv = document.createElement('div');
-resetBtnDiv.id = 'cookie-reset-div';
-resetBtnDiv.role = "complementary";
-resetBtnDiv.ariaLabel = 'Cookie-Einstellungen anzeigen';
-resetBtnDiv.innerHTML = '<button id="cookie-reset" class="emoji">&#x1F36A;</button>';
-const resetBtn = resetBtnDiv.querySelector('#cookie-reset');
-resetBtn.addEventListener('click', () => {
-    localStorage.removeItem('cookieConsent');
-    location.reload();
-});
-document.body.appendChild(resetBtnDiv);
+function addResetBtn() {
+    // 🔁 Reset-Button zum Zurücksetzen
+    const resetBtnDiv = document.createElement('div');
+    resetBtnDiv.id = 'cookie-reset-div';
+    resetBtnDiv.role = "complementary";
+    resetBtnDiv.ariaLabel = 'Cookie-Einstellungen anzeigen';
+    resetBtnDiv.innerHTML = '<button id="cookie-reset" class="emoji">&#x1F36A;</button>';
+    const resetBtn = resetBtnDiv.querySelector('#cookie-reset');
+    resetBtn.addEventListener('click', () => {
+        localStorage.removeItem('cookieConsent');
+        addCookieBanner();
+    });
+    document.body.appendChild(resetBtnDiv);
+}
 
 function getCookiePreferences() {
     const consentString = localStorage.getItem('cookieConsent');
     return consentString ? JSON.parse(consentString) : {};
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    addStyle();
+    addResetBtn();
+});

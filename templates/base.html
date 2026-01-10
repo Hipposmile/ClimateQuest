@@ -268,81 +268,133 @@
             background-color: var(--color-primary-light);
             color: var(--color-primary);
         }
+
+        #pwaNav {
+            position: fixed;
+            top: max(25px, calc(25px + var(--safe-area-inset-top)));
+            left: max(10px, calc(10px + var(--safe-area-inset-left)));
+            display: flex;
+            pointer-events: none;
+            opacity: 0;
+            gap: 8px;
+            z-index: 9998;
+            transition: opacity 200ms ease-in-out;
+        }
+
+        #pwaNav.open {
+            pointer-events: auto;
+            opacity: 1;
+        }
+
+        #pwaNav button {
+            padding: 8px 12px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--color-primary);
+            cursor: pointer;
+            min-width: 44px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-appearance: none;
+            appearance: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        #pwaNav button:active {
+            transform: scale(0.95);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #pwaNav button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #pwaNavToggle {
+            position: fixed;
+            top: max(0px, var(--safe-area-inset-top));
+            left: max(10px, calc(10px + var(--safe-area-inset-left)));
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+            height: 10px;
+            width: 20px;
+            z-index: 9997;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transform: rotate(180deg);
+            padding: 5px;
+            transition: transform 200ms ease-in-out;
+            border-radius: 5px;
+
+        }
+
+        #pwaNavToggle.open {
+            transform: rotate(0);
+        }
+
+        .loading-div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4); /* ← Rauchiger Schleier */
+            z-index: 9998;
+            animation: fadeIn 0.3s ease-in-out;
+            pointer-events: auto; /* ← wichtig: erlaubt Interaktion mit dem Banner */
+        }
+
+        .loading {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            border: 8px solid transparent;
+            border-top: 8px solid #ff0080;
+            border-radius: 50%;
+            z-index: 9999;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+                border-top-color: #ff0080;
+            }
+            25% {
+                border-top-color: #00ff80;
+            }
+            50% {
+                border-top-color: #8000ff;
+            }
+            75% {
+                border-top-color: #ff8000;
+            }
+            100% {
+                transform: rotate(360deg);
+                border-top-color: #ff0080;
+            }
+        }
     </style>
 </head>
 
 <body>
-<style>
-    #pwaNav {
-        position: fixed;
-        top: max(25px, calc(25px + var(--safe-area-inset-top)));
-        left: max(10px, calc(10px + var(--safe-area-inset-left)));
-        display: flex;
-        pointer-events: none;
-        opacity: 0;
-        gap: 8px;
-        z-index: 9998;
-        transition: opacity 200ms ease-in-out;
-    }
 
-    #pwaNav.open {
-        pointer-events: auto;
-        opacity: 1;
-    }
-
-    #pwaNav button {
-        padding: 8px 12px;
-        font-size: 18px;
-        border: none;
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.9);
-        color: var(--color-primary);
-        cursor: pointer;
-        min-width: 44px;
-        min-height: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        -webkit-appearance: none;
-        appearance: none;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        transition: all 0.2s ease;
-    }
-
-    #pwaNav button:active {
-        transform: scale(0.95);
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    #pwaNav button:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-
-    #pwaNavToggle {
-        position: fixed;
-        top: max(0px, var(--safe-area-inset-top));
-        left: max(10px, calc(10px + var(--safe-area-inset-left)));
-        background: rgba(255, 255, 255, 0.9);
-        color: black;
-        height: 10px;
-        width: 20px;
-        z-index: 9997;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transform: rotate(180deg);
-        padding: 5px;
-        transition: transform 200ms ease-in-out;
-        border-radius: 5px;
-
-    }
-
-    #pwaNavToggle.open {
-        transform: rotate(0);
-    }
-</style>
+<div class="loading-div" id="loading-div">
+    <div class="loading" id="loading"></div>
+</div>
+<script>
+    window.addEventListener('load', () => {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('loading-div').style.display = 'none';
+    });
+</script>
 
 <script>
     function createPwaNav() {
