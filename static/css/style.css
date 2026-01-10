@@ -317,6 +317,12 @@ main {
     opacity: 0.6;
 }
 
+.h2_size {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
 .h3_size {
     font-size: 1rem;
     margin-bottom: 1rem;
@@ -965,10 +971,6 @@ summary {
 
     h2 {
         font-size: 20px;
-    }
-
-    .h1_size {
-        font-size: 1.4rem;
     }
 
     .action-list-container,

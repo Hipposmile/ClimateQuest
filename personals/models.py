@@ -11,6 +11,7 @@ class UserErweitert(models.Model):
     def __str__(self):
         return self.user.username
 
+
 # Wichtig: Immer auch ein Level ab 0 Punkten haben, sonst kommt es zu Fehlern
 class Level(models.Model):
     klimapunkte = models.IntegerField()
