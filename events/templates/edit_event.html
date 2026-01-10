@@ -22,7 +22,7 @@
     <form method="post" onsubmit="fillEditor()">
         {% csrf_token %}
         <label for="name">Name</label>
-        <input type="text" id="name" name="name" placeholder="Name" value="{{ event.name }}" required>
+        <input type="text" id="name" name="name" placeholder="Name" maxlength="100" value="{{ event.name }}" required>
 
         <label for="description_editor">Beschreibung</label>
         <div id="description_editor" style="height: 300px;">{{ event.description|safe }}</div>
@@ -38,7 +38,7 @@
                required>
 
         <label for="adress">Adresse</label>
-        <input type="text" id="adress" name="adress" placeholder="Adresse" value="{{ event.adress }}" required>
+        <input type="text" id="adress" name="adress" placeholder="Adresse" value="{{ event.adress }}" maxlength="100" required>
 
         <label class="custom-checkbox">
             <input type="checkbox" name="is_truth">

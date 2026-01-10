@@ -137,7 +137,7 @@ def add_event(request):
             return redirect('add_event')
 
         if len(name) > 100 or len(adress) > 100:
-            messages.error(request, all_messages["input_too_long"])
+            messages.error(request, all_messages["too_long_input"])
             return redirect('add_event')
 
         if not name or not description or not date_time or not duration or not adress:
@@ -199,7 +199,7 @@ def edit_event(request, event_id):
                 return redirect('edit_event', event_id)
 
             if len(name) > 100 or len(adress) > 100:
-                messages.error(request, all_messages["input_too_long"])
+                messages.error(request, all_messages["too_long_input"])
                 return redirect('edit_event', event_id)
 
             if not name or not description or not date_time or not duration or not adress:

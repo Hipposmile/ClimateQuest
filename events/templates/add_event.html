@@ -15,7 +15,7 @@
     <form method="post" onsubmit="fillEditor(event)">
         {% csrf_token %}
         <label for="name">Name</label>
-        <input type="text" id="name" name="name" placeholder="Name" required>
+        <input type="text" id="name" name="name" placeholder="Name" maxlength="100" required>
 
         <label for="description_editor">Beschreibung</label>
         <div id="description_editor" class="quill-editor"></div>
@@ -28,7 +28,7 @@
         <input type="number" min="0" id="duration" name="duration" placeholder="Dauer" required>
 
         <label for="adress">Adresse</label>
-        <input type="text" id="adress" name="adress" placeholder="Adresse" required>
+        <input type="text" id="adress" name="adress" placeholder="Adresse" maxlength="100" required>
 
         <label class="custom-checkbox">
             <input type="checkbox" name="is_truth">

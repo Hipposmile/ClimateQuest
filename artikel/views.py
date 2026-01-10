@@ -73,7 +73,7 @@ def add_artikel(request):
         content = request.POST.get('content')
 
         if len(name) > 100:
-            messages.error(request, all_messages["input_too_long"])
+            messages.error(request, all_messages["too_long_input"])
             return redirect('add_artikel')
 
         if not name or not content:
@@ -118,7 +118,7 @@ def edit_artikel(request, artikel_id):
             content = request.POST.get('content')
 
             if len(name) > 100:
-                messages.error(request, all_messages["input_too_long"])
+                messages.error(request, all_messages["too_long_input"])
                 return redirect('add_artikel')
 
             if not name or not content:
