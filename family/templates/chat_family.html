@@ -6,140 +6,140 @@
 
 {% load static %}
 
-{% block title %}ClimateQuest - {% if family %}Chat: Family {{ family.name }}{% else %}Die Family konnte nicht geladen werden.{% endif %} {% endblock %}
+{% block title %}ClimateQuest - {% if family %}Chat: Family {{ family.name }}{% else %}Die Family konnte nicht geladen
+    werden.{% endif %} {% endblock %}
 
 {% block content %}
 
-<style>
-    .chat-family-container {
-    max-width: 500px;
-    margin: 2rem auto;
-    background: var(--color-white);
-    border-radius: 12px;
-    box-shadow: var(--shadow-md);
-    padding: 1.5rem 1rem 1rem 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    position: relative;
-}
+    <style>
+        .chat-family-container {
+            max-width: 500px;
+            margin: 2rem auto;
+            background: var(--color-white);
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem 1rem 1rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            position: relative;
+        }
 
-.chat-family-messages {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-    min-height: 200px;
-    max-height: 350px;
-    overflow-y: auto;
-    margin-bottom: 1rem;
-}
+        .chat-family-messages {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            min-height: 200px;
+            max-height: 350px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
 
-.chat-family-message {
-    display: flex;
-    align-items: flex-end;
-}
+        .chat-family-message {
+            display: flex;
+            align-items: flex-end;
+        }
 
-.chat-family-message.me {
-    justify-content: flex-end;
-}
+        .chat-family-message.me {
+            justify-content: flex-end;
+        }
 
-.chat-family-message.other {
-    justify-content: flex-start;
-}
+        .chat-family-message.other {
+            justify-content: flex-start;
+        }
 
-.chat-family-bubble {
-    max-width: 70%;
-    padding: 0.75rem 1.1rem;
-    border-radius: 18px;
-    font-size: 1rem;
-    line-height: 1.4;
-    background: var(--color-bg);
-    color: var(--color-header-bg);
-    box-shadow: var(--shadow-md);
-    word-break: break-word;
-    position: relative;
-}
+        .chat-family-bubble {
+            max-width: 70%;
+            padding: 0.75rem 1.1rem;
+            border-radius: 18px;
+            font-size: 1rem;
+            line-height: 1.4;
+            background: var(--color-bg);
+            color: var(--color-header-bg);
+            box-shadow: var(--shadow-md);
+            word-break: break-word;
+            position: relative;
+        }
 
-.chat-family-message.me .chat-family-bubble {
-    background: var(--color-primary);
-    color: var(--color-white);
-    border-radius: 18px 18px 4px 18px;
-}
+        .chat-family-message.me .chat-family-bubble {
+            background: var(--color-primary);
+            color: var(--color-white);
+            border-radius: 18px 18px 4px 18px;
+        }
 
-.chat-family-message.other .chat-family-bubble {
-    background: var(--color-primary-light);
-    color: var(--color-primary);
-    border-radius: 18px 18px 18px 4px;
-}
+        .chat-family-message.other .chat-family-bubble {
+            background: var(--color-primary-light);
+            color: var(--color-primary);
+            border-radius: 18px 18px 18px 4px;
+        }
 
-.chat-family-message.system .chat-family-bubble {
-    background: #f4f6f8; /*Nicht-Variable genehmigt*/
-    color: var(--color-text);
-    border-radius: 18px 18px 18px 4px;
-}
+        .chat-family-message.system .chat-family-bubble {
+            background: #f4f6f8; /*Nicht-Variable genehmigt*/
+            color: var(--color-text);
+            border-radius: 18px 18px 18px 4px;
+        }
 
-.chat-family-meta {
-    display: block;
-    font-size: 0.85em;
-    color: var(--color-muted);
-    margin-top: 0.3em;
-    text-align: right;
-}
+        .chat-family-meta {
+            display: block;
+            font-size: 0.85em;
+            color: var(--color-muted);
+            margin-top: 0.3em;
+            text-align: right;
+        }
 
-.chat-family-empty {
-    text-align: center;
-    color: var(--color-muted);
-    font-style: italic;
-    margin: 2rem 0;
-}
+        .chat-family-empty {
+            text-align: center;
+            color: var(--color-muted);
+            font-style: italic;
+            margin: 2rem 0;
+        }
 
-.chat-family-form {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    background: var(--color-bg);
-    border-radius: 8px;
-    padding: 0.7rem 1rem;
-    box-shadow: var(--shadow-md);
-}
+        .chat-family-form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            background: var(--color-bg);
+            border-radius: 8px;
+            padding: 0.7rem 1rem;
+            box-shadow: var(--shadow-md);
+        }
 
-.chat-family-form input[type="text"] {
-    flex: 1;
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-    padding: 0.7rem;
-    font-size: 1rem;
-    margin-bottom: 0;
-}
+        .chat-family-form input[type="text"] {
+            width: 100%; /* Input füllt die Breite */
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            padding: 0.9rem;
+            font-size: 1rem;
+        }
 
-.chat-family-form button {
-    width: auto;
-    padding: 0.7rem 1.1rem;
-    background-color: var(--color-primary);
-    border: none;
-    color: var(--color-white);
-    font-size: 1.1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.2s;
-}
+        .chat-family-form button {
+            width: 100%; /* Button auch volle Breite – ideal für Mobilgeräte */
+            padding: 0.9rem;
+            background-color: var(--color-primary);
+            border: none;
+            color: var(--color-white);
+            font-size: 1.1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
 
-.chat-family-form button:hover {
-    background-color: var(--color-primary-hover);
-}
-</style>
+        .chat-family-form button:hover {
+            background-color: var(--color-primary-hover);
+        }
+    </style>
 
-<h1>Chat: Family <a href="{% url 'family_detail' family.id %}">{{ family.name }}</a></h1>
+    <h1>Chat: Family <a href="{% url 'family_detail' family.id %}">{{ family.name }}</a></h1>
 
-{% if messages %}
-{% for message in messages %}
-<p class="{{message.level_tag}}-message">{{ message }}</p>
-{% endfor %}
-{% endif %}
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
 
-<div class="chat-family-container">
-    <button type="button" class="chat-refresh-btn" onclick="location.reload()" title="Chat aktualisieren">
-        <picture>
+    <div class="chat-family-container">
+        <button type="button" class="chat-refresh-btn" onclick="location.reload()" title="Chat aktualisieren">
+            <picture>
                 <source type="image/avif" srcset="
                     {% static 'images/refresh/refresh-320.avif' %} 320w,
                     {% static 'images/refresh/refresh-640.avif' %} 640w,
@@ -158,45 +158,49 @@
 
                 <img src="{% static 'images/refresh/refresh-fallback.png' %}" alt="Refresh">
             </picture>
-    </button>
-    <div class="chat-family-messages">
-        <div class="chat-family-message system">
-            <div class="chat-family-bubble">
-                Ich werde morgen um 15:00 am See Müll sammeln gehen. Wer will mitmachen?
-                <span class="chat-family-meta">Beispiel</span>
+        </button>
+        <div class="chat-family-messages">
+            <div class="chat-family-message system">
+                <div class="chat-family-bubble">
+                    Ich werde morgen um 15:00 am See Müll sammeln gehen. Wer will mitmachen?
+                    <span class="chat-family-meta">Beispiel</span>
+                </div>
             </div>
-        </div>
-        <div class="chat-family-message system">
-            <div class="chat-family-bubble">
-                Wir machen eine Challenge: Wer schafft es von heute bis nächste Woche Sonntag am meisten Klimapunkte zu sammeln?
-                <span class="chat-family-meta">Beispiel</span>
+            <div class="chat-family-message system">
+                <div class="chat-family-bubble">
+                    Wir machen eine Challenge: Wer schafft es von heute bis nächste Woche Sonntag am meisten Klimapunkte
+                    zu sammeln?
+                    <span class="chat-family-meta">Beispiel</span>
+                </div>
             </div>
+            {% for msg in msgs %}
+                <div class="chat-family-message {% if msg.user == user %}me{% else %}other{% endif %}">
+                    <div class="chat-family-bubble">
+                        {{ msg.message }}
+                        <span class="chat-family-meta"><a href="{% url 'user_detail' msg.user.id %}"
+                                                          class="chat-family-meta">{{ msg.user.username }}</a></span>
+                        <span class="chat-family-meta">{{ msg.erstellt_am|date:"d.m.Y H:i" }}</span>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="chat-family-empty">Noch keine Nachrichten.</div>
+            {% endfor %}
         </div>
-        {% for msg in msgs %}
-        <div class="chat-family-message {% if msg.user == user %}me{% else %}other{% endif %}">
-            <div class="chat-family-bubble">
-                {{ msg.message }}
-                <span class="chat-family-meta"><a href="{% url 'user_detail' msg.user.id %}" class="chat-family-meta">{{ msg.user.username }}</a></span>
-                <span class="chat-family-meta">{{ msg.erstellt_am|date:"d.m.Y H:i" }}</span>
-            </div>
-        </div>
-        {% empty %}
-        <div class="chat-family-empty">Noch keine Nachrichten.</div>
-        {% endfor %}
+        <form method="post" class="chat-family-form" onsubmit="return true;">
+            {% csrf_token %}
+            <label for="message">Nachricht eingeben</label>
+            <br>
+            <input type="text" name="message" id="message" placeholder="Nachricht eingeben..." required>
+            <br>
+            <button type="submit" name="send">Senden</button>
+        </form>
     </div>
-    <form method="post" class="chat-family-form" onsubmit="return true;">
-        {% csrf_token %}
-        <label for="message">Nachricht eingeben</label>
-        <input type="text" name="message" id="message" placeholder="Nachricht eingeben..." required>
-        <button type="submit" name="send">Senden</button>
-    </form>
-</div>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var chatContainer = document.querySelector('.chat-family-messages');
-        if (chatContainer) {
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-    });
-</script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var chatContainer = document.querySelector('.chat-family-messages');
+            if (chatContainer) {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+        });
+    </script>
 {% endblock %}

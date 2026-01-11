@@ -36,7 +36,6 @@ def create_family(request):
 
         family = Family.objects.create(name=family_name, password=family_password, admin_password=family_admin_password)
         family.members.add(request.user)
-        create_notification(request, f'Du hast die Family {family.name} erstellt', request.user)
         messages.success(request, all_messages["family_created"])
         return redirect('families_view')
     
@@ -59,7 +58,6 @@ def join_family(request):
                 for user_to_message in family.members.all():
                     create_notification(request, f'User {request.user} ist der Family {family} beigetreten', user_to_message)
                 family.members.add(request.user)
-                create_notification(request, all_messages["family_joined"].format(family=family))
                 messages.success(request, all_messages["family_joined"].format(family=family))
                 return redirect('families_view')
             else:
@@ -138,7 +136,7 @@ def edit_family(request, family_id):
 
             if Family.objects.filter(name=familyname).exists():
                 messages.error(request, all_messages["family_exists"])
-                return redirect('create_family')
+                return redirect('edit_family', family_id)
 
             if len(familyname) > 100:
                 messages.error(request, all_messages["too_long_input"])
@@ -153,7 +151,7 @@ def edit_family(request, family_id):
                 family.name = familyname
                 family.save()
                 for user_to_message in family.members.all():
-                    create_notification(request, f'Der Familyname der Family {old_familyname} wurde zu {familyname} geändert', user_to_message)
+                    create_notification(request, f'Der Familyname der Family {old_familyname} wurde von {request.user} zu {familyname} geändert', user_to_message)
                 messages.success(request, all_messages["family_name_changed"])
 
         if 'change_password' in request.POST:
@@ -191,7 +189,7 @@ def edit_family(request, family_id):
                 family.admin_password = new_admin_password
                 family.save()
                 for user_to_message in family.members.all():
-                    create_notification(request, f'Family-Admin-Passwort bei Family {family.name} wurde von User {request.user} geändert', user_to_message)
+                    create_notification(request, f'Family-Admin-Passwort der Family {family.name} wurde von User {request.user} geändert', user_to_message)
                 messages.success(request, all_messages["family_admin_password_changed"])
         
         if 'remove_member' in request.POST:
@@ -204,7 +202,6 @@ def edit_family(request, family_id):
                 messages.error(request, all_messages["admin_password_invalid"])
             elif username == request.user.username:
                 family.members.remove(request.user)
-                create_notification(request, f'Du hast die Family {family.name} verlassen', request.user)
                 messages.success(request, all_messages["family_left"])
                 return redirect('dashboard')
             else:
@@ -220,7 +217,6 @@ def edit_family(request, family_id):
         
         if 'leave_family' in request.POST:
             family.members.remove(request.user)
-            create_notification(request, f'Du hast die Family {family.name} verlassen', request.user)
             messages.success(request, all_messages["family_left"])
             return redirect('dashboard')
 

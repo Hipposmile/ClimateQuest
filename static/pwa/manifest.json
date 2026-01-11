@@ -2,7 +2,7 @@
   "background_color": "#ffffff",
   "description": "Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.",
   "dir": "ltr",
-  "display": "fullscreen",
+  "display": "standalone",
   "name": "ClimateQuest",
   "orientation": "any",
   "scope": "https://climate-quest.de",

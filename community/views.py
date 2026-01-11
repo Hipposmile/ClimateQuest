@@ -42,8 +42,6 @@ def create_community(request):
         community = Community.objects.create(name=community_name, password=community_password,
                                              admin_password=community_admin_password)
         community.members.add(family)
-        create_notification(request, f'Du hast die Community {community.name} mit der Family {family.name} erstellt',
-                            request.user)
         for user_to_message in family.members.all():
             create_notification(request, f'Die Family {family.name} ist der Community {community.name} beigetreten',
                                 user_to_message)
@@ -164,7 +162,7 @@ def edit_community(request, community_id, family_id):
                 messages.success(request, all_messages["community_name_changed"])
                 for user_to_message in community.user_members():
                     create_notification(request,
-                                           f'Der Communityname der Community {old_communityname} wurde zu {communityname} geändert',
+                                           f'Der Communityname der Community {old_communityname} wurde von {request.user} zu {communityname} geändert',
                                         user_to_message)
 
         if 'change_password' in request.POST:
@@ -183,7 +181,7 @@ def edit_community(request, community_id, family_id):
                 community.password = password
                 community.save()
                 for user_to_message in community.user_members():
-                    create_notification(request, f'Das Passwort der Community {community.name} wurde geändert',
+                    create_notification(request, f'Das Passwort der Community {community.name} wurde von {request.user} geändert',
                                         user_to_message)
                 messages.success(request, all_messages["community_password_changed"])
 
@@ -203,7 +201,7 @@ def edit_community(request, community_id, family_id):
                 community.admin_password = new_admin_password
                 community.save()
                 for user_to_message in community.user_members()():
-                    create_notification(request, f'Das Admin-Passwort der Community {community.name} wurde geändert',
+                    create_notification(request, f'Das Admin-Passwort der Community {community.name} wurde von {request.user} geändert',
                                         user_to_message)
                 messages.success(request, all_messages["community_admin_password_changed"])
 

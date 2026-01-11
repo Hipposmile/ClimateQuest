@@ -94,8 +94,8 @@
 
         .chat-community-form {
             display: flex;
-            gap: 0.5rem;
-            align-items: center;
+            flex-direction: column;
+            width: 100%;
             background: var(--color-bg);
             border-radius: 8px;
             padding: 0.7rem 1rem;
@@ -103,17 +103,16 @@
         }
 
         .chat-community-form input[type="text"] {
-            flex: 1;
+            width: 100%; /* Input füllt die Breite */
             border: 1px solid var(--color-border);
             border-radius: 4px;
-            padding: 0.7rem;
+            padding: 0.9rem;
             font-size: 1rem;
-            margin-bottom: 0;
         }
 
         .chat-community-form button {
-            width: auto;
-            padding: 0.7rem 1.1rem;
+            width: 100%; /* Button auch volle Breite – ideal für Mobilgeräte */
+            padding: 0.9rem;
             background-color: var(--color-primary);
             border: none;
             color: var(--color-white);
