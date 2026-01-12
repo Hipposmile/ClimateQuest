@@ -506,7 +506,7 @@
         <div class="mobile-menu-overlay" data-menu="profile">
             <div class="mobile-menu-modal">
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
-                <h2><span class="emoji">&#x1F464;</span> Profil</h2>
+                <h2><span class="emoji">&#x1F464;</span> {{ request.user.username }}</h2>
                 <nav class="mobile-menu-nav">
                     <a href="{% url 'dashboard' %}"><span class="emoji">&#x1F5A5;</span> Dashboard</a>
                     <a href="{% url 'home' %}"><span class="emoji">&#x1F3E1;</span> Home</a>
@@ -677,7 +677,7 @@
         <div class="mobile-menu-overlay" data-menu="profile">
             <div class="mobile-menu-modal">
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
-                <h2><span class="emoji">&#x1F464;</span> Profil</h2>
+                <h2><span class="emoji">&#x1F464;</span> {{ request.user.username }}</h2>
                 <nav class="mobile-menu-nav">
                     <a href="{% url 'dashboard' %}"><span class="emoji">&#x1F5A5;</span> Dashboard</a>
                     <a href="{% url 'home' %}"><span class="emoji">&#x1F3E1;</span> Home</a>
