@@ -55,7 +55,7 @@ def join_family(request):
             if request.user in family.members.all():
                 messages.error(request, all_messages["family_already_joined"])
             if check_password(family_password, family.password):
-                for user_to_message in family.members.all():
+                for user_to_message in family.members.all().exclude(id=request.user.id):
                     create_notification(request, f'User {request.user} ist der Family {family} beigetreten', user_to_message)
                 family.members.add(request.user)
                 messages.success(request, all_messages["family_joined"].format(family=family))
@@ -65,7 +65,7 @@ def join_family(request):
                 return redirect('join_family')
         except Family.DoesNotExist:
             messages.error(request, all_messages["invalid_family_credentials"])
-            return redirect('create_family')
+            return redirect('join_family')
 
     return render(request, './join_family.html')
 
@@ -95,7 +95,7 @@ def chat_family(request, family_id):
     if request.method == 'POST':
         msg = request.POST.get('message')
         FamilyChatMessage.objects.create(family=family, user=request.user, message=msg)
-        for user_to_message in family.members.all():
+        for user_to_message in family.members.all().exclude(id=request.user.id):
             if user_to_message != request.user:
                 create_notification(request, f'Neue Nachricht in Family {family.name} von User {request.user}: {msg}', user_to_message)
         return redirect('chat_family', family_id=family.id)
@@ -150,7 +150,7 @@ def edit_family(request, family_id):
                 old_familyname = family.name
                 family.name = familyname
                 family.save()
-                for user_to_message in family.members.all():
+                for user_to_message in family.members.all().exclude(id=request.user.id):
                     create_notification(request, f'Der Familyname der Family {old_familyname} wurde von {request.user} zu {familyname} geändert', user_to_message)
                 messages.success(request, all_messages["family_name_changed"])
 
@@ -169,7 +169,7 @@ def edit_family(request, family_id):
             else:
                 family.password = password
                 family.save()
-                for user_to_message in family.members.all():
+                for user_to_message in family.members.all().exclude(id=request.user.id):
                     create_notification(request, f'Passwort bei Family {family.name} wurde von User {request.user} geändert', user_to_message)
                 messages.success(request, all_messages["family_password_changed"])
 
@@ -188,8 +188,8 @@ def edit_family(request, family_id):
             else:
                 family.admin_password = new_admin_password
                 family.save()
-                for user_to_message in family.members.all():
-                    create_notification(request, f'Family-Admin-Passwort der Family {family.name} wurde von User {request.user} geändert', user_to_message)
+                for user_to_message in family.members.all().exclude(id=request.user.id):
+                    create_notification(request, f'Das Family-Admin-Passwort der Family {family.name} wurde von User {request.user} geändert', user_to_message)
                 messages.success(request, all_messages["family_admin_password_changed"])
         
         if 'remove_member' in request.POST:
@@ -240,7 +240,7 @@ def edit_family(request, family_id):
             elif not check_password(admin_password, family.admin_password):
                 messages.error(request, all_messages["invalid_admin_password"])
             else:
-                for user_to_message in family.members.all():
+                for user_to_message in family.members.all().exclude(id=request.user.id):
                     create_notification(request, f'Family {family.name} wurde von User {request.user} gelöscht.', user_to_message)
                 family.delete()
                 messages.success(request, all_messages["family_deleted"])

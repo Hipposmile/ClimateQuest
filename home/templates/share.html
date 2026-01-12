@@ -1,219 +1,223 @@
 {% extends "base.html" %}
 {% load static %}
 {% block meta %}
-    <meta name="description" content="Teile diese Seite mit anderen, um das Bewusstsein für Klimaschutz zu verbreiten und gemeinsam eine nachhaltigere Zukunft zu gestalten.">
-    <link rel="canonical" href="{% url 'share' %}" />
+    <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 {% block title %}ClimateQuest - Teilen{% endblock %}
 
 {% block content %}
 
-<style>
-    .share-container {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
-    font-family: 'Segoe UI', sans-serif;
-    text-align: center;
-}
-
-.message-box {
-    margin-bottom: 20px;
-}
-
-.message {
-    padding: 10px;
-    border-radius: 6px;
-    font-weight: bold;
-}
-
-.divider {
-    margin: 20px 0;
-    font-weight: bold;
-    color: var(--color-text);
-}
-
-.share-panel {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-}
-
-.share-btn {
-    padding: 10px 16px;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    color: var(--color-text-light);
-}
-
-.share-btn:hover {
-    transform: scale(1.05);
-}
-
-.native-share {
-    background-color: #444; /*Nicht-Variable genehmigt*/
-}
-
-.facebook {
-    background-color: #0866ff; /*Nicht-Variable genehmigt*/
-}
-
-.x {
-    background-color: #000000; /*Nicht-Variable genehmigt*/
-}
-
-.linkedin {
-    background-color: #0a66c2; /*Nicht-Variable genehmigt*/
-}
-
-.whatsapp {
-    background-color: #25d366; /*Nicht-Variable genehmigt*/
-}
-
-.email {
-    background-color: #7f7f7f; /*Nicht-Variable genehmigt*/
-}
-
-.copy {
-    background-color: #6c757d; /*Nicht-Variable genehmigt*/
-}
-
-.qrcode {
-    background-color: #17a2b8; /*Nicht-Variable genehmigt*/
-}
-
-    #qrcodeDownload {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #0078D7;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      margin: 10px;
-    }
-
-    #qrcodeDownload:hover {
-      background-color: #005fa3;
-    }
-
-    #qrcodeContainer {
-      display: none; /* Unsichtbar bis QR-Code existiert */
-      margin-top: 20px;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      width: fit-content;
-      align-self: center;
-    }
-
-    #qrcodeContainer canvas {
-      display: block;
-      margin: 0 auto;
-    }
-
-</style>
-<script src="{% static 'js/qrcode.min.js' %}"></script>
-<div class="share-container">
-    <h1>Seite teilen</h1>
-
-    {% if messages %}
-    <div class="message-box">
-        {% for message in messages %}
-        <p class="message {{ message.level_tag }}">{{ message }}</p>
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    <p class="h3_size">Folgende URL teilen: <a href="{{ url }}">{{ url }}</a></p>
-
-    <button class="share-btn native-share" onclick="sharePage('{{ url }}')">Teilen über Gerät</button>
-
-    <p class="divider">ODER</p>
-
-    <div class="share-panel">
-        <a href="https://www.facebook.com/sharer/sharer.php?u={{ url }}" target="_blank" title="Facebook">
-            <button class="share-btn facebook">Facebook</button>
-        </a>
-        <a href="https://twitter.com/intent/tweet?url={{ url }}" target="_blank" title="X (Twitter)">
-            <button class="share-btn x">X (Twitter)</button>
-        </a>
-        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url }}" target="_blank" title="LinkedIn">
-            <button class="share-btn linkedin">LinkedIn</button>
-        </a>
-        <a href="https://api.whatsapp.com/send?text={{ url }}" target="_blank" title="WhatsApp">
-            <button class="share-btn whatsapp">WhatsApp</button>
-        </a>
-        <a href="mailto:?subject=Schau mal!&body={{ url }}" title="E-Mail">
-            <button class="share-btn email">E-Mail</button>
-        </a>
-        <button class="share-btn copy" onclick="copyURL('{{ url }}')" title="Link kopieren" id="copy_button">Link
-            kopieren</button>
-        <button class="share-btn qrcode" onclick="generateQrCode('{{ url }}')" title="QR-Code erstellen">QR-Code erstellen</button>
-    </div>
-</div>
-<div id="qrcodeContainer"><canvas id="qrcode"></canvas></div>
-
-<script>
-    function sharePage(url) {
-        if (navigator.share) {
-            navigator.share({ url: url }).catch(console.error);
-        } else {
-            alert("Teilen wird auf diesem Gerät nicht unterstützt.");
+    <style>
+        .share-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
         }
-    }
 
-    function generateQrCode(url) {
-        // Quelle der Bibliothek: https://github.com/davidshimjs/qrcodejs
-        let qrcodeContainer = document.getElementById("qrcodeContainer");
-        qrcodeContainer.innerHTML = ""; // Vorherigen QR-Code entfernen
-        qrcodeContainer.style.display = "block"; // Container sichtbar machen
-        var qrcode = new QRCode(qrcodeContainer, {
-            text: url,
-            width: 400,
-            height: 400,
-            colorDark : "#000000",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
-        });
-        let downloadButton = document.createElement("button");
-        downloadButton.id = "qrcodeDownload";
-        downloadButton.textContent = "Download";
-        downloadButton.addEventListener("click", downloadQrCode);
-        qrcodeContainer.appendChild(downloadButton);
-    }
+        .message-box {
+            margin-bottom: 20px;
+        }
 
-    function downloadQrCode() {
-        const qrCodeImg = document.querySelector('#qrcodeContainer canvas');
-        const dataUrl = qrCodeImg.toDataURL("image/png");
-        const link = document.createElement('a');
-        link.href = dataUrl;
-        link.download = 'qrcode.png';
-        link.click();
-    }
+        .message {
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
 
-    function copyURL(url) {
-        const copy_button = document.getElementById('copy_button');
+        .divider {
+            margin: 20px 0;
+            font-weight: bold;
+            color: var(--color-text);
+        }
 
-        navigator.clipboard.writeText(url)
-            .then(() => {
-                copy_button.textContent = "Link kopiert";
-                setTimeout(() => {
-                    copy_button.textContent = "Link kopieren";
-                }, 1000);
-            })
-            .catch(() => {
-                copy_button.textContent = "Kopieren fehlgeschlagen";
-                setTimeout(() => {
-                    copy_button.textContent = "Link kopieren";
-                }, 1000);
+        .share-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .share-btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--color-text-light);
+        }
+
+        .share-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .native-share {
+            background-color: #444; /*Nicht-Variable genehmigt*/
+        }
+
+        .facebook {
+            background-color: #0866ff; /*Nicht-Variable genehmigt*/
+        }
+
+        .x {
+            background-color: #000000; /*Nicht-Variable genehmigt*/
+        }
+
+        .linkedin {
+            background-color: #0a66c2; /*Nicht-Variable genehmigt*/
+        }
+
+        .whatsapp {
+            background-color: #25d366; /*Nicht-Variable genehmigt*/
+        }
+
+        .email {
+            background-color: #7f7f7f; /*Nicht-Variable genehmigt*/
+        }
+
+        .copy {
+            background-color: #6c757d; /*Nicht-Variable genehmigt*/
+        }
+
+        .qrcode {
+            background-color: #17a2b8; /*Nicht-Variable genehmigt*/
+        }
+
+        #qrcodeDownload {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #0078D7;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 10px;
+        }
+
+        #qrcodeDownload:hover {
+            background-color: #005fa3;
+        }
+
+        #qrcodeContainer {
+            display: none; /* Unsichtbar bis QR-Code existiert */
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: fit-content;
+            align-self: center;
+        }
+
+        #qrcodeContainer canvas {
+            display: block;
+            margin: 0 auto;
+        }
+
+    </style>
+    <script src="{% static 'js/qrcode.min.js' %}"></script>
+    <div class="share-container">
+        <h1>Seite teilen</h1>
+
+        {% if messages %}
+            <div class="message-box">
+                {% for message in messages %}
+                    <p class="message {{ message.level_tag }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <p class="h3_size">Folgende URL teilen: <a href="{{ url }}">{{ url }}</a></p>
+
+        <button class="share-btn native-share" onclick="sharePage('{{ url }}')">Teilen über Gerät</button>
+
+        <p class="divider">ODER</p>
+
+        <div class="share-panel">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ url }}" target="_blank" title="Facebook">
+                <button class="share-btn facebook">Facebook</button>
+            </a>
+            <a href="https://twitter.com/intent/tweet?url={{ url }}" target="_blank" title="X (Twitter)">
+                <button class="share-btn x">X (Twitter)</button>
+            </a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url }}" target="_blank" title="LinkedIn">
+                <button class="share-btn linkedin">LinkedIn</button>
+            </a>
+            <a href="https://api.whatsapp.com/send?text={{ url }}" target="_blank" title="WhatsApp">
+                <button class="share-btn whatsapp">WhatsApp</button>
+            </a>
+            <a href="mailto:?subject=Schau mal!&body={{ url }}" title="E-Mail">
+                <button class="share-btn email">E-Mail</button>
+            </a>
+            <button class="share-btn copy" onclick="copyURL('{{ url }}')" title="Link kopieren" id="copy_button">Link
+                kopieren
+            </button>
+            <button class="share-btn qrcode" onclick="generateQrCode('{{ url }}')" title="QR-Code erstellen">QR-Code
+                erstellen
+            </button>
+        </div>
+    </div>
+    <div id="qrcodeContainer">
+        <canvas id="qrcode"></canvas>
+    </div>
+
+    <script>
+        function sharePage(url) {
+            if (navigator.share) {
+                navigator.share({url: url}).catch(console.error);
+            } else {
+                alert("Teilen wird auf diesem Gerät nicht unterstützt.");
+            }
+        }
+
+        function generateQrCode(url) {
+            // Quelle der Bibliothek: https://github.com/davidshimjs/qrcodejs
+            let qrcodeContainer = document.getElementById("qrcodeContainer");
+            qrcodeContainer.innerHTML = ""; // Vorherigen QR-Code entfernen
+            qrcodeContainer.style.display = "block"; // Container sichtbar machen
+            var qrcode = new QRCode(qrcodeContainer, {
+                text: url,
+                width: 400,
+                height: 400,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
             });
-    }
-</script>
+            let downloadButton = document.createElement("button");
+            downloadButton.id = "qrcodeDownload";
+            downloadButton.textContent = "Download";
+            downloadButton.addEventListener("click", downloadQrCode);
+            qrcodeContainer.appendChild(downloadButton);
+        }
+
+        function downloadQrCode() {
+            const qrCodeImg = document.querySelector('#qrcodeContainer canvas');
+            const dataUrl = qrCodeImg.toDataURL("image/png");
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = 'qrcode.png';
+            link.click();
+        }
+
+        function copyURL(url) {
+            const copy_button = document.getElementById('copy_button');
+
+            navigator.clipboard.writeText(url)
+                .then(() => {
+                    copy_button.textContent = "Link kopiert";
+                    setTimeout(() => {
+                        copy_button.textContent = "Link kopieren";
+                    }, 1000);
+                })
+                .catch(() => {
+                    copy_button.textContent = "Kopieren fehlgeschlagen";
+                    setTimeout(() => {
+                        copy_button.textContent = "Link kopieren";
+                    }, 1000);
+                });
+        }
+    </script>
 {% endblock %}
