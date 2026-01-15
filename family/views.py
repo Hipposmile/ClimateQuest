@@ -199,14 +199,17 @@ def edit_family(request, family_id):
             if not admin_password or not username:
                 messages.error(request, all_messages["missing_required_inputs"])
             elif not check_password(admin_password, family.admin_password):
-                messages.error(request, all_messages["admin_password_invalid"])
+                messages.error(request, all_messages["invalid_admin_password"])
             elif username == request.user.username:
                 family.members.remove(request.user)
                 messages.success(request, all_messages["family_left"])
                 return redirect('dashboard')
             else:
-                user = User.objects.get(username=username)
-                family = Family.objects.get(id=family_id)
+                try:
+                    user = User.objects.get(username=username)
+                except User.DoesNotExist:
+                    messages.error(request, all_messages["family_user_not_found"])
+                    return redirect('edit_family', family_id)
                 family.members.remove(user)
                 for user_to_message in family.members.all():
                     if user_to_message == user:

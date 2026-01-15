@@ -82,6 +82,7 @@ all_messages = {
     "family_chat_enabled": "Chat für die Family aktiviert",
     "family_chat_disabled": "Chat für die Family deaktiviert",
     "family_deleted": "Family erfolgreich gelöscht",
+    "family_user_not_found": "Dieser User existiert in dieser Family nicht",
 
     #Allgemein
     "chat_disabled_for_family": "Der Chat für diese Family ist deaktiviert",
