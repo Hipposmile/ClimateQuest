@@ -9,7 +9,7 @@ class Family(models.Model):
     name = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
     admin_password = models.CharField(max_length=100)
-    members = models.ManyToManyField(User, related_name='families')
+    members = models.ManyToManyField(User, related_name='families', blank=True)
     chat = models.BooleanField(default=True)
 
     def __str__(self):

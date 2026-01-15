@@ -10,7 +10,7 @@ class Community(models.Model):
     name = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
     admin_password = models.CharField(max_length=100)
-    members = models.ManyToManyField(Family, related_name='communities')
+    members = models.ManyToManyField(Family, related_name='communities', blank=True)
     chat = models.BooleanField(default=True)
 
     def __str__(self):
