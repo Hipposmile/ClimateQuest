@@ -225,7 +225,11 @@ def edit_community(request, community_id, family_id):
                 messages.success(request, all_messages["family_left_community"])
                 return redirect('dashboard')
             else:
-                family_to_remove = Family.objects.get(name=family_name)
+                try:
+                    family_to_remove = Family.objects.get(name=family_name)
+                except Family.DoesNotExist:
+                    messages.error(request, all_messages["community__family_not_found"])
+                    return redirect('edit_community', community_id, family_id)
                 community = Community.objects.get(id=community_id)
                 community.members.remove(family_to_remove)
                 for user_to_message in community.user_members().exclude(id=request.user.id):
