@@ -12,7 +12,7 @@
         <p class="error-message">{{ error }}</p>
     {% endif %}
     <h1>Community <i>{{ community.name }}</i></h1>
-    <h3>Eingeloggt mit Family <a href="{% url 'family_detail' family.id%}">{{ family.name }}</a></h3>
+    <h3>Eingeloggt mit Family <a href="{% url 'family_detail' family.id %}">{{ family.name }}</a></h3>
 
     {% if messages %}
         {% for message in messages %}
@@ -54,6 +54,16 @@
     {% endif %}
 
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const today = new Date().toISOString().split("T")[0];
+            let startDate = document.getElementById('start_date');
+            startDate.setAttribute('max', today);
+            startDate.setAttribute('value', today);
+            let endDate = document.getElementById('end_date');
+            endDate.setAttribute('max', today);
+            endDate.setAttribute('value', today);
+        });
+
         document.getElementById("zeitraum").addEventListener("change", function () {
             const hiddenDateDiv = document.getElementById("hiddenDateDiv");
 

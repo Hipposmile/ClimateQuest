@@ -284,7 +284,7 @@ def family_detail(request, family_id):
                 start_datum = datetime.strptime(start_datum, '%Y-%m-%d').date()
                 end_datum = datetime.strptime(end_datum, '%Y-%m-%d').date()
 
-                if start_datum > end_datum or end_datum > heute:
+                if start_datum > end_datum:
                     messages.error(request, all_messages["invalid_date_range"])
                     return redirect('family_detail', family_id)
                 if end_datum > heute:

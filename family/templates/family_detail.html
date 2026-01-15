@@ -52,6 +52,16 @@
     </form>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const today = new Date().toISOString().split("T")[0];
+            let startDate = document.getElementById('start_date');
+            startDate.setAttribute('max', today);
+            startDate.setAttribute('value', today);
+            let endDate = document.getElementById('end_date');
+            endDate.setAttribute('max', today);
+            endDate.setAttribute('value', today);
+        });
+
         document.getElementById("zeitraum").addEventListener("change", function () {
             const hiddenDateDiv = document.getElementById("hiddenDateDiv");
 
