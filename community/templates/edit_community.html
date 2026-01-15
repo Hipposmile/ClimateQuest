@@ -126,7 +126,7 @@
         <label for="admin_password">Admin Passwort:</label>
         <input type="password" name="admin_password" id="admin_password" placeholder="Admin Passwort" required>
         <label for="family_name">Familyname:</label>
-        <input type="password" name="family_name" id="family_name" placeholder="Familyname" required>
+        <input type="text" name="family_name" id="family_name" placeholder="Familyname" required>
         <button type="submit" name="remove_member">Speichern</button>
     </form>
     {% if remove_error %}<p class="error-message">{{ remove_error }}</p>{% endif %}

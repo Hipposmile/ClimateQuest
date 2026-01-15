@@ -33,7 +33,7 @@ all_messages = {
     "family_already_in_community": "Family ist bereits Teil der Community",
 
     #Join
-    "community_joined": "Deine Family {family} ist der Commnity {community} beigetreten",
+    "community_joined": "Deine Family {family} ist der Community {community} beigetreten",
     "invalid_community_credentials": "Community-Anmeldedaten ungültig",
 
     #Login
