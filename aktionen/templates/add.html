@@ -407,7 +407,7 @@
             klimapunkte_anzeige.textContent = `Klimapunkte pro ${mengeBeschreibungSingular}: ${klimapunkte}`;
             calculateImpact();
 
-            if (anmerkung !== '' || anmerkung !== '-') {
+            if (anmerkung !== '-') {
                 anmerkungButton.style.display = 'inline-block';
                 anmerkungBox.textContent = anmerkung;
             } else {

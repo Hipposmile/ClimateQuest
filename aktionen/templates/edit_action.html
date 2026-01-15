@@ -60,6 +60,7 @@
                data-mengebeschreibung="{{ current_action.aktion.mengeBeschreibung }}"
                data-source="{{ current_action.aktion.source }}"
                data-categories="
+
                        {% for action_category in current_action.aktion.category.all %}{{ action_category }}{% if not forloop.last %}, {% endif %}{% endfor %}"
                readonly>
 
@@ -292,22 +293,20 @@
                         {% for action in category.actions.all %}
                             {
                                 id: "{{ action.id }}",
-                                name: "{{ action.name }}",
-                                klimapunkte: "{{ action.klimapunkte|floatformat:-4 }}",
-                                anmerkung: "{{ action.anmerkung|safe }}",
-                                mengebeschreibung: "{{ action.mengeBeschreibung }}",
-                                mengebeschreibungsingular: "{{ action.mengeBeschreibungSingular }}",
+                                name: `{{ action.name }}`,
+                                klimapunkte: `{{ action.klimapunkte|floatformat:-4 }}`,
+                                anmerkung: `{{ action.anmerkung|safe }}`,
+                                mengebeschreibung: `{{ action.mengeBeschreibung }}`,
+                                mengebeschreibungsingular: `{{ action.mengeBeschreibungSingular }}`,
                                 source: `{{ action.source|safe }}`,
-                                categories: "{% for action_category in action.category.all %}{{ action_category }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+                                categories: `{% for action_category in action.category.all %}{{ action_category }}{% if not forloop.last %}, {% endif %}{% endfor %}`
                             },
                         {% endfor %}
                     ]
                 },
             {% endfor %}
         };
-    </script>
 
-    <script>
         const modal = document.getElementById("modal");
         const openModal = document.getElementById("openModal");
         const closeModal = document.getElementById("closeModal");
@@ -439,7 +438,7 @@
             klimapunkte_anzeige.textContent = `Klimapunkte pro ${mengeBeschreibungSingular}: ${klimapunkte}`;
             calculateImpact();
 
-            if (anmerkung !== '') {
+            if (anmerkung !== '-') {
                 anmerkungButton.style.display = 'inline-block';
                 anmerkungBox.textContent = anmerkung;
             } else {
