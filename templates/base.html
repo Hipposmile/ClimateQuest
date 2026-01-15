@@ -452,6 +452,46 @@
 
     // Beim Laden prüfen
     document.addEventListener('DOMContentLoaded', createPwaNav);
+
+
+    function removeHoverStyles() {
+        const canHover = window.matchMedia("(hover: hover)").matches;
+        if (canHover) return;
+
+        for (const sheet of document.styleSheets) {
+            let rules;
+            try {
+                rules = sheet.cssRules;
+            } catch (e) {
+                // Cross-origin Stylesheets ignorieren
+                continue;
+            }
+
+            if (!rules) continue;
+
+            // Rückwärts iterieren, damit das Löschen stabil bleibt
+            for (let i = rules.length - 1; i >= 0; i--) {
+                const rule = rules[i];
+
+                // Nur CSSStyleRule prüfen
+                if (rule.selectorText && rule.selectorText.includes(":hover")) {
+                    sheet.deleteRule(i);
+                }
+
+                // Auch verschachtelte Regeln prüfen (z.B. @media)
+                if (rule.cssRules) {
+                    for (let j = rule.cssRules.length - 1; j >= 0; j--) {
+                        const nested = rule.cssRules[j];
+                        if (nested.selectorText && nested.selectorText.includes(":hover")) {
+                            rule.deleteRule(j);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", removeHoverStyles);
 </script>
 {% csrf_token %}
 <header id="header">

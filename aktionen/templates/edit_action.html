@@ -45,7 +45,7 @@
     </ul>
 
     <p id="source-label" class="action-label"></p>
-
+    <p>Bitte gib bei Aktionen, die länger als einen Tag gedauert haben, das Enddatum an.</p>
     <button class="info-btn" id="anmerkung-button" onclick="toggleAnmerkung()" style="display: none;" type="button">?
     </button>
     <div id="anmerkung-box" class="anmerkung-box" style="display: none;"></div>
@@ -59,7 +59,8 @@
                data-anmerkung="{{ current_action.anmerkung }}"
                data-mengebeschreibung="{{ current_action.aktion.mengeBeschreibung }}"
                data-source="{{ current_action.aktion.source }}"
-               data-categories="{% for action_category in current_action.aktion.category.all %}{{ action_category }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+               data-categories="
+                       {% for action_category in current_action.aktion.category.all %}{{ action_category }}{% if not forloop.last %}, {% endif %}{% endfor %}"
                readonly>
 
         <button type="button" id="openModal">Element auswählen</button>
