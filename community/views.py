@@ -150,7 +150,7 @@ def edit_community(request, community_id, family_id):
 
             if Community.objects.filter(name=communityname).exists():
                 messages.error(request, all_messages["community_exists"])
-                return redirect('edit_family', community_id, family_id)
+                return redirect('edit_community', community_id, family_id)
 
             if not admin_password or not communityname:
                 messages.error(request, all_messages["missing_required_inputs"])
