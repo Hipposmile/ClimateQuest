@@ -198,7 +198,7 @@ def edit_community(request, community_id, family_id):
             if not current_admin_password or not new_admin_password:
                 messages.error(request, all_messages["missing_required_inputs"])
             elif not check_password(current_admin_password, community.admin_password):
-                messages.error(request, all_messages["invalid_admin_passord"])
+                messages.error(request, all_messages["invalid_admin_password"])
             else:
                 community.admin_password = new_admin_password
                 community.save()
