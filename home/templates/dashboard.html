@@ -12,6 +12,12 @@
     <h1 style="margin-top: 0;">Dashboard</h1>
     <p>Willkommen, {{ user.username }}!</p>
 
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
     {% if user.usererweitert.mail_verified == False and user.email != '' %}
         <p>Bitte bestätige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. Falls du keine
             Verifizierungsmail
@@ -145,11 +151,6 @@
         }
     </style>
 
-    {% if messages %}
-        {% for message in messages %}
-            <p class="{{ message.level_tag }}-message">{{ message }}</p>
-        {% endfor %}
-    {% endif %}
     {% if families %}
         <section class="families-section">
             <div class="families-grid">
