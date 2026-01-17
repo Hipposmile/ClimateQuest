@@ -9,6 +9,7 @@ class AktionenListe(models.Model):
     mengeBeschreibungSingular = models.CharField(max_length=100, default=mengeBeschreibung)
     anmerkung = models.CharField(max_length=500)
     source = models.CharField(max_length=1000)
+    max = models.FloatField(default=0.0)
 
     def __str__(self):
         return self.name
@@ -26,7 +27,7 @@ class Aktion(models.Model):
     quantity = models.FloatField()
     aktion = models.ForeignKey(AktionenListe, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.now)
-    
+
     @property
     def impact(self):
         return self.quantity * self.aktion.klimapunkte

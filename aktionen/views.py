@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 
 from core.all_messages import all_messages
 from utils.functions import *
+from dateutil.relativedelta import relativedelta
 
 
 @login_required
@@ -44,6 +45,9 @@ def add(request):
         if action_date > datetime.now().date():
             messages.error(request, all_messages["date_in_future"])
             return redirect('add')
+        elif action_date < datetime.now() + relativedelta(years=100):
+            messages.error(request, all_messages["action_too_past"])
+            return redirect('add')
 
         action_quantity = request.POST.get('action_quantity')
         if not action_quantity:
@@ -56,6 +60,9 @@ def add(request):
             return redirect('add')
         if action_quantity < 0 or action_quantity is False:
             messages.error(request, all_messages["invalid_quantity"])
+            return redirect('add')
+        elif action_quantity > action.max:
+            messages.error(request, all_messages["max_action_quantity"])
             return redirect('add')
 
         aktion_existing = any(aktion.name == action_type for aktion in aktionen)
@@ -137,6 +144,9 @@ def edit_action(request, action_id):
             if action_date > datetime.now().date():
                 messages.error(request, all_messages["date_in_future"])
                 return redirect('edit_action', action_id)
+            elif action_date < datetime.now() + relativedelta(years=100):
+                messages.error(request, all_messages["action_too_past"])
+                return redirect('edit_action', action_id)
 
             action_quantity = request.POST.get('action_quantity')
             if not action_quantity:
@@ -150,6 +160,9 @@ def edit_action(request, action_id):
             if action_quantity < 0 or action_quantity is False:
                 messages.error(request, all_messages["invalid_quantity"])
                 return redirect('edit_action', action_id)
+            elif action_quantity > action.max:
+                messages.error(request, all_messages["max_action_quantity"])
+                return redirect('add')
 
             action_existing = any(aktion.name == action_type for aktion in aktionen)
             if not action_existing:
