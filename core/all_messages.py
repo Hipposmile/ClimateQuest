@@ -1,3 +1,5 @@
+from django.utils.safestring import mark_safe
+
 all_messages = {
     # --------
     #Allgemein
@@ -141,7 +143,7 @@ all_messages = {
     "action_edited": "Aktion erfolgreich bearbeitet",
     "action_deleted": "Aktion erfolgreich gelöscht",
     "action_invalid_quantity": "Ungültige Menge",
-    "max_action_quantity": "Die angegebene Menge ist zu hoch, um realistisch zu sein.",
+    "max_action_quantity": mark_safe("Die angegebene Menge ist zu hoch, um realistisch zu sein. Weitere Informationen findest du in <a href='https://climate-quest.de/artikel/artikel_detail/9'>diesem Artikel</a>."),
     "action_too_past": "Das Datum liegt zu weit in der Vergangenheit, um realistisch zu sein.",
 
     # --------

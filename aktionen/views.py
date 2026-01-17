@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from core.all_messages import all_messages
 from utils.functions import *
 from dateutil.relativedelta import relativedelta
+from django.db.models import Sum
 
 
 @login_required
@@ -50,6 +51,7 @@ def add(request):
             return redirect('add')
 
         action_quantity = request.POST.get('action_quantity')
+
         if not action_quantity:
             messages.error(request, all_messages["missing_required_inputs"])
             return redirect('add')
@@ -61,7 +63,8 @@ def add(request):
         if action_quantity < 0 or action_quantity is False:
             messages.error(request, all_messages["invalid_quantity"])
             return redirect('add')
-        elif action_quantity >= action.max:
+        elif (Aktion.objects.filter(user=request.user, aktion=action).aggregate(total=Sum('quantity'))[
+                  "total"] or 0) + action_quantity > action.max:
             messages.error(request, all_messages["max_action_quantity"])
             return redirect('add')
 
@@ -160,9 +163,10 @@ def edit_action(request, action_id):
             if action_quantity < 0 or action_quantity is False:
                 messages.error(request, all_messages["invalid_quantity"])
                 return redirect('edit_action', action_id)
-            elif action_quantity >= action.max:
+            elif (Aktion.objects.filter(user=request.user, aktion=action).aggregate(total=Sum('quantity'))[
+                      "total"] or 0) + action_quantity > action.max:
                 messages.error(request, all_messages["max_action_quantity"])
-                return redirect('add')
+                return redirect('edit_action', action_id)
 
             action_existing = any(aktion.name == action_type for aktion in aktionen)
             if not action_existing:

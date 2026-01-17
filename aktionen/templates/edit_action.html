@@ -61,6 +61,7 @@
                data-source="{{ current_action.aktion.source }}"
                data-categories="
 
+
                        {% for action_category in current_action.aktion.category.all %}{{ action_category }}{% if not forloop.last %}, {% endif %}{% endfor %}"
                readonly>
 
@@ -331,7 +332,7 @@
             modal.classList.remove("active");
         };
 
-                // Modal auch bei Klick auf Hintergrund schließen
+        // Modal auch bei Klick auf Hintergrund schließen
         modal.onclick = (e) => {
             if (e.target === modal) {
                 modal.classList.remove("active");
