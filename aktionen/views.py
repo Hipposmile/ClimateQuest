@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -45,7 +45,7 @@ def add(request):
         if action_date > datetime.now().date():
             messages.error(request, all_messages["date_in_future"])
             return redirect('add')
-        elif action_date < datetime.now() + relativedelta(years=100):
+        elif action_date < date.today() - relativedelta(years=100):
             messages.error(request, all_messages["action_too_past"])
             return redirect('add')
 
@@ -61,7 +61,7 @@ def add(request):
         if action_quantity < 0 or action_quantity is False:
             messages.error(request, all_messages["invalid_quantity"])
             return redirect('add')
-        elif action_quantity > action.max:
+        elif action_quantity >= action.max:
             messages.error(request, all_messages["max_action_quantity"])
             return redirect('add')
 
@@ -144,7 +144,7 @@ def edit_action(request, action_id):
             if action_date > datetime.now().date():
                 messages.error(request, all_messages["date_in_future"])
                 return redirect('edit_action', action_id)
-            elif action_date < datetime.now() + relativedelta(years=100):
+            elif action_date < date.today() - relativedelta(years=100):
                 messages.error(request, all_messages["action_too_past"])
                 return redirect('edit_action', action_id)
 
@@ -160,7 +160,7 @@ def edit_action(request, action_id):
             if action_quantity < 0 or action_quantity is False:
                 messages.error(request, all_messages["invalid_quantity"])
                 return redirect('edit_action', action_id)
-            elif action_quantity > action.max:
+            elif action_quantity >= action.max:
                 messages.error(request, all_messages["max_action_quantity"])
                 return redirect('add')
 

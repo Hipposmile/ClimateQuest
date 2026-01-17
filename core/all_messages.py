@@ -141,7 +141,7 @@ all_messages = {
     "action_edited": "Aktion erfolgreich bearbeitet",
     "action_deleted": "Aktion erfolgreich gelöscht",
     "action_invalid_quantity": "Ungültige Menge",
-    "action_quantity_max": "Die angegebene Menge ist zu hoch, um realistisch zu sein.",
+    "max_action_quantity": "Die angegebene Menge ist zu hoch, um realistisch zu sein.",
     "action_too_past": "Das Datum liegt zu weit in der Vergangenheit, um realistisch zu sein.",
 
     # --------
