@@ -5,7 +5,7 @@ admin.site.register(Aktion)
 
 @admin.register(AktionenListe)
 class AktionenListeAdmin(admin.ModelAdmin):
-    list_display = ("name", "klimapunkte", "mengeBeschreibung", "mengeBeschreibungSingular", "anmerkung")
+    list_display = ("name", "klimapunkte", "mengeBeschreibung", "anmerkung", "max")
     search_fields = ("name", "mengeBeschreibung", "anmerkung")
     list_filter = ("klimapunkte",)
     ordering = ("name",)
@@ -15,4 +15,4 @@ class AktionenListeAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ("name",)
     search_fields = ("name",)
-    filter_horizontal = ("actions",)  # bessere ManyToMany-Auswahl
+    filter_horizontal = ("actions",)
