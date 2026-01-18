@@ -34,7 +34,7 @@ def dashboard(request):
         return redirect('home')
 
     weekly_goal = request.user.usererweitert.weekly_goal
-    weekly_klimapunkte = (
+    weekly_klimapunkte = round(
             Aktion.objects
             .filter(user=request.user, date__gte=(date.today() - relativedelta(weeks=1)))
             .annotate(impact=(F("aktion__klimapunkte") * F("quantity")))
