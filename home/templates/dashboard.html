@@ -66,7 +66,7 @@
     <div class="progress-container">
         <div class="progress-bar" style="width: {{ weekly_goal_progress_percent }}%; max-width: 100%"></div>
     </div>
-    <p>{{ weekly_klimapunkte }} Klimapunkte bis zum wöchentlichen Ziel von {{ weekly_goal }} Klimapunkten geschafft</p>
+    <p>{{ weekly_klimapunkte|floatformat:-4 }} Klimapunkte bis zum wöchentlichen Ziel von {{ weekly_goal }} Klimapunkten geschafft</p>
     <a href="{% url 'settings_view' %}#change_goal_h3" class="redirect-link">
         <span>Ziel ändern</span>
         <span class="redirect-link-icon">→</span>
