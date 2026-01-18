@@ -205,7 +205,7 @@ def settings_view(request):
                     messages.success(request, all_messages["username_changed"])
             return redirect('settings_view')
 
-        if 'change_password' in request.POST:
+        elif 'change_password' in request.POST:
             current_pw = request.POST.get('current_password')
             new_pw = request.POST.get('new_password')
             if not request.user.check_password(current_pw):
@@ -217,7 +217,7 @@ def settings_view(request):
                 messages.success(request, all_messages["password_changed"])
             return redirect('settings_view')
 
-        if 'change_email' in request.POST:
+        elif 'change_email' in request.POST:
             email = request.POST.get('email')
             password = request.POST.get('password')
             if not request.user.check_password(password):
@@ -263,7 +263,7 @@ def settings_view(request):
                     messages.success(request, all_messages["email_changed"])
                 return redirect('settings_view')
 
-        if 'change_email_settings' in request.POST:
+        elif 'change_email_settings' in request.POST:
             mailinglist = request.POST.get('mailinglist') == 'on'
             password = request.POST.get('password')
             if not request.user.check_password(password):
@@ -281,7 +281,7 @@ def settings_view(request):
                 messages.success(request, all_messages["mailinglist_disabled"])
             return redirect('settings_view')
 
-        if 'change_statement' in request.POST:
+        elif 'change_statement' in request.POST:
             statement = request.POST.get('statement')
             password = request.POST.get('password')
             if not request.user.check_password(password):
@@ -296,7 +296,31 @@ def settings_view(request):
             messages.success(request, all_messages["successfully_changed_statement"])
             return redirect('settings_view')
 
-        if 'delete_account' in request.POST:
+        elif 'change_weekly_goal' in request.POST:
+            weekly_goal = request.POST.get('weekly_goal')
+            password = request.POST.get('password')
+            if not request.user.check_password(password):
+                messages.error(request, all_messages["invalid_password"])
+                return redirect('settings_view')
+            try:
+                weekly_goal = int(weekly_goal)
+            except ValueError:
+                messages.error(request, all_messages["not_a_number"])
+                return redirect('settings_view')
+            if weekly_goal < 1:
+                messages.error(request, all_messages["weekly_goal_too_small"])
+                return redirect('settings_view')
+            try:
+                user_erweitert = UserErweitert.objects.get(user=request.user)
+            except UserErweitert.DoesNotExist:
+                create_internal_error(request, f"UserErweitert zu User {request.user} existiert nicht")
+                return  redirect('settings_view')
+            user_erweitert.weekly_goal = weekly_goal
+            user_erweitert.save()
+            messages.success(request, all_messages["successfully_changed_goal"])
+            return redirect('dashboard')
+
+        elif 'delete_account' in request.POST:
             password = request.POST.get('password')
             if not request.user.check_password(password):
                 messages.error(request, all_messages["invalid_password"])

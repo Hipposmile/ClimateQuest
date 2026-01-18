@@ -1041,3 +1041,40 @@ input[type="file"]::-webkit-file-upload-button {
 .redirect-link:hover .redirect-link-icon {
     transform: translateX(4px);
 }
+
+.progress-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+}
+
+.progress-bar {
+    height: 20px;
+    border-radius: 10px;
+    background: linear-gradient(
+            90deg,
+            #ff6ec4,
+            #ff9a44,
+            #fbd72b,
+            #7cf29c,
+            #4facfe,
+            #c084fc
+    ); /* bunter, aber hochwertiger Multicolor-Verlauf */
+    background-size: 300% 100%;
+    animation: rainbowFlow 6s ease-in-out infinite;
+    transition: width 0.3s ease;
+}
+
+/* sanfte, moderne Schimmerbewegung */
+@keyframes rainbowFlow {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 0%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+

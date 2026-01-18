@@ -13,6 +13,15 @@
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message }}</p>
         {% endfor %}
+        <script>
+            // Verzögere das Scrolling, um sicherzustellen, dass es nach dem automatischen Browser-Scrolling passiert
+            setTimeout(() => {
+                if (window.location.hash) {
+                    history.replaceState(null, null, window.location.pathname + window.location.search);
+                }
+                window.scrollTo({top: 0});
+            }, 100);  // 100ms warten
+        </script>
     {% endif %}
     <p>Willkommen, {{ user.username }}</p>
     <hr>
@@ -303,6 +312,19 @@
     </script>
 
     <hr>
+
+    <h3 id="change_goal_h3">Wöchentliches Ziel ändern</h3>
+    <form method="post">
+        {% csrf_token %}
+        <label for="weekly_goal">Wöchentliches Ziel</label>
+        <input id="weekly_goal" name="weekly_goal" type="number" value="{{ request.user.usererweitert.weekly_goal }}"
+               required>
+        <label for="password">Passwort</label>
+        <input id="password" type="password" name="password" placeholder="Passwort" required>
+        <button type="submit" name="change_weekly_goal">Speichern</button>
+    </form>
+
+    <hr>
     <!-- Account löschen -->
     <h3 id="delete_h3">Account löschen</h3>
     <form method="post"
@@ -321,6 +343,8 @@
         Nenne hier bitte die konkreten Daten, welche du löschen möchtest. Wenn sich die Daten über die Webseite bereits
         löschen lassen, werden diese auch tatsächlich gelöscht und als Backup maximal 14 Tage gespeichert. </p>
 
-    <a href="{% url 'reset_password' %}"><button class="btn">Passwort resetten</button></a>
+    <a href="{% url 'reset_password' %}">
+        <button class="btn">Passwort resetten</button>
+    </a>
 
 {% endblock %}

@@ -5,8 +5,6 @@ from django.shortcuts import render, redirect
 
 from core.all_messages import all_messages
 from utils.functions import *
-from .models import *
-
 
 @login_required
 def klimapunkte_view(request, user_id):

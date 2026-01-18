@@ -10,13 +10,19 @@
         <span class="redirect-link-icon">→</span>
     </a>
     <h1 style="margin-top: 0;">Dashboard</h1>
-    <p>Willkommen, {{ user.username }}!</p>
 
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message }}</p>
         {% endfor %}
+        <script>
+            if (window.location.hash) {
+                history.replaceState(null, "", window.location.pathname + window.location.search);
+            }
+        </script>
     {% endif %}
+
+    <p>Willkommen, {{ user.username }}!</p>
 
     {% if user.usererweitert.mail_verified == False and user.email != '' %}
         <p>Bitte bestätige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. Falls du keine
@@ -55,6 +61,18 @@
         <span>Zur öffentlichen Profilseite</span>
         <span class="redirect-link-icon">→</span>
     </a>
+    <hr>
+    <h2>Wöchentliches Ziel</h2>
+    <div class="progress-container">
+        <div class="progress-bar" style="width: {{ weekly_goal_progress_percent }}%; max-width: 100%"></div>
+    </div>
+    <p>{{ weekly_klimapunkte }} Klimapunkte bis zum wöchentlichen Ziel von {{ weekly_goal }} Klimapunkten geschafft</p>
+    <a href="{% url 'settings_view' %}#change_goal_h3" class="redirect-link">
+        <span>Ziel ändern</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+    <hr>
+
     <h2>Aktionen</h2>
     {% if aktionen %}
         <ul class="action-list">
@@ -93,16 +111,16 @@
         <span>Aktion hinzufügen</span>
         <span class="redirect-link-icon">→</span>
     </a>
-    <br>
+    <hr>
 
     <h2>Klimapunkte</h2>
-    <p>Du hast bereits {{ klimapunkte }} Klimapunkte gesammelt</p>
+    <p>Du hast bereits {{ klimapunkte }} Klimapunkte gesammelt.</p>
     <a href="{% url 'klimapunkte_me' %}" class="redirect-link">
         <span>Zu den Klimapunkten</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <h2>Level</h2>
-    <p>Du bist im Level {{ level }}</p>
+    <p>Du bist im Level {{ level.description }}.</p>
     <a href="{% url 'level_me' %}" class="redirect-link">
         <span>Zu den Levels</span>
         <span class="redirect-link-icon">→</span>
@@ -171,7 +189,7 @@
         <span>Zu den Families</span>
         <span class="redirect-link-icon">→</span>
     </a>
-
+    <hr>
 
     <style>
         .communities-section {
@@ -281,6 +299,7 @@
         <span>Zu den Communities</span>
         <span class="redirect-link-icon">→</span>
     </a>
+    <hr>
 
     <style>
         .event-date-relative {
@@ -341,6 +360,7 @@
         <span>Zu den Events</span>
         <span class="redirect-link-icon">→</span>
     </a>
+    <hr>
 
     <h2>Events, bei denen ich teilnehme</h2>
     {% if events %}
@@ -388,6 +408,7 @@
         <span>Zu den Events</span>
         <span class="redirect-link-icon">→</span>
     </a>
+    <hr>
 
     <script>
         function getLabel(dateStr) {
@@ -468,6 +489,8 @@
         <span>Zu den Artikeln</span>
         <span class="redirect-link-icon">→</span>
     </a>
+    <hr>
+
 
     <h2>von mir gelikte Artikel</h2>
     {% if artikel %}
@@ -501,6 +524,7 @@
         <span>Zu den Artikeln</span>
         <span class="redirect-link-icon">→</span>
     </a>
+    <hr>
 
     <h2>von mir erstellte Forumsbeiträge</h2>
     {% if created_forum_posts %}
@@ -534,6 +558,7 @@
         <span>Zum Forum</span>
         <span class="redirect-link-icon">→</span>
     </a>
+    <hr>
 
     <h2>von mir beantwortete Forumsbeiträge</h2>
     {% if forum_posts %}

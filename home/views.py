@@ -1,19 +1,20 @@
 import os
+from datetime import date
 
+from dateutil.relativedelta import relativedelta
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
+from django.db.models import Sum, F
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from dotenv import load_dotenv
 
+from core.all_messages import all_messages
 from events.models import *
 from forum.models import *
-from aktionen.models import *
 from utils.functions import *
 
 load_dotenv()
-
-from core.all_messages import all_messages
 
 
 def home(request):
@@ -27,9 +28,19 @@ def home(request):
         user_count += 1
     return render(request, './home.html', {'klimapunkte': klimapunkte_gesamt, 'user_count': user_count})
 
+
 def dashboard(request):
     if not request.user.is_authenticated:
         return redirect('home')
+
+    weekly_goal = request.user.usererweitert.weekly_goal
+    weekly_klimapunkte = (
+            Aktion.objects
+            .filter(user=request.user, date__gte=(date.today() - relativedelta(weeks=1)))
+            .annotate(impact=(F("aktion__klimapunkte") * F("quantity")))
+            .aggregate(total=Sum('impact'))['total'] or 0
+    )
+    weekly_goal_progress_percent = round((weekly_klimapunkte / weekly_goal) * 100)
 
     aktionen = Aktion.objects.filter(user=request.user).order_by('date')[:2]
 
@@ -50,7 +61,8 @@ def dashboard(request):
 
     families = families[:2]
 
-    created_events = Event.objects.filter(creator=request.user, date_time__gte=timezone.now()).order_by('-date_time')[:2]
+    created_events = Event.objects.filter(creator=request.user, date_time__gte=timezone.now()).order_by('-date_time')[
+        :2]
     events = request.user.events.filter(date_time__gte=timezone.now()).order_by('-date_time')[:2]
 
     created_artikel = Artikel.objects.filter(creator=request.user).order_by('-date_time')[:2]
@@ -58,7 +70,14 @@ def dashboard(request):
 
     created_forum_posts = ForumPost.objects.filter(creator=request.user).order_by('-date_time')[:2]
     forum_posts = ForumPost.objects.filter(answers__creator=request.user).distinct().order_by('-date_time')[:2]
-    return render(request, './dashboard.html', {'aktionen': aktionen, 'klimapunkte': klimapunkte, 'level': level, 'families': families, 'communities_with_user_families': communities_with_user_families, 'created_events': created_events, 'events': events, 'created_artikel': created_artikel, 'artikel': artikel, 'created_forum_posts': created_forum_posts, 'forum_posts': forum_posts})
+    return render(request, './dashboard.html',
+                  {'weekly_goal': weekly_goal, 'weekly_goal_progress_percent': weekly_goal_progress_percent,
+                   'weekly_klimapunkte': weekly_klimapunkte,
+                   'aktionen': aktionen, 'klimapunkte': klimapunkte, 'level': level, 'families': families,
+                   'communities_with_user_families': communities_with_user_families, 'created_events': created_events,
+                   'events': events, 'created_artikel': created_artikel, 'artikel': artikel,
+                   'created_forum_posts': created_forum_posts, 'forum_posts': forum_posts})
+
 
 @login_required
 def admin(request):
@@ -78,7 +97,7 @@ def admin(request):
             if not receiver or not name or not msg:
                 messages.error(request, all_messages["missing_required_inputs"])
                 return redirect('admin')
-            
+
             if receiver == 'user':
                 try:
                     user = User.objects.get(username=name)
@@ -122,11 +141,13 @@ def admin(request):
             else:
                 messages.error(request, all_messages["admin__invalid_receiver_type"])
                 return redirect('admin')
-        
+
         elif 'check_worldwide_ranking' in request.POST:
             try:
                 worldwide_ranking = Family.objects.get(name='worldwide ranking', chat=False)
-                if check_password(os.environ.get("WORLDWIDE_RANKING_PASSWORD", ""), worldwide_ranking.password) and check_password(os.environ.get("WORLDWIDE_RANKING_ADMIN_PASSWORD", ""), worldwide_ranking.admin_password):
+                if check_password(os.environ.get("WORLDWIDE_RANKING_PASSWORD", ""),
+                                  worldwide_ranking.password) and check_password(
+                    os.environ.get("WORLDWIDE_RANKING_ADMIN_PASSWORD", ""), worldwide_ranking.admin_password):
                     messages.success(request, all_messages["worldwide_ranking_valid"])
                 else:
                     worldwide_ranking_password = os.environ.get("WORLDWIDE_RANKING_PASSWORD", "")
@@ -162,18 +183,21 @@ def admin(request):
                 messages.error(request, all_messages["user_not_found"])
         else:
             messages.error(request, all_messages["admin_invalid_action"])
-            
+
     return render(request, 'admin.html')
+
 
 @login_required
 def count_benachrichtigungen(request):
     benachrichtigungen_count = Benachrichtigung.objects.filter(user=request.user).count()
     return JsonResponse({'benachrichtigungen_count': benachrichtigungen_count})
 
+
 @login_required
 def benachrichtigungen_view(request):
     benachrichtigungen = Benachrichtigung.objects.filter(user=request.user).order_by('-date')
     return render(request, 'benachrichtigungen.html', {'benachrichtigungen': benachrichtigungen})
+
 
 @login_required
 def delete_benachrichtigung(request, id):
@@ -184,21 +208,26 @@ def delete_benachrichtigung(request, id):
         messages.error(request, all_messages["delete_notification_error"])
     return redirect('benachrichtigungen_view')
 
+
 def share(request):
     url = request.GET.get('url')
     if url is None:
         url = "https://climate-quest.de"
     return render(request, 'share.html', {'url': url})
 
+
 def nutzungsbedingungen(request):
     return render(request, 'nutzungsbedingungen.html')
+
 
 def actions_table(request):
     aktionen = AktionenListe.objects.all()
     return render(request, 'aktionenTable.html', {'aktionen': aktionen})
 
+
 def datenschutz(request):
     return render(request, 'datenschutz.html')
+
 
 def impressum(request):
     return render(request, 'impressum.html')

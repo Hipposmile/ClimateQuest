@@ -16,6 +16,7 @@ all_messages = {
     "user_not_exist": "User existiert nicht",
     "not_is_truth": "Du musst bestätigen, dass alle Angaben der Wahrheit entsprechen",
     "too_long_input": "Ein oder mehrere Input-Felder sind zu lang",
+    "not_a_number": "Der Input muss eine Zahl sein.",
 
     #Zeitraum
     "invalid_date_range": "Startdatum muss vor Enddatum liegen",
@@ -125,6 +126,8 @@ all_messages = {
     "user_is_active_at_verify": "Du bist bereits verifiziert. Logge dich direkt ein.",
     "email_verified": "E-Mail-Adresse erfolgreich verifiziert",
     "verification_email_resent": "Verifizierungs-E-Mail erfolgreich erneut gesendet",
+    "successfully_changed_goal": "Wöchentliches Ziel erfolgreich geändert.",
+    "weekly_goal_too_small": "Das wöchentliche Ziel ist zu klein.",
 
 
     # --------

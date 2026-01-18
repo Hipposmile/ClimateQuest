@@ -7,6 +7,7 @@ class UserErweitert(models.Model):
     mailinglist = models.BooleanField(default=True)
     mail_verified = models.BooleanField(default=False)
     statement = models.TextField(default="Hallo. Ich benutze ClimateQuest.")
+    weekly_goal = models.IntegerField(default=20)
 
     def __str__(self):
         return self.user.username
