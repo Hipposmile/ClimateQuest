@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from utils.functions import *
-from datetime import timedelta
 from django.test import RequestFactory
+from django.contrib.auth.models import User
 
 
 # Create your views here.

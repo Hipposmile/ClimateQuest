@@ -139,5 +139,7 @@ STORAGES = {
 }
 
 CRONJOBS = [
-    ('0 12 * * 0', 'core.views.create_reminder', '>> /logs/django_errors.log')
+    ('0 12 * * 0', 'core.views.create_reminder', '>> /logs/django_errors.log 2>&1')
 ]
+
+CRONTAB_PYTHON_EXECUTABLE = "/webapps/climatequest/venv/bin/python"
