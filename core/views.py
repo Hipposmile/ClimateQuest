@@ -37,6 +37,7 @@ def custom_503(request, exception=""):
 factory = RequestFactory()
 fake_request = factory.get('/')
 
+
 def create_reminder():
     for user in User.objects.all():
         try:
