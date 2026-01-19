@@ -1,10 +1,7 @@
 import os
-from datetime import date
 
-from dateutil.relativedelta import relativedelta
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
-from django.db.models import Sum, F
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from dotenv import load_dotenv
@@ -33,14 +30,7 @@ def dashboard(request):
     if not request.user.is_authenticated:
         return redirect('home')
 
-    weekly_goal = request.user.usererweitert.weekly_goal
-    weekly_klimapunkte = (
-            Aktion.objects
-            .filter(user=request.user, date__gte=(date.today() - relativedelta(weeks=1)))
-            .annotate(impact=(F("aktion__klimapunkte") * F("quantity")))
-            .aggregate(total=Sum('impact'))['total'] or 0
-    )
-    weekly_goal_progress_percent = round((weekly_klimapunkte / weekly_goal) * 100)
+    weekly_goal, weekly_klimapunkte, weekly_goal_progress_percent = get_weekly_goal_from_user(request.user)
 
     aktionen = Aktion.objects.filter(user=request.user).order_by('date')[:2]
 

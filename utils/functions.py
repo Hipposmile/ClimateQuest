@@ -1,28 +1,34 @@
+import logging
 import random
 import string
 import traceback
-import logging
+from datetime import date, timedelta
 
 import bleach
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMultiAlternatives
 from django.core.validators import validate_email
+from django.db.models import Sum, F
 from webpush import send_user_notification
 
 from ClimateQuest import settingsprod
+from aktionen.models import *
 from artikel.models import Artikel
 from community.models import *
 from home.models import *
 from personals.models import *
-from aktionen.models import *
 
 dezimalstellen = 4
 
 logger = logging.getLogger("django")
 
+
 def generate_random_password():
-    return ''.join(random.choices(string.ascii_letters + string.digits + string.punctuation.replace('"', '').replace("'", ""), k=12)) # Removes " so string can´t be interrupted
+    return ''.join(
+        random.choices(string.ascii_letters + string.digits + string.punctuation.replace('"', '').replace("'", ""),
+                       k=12))  # Removes " so string can´t be interrupted
+
 
 def send_mail_function(**kwargs):
     request = kwargs.get('request')
@@ -250,11 +256,24 @@ def get_level(user):
             'levels': levels, 'klimapunkte': klimapunkte, 'level_number': level_number}
 
 
+def get_weekly_goal_from_user(user):
+    weekly_goal = user.usererweitert.weekly_goal
+    weekly_klimapunkte = (
+            Aktion.objects
+            .filter(user=user, date__gte=(date.today() - timedelta(days=date.today().weekday())))
+            .annotate(impact=(F("aktion__klimapunkte") * F("quantity")))
+            .aggregate(total=Sum('impact'))['total'] or 0
+    )
+    weekly_goal_progress_percent = round((weekly_klimapunkte / weekly_goal) * 100)
+    return weekly_goal, weekly_klimapunkte, weekly_goal_progress_percent
+
+
 def get_all_klimapunkte_from_user(user):
     aktionen = Aktion.objects.filter(user=user)
     klimapunkte = get_klimapunkte(aktionen)
     klimapunkte += get_klimapunkte_from_likes(user)
     return klimapunkte
+
 
 def get_klimapunkte(aktionen):
     klimapunkte = sum(aktion.impact for aktion in aktionen)
@@ -319,7 +338,9 @@ def create_notification(request, notification, user=None):
     )
     res = send_push(benachrichtigung=notification, user=user)
     if res == 500:
-        create_internal_error(request, "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.", "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.")
+        create_internal_error(request, "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.",
+                              "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.")
+
 
 def send_push(benachrichtigung, user, head="Neue Benachrichtigung"):
     try:
@@ -329,7 +350,6 @@ def send_push(benachrichtigung, user, head="Neue Benachrichtigung"):
         return 200
     except TypeError:
         return 500
-
 
 
 def ist_email_gueltig(email):
