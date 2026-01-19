@@ -40,10 +40,10 @@ fake_request = factory.get('/')
 def create_reminder():
     for user in User.objects.all():
         try:
-            if not Aktion.objects.filter(user=user, date__gte=timezone.now().date() - timedelta(days=7)).exists():
+            if get_weekly_goal_from_user(user)[-1] < 100:
                 fake_request = fake_request.user = user
                 create_notification(fake_request,
-                                    notification=f"Hey {user.username}, du hast in der letzten Woche keine einzige Aktion eingetragen! Ändere das und schütze nicht nur das Klima, sondern steige auch in den Rankings deiner Families und Communities sowie in deinem Level auf!",
+                                    notification=f"Hey {user.username}, du hast dein wöchentliches Ziel noch nicht erreicht! Trage jetzt noch eine Aktion ein, die du durchgeführt hast, und erreiche dein Ziel!",
                                     user=user)
         except Exception as e:
             error_message = f'Cronjob: {timezone.now().isoformat()} Create Reminder for User: {user}: Exception: {e}'
