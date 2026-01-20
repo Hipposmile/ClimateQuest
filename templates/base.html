@@ -561,7 +561,7 @@
                     <a href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span> Logout</a>
                     {% if user.is_superuser %}
                         <a href="/ClimateQuestAdmin/" target="_blank"><span class="emoji">&#x1F451;</span> Admin (I)</a>
-                        <a href="{% url 'admin_view' %}"><span class="emoji">&#x1F451;</span> Admin (II)</a>
+                        <a href="{% url 'admin' %}"><span class="emoji">&#x1F451;</span> Admin (II)</a>
                     {% endif %}
                 </nav>
             </div>
@@ -655,12 +655,18 @@
 <!--Nav-Leist-->
 <script>
     let timeoutId;
+    let timeoutId2;
 
     const header = document.getElementById('header');
 
     const renderMobileNavComplete = () => {
         try {
             clearTimeout(timeoutId);
+        } catch (error) {
+            console.log("No timeout to clear!")
+        }
+        try {
+            clearTimeout(timeoutId2);
         } catch (error) {
             console.log("No timeout to clear!")
         }
@@ -732,7 +738,7 @@
                     <a href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span> Logout</a>
                     {% if user.is_superuser %}
                         <a href="/ClimateQuestAdmin/" target="_blank"><span class="emoji">&#x1F451;</span> Admin (I)</a>
-                        <a href="{% url 'admin_view' %}"><span class="emoji">&#x1F451;</span> Admin (II)</a>
+                        <a href="{% url 'admin' %}"><span class="emoji">&#x1F451;</span> Admin (II)</a>
                     {% endif %}
                 </nav>
             </div>
@@ -883,7 +889,7 @@
                             <a href="{% url 'logout_view' %}">Logout</a>
                             {% if user.is_staff %}
                             <a href="/ClimateQuestAdmin/" target="_blank">Admin-Bereich (I)</a>
-                            <a href="{% url 'admin_view' %}">Admin-Bereich (II)</a>
+                            <a href="{% url 'admin' %}">Admin-Bereich (II)</a>
                             {% endif %}
                         </div>
                     </div>
@@ -912,7 +918,7 @@
                     </div>
                     <a href="{% url 'benachrichtigungen_view' %}">
                         <div class="benachrichtigung-wrapper">
-                            <span class="icon emoji">&#x1F514;</span>
+                            <span class="emoji">&#x1F514;</span>
                             <span id="benachrichtigungen-count" class="count">?</span>
                         </div>
                     </a>
@@ -1032,7 +1038,13 @@
                         return false;
                     }
                     if (benachrichtigungen_count != 0) {
-                        countSpan.textContent = data.benachrichtigungen_count;
+                        let previousCount = parseInt(localStorage.getItem('benachrichtigungen_count') || "0");
+                        if (benachrichtigungen_count > previousCount) {
+                            // alert(`Neue Benachrichtigung.`);
+                        }
+                        localStorage.setItem('benachrichtigungen_count', benachrichtigungen_count);
+
+                        countSpan.textContent = benachrichtigungen_count;
                     } else {
                         countSpan.style.display = 'none';
                     }

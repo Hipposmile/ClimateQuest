@@ -32,6 +32,9 @@ def dashboard(request):
 
     weekly_goal, weekly_klimapunkte, weekly_goal_progress_percent = get_weekly_goal_from_user(request.user)
 
+    streak = get_streak_from_user(request.user)
+    already_heightened = Aktion.objects.filter(date=date.today()).exists()
+
     aktionen = Aktion.objects.filter(user=request.user).order_by('date')[:2]
 
     klimapunkte = get_all_klimapunkte_from_user(request.user)
@@ -62,7 +65,7 @@ def dashboard(request):
     forum_posts = ForumPost.objects.filter(answers__creator=request.user).distinct().order_by('-date_time')[:2]
     return render(request, './dashboard.html',
                   {'weekly_goal': weekly_goal, 'weekly_goal_progress_percent': weekly_goal_progress_percent,
-                   'weekly_klimapunkte': weekly_klimapunkte,
+                   'weekly_klimapunkte': weekly_klimapunkte, 'streak': streak, 'already_heightened': already_heightened,
                    'aktionen': aktionen, 'klimapunkte': klimapunkte, 'level': level, 'families': families,
                    'communities_with_user_families': communities_with_user_families, 'created_events': created_events,
                    'events': events, 'created_artikel': created_artikel, 'artikel': artikel,
@@ -91,11 +94,11 @@ def admin(request):
             if receiver == 'user':
                 try:
                     user = User.objects.get(username=name)
-                    create_notification(request, msg, user)
-                    messages.success(request, all_messages["admin__successfully_sent_notification"])
                 except User.DoesNotExist:
                     messages.error(request, all_messages["admin__user_not_found"])
                     return redirect('admin')
+                create_notification(request, msg, user)
+                messages.success(request, all_messages["admin__successfully_sent_notification"])
             elif receiver == 'family-members':
                 try:
                     family = Family.objects.get(name=name)

@@ -2,7 +2,7 @@ import logging
 import random
 import string
 import traceback
-from datetime import date, timedelta
+from datetime import timedelta, date
 
 import bleach
 from django.contrib import messages
@@ -410,3 +410,28 @@ def get_klimapunkte_from_likes(user):
         klimapunkte_artikel = likes * klimapunkte_per_like
         klimapunkte += klimapunkte_artikel
     return klimapunkte
+
+
+def get_streak_from_user(user):
+    action_days = (
+        Aktion.objects
+        .filter(user=user)
+        .values_list('date', flat=True)
+        .distinct()
+        .order_by('-date')
+    )
+
+    today = date.today()
+
+    has_today = date.today() in action_days
+
+    streak = 0
+    expected_day = today if has_today else today - timedelta(days=1)
+
+    for action_day in action_days:
+        if action_day == expected_day:
+            streak += 1
+            expected_day -= timedelta(days=1)
+        else:
+            break
+    return streak

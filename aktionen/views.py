@@ -75,6 +75,7 @@ def add(request):
 
         old_level = get_level(request.user)
         old_weekly_goal_progress_percent = get_weekly_goal_from_user(request.user)[-1]
+        old_streak = get_streak_from_user(request.user)
 
         Aktion.objects.create(
             aktion=action,
@@ -86,6 +87,7 @@ def add(request):
 
         new_level = get_level(request.user)
         new_weekly_goal_progress_percent = get_weekly_goal_from_user(request.user)[-1]
+        new_streak = get_streak_from_user(request.user)
 
         if old_level['level_number'] < new_level['level_number']:
             create_notification(request,
@@ -96,6 +98,10 @@ def add(request):
                                 f'Du hast eine neue Aktion vom Typen {action_type} erstellt und so dein wöchentliches Ziel erreicht. <span class="emoji">&#x1F973;</span>',
                                 request.user
                                 )
+        if old_streak < new_streak:
+            create_notification(request,
+                                f'Du hast eine neue Aktion vom Typen {action_type} erstellt und so deine Streak verlängert. <span class="emoji">&#x1F973;</span>',
+                                request.user)
         messages.success(request, all_messages["action_added"])
         return redirect('history')
 
@@ -183,6 +189,7 @@ def edit_action(request, action_id):
 
             old_level = get_level(request.user)
             old_weekly_goal_progress_percent = get_weekly_goal_from_user(request.user)[-1]
+            old_streak = get_streak_from_user(request.user)
 
             current_action.aktion = action
             current_action.description = action_description
@@ -193,6 +200,7 @@ def edit_action(request, action_id):
 
             new_level = get_level(request.user)
             new_weekly_goal_progress_percent = get_weekly_goal_from_user(request.user)[-1]
+            new_streak = get_streak_from_user(request.user)
 
             if old_level['level_number'] < new_level['level_number']:
                 create_notification(request,
@@ -209,9 +217,17 @@ def edit_action(request, action_id):
                                     )
             elif new_weekly_goal_progress_percent < 100 <= old_weekly_goal_progress_percent:
                 create_notification(request,
-                                    f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet, dadurch Klimapunkte verloren und so dein wöchentliches Ziel nun nicht mehr erreicht. <span class="emoji">&#x1F973;</span>',
+                                    f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet, dadurch Klimapunkte verloren und so dein wöchentliches Ziel nun nicht mehr erreicht. <span class="emoji">&#x1F622;</span>',
                                     request.user
                                     )
+            if old_streak < new_streak:
+                create_notification(request,
+                                    f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so deine Streak verkürzt. <span class="emoji">&#x1F973;</span>',
+                                    request.user)
+            elif old_streak > new_streak:
+                create_notification(request,
+                                    f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so deine Streak verkürzt. <span class="emoji">&#x1F622;</span>',
+                                    request.user)
 
             messages.success(request, all_messages["action_edited"])
             return redirect('history')
@@ -219,10 +235,12 @@ def edit_action(request, action_id):
         if 'delete_action' in request.POST:
             old_level = get_level(request.user)
             old_weekly_goal_progress_percent = get_weekly_goal_from_user(request.user)[-1]
+            old_streak = get_streak_from_user(request.user)
             action_type = current_action.aktion.name
             current_action.delete()
             new_level = get_level(request.user)
             new_weekly_goal_progress_percent = get_weekly_goal_from_user(request.user)[-1]
+            new_streak = get_streak_from_user(request.user)
             if old_level['level_number'] > new_level['level_number']:
                 create_notification(request,
                                     f'Du hast eine Aktion vom Typen {action_type} gelöscht, dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>',
@@ -232,7 +250,11 @@ def edit_action(request, action_id):
                                     f'Du hast eine neue Aktion vom Typen {action_type} gelöscht, dadurch Klimapunkte verloren und so dein wöchentliches Ziel nun nicht mehr erreicht. <span class="emoji">&#x1F622;</span>',
                                     request.user
                                     )
-            messages.success(request, all_messages["action_deleted"])
+            if old_streak > new_streak:
+                create_notification(request,
+                                    f'Du hast eine neue Aktion vom Typen {action_type} gelöscht und so deine Streak verkürzt. <span class="emoji">&#x1F622;</span>',
+                                    request.user)
+                messages.success(request, all_messages["action_deleted"])
             return redirect('history')
 
     return render(request, './edit_action.html', {'categories': categories, 'current_action': current_action})
