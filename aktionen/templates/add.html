@@ -25,7 +25,7 @@
     </button>
     <div id="anmerkung-box" class="anmerkung-box" style="display: none;"></div>
 
-    <form method="POST">
+    <form method="POST" onsubmit="showLoading()">
         {% csrf_token %}
         <label for="action_type">Ausgewähltes Element:</label>
         <input type="text" id="action_type" name="action_type" readonly>
