@@ -17,9 +17,9 @@
     {% endif %}
 
     {% if family.name != 'worldwide ranking' %}
-        <p><a href="{% url 'edit_family' family.id %}">Bearbeiten</a></p>
+        <p><a onclick="showLoading()" href="{% url 'edit_family' family.id %}">Bearbeiten</a></p>
         {% if family.chat %}
-            <p><a href="{% url 'chat_family' family.id %}">Chatten</a></p>
+            <p><a onclick="showLoading()" href="{% url 'chat_family' family.id %}">Chatten</a></p>
         {% else %}
             <p>Die Chat-Funktion ist für diese Family deaktiviert.</p>
         {% endif %}

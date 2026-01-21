@@ -57,7 +57,7 @@
         <button type="submit">Anwenden</button>
     </form>
 
-    <a href="{% url 'user_detail' user.id %}">Userseite ansehen</a>
+    <a onclick="showLoading()" href="{% url 'user_detail' user.id %}">Userseite ansehen</a>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {

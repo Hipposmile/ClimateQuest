@@ -12,7 +12,7 @@
         <p class="error-message">{{ error }}</p>
     {% endif %}
     <h1>Community <i>{{ community.name }}</i></h1>
-    <h3>Eingeloggt mit Family <a href="{% url 'family_detail' family.id %}">{{ family.name }}</a></h3>
+    <h3>Eingeloggt mit Family <a onclick="showLoading()" href="{% url 'family_detail' family.id %}">{{ family.name }}</a></h3>
 
     {% if messages %}
         {% for message in messages %}
@@ -20,9 +20,9 @@
         {% endfor %}
     {% endif %}
 
-    <p><a href="{% url 'edit_community' community.id family.id %}">Bearbeiten</a></p>
+    <p><a onclick="showLoading()" href="{% url 'edit_community' community.id family.id %}">Bearbeiten</a></p>
     {% if community.chat %}
-        <p><a href="{% url 'chat_community' community.id family.id %}">Chatten</a></p>
+        <p><a onclick="showLoading()" href="{% url 'chat_community' community.id family.id %}">Chatten</a></p>
     {% else %}
         <p>Die Chat-Funktion ist für diese Community deaktiviert.</p>
     {% endif %}

@@ -9,7 +9,7 @@
 
 {% block content %}
 
-    <h1>Family <a href="{% url 'family_detail' family.id %}">{{ family.name }}</a> bearbeiten</h1>
+    <h1>Family <a onclick="showLoading()" href="{% url 'family_detail' family.id %}">{{ family.name }}</a> bearbeiten</h1>
 
     {% if messages %}
         {% for message in messages %}

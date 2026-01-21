@@ -62,7 +62,7 @@
         <div class="family-card">
             <h3>{{ family.name }}</h3>
             <p>Mitglieder: {{ family.members.count }}</p>
-            <a href="{% url 'family_detail' family.id %}" class="card-btn">Details ansehen</a>
+            <a onclick="showLoading()" href="{% url 'family_detail' family.id %}" class="card-btn">Details ansehen</a>
         </div>
         {% endfor %}
     </div>

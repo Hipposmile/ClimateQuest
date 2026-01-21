@@ -127,8 +127,8 @@
         }
     </style>
 
-    <h1>Chat: Community <a href="{% url 'community_detail' community.id family.id %}">{{ community.name }}</a></h1>
-    <h3>Eingeloggt mit Family <a href="{% url 'family_detail' family.id %}">{{ family.name }}</a></h3>
+    <h1>Chat: Community <a onclick="showLoading()" href="{% url 'community_detail' community.id family.id %}">{{ community.name }}</a></h1>
+    <h3>Eingeloggt mit Family <a onclick="showLoading()" href="{% url 'family_detail' family.id %}">{{ family.name }}</a></h3>
 
     {% if messages %}
         {% for message in messages %}
@@ -176,7 +176,7 @@
                 <div class="chat-community-message {% if msg.user == user %}me{% else %}other{% endif %}">
                     <div class="chat-community-bubble">
                         {{ msg.message }}
-                        <span class="chat-community-meta"><a href="{% url 'user_detail' msg.user.id %}"
+                        <span class="chat-community-meta"><a onclick="showLoading()" href="{% url 'user_detail' msg.user.id %}"
                                                              class="chat-community-meta">{{ msg.user.username }}</a> aus Family {{ msg.family.name }}</span>
                         <span class="chat-community-meta">{{ msg.erstellt_am|date:"d.m.Y H:i" }}</span>
                     </div>

@@ -28,6 +28,6 @@
     <input type="password" name="password" id="password" placeholder="Passwort" required>
     <button type="submit">Login</button>
 </form>
-<p>Du hast noch kein Konto? <a href="{% url 'register_view' %}">Jetzt registrieren</a></p>
-<p>Benutzername / Passwort vergessen? <a href="{% url 'reset_password' %}">Passwort resetten</a></p>
+<p>Du hast noch kein Konto? <a onclick="showLoading()" href="{% url 'register_view' %}">Jetzt registrieren</a></p>
+<p>Benutzername / Passwort vergessen? <a onclick="showLoading()" href="{% url 'reset_password' %}">Passwort resetten</a></p>
 {% endblock %}

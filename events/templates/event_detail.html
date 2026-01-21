@@ -46,7 +46,7 @@
     <p><strong>Adresse:</strong> {{ event.adress }}</p>
 
     <p class="{% if request.user == event.creator %}event-creator{% else %}event-user{% endif %}">
-        <strong>Ersteller:</strong> <a href="{% url 'user_detail' event.creator.id %}">{{ event.creator.username }}</a>
+        <strong>Ersteller:</strong> <a onclick="showLoading()" href="{% url 'user_detail' event.creator.id %}">{{ event.creator.username }}</a>
         {% if request.user == event.creator %}(Du){% endif %}
     </p>
 
@@ -72,7 +72,7 @@
                 {% endif %}
             </form>
         {% else %}
-            <a href="{% url 'edit_event' event.id %}" class="edit-link">Bearbeiten</a>
+            <a onclick="showLoading()" href="{% url 'edit_event' event.id %}" class="edit-link">Bearbeiten</a>
         {% endif %}
     {% endif %}
 
@@ -112,7 +112,7 @@
                                     <button name="answer_question">Antworten</button>
                                 </form>
                             {% else %}
-                                <p><a href="{% url 'login_view' %}">Logge dich ein</a>, um den Kommentar zu beantworten
+                                <p><a onclick="showLoading()" href="{% url 'login_view' %}">Logge dich ein</a>, um den Kommentar zu beantworten
                                 </p>
                             {% endif %}
                         </details>
@@ -166,7 +166,7 @@
             <button type="submit" name="ask_question">Frage stellen</button>
         </form>
     {% else %}
-        <p><a href="{% url 'login_view' %}">Logge dich ein</a>, um einen Kommentar zu verfassen
+        <p><a onclick="showLoading()" href="{% url 'login_view' %}">Logge dich ein</a>, um einen Kommentar zu verfassen
         </p>
     {% endif %}
 {% endblock %}

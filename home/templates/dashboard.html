@@ -5,7 +5,7 @@
 {% block title %}ClimateQuest - Dashboard{% endblock %}
 
 {% block content %}
-    <a href="{% url 'home' %}" class="redirect-link">
+    <a onclick="showLoading()" href="{% url 'home' %}" class="redirect-link">
         <span>Zur Homepage</span>
         <span class="redirect-link-icon">→</span>
     </a>
@@ -27,7 +27,7 @@
     {% if user.usererweitert.mail_verified == False and user.email != '' %}
         <p>Bitte bestätige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. Falls du keine
             Verifizierungsmail
-            erhalten hast, <a href="{% url 'resend_verification_email' %}">lasse dir eine neue senden.</a></p>
+            erhalten hast, <a onclick="showLoading()" href="{% url 'resend_verification_email' %}">lasse dir eine neue senden.</a></p>
     {% endif %}
     <div id="request_permission"></div>
 
@@ -57,7 +57,7 @@
 
     <br>
     <p>Es werden jeweils nur die ersten zwei Einträge angezeigt.</p>
-    <a href="{% url 'user_detail' request.user.id %}" class="redirect-link">
+    <a onclick="showLoading()" href="{% url 'user_detail' request.user.id %}" class="redirect-link">
         <span>Zur öffentlichen Profilseite</span>
         <span class="redirect-link-icon">→</span>
     </a>
@@ -68,7 +68,7 @@
     </div>
     <p>{{ weekly_klimapunkte|floatformat:-4 }} Klimapunkte bis zum wöchentlichen Ziel von {{ weekly_goal }} Klimapunkten
         geschafft</p>
-    <a href="{% url 'settings_view' %}#change_goal_h3" class="redirect-link">
+    <a onclick="showLoading()" href="{% url 'settings_view' %}#change_goal_h3" class="redirect-link">
         <span>Ziel ändern</span>
         <span class="redirect-link-icon">→</span>
     </a>
@@ -226,19 +226,19 @@
                     <p class="action-list-description">{{ aktion.aktion.mengeBeschreibung }}</p>
                     <p class="action-list-value">{{ aktion.quantity }} {{ aktion.einheit }}</p>
 
-                    <a href="{% url 'edit_action' aktion.id %}">Bearbeiten</a>
+                    <a onclick="showLoading()" href="{% url 'edit_action' aktion.id %}">Bearbeiten</a>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
         <p>Keine Aktionen gefunden.</p>
     {% endif %}
-    <a href="{% url 'history' %}" class="redirect-link">
+    <a onclick="showLoading()" href="{% url 'history' %}" class="redirect-link">
         <span>Zur Aktions-Historie</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <br>
-    <a href="{% url 'add' %}" class="redirect-link">
+    <a onclick="showLoading()" href="{% url 'add' %}" class="redirect-link">
         <span>Aktion hinzufügen</span>
         <span class="redirect-link-icon">→</span>
     </a>
@@ -246,13 +246,13 @@
 
     <h2>Klimapunkte</h2>
     <p>Du hast bereits {{ klimapunkte }} Klimapunkte gesammelt.</p>
-    <a href="{% url 'klimapunkte_me' %}" class="redirect-link">
+    <a onclick="showLoading()" href="{% url 'klimapunkte_me' %}" class="redirect-link">
         <span>Zu den Klimapunkten</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <h2>Level</h2>
     <p>Du bist im Level {{ level.description }}.</p>
-    <a href="{% url 'level_me' %}" class="redirect-link">
+    <a onclick="showLoading()" href="{% url 'level_me' %}" class="redirect-link">
         <span>Zu den Levels</span>
         <span class="redirect-link-icon">→</span>
     </a>
@@ -307,7 +307,7 @@
                     <div class="family-card">
                         <h3>{{ family.name }}</h3>
                         <p>Mitglieder: {{ family.members.count }}</p>
-                        <a href="{% url 'family_detail' family.id %}" class="card-btn">Details ansehen</a>
+                        <a onclick="showLoading()" href="{% url 'family_detail' family.id %}" class="card-btn">Details ansehen</a>
                     </div>
                 {% endfor %}
             </div>
@@ -316,7 +316,7 @@
     {% else %}
         <p>Du bist keiner Family beigetreten.</p>
     {% endif %}
-    <a href="{% url 'families_view' %}" class="redirect-link">
+    <a onclick="showLoading()" href="{% url 'families_view' %}" class="redirect-link">
         <span>Zu den Families</span>
         <span class="redirect-link-icon">→</span>
     </a>
@@ -426,7 +426,7 @@
         <p>Du bist keiner Community beigetreten.</p>
     {% endif %}
 
-    <a href="{% url 'communities_view' %}" class="redirect-link">
+    <a onclick="showLoading()" href="{% url 'communities_view' %}" class="redirect-link">
         <span>Zu den Communities</span>
         <span class="redirect-link-icon">→</span>
     </a>
@@ -487,7 +487,7 @@
         <p>Derzeit nimmst du an keinen Events teil</p>
     {% endif %}
 
-    <a href="{% url 'events_overview' %}" class="redirect-link">
+    <a onclick="showLoading()" href="{% url 'events_overview' %}" class="redirect-link">
         <span>Zu den Events</span>
         <span class="redirect-link-icon">→</span>
     </a>
@@ -535,7 +535,7 @@
         <p>Derzeit nimmst du an keinen Events teil</p>
     {% endif %}
 
-    <a href="{% url 'events_overview' %}" class="redirect-link">
+    <a onclick="showLoading()" href="{% url 'events_overview' %}" class="redirect-link">
         <span>Zu den Events</span>
         <span class="redirect-link-icon">→</span>
     </a>
@@ -616,7 +616,7 @@
         <p>Derzeit hast du keine Artikel erstellt</p>
     {% endif %}
 
-    <a href="{% url 'artikel_overview' %}" class="redirect-link">
+    <a onclick="showLoading()" href="{% url 'artikel_overview' %}" class="redirect-link">
         <span>Zu den Artikeln</span>
         <span class="redirect-link-icon">→</span>
     </a>
@@ -651,7 +651,7 @@
         <p>Derzeit hast du keine Artikel geliket</p>
     {% endif %}
 
-    <a href="{% url 'artikel_overview' %}" class="redirect-link">
+    <a onclick="showLoading()" href="{% url 'artikel_overview' %}" class="redirect-link">
         <span>Zu den Artikeln</span>
         <span class="redirect-link-icon">→</span>
     </a>
@@ -685,7 +685,7 @@
         <p>Derzeit hast du keine Forumsbeiträge erstellt</p>
     {% endif %}
 
-    <a href="{% url 'forum_overview' %}" class="redirect-link">
+    <a onclick="showLoading()" href="{% url 'forum_overview' %}" class="redirect-link">
         <span>Zum Forum</span>
         <span class="redirect-link-icon">→</span>
     </a>
@@ -719,7 +719,7 @@
         <p>Derzeit hast du keine Forumsbeiträge beantwortet</p>
     {% endif %}
 
-    <a href="{% url 'forum_overview' %}" class="redirect-link">
+    <a onclick="showLoading()" href="{% url 'forum_overview' %}" class="redirect-link">
         <span>Zum Forum</span>
         <span class="redirect-link-icon">→</span>
     </a>

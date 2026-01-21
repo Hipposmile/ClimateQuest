@@ -85,5 +85,5 @@
         {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'user_detail' user.id %}">Userseite ansehen</a>
+    <a onclick="showLoading()" href="{% url 'user_detail' user.id %}">Userseite ansehen</a>
 {% endblock %}

@@ -537,19 +537,19 @@
                 <span class="tab-icon"><span class="emoji">&#x1F3E0;</span></span>
                 <span class="tab-label">Home</span>
             </a>
-            <a href="{% url 'artikel_overview' %}" class="tab-item">
+            <a onclick="showLoading()" href="{% url 'artikel_overview' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F4F0;</span></span>
                 <span class="tab-label">Artikel</span>
             </a>
-            <a href="{% url 'events_overview' %}" class="tab-item">
+            <a onclick="showLoading()" href="{% url 'events_overview' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F389;</span></span>
                 <span class="tab-label">Events</span>
             </a>
-            <a href="{% url 'forum_overview' %}" class="tab-item">
+            <a onclick="showLoading()" href="{% url 'forum_overview' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F4AC;</span></span>
                 <span class="tab-label">Forum</span>
             </a>
-            <a href="{% url 'login_view' %}" class="tab-item">
+            <a onclick="showLoading()" href="{% url 'login_view' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F510;</span></span>
                 <span class="tab-label">Login</span>
             </a>
@@ -562,20 +562,20 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F464;</span> {{ request.user.username }}</h2>
                 <nav class="mobile-menu-nav">
-                    <a href="{% url 'dashboard' %}"><span class="emoji">&#x1F5A5;</span> Dashboard</a>
-                    <a href="{% url 'home' %}"><span class="emoji">&#x1F3E1;</span> Home</a>
-                    <a href="{% url 'benachrichtigungen_view' %}"><span class="emoji">&#x1F514;</span>
+                    <a onclick="showLoading()" href="{% url 'dashboard' %}"><span class="emoji">&#x1F5A5;</span> Dashboard</a>
+                    <a onclick="showLoading()" href="{% url 'home' %}"><span class="emoji">&#x1F3E1;</span> Home</a>
+                    <a onclick="showLoading()" href="{% url 'benachrichtigungen_view' %}"><span class="emoji">&#x1F514;</span>
                         Benachrichtigungen</a>
-                    <a href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
-                    <a href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span> Klimapunkte</a>
-                    <a href="{% url 'users_overview' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
+                    <a onclick="showLoading()" href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
+                    <a onclick="showLoading()" href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span> Klimapunkte</a>
+                    <a onclick="showLoading()" href="{% url 'users_overview' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
                         User</a>
-                    <a href="{% url 'presents_overview' %}"><span class="emoji">&#x1F381;</span> Geschenke</a>
-                    <a href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span> Einstellungen</a>
-                    <a href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span> Logout</a>
+                    <a onclick="showLoading()" href="{% url 'presents_overview' %}"><span class="emoji">&#x1F381;</span> Geschenke</a>
+                    <a onclick="showLoading()" href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span> Einstellungen</a>
+                    <a onclick="showLoading()" href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span> Logout</a>
                     {% if user.is_superuser %}
                         <a href="/ClimateQuestAdmin/" target="_blank"><span class="emoji">&#x1F451;</span> Admin (I)</a>
-                        <a href="{% url 'admin' %}"><span class="emoji">&#x1F451;</span> Admin (II)</a>
+                        <a onclick="showLoading()" href="{% url 'admin' %}"><span class="emoji">&#x1F451;</span> Admin (II)</a>
                     {% endif %}
                 </nav>
             </div>
@@ -586,8 +586,8 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F4CA;</span> Aktionen</h2>
                 <nav class="mobile-menu-nav">
-                    <a href="{% url 'add' %}"><span class="emoji">&#x2795;</span> Aktion hinzufügen</a>
-                    <a href="{% url 'history' %}"><span class="emoji">&#x1F4DC;</span> Aktions-Historie</a>
+                    <a onclick="showLoading()" href="{% url 'add' %}"><span class="emoji">&#x2795;</span> Aktion hinzufügen</a>
+                    <a onclick="showLoading()" href="{% url 'history' %}"><span class="emoji">&#x1F4DC;</span> Aktions-Historie</a>
                 </nav>
             </div>
         </div>
@@ -597,9 +597,9 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span> Family</h2>
                 <nav class="mobile-menu-nav">
-                    <a href="{% url 'create_family' %}"><span class="emoji">&#x2795;</span> Family erstellen</a>
-                    <a href="{% url 'join_family' %}"><span class="emoji">&#x1F91D;</span> Family beitreten</a>
-                    <a href="{% url 'families_view' %}"><span class="emoji">&#x1F440;</span> Meine Families</a>
+                    <a onclick="showLoading()" href="{% url 'create_family' %}"><span class="emoji">&#x2795;</span> Family erstellen</a>
+                    <a onclick="showLoading()" href="{% url 'join_family' %}"><span class="emoji">&#x1F91D;</span> Family beitreten</a>
+                    <a onclick="showLoading()" href="{% url 'families_view' %}"><span class="emoji">&#x1F440;</span> Meine Families</a>
                 </nav>
             </div>
         </div>
@@ -609,9 +609,9 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F465;</span> Community</h2>
                 <nav class="mobile-menu-nav">
-                    <a href="{% url 'create_community' %}"><span class="emoji">&#x2795;</span> Community erstellen</a>
-                    <a href="{% url 'join_community' %}"><span class="emoji">&#x1F91D;</span> Community beitreten</a>
-                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F440;</span> Meine Communities</a>
+                    <a onclick="showLoading()" href="{% url 'create_community' %}"><span class="emoji">&#x2795;</span> Community erstellen</a>
+                    <a onclick="showLoading()" href="{% url 'join_community' %}"><span class="emoji">&#x1F91D;</span> Community beitreten</a>
+                    <a onclick="showLoading()" href="{% url 'communities_view' %}"><span class="emoji">&#x1F440;</span> Meine Communities</a>
                 </nav>
             </div>
         </div>
@@ -655,10 +655,10 @@
 </main>
 
 <footer>
-    <p><a href="{% url 'aktionenTable' %}">Alle Aktionen</a></p>
-    <p><a href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a></p>
-    <p><a href="{% url 'impressum' %}">Impressum</a></p>
-    <p><a href="{% url 'datenschutz' %}">Datenschutz</a></p>
+    <p><a onclick="showLoading()" href="{% url 'aktionenTable' %}">Alle Aktionen</a></p>
+    <p><a onclick="showLoading()" href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a></p>
+    <p><a onclick="showLoading()" href="{% url 'impressum' %}">Impressum</a></p>
+    <p><a onclick="showLoading()" href="{% url 'datenschutz' %}">Datenschutz</a></p>
     <br>
     <br>
 </footer>
@@ -714,19 +714,19 @@
                 <span class="tab-icon"><span class="emoji">&#x1F3E0;</span></span>
                 <span class="tab-label">Home</span>
             </a>
-            <a href="{% url 'artikel_overview' %}" class="tab-item">
+            <a onclick="showLoading()" href="{% url 'artikel_overview' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F4F0;</span></span>
                 <span class="tab-label">Artikel</span>
             </a>
-            <a href="{% url 'events_overview' %}" class="tab-item">
+            <a onclick="showLoading()" href="{% url 'events_overview' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F389;</span></span>
                 <span class="tab-label">Events</span>
             </a>
-            <a href="{% url 'forum_overview' %}" class="tab-item">
+            <a onclick="showLoading()" href="{% url 'forum_overview' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F4AC;</span></span>
                 <span class="tab-label">Forum</span>
             </a>
-            <a href="{% url 'login_view' %}" class="tab-item">
+            <a onclick="showLoading()" href="{% url 'login_view' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F510;</span></span>
                 <span class="tab-label">Login</span>
             </a>
@@ -739,20 +739,20 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F464;</span> {{ request.user.username }}</h2>
                 <nav class="mobile-menu-nav">
-                    <a href="{% url 'dashboard' %}"><span class="emoji">&#x1F5A5;</span> Dashboard</a>
-                    <a href="{% url 'home' %}"><span class="emoji">&#x1F3E1;</span> Home</a>
-                    <a href="{% url 'benachrichtigungen_view' %}"><span class="emoji">&#x1F514;</span>
+                    <a onclick="showLoading()" href="{% url 'dashboard' %}"><span class="emoji">&#x1F5A5;</span> Dashboard</a>
+                    <a onclick="showLoading()" href="{% url 'home' %}"><span class="emoji">&#x1F3E1;</span> Home</a>
+                    <a onclick="showLoading()" href="{% url 'benachrichtigungen_view' %}"><span class="emoji">&#x1F514;</span>
                         Benachrichtigungen</a>
-                    <a href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
-                    <a href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span> Klimapunkte</a>
-                    <a href="{% url 'users_overview' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
+                    <a onclick="showLoading()" href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
+                    <a onclick="showLoading()" href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span> Klimapunkte</a>
+                    <a onclick="showLoading()" href="{% url 'users_overview' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
                         User</a>
-                    <a href="{% url 'presents_overview' %}"><span class="emoji">&#x1F381;</span> Geschenke</a>
-                    <a href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span> Einstellungen</a>
-                    <a href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span> Logout</a>
+                    <a onclick="showLoading()" href="{% url 'presents_overview' %}"><span class="emoji">&#x1F381;</span> Geschenke</a>
+                    <a onclick="showLoading()" href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span> Einstellungen</a>
+                    <a onclick="showLoading()" href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span> Logout</a>
                     {% if user.is_superuser %}
                         <a href="/ClimateQuestAdmin/" target="_blank"><span class="emoji">&#x1F451;</span> Admin (I)</a>
-                        <a href="{% url 'admin' %}"><span class="emoji">&#x1F451;</span> Admin (II)</a>
+                        <a onclick="showLoading()" href="{% url 'admin' %}"><span class="emoji">&#x1F451;</span> Admin (II)</a>
                     {% endif %}
                 </nav>
             </div>
@@ -763,8 +763,8 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F4CA;</span> Aktionen</h2>
                 <nav class="mobile-menu-nav">
-                    <a href="{% url 'add' %}"><span class="emoji">&#x2795;</span> Aktion hinzufügen</a>
-                    <a href="{% url 'history' %}"><span class="emoji">&#x1F4DC;</span> Aktions-Historie</a>
+                    <a onclick="showLoading()" href="{% url 'add' %}"><span class="emoji">&#x2795;</span> Aktion hinzufügen</a>
+                    <a onclick="showLoading()" href="{% url 'history' %}"><span class="emoji">&#x1F4DC;</span> Aktions-Historie</a>
                 </nav>
             </div>
         </div>
@@ -774,9 +774,9 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span> Family</h2>
                 <nav class="mobile-menu-nav">
-                    <a href="{% url 'create_family' %}"><span class="emoji">&#x2795;</span> Family erstellen</a>
-                    <a href="{% url 'join_family' %}"><span class="emoji">&#x1F91D;</span> Family beitreten</a>
-                    <a href="{% url 'families_view' %}"><span class="emoji">&#x1F440;</span> Meine Families</a>
+                    <a onclick="showLoading()" href="{% url 'create_family' %}"><span class="emoji">&#x2795;</span> Family erstellen</a>
+                    <a onclick="showLoading()" href="{% url 'join_family' %}"><span class="emoji">&#x1F91D;</span> Family beitreten</a>
+                    <a onclick="showLoading()" href="{% url 'families_view' %}"><span class="emoji">&#x1F440;</span> Meine Families</a>
                 </nav>
             </div>
         </div>
@@ -786,9 +786,9 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F465;</span> Community</h2>
                 <nav class="mobile-menu-nav">
-                    <a href="{% url 'create_community' %}"><span class="emoji">&#x2795;</span> Community erstellen</a>
-                    <a href="{% url 'join_community' %}"><span class="emoji">&#x1F91D;</span> Community beitreten</a>
-                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F440;</span> Meine Communities</a>
+                    <a onclick="showLoading()" href="{% url 'create_community' %}"><span class="emoji">&#x2795;</span> Community erstellen</a>
+                    <a onclick="showLoading()" href="{% url 'join_community' %}"><span class="emoji">&#x1F91D;</span> Community beitreten</a>
+                    <a onclick="showLoading()" href="{% url 'communities_view' %}"><span class="emoji">&#x1F440;</span> Meine Communities</a>
                 </nav>
             </div>
         </div>
@@ -888,79 +888,79 @@
             </picture>
                 </a>
                 <nav>
-                    <a href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a>
+                    <a onclick="showLoading()" href="{% url 'share' %}?url={{ request.build_absolute_uri|urlencode }}" class="share">Teilen</a>
 
                     {% if user.is_authenticated %}
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Konto ▾</span>
                         <div class="dropdown-content">
                             <p>{{ user.username }}</p>
-                            <a href="{% url 'level_view' request.user.id %}">Level</a>
-                            <a href="{% url 'klimapunkte_view' request.user.id %}">Klimapunkte</a>
-                            <a href="{% url 'settings_view' %}">Profil bearbeiten</a>
-                            <a href="{% url 'users_overview' %}">User</a>
-                            <a href="{% url 'presents_overview' %}">Geschenke</a>
-                            <a href="{% url 'logout_view' %}">Logout</a>
+                            <a onclick="showLoading()" href="{% url 'level_view' request.user.id %}">Level</a>
+                            <a onclick="showLoading()" href="{% url 'klimapunkte_view' request.user.id %}">Klimapunkte</a>
+                            <a onclick="showLoading()" href="{% url 'settings_view' %}">Profil bearbeiten</a>
+                            <a onclick="showLoading()" href="{% url 'users_overview' %}">User</a>
+                            <a onclick="showLoading()" href="{% url 'presents_overview' %}">Geschenke</a>
+                            <a onclick="showLoading()" href="{% url 'logout_view' %}">Logout</a>
                             {% if user.is_staff %}
                             <a href="/ClimateQuestAdmin/" target="_blank">Admin-Bereich (I)</a>
-                            <a href="{% url 'admin' %}">Admin-Bereich (II)</a>
+                            <a onclick="showLoading()" href="{% url 'admin' %}">Admin-Bereich (II)</a>
                             {% endif %}
                         </div>
                     </div>
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Aktionen ▾</span>
                         <div class="dropdown-content">
-                            <a href="{% url 'add' %}">Aktion hinzufügen</a>
-                            <a href="{% url 'history' %}">Aktions-Historie</a>
+                            <a onclick="showLoading()" href="{% url 'add' %}">Aktion hinzufügen</a>
+                            <a onclick="showLoading()" href="{% url 'history' %}">Aktions-Historie</a>
                         </div>
                     </div>
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Family ▾</span>
                         <div class="dropdown-content">
-                            <a href="{% url 'create_family' %}">Family erstellen</a>
-                            <a href="{% url 'join_family' %}">Family beitreten</a>
-                            <a href="{% url 'families_view' %}">Meine Families</a>
+                            <a onclick="showLoading()" href="{% url 'create_family' %}">Family erstellen</a>
+                            <a onclick="showLoading()" href="{% url 'join_family' %}">Family beitreten</a>
+                            <a onclick="showLoading()" href="{% url 'families_view' %}">Meine Families</a>
                         </div>
                     </div>
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Community ▾</span>
                         <div class="dropdown-content">
-                            <a href="{% url 'create_community' %}">Community erstellen</a>
-                            <a href="{% url 'join_community' %}">Community beitreten</a>
-                            <a href="{% url 'communities_view' %}">Meine Communities</a>
+                            <a onclick="showLoading()" href="{% url 'create_community' %}">Community erstellen</a>
+                            <a onclick="showLoading()" href="{% url 'join_community' %}">Community beitreten</a>
+                            <a onclick="showLoading()" href="{% url 'communities_view' %}">Meine Communities</a>
                         </div>
                     </div>
-                    <a href="{% url 'benachrichtigungen_view' %}">
+                    <a onclick="showLoading()" href="{% url 'benachrichtigungen_view' %}">
                         <div class="benachrichtigung-wrapper">
                             <span class="emoji">&#x1F514;</span>
                             <span id="benachrichtigungen-count" class="count">?</span>
                         </div>
                     </a>
                     {% else %}
-                    <a href="{% url 'login_view' %}">Login</a>
+                    <a onclick="showLoading()" href="{% url 'login_view' %}">Login</a>
                     {% endif %}
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Events ▾</span>
                         <div class="dropdown-content">
-                            {% if user.is_authenticated %}<a href="{% url 'add_event' %}
+                            {% if user.is_authenticated %}<a onclick="showLoading()" href="{% url 'add_event' %}
             ">Event hinzufügen</a>{% endif %}
-                            <a href="{% url 'events_overview' %}">Überblick</a>
+                            <a onclick="showLoading()" href="{% url 'events_overview' %}">Überblick</a>
                         </div>
                     </div>
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Artikel ▾</span>
                         <div class="dropdown-content">
-                            {% if user.is_authenticated %}<a href="{% url 'add_artikel' %}
+                            {% if user.is_authenticated %}<a onclick="showLoading()" href="{% url 'add_artikel' %}
             ">Artikel hinzufügen</a>{% endif %}
-                            <a href="{% url 'artikel_overview' %}">Überblick</a>
+                            <a onclick="showLoading()" href="{% url 'artikel_overview' %}">Überblick</a>
                         </div>
                     </div>
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Forum ▾</span>
                         <div class="dropdown-content">
-                            {% if user.is_authenticated %}<a href="{% url 'add_forum_post' %}
+                            {% if user.is_authenticated %}<a onclick="showLoading()" href="{% url 'add_forum_post' %}
             ">Beitrag hinzufügen</a>{% endif %}
-                            <a href="{% url 'forum_overview' %}">Überblick</a>
+                            <a onclick="showLoading()" href="{% url 'forum_overview' %}">Überblick</a>
                         </div>
                     </div>
                 </nav>

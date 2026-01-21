@@ -1,12 +1,11 @@
-from datetime import datetime, date
+from datetime import datetime
 
+from dateutil.relativedelta import relativedelta
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from core.all_messages import all_messages
 from utils.functions import *
-from dateutil.relativedelta import relativedelta
-from django.db.models import Sum
 
 
 @login_required

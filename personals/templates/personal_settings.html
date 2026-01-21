@@ -31,11 +31,11 @@
         <li>E-Mail-Adresse: {{ user.email }}</li>
         <li>E-Mail-Adresse verifiziert: {{ user.usererweitert.mail_verified|yesno:"Ja,Nein" }}
             {% if user.usererweitert.mail_verified == False and user.email != '' %} |
-                <a href="{% url 'resend_verification_email' %}">Bestätigungs-E-Mail erneut senden</a>{% endif %}
+                <a onclick="showLoading()" href="{% url 'resend_verification_email' %}">Bestätigungs-E-Mail erneut senden</a>{% endif %}
         </li>
         <li>Account erstellt am: {{ user.date_joined }}</li>
         <li>Letzter Login: {{ user.last_login }}</li>
-        <li><a href="{% url 'user_detail' request.user.id %}">Zur öffentlichen Accountseite</a></li>
+        <li><a onclick="showLoading()" href="{% url 'user_detail' request.user.id %}">Zur öffentlichen Accountseite</a></li>
     </ul>
     <hr>
     <!-- Benutzername ändern -->
@@ -343,7 +343,7 @@
         Nenne hier bitte die konkreten Daten, welche du löschen möchtest. Wenn sich die Daten über die Webseite bereits
         löschen lassen, werden diese auch tatsächlich gelöscht und als Backup maximal 14 Tage gespeichert. </p>
 
-    <a href="{% url 'reset_password' %}">
+    <a onclick="showLoading()" href="{% url 'reset_password' %}">
         <button class="btn">Passwort resetten</button>
     </a>
 

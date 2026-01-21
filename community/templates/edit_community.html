@@ -9,8 +9,8 @@
 
 {% block content %}
 
-    <h1>Community <a href="{% url 'community_detail' community.id family.id %}">{{ community.name }}</a> bearbeiten</h1>
-    <h3>Eingeloggt mit Family <a href="{% url 'family_detail' family.id %}">{{ family.name }}</a></h3>
+    <h1>Community <a onclick="showLoading()" href="{% url 'community_detail' community.id family.id %}">{{ community.name }}</a> bearbeiten</h1>
+    <h3>Eingeloggt mit Family <a onclick="showLoading()" href="{% url 'family_detail' family.id %}">{{ family.name }}</a></h3>
 
     {% if messages %}
         {% for message in messages %}

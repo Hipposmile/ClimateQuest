@@ -26,7 +26,7 @@
         <label class="custom-checkbox">
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
-            <span class="label-text">Ich bestätige, dass alle Angaben der Wahrheit entsprechen, mit mindestens zwei Quellen, welche im Text vorkommen, übereinstimmen und dass der Artikel mit den <a href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmt. </span>
+            <span class="label-text">Ich bestätige, dass alle Angaben der Wahrheit entsprechen, mit mindestens zwei Quellen, welche im Text vorkommen, übereinstimmen und dass der Artikel mit den <a onclick="showLoading()" href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmt. </span>
         </label>
 
         <button type="submit">Speichern</button>

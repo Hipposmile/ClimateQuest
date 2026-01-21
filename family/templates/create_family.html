@@ -35,7 +35,7 @@
   </div>
     <button type="submit" id="create-button">Family erstellen</button>
 </form>
-<p>Oder <a href="{% url 'join_family' %}">einer bestehenden Family beitreten</a>.</p>
+<p>Oder <a onclick="showLoading()" href="{% url 'join_family' %}">einer bestehenden Family beitreten</a>.</p>
 
 <script>
     const passwordInput = document.getElementById('family_admin_password')

@@ -135,10 +135,10 @@
     {% endif %}
 
     <div class="btns">
-        <a href="{% url 'klimapunkte_view' user_expanded.user.id %}">
+        <a onclick="showLoading()" href="{% url 'klimapunkte_view' user_expanded.user.id %}">
             <button class="btn">Klimapunkte</button>
         </a>
-        <a href="{% url 'level_view' user_expanded.user.id %}">
+        <a onclick="showLoading()" href="{% url 'level_view' user_expanded.user.id %}">
             <button class="btn">Level</button>
         </a>
     </div>
