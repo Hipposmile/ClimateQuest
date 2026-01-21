@@ -20,7 +20,7 @@
 {% if error %}
 <div class="error-message">{{ error }}</div>
 {% endif %}
-<form method="post">
+<form method="post" onsubmit="showLoading()">
     {% csrf_token %}
     <label for="username">Benutzername:</label>
     <input type="text" name="username" id="username" placeholder="Benutzername" required>

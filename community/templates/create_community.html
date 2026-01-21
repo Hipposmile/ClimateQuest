@@ -12,7 +12,7 @@
 <p class="{{message.level_tag}}-message">{{ message }}</p>
 {% endfor %}
 {% endif %}
-<form method="post">
+<form method="post" onsubmit="showLoading()">
     {% csrf_token %}
     <small id="communityname-feedback"></small>
     <label for="communityname">Communityname:</label>

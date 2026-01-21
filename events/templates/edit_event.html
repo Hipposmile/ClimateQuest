@@ -19,7 +19,7 @@
     <p><strong>geschätzte Dauer in Minuten:</strong> {{ event.duration }}</p>
     <p><strong>Adresse:</strong> {{ event.adress }}</p>
 
-    <form method="post" onsubmit="fillEditor()">
+    <form method="post" onsubmit="fillEditor() && showLoading()">
         {% csrf_token %}
         <label for="name">Name</label>
         <input type="text" id="name" name="name" placeholder="Name" maxlength="100" value="{{ event.name }}" required>
@@ -49,7 +49,7 @@
 
         <button type="submit" name="edit">Speichern</button>
     </form>
-    <form method="post" onsubmit="return confirm('Möchtest du dieses Event wirklich löschen?')">
+    <form method="post" onsubmit="return confirm('Möchtest du dieses Event wirklich löschen?') && showLoading()">
         {% csrf_token %}
         <button type="submit" name="delete" style="color: red;">Event löschen</button>
     </form>

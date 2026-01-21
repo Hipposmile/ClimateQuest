@@ -193,7 +193,7 @@
                 <div class="chat-family-empty">Noch keine Nachrichten.</div>
             {% endfor %}
         </div>
-        <form method="post" class="chat-family-form" onsubmit="return true;">
+        <form method="post" class="chat-family-form" onsubmit="showLoading()">
             {% csrf_token %}
             <label for="message">Nachricht eingeben</label>
             <br>

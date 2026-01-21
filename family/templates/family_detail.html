@@ -29,7 +29,7 @@
     {% endif %}
 
 
-    <form method="POST">
+    <form method="post" onsubmit="showLoading()">
         {% csrf_token %}
         <label for="zeitraum">Zeitraum</label>
         <select name="zeitraum" id="zeitraum" required>

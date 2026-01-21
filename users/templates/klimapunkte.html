@@ -35,7 +35,7 @@
     <p>Außerdem wurden <b>{{ aktionen_klimapunkte }}</b> Klimapunkte durch das Schreiben von Artikeln verdient.</p>
     <p>Insgesamt wurden also bereits <b>{{ klimapunkte_total }}</b> Klimapunkte gesammelt.</p>
     <p>Zeitraum: {{ zeitraum }}</p>
-    <form method="POST">
+    <form method="post" onsubmit="showLoading()">
         {% csrf_token %}
         <label for="zeitraum">Zeitraum</label>
         <select name="zeitraum" id="zeitraum" required>

@@ -102,7 +102,7 @@
         }
     </script>
     <hr>
-    <form method="post" onsubmit="return confirm('Willst du diesen Artikel wirklich löschen?');">
+    <form method="post" onsubmit="return confirm('Willst du diesen Artikel wirklich löschen?') && showLoading()">
         {% csrf_token %}
         <button type="submit" name="delete_artikel" style="color:red;">Diesen Artikel löschen</button>
     </form>

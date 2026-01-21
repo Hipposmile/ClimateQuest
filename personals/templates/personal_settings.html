@@ -40,7 +40,7 @@
     <hr>
     <!-- Benutzername ändern -->
     <h3 id="username_h3">Benutzernamen ändern</h3>
-    <form method="post">
+    <form method="post" onsubmit="showLoading()">
         {% csrf_token %}
         <label for="password">Aktuelles Passwort:</label>
         <input type="password" name="password" id="password" placeholder="Passwort" required>
@@ -170,7 +170,7 @@
     <hr>
 
     <h3 id="email_h3">E-Mail-Adresse ändern</h3>
-    <form method="post">
+    <form method="post" onsubmit="showLoading()">
         {% csrf_token %}
         <label for="password">Passwort:</label>
         <input type="password" name="password" id="password" placeholder="Passwort" required>
@@ -206,7 +206,7 @@
     <hr>
 
     <h3 id="mailsettings_h3">E-Mail Einstellungen</h3>
-    <form method="POST">
+    <form method="post" onsubmit="showLoading()">
         {% csrf_token %}
         <label for="password">Passwort:</label>
         <input type="password" name="password" id="password" placeholder="Passwort" required>
@@ -314,7 +314,7 @@
     <hr>
 
     <h3 id="change_goal_h3">Wöchentliches Ziel ändern</h3>
-    <form method="post">
+    <form method="post" onsubmit="showLoading()">
         {% csrf_token %}
         <label for="weekly_goal">Wöchentliches Ziel</label>
         <input id="weekly_goal" name="weekly_goal" type="number" value="{{ request.user.usererweitert.weekly_goal }}"
@@ -328,7 +328,7 @@
     <!-- Account löschen -->
     <h3 id="delete_h3">Account löschen</h3>
     <form method="post"
-          onsubmit="return confirm('Willst du deinen Account wirklich löschen?');">
+          onsubmit="return confirm('Willst du deinen Account wirklich löschen?') && showLoading()">
         {% csrf_token %}
         <label for="password">Passwort:</label>
         <input type="password" name="password" id="password" placeholder="Passwort" required>

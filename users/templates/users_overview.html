@@ -16,7 +16,7 @@
 {% endfor %}
 {% endif %}
 
-<form method="post">
+<form method="post" onsubmit="showLoading()">
     {% csrf_token %}
     <label for="search_keyword">Suchwort</label>
     <input type="search" id="search_keyword" name="search_keyword" placeholder="Suchwort" required>

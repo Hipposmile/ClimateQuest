@@ -146,7 +146,7 @@
     <div class="artikel-content"><p>{{ user_expanded.statement|safe }}</p></div>
 
     <h2>User melden</h2>
-    <form method="post" onsubmit="return confirm('Bist du sicher, dass du diesen User melden möchtest.');">
+    <form method="post" onsubmit="return confirm('Bist du sicher, dass du diesen User melden möchtest.') && showLoading()">
         {% csrf_token %}
         <label for="reason">Begründung</label>
         <textarea id="reason" name="reason" class="quill-editor"></textarea>

@@ -13,7 +13,7 @@
 <p class="{{message.level_tag}}-message">{{ message }}</p>
 {% endfor %}
 {% endif %}
-<form method="post">
+<form method="post" onsubmit="showLoading()">
     {% csrf_token %}
     <label for="familyname">Familyname:</label>
     <input type="text" name="familyname" id="familyname" placeholder="Familyname" required>

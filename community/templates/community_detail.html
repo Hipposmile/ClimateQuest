@@ -27,7 +27,7 @@
         <p>Die Chat-Funktion ist für diese Community deaktiviert.</p>
     {% endif %}
 
-    <form method="POST">
+    <form method="post" onsubmit="showLoading()">
         {% csrf_token %}
         <label for="zeitraum">Zeitraum auswählen</label>
         <select name="zeitraum" id="zeitraum" required>

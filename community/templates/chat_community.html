@@ -184,7 +184,7 @@
             {% empty %}
                 <div class="chat-community-empty">Noch keine Nachrichten.</div>
             {% endfor %}
-            <form method="post" class="chat-community-form" onsubmit="return true;">
+            <form method="post" class="chat-community-form" onsubmit="showLoading()">
                 {% csrf_token %}
                 <label for="message">Nachricht</label>
                 <input type="text" id="message" name="message" placeholder="Nachricht eingeben..." required>

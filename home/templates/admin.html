@@ -14,7 +14,7 @@
 {% endfor %}
 {% endif %}
 <h3>Benachrichtigung erstellen</h3>
-<form method="post" onsubmit="return confirm('Möchtest du diese Benachrichtigung wirklich erstellen?');">
+<form method="post" onsubmit="return confirm('Möchtest du diese Benachrichtigung wirklich erstellen?') && showLoading()">
     <label for="receiver">{% csrf_token %}</label><select name="receiver" id="receiver">
         <option value="user" selected>User</option>
         <option value="family-members">Family-Members</option>
@@ -45,14 +45,14 @@
 </script>
 <hr>
 <h3>"worldwide ranking" überprüfen</h3>
-<form method="post">
+<form method="post" onsubmit="showLoading()">
     {% csrf_token %}
     <small>Dies wird überprüfen, ob die Family "worldwide ranking" existiert, und sie nötigenfalls erstellen sowie alle User hinufügen.</small>
     <button type="submit" name="check_worldwide_ranking">Überprüfen</button>
 </form>
 <hr>
 <h3>"UserErweitert" überprüfen</h3>
-<form method="post">
+<form method="post" onsubmit="showLoading()">
     {% csrf_token %}
     <small>Dies wird überprüfen, ob jedem User ein UserErweitert zugewiesen wurde, und nötigenfalls eines erstellen.</small>
     <button type="submit" name="add_everyone_user_erweitert">Überprüfen</button>

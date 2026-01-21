@@ -390,15 +390,24 @@
     <div class="loading" id="loading"></div>
 </div>
 <script>
-    window.addEventListener('load', () => {
-        document.getElementById('loading').style.display = 'none';
-        document.getElementById('loading-div').style.display = 'none';
-    });
-
     function showLoading() {
         document.getElementById('loading').style.display = 'flex';
         document.getElementById('loading-div').style.display = 'flex';
     }
+
+    function hideLoading() {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('loading-div').style.display = 'none';
+    }
+
+    window.addEventListener('load', () => {
+        hideLoading();
+    });
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            hideLoading();
+        }
+    });
 </script>
 
 <script>
@@ -857,7 +866,7 @@
 
     const renderDesktopNav = () => {
         header.innerHTML = `
-                <a href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}/{% endif %}" class="logo-link">
+                <a href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}/{% endif %}" onclick="showLoading()" class="logo-link">
                     <picture>
                 <source type="image/avif" srcset="
                     {% static 'icons/ClimateQuest-320.avif' %} 320w,
@@ -889,7 +898,7 @@
                             <a href="{% url 'level_view' request.user.id %}">Level</a>
                             <a href="{% url 'klimapunkte_view' request.user.id %}">Klimapunkte</a>
                             <a href="{% url 'settings_view' %}">Profil bearbeiten</a>
-                            <a href={% url 'users_overview' %}>User</a>
+                            <a href="{% url 'users_overview' %}">User</a>
                             <a href="{% url 'presents_overview' %}">Geschenke</a>
                             <a href="{% url 'logout_view' %}">Logout</a>
                             {% if user.is_staff %}

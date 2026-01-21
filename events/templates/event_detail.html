@@ -104,7 +104,7 @@
                         <details>
                             <summary>selbst antworten</summary>
                             {% if user.is_authenticated %}
-                                <form method="post">
+                                <form method="post" onsubmit="showLoading()">
                                     {% csrf_token %}
                                     <input type="hidden" name="question_id" value="{{ question.id }}">
                                     <label for="answer">Antwort:</label>
@@ -159,7 +159,7 @@
     </script>
 
     {% if user.is_authenticated %}
-        <form method="post">
+        <form method="post" onsubmit="showLoading()">
             {% csrf_token %}
             <label for="question">Frage stellen:</label>
             <input type="text" name="question" id="question" placeholder="Frage stellen">

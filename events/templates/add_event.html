@@ -12,7 +12,7 @@
             <p class="{{ message.level_tag }}-message">{{ message }}</p>
         {% endfor %}
     {% endif %}
-    <form method="post" onsubmit="fillEditor(event)">
+    <form method="post" onsubmit="fillEditor(event) && showLoading()">
         {% csrf_token %}
         <label for="name">Name</label>
         <input type="text" id="name" name="name" placeholder="Name" maxlength="100" required>

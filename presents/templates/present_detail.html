@@ -42,7 +42,7 @@
             <p class="{{ message.level_tag }}-message">{{ message }}</p>
         {% endfor %}
     {% endif %}
-    <form method="POST">
+    <form method="post" onsubmit="showLoading()">
         {% csrf_token %}
         <label for="msg">Nachricht:</label>
         <input type="text" id="msg" name="msg" required>
@@ -52,7 +52,7 @@
 
         <button type="submit" name="add_congratulation">Botschaft erstellen</button>
     </form>
-    <form method="POST">
+    <form method="post" onsubmit="showLoading()">
         {% csrf_token %}
         <button type="submit" name="light_candle">Kerze anzünden</button>
     </form>

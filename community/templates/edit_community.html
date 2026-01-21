@@ -19,7 +19,7 @@
     {% endif %}
 
     <h3>Benutzernamen ändern</h3>
-    <form method="post">
+    <form method="post" onsubmit="showLoading()">
         {% csrf_token %}
         <label for="admin_password">Admin Passwort:</label>
         <input type="password" name="admin_password" id="admin_password" placeholder="Admin Passwort" required>
@@ -60,7 +60,7 @@
     <hr>
 
     <h3>Passwort ändern</h3>
-    <form method="post">
+    <form method="post" onsubmit="showLoading()">
         {% csrf_token %}
         <label for="admin_password">Admin Passwort:</label>
         <input type="password" name="admin_password" id="admin_password" placeholder="Admin Passwort" required>
@@ -74,7 +74,7 @@
     <hr>
 
     <h3>Admin Passwort ändern</h3>
-    <form method="post">
+    <form method="post" onsubmit="showLoading()">
         {% csrf_token %}
         <label for="current_admin_password">Aktuelles Admin Passwort:</label>
         <input type="password" name="current_admin_password" id="current_admin_password"
@@ -121,7 +121,7 @@
     <hr>
 
     <h3>Mitglieder entfernen</h3>
-    <form method="post">
+    <form method="post" onsubmit="showLoading()">
         {% csrf_token %}
         <label for="admin_password">Admin Passwort:</label>
         <input type="password" name="admin_password" id="admin_password" placeholder="Admin Passwort" required>
@@ -135,7 +135,7 @@
     <hr>
 
     <h3>Community verlassen</h3>
-    <form method="post" onsubmit="return confirm('Willst du diese Community wirklich verlassen?');">
+    <form method="post" onsubmit="return confirm('Willst du diese Community wirklich verlassen?') && showLoading()">
         {% csrf_token %}
         <label for="family_admin_password">Family-Admin-Passwort:</label>
         <input type="password" name="family_admin_password" id="family_admin_password"
@@ -147,7 +147,7 @@
     <hr>
 
     <h3>Chat-Einstellungen</h3>
-    <form method="POST">
+    <form method="post" onsubmit="showLoading()">
         {% csrf_token %}
         <label for="admin_password">Admin Passwort:</label>
         <input type="password" name="admin_password" id="admin_password" placeholder="Admin-Passwort" required>
@@ -174,7 +174,7 @@
     <hr>
 
     <h3>Community löschen</h3>
-    <form method="post" onsubmit="return confirm('Willst du diese Community wirklich löschen?');">
+    <form method="post" onsubmit="return confirm('Willst du diese Community wirklich löschen?') && showLoading()">
         {% csrf_token %}
         <label for="admin_password">Admin-Passwort:</label>
         <input type="password" name="admin_password" id="admin_password" placeholder="Admin-Passwort" required>

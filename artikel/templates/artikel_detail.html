@@ -113,7 +113,7 @@
                         <details>
                             <summary>selbst antworten</summary>
                             {% if user.is_authenticated %}
-                                <form method="post">
+                                <form method="post" onsubmit="showLoading()">
                                     {% csrf_token %}
                                     <input type="hidden" name="comment_id" value="{{ comment.id }}">
                                     <label for="answer">Antwort:</label>
@@ -167,7 +167,7 @@
         });
     </script>
     {% if user.is_authenticated %}
-        <form method="post">
+        <form method="post" onsubmit="showLoading()">
             {% csrf_token %}
             <label for="comment">Neuen Kommentar hinzufügen:</label>
             <input type="text" id="comment" name="comment" placeholder="Kommentar hinzufügen">

@@ -14,7 +14,7 @@
             <p class="{{ message.level_tag }}-message">{{ message }}</p>
         {% endfor %}
     {% endif %}
-    <form method="post" onsubmit="register(event)">
+    <form method="post" onsubmit="register(event) && showLoading()">
         {% csrf_token %}
         <label for="username">Benutzername:</label>
         <small id="username-feedback"></small>
