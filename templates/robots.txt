@@ -9,6 +9,7 @@ Disallow: /events/edit/
 Disallow: /artikel/edit/
 Disallow: /benachrichtigungen/
 Disallow: /presents/present_detail/
+Disallow: /share/
 Allow: /
 
 Sitemap: https://climate-quest.de/sitemap.xml
