@@ -192,11 +192,11 @@
 
                 <div class="streak-row">
                     <span class="streak-value">{{ streak }}</span>
-                    <span class="streak-unit">Tage</span>
+                    <span class="streak-unit">Wochen mit erreichtem wöchentlichen Ziel</span>
                 </div>
 
                 <div class="streak-pill">
-                    <span class="streak-pill-text">{% if already_heightened %}Du hast bereits etwas eingetragen{% else %}Du hast heute noch nichts eingetragen{% endif %}</span>
+                    <span class="streak-pill-text">{% if weekly_goal_progress_percent >= 100 %}Du hast dein wöchentliches Ziel diese Woche bereits erreicht{% else %}Du hast dein wöchentliches Ziel diese Woche nocht nicht erreicht{% endif %}</span>
                 </div>
             </div>
         </div>

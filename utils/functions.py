@@ -10,6 +10,7 @@ from django.core.exceptions import ValidationError
 from django.core.mail import EmailMultiAlternatives
 from django.core.validators import validate_email
 from django.db.models import Sum, F
+from django.db.models.functions import TruncWeek
 from webpush import send_user_notification
 
 from ClimateQuest import settingsprod
@@ -412,7 +413,7 @@ def get_klimapunkte_from_likes(user):
     return klimapunkte
 
 
-def get_streak_from_user(user):
+"""def get_streak_from_user(user):
     action_days = (
         Aktion.objects
         .filter(user=user)
@@ -434,4 +435,51 @@ def get_streak_from_user(user):
             expected_day -= timedelta(days=1)
         else:
             break
-    return streak
+    return streak"""
+
+def get_streak_from_user(user):
+    weekly_goal = user.usererweitert.weekly_goal
+
+    # Alle Wochen + Klimapunkte
+    weekly_data = (
+        Aktion.objects
+        .filter(user=user)
+        .annotate(week=TruncWeek('date'))
+        .values('week')
+        .annotate(
+            total_impact=Sum(F("aktion__klimapunkte") * F("quantity"))
+        )
+        .order_by('-week')
+    )
+
+    today = date.today()
+    current_week_start = today - timedelta(days=today.weekday())
+
+    successful_weeks = 0
+    expected_week = current_week_start
+
+    for entry in weekly_data:
+        week_start = entry["week"]
+
+        # 1) Wenn wir gerade die aktuelle Woche prüfen
+        if week_start == current_week_start:
+            if entry["total_impact"] >= weekly_goal:
+                # Diese Woche zählt zur Streak
+                successful_weeks += 1
+                expected_week -= timedelta(days=7)
+            else:
+                # Diese Woche ignorieren, Streak beginnt ab letzter Woche
+                expected_week = current_week_start - timedelta(days=7)
+            continue
+
+        # 2) Ab hier prüfen wir abgeschlossene Wochen
+        if week_start != expected_week:
+            break
+
+        if entry["total_impact"] >= weekly_goal:
+            successful_weeks += 1
+            expected_week -= timedelta(days=7)
+        else:
+            break
+
+    return successful_weeks

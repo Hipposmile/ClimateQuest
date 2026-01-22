@@ -33,7 +33,6 @@ def dashboard(request):
     weekly_goal, weekly_klimapunkte, weekly_goal_progress_percent = get_weekly_goal_from_user(request.user)
 
     streak = get_streak_from_user(request.user)
-    already_heightened = Aktion.objects.filter(date=date.today()).exists()
 
     aktionen = Aktion.objects.filter(user=request.user).order_by('date')[:2]
 
@@ -65,7 +64,7 @@ def dashboard(request):
     forum_posts = ForumPost.objects.filter(answers__creator=request.user).distinct().order_by('-date_time')[:2]
     return render(request, './dashboard.html',
                   {'weekly_goal': weekly_goal, 'weekly_goal_progress_percent': weekly_goal_progress_percent,
-                   'weekly_klimapunkte': weekly_klimapunkte, 'streak': streak, 'already_heightened': already_heightened,
+                   'weekly_klimapunkte': weekly_klimapunkte, 'streak': streak,
                    'aktionen': aktionen, 'klimapunkte': klimapunkte, 'level': level, 'families': families,
                    'communities_with_user_families': communities_with_user_families, 'created_events': created_events,
                    'events': events, 'created_artikel': created_artikel, 'artikel': artikel,
