@@ -55,13 +55,12 @@
         <label for="action_type">Ausgewähltes Element:</label>
         <input type="text" id="action_type" name="action_type" value="{{ current_action.aktion.name }}"
                data-name="{{ current_action.aktion.name }}"
-               data-klimapunkte="{{ current_action.impact|floatformat:-4 }}"
+               data-klimapunkte="{{ current_action.aktion.klimapunkte|floatformat:-4 }}"
                data-anmerkung="{{ current_action.anmerkung }}"
                data-mengebeschreibung="{{ current_action.aktion.mengeBeschreibung }}"
+               data-mengebeschreibungsingular="{{ current_action.aktion.mengeBeschreibungSingular }}"
                data-source="{{ current_action.aktion.source }}"
                data-categories="
-
-
                        {% for action_category in current_action.aktion.category.all %}{{ action_category }}{% if not forloop.last %}, {% endif %}{% endfor %}"
                readonly>
 

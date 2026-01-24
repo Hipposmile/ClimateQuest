@@ -40,7 +40,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            next_url = request.POST.get('next') or request.GET.get('next') or 'home'
+            next_url = request.POST.get('next') or request.GET.get('next') or 'dashboard'
             return redirect(next_url)
         else:
             messages.error(request, all_messages["invalid_login_data"])
@@ -101,7 +101,7 @@ def register_view(request):
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
-                messages.success(request, all_messages['successfully_signed_up_email_not_verified'])
+                messages.success(request, all_messages['successfully_signed_up'])
                 return redirect('dashboard')
             create_internal_error(request, 'bei Registrierung existiert Nutzer nicht')
             return redirect('register_view')
@@ -121,7 +121,7 @@ def register_view(request):
         user_authenticated = authenticate(username=username, password=password)
         if user_authenticated:
             login(request, user)
-            messages.success(request, all_messages['successfully_signed_up'])
+            messages.success(request, all_messages['successfully_signed_up_email_not_verified'])
         else:
             create_internal_error(request, 'bei Registrierung existiert Nutzer nicht')
             return redirect('register_view')
