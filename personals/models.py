@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.core.validators import MinValueValidator
 
 
 class UserErweitert(models.Model):
@@ -7,7 +8,7 @@ class UserErweitert(models.Model):
     mailinglist = models.BooleanField(default=True)
     mail_verified = models.BooleanField(default=False)
     statement = models.TextField(default="Hallo. Ich benutze ClimateQuest.")
-    weekly_goal = models.IntegerField(default=20)
+    weekly_goal = models.PositiveIntegerField(default=20, validators=[MinValueValidator(1)])
 
     def __str__(self):
         return self.user.username

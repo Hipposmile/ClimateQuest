@@ -81,7 +81,6 @@ def register_view(request):
         nutzungsbedingungen_accepted = request.POST.get('nutzungsbedingungen_accepted') == 'on'
         datenschutz_accepted = request.POST.get('datenschutz_accepted') == 'on'
 
-
         if not nutzungsbedingungen_accepted:
             messages.error(request, all_messages["nutzungsbedingungen_not_accepted"])
             return redirect('register_view')
@@ -314,7 +313,7 @@ def settings_view(request):
                 user_erweitert = UserErweitert.objects.get(user=request.user)
             except UserErweitert.DoesNotExist:
                 create_internal_error(request, f"UserErweitert zu User {request.user} existiert nicht")
-                return  redirect('settings_view')
+                return redirect('settings_view')
             user_erweitert.weekly_goal = weekly_goal
             user_erweitert.save()
             messages.success(request, all_messages["successfully_changed_goal"])

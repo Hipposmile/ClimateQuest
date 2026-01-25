@@ -245,7 +245,7 @@
     <hr>
 
     <h2>Klimapunkte</h2>
-    <p>Du hast bereits {{ klimapunkte }} Klimapunkte gesammelt.</p>
+    <p>Du hast bereits {{ klimapunkte|floatformat:-4 }} Klimapunkte gesammelt.</p>
     <a onclick="showLoading()" href="{% url 'klimapunkte_me' %}" class="redirect-link">
         <span>Zu den Klimapunkten</span>
         <span class="redirect-link-icon">→</span>
