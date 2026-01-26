@@ -108,12 +108,6 @@ def add(request):
 
 
 @login_required
-def history(request):
-    actions = Aktion.objects.filter(user=request.user).order_by('-date')
-    return render(request, './history.html', {'actions': actions})
-
-
-@login_required
 def edit_action(request, action_id):
     if not action_id:
         messages.error(request, all_messages["action_id_missing"])

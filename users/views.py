@@ -1,10 +1,11 @@
-from datetime import datetime, timedelta, date
+from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from core.all_messages import all_messages
 from utils.functions import *
+
 
 @login_required
 def klimapunkte_view(request, user_id):
@@ -96,6 +97,18 @@ def level_view(request, user_id):
 
 
 @login_required
+def history(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        messages.error(request, all_messages["user_not_found"])
+        return redirect('dashboard')
+
+    actions = Aktion.objects.filter(user=user).order_by('-date')
+    return render(request, './history.html', {'actions': actions})
+
+
+@login_required
 def users_overview(request):
     if request.method == 'POST':
         search_keyword = request.POST.get('search_keyword')
@@ -113,13 +126,17 @@ def user_detail(request, user_id):
         return redirect('users_overview')
 
     user_expanded = UserErweitert.objects.get(user=user)
+    weekly_goal, weekly_klimapunkte, weekly_goal_progress_percent = get_weekly_goal_from_user(user)
+    streak = get_streak_from_user(user)
 
     if request.method == 'POST':
         reason = request.POST.get('reason')
         report_user(request, user, request.user, reason)
         messages.success(request, all_messages["reported_user"])
 
-    return render(request, './user_detail.html', {'user_expanded': user_expanded})
+    return render(request, './user_detail.html', {'user_expanded': user_expanded, 'weekly_goal': weekly_goal,
+                                                  'weekly_goal_progress_percent': weekly_goal_progress_percent,
+                                                  'weekly_klimapunkte': weekly_klimapunkte, 'streak': streak})
 
 
 @login_required
@@ -130,6 +147,10 @@ def klimapunkte_me(request):
 @login_required
 def level_me(request):
     return redirect('level_view', request.user.id)
+
+
+def history_me(request):
+    return redirect('history', request.user.id)
 
 
 def report_user(request, reported_user, reporting_user, reason):

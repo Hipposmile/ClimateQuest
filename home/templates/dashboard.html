@@ -196,7 +196,7 @@
                 </div>
 
                 <div class="streak-pill">
-                    <span class="streak-pill-text">{% if weekly_goal_progress_percent >= 100 %}Du hast dein wöchentliches Ziel diese Woche bereits erreicht{% else %}Du hast dein wöchentliches Ziel diese Woche nocht nicht erreicht{% endif %}</span>
+                    <span class="streak-pill-text">{% if weekly_goal_progress_percent >= 100 %}Du hast dein wöchentliches Ziel diese Woche bereits erreicht{% else %}Du hast dein wöchentliches Ziel diese Woche noch nicht erreicht{% endif %}</span>
                 </div>
             </div>
         </div>
@@ -233,7 +233,7 @@
     {% else %}
         <p>Keine Aktionen gefunden.</p>
     {% endif %}
-    <a onclick="showLoading()" href="{% url 'history' %}" class="redirect-link">
+    <a onclick="showLoading()" href="{% url 'history_me' %}" class="redirect-link">
         <span>Zur Aktions-Historie</span>
         <span class="redirect-link-icon">→</span>
     </a>
