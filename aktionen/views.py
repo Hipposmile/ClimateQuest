@@ -102,7 +102,7 @@ def add(request):
                                 f'Du hast eine neue Aktion vom Typen {action_type} erstellt und so deine Streak verlängert. <span class="emoji">&#x1F973;</span>',
                                 request.user)
         messages.success(request, all_messages["action_added"])
-        return redirect('history')
+        return redirect('history_me')
 
     return render(request, './add.html', {'categories': categories})
 
@@ -111,12 +111,12 @@ def add(request):
 def edit_action(request, action_id):
     if not action_id:
         messages.error(request, all_messages["action_id_missing"])
-        return redirect('history')
+        return redirect('history_me')
     try:
         current_action = Aktion.objects.get(id=action_id, user=request.user)
     except Aktion.DoesNotExist:
         messages.error(request, all_messages["action_not_found"])
-        return redirect('history')
+        return redirect('history_me')
 
     aktionen = AktionenListe.objects.all().order_by('name')
     categories = Category.objects.all().order_by('name')
@@ -223,7 +223,7 @@ def edit_action(request, action_id):
                                     request.user)
 
             messages.success(request, all_messages["action_edited"])
-            return redirect('history')
+            return redirect('history_me')
 
         if 'delete_action' in request.POST:
             old_level = get_level(request.user)
@@ -248,7 +248,7 @@ def edit_action(request, action_id):
                                     f'Du hast eine neue Aktion vom Typen {action_type} gelöscht und so deine Streak verkürzt. <span class="emoji">&#x1F622;</span>',
                                     request.user)
                 messages.success(request, all_messages["action_deleted"])
-            return redirect('history')
+            return redirect('history_me')
 
     return render(request, './edit_action.html', {'categories': categories, 'current_action': current_action})
 
