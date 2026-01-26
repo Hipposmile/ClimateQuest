@@ -1071,11 +1071,10 @@
                         return false;
                     }
                     if (benachrichtigungen_count != 0) {
-                        let previousCount = parseInt(localStorage.getItem('benachrichtigungen_count') || "0");
+                        /*let previousCount = parseInt(localStorage.getItem('benachrichtigungen_count') || "0");
                         if (benachrichtigungen_count > previousCount) {
-                            // alert(`Neue Benachrichtigung.`);
                         }
-                        localStorage.setItem('benachrichtigungen_count', benachrichtigungen_count);
+                        localStorage.setItem('benachrichtigungen_count', benachrichtigungen_count);*/
 
                         countSpan.textContent = benachrichtigungen_count;
                     } else {

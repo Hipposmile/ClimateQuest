@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block meta %}{% endblock %}
 
@@ -27,29 +28,28 @@
     {% if user.usererweitert.mail_verified == False and user.email != '' %}
         <p>Bitte bestätige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. Falls du keine
             Verifizierungsmail
-            erhalten hast, <a onclick="showLoading()" href="{% url 'resend_verification_email' %}">lasse dir eine neue senden.</a></p>
+            erhalten hast, <a onclick="showLoading()" href="{% url 'resend_verification_email' %}">lasse dir eine neue
+                senden.</a></p>
     {% endif %}
-    <div id="request_permission"></div>
+    <div id="request_permission_notification"></div>
 
     <script>
-        async function requestPermission() {
+        async function requestPermissionNotification() {
             if (Notification.permission === 'default') {
-                const div = document.getElementById('request_permission');
+                const div = document.getElementById('request_permission_notification');
                 div.innerHTML = `
-                    <button id="reqBtn" class="btn">Benachrichtigungen anfordern</button>
+                    <button id="reqBtnMsg" class="btn">Benachrichtigungen anfordern</button>
                     <p>Über Push-Benachrichtigungen können wir dir Mitteilungen direkt an dieses Gerät senden.</p>
                     <br>
                 `;
 
-                document.getElementById('reqBtn').addEventListener('click', () => {
+                document.getElementById('reqBtnMsg').addEventListener('click', () => {
                     Notification.requestPermission();
                     console.log("requested permission");
                     div.style.display = 'none';
                 });
             }
         }
-
-        requestPermission();
     </script>
 
     <p>Tipp: Wenn andere Nutzer Artikel liken, die du selbst geschrieben hast, erhältst du Klimapunkte! Schreibe also
@@ -196,7 +196,9 @@
                 </div>
 
                 <div class="streak-pill">
-                    <span class="streak-pill-text">{% if weekly_goal_progress_percent >= 100 %}Du hast dein wöchentliches Ziel diese Woche bereits erreicht{% else %}Du hast dein wöchentliches Ziel diese Woche noch nicht erreicht{% endif %}</span>
+                    <span class="streak-pill-text">{% if weekly_goal_progress_percent >= 100 %}Du hast dein
+                        wöchentliches Ziel diese Woche bereits erreicht{% else %}Du hast dein wöchentliches Ziel diese
+                        Woche noch nicht erreicht{% endif %}</span>
                 </div>
             </div>
         </div>
@@ -307,7 +309,8 @@
                     <div class="family-card">
                         <h3>{{ family.name }}</h3>
                         <p>Mitglieder: {{ family.members.count }}</p>
-                        <a onclick="showLoading()" href="{% url 'family_detail' family.id %}" class="card-btn">Details ansehen</a>
+                        <a onclick="showLoading()" href="{% url 'family_detail' family.id %}" class="card-btn">Details
+                            ansehen</a>
                     </div>
                 {% endfor %}
             </div>
@@ -372,7 +375,7 @@
 
     {% if messages %}
         {% for message in messages %}
-            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+            <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
     {% if communities_with_user_families %}

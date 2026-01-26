@@ -1078,7 +1078,6 @@ input[type="file"]::-webkit-file-upload-button {
     }
 }
 
-/* --- Overlay Grundstruktur --- */
 .overlay {
     position: fixed;
     inset: 0;
@@ -1100,7 +1099,6 @@ input[type="file"]::-webkit-file-upload-button {
     overflow-y: auto;
 }
 
-/* Close Button */
 .overlay-close {
     position: absolute;
     top: 10px;
@@ -1112,7 +1110,6 @@ input[type="file"]::-webkit-file-upload-button {
     color: var(--color-text, #000);
 }
 
-/* --- Deine bestehenden Styles bleiben unverändert --- */
 .share-container {
     max-width: 600px;
     margin: 0 auto;
