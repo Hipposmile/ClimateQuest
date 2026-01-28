@@ -14,7 +14,6 @@ class AddCORSHeaderMiddleware:
         if origin in self.ALLOWED_ORIGINS:
             response["Access-Control-Allow-Origin"] = origin
         else:
-            # Optional: Header entfernen, wenn nicht erlaubt
             if "Access-Control-Allow-Origin" in response:
                 del response["Access-Control-Allow-Origin"]
 
