@@ -68,6 +68,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
+    "core.middleware.AddCORSHeaderMiddleware"
 ]
 
 ROOT_URLCONF = 'ClimateQuest.urls'
