@@ -10,13 +10,3 @@ class AddAktionenSitemap(Sitemap):
 
     def location(self, item):
         return reverse(item)
-
-class HistorySitemap(Sitemap):
-    changefreq = "yearly"
-    priority = 0.5
-
-    def items(self):
-        return ['history']
-
-    def location(self, item):
-        return reverse(item)

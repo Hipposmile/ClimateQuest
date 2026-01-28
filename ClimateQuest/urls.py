@@ -51,9 +51,9 @@ sitemaps = {
 
     "klimapunkte_view": KlimapunkteViewSitemap(),
     "level_view": LevelViewSitemap(),
+    "history": HistorySitemap(),
 
     "add_aktionen": AddAktionenSitemap(),
-    "history": HistorySitemap(),
 
     "artikel_detail": ArtikelDetailSitemap(),
     "artikel_overview": ArtikelOverviewSitemap(),
