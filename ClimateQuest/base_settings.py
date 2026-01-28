@@ -142,9 +142,3 @@ CRONJOBS = [
 ]
 
 CRONTAB_PYTHON_EXECUTABLE = "/webapps/climatequest/venv/bin/python"
-
-CONTENT_SECURITY_POLICY = {
-    "default-src": ["'self'"],
-    "script-src": ["'self'"],
-    "style-src": ["'self'"],
-}
