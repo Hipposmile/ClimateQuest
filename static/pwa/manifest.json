@@ -467,49 +467,49 @@
       "name": "Aktion hinzufügen",
       "short_name": "Aktion",
       "description": "Neue Klimaschutz-Aktion hinzufügen",
-      "url": "https://climate-quest.de/aktionen/add/"
+      "url": "/aktionen/add/"
     },
     {
       "name": "Meine Families",
       "short_name": "Families",
       "description": "Übersicht deiner Familiengruppen",
-      "url": "https://climate-quest.de/family/families/"
+      "url": "/family/families/"
     },
     {
       "name": "Meine Communities",
       "short_name": "Communities",
       "description": "Übersicht deiner Communities",
-      "url": "https://climate-quest.de/community/communities/"
+      "url": "/community/communities/"
     },
     {
       "name": "Level",
       "short_name": "Level",
       "description": "Dein aktuelles Level anzeigen",
-      "url": "https://climate-quest.de/users/klimapunkte/me/"
+      "url": "/users/klimapunkte/me/"
     },
     {
       "name": "Klimapunkte",
       "short_name": "Punkte",
       "description": "Deine gesammelten Klimapunkte",
-      "url": "https://climate-quest.de/users/klimapunkte/me/"
+      "url": "/users/klimapunkte/me/"
     },
     {
       "name": "Events Überblick",
       "short_name": "Events",
       "description": "Alle Events im Überblick",
-      "url": "https://climate-quest.de/events/overview/"
+      "url": "/events/overview/"
     },
     {
       "name": "Artikel Überblick",
       "short_name": "Artikel",
       "description": "Alle Artikel im Überblick",
-      "url": "https://climate-quest.de/artikel/artikel_overview/"
+      "url": "/artikel/artikel_overview/"
     },
     {
       "name": "Forum Überblick",
       "short_name": "Forum",
       "description": "Alle Forums-Beiträge im Überblick",
-      "url": "https://climate-quest.de/forum/forum_overview/"
+      "url": "/forum/forum_overview/"
     }
   ]
 }
