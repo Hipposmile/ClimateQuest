@@ -19,7 +19,7 @@
     <input type="hidden" id="klimapunkte" value="{{ klimapunkte|floatformat:-4 }}">
     <p>Klimapunkte: <b>{{ klimapunkte|floatformat:-4 }}</b></p>
     <p id="co2"></p>
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         let klimapunkte = formatToFloat(document.getElementById("klimapunkte").value);
         let co2 = Intl.NumberFormat('de-DE', {
             minimumFractionDigits: 4,
@@ -35,7 +35,7 @@
     <p>Außerdem wurden <b>{{ aktionen_klimapunkte }}</b> Klimapunkte durch das Schreiben von Artikeln verdient.</p>
     <p>Insgesamt wurden also bereits <b>{{ klimapunkte_total }}</b> Klimapunkte gesammelt.</p>
     <p>Zeitraum: {{ zeitraum }}</p>
-    <form method="post" onsubmit="showLoading()">
+    <form method="post" >
         {% csrf_token %}
         <label for="zeitraum">Zeitraum</label>
         <select name="zeitraum" id="zeitraum" required>
@@ -47,7 +47,7 @@
             <option value="benutzerdefiniert">Benutzerdefiniert</option>
         </select>
 
-        <div id="hiddenDateDiv" style="display: none">
+        <div id="hiddenDateDiv" class="display-none">
             <label for="start_date">Startdatum:</label>
             <input type="date" name="start_date" id="start_date" placeholder="Startdatum" value="">
             <label for="end_date">Enddatum:</label>
@@ -57,9 +57,9 @@
         <button type="submit">Anwenden</button>
     </form>
 
-    <a onclick="showLoading()" href="{% url 'user_detail' user.id %}">Userseite ansehen</a>
+    <a  href="{% url 'user_detail' user.id %}">Userseite ansehen</a>
 
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         document.addEventListener('DOMContentLoaded', function () {
             const today = new Date().toISOString().split("T")[0];
             let startDate = document.getElementById('start_date');

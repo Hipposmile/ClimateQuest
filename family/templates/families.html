@@ -7,7 +7,7 @@
 {% block title %}ClimateQuest - Meine Families{% endblock %}
 {% block content %}
 
-<style>
+<style nonce="{{ request.csp_style_nonce }}">
     .families-section {
         max-width: 960px;
         margin: 2rem auto;
@@ -62,7 +62,7 @@
         <div class="family-card">
             <h3>{{ family.name }}</h3>
             <p>Mitglieder: {{ family.members.count }}</p>
-            <a onclick="showLoading()" href="{% url 'family_detail' family.id %}" class="card-btn">Details ansehen</a>
+            <a  href="{% url 'family_detail' family.id %}" class="card-btn">Details ansehen</a>
         </div>
         {% endfor %}
     </div>

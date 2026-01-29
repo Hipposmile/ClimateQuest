@@ -8,7 +8,6 @@ urlpatterns = [
     path('benachrichtigungen/', benachrichtigungen_view, name='benachrichtigungen_view'),
     path('delete-benachrichtigung/<int:id>', delete_benachrichtigung, name='delete_benachrichtigung'),
     path('admin/', admin, name='admin'),
-    path('share/', share, name='share'),
     path('nutzungsbedingungen/', nutzungsbedingungen, name='nutzungsbedingungen'),
     path('datenschutz/', datenschutz, name='datenschutz'),
     path('impressum/', impressum, name='impressum'),

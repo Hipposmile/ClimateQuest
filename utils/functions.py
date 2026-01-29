@@ -70,7 +70,7 @@ def send_mail_function(**kwargs):
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>{subject}</title>
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
       body {{
         margin: 0; padding: 0;
         background: #f5f7fa;
@@ -146,7 +146,7 @@ def send_mail_function(**kwargs):
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width">
                 <title>{subject}</title>
-                <style>
+                <style nonce="{{ request.csp_style_nonce }}">
                   body {{
                     margin: 0; padding: 0;
                     background: #f5f7fa;

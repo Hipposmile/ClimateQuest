@@ -8,7 +8,7 @@
 {% block title %}ClimateQuest - Artikel {{ artikel.name }}{% endblock %}
 
 {% block content %}
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         .like-button {
             display: inline-block;
         }
@@ -65,7 +65,7 @@
 
     <div class="artikel-content"><p>{{ artikel.content|safe }}</p></div>
     <br>
-    <p>Erstellt von <a onclick="showLoading()" href="{% url 'user_detail' artikel.creator.id %}">{{ artikel.creator }}</a></p>
+    <p>Erstellt von <a  href="{% url 'user_detail' artikel.creator.id %}">{{ artikel.creator }}</a></p>
     {% if artikel.creator.is_superuser %}
         <p><span class="emoji">&#x1F4A1;</span> Ein offizieller Artikel von ClimateQuest</p>{% endif %}
     <p>Zuletzt bearbeitet: {{ artikel.date_time|date:"d.m.Y H:i" }}</p>
@@ -82,7 +82,7 @@
 
 
     {% if artikel.creator == request.user %}
-        <p><a onclick="showLoading()" href="{% url 'edit_artikel' artikel.id %}">Artikel bearbeiten</a></p>
+        <p><a  href="{% url 'edit_artikel' artikel.id %}">Artikel bearbeiten</a></p>
     {% endif %}
 
     <h3 class="section-title">Kommentare</h3>
@@ -113,7 +113,7 @@
                         <details>
                             <summary>selbst antworten</summary>
                             {% if user.is_authenticated %}
-                                <form method="post" onsubmit="showLoading()">
+                                <form method="post" >
                                     {% csrf_token %}
                                     <input type="hidden" name="comment_id" value="{{ comment.id }}">
                                     <label for="answer">Antwort:</label>
@@ -121,7 +121,7 @@
                                     <button name="answer_comment">Antworten</button>
                                 </form>
                             {% else %}
-                                <p><a onclick="showLoading()" href="{% url 'login_view' %}">Logge dich ein</a>, um den Kommentar zu beantworten
+                                <p><a  href="{% url 'login_view' %}">Logge dich ein</a>, um den Kommentar zu beantworten
                                 </p>
                             {% endif %}
                         </details>
@@ -133,7 +133,7 @@
         {% endif %}
     </div>
 
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         document.addEventListener("DOMContentLoaded", function () {
             const comments = document.querySelectorAll(".comment");
 
@@ -167,14 +167,14 @@
         });
     </script>
     {% if user.is_authenticated %}
-        <form method="post" onsubmit="showLoading()">
+        <form method="post" >
             {% csrf_token %}
             <label for="comment">Neuen Kommentar hinzufügen:</label>
             <input type="text" id="comment" name="comment" placeholder="Kommentar hinzufügen">
             <button type="submit" name="add_comment">Kommentar hinzufügen</button>
         </form>
     {% else %}
-        <p><a onclick="showLoading()" href="{% url 'login_view' %}">Logge dich ein</a>, um einen Kommentar zu verfassen
+        <p><a  href="{% url 'login_view' %}">Logge dich ein</a>, um einen Kommentar zu verfassen
         </p>
     {% endif %}
 

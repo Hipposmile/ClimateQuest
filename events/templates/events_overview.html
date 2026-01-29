@@ -6,7 +6,7 @@
 {% block title %}ClimateQuest - Events - Übersicht{% endblock %}
 
 {% block content %}
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         .event-date-relative {
             font-weight: 100;
             filter: grayscale(100%);
@@ -24,7 +24,7 @@
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
-    <form method="post" onsubmit="showLoading()">
+    <form method="post" >
         {% csrf_token %}
         <div id="search_keyword_div">
             <label for="search_keyword">Suchwort:</label>
@@ -55,7 +55,7 @@
         <button type="submit">Anwenden</button>
     </form>
 
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         search_keyword = document.querySelector('input[name=search_keyword]');
         order_by = document.querySelector('select[name=order_by]');
         search_keyword_div = document.getElementById('search_keyword_div');
@@ -160,7 +160,7 @@
         <p><i>Es gibt derzeit keine Events mit diesem Filter.</i></p>
     {% endif %}
 
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         function getLabel(dateStr) {
             const now = new Date();
             const target = new Date(dateStr);

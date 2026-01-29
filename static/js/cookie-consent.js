@@ -32,161 +32,6 @@ const cookieCategories = {
     }
 };
 
-function addStyle() {
-    const styleCookie = document.createElement('style');
-    styleCookie.textContent = `
-    #cookie-overlay {
-        position: fixed; inset: 0;
-        background: var(--color-shadow-light);
-        z-index: 9998;
-        animation: fadeIn 0.3s ease-in-out;
-    }
-    @keyframes fadeIn {
-        from { opacity: 0; } to { opacity: 1; }
-    }
-
-    #cookie-banner {
-        position: fixed; bottom: 2%; left: 50%;
-        transform: translateX(-50%);
-        width: 90%; 
-        max-width: 520px;
-        background: var(--color-white);
-        color: var(--color-text);
-        border-radius: 12px;
-        padding: 24px;
-        box-shadow: 0 8px 24px var(--color-shadow-light);
-        font-family: 'Segoe UI', sans-serif;
-        z-index: 9999;
-        max-height: 500px; /* Höhe des Divs, um Scrollen zu ermöglichen */
-        overflow-y: auto;
-    }
-
-    #cookie-banner a {
-        color: var(--color-primary);
-        text-decoration: none;
-    }
-    #cookie-banner a:hover {
-        color: var(--color-primary-hover);
-        text-decoration: underline;
-    }
-
-    #cookie-banner button {
-        margin: 6px;
-        padding: 10px 18px;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 0.95rem;
-        background: var(--color-primary);
-        color: var(--color-white);
-        cursor: pointer;
-        transition: background 0.2s ease;
-    }
-
-    #cookie-banner button:hover {
-        background-color: var(--color-primary-hover);
-    }
-
-    #settings-panel {
-        display: none;
-        background: var(--color-bg);
-        padding: 16px;
-        border-radius: 8px;
-        margin-top: 16px;
-    }
-
-    .cookie-category {
-        margin-bottom: 14px;
-    }
-
-    .cookie-category label {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        color: var(--color-text);
-    }
-
-    .cookie-category input[type="checkbox"] {
-        accent-color: var(--color-primary);
-        width: 18px; height: 18px;
-        cursor: pointer;
-    }
-
-    .toggle-expl {
-        background: transparent;
-        border: 1px solid var(--color-primary);
-        color: var(--color-primary);
-        border-radius: 6px;
-        font-size: 0.85em;
-        padding: 4px 8px;
-        margin-top: 4px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-
-    .toggle-expl:hover {
-        background: var(--color-primary);
-        color: var(--color-white);
-    }
-
-    .explanation {
-        display: none;
-        font-size: 0.85em;
-        color: var(--color-muted);
-        margin-top: 4px;
-    }
-
-    #btn-save {
-        background-color: var(--color-success);
-    }
-
-    #cookie-reset {
-        position: fixed; 
-        bottom: max(65px, calc(65px + var(--safe-area-inset-bottom)));
-        left: max(20px, calc(20px + var(--safe-area-inset-left)));
-        padding: 10px 16px;
-        background-color: var(--color-accent);
-        color: var(--color-white);
-        border: none;
-        border-radius: 6px;
-        font-weight: 600;
-        cursor: pointer;
-        z-index: 1000;
-        box-shadow: 0 4px 12px var(--color-shadow-light);
-    }
-    
-    @media (min-width: 1200px) {
-        #cookie-reset {
-            bottom: max(20px, calc(20px + var(--safe-area-inset-bottom)));
-        }
-    }
-    
-    #cookie-reset:hover {
-        background-color: var(--color-accent);
-    }
-    
-    /* Overlay als Schleier */
-    #cookie-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.4); /* ← Rauchiger Schleier */
-        z-index: 9998;
-        animation: fadeIn 0.3s ease-in-out;
-        pointer-events: auto; /* ← wichtig: erlaubt Interaktion mit dem Banner */
-    }
-      
-    
-    /* Banner bleibt interaktiv */
-    #cookie-banner {
-        z-index: 9999; /* ← über dem Overlay */
-    }
-    
-    #cookie-reset:hover {
-        background-color: var(--color-accent); /* Fix: fehlender Wert */
-    }`;
-    document.head.appendChild(styleCookie);
-}
-
 function addCookieBanner() {
     const banner = document.createElement('div');
     banner.innerHTML = `<div id="cookie-overlay"></div>
@@ -285,7 +130,7 @@ function handleCookieBlocks(consentState) {
                 }
 
                 // Prüfen, ob es ein Inline-Skript ist
-                const inlineMatch = content.match(/<script>([\s\S]*?)<\/script>/i);
+                const inlineMatch = content.match(/<script nonce="{{ request.csp_script_nonce }}">([\s\S]*?)<\/script>/i);
                 if (inlineMatch) {
                     const script = document.createElement("script");
                     script.textContent = inlineMatch[1];
@@ -310,7 +155,7 @@ function handleCookieBlocks(consentState) {
                 el.innerHTML = content;
             }
         } else {
-            el.innerHTML = `<div style="background:#ccc; padding:15px; border-radius:8px; margin: 15px;">
+            el.innerHTML = `<div class="cookie-forbidden-div">
           Dieses Element ist blockiert. Bitte '${type}'-Cookies erlauben, um es zu sehen. Evtl. musst du die Seite anschließend neu laden.
         </div>`;
         }
@@ -349,6 +194,5 @@ function getCookiePreferences() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    addStyle();
     addResetBtn();
 });

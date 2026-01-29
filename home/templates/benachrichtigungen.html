@@ -8,7 +8,7 @@
   ClimateQuest - Benachrichtigungen
 {% endblock %}
 {% block content %}
-<style>
+<style nonce="{{ request.csp_style_nonce }}">
     .benachrichtigungen-list {
     max-width: 480px;
     margin: 2rem auto;
@@ -108,7 +108,7 @@
         <p class="emoji">&#x1F514;</p>
           <div class="benachrichtigung-inhalt">
             <p>{{ benachrichtigung.benachrichtigung|safe }}</p>
-            <a onclick="showLoading()" href="{% url 'delete_benachrichtigung' benachrichtigung.id %}"><p class="emoji">&#x1F5D1;</p></a>
+            <a  href="{% url 'delete_benachrichtigung' benachrichtigung.id %}"><p class="emoji">&#x1F5D1;</p></a>
           </div>
           <div class="benachrichtigung-datum">
             <small>{{ benachrichtigung.date|date:'d.m.Y H:i' }}</small>

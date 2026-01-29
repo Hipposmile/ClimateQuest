@@ -6,7 +6,7 @@
     <title>Offline – Keine Internetverbindung</title>
     <meta name="color-scheme" content="light dark"/>
     <link rel="icon" href="/icons/favicon.ico"/>
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         :root {
             --bg: #0f172a; /* slate-900 */
             --card: rgba(255, 255, 255, 0.08);
@@ -217,7 +217,7 @@
     </footer>
 </main>
 
-<script>
+<script nonce="{{ request.csp_script_nonce }}">
     // Online-Status aktualisieren
     const stateEl = document.getElementById('net-state');
 

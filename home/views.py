@@ -77,104 +77,61 @@ def admin(request):
         messages.error(request, all_messages["not_authorized_to_visit"])
         return redirect('dashboard')
     if request.method == 'POST':
-        if 'benachrichtigung' in request.POST:
-            receiver = request.POST.get('receiver')
-            name = request.POST.get('name')
-            msg = request.POST.get('msg')
+        receiver = request.POST.get('receiver')
+        name = request.POST.get('name')
+        msg = request.POST.get('msg')
 
-            if len(msg) > 100:
-                messages.error(request, all_messages["too_long_input"])
+        if len(msg) > 100:
+            messages.error(request, all_messages["too_long_input"])
+            return redirect('admin')
+
+        if not receiver or not name or not msg:
+            messages.error(request, all_messages["missing_required_inputs"])
+            return redirect('admin')
+
+        if receiver == 'user':
+            try:
+                user = User.objects.get(username=name)
+            except User.DoesNotExist:
+                messages.error(request, all_messages["admin__user_not_found"])
                 return redirect('admin')
-
-            if not receiver or not name or not msg:
-                messages.error(request, all_messages["missing_required_inputs"])
+            create_notification(request, msg, user)
+            messages.success(request, all_messages["admin__successfully_sent_notification"])
+        elif receiver == 'family-members':
+            try:
+                family = Family.objects.get(name=name)
+            except Family.DoesNotExist:
+                messages.error(request, all_messages["admin__family_not_found"])
                 return redirect('admin')
-
-            if receiver == 'user':
-                try:
-                    user = User.objects.get(username=name)
-                except User.DoesNotExist:
-                    messages.error(request, all_messages["admin__user_not_found"])
-                    return redirect('admin')
+            for user in family.members.all():
                 create_notification(request, msg, user)
-                messages.success(request, all_messages["admin__successfully_sent_notification"])
-            elif receiver == 'family-members':
-                try:
-                    family = Family.objects.get(name=name)
-                except Family.DoesNotExist:
-                    messages.error(request, all_messages["admin__family_not_found"])
-                    return redirect('admin')
+            messages.success(request, all_messages["admin__successfully_sent_notification"])
+        elif receiver == 'community-members':
+            try:
+                community = Community.objects.get(name=name)
+            except Community.DoesNotExist:
+                messages.error(request, all_messages["admin__community_not_found"])
+                return redirect('admin')
+            for family in community.members.all():
                 for user in family.members.all():
                     create_notification(request, msg, user)
-                messages.success(request, all_messages["admin__successfully_sent_notification"])
-            elif receiver == 'community-members':
-                try:
-                    community = Community.objects.get(name=name)
-                except Community.DoesNotExist:
-                    messages.error(request, all_messages["admin__community_not_found"])
-                    return redirect('admin')
-                for family in community.members.all():
-                    for user in family.members.all():
-                        create_notification(request, msg, user)
-                messages.success(request, all_messages["admin__successfully_sent_notification"])
-            elif receiver == 'event-participants':
-                print("Sending to event participants")
-                try:
-                    event = Event.objects.get(id=name)
-                except Event.DoesNotExist:
-                    messages.error(request, all_messages["admin__event_not_found"])
-                    return redirect('admin')
-                print(event)
-                for participant in event.participants.all():
-                    create_notification(request, msg, participant)
-                    print(participant.username)
-
-                messages.success(request, all_messages["admin__successfully_sent_notification"])
-            else:
-                messages.error(request, all_messages["admin__invalid_receiver_type"])
+            messages.success(request, all_messages["admin__successfully_sent_notification"])
+        elif receiver == 'event-participants':
+            print("Sending to event participants")
+            try:
+                event = Event.objects.get(id=name)
+            except Event.DoesNotExist:
+                messages.error(request, all_messages["admin__event_not_found"])
                 return redirect('admin')
+            print(event)
+            for participant in event.participants.all():
+                create_notification(request, msg, participant)
+                print(participant.username)
 
-        elif 'check_worldwide_ranking' in request.POST:
-            try:
-                worldwide_ranking = Family.objects.get(name='worldwide ranking', chat=False)
-                if check_password(os.environ.get("WORLDWIDE_RANKING_PASSWORD", ""),
-                                  worldwide_ranking.password) and check_password(
-                    os.environ.get("WORLDWIDE_RANKING_ADMIN_PASSWORD", ""), worldwide_ranking.admin_password):
-                    messages.success(request, all_messages["worldwide_ranking_valid"])
-                else:
-                    worldwide_ranking_password = os.environ.get("WORLDWIDE_RANKING_PASSWORD", "")
-                    worldwide_ranking.password = worldwide_ranking_password
-
-                    worldwide_ranking_admin_password = os.environ.get("WORLDWIDE_RANKING_ADMIN_PASSWORD", "")
-                    worldwide_ranking.admin_password = worldwide_ranking_admin_password
-
-                    messages.error(request, all_messages["worldwide_ranking_invalid_passwords"])
-            except Family.DoesNotExist:
-                worldwide_ranking = Family.objects.create(
-                    name='worldwide ranking',
-                    password=os.environ.get("WORLDWIDE_RANKING_PASSWORD", ""),
-                    admin_password=os.environ.get("WORLDWIDE_RANKING_PASSWORD", ""),
-                    chat=False
-                )
-                for user in User.objects.all():
-                    worldwide_ranking.members.add(user)
-                    worldwide_ranking.save()
-                messages.success(request, all_messages["worldwide_ranking_created"])
-        elif 'add_everyone_user_erweitert' in request.POST:
-            for user in User.objects.all():
-                if not UserErweitert.objects.filter(user=user):
-                    UserErweitert.objects.create(user=user)
-            messages.success(request, all_messages["added_everyone_user_erweitert"])
-        elif 'delete_user' in request.POST:
-            username_to_delete = request.POST.get('username_to_delete')
-            try:
-                user = User.objects.get(username=username_to_delete)
-                user.delete()
-                messages.success(request, all_messages["user_deleted"])
-            except User.DoesNotExist:
-                messages.error(request, all_messages["user_not_found"])
+            messages.success(request, all_messages["admin__successfully_sent_notification"])
         else:
-            messages.error(request, all_messages["admin_invalid_action"])
+            messages.error(request, all_messages["admin__invalid_receiver_type"])
+            return redirect('admin')
 
     return render(request, 'admin.html')
 
@@ -199,13 +156,6 @@ def delete_benachrichtigung(request, id):
     except Benachrichtigung.DoesNotExist:
         messages.error(request, all_messages["delete_notification_error"])
     return redirect('benachrichtigungen_view')
-
-
-def share(request):
-    url = request.GET.get('url')
-    if url is None:
-        url = "https://climate-quest.de"
-    return render(request, 'share.html', {'url': url})
 
 
 def nutzungsbedingungen(request):

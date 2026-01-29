@@ -126,7 +126,7 @@ def event_detail(request, event_id):
 def add_event(request):
     if request.method == 'POST':
         name = request.POST.get('name')
-        description = request.POST.get('description')
+        content = request.POST.get('content')
         date_time = request.POST.get('date_time')
         duration = request.POST.get('duration')
         adress = request.POST.get('adress')
@@ -140,11 +140,11 @@ def add_event(request):
             messages.error(request, all_messages["too_long_input"])
             return redirect('add_event')
 
-        if not name or not description or not date_time or not duration or not adress:
+        if not name or not content or not date_time or not duration or not adress:
             messages.error(request, all_messages["missing_required_inputs"])
             return redirect('add_event')
 
-        description = clean_html(description)
+        content = clean_html(content)
 
         try:
             date_time = datetime.strptime(date_time, '%Y-%m-%dT%H:%M')
@@ -161,7 +161,7 @@ def add_event(request):
 
         Event.objects.create(
             name=name,
-            description=description,
+            description=content,
             adress=adress,
             date_time=date_time,
             duration=duration,

@@ -31,6 +31,7 @@
     <meta name="robots" content="index, follow">
 
     <meta name="vapid-key" content="{{ vapid_public_key }}">
+    <meta name="cps-style-nonce" content="{{ request.cps_style_nonce }}">
 
     <title>{% block title %}ClimateQuest{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
@@ -40,7 +41,7 @@
 
     <link rel="manifest" href="{% static 'pwa/manifest.json' %}">
 
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         #up-btn {
             position: fixed;
             top: max(2rem, calc(2rem + var(--safe-area-inset-top)));
@@ -389,7 +390,7 @@
 <div class="loading-div" id="loading-div">
     <div class="loading" id="loading"></div>
 </div>
-<script>
+<script nonce="{{ request.csp_script_nonce }}">
     function showLoading() {
         document.getElementById('loading').style.display = 'flex';
         document.getElementById('loading-div').style.display = 'flex';
@@ -410,7 +411,7 @@
     });
 </script>
 
-<script>
+<script nonce="{{ request.csp_script_nonce }}">
     function createPwaNav() {
         const isStandalone =
             window.matchMedia('(display-mode: standalone)').matches ||
@@ -437,7 +438,7 @@
             backBtn.innerHTML = '<span class="emoji">&#x2B05;&#xFE0F;</span>';
             backBtn.onclick = () => {
                 if (window.history.length > 1) {
-                    window.history.back();
+                    history.back();
                 }
             };
 
@@ -446,7 +447,7 @@
             reloadBtn.innerHTML = '<span class="emoji">&#x1F504;</span>';
             reloadBtn.onclick = () => {
                 if (window.history.length > 1) {
-                    window.location.reload();
+                    location.reload();
                 }
             };
 
@@ -454,7 +455,7 @@
             const forwardBtn = document.createElement('button');
             forwardBtn.innerHTML = '<span class="emoji">&#x27A1;&#xFE0F;</span>';
             forwardBtn.onclick = () => {
-                window.history.forward();
+                history.forward();
             };
 
             nav.appendChild(backBtn);
@@ -506,6 +507,36 @@
     }
 
     document.addEventListener("DOMContentLoaded", removeHoverStyles);
+
+    let quill;
+
+    function initializeQuill() {
+        let editor = document.getElementById('content_editor')
+        if (getCookiePreferences().quill) {
+            const script = document.createElement("script");
+            script.src = "https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js";
+            document.body.appendChild(script);
+            script.onload = function () {
+                if (editor) {
+                    quill = new Quill(editor, {
+                        theme: 'snow',
+                        modules: {
+                            toolbar: [
+                                [{header: [1, 2, false]}],
+                                ['bold', 'italic', 'underline'],
+                                [{'list': 'ordered'}, {'list': 'bullet'}],
+                                ['link']
+                            ]
+                        }
+                    });
+                } else {
+                    console.warn("Editor not found");
+                }
+            }
+        } else {
+            editor.innerHTML = `<textarea placeholder="Beschreibung" class="quill-editor" id="textarea-content"></textarea>`;
+        }
+    }
 </script>
 {% csrf_token %}
 <header id="header">
@@ -537,19 +568,19 @@
                 <span class="tab-icon"><span class="emoji">&#x1F3E0;</span></span>
                 <span class="tab-label">Home</span>
             </a>
-            <a onclick="showLoading()" href="{% url 'artikel_overview' %}" class="tab-item">
+            <a href="{% url 'artikel_overview' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F4F0;</span></span>
                 <span class="tab-label">Artikel</span>
             </a>
-            <a onclick="showLoading()" href="{% url 'events_overview' %}" class="tab-item">
+            <a href="{% url 'events_overview' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F389;</span></span>
                 <span class="tab-label">Events</span>
             </a>
-            <a onclick="showLoading()" href="{% url 'forum_overview' %}" class="tab-item">
+            <a href="{% url 'forum_overview' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F4AC;</span></span>
                 <span class="tab-label">Forum</span>
             </a>
-            <a onclick="showLoading()" href="{% url 'login_view' %}" class="tab-item">
+            <a href="{% url 'login_view' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F510;</span></span>
                 <span class="tab-label">Login</span>
             </a>
@@ -562,28 +593,28 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F464;</span> {{ request.user.username }}</h2>
                 <nav class="mobile-menu-nav">
-                    <a onclick="showLoading()" href="{% url 'dashboard' %}"><span class="emoji">&#x1F5A5;</span>
+                    <a href="{% url 'dashboard' %}"><span class="emoji">&#x1F5A5;</span>
                         Dashboard</a>
-                    <a onclick="showLoading()" href="{% url 'home' %}"><span class="emoji">&#x1F3E1;</span> Home</a>
-                    <a href="#" onclick="openOverlay()" id="openShareOverlay"><span class="emoji">&#xE253;</span> Teilen</a>
-                    <a onclick="showLoading()" href="{% url 'benachrichtigungen_view' %}"><span
+                    <a href="{% url 'home' %}"><span class="emoji">&#x1F3E1;</span> Home</a>
+                    <a href="#" class="openShareOverlay"><span class="emoji">&#xE253;</span> Teilen</a>
+                    <a href="{% url 'benachrichtigungen_view' %}"><span
                             class="emoji">&#x1F514;</span>
                         Benachrichtigungen</a>
-                    <a onclick="showLoading()" href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span>
+                    <a href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span>
                         Level</a>
-                    <a onclick="showLoading()" href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span>
+                    <a href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span>
                         Klimapunkte</a>
-                    <a onclick="showLoading()" href="{% url 'users_overview' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
+                    <a href="{% url 'users_overview' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
                         User</a>
-                    <a onclick="showLoading()" href="{% url 'presents_overview' %}"><span class="emoji">&#x1F381;</span>
+                    <a href="{% url 'presents_overview' %}"><span class="emoji">&#x1F381;</span>
                         Geschenke</a>
-                    <a onclick="showLoading()" href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span>
+                    <a href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span>
                         Einstellungen</a>
-                    <a onclick="showLoading()" href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span>
+                    <a href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span>
                         Logout</a>
                     {% if user.is_superuser %}
                         <a href="/ClimateQuestAdmin/" target="_blank"><span class="emoji">&#x1F451;</span> Admin (I)</a>
-                        <a onclick="showLoading()" href="{% url 'admin' %}"><span class="emoji">&#x1F451;</span> Admin
+                        <a href="{% url 'admin' %}"><span class="emoji">&#x1F451;</span> Admin
                             (II)</a>
                     {% endif %}
                 </nav>
@@ -595,9 +626,9 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F4CA;</span> Aktionen</h2>
                 <nav class="mobile-menu-nav">
-                    <a onclick="showLoading()" href="{% url 'add' %}"><span class="emoji">&#x2795;</span> Aktion
+                    <a href="{% url 'add' %}"><span class="emoji">&#x2795;</span> Aktion
                         hinzufügen</a>
-                    <a onclick="showLoading()" href="{% url 'history_me' %}"><span class="emoji">&#x1F4DC;</span>
+                    <a href="{% url 'history_me' %}"><span class="emoji">&#x1F4DC;</span>
                         Aktions-Historie</a>
                 </nav>
             </div>
@@ -608,11 +639,11 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span> Family</h2>
                 <nav class="mobile-menu-nav">
-                    <a onclick="showLoading()" href="{% url 'create_family' %}"><span class="emoji">&#x2795;</span>
+                    <a href="{% url 'create_family' %}"><span class="emoji">&#x2795;</span>
                         Family erstellen</a>
-                    <a onclick="showLoading()" href="{% url 'join_family' %}"><span class="emoji">&#x1F91D;</span>
+                    <a href="{% url 'join_family' %}"><span class="emoji">&#x1F91D;</span>
                         Family beitreten</a>
-                    <a onclick="showLoading()" href="{% url 'families_view' %}"><span class="emoji">&#x1F440;</span>
+                    <a href="{% url 'families_view' %}"><span class="emoji">&#x1F440;</span>
                         Meine Families</a>
                 </nav>
             </div>
@@ -623,11 +654,11 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F465;</span> Community</h2>
                 <nav class="mobile-menu-nav">
-                    <a onclick="showLoading()" href="{% url 'create_community' %}"><span class="emoji">&#x2795;</span>
+                    <a href="{% url 'create_community' %}"><span class="emoji">&#x2795;</span>
                         Community erstellen</a>
-                    <a onclick="showLoading()" href="{% url 'join_community' %}"><span class="emoji">&#x1F91D;</span>
+                    <a href="{% url 'join_community' %}"><span class="emoji">&#x1F91D;</span>
                         Community beitreten</a>
-                    <a onclick="showLoading()" href="{% url 'communities_view' %}"><span class="emoji">&#x1F440;</span>
+                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F440;</span>
                         Meine Communities</a>
                 </nav>
             </div>
@@ -672,10 +703,10 @@
 </main>
 
 <footer>
-    <p><a onclick="showLoading()" href="{% url 'aktionenTable' %}">Alle Aktionen</a></p>
-    <p><a onclick="showLoading()" href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a></p>
-    <p><a onclick="showLoading()" href="{% url 'impressum' %}">Impressum</a></p>
-    <p><a onclick="showLoading()" href="{% url 'datenschutz' %}">Datenschutz</a></p>
+    <p><a href="{% url 'aktionenTable' %}">Alle Aktionen</a></p>
+    <p><a href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a></p>
+    <p><a href="{% url 'impressum' %}">Impressum</a></p>
+    <p><a href="{% url 'datenschutz' %}">Datenschutz</a></p>
     <br>
     <br>
 </footer>
@@ -684,7 +715,7 @@
     <button id="up-btn" class="emoji">&#x2B06;</button>
 </nav>
 <!--Nav-Leist-->
-<script>
+<script nonce="{{ request.csp_script_nonce }}">
     let timeoutId;
 
     const header = document.getElementById('header');
@@ -725,19 +756,19 @@
                 <span class="tab-icon"><span class="emoji">&#x1F3E0;</span></span>
                 <span class="tab-label">Home</span>
             </a>
-            <a onclick="showLoading()" href="{% url 'artikel_overview' %}" class="tab-item">
+            <a  href="{% url 'artikel_overview' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F4F0;</span></span>
                 <span class="tab-label">Artikel</span>
             </a>
-            <a onclick="showLoading()" href="{% url 'events_overview' %}" class="tab-item">
+            <a  href="{% url 'events_overview' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F389;</span></span>
                 <span class="tab-label">Events</span>
             </a>
-            <a onclick="showLoading()" href="{% url 'forum_overview' %}" class="tab-item">
+            <a  href="{% url 'forum_overview' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F4AC;</span></span>
                 <span class="tab-label">Forum</span>
             </a>
-            <a onclick="showLoading()" href="{% url 'login_view' %}" class="tab-item">
+            <a  href="{% url 'login_view' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F510;</span></span>
                 <span class="tab-label">Login</span>
             </a>
@@ -750,21 +781,21 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F464;</span> {{ request.user.username }}</h2>
                 <nav class="mobile-menu-nav">
-                    <a onclick="showLoading()" href="{% url 'dashboard' %}"><span class="emoji">&#x1F5A5;</span> Dashboard</a>
-                    <a onclick="showLoading()" href="{% url 'home' %}"><span class="emoji">&#x1F3E1;</span> Home</a>
-                    <a href="#" onclick="openOverlay()" id="openShareOverlay"><span class="emoji">&#xE253;</span> Teilen</a>
-                    <a onclick="showLoading()" href="{% url 'benachrichtigungen_view' %}"><span class="emoji">&#x1F514;</span>
+                    <a  href="{% url 'dashboard' %}"><span class="emoji">&#x1F5A5;</span> Dashboard</a>
+                    <a  href="{% url 'home' %}"><span class="emoji">&#x1F3E1;</span> Home</a>
+                    <a href="#" class="openShareOverlay"><span class="emoji">&#xE253;</span> Teilen</a>
+                    <a  href="{% url 'benachrichtigungen_view' %}"><span class="emoji">&#x1F514;</span>
                         Benachrichtigungen</a>
-                    <a onclick="showLoading()" href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
-                    <a onclick="showLoading()" href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span> Klimapunkte</a>
-                    <a onclick="showLoading()" href="{% url 'users_overview' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
+                    <a  href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
+                    <a  href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span> Klimapunkte</a>
+                    <a  href="{% url 'users_overview' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
                         User</a>
-                    <a onclick="showLoading()" href="{% url 'presents_overview' %}"><span class="emoji">&#x1F381;</span> Geschenke</a>
-                    <a onclick="showLoading()" href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span> Einstellungen</a>
-                    <a onclick="showLoading()" href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span> Logout</a>
+                    <a  href="{% url 'presents_overview' %}"><span class="emoji">&#x1F381;</span> Geschenke</a>
+                    <a  href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span> Einstellungen</a>
+                    <a  href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span> Logout</a>
                     {% if user.is_superuser %}
                         <a href="/ClimateQuestAdmin/" target="_blank"><span class="emoji">&#x1F451;</span> Admin (I)</a>
-                        <a onclick="showLoading()" href="{% url 'admin' %}"><span class="emoji">&#x1F451;</span> Admin (II)</a>
+                        <a  href="{% url 'admin' %}"><span class="emoji">&#x1F451;</span> Admin (II)</a>
                     {% endif %}
                 </nav>
             </div>
@@ -775,8 +806,8 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F4CA;</span> Aktionen</h2>
                 <nav class="mobile-menu-nav">
-                    <a onclick="showLoading()" href="{% url 'add' %}"><span class="emoji">&#x2795;</span> Aktion hinzufügen</a>
-                    <a onclick="showLoading()" href="{% url 'history_me' %}"><span class="emoji">&#x1F4DC;</span> Aktions-Historie</a>
+                    <a  href="{% url 'add' %}"><span class="emoji">&#x2795;</span> Aktion hinzufügen</a>
+                    <a  href="{% url 'history_me' %}"><span class="emoji">&#x1F4DC;</span> Aktions-Historie</a>
                 </nav>
             </div>
         </div>
@@ -786,9 +817,9 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span> Family</h2>
                 <nav class="mobile-menu-nav">
-                    <a onclick="showLoading()" href="{% url 'create_family' %}"><span class="emoji">&#x2795;</span> Family erstellen</a>
-                    <a onclick="showLoading()" href="{% url 'join_family' %}"><span class="emoji">&#x1F91D;</span> Family beitreten</a>
-                    <a onclick="showLoading()" href="{% url 'families_view' %}"><span class="emoji">&#x1F440;</span> Meine Families</a>
+                    <a  href="{% url 'create_family' %}"><span class="emoji">&#x2795;</span> Family erstellen</a>
+                    <a  href="{% url 'join_family' %}"><span class="emoji">&#x1F91D;</span> Family beitreten</a>
+                    <a  href="{% url 'families_view' %}"><span class="emoji">&#x1F440;</span> Meine Families</a>
                 </nav>
             </div>
         </div>
@@ -798,9 +829,9 @@
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
                 <h2><span class="emoji">&#x1F465;</span> Community</h2>
                 <nav class="mobile-menu-nav">
-                    <a onclick="showLoading()" href="{% url 'create_community' %}"><span class="emoji">&#x2795;</span> Community erstellen</a>
-                    <a onclick="showLoading()" href="{% url 'join_community' %}"><span class="emoji">&#x1F91D;</span> Community beitreten</a>
-                    <a onclick="showLoading()" href="{% url 'communities_view' %}"><span class="emoji">&#x1F440;</span> Meine Communities</a>
+                    <a  href="{% url 'create_community' %}"><span class="emoji">&#x2795;</span> Community erstellen</a>
+                    <a  href="{% url 'join_community' %}"><span class="emoji">&#x1F91D;</span> Community beitreten</a>
+                    <a  href="{% url 'communities_view' %}"><span class="emoji">&#x1F440;</span> Meine Communities</a>
                 </nav>
             </div>
         </div>
@@ -878,7 +909,7 @@
 
     const renderDesktopNav = () => {
         header.innerHTML = `
-                <a href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}/{% endif %}" onclick="showLoading()" class="logo-link">
+                <a href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}/{% endif %}" class="logo-link">
                     <picture>
                 <source type="image/avif" srcset="
                     {% static 'icons/ClimateQuest-320.avif' %} 320w,
@@ -900,79 +931,79 @@
             </picture>
                 </a>
                 <nav>
-                    <a href="#" onclick="openOverlay()" id="openShareOverlay">Teilen</a>
+                    <a href="#" class="openShareOverlay">Teilen</a>
 
                     {% if user.is_authenticated %}
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Konto ▾</span>
                         <div class="dropdown-content">
                             <p>{{ user.username }}</p>
-                            <a onclick="showLoading()" href="{% url 'level_view' request.user.id %}">Level</a>
-                            <a onclick="showLoading()" href="{% url 'klimapunkte_view' request.user.id %}">Klimapunkte</a>
-                            <a onclick="showLoading()" href="{% url 'settings_view' %}">Profil bearbeiten</a>
-                            <a onclick="showLoading()" href="{% url 'users_overview' %}">User</a>
-                            <a onclick="showLoading()" href="{% url 'presents_overview' %}">Geschenke</a>
-                            <a onclick="showLoading()" href="{% url 'logout_view' %}">Logout</a>
+                            <a  href="{% url 'level_view' request.user.id %}">Level</a>
+                            <a  href="{% url 'klimapunkte_view' request.user.id %}">Klimapunkte</a>
+                            <a  href="{% url 'settings_view' %}">Profil bearbeiten</a>
+                            <a  href="{% url 'users_overview' %}">User</a>
+                            <a  href="{% url 'presents_overview' %}">Geschenke</a>
+                            <a  href="{% url 'logout_view' %}">Logout</a>
                             {% if user.is_staff %}
                             <a href="/ClimateQuestAdmin/" target="_blank">Admin-Bereich (I)</a>
-                            <a onclick="showLoading()" href="{% url 'admin' %}">Admin-Bereich (II)</a>
+                            <a  href="{% url 'admin' %}">Admin-Bereich (II)</a>
                             {% endif %}
                         </div>
                     </div>
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Aktionen ▾</span>
                         <div class="dropdown-content">
-                            <a onclick="showLoading()" href="{% url 'add' %}">Aktion hinzufügen</a>
-                            <a onclick="showLoading()" href="{% url 'history_me' %}">Aktions-Historie</a>
+                            <a  href="{% url 'add' %}">Aktion hinzufügen</a>
+                            <a  href="{% url 'history_me' %}">Aktions-Historie</a>
                         </div>
                     </div>
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Family ▾</span>
                         <div class="dropdown-content">
-                            <a onclick="showLoading()" href="{% url 'create_family' %}">Family erstellen</a>
-                            <a onclick="showLoading()" href="{% url 'join_family' %}">Family beitreten</a>
-                            <a onclick="showLoading()" href="{% url 'families_view' %}">Meine Families</a>
+                            <a  href="{% url 'create_family' %}">Family erstellen</a>
+                            <a  href="{% url 'join_family' %}">Family beitreten</a>
+                            <a  href="{% url 'families_view' %}">Meine Families</a>
                         </div>
                     </div>
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Community ▾</span>
                         <div class="dropdown-content">
-                            <a onclick="showLoading()" href="{% url 'create_community' %}">Community erstellen</a>
-                            <a onclick="showLoading()" href="{% url 'join_community' %}">Community beitreten</a>
-                            <a onclick="showLoading()" href="{% url 'communities_view' %}">Meine Communities</a>
+                            <a  href="{% url 'create_community' %}">Community erstellen</a>
+                            <a  href="{% url 'join_community' %}">Community beitreten</a>
+                            <a  href="{% url 'communities_view' %}">Meine Communities</a>
                         </div>
                     </div>
-                    <a onclick="showLoading()" href="{% url 'benachrichtigungen_view' %}">
+                    <a  href="{% url 'benachrichtigungen_view' %}">
                         <div class="benachrichtigung-wrapper">
                             <span class="emoji">&#x1F514;</span>
                             <span id="benachrichtigungen-count" class="count">?</span>
                         </div>
                     </a>
                     {% else %}
-                    <a onclick="showLoading()" href="{% url 'login_view' %}">Login</a>
+                    <a  href="{% url 'login_view' %}">Login</a>
                     {% endif %}
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Events ▾</span>
                         <div class="dropdown-content">
-                            {% if user.is_authenticated %}<a onclick="showLoading()" href="{% url 'add_event' %}
+                            {% if user.is_authenticated %}<a  href="{% url 'add_event' %}
             ">Event hinzufügen</a>{% endif %}
-                            <a onclick="showLoading()" href="{% url 'events_overview' %}">Überblick</a>
+                            <a  href="{% url 'events_overview' %}">Überblick</a>
                         </div>
                     </div>
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Artikel ▾</span>
                         <div class="dropdown-content">
-                            {% if user.is_authenticated %}<a onclick="showLoading()" href="{% url 'add_artikel' %}
+                            {% if user.is_authenticated %}<a  href="{% url 'add_artikel' %}
             ">Artikel hinzufügen</a>{% endif %}
-                            <a onclick="showLoading()" href="{% url 'artikel_overview' %}">Überblick</a>
+                            <a  href="{% url 'artikel_overview' %}">Überblick</a>
                         </div>
                     </div>
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Forum ▾</span>
                         <div class="dropdown-content">
-                            {% if user.is_authenticated %}<a onclick="showLoading()" href="{% url 'add_forum_post' %}
+                            {% if user.is_authenticated %}<a  href="{% url 'add_forum_post' %}
             ">Beitrag hinzufügen</a>{% endif %}
-                            <a onclick="showLoading()" href="{% url 'forum_overview' %}">Überblick</a>
+                            <a  href="{% url 'forum_overview' %}">Überblick</a>
                         </div>
                     </div>
                 </nav>
@@ -1007,6 +1038,7 @@
         } else {
             renderDesktopNav();
         }
+        resetOverlayTriggers();
     }
 
     function handleLoad() {
@@ -1015,6 +1047,8 @@
         } else {
             renderDesktopNav();
         }
+        resetOverlayTriggers();
+        initializeShareBtns();
     }
 
     window.addEventListener('resize', handleResize);
@@ -1023,7 +1057,7 @@
 
 
 <!--Up-Button-->
-<script>
+<script nonce="{{ request.csp_script_nonce }}">
     // Button ein-/ausblenden beim Scrollen
     const upBtn = document.getElementById('up-btn');
     window.addEventListener('scroll', function () {
@@ -1040,7 +1074,7 @@
 </script>
 
 {% if user.is_authenticated %}
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         const maxTries = 99;
         let tries = 0;
 
@@ -1087,7 +1121,7 @@
     <!--Teilen-->
     <div id="shareOverlay" class="overlay">
         <div class="overlay-content">
-            <button class="overlay-close" onclick="closeOverlay()"><span class="emoji">&#x2717;</span></button>
+            <button class="closeShareOverlay"><span class="emoji">&#x2717;</span></button>
 
             <div class="share-container">
                 <h1>Seite teilen</h1>
@@ -1102,7 +1136,7 @@
 
                 <p class="h3_size">Folgende URL teilen: <a href="#">{{ url }}</a></p>
 
-                <button class="share-btn native-share" onclick="sharePage('{{ url }}')">Teilen über Gerät</button>
+                <button class="share-btn native-share" id="share">Teilen über Gerät</button>
 
                 <p class="divider">ODER</p>
 
@@ -1122,9 +1156,9 @@
                     <a href="mailto:?subject=Schau mal!&body={{ url }}">
                         <button class="share-btn email">E-Mail</button>
                     </a>
-                    <button class="share-btn copy" onclick="copyURL('{{ url }}')" id="copy_button">Link kopieren
+                    <button class="share-btn copy" id="copy_button">Link kopieren
                     </button>
-                    <button class="share-btn qrcode" onclick="generateQrCode('{{ url }}')">QR-Code erstellen</button>
+                    <button class="share-btn qrcode" id="generateQrCode">QR-Code erstellen</button>
                 </div>
 
                 <div id="qrcodeContainer">
@@ -1134,7 +1168,7 @@
         </div>
     </div>
     <script src="{% static 'js/qrcode.min.js' %}"></script>
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         function openOverlay() {
             document.getElementById("shareOverlay").style.display = "flex";
 
@@ -1149,7 +1183,22 @@
             document.getElementById("shareOverlay").style.display = "none";
         }
 
-        function sharePage(url) {
+        function resetOverlayTriggers() {
+            document.querySelectorAll('.openShareOverlay').forEach((el) => {
+                el.addEventListener('click', openOverlay);
+            });
+            document.querySelectorAll('.closeShareOverlay').forEach((el) => {
+                el.addEventListener('click', closeOverlay);
+            });
+        }
+
+        function initializeShareBtns() {
+            document.getElementById('share').addEventListener('click', sharePage)
+            document.getElementById('copy_button').addEventListener('click', copyURL)
+            document.getElementById('generateQrCode').addEventListener('click', generateQrCode)
+        }
+
+        function sharePage(url = "{{ url }}") {
             if (navigator.share) {
                 navigator.share({url: url}).catch(console.error);
             } else {
@@ -1157,7 +1206,7 @@
             }
         }
 
-        function generateQrCode(url) {
+        function generateQrCode(url = "{{ url }}") {
             let qrcodeContainer = document.getElementById("qrcodeContainer");
             qrcodeContainer.innerHTML = "";
             qrcodeContainer.style.display = "block";
@@ -1187,7 +1236,7 @@
             link.click();
         }
 
-        function copyURL(url) {
+        function copyURL(url = "{{ url }}") {
             const copy_button = document.getElementById('copy_button');
 
             navigator.clipboard.writeText(url)
@@ -1202,5 +1251,52 @@
         }
     </script>
 {% endwith %}
+<script nonce="{{ request.csp_script_nonce }}">
+    const a_showLoading = document.querySelectorAll('a:not(.dont-show-loading):not(.mobile-menu-trigger)');
+    a_showLoading.forEach((el) => {
+        el.addEventListener('click', showLoading);
+    });
+
+    const form_showLoading = document.querySelectorAll('form:not(.dont-show-loading)');
+    form_showLoading.forEach((el) => {
+        el.addEventListener('submit', showLoading);
+    });
+
+    const forms_confirm = document.querySelectorAll('.form-confirm');
+    forms_confirm.forEach((el) => {
+        el.addEventListener('submit', (event) => {
+            const msg = el.dataset.confirm || "Bist du sicher?";
+            if (!confirm(msg)) {
+                event.preventDefault();
+            }
+        });
+    });
+
+    forms_fillEditor = document.querySelectorAll('.fill-editor');
+    forms_fillEditor.forEach((el) => {
+        el.addEventListener('submit', () => {
+            fillEditor(event);
+        });
+    })
+
+    function fillEditor(event) {
+        const form = event.target;
+        event.preventDefault();
+        let content = "";
+        if (getCookiePreferences().quill) {
+            try {
+                content = quill.root.innerHTML;
+            } catch {
+                console.error("Variable Quill not found");
+                alert("Ein interner Fehler ist aufgetreten. Probiere es später bitte erneut!");
+                return false;
+            }
+        } else {
+            content = document.getElementById('textarea-content').content;
+        }
+        form.querySelector('input[name=content]').value = content;
+        form.submit();
+    }
+</script>
 </body>
 </html>

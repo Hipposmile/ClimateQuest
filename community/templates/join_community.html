@@ -11,7 +11,7 @@
 <p class="{{message.level_tag}}-message">{{ message }}</p>
 {% endfor %}
 {% endif %}
-<form method="post" onsubmit="showLoading()">
+<form method="post" >
     {% csrf_token %}
     <label for="communityname">Communityname:</label>
     <input type="text" name="communityname" id="communityname" placeholder="Communityname" required>
@@ -24,6 +24,6 @@
     <button type="submit">Community beitreten</button>
 </form>
 
-<p>Oder <a onclick="showLoading()" href="{% url 'create_community' %}">eine Community gründen</a>.</p>
+<p>Oder <a  href="{% url 'create_community' %}">eine Community gründen</a>.</p>
 
 {% endblock %}

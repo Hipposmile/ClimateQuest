@@ -16,13 +16,13 @@
     {% endif %}
 
     <div class="btns">
-        <a onclick="showLoading()" href="{% url 'klimapunkte_view' user_expanded.user.id %}">
+        <a  href="{% url 'klimapunkte_view' user_expanded.user.id %}">
             <button class="btn">Klimapunkte</button>
         </a>
-        <a onclick="showLoading()" href="{% url 'level_view' user_expanded.user.id %}">
+        <a  href="{% url 'level_view' user_expanded.user.id %}">
             <button class="btn">Level</button>
         </a>
-        <a onclick="showLoading()" href="{% url 'history' user_expanded.user.id %}">
+        <a  href="{% url 'history' user_expanded.user.id %}">
             <button class="btn">Aktions-Historie</button>
         </a>
     </div>
@@ -36,14 +36,20 @@
 
     <h2>Wöchentliches Ziel</h2>
     <div class="progress-container">
-        <div class="progress-bar" style="width: {{ weekly_goal_progress_percent }}%; max-width: 100%"></div>
+        <div class="progress-bar" id="progress-bar"></div>
     </div>
+    <style nonce="{{ request.csp_style_nonce }}">
+        #progress-bar {
+            width: {{ weekly_goal_progress_percent }}%;
+            max-width: 100%;
+        }
+    </style>
     <p>{{ weekly_klimapunkte|floatformat:-4 }} Klimapunkte bis zum wöchentlichen Ziel von {{ weekly_goal }} Klimapunkten
         geschafft</p>
 
     <hr>
 
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         .streak-card-container .streak-card {
             background: var(--color-white);
             border-radius: 16px;
@@ -150,12 +156,11 @@
     <hr>
 
     <h2>User melden</h2>
-    <form method="post"
-          onsubmit="return confirm('Bist du sicher, dass du diesen User melden möchtest.') && showLoading()">
+    <form method="post" class="form-confirm" data-confirm="Bist du sicher, dass du diesen User melden möchtest.">
         {% csrf_token %}
         <label for="reason">Begründung</label>
         <textarea id="reason" name="reason" class="quill-editor"></textarea>
-        <button id="report_user" name="report_user" type="submit" style="color: red;">User melden</button>
+        <button id="report_user" name="report_user" type="submit" class="color-red">User melden</button>
         <p>Dies wird eine Nachricht mit folgenden Daten an ClimateQuest senden:</p>
         <ul>
             <li>Dein Userprofil</li>
@@ -167,7 +172,7 @@
         <p>Durch das Melden eines Users erhältst du selbst keine Vorteile.</p>
         <p>User können vor allem wegen Verstößen gegen die Nutzungsbedingungen gemeldet werden.</p>
 
-        <p style="color: red">Wenn du User willkürlich und ohne konkrete Begründung meldest, ist auch dies ein Verstoß
+        <p class="color-red">Wenn du User willkürlich und ohne konkrete Begründung meldest, ist auch dies ein Verstoß
             gegen die
             Nutzungsbedingungen.</p>
     </form>

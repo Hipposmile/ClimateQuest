@@ -4,10 +4,11 @@
 {% block meta %}
     <meta name="description" content="Sieh dir dein Level bei ClimateQuest an.">
 {% endblock %}
-{% block title %}ClimateQuest - {% if user == request.user %}Mein Level{% else %}Level von {{ user }}{% endif %}{% endblock %}
+{% block title %}ClimateQuest - {% if user == request.user %}Mein Level{% else %}Level von {{ user }}
+{% endif %}{% endblock %}
 {% block content %}
 
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         .level-table {
             width: 100%;
             max-width: 500px;
@@ -64,8 +65,14 @@
         <p>Du bist im Level: {{ level_data.current_level }}</p>
         <p>Nächstes Level: {{ level_data.next_level }}</p>
         <div class="progress-container">
-            <div class="progress-bar" style="width: {{ level_data.progress_percent }}%;"></div>
+            <div class="progress-bar" id="progress-bar"></div>
         </div>
+        <style nonce="{{ request.csp_style_nonce }}">
+            #progress-bar {
+                width: {{ weekly_goal_progress_percent }}%;
+                max-width: 100%;
+            }
+        </style>
         <p>{{ level_data.progress_percent }} % zum nächsten Level geschafft</p>
     {% endif %}
     <h3>Liste der Level</h3>
@@ -85,5 +92,5 @@
         {% endfor %}
         </tbody>
     </table>
-    <a onclick="showLoading()" href="{% url 'user_detail' user.id %}">Userseite ansehen</a>
+    <a  href="{% url 'user_detail' user.id %}">Userseite ansehen</a>
 {% endblock %}

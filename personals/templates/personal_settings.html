@@ -13,7 +13,7 @@
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message }}</p>
         {% endfor %}
-        <script>
+        <script nonce="{{ request.csp_script_nonce }}">
             // Verzögere das Scrolling, um sicherzustellen, dass es nach dem automatischen Browser-Scrolling passiert
             setTimeout(() => {
                 if (window.location.hash) {
@@ -31,18 +31,17 @@
         <li>E-Mail-Adresse: {{ user.email }}</li>
         <li>E-Mail-Adresse verifiziert: {{ user.usererweitert.mail_verified|yesno:"Ja,Nein" }}
             {% if user.usererweitert.mail_verified == False and user.email != '' %} |
-                <a onclick="showLoading()" href="{% url 'resend_verification_email' %}">Bestätigungs-E-Mail erneut
+                <a href="{% url 'resend_verification_email' %}">Bestätigungs-E-Mail erneut
                     senden</a>{% endif %}
         </li>
         <li>Account erstellt am: {{ user.date_joined }}</li>
         <li>Letzter Login: {{ user.last_login }}</li>
-        <li><a onclick="showLoading()" href="{% url 'user_detail' request.user.id %}">Zur öffentlichen Accountseite</a>
+        <li><a href="{% url 'user_detail' request.user.id %}">Zur öffentlichen Accountseite</a>
         </li>
     </ul>
     <hr>
-    <!-- Benutzername ändern -->
     <h3 id="username_h3">Benutzernamen ändern</h3>
-    <form method="post" onsubmit="showLoading()">
+    <form method="post">
         {% csrf_token %}
         <label for="password">Aktuelles Passwort:</label>
         <input type="password" name="password" id="password" placeholder="Passwort" required>
@@ -53,7 +52,7 @@
         <button type="submit" name="change_username">Speichern</button>
     </form>
 
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         document.getElementById('new_username').addEventListener('input', function () {
             const username = this.value;
             const feedback = document.getElementById('username-feedback');
@@ -80,15 +79,13 @@
     </script>
 
     <hr>
-
-    <!-- Passwort ändern -->
     <h3 id="password_h3">Passwort ändern</h3>
-    <form method="post" onsubmit="register(event)">
+    <form method="post" id="register_form">
         {% csrf_token %}
         <label for="current_password">Aktuelles Passwort:</label>
         <input type="password" name="current_password" id="current_password" placeholder="Aktuelles Passwort" required>
         <label for="new_password">Neues Passwort:</label>
-        <a id="showPassword" style="color: red">Passwort anzeigen</a>
+        <a id="showPassword" class="color-red">Passwort anzeigen</a>
         <input type="password" name="new_password" id="new_password" placeholder="Neues Passwort" required>
         <div>
             <h4>Wir empfehlen folgende Passwortanforderungen, um deinen Account vor Hackingangriffen und
@@ -104,10 +101,10 @@
         </div>
         <button type="submit" name="change_password">Ändern</button>
     </form>
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         let passwordRecommendation = false;
     </script>
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         const passwordInput = document.getElementById('new_password')
         const password_lenght = document.getElementById('length')
         const uppercase = document.getElementById('uppercase')
@@ -130,7 +127,7 @@
         });
 
     </script>
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         function register(event) {
             event.preventDefault(); // verhindert sofortiges Abschicken
             if (!passwordRecommendation) {
@@ -151,8 +148,12 @@
             }
             form.submit()
         }
+
+        document.getElementById('register_form').addEventListener('submit', () => {
+            register(event);
+        });
     </script>
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         const showPassword = document.getElementById('showPassword');
         let password = document.getElementById('new_password');
         showPassword.addEventListener('mousedown', function () {
@@ -172,7 +173,7 @@
     <hr>
 
     <h3 id="email_h3">E-Mail-Adresse ändern</h3>
-    <form method="post" onsubmit="showLoading()">
+    <form method="post">
         {% csrf_token %}
         <label for="password">Passwort:</label>
         <input type="password" name="password" id="password" placeholder="Passwort" required>
@@ -183,7 +184,7 @@
         <small>Dein Account wird so lange inaktiv sein, bis die neue E-Mail-Adresse verifiziert wurde.</small>
         <button type="submit" name="change_email">Ändern</button>
     </form>
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         document.getElementById('email').addEventListener('input', function () {
             const email = this.value;
             const email_feedback = document.getElementById('email-feedback');
@@ -208,7 +209,7 @@
     <hr>
 
     <h3 id="mailsettings_h3">E-Mail Einstellungen</h3>
-    <form method="post" onsubmit="showLoading()">
+    <form method="post">
         {% csrf_token %}
         <label for="password">Passwort:</label>
         <input type="password" name="password" id="password" placeholder="Passwort" required>
@@ -220,7 +221,7 @@
         <button type="submit" name="change_email_settings">Speichern</button>
     </form>
 
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         const mailinglist_checkbox = document.getElementById('mailinglist_checkbox');
         fetch(`/personals/get_email_settings`)
             .then(response => response.json())
@@ -233,10 +234,8 @@
             })
     </script>
     <hr>
-
-    <!--Statement ändern!-->
     <h3 id="statement_h3">Statement ändern</h3>
-    <form method="post" onsubmit="fillEditor(event)">
+    <form method="post" class="fill-editor">
         {% csrf_token %}
         <label for="password">Passwort:</label>
         <input type="password" name="password" id="password" placeholder="Passwort" required>
@@ -248,75 +247,18 @@
         <button type="submit" name="change_statement">Speichern</button>
     </form>
 
-    <!-- Quill CSS -->
     <div class="cookie-blocked" data-requires="quill"
          data-content='<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />'>
     </div>
 
-    <script>
-        let quill;
-        document.addEventListener('DOMContentLoaded', function () {
-            let editor = document.getElementById('content_editor')
-            if (getCookiePreferences().quill) {
-                const script = document.createElement("script");
-                script.src = "https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js";
-                document.body.appendChild(script);
-                script.onload = function () {
-                    if (editor) {
-                        quill = new Quill(editor, {
-                            theme: 'snow',
-                            modules: {
-                                toolbar: [
-                                    [{header: [1, 2, false]}],
-                                    ['bold', 'italic', 'underline'],
-                                    [{'list': 'ordered'}, {'list': 'bullet'}],
-                                    ['link']
-                                ]
-                            }
-                        });
-                    } else {
-                        console.warn("Editor not found");
-                    }
-                }
-            } else {
-                editor.innerHTML = `<textarea class="quill-editor" style="max-width: 400px; min-width: 400px;">{{ user.usererweitert.statement }}</textarea>`;
-            }
-        });
-
-
-        // Beim Absenden des Formulars
-        function fillEditor(event) {
-            if (getCookiePreferences().quill) {
-                const form = event.target;
-                event.preventDefault();
-                try {
-                    var html = quill.root.innerHTML;
-                    form.querySelector('input[name=statement]').value = html;
-
-                    // Button-Wert manuell setzen
-                    const btn = form.querySelector('button[name=change_statement]');
-                    if (btn) {
-                        const hidden = document.createElement('input');
-                        hidden.type = 'hidden';
-                        hidden.name = btn.name;
-                        hidden.value = btn.value || btn.textContent;
-                        form.appendChild(hidden);
-                    }
-
-                    form.submit();
-                } catch {
-                    console.error("Variable Quill not found");
-                    alert("Ein interner Fehler ist aufgetreten. Probiere es später bitte erneut!");
-                    return false;
-                }
-            }
-        }
+    <script nonce="{{ request.csp_script_nonce }}">
+        document.addEventListener('DOMContentLoaded', initializeQuill);
     </script>
 
     <hr>
 
     <h3 id="change_goal_h3">Wöchentliches Ziel ändern</h3>
-    <form method="post" onsubmit="showLoading()">
+    <form method="post">
         {% csrf_token %}
         <label for="weekly_goal">Wöchentliches Ziel</label>
         <input id="weekly_goal" name="weekly_goal" type="number" value="{{ request.user.usererweitert.weekly_goal }}"
@@ -327,25 +269,24 @@
     </form>
 
     <hr>
-    <!-- Account löschen -->
     <h3 id="delete_h3">Account löschen</h3>
-    <form method="post"
-          onsubmit="return confirm('Willst du deinen Account wirklich löschen?') && showLoading()">
+    <form method="post" class="form-confirm" data-confirm="Willst du deinen Account wirklich löschen?">
         {% csrf_token %}
         <label for="password">Passwort:</label>
         <input type="password" name="password" id="password" placeholder="Passwort" required>
-        <button type="submit" name="delete_account" style="color:red;">Diesen Account löschen</button>
+        <button type="submit" name="delete_account" class="color-red">Diesen Account löschen</button>
         <p>Dadurch werden alle mit deinem Konto verknüpften Daten wie Aktionen oder Chat-Nachrichten gelöscht. Alle
             Mitglieder deiner Families und Communities werden darüber benachrichtigt werden.</p>
     </form>
 
+    <hr>
     <h3 id="deletesingledata_h3">Löschen einzelner Daten</h3>
     <p>Wenn du nur einige mit deinem Konto verknüpften Daten löschen möchtest, wende dich bitte an <a
             href="mailto:climate-quest.de?subject:Anforderung zum Löschen bestimmter Daten">kontakt@climate-quest.de</a>.
         Nenne hier bitte die konkreten Daten, welche du löschen möchtest. Wenn sich die Daten über die Webseite bereits
         löschen lassen, werden diese auch tatsächlich gelöscht und als Backup maximal 14 Tage gespeichert. </p>
     <hr>
-    <a onclick="showLoading()" href="{% url 'reset_password' %}">
+    <a href="{% url 'reset_password' %}">
         <button class="btn">Passwort resetten</button>
     </a>
 

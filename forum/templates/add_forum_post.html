@@ -2,7 +2,8 @@
 
 
 {% block meta %}
-    <meta name="description" content="Erstelle einen neuen Post im Forum von ClimateQuest, um deine Fragen zur Klimakrise oder zur Organisation und Durchführung von Aktionen zum Klima-Themen von anderen Usern beantworten zu lassen.">
+    <meta name="description"
+          content="Erstelle einen neuen Post im Forum von ClimateQuest, um deine Fragen zur Klimakrise oder zur Organisation und Durchführung von Aktionen zum Klima-Themen von anderen Usern beantworten zu lassen.">
 {% endblock %}
 
 {% block title %}ClimateQuest - Forum-Beitrag hinzufügen{% endblock %}
@@ -17,7 +18,7 @@
         {% endfor %}
     {% endif %}
 
-    <form method="post" onsubmit="fillEditor(event)">
+    <form method="post" class="fill-editor">
         {% csrf_token %}
         <label for="title">Titel</label>
         <input type="text" name="title" id="title" placeholder="Titel" maxlength="100" required>
@@ -29,7 +30,8 @@
         <label class="custom-checkbox">
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
-            <span class="label-text">Ich bestätige, dass dies eine ernst gemeinte Frage ist und dass sie mit den <a onclick="showLoading()" href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmt.</span>
+            <span class="label-text">Ich bestätige, dass dies eine ernst gemeinte Frage ist und dass sie mit den <a
+                    href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmt.</span>
         </label>
 
         <button type="submit">Speichern</button>
@@ -40,51 +42,7 @@
          data-content='<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />'>
     </div>
 
-    <script>
-        let quill;
-        document.addEventListener('DOMContentLoaded', function () {
-            let editor = document.getElementById('content_editor')
-            if (getCookiePreferences().quill) {
-                const script = document.createElement("script");
-                script.src = "https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js";
-                document.body.appendChild(script);
-                script.onload = function () {
-                    if (editor) {
-                        quill = new Quill(editor, {
-                            theme: 'snow',
-                            modules: {
-                                toolbar: [
-                                    [{header: [1, 2, false]}],
-                                    ['bold', 'italic', 'underline'],
-                                    [{'list': 'ordered'}, {'list': 'bullet'}],
-                                    ['link']
-                                ]
-                            }
-                        });
-                    } else {
-                        console.warn("Editor not found");
-                    }
-                }
-            } else {
-                editor.innerHTML = `<textarea placeholder="Beschreibung" class="quill-editor"  id="textarea-content" style="width: 100%;"></textarea>`;
-            }
-        });
-
-        function fillEditor(event) {
-            const form = event.target;
-            event.preventDefault();
-            if (getCookiePreferences().quill) {
-                try {
-                    form.querySelector('input[name=content]').value = quill.root.innerHTML;
-                    form.submit();
-                } catch {
-                    console.error("Variable Quill not found");
-                    alert("Ein interner Fehler ist aufgetreten. Probiere es später bitte erneut!");
-                    return false;
-                }
-            } else {
-                form.querySelector('input[name=content]').value = document.getElementById('textarea-content');
-            }
-        }
+    <script nonce="{{ request.csp_script_nonce }}">
+        document.addEventListener('DOMContentLoaded', initializeQuill);
     </script>
 {% endblock %}

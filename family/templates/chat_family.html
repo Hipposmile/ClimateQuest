@@ -11,7 +11,7 @@
 
 {% block content %}
 
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         .chat-family-container {
             max-width: 500px;
             margin: 2rem auto;
@@ -136,7 +136,7 @@
         }
     </style>
 
-    <h1>Chat: Family <a onclick="showLoading()" href="{% url 'family_detail' family.id %}">{{ family.name }}</a></h1>
+    <h1>Chat: Family <a  href="{% url 'family_detail' family.id %}">{{ family.name }}</a></h1>
 
     {% if messages %}
         {% for message in messages %}
@@ -145,7 +145,7 @@
     {% endif %}
 
     <div class="chat-family-container">
-        <button type="button" class="chat-refresh-btn" onclick="location.reload()" title="Chat aktualisieren">
+        <button type="button" class="chat-refresh-btn" id="refresh" title="Chat aktualisieren">
             <picture>
                 <source type="image/avif" srcset="
                     {% static 'images/refresh/refresh-320.avif' %} 320w,
@@ -184,7 +184,7 @@
                 <div class="chat-family-message {% if msg.user == user %}me{% else %}other{% endif %}">
                     <div class="chat-family-bubble">
                         {{ msg.message }}
-                        <span class="chat-family-meta"><a onclick="showLoading()" href="{% url 'user_detail' msg.user.id %}"
+                        <span class="chat-family-meta"><a  href="{% url 'user_detail' msg.user.id %}"
                                                           class="chat-family-meta">{{ msg.user.username }}</a></span>
                         <span class="chat-family-meta">{{ msg.erstellt_am|date:"d.m.Y H:i" }}</span>
                     </div>
@@ -193,7 +193,7 @@
                 <div class="chat-family-empty">Noch keine Nachrichten.</div>
             {% endfor %}
         </div>
-        <form method="post" class="chat-family-form" onsubmit="showLoading()">
+        <form method="post" class="chat-family-form" >
             {% csrf_token %}
             <label for="message">Nachricht eingeben</label>
             <br>
@@ -202,12 +202,14 @@
             <button type="submit" name="send">Senden</button>
         </form>
     </div>
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         document.addEventListener("DOMContentLoaded", function () {
             var chatContainer = document.querySelector('.chat-family-messages');
             if (chatContainer) {
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             }
         });
+
+        document.getElementById('.refresh').addEventListener('click', location.reload)
     </script>
 {% endblock %}

@@ -14,7 +14,7 @@
 <p class="{{message.level_tag}}-message">{{ message }}</p>
 {% endfor %}
 {% endif %}
-<form method="post" onsubmit="showLoading()">
+<form method="post" >
     {% csrf_token %}
     <label for="familyname">Familyname:</label>
     <small id="familyname-feedback"></small>
@@ -35,9 +35,9 @@
   </div>
     <button type="submit" id="create-button">Family erstellen</button>
 </form>
-<p>Oder <a onclick="showLoading()" href="{% url 'join_family' %}">einer bestehenden Family beitreten</a>.</p>
+<p>Oder <a  href="{% url 'join_family' %}">einer bestehenden Family beitreten</a>.</p>
 
-<script>
+<script nonce="{{ request.csp_script_nonce }}">
     const passwordInput = document.getElementById('family_admin_password')
     const password_lenght = document.getElementById('length')
     const uppercase = document.getElementById('uppercase')

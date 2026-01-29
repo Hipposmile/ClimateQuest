@@ -6,7 +6,7 @@
 {% block title %}ClimateQuest - Tester/-innen{% endblock %}
 
 {% block content %}
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         .accordion {
             width: 100%;
             background: #ffffff;
@@ -238,7 +238,7 @@
     <p>Aber auch wenn du diese Aspekte ignorierst, freuen wir uns natürlich sehr über deine Unterstützung!</p>
     <p class="h2_size">Vielen Dank! <span class="emoji">&#x1F973;</span></p>
 
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         document.querySelectorAll(".accordion").forEach((accordion) => {
             const toggleBtn = accordion.querySelector(".accordion-toggle");
             const contentWrapper = accordion.querySelector(".accordion-content-wrapper");

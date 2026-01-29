@@ -7,7 +7,7 @@
 
 {% block content %}
 
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         .event-form {
             margin-top: 1em;
         }
@@ -46,7 +46,7 @@
     <p><strong>Adresse:</strong> {{ event.adress }}</p>
 
     <p class="{% if request.user == event.creator %}event-creator{% else %}event-user{% endif %}">
-        <strong>Ersteller:</strong> <a onclick="showLoading()" href="{% url 'user_detail' event.creator.id %}">{{ event.creator.username }}</a>
+        <strong>Ersteller:</strong> <a  href="{% url 'user_detail' event.creator.id %}">{{ event.creator.username }}</a>
         {% if request.user == event.creator %}(Du){% endif %}
     </p>
 
@@ -72,7 +72,7 @@
                 {% endif %}
             </form>
         {% else %}
-            <a onclick="showLoading()" href="{% url 'edit_event' event.id %}" class="edit-link">Bearbeiten</a>
+            <a  href="{% url 'edit_event' event.id %}" class="edit-link">Bearbeiten</a>
         {% endif %}
     {% endif %}
 
@@ -104,7 +104,7 @@
                         <details>
                             <summary>selbst antworten</summary>
                             {% if user.is_authenticated %}
-                                <form method="post" onsubmit="showLoading()">
+                                <form method="post" >
                                     {% csrf_token %}
                                     <input type="hidden" name="question_id" value="{{ question.id }}">
                                     <label for="answer">Antwort:</label>
@@ -112,7 +112,7 @@
                                     <button name="answer_question">Antworten</button>
                                 </form>
                             {% else %}
-                                <p><a onclick="showLoading()" href="{% url 'login_view' %}">Logge dich ein</a>, um den Kommentar zu beantworten
+                                <p><a  href="{% url 'login_view' %}">Logge dich ein</a>, um den Kommentar zu beantworten
                                 </p>
                             {% endif %}
                         </details>
@@ -124,7 +124,7 @@
         {% endif %}
     </div>
 
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         document.addEventListener("DOMContentLoaded", function () {
             const comments = document.querySelectorAll(".comment");
 
@@ -159,14 +159,14 @@
     </script>
 
     {% if user.is_authenticated %}
-        <form method="post" onsubmit="showLoading()">
+        <form method="post" >
             {% csrf_token %}
             <label for="question">Frage stellen:</label>
             <input type="text" name="question" id="question" placeholder="Frage stellen">
             <button type="submit" name="ask_question">Frage stellen</button>
         </form>
     {% else %}
-        <p><a onclick="showLoading()" href="{% url 'login_view' %}">Logge dich ein</a>, um einen Kommentar zu verfassen
+        <p><a  href="{% url 'login_view' %}">Logge dich ein</a>, um einen Kommentar zu verfassen
         </p>
     {% endif %}
 {% endblock %}

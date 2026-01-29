@@ -7,7 +7,7 @@
 {% block title %}ClimateQuest - Post {{ post.title }}{% endblock %}
 
 {% block content %}
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         .answer {
             background-color: var(--color-bg);
             border-left: 4px solid var(--color-primary);
@@ -35,20 +35,20 @@
 
     <div class="artikel-content"><p>{{ post.content|safe }}</p></div>
     <br>
-    <p>Erstellt von <a onclick="showLoading()" href="{% url 'user_detail' post.creator.id %}">{{ post.creator }}</a></p>
+    <p>Erstellt von <a  href="{% url 'user_detail' post.creator.id %}">{{ post.creator }}</a></p>
     <p>Erstellt am: {{ post.date_time|date:"d.m.Y H:i" }}</p>
 
     {% for answer in answers %}
         <div class="answer">
             <p>{{ answer.content|safe }}</p>
-            <p><small>Antwort von <a onclick="showLoading()" href="{% url 'user_detail' answer.creator.id %}">{{ answer.creator }}</a>
+            <p><small>Antwort von <a  href="{% url 'user_detail' answer.creator.id %}">{{ answer.creator }}</a>
                 am {{ answer.date_time|date:"d.m.Y H:i" }}</small></p>
         </div>
     {% endfor %}
 
 
     <h3>Antworten</h3>
-    <form method="post" onsubmit="fillEditor(event)">
+    <form method="post" class="fill-editor">
         {% csrf_token %}
         <div id="content_editor" class="quill-editor"></div>
         <input type="hidden" name="content">
@@ -68,53 +68,8 @@
          data-content='<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />'>
     </div>
 
-    <script>
-        let quill;
-        document.addEventListener('DOMContentLoaded', function () {
-            let editor = document.getElementById('content_editor')
-            if (getCookiePreferences().quill) {
-                const script = document.createElement("script");
-                script.src = "https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js";
-                document.body.appendChild(script);
-                script.onload = function () {
-                    if (editor) {
-                        quill = new Quill(editor, {
-                            theme: 'snow',
-                            modules: {
-                                toolbar: [
-                                    [{header: [1, 2, false]}],
-                                    ['bold', 'italic', 'underline'],
-                                    [{'list': 'ordered'}, {'list': 'bullet'}],
-                                    ['link']
-                                ]
-                            }
-                        });
-                    } else {
-                        console.warn("Editor not found");
-                    }
-                }
-            } else {
-                editor.innerHTML = `<textarea placeholder="Beschreibung" class="quill-editor" style="max-width: 400px; min-width: 400px;"></textarea>`;
-            }
-        });
-
-
-        // Beim Absenden des Formulars
-        function fillEditor(event) {
-            if (getCookiePreferences().quill) {
-                const form = event.target;
-                event.preventDefault();
-                try {
-                    var html = quill.root.innerHTML;
-                    form.querySelector('input[name=content]').value = html;
-                    form.submit();
-                } catch {
-                    console.error("Variable Quill not found");
-                    alert("Ein interner Fehler ist aufgetreten. Probiere es später bitte erneut!");
-                    return false;
-                }
-            }
-        }
+    <script nonce="{{ request.csp_script_nonce }}">
+        document.addEventListener('DOMContentLoaded', initializeQuill);
     </script>
 
 {% endblock %}

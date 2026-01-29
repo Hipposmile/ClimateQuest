@@ -13,7 +13,7 @@
 <p class="{{message.level_tag}}-message">{{ message }}</p>
 {% endfor %}
 {% endif %}
-<form method="post" onsubmit="showLoading()">
+<form method="post" >
     {% csrf_token %}
     <label for="familyname">Familyname:</label>
     <input type="text" name="familyname" id="familyname" placeholder="Familyname" required>
@@ -22,6 +22,6 @@
     <button type="submit">Family beitreten</button>
 </form>
 
-<p>Oder <a onclick="showLoading()" href="{% url 'create_family' %}">eine Family gründen</a>.</p>
+<p>Oder <a  href="{% url 'create_family' %}">eine Family gründen</a>.</p>
 
 {% endblock %}

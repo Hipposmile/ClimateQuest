@@ -12,14 +12,14 @@
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
-    <form method="post" onsubmit="fillEditor(event) && showLoading()">
+    <form method="post" class="fill-editor">
         {% csrf_token %}
         <label for="name">Name</label>
         <input type="text" id="name" name="name" placeholder="Name" maxlength="100" required>
 
-        <label for="description_editor">Beschreibung</label>
-        <div id="description_editor" class="quill-editor"></div>
-        <input type="hidden" name="description">
+        <label for="content_editor">Beschreibung</label>
+        <div id="content_editor" class="quill-editor"></div>
+        <input type="hidden" name="content">
 
         <label for="date_time">Datum und Uhrzeit (Beginn)</label>
         <input type="datetime-local" id="date_time" name="date_time" required>
@@ -45,59 +45,15 @@
          data-content='<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />'>
     </div>
 
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         document.addEventListener('DOMContentLoaded', function () {
             const day_after_tomorrow = new Date(Date.now() + 48 * 60 * 60 * 1000);
             const formatted = day_after_tomorrow.toISOString().slice(0, 16); // YYYY-MM-DDTHH:MM
             let dateInput = document.getElementById('date_time');
             dateInput.min = formatted;
             dateInput.value = formatted;
-        });
 
-        let quill;
-        document.addEventListener('DOMContentLoaded', function () {
-            let editor = document.getElementById('description_editor')
-            if (getCookiePreferences().quill) {
-                const script = document.createElement("script");
-                script.src = "https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js";
-                document.body.appendChild(script);
-                script.onload = function () {
-                    if (editor) {
-                        quill = new Quill(editor, {
-                            theme: 'snow',
-                            modules: {
-                                toolbar: [
-                                    [{header: [1, 2, false]}],
-                                    ['bold', 'italic', 'underline'],
-                                    [{'list': 'ordered'}, {'list': 'bullet'}],
-                                    ['link']
-                                ]
-                            }
-                        });
-                    } else {
-                        console.warn("Editor not found");
-                    }
-                }
-            } else {
-                editor.innerHTML = `<textarea placeholder="Beschreibung" class="quill-editor" id="textarea-description" style="width: 100%;"></textarea>`;
-            }
+            initializeQuill();
         });
-
-        function fillEditor(event) {
-            const form = event.target;
-            event.preventDefault();
-            if (getCookiePreferences().quill) {
-                try {
-                    form.querySelector('input[name=description]').value = quill.root.innerHTML;
-                    form.submit();
-                } catch {
-                    console.error("Variable Quill not found");
-                    alert("Ein interner Fehler ist aufgetreten. Probiere es später bitte erneut!");
-                    return false;
-                }
-            } else {
-                form.querySelector('input[name=description]').value = document.getElementById('textarea-description');
-            }
-        }
     </script>
 {% endblock %}

@@ -21,11 +21,24 @@
 
     <p id="source-label" class="action-label"></p>
     <p>Bitte gib bei Aktionen, die länger als einen Tag gedauert haben, das Enddatum an.</p>
-    <button class="info-btn" id="anmerkung-button" onclick="toggleAnmerkung()" style="display: none;" type="button">?
+    <button class="info-btn display-none" id="anmerkung-button" type="button">?
     </button>
-    <div id="anmerkung-box" class="anmerkung-box" style="display: none;"></div>
+    <div id="anmerkung-box" class="anmerkung-box display-none"></div>
 
-    <form method="POST" onsubmit="showLoading()">
+    <script nonce="{{ request.csp_script_nonce }}">
+        function toggleAnmerkung() {
+            const box = document.getElementById('anmerkung-box');
+            if (box.classList.contains('display-none')) {
+                box.classList.remove('display-none');
+            } else {
+                box.classList.add('display-none');
+            }
+        }
+
+        document.getElementById("anmerkung-button").addEventListener('click', toggleAnmerkung);
+    </script>
+
+    <form method="POST">
         {% csrf_token %}
         <label for="action_type">Ausgewähltes Element:</label>
         <input type="text" id="action_type" name="action_type" readonly>
@@ -78,7 +91,7 @@
                 </ul>
             </div>
 
-            <div id="page-items" style="display:none;">
+            <div id="page-items" class="display-none">
                 <h2 id="items-title"></h2>
                 <ul id="items-list"></ul>
                 <button id="backToCategories">Zurück</button>
@@ -89,7 +102,7 @@
         </div>
     </div>
 
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         .modal {
             display: none;
             position: fixed;
@@ -250,7 +263,7 @@
         }
     </style>
 
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         const data = {
             {% for category in categories %}
                 "{{ category.id }}": {
@@ -408,12 +421,12 @@
             calculateImpact();
 
             if (anmerkung !== '-') {
-                anmerkungButton.style.display = 'inline-block';
+                anmerkungButton.classList.remove('display-none');
                 anmerkungBox.textContent = anmerkung;
             } else {
-                anmerkungButton.style.display = 'none';
+                anmerkungButton.classList.add('display-none');
                 anmerkungBox.textContent = '';
-                anmerkungBox.style.display = 'none';
+                anmerkungBox.classList.add('display-none');
             }
         }
 
@@ -446,11 +459,6 @@
                 }).format(impact);
                 impact_anzeige.textContent = 'Insgesamt durch diese Aktion gewonnene Klimapunkte: ' + impact;
             }
-        }
-
-        function toggleAnmerkung() {
-            const box = document.getElementById('anmerkung-box');
-            box.style.display = box.style.display === 'none' ? 'block' : 'none';
         }
     </script>
 {% endblock %}

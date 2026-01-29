@@ -6,5 +6,9 @@
 {% block content %}
     <h1>500 – Interner Serverfehler</h1>
     <p>Es ist ein unerwarteter Fehler aufgetreten. Wir arbeiten daran!</p>
-    <button class="btn" onclick="window.location.reload()">Erneut probieren</button>
+    <button class="btn" id="refresh">Erneut probieren</button>
+
+    <script nonce="{{ request.csp_script_nonce }}">
+        document.getElementById('#refresh').addEventListener('click', location.reload)
+    </script>
 {% endblock %}

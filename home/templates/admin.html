@@ -7,54 +7,40 @@
 {% block title %}ClimateQuest - Benachrichtigungen erstellen - Admin{% endblock %}
 
 {% block content %}
-<h1>Benachrichtigungen erstellen - Admin</h1>
-{% if messages %}
-{% for message in messages %}
-<p class="{{ message.level_tag }}-message">{{ message }}</p>
-{% endfor %}
-{% endif %}
-<h3>Benachrichtigung erstellen</h3>
-<form method="post" onsubmit="return confirm('Möchtest du diese Benachrichtigung wirklich erstellen?') && showLoading()">
-    <label for="receiver">{% csrf_token %}</label><select name="receiver" id="receiver">
+    <h1>Benachrichtigungen erstellen - Admin</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <h3>Benachrichtigung erstellen</h3>
+    <form method="post" class="form-confirm" data-confirm="Möchtest du diese Benachrichtigung wirklich erstellen?">
+        <label for="receiver">{% csrf_token %}</label><select name="receiver" id="receiver">
         <option value="user" selected>User</option>
         <option value="family-members">Family-Members</option>
         <option value="community-members">Community-Members</option>
         <option value="event-participants">Event-Teilnehmer</option>
     </select>
-    <label for="name">Name:</label>
-    <input type="text" name="name" id="name" placeholder="Username" required />
-    <label for="msg">Nachricht:</label>
-    <input type="text" name="msg" id="msg" placeholder="Nachricht" maxlength="500" required />
-    <button type="submit" name="benachrichtigung">Erstellen</button>
-    <small>Wenn alle User erreicht werden sollen, bitte Family 'worldwide ranking' angeben</small>
-</form>
-<script>
-    document.getElementById('receiver').addEventListener('change', function () {
-        const receiver = this.value;
-        const nameInput = document.getElementById('name');
-        if (receiver == 'user') {
-            nameInput.placeholder = 'Username';
-        } else if (receiver == 'family-members') {
-            nameInput.placeholder = 'Family-Name';
-        } else if (receiver == 'community-members') {
-            nameInput.placeholder = 'Community-Name';
-        } else if (receiver == 'event-participants') {
-            nameInput.placeholder = 'Event-Id';
-        }
-    });
-</script>
-<hr>
-<h3>"worldwide ranking" überprüfen</h3>
-<form method="post" onsubmit="showLoading()">
-    {% csrf_token %}
-    <small>Dies wird überprüfen, ob die Family "worldwide ranking" existiert, und sie nötigenfalls erstellen sowie alle User hinufügen.</small>
-    <button type="submit" name="check_worldwide_ranking">Überprüfen</button>
-</form>
-<hr>
-<h3>"UserErweitert" überprüfen</h3>
-<form method="post" onsubmit="showLoading()">
-    {% csrf_token %}
-    <small>Dies wird überprüfen, ob jedem User ein UserErweitert zugewiesen wurde, und nötigenfalls eines erstellen.</small>
-    <button type="submit" name="add_everyone_user_erweitert">Überprüfen</button>
-</form>
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" placeholder="Username" required/>
+        <label for="msg">Nachricht:</label>
+        <input type="text" name="msg" id="msg" placeholder="Nachricht" maxlength="500" required/>
+        <button type="submit" name="benachrichtigung">Erstellen</button>
+        <small>Wenn alle User erreicht werden sollen, bitte Family 'worldwide ranking' angeben</small>
+    </form>
+    <script nonce="{{ request.csp_script_nonce }}">
+        document.getElementById('receiver').addEventListener('change', function () {
+            const receiver = this.value;
+            const nameInput = document.getElementById('name');
+            if (receiver == 'user') {
+                nameInput.placeholder = 'Username';
+            } else if (receiver == 'family-members') {
+                nameInput.placeholder = 'Family-Name';
+            } else if (receiver == 'community-members') {
+                nameInput.placeholder = 'Community-Name';
+            } else if (receiver == 'event-participants') {
+                nameInput.placeholder = 'Event-Id';
+            }
+        });
+    </script>
 {% endblock %}

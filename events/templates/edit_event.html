@@ -19,15 +19,15 @@
     <p><strong>geschätzte Dauer in Minuten:</strong> {{ event.duration }}</p>
     <p><strong>Adresse:</strong> {{ event.adress }}</p>
 
-    <form method="post" onsubmit="fillEditor() && showLoading()">
+    <form method="post" class="fill-editor">
         {% csrf_token %}
         <label for="name">Name</label>
         <input type="text" id="name" name="name" placeholder="Name" maxlength="100" value="{{ event.name }}" required>
 
-        <label for="description_editor">Beschreibung</label>
-        <div id="description_editor" style="height: 300px;">{{ event.description|safe }}</div>
+        <label for="content_editor">Beschreibung</label>
+        <div id="content_editor">{{ event.description|safe }}</div>
         <small>Wenn du die Quill-Cookies abgelehnt hast, können Design-Elemente nicht richtig angezeigt werden. Stattdessen wirst du seltsame Tags wie &lt;p&gt; sehen.</small>
-        <input type="hidden" name="description">
+        <input type="hidden" name="content">
 
         <label for="date_time">Datum und Uhrzeit (Beginn)</label>
         <input type="datetime-local" id="date_time" name="date_time" value="{{ event.date_time|date:"d.m.Y, H:i" }}"
@@ -49,9 +49,9 @@
 
         <button type="submit" name="edit">Speichern</button>
     </form>
-    <form method="post" onsubmit="return confirm('Möchtest du dieses Event wirklich löschen?') && showLoading()">
+    <form method="post" class="form-confirm" data-confirm="Möchtest du dieses Event wirklich löschen?">
         {% csrf_token %}
-        <button type="submit" name="delete" style="color: red;">Event löschen</button>
+        <button type="submit" name="delete" class="color-red">Event löschen</button>
     </form>
 
     <!-- Quill CSS -->
@@ -60,7 +60,7 @@
     </div>
 
 
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         document.addEventListener('DOMContentLoaded', function () {
             const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000);
             const formatted = tomorrow.toISOString().slice(0, 16); // YYYY-MM-DDTHH:MM
@@ -71,48 +71,13 @@
             let durationInput = document.getElementById('duration');
             duration = formatToFloat(duration);
             durationInput.value = duration;
+
+            initializeQuill();
         });
 
         function formatToFloat(str) {
             const normalized = str.replace(/\./g, '').replace(',', '.');
             return parseFloat(normalized);
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            let editor = document.getElementById('description_editor')
-            if (getCookiePreferences().quill) {
-                const script = document.createElement("script");
-                script.src = "https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js";
-                document.body.appendChild(script);
-                script.onload = function () {
-                    if (editor) {
-                        var quill = new Quill(editor, {
-                            theme: 'snow',
-                            modules: {
-                                toolbar: [
-                                    [{header: [1, 2, false]}],
-                                    ['bold', 'italic', 'underline'],
-                                    [{'list': 'ordered'}, {'list': 'bullet'}],
-                                    ['link', 'image']
-                                ]
-                            }
-                        });
-                    } else {
-                        console.warn("Editor not found");
-                    }
-                }
-            } else {
-                editor.innerHTML = `<textarea placeholder="Beschreibung" class="quill-editor" id="textarea-description" style="width: 100%;">{{ event.description }}</textarea>`;
-            }
-        });
-
-
-        // Beim Absenden des Formulars
-        function fillEditor() {
-            if (getCookiePreferences().quill) {
-                var html = quill.root.innerHTML;
-                document.querySelector('input[name=description]').value = html;
-            }
         }
     </script>
 

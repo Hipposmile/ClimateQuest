@@ -7,25 +7,41 @@
 {% block title %}Geschenke Übersicht{% endblock %}
 
 {% block content %}
-<h1>Geschenke Übersicht</h1>
-{% if messages %}
-{% for message in messages %}
-<p class="{{ message.level_tag }}-message">{{ message }}</p>
-{% endfor %}
-{% endif %}
-<p>Schenken Sie ein bisschen Liebe! Erstellen Sie Ihren Liebsten eine individuelle Seite, auf der alle Freunde, Verwandte oder Kollegen Glückwunschbotschaften und Kerzen hinterlassen können, damit der / die Beschenkte weiß, wie viele Menschen ihn / sie lieben. Die Seiten eignen sich auch für Anlässe wie Geburtstage, Hochzeiten oder Jubiläen.</p>
+    <h1>Geschenke Übersicht</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <p>Schenken Sie ein bisschen Liebe! Erstellen Sie Ihren Liebsten eine individuelle Seite, auf der alle Freunde,
+        Verwandte oder Kollegen Glückwunschbotschaften und Kerzen hinterlassen können, damit der / die Beschenkte weiß,
+        wie viele Menschen ihn / sie lieben. Die Seiten eignen sich auch für Anlässe wie Geburtstage, Hochzeiten oder
+        Jubiläen.</p>
 
-<a onclick="showLoading()" href="{% url 'add_present' %}"><button>Geschenk erstellen</button></a>
-<h2>Vorhandene, von mir erstellte Geschenke:</h2>
-{% for own_present in own_presents %}
-    <div style="border: 1px solid black; padding: 10px; margin: 10px 0;">
-        <h3>Geschenk für {{ own_present.recipient }}</h3>
-        <p>{{ own_present.candles }} angezündete Kerzen</p>
-        <p>{{ own_present.congratulation_count }} Glückwünsche</p>
-        <a onclick="showLoading()" href="{% url 'present_detail' own_present.secret_key %}"><button>Zur Geschenkseite</button></a>
-        <a onclick="showLoading()" href="{% url 'delete_present' own_present.secret_key %}"><button style="color: red;">Löschen</button></a>
-    </div>
-{% empty %}
-    <p>Sie haben noch keine Geschenke erstellt.</p>
-{% endfor %}
+    <a  href="{% url 'add_present' %}">
+        <button>Geschenk erstellen</button>
+    </a>
+    <h2>Vorhandene, von mir erstellte Geschenke:</h2>
+    {% for own_present in own_presents %}
+        <div class="present-card">
+            <h3>Geschenk für {{ own_present.recipient }}</h3>
+            <p>{{ own_present.candles }} angezündete Kerzen</p>
+            <p>{{ own_present.congratulation_count }} Glückwünsche</p>
+            <a  href="{% url 'present_detail' own_present.secret_key %}">
+                <button>Zur Geschenkseite</button>
+            </a>
+            <a  href="{% url 'delete_present' own_present.secret_key %}">
+                <button class="color-red">Löschen</button>
+            </a>
+        </div>
+    {% empty %}
+        <p>Sie haben noch keine Geschenke erstellt.</p>
+    {% endfor %}
+    <style nonce="{{ request.csp_style_nonce }}">
+        .present-card {
+            border: 1px solid black;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
 {% endblock %}

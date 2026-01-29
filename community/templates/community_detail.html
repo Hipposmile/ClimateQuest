@@ -12,7 +12,7 @@
         <p class="error-message">{{ error }}</p>
     {% endif %}
     <h1>Community <i>{{ community.name }}</i></h1>
-    <h3>Eingeloggt mit Family <a onclick="showLoading()" href="{% url 'family_detail' family.id %}">{{ family.name }}</a></h3>
+    <h3>Eingeloggt mit Family <a  href="{% url 'family_detail' family.id %}">{{ family.name }}</a></h3>
 
     {% if messages %}
         {% for message in messages %}
@@ -20,14 +20,14 @@
         {% endfor %}
     {% endif %}
 
-    <p><a onclick="showLoading()" href="{% url 'edit_community' community.id family.id %}">Bearbeiten</a></p>
+    <p><a  href="{% url 'edit_community' community.id family.id %}">Bearbeiten</a></p>
     {% if community.chat %}
-        <p><a onclick="showLoading()" href="{% url 'chat_community' community.id family.id %}">Chatten</a></p>
+        <p><a  href="{% url 'chat_community' community.id family.id %}">Chatten</a></p>
     {% else %}
         <p>Die Chat-Funktion ist für diese Community deaktiviert.</p>
     {% endif %}
 
-    <form method="post" onsubmit="showLoading()">
+    <form method="post" >
         {% csrf_token %}
         <label for="zeitraum">Zeitraum auswählen</label>
         <select name="zeitraum" id="zeitraum" required>
@@ -39,7 +39,7 @@
             <option value="benutzerdefiniert">Benutzerdefiniert</option>
         </select>
 
-        <div id="hiddenDateDiv" style="display: none;">
+        <div id="hiddenDateDiv" class="display-none">
             <label for="start_date">Startdatum:</label>
             <input type="date" name="start_date" id="start_date" placeholder="Startdatum" value="">
             <label for="end_date">Enddatum:</label>
@@ -53,7 +53,7 @@
         <p>Zeitraum: {{ zeitraum }}</p>
     {% endif %}
 
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         document.addEventListener('DOMContentLoaded', function () {
             const today = new Date().toISOString().split("T")[0];
             let startDate = document.getElementById('start_date');
@@ -74,7 +74,7 @@
             }
         });
     </script>
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         let rank = 1;
         let div_rank;
         let rank_span;
@@ -83,12 +83,12 @@
         {% for member in members_with_klimapunkte %}
             <li class="{% if member.member.name == family.name %}klimapunkte_me{% else %}klimapunkte_other{% endif %}"
                 id="{% if member.member.name == family.name %}me{% else %}other{% endif %}">
-                <span><span style="color: #888;" id="rank_{{ member.member.id }}"></span><a
+                <span><span class="color-888" id="rank_{{ member.member.id }}"></span><a
                         href="{% url 'family_detail' member.member.id %}">{{ member.member.name }}</a></span>
                 <br>
-                <span style="font-size:0.95em; color:#888;">(durchschnittlich {{ member.klimapunkte|floatformat:-4 }} Klimapunkte)</span>
+                <span class="fontSize-0-95em color-888">(durchschnittlich {{ member.klimapunkte|floatformat:-4 }} Klimapunkte)</span>
             </li>
-            <script>
+            <script nonce="{{ request.csp_script_nonce }}">
                 rank_span = document.getElementById("rank_{{member.member.id}}");
                 rank_span.innerText = rank + ". ";
                 div_rank = rank_span.closest("li");

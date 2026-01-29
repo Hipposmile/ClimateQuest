@@ -6,17 +6,17 @@
 {% block title %}ClimateQuest - Dashboard{% endblock %}
 
 {% block content %}
-    <a onclick="showLoading()" href="{% url 'home' %}" class="redirect-link">
+    <a href="{% url 'home' %}" class="redirect-link ">
         <span>Zur Homepage</span>
         <span class="redirect-link-icon">→</span>
     </a>
-    <h1 style="margin-top: 0;">Dashboard</h1>
+    <h1>Dashboard</h1>
 
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message }}</p>
         {% endfor %}
-        <script>
+        <script nonce="{{ request.csp_script_nonce }}">
             if (window.location.hash) {
                 history.replaceState(null, "", window.location.pathname + window.location.search);
             }
@@ -28,12 +28,12 @@
     {% if user.usererweitert.mail_verified == False and user.email != '' %}
         <p>Bitte bestätige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. Falls du keine
             Verifizierungsmail
-            erhalten hast, <a onclick="showLoading()" href="{% url 'resend_verification_email' %}">lasse dir eine neue
+            erhalten hast, <a  href="{% url 'resend_verification_email' %}">lasse dir eine neue
                 senden.</a></p>
     {% endif %}
     <div id="request_permission_notification"></div>
 
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         async function requestPermissionNotification() {
             if (Notification.permission === 'default') {
                 const div = document.getElementById('request_permission_notification');
@@ -56,24 +56,30 @@
 
     <br>
     <p>Es werden jeweils nur die ersten zwei Einträge angezeigt.</p>
-    <a onclick="showLoading()" href="{% url 'user_detail' request.user.id %}" class="redirect-link">
+    <a href="{% url 'user_detail' request.user.id %}" class="redirect-link ">
         <span>Zur öffentlichen Profilseite</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <hr>
     <h2>Wöchentliches Ziel</h2>
     <div class="progress-container">
-        <div class="progress-bar" style="width: {{ weekly_goal_progress_percent }}%; max-width: 100%"></div>
+        <div class="progress-bar" id="progress-bar"></div>
     </div>
+    <style nonce="{{ request.csp_style_nonce }}">
+        #progress-bar {
+            width: {{ weekly_goal_progress_percent }}%;
+            max-width: 100%;
+        }
+    </style>
     <p>{{ weekly_klimapunkte|floatformat:-4 }} Klimapunkte bis zum wöchentlichen Ziel von {{ weekly_goal }} Klimapunkten
         geschafft</p>
-    <a onclick="showLoading()" href="{% url 'settings_view' %}#change_goal_h3" class="redirect-link">
+    <a href="{% url 'settings_view' %}#change_goal_h3" class="redirect-link ">
         <span>Ziel ändern</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <hr>
 
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         .streak-card-container .streak-card {
             background: var(--color-white);
             border-radius: 16px;
@@ -227,19 +233,19 @@
                     <p class="action-list-description">{{ aktion.aktion.mengeBeschreibung }}</p>
                     <p class="action-list-value">{{ aktion.quantity }} {{ aktion.einheit }}</p>
 
-                    <a onclick="showLoading()" href="{% url 'edit_action' aktion.id %}">Bearbeiten</a>
+                    <a  href="{% url 'edit_action' aktion.id %}">Bearbeiten</a>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
         <p>Keine Aktionen gefunden.</p>
     {% endif %}
-    <a onclick="showLoading()" href="{% url 'history_me' %}" class="redirect-link">
+    <a href="{% url 'history_me' %}" class="redirect-link ">
         <span>Zur Aktions-Historie</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <br>
-    <a onclick="showLoading()" href="{% url 'add' %}" class="redirect-link">
+    <a href="{% url 'add' %}" class="redirect-link ">
         <span>Aktion hinzufügen</span>
         <span class="redirect-link-icon">→</span>
     </a>
@@ -247,19 +253,19 @@
 
     <h2>Klimapunkte</h2>
     <p>Du hast bereits {{ klimapunkte|floatformat:-4 }} Klimapunkte gesammelt.</p>
-    <a onclick="showLoading()" href="{% url 'klimapunkte_me' %}" class="redirect-link">
+    <a href="{% url 'klimapunkte_me' %}" class="redirect-link ">
         <span>Zu den Klimapunkten</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <h2>Level</h2>
     <p>Du bist im Level {{ level.description }}.</p>
-    <a onclick="showLoading()" href="{% url 'level_me' %}" class="redirect-link">
+    <a href="{% url 'level_me' %}" class="redirect-link ">
         <span>Zu den Levels</span>
         <span class="redirect-link-icon">→</span>
     </a>
 
     <h2>Families</h2>
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         .families-section {
             max-width: 960px;
             margin: 2rem auto;
@@ -308,7 +314,7 @@
                     <div class="family-card">
                         <h3>{{ family.name }}</h3>
                         <p>Mitglieder: {{ family.members.count }}</p>
-                        <a onclick="showLoading()" href="{% url 'family_detail' family.id %}" class="card-btn">Details
+                        <a href="{% url 'family_detail' family.id %}" class="card-btn ">Details
                             ansehen</a>
                     </div>
                 {% endfor %}
@@ -318,13 +324,13 @@
     {% else %}
         <p>Du bist keiner Family beigetreten.</p>
     {% endif %}
-    <a onclick="showLoading()" href="{% url 'families_view' %}" class="redirect-link">
+    <a href="{% url 'families_view' %}" class="redirect-link ">
         <span>Zu den Families</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <hr>
 
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         .communities-section {
             max-width: 960px;
             margin: 2rem auto;
@@ -378,7 +384,7 @@
         {% endfor %}
     {% endif %}
     {% if communities_with_user_families %}
-        <script>
+        <script nonce="{{ request.csp_script_nonce }}">
             let family_select;
             let community_detail_link;
             let communityId;
@@ -403,7 +409,7 @@
                 {% endfor %}
             </div>
         </section>
-        <script>
+        <script nonce="{{ request.csp_script_nonce }}">
             document.addEventListener('DOMContentLoaded', function () {
                 const selects = document.querySelectorAll('.family-select');
 
@@ -428,13 +434,13 @@
         <p>Du bist keiner Community beigetreten.</p>
     {% endif %}
 
-    <a onclick="showLoading()" href="{% url 'communities_view' %}" class="redirect-link">
+    <a href="{% url 'communities_view' %}" class="redirect-link ">
         <span>Zu den Communities</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <hr>
 
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         .event-date-relative {
             font-weight: 100;
             filter: grayscale(100%);
@@ -489,7 +495,7 @@
         <p>Derzeit nimmst du an keinen Events teil</p>
     {% endif %}
 
-    <a onclick="showLoading()" href="{% url 'events_overview' %}" class="redirect-link">
+    <a href="{% url 'events_overview' %}" class="redirect-link ">
         <span>Zu den Events</span>
         <span class="redirect-link-icon">→</span>
     </a>
@@ -537,13 +543,13 @@
         <p>Derzeit nimmst du an keinen Events teil</p>
     {% endif %}
 
-    <a onclick="showLoading()" href="{% url 'events_overview' %}" class="redirect-link">
+    <a href="{% url 'events_overview' %}" class="redirect-link ">
         <span>Zu den Events</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <hr>
 
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         function getLabel(dateStr) {
             const now = new Date();
             const target = new Date(dateStr);
@@ -618,7 +624,7 @@
         <p>Derzeit hast du keine Artikel erstellt</p>
     {% endif %}
 
-    <a onclick="showLoading()" href="{% url 'artikel_overview' %}" class="redirect-link">
+    <a href="{% url 'artikel_overview' %}" class="redirect-link ">
         <span>Zu den Artikeln</span>
         <span class="redirect-link-icon">→</span>
     </a>
@@ -653,7 +659,7 @@
         <p>Derzeit hast du keine Artikel geliket</p>
     {% endif %}
 
-    <a onclick="showLoading()" href="{% url 'artikel_overview' %}" class="redirect-link">
+    <a href="{% url 'artikel_overview' %}" class="redirect-link ">
         <span>Zu den Artikeln</span>
         <span class="redirect-link-icon">→</span>
     </a>
@@ -687,7 +693,7 @@
         <p>Derzeit hast du keine Forumsbeiträge erstellt</p>
     {% endif %}
 
-    <a onclick="showLoading()" href="{% url 'forum_overview' %}" class="redirect-link">
+    <a href="{% url 'forum_overview' %}" class="redirect-link ">
         <span>Zum Forum</span>
         <span class="redirect-link-icon">→</span>
     </a>
@@ -721,7 +727,7 @@
         <p>Derzeit hast du keine Forumsbeiträge beantwortet</p>
     {% endif %}
 
-    <a onclick="showLoading()" href="{% url 'forum_overview' %}" class="redirect-link">
+    <a href="{% url 'forum_overview' %}" class="redirect-link ">
         <span>Zum Forum</span>
         <span class="redirect-link-icon">→</span>
     </a>

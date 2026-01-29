@@ -9,7 +9,7 @@
     nicht geladen werden.{% endif %} {% endblock %}
 
 {% block content %}
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         .chat-community-container {
             max-width: 500px;
             margin: 2rem auto;
@@ -127,8 +127,10 @@
         }
     </style>
 
-    <h1>Chat: Community <a onclick="showLoading()" href="{% url 'community_detail' community.id family.id %}">{{ community.name }}</a></h1>
-    <h3>Eingeloggt mit Family <a onclick="showLoading()" href="{% url 'family_detail' family.id %}">{{ family.name }}</a></h3>
+    <h1>Chat: Community <a
+                           href="{% url 'community_detail' community.id family.id %}">{{ community.name }}</a></h1>
+    <h3>Eingeloggt mit Family <a  href="{% url 'family_detail' family.id %}">{{ family.name }}</a>
+    </h3>
 
     {% if messages %}
         {% for message in messages %}
@@ -137,7 +139,7 @@
     {% endif %}
 
     <div class="chat-community-container">
-        <button type="button" class="chat-refresh-btn" onclick="location.reload()" title="Chat aktualisieren">
+        <button type="button" class="chat-refresh-btn" id="refresh" title="Chat aktualisieren">
             <picture>
                 <source type="image/avif" srcset="
                     {% static 'images/refresh/refresh-320.avif' %} 320w,
@@ -176,7 +178,8 @@
                 <div class="chat-community-message {% if msg.user == user %}me{% else %}other{% endif %}">
                     <div class="chat-community-bubble">
                         {{ msg.message }}
-                        <span class="chat-community-meta"><a onclick="showLoading()" href="{% url 'user_detail' msg.user.id %}"
+                        <span class="chat-community-meta"><a
+                                                             href="{% url 'user_detail' msg.user.id %}"
                                                              class="chat-community-meta">{{ msg.user.username }}</a> aus Family {{ msg.family.name }}</span>
                         <span class="chat-community-meta">{{ msg.erstellt_am|date:"d.m.Y H:i" }}</span>
                     </div>
@@ -184,7 +187,7 @@
             {% empty %}
                 <div class="chat-community-empty">Noch keine Nachrichten.</div>
             {% endfor %}
-            <form method="post" class="chat-community-form" onsubmit="showLoading()">
+            <form method="post" class="chat-community-form" >
                 {% csrf_token %}
                 <label for="message">Nachricht</label>
                 <input type="text" id="message" name="message" placeholder="Nachricht eingeben..." required>
@@ -192,12 +195,14 @@
             </form>
         </div>
     </div>
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         document.addEventListener("DOMContentLoaded", function () {
             var chatContainer = document.querySelector('.chat-community-messages');
             if (chatContainer) {
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             }
         });
+
+        document.getElementById('#refresh').addEventListener('click', location.reload)
     </script>
 {% endblock %}

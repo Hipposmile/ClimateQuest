@@ -19,14 +19,15 @@
     <h2>Artikel <i>{{ artikel.name }}</i></h2>
     <div class="artikel-content"><p>{{ artikel.content|safe }}</p></div>
 
-    <form method="post" onsubmit="fillEditor(event)">
+    <form method="post" class="fill-editor">
         {% csrf_token %}
         <label for="name">Name</label>
         <input type="text" name="name" id="name" placeholder="Name" maxlength="100" value="{{ artikel.name }}">
 
         <label for="content_editor">Beschreibung</label>
         <div id="content_editor" class="quill-editor">{{ artikel.content|safe }}</div>
-        <small>Wenn du die Quill-Cookies abgelehnt hast, können Design-Elemente nicht richtig angezeigt werden. Stattdessen wirst du seltsame Tags wie &lt;p&gt; sehen.</small>
+        <small>Wenn du die Quill-Cookies abgelehnt hast, können Design-Elemente nicht richtig angezeigt werden.
+            Stattdessen wirst du seltsame Tags wie &lt;p&gt; sehen.</small>
         <input type="hidden" name="content">
 
         <label class="custom-checkbox">
@@ -44,66 +45,12 @@
          data-content='<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />'>
     </div>
 
-    <script>
-        let quill;
-        document.addEventListener('DOMContentLoaded', function () {
-            let editor = document.getElementById('content_editor')
-            if (getCookiePreferences().quill) {
-                const script = document.createElement("script");
-                script.src = "https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js";
-                document.body.appendChild(script);
-                script.onload = function () {
-                    if (editor) {
-                        quill = new Quill(editor, {
-                            theme: 'snow',
-                            modules: {
-                                toolbar: [
-                                    [{header: [1, 2, false]}],
-                                    ['bold', 'italic', 'underline'],
-                                    [{'list': 'ordered'}, {'list': 'bullet'}],
-                                    ['link']
-                                ]
-                            }
-                        });
-                    } else {
-                        console.warn("Editor not found");
-                    }
-                }
-            } else {
-                editor.innerHTML = `<textarea placeholder="Beschreibung" class="quill-editor" id="textarea-content" style="width: 100%;">{{ artikel.content }}</textarea>`;
-            }
-        });
-
-
-        // Beim Absenden des Formulars
-        function fillEditor(event) {
-            if (getCookiePreferences().quill) {
-                const form = event.target;
-                event.preventDefault();
-                const btn = form.querySelector('button[name=edit_artikel]');
-                if (btn) {
-                    const hidden = document.createElement('input');
-                    hidden.type = 'hidden';
-                    hidden.name = btn.name;
-                    hidden.value = btn.value || btn.textContent;
-                    form.appendChild(hidden);
-                }
-
-                try {
-                    var html = quill.root.innerHTML;
-                    form.querySelector('input[name=content]').value = html;
-                    form.submit();
-                } catch {
-                    console.error("Variable Quill not found");
-                    alert("Ein interner Fehler ist aufgetreten. Probiere es später bitte erneut!");
-                    return false;
-                }
-            }
-        }
+    <script nonce="{{ request.csp_script_nonce }}">
+        document.addEventListener('DOMContentLoaded', initializeQuill);
     </script>
     <hr>
-    <form method="post" onsubmit="return confirm('Willst du diesen Artikel wirklich löschen?') && showLoading()">
+    <form method="post" class="form-confirm" data-confirm="Willst du diesen Artikel wirklich löschen?">
         {% csrf_token %}
-        <button type="submit" name="delete_artikel" style="color:red;">Diesen Artikel löschen</button>
+        <button type="submit" name="delete_artikel" class="color-red">Diesen Artikel löschen</button>
     </form>
 {% endblock %}
