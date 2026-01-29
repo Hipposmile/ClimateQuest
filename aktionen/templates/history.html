@@ -4,9 +4,10 @@
     <meta name="description"
           content="Sieh dir deine Aktions-Historie bei ClimateQuest an.">
 {% endblock %}
-{% block title %}ClimateQuest - Aktions-Historie{% endblock %}
+{% block title %}ClimateQuest - Aktions-Historie von {% if user == request.user %}mir{% else %}{% endif %}{{ user }}{% endblock %}
 {% block content %}
-    <h1>Aktions-Historie</h1>
+    <h1>Aktions-Historie von {% if user == request.user %} <a href="{% url 'user_detail' user.id %}">mir</a>{% else %}
+        <a href="{% url 'user_detail' user.id %}">{{ user }}</a>{% endif %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
@@ -33,7 +34,7 @@
                     <p class="action-list-description">{{ action.aktion.mengeBeschreibung }}</p>
                     <p class="action-list-value">{{ action.quantity }} {{ action.einheit }}</p>
 
-                    <a  href="{% url 'edit_action' action.id %}">Bearbeiten</a>
+                    <a href="{% url 'edit_action' action.id %}">Bearbeiten</a>
                 </li>
             {% endfor %}
         </ul>

@@ -81,7 +81,7 @@ def post_detail(request, post_id):
         is_truth = request.POST.get('is_truth') == 'on'
         if not is_truth:
             messages.error(request, all_messages["not_is_truth"])
-            return redirect('add_forum_post')
+            return redirect('post_detail', post_id=post_id)
 
         content = request.POST.get('content')
         if not content:

@@ -4,7 +4,8 @@
 {% block meta %}
     <meta name="description" content="Sieh dir dein Level bei ClimateQuest an.">
 {% endblock %}
-{% block title %}ClimateQuest - {% if user == request.user %}Mein Level{% else %}Level von {{ user }}
+{% block title %}ClimateQuest - Klimapunkte von {% if user == request.user %}
+    <a href="{% url 'user_detail' user.id %}">mir</a>{% else %}<a href="{% url 'user_detail' user.id %}">{{ user }}</a>
 {% endif %}{% endblock %}
 {% block content %}
 
@@ -49,7 +50,8 @@
         }
     </style>
 
-    <h1>{% if user == request.user %}Mein Level{% else %}Level von {{ user }}{% endif %}</h1>
+    <h1>Level von {% if user == request.user %} <a href="{% url 'user_detail' user.id %}">mir</a>{% else %}
+        <a href="{% url 'user_detail' user.id %}">{{ user }}</a>{% endif %}</h1>
 
     {% if messages %}
         {% for message in messages %}
@@ -92,5 +94,4 @@
         {% endfor %}
         </tbody>
     </table>
-    <a  href="{% url 'user_detail' user.id %}">Userseite ansehen</a>
 {% endblock %}

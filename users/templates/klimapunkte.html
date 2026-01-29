@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load static %}
 
 {% block meta %}
     <meta name="description"
@@ -10,7 +9,8 @@
 {% endif %}{% endblock %}
 
 {% block content %}
-    <h1>{% if user == request.user %}Meine Klimapunkte{% else %}Klimapunkte von {{ user }}{% endif %}</h1>
+    <h1>Klimapunkte von {% if user == request.user %} <a href="{% url 'user_detail' user.id %}">mir</a>{% else %}
+        <a href="{% url 'user_detail' user.id %}">{{ user }}</a>{% endif %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
@@ -56,8 +56,6 @@
 
         <button type="submit">Anwenden</button>
     </form>
-
-    <a  href="{% url 'user_detail' user.id %}">Userseite ansehen</a>
 
     <script nonce="{{ request.csp_script_nonce }}">
         document.addEventListener('DOMContentLoaded', function () {
