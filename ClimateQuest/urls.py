@@ -34,7 +34,6 @@ sitemaps = {
     "home": HomeSitemap(),
     "nutzungsbedingungen": NutzungsbedingungenSitemap(),
     "aktionen_table": AktionenTableSitemap(),
-    "share": ShareSitemap(),
 
     "family_overview": FamilyOverviewSitemap(),
     "add_family": AddFamilySitemap(),
