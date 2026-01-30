@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>CSRF-Fehler – Ungültige Anfrage</title>
+    <title>400 – Ungültige Anfrage</title>
     <meta name="color-scheme" content="light dark"/>
     <link rel="icon" href="/icons/favicon.ico"/>
     <style nonce="{{ request.csp_style_nonce }}">
@@ -156,31 +156,31 @@
     </style>
 </head>
 <body>
-<main class="card" role="main" aria-labelledby="csrf-title">
+<main class="card" role="main" aria-labelledby="error-title">
     <div class="header">
         <div>
-            <h1 id="csrf-title">Sicherheitsprüfung fehlgeschlagen</h1>
-            <p>Diese Anfrage wurde aus Sicherheitsgründen blockiert. Das CSRF‑Token war ungültig oder fehlte.</p>
+            <h1 id="error-title">Ungültige Anfrage</h1>
+            <p>Die Anfrage konnte nicht verarbeitet werden. Bitte überprüfe die eingegebene Adresse oder versuche es erneut.</p>
         </div>
     </div>
 
     <div class="actions">
-        <button id="reload" class="btn btn-primary" type="button">Erneut probieren</button>
+        <button id="retry" class="btn btn-primary" type="button">Erneut versuchen</button>
         <button id="home" class="btn btn-secondary" type="button">Zur Startseite</button>
     </div>
 
     <div class="status" aria-live="polite">
         <span class="dot"></span>
-        <span id="status-text">Fehler: CSRF‑Token ungültig oder abgelaufen</span>
+        <span id="status-text">Fehlercode: 400 – Ungültige oder fehlerhafte Anfrage</span>
     </div>
 
     <footer>
-        <span>Diese Seite erscheint, wenn eine Anfrage nicht authentifiziert werden konnte.</span>
+        <span>Diese Seite wird angezeigt, wenn eine Anfrage nicht korrekt verarbeitet werden konnte.</span>
     </footer>
 </main>
 
 <script nonce="{{ request.csp_script_nonce }}">
-    document.getElementById('reload').addEventListener('click', () => {
+    document.getElementById('retry').addEventListener('click', () => {
         location.reload();
     });
 

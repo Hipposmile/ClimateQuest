@@ -7,7 +7,6 @@ from core.all_messages import all_messages
 from utils.functions import *
 
 
-@login_required
 def klimapunkte_view(request, user_id):
     try:
         user = User.objects.get(id=user_id)
@@ -84,7 +83,6 @@ def klimapunkte_view(request, user_id):
                    'klimapunkte_total': klimapunkte_total, 'zeitraum': zeitraum, 'user': user})
 
 
-@login_required
 def level_view(request, user_id):
     try:
         user = User.objects.get(id=user_id)
@@ -96,7 +94,6 @@ def level_view(request, user_id):
     return render(request, './level.html', {'level_data': level_data, 'user': user})
 
 
-@login_required
 def history(request, user_id):
     try:
         user = User.objects.get(id=user_id)
@@ -108,7 +105,6 @@ def history(request, user_id):
     return render(request, './history.html', {'actions': actions})
 
 
-@login_required
 def users_overview(request):
     if request.method == 'POST':
         search_keyword = request.POST.get('search_keyword')
@@ -117,7 +113,6 @@ def users_overview(request):
     return render(request, 'users_overview.html')
 
 
-@login_required
 def user_detail(request, user_id):
     try:
         user = User.objects.get(id=user_id)
@@ -149,6 +144,7 @@ def level_me(request):
     return redirect('level_view', request.user.id)
 
 
+@login_required()
 def history_me(request):
     return redirect('history', request.user.id)
 

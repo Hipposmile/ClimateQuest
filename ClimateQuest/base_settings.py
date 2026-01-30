@@ -144,5 +144,3 @@ CRONJOBS = [
 ]
 
 CRONTAB_PYTHON_EXECUTABLE = "/webapps/climatequest/venv/bin/python"
-
-CSRF_COOKIE_HTTPONLY = True

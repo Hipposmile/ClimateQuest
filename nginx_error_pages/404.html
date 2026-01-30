@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>CSRF-Fehler – Ungültige Anfrage</title>
+    <title>404 – Seite nicht gefunden</title>
     <meta name="color-scheme" content="light dark"/>
     <link rel="icon" href="/icons/favicon.ico"/>
     <style nonce="{{ request.csp_style_nonce }}">
@@ -65,6 +65,14 @@
             align-items: center;
             gap: 16px;
             margin-bottom: 12px;
+        }
+
+        .icon {
+            inline-size: 56px;
+            block-size: 56px;
+            flex: 0 0 56px;
+            color: var(--primary);
+            filter: drop-shadow(0 8px 18px rgba(34, 211, 238, 0.3));
         }
 
         h1 {
@@ -156,36 +164,36 @@
     </style>
 </head>
 <body>
-<main class="card" role="main" aria-labelledby="csrf-title">
+<main class="card" role="main" aria-labelledby="error-title">
     <div class="header">
         <div>
-            <h1 id="csrf-title">Sicherheitsprüfung fehlgeschlagen</h1>
-            <p>Diese Anfrage wurde aus Sicherheitsgründen blockiert. Das CSRF‑Token war ungültig oder fehlte.</p>
+            <h1 id="error-title">404 - Seite nicht gefunden</h1>
+            <p>Die angeforderte Seite existiert nicht oder wurde verschoben. Vielleicht hilft dir einer der folgenden Schritte.</p>
         </div>
     </div>
 
     <div class="actions">
-        <button id="reload" class="btn btn-primary" type="button">Erneut probieren</button>
-        <button id="home" class="btn btn-secondary" type="button">Zur Startseite</button>
+        <button id="home" class="btn btn-primary" type="button">Zur Startseite</button>
+        <button id="back" class="btn btn-secondary" type="button">Zurück</button>
     </div>
 
     <div class="status" aria-live="polite">
         <span class="dot"></span>
-        <span id="status-text">Fehler: CSRF‑Token ungültig oder abgelaufen</span>
+        <span id="status-text">Fehlercode: 404 – Ressource nicht gefunden</span>
     </div>
 
     <footer>
-        <span>Diese Seite erscheint, wenn eine Anfrage nicht authentifiziert werden konnte.</span>
+        <span>Diese Seite wird angezeigt, wenn eine Adresse nicht existiert.</span>
     </footer>
 </main>
 
 <script nonce="{{ request.csp_script_nonce }}">
-    document.getElementById('reload').addEventListener('click', () => {
-        location.reload();
-    });
-
     document.getElementById('home').addEventListener('click', () => {
         location.href = '/';
+    });
+
+    document.getElementById('back').addEventListener('click', () => {
+        history.back();
     });
 </script>
 </body>
