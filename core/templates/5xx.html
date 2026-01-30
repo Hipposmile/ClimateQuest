@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>400 – Ungültige Anfrage</title>
+    <title>5xx - Serverfehler</title>
     <meta name="color-scheme" content="light dark"/>
     <link rel="icon" href="/icons/favicon.ico"/>
     <style nonce="{{ request.csp_style_nonce }}">
@@ -65,6 +65,14 @@
             align-items: center;
             gap: 16px;
             margin-bottom: 12px;
+        }
+
+        .icon {
+            inline-size: 56px;
+            block-size: 56px;
+            flex: 0 0 56px;
+            color: var(--primary);
+            filter: drop-shadow(0 8px 18px rgba(34, 211, 238, 0.3));
         }
 
         h1 {
@@ -159,8 +167,8 @@
 <main class="card" role="main" aria-labelledby="error-title">
     <div class="header">
         <div>
-            <h1 id="error-title">Ungültige Anfrage</h1>
-            <p>Die Anfrage konnte nicht verarbeitet werden. Bitte überprüfe die eingegebene Adresse oder versuche es erneut.</p>
+            <h1 id="error-title">Serverfehler</h1>
+            <p>Auf unserem Server ist ein unerwarteter Fehler aufgetreten. Wir arbeiten bereits an der Behebung.</p>
         </div>
     </div>
 
@@ -171,19 +179,41 @@
 
     <div class="status" aria-live="polite">
         <span class="dot"></span>
-        <span id="status-text">Fehlercode: 400 – Ungültige oder fehlerhafte Anfrage</span>
+        <span id="status-text">Fehlercode: 5xx – Interner Serverfehler</span>
     </div>
 
     <footer>
-        <span>Diese Seite wird angezeigt, wenn eine Anfrage nicht korrekt verarbeitet werden konnte.</span>
+        <span>Diese Seite wird angezeigt, wenn unser Server vorübergehend nicht korrekt antwortet.</span>
     </footer>
 </main>
 
 <script nonce="{{ request.csp_script_nonce }}">
-    document.getElementById('retry').addEventListener('click', () => {
-        location.reload();
-    });
+    async function pingServer() {
+        try {
+            const ctrl = new AbortController();
+            const t = setTimeout(() => ctrl.abort(), 2500);
+            const res = await fetch('/', { method: 'HEAD', cache: 'no-store', signal: ctrl.signal });
+            clearTimeout(t);
+            return res.ok;
+        } catch {
+            return false;
+        }
+    }
 
+    async function tryAgain() {
+        const statusEl = document.getElementById('status-text');
+        statusEl.textContent = 'Verbindung zum Server wird geprüft …';
+
+        const ok = await pingServer();
+        if (ok) {
+            statusEl.textContent = 'Server wieder erreichbar. Seite wird neu geladen …';
+            location.reload();
+        } else {
+            statusEl.textContent = 'Server weiterhin nicht erreichbar. Bitte später erneut versuchen.';
+        }
+    }
+
+    document.getElementById('retry').addEventListener('click', tryAgain);
     document.getElementById('home').addEventListener('click', () => {
         location.href = '/';
     });

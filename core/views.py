@@ -26,12 +26,12 @@ def custom_404(request, exception=""):
 
 def custom_500(request, exception=""):
     create_internal_error(request, f'Interner Serverfehler (500): {exception}', '', None, False)
-    return render(request, '500.html', status=500)
+    return render(request, '5xx.html', status=500)
 
 
 def custom_503(request, exception=""):
     create_internal_error(request, f'Dienst nicht verfügbar (503): {exception}')
-    return render(request, '503.html', status=503)
+    return render(request, '5xx.html', status=503)
 
 
 factory = RequestFactory()
