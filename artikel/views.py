@@ -10,7 +10,6 @@ from .models import *
 # Create your views here.
 def artikel_overview(request):
     all_artikel = Artikel.objects.all()
-    # artikel = all_artikel.order_by('name')
     search_keyword = None
     if request.method == 'POST':
         already_ordered = False

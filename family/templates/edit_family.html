@@ -19,8 +19,8 @@
     <h3>Benutzernamen ändern</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="admin_password">Admin Passwort:</label>
-        <input type="password" name="admin_password" id="admin_password" placeholder="Admin Passwort" required>
+        <label for="admin_password_familyname">Admin Passwort:</label>
+        <input type="password" name="admin_password_familyname" id="admin_password_familyname" placeholder="Admin Passwort" required>
         <label for="new_familyname">Neuer Familyname:</label>
         <small id="familyname-feedback"></small>
         <input type="text" name="new_familyname" id="new_familyname" placeholder="Neuer Familyname" required>
@@ -60,8 +60,8 @@
     <h3>Passwort ändern</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="admin_password">Admin Passwort:</label>
-        <input type="password" name="admin_password" id="admin_password" placeholder="Admin Passwort" required>
+        <label for="admin_password_password">Admin Passwort:</label>
+        <input type="password" name="admin_password_password" id="admin_password_password" placeholder="Admin Passwort" required>
         <label for="new_password">Neues Passwort:</label>
         <input type="password" name="new_password" id="new_password" placeholder="Neues Passwort" required>
         <button type="submit" name="change_password">Ändern</button>
@@ -121,8 +121,8 @@
     <h3>Mitglieder entfernen</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="admin_password">Admin Passwort:</label>
-        <input type="password" name="admin_password" id="admin_password" placeholder="Admin Passwort" required>
+        <label for="admin_password_remove">Admin Passwort:</label>
+        <input type="password" name="admin_password_remove" id="admin_password_remove" placeholder="Admin Passwort" required>
         <label for="username">Username:</label>
         <input type="text" name="username" id="username" placeholder="Username" required>
         <button type="submit" name="remove_member">Ändern</button>
@@ -144,8 +144,8 @@
     <h3>Chat-Einstellungen</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="admin_password">Admin Passwort:</label>
-        <input type="password" name="admin_password" id="admin_password" placeholder="Admin-Passwort" required>
+        <label for="admin_password_chat_settings">Admin Passwort:</label>
+        <input type="password" name="admin_password_chat_settings" id="admin_password_chat_settings" placeholder="Admin-Passwort" required>
         <label class="custom-checkbox">
             <input type="hidden" id="chat_settings" value="{{ family.chat }}">
             <input type="checkbox" name="chat_checkbox" id="chat_checkbox">
@@ -171,8 +171,8 @@
     <h3>Family löschen</h3>
     <form method="post" class="form-confirm" data-confirm="Willst du diese Family wirklich löschen?">
         {% csrf_token %}
-        <label for="admin_password">Admin Passwort:</label>
-        <input type="password" name="admin_password" id="admin_password" placeholder="Admin-Passwort" required>
+        <label for="admin_password_delete">Admin Passwort:</label>
+        <input type="password" name="admin_password_delete" id="admin_password_delete" placeholder="Admin-Passwort" required>
         <button type="submit" name="delete_family" class="color-red">Diese Family löschen</button>
     </form>
     {% if delete_error %}<p class="color-red">{{ delete_error }}</p>{% endif %}

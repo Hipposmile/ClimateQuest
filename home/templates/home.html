@@ -240,7 +240,7 @@
     </script>
     <hr>
     {% if not user.is_authenticated %}
-        <div class="btns"><a  href="{% url 'register_view' %}">
+        <div class="btns"><a href="{% url 'register_view' %}">
             <button class="btn">Jetzt registrieren!</button>
         </a></div>
         <hr>
@@ -270,27 +270,38 @@
         </div>
     </div>
 
+    <!--Tester-->
+    <hr>
+    Möchtest du ClimateQuest unterstützen?
+    <a href="{% url 'testers' %}" class="redirect-link ">
+        <span>Tester werden</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+    <hr>
+    <!--Tester Ende -->
+
     <hr>
     {% if user.is_authenticated %}
-        <a href="https://de.trustpilot.com/review/climate-quest.de" target="_blank" class="redirect-link dont-show-loading">
+        <a href="https://de.trustpilot.com/review/climate-quest.de" target="_blank"
+           class="redirect-link dont-show-loading">
             <span>Bewerten Sie uns auf Trustpilot</span>
             <span class="redirect-link-icon">→</span>
         </a>
         <hr>
     {% endif %}
     <div class="btns">
-        <a  href="{% url 'artikel_detail' 5 %}">
+        <a href="{% url 'artikel_detail' 5 %}">
             <button class="btn">Wie ClimateQuest funktioniert</button>
         </a>
         {% if user.is_authenticated %}
-            <a  href="{% url 'add' %}">
+            <a href="{% url 'add' %}">
                 <button class="btn">Aktion hinzufügen</button>
             </a>
             {% if not request.user.families.count > 1 %}
-                <a  href="{% url 'create_family' %}">
+                <a href="{% url 'create_family' %}">
                     <button class="btn">Family gründen</button>
                 </a>
-                <a  href="{% url 'join_family' %}">
+                <a href="{% url 'join_family' %}">
                     <button class="btn">Family beitreten</button>
                 </a>
             {% endif %}

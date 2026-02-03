@@ -38,9 +38,9 @@
         <button type="submit">Anwenden</button>
     </form>
     <script nonce="{{ request.csp_script_nonce }}">
-        search_keyword = document.querySelector('input[name=search_keyword]');
-        order_by = document.querySelector('select[name=order_by]');
-        search_keyword_div = document.getElementById('search_keyword_div');
+        let search_keyword = document.querySelector('input[name=search_keyword]');
+        let order_by = document.querySelector('select[name=order_by]');
+        let search_keyword_div = document.getElementById('search_keyword_div');
 
         order_by.addEventListener('change', function () {
             if (order_by.value === "von mir erstellte Artikel" || order_by.value === "von mir gelikte Artikel") {

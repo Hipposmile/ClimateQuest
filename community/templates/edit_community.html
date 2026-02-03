@@ -18,11 +18,11 @@
         {% endfor %}
     {% endif %}
 
-    <h3>Benutzernamen ändern</h3>
-    <form method="post" >
+    <h3>Communityname ändern</h3>
+    <form method="post">
         {% csrf_token %}
-        <label for="admin_password">Admin Passwort:</label>
-        <input type="password" name="admin_password" id="admin_password" placeholder="Admin Passwort" required>
+        <label for="admin_password_communityname">Admin Passwort:</label>
+        <input type="password" name="admin_password_communityname" id="admin_password_communityname" placeholder="Admin Passwort" required>
         <label for="new_communityname">Neuer Communityname:</label>
         <small id="communityname-feedback"></small>
         <input type="text" name="new_communityname" id="new_communityname" placeholder="Neuer Communityname" required>
@@ -62,8 +62,8 @@
     <h3>Passwort ändern</h3>
     <form method="post" >
         {% csrf_token %}
-        <label for="admin_password">Admin Passwort:</label>
-        <input type="password" name="admin_password" id="admin_password" placeholder="Admin Passwort" required>
+        <label for="admin_password_password">Admin Passwort:</label>
+        <input type="password" name="admin_password_password" id="admin_password_password" placeholder="Admin Passwort" required>
         <label for="new_password">Neues Passwort:</label>
         <input type="password" name="new_password" id="new_password" placeholder="Neues Passwort" required>
         <button type="submit" name="change_password">Speichern</button>
@@ -123,8 +123,8 @@
     <h3>Mitglieder entfernen</h3>
     <form method="post" >
         {% csrf_token %}
-        <label for="admin_password">Admin Passwort:</label>
-        <input type="password" name="admin_password" id="admin_password" placeholder="Admin Passwort" required>
+        <label for="admin_password_remove">Admin Passwort:</label>
+        <input type="password" name="admin_password_remove" id="admin_password_remove" placeholder="Admin Passwort" required>
         <label for="family_name">Familyname:</label>
         <input type="text" name="family_name" id="family_name" placeholder="Familyname" required>
         <button type="submit" name="remove_member">Speichern</button>
@@ -149,8 +149,8 @@
     <h3>Chat-Einstellungen</h3>
     <form method="post" >
         {% csrf_token %}
-        <label for="admin_password">Admin Passwort:</label>
-        <input type="password" name="admin_password" id="admin_password" placeholder="Admin-Passwort" required>
+        <label for="admin_password_chat_settings">Admin Passwort:</label>
+        <input type="password" name="admin_password_chat_settings" id="admin_password_chat_settings" placeholder="Admin-Passwort" required>
         <label class="custom-checkbox">
             <input type="hidden" id="chat_settings" value="{{ community.chat }}">
             <input type="checkbox" name="chat_checkbox" id="chat_checkbox">
@@ -176,8 +176,8 @@
     <h3>Community löschen</h3>
     <form method="post" class="form-confirm" data-confirm="Willst du diese Community wirklich löschen?">
         {% csrf_token %}
-        <label for="admin_password">Admin-Passwort:</label>
-        <input type="password" name="admin_password" id="admin_password" placeholder="Admin-Passwort" required>
+        <label for="admin_password_delete">Admin-Passwort:</label>
+        <input type="password" name="admin_password_delete" id="admin_password_delete" placeholder="Admin-Passwort" required>
         <button type="submit" name="delete_community" class="color-red">Diese Community löschen</button>
     </form>
     {% if delete_error %}<p class="color-red">{{ delete_error }}</p>{% endif %}

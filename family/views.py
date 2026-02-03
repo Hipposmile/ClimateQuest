@@ -131,7 +131,7 @@ def edit_family(request, family_id):
 
     if request.method == 'POST':
         if 'change_familyname' in request.POST:
-            admin_password = request.POST.get('admin_password')
+            admin_password = request.POST.get('admin_password_familyname')
             familyname = request.POST.get('new_familyname')
 
             if Family.objects.filter(name=familyname).exists():
@@ -155,7 +155,7 @@ def edit_family(request, family_id):
                 messages.success(request, all_messages["family_name_changed"])
 
         if 'change_password' in request.POST:
-            admin_password = request.POST.get('admin_password')
+            admin_password = request.POST.get('admin_password_password')
             password = request.POST.get('new_password')
 
             if len(password) > 100:
@@ -193,7 +193,7 @@ def edit_family(request, family_id):
                 messages.success(request, all_messages["family_admin_password_changed"])
         
         if 'remove_member' in request.POST:
-            admin_password = request.POST.get('admin_password')
+            admin_password = request.POST.get('admin_password_remove')
             username = request.POST.get('username')
 
             if not admin_password or not username:
@@ -224,7 +224,7 @@ def edit_family(request, family_id):
             return redirect('dashboard')
 
         if 'change_chat_settings' in request.POST:
-            admin_password = request.POST.get('admin_password')
+            admin_password = request.POST.get('admin_password_chat_settings')
             if not check_password(admin_password, family.admin_password):
                 messages.error(request, all_messages["invalid_admin_password"])
             else:
@@ -237,7 +237,7 @@ def edit_family(request, family_id):
                     messages.success(request, all_messages["family_chat_disabled"])
 
         if 'delete_family' in request.POST:
-            admin_password = request.POST.get('admin_password')
+            admin_password = request.POST.get('admin_password_delete')
             if not admin_password:
                 messages.error(request, all_messages["missing_required_inputs"])
             elif not check_password(admin_password, family.admin_password):

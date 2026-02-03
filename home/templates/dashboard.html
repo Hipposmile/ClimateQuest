@@ -28,7 +28,7 @@
     {% if user.usererweitert.mail_verified == False and user.email != '' %}
         <p>Bitte bestätige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. Falls du keine
             Verifizierungsmail
-            erhalten hast, <a  href="{% url 'resend_verification_email' %}">lasse dir eine neue
+            erhalten hast, <a href="{% url 'resend_verification_email' %}">lasse dir eine neue
                 senden.</a></p>
     {% endif %}
     <div id="request_permission_notification"></div>
@@ -233,7 +233,7 @@
                     <p class="action-list-description">{{ aktion.aktion.mengeBeschreibung }}</p>
                     <p class="action-list-value">{{ aktion.quantity }} {{ aktion.einheit }}</p>
 
-                    <a  href="{% url 'edit_action' aktion.id %}">Bearbeiten</a>
+                    <a href="{% url 'edit_action' aktion.id %}">Bearbeiten</a>
                 </li>
             {% endfor %}
         </ul>
@@ -257,12 +257,15 @@
         <span>Zu den Klimapunkten</span>
         <span class="redirect-link-icon">→</span>
     </a>
+    <hr>
+
     <h2>Level</h2>
     <p>Du bist im Level {{ level.description }}.</p>
     <a href="{% url 'level_me' %}" class="redirect-link ">
         <span>Zu den Levels</span>
         <span class="redirect-link-icon">→</span>
     </a>
+    <hr>
 
     <h2>Families</h2>
     <style nonce="{{ request.csp_style_nonce }}">

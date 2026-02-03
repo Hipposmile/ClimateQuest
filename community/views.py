@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, date
+from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
@@ -7,7 +7,6 @@ from django.shortcuts import render, redirect
 
 from core.all_messages import all_messages
 from utils.functions import *
-from aktionen.models import *
 
 
 @login_required
@@ -141,7 +140,7 @@ def edit_community(request, community_id, family_id):
     if request.method == 'POST':
 
         if 'change_communityname' in request.POST:
-            admin_password = request.POST.get('admin_password')
+            admin_password = request.POST.get('admin_password_communityname')
             communityname = request.POST.get('new_communityname')
 
             if len(communityname) > 100:
@@ -167,7 +166,7 @@ def edit_community(request, community_id, family_id):
                                         user_to_message)
 
         if 'change_password' in request.POST:
-            admin_password = request.POST.get('admin_password')
+            admin_password = request.POST.get('admin_password_password')
             password = request.POST.get('new_password')
 
             if len(password) > 100:
@@ -209,7 +208,7 @@ def edit_community(request, community_id, family_id):
                 messages.success(request, all_messages["community_admin_password_changed"])
 
         if 'remove_member' in request.POST:
-            admin_password = request.POST.get('admin_password')
+            admin_password = request.POST.get('admin_password_remove')
             family_name = request.POST.get('family_name')
 
             if not admin_password or not family_name:
@@ -254,7 +253,7 @@ def edit_community(request, community_id, family_id):
                 return redirect('dashboard')
 
         if 'change_chat_settings' in request.POST:
-            admin_password = request.POST.get('admin_password')
+            admin_password = request.POST.get('admin_password_chat_settings')
             if not check_password(admin_password, community.admin_password):
                 messages.error(request, all_messages["invalid_admin_password"])
             else:
@@ -267,7 +266,7 @@ def edit_community(request, community_id, family_id):
                     messages.success(request, all_messages["community_chat_disabled"])
 
         if 'delete_community' in request.POST:
-            admin_password = request.POST.get('admin_password')
+            admin_password = request.POST.get('admin_password_delete')
 
             if not admin_password:
                 messages.error(request, all_messages["missing_required_inputs"])

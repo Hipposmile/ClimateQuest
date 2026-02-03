@@ -43,8 +43,8 @@
     <h3 id="username_h3">Benutzernamen ändern</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="password">Aktuelles Passwort:</label>
-        <input type="password" name="password" id="password" placeholder="Passwort" required>
+        <label for="password_username">Aktuelles Passwort:</label>
+        <input type="password" name="password_username" id="password_username" placeholder="Passwort" required>
         <label for="new_username">Neuer Benutzername:</label>
         <small id="username-feedback"></small>
         <input type="text" name="new_username" id="new_username" placeholder="Neuer Benutzername" required>
@@ -175,8 +175,8 @@
     <h3 id="email_h3">E-Mail-Adresse ändern</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="password">Passwort:</label>
-        <input type="password" name="password" id="password" placeholder="Passwort" required>
+        <label for="password_email">Passwort:</label>
+        <input type="password" name="password_email" id="password_email" placeholder="Passwort" required>
         <label for="email">Neue E-Mail-Adresse:</label>
         <small>Leer lassen, um die E-Mail Adresse zu löschen und keine mehr hinterlegt zu haben</small>
         <small id="email-feedback"></small>
@@ -211,8 +211,8 @@
     <h3 id="mailsettings_h3">E-Mail Einstellungen</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="password">Passwort:</label>
-        <input type="password" name="password" id="password" placeholder="Passwort" required>
+        <label for="password_email_settings">Passwort:</label>
+        <input type="password" name="password_email_settings" id="password_email_settings" placeholder="Passwort" required>
         <label class="custom-checkbox">
             <input type="checkbox" name="mailinglist" id="mailinglist_checkbox">
             <span class="checkmark"></span>
@@ -237,8 +237,8 @@
     <h3 id="statement_h3">Statement ändern</h3>
     <form method="post" class="fill-editor">
         {% csrf_token %}
-        <label for="password">Passwort:</label>
-        <input type="password" name="password" id="password" placeholder="Passwort" required>
+        <label for="password_statement">Passwort:</label>
+        <input type="password" name="password_statement" id="password_statement" placeholder="Passwort" required>
         <label for="content_editor">Statement</label>
         <div id="content_editor" class="quill-editor">{{ user.usererweitert.statement|safe }}</div>
         <small>Wenn du die Quill-Cookies abgelehnt hast, können Design-Elemente nicht richtig angezeigt werden.
@@ -263,8 +263,8 @@
         <label for="weekly_goal">Wöchentliches Ziel</label>
         <input id="weekly_goal" name="weekly_goal" type="number" value="{{ request.user.usererweitert.weekly_goal }}"
                min="1" required>
-        <label for="password">Passwort</label>
-        <input id="password" type="password" name="password" placeholder="Passwort" required>
+        <label for="password_weekly_goal">Passwort</label>
+        <input id="password_weekly_goal" type="password" name="password_weekly_goal" placeholder="Passwort" required>
         <button type="submit" name="change_weekly_goal">Speichern</button>
     </form>
 
@@ -272,8 +272,8 @@
     <h3 id="delete_h3">Account löschen</h3>
     <form method="post" class="form-confirm" data-confirm="Willst du deinen Account wirklich löschen?">
         {% csrf_token %}
-        <label for="password">Passwort:</label>
-        <input type="password" name="password" id="password" placeholder="Passwort" required>
+        <label for="password_delete_account">Passwort:</label>
+        <input type="password" name="password_delete_account" id="password_delete_account" placeholder="Passwort" required>
         <button type="submit" name="delete_account" class="color-red">Diesen Account löschen</button>
         <p>Dadurch werden alle mit deinem Konto verknüpften Daten wie Aktionen oder Chat-Nachrichten gelöscht. Alle
             Mitglieder deiner Families und Communities werden darüber benachrichtigt werden.</p>

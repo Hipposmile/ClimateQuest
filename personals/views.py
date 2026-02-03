@@ -189,7 +189,7 @@ def resend_verification_email(request):
 def settings_view(request):
     if request.method == 'POST':
         if 'change_username' in request.POST:
-            password = request.POST.get('password')
+            password = request.POST.get('password_username')
             new_username = request.POST.get('new_username')
             if not check_password(password, request.user.password):
                 messages.error(request, all_messages["invalid_password"])
@@ -218,7 +218,7 @@ def settings_view(request):
 
         elif 'change_email' in request.POST:
             email = request.POST.get('email')
-            password = request.POST.get('password')
+            password = request.POST.get('password_email')
             if not request.user.check_password(password):
                 messages.error(request, all_messages["invalid_password"])
             else:
@@ -264,7 +264,7 @@ def settings_view(request):
 
         elif 'change_email_settings' in request.POST:
             mailinglist = request.POST.get('mailinglist') == 'on'
-            password = request.POST.get('password')
+            password = request.POST.get('password_email_settings')
             if not request.user.check_password(password):
                 messages.error(request, all_messages["invalid_password"])
                 return redirect('settings_view')
@@ -282,7 +282,7 @@ def settings_view(request):
 
         elif 'change_statement' in request.POST:
             statement = request.POST.get('statement')
-            password = request.POST.get('password')
+            password = request.POST.get('password_statement')
             if not request.user.check_password(password):
                 messages.error(request, all_messages["invalid_password"])
                 return redirect('settings_view')
@@ -297,7 +297,7 @@ def settings_view(request):
 
         elif 'change_weekly_goal' in request.POST:
             weekly_goal = request.POST.get('weekly_goal')
-            password = request.POST.get('password')
+            password = request.POST.get('password_weekly_goal')
             if not request.user.check_password(password):
                 messages.error(request, all_messages["invalid_password"])
                 return redirect('settings_view')
@@ -320,7 +320,7 @@ def settings_view(request):
             return redirect('dashboard')
 
         elif 'delete_account' in request.POST:
-            password = request.POST.get('password')
+            password = request.POST.get('password_delete_account')
             if not request.user.check_password(password):
                 messages.error(request, all_messages["invalid_password"])
             else:
