@@ -1,0 +1,700 @@
+{% extends "base.html" %}
+{% load static %}
+{% block meta %}
+    <meta name="description" content="AK Nachhaltigkeit des GMF">
+{% endblock %}
+{% block title %}AK Nachhaltigkeit des GMF{% endblock %}
+
+{% block content %}
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AK Nachhaltigkeit</title>
+        <style nonce="{{ request.csp_style_nonce }}">
+            :root {
+                --primary-color: #2ecc71;
+                --secondary-color: #27ae60;
+                --background-color: #f8f9fa;
+                --text-color: #2c3e50;
+                --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            /* Basis-Styles */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: 'Poppins', sans-serif;
+                line-height: 2;
+                color: var(--text-color);
+                background-color: var(--background-color);
+            }
+
+            /* Gemeinsame Komponenten-Styles */
+            .button {
+                cursor: pointer;
+                margin: 10px;
+                padding: 10px;
+                width: 50%;
+                background-color: greenyellow;
+                border: 5px dashed black;
+                border-radius: 10px;
+                transition: all 0.3s ease;
+                color: var(--text-color);
+            }
+
+            .button:hover {
+                background-color: rgb(81, 255, 0);
+                border-style: solid;
+            }
+
+            a {
+                cursor: pointer;
+                color: green;
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+
+            a:hover {
+                color: rgb(81, 255, 0);
+                text-decoration: underline;
+            }
+
+            /* Layout-Komponenten */
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+
+            section {
+                opacity: 0;
+                transform: translateY(50px);
+                padding: 2rem;
+                margin: 2rem 0;
+                background-color: white;
+                border-radius: 15px;
+                box-shadow: var(--shadow);
+            }
+
+            section.visible {
+                opacity: 1;
+                transform: translateY(0);
+                transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            }
+
+            /* Neue Regel für Bilder innerhalb von Sektionen */
+            section img {
+                opacity: 1;
+                transform: none;
+                transition: none;
+                display: block;
+                margin: 20px auto;
+                box-shadow: var(--shadow);
+            }
+
+            /* Grid-Container für Bilder sollten auch keine Animation haben */
+            section .image-grid {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            /* Formular-Elemente */
+            .input {
+                width: 50%;
+                height: 50px;
+                padding: 0.8rem;
+                border: 2px solid #eee;
+                border-radius: 8px;
+                margin-bottom: 1rem;
+                transition: border-color 0.3s ease;
+            }
+
+            .label {
+                display: block;
+                margin: 20px;
+                font-weight: 500;
+            }
+
+            /* Spezifische Komponenten */
+            .hero {
+                background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+                color: white;
+                padding: 4rem 2rem;
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+                color: white;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+
+            .ul {
+                list-style: none;
+                text-align: center;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+                margin: 2rem 0;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin: 2rem 0;
+                color: var(--primary-color);
+            }
+
+            .card {
+                background: white;
+                padding: 1.5rem;
+                border-radius: 10px;
+                box-shadow: var(--shadow);
+                margin-bottom: 1.5rem;
+            }
+
+            .input:focus {
+                outline: none;
+                border-color: var(--primary-color);
+            }
+
+            #back-to-top {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: var(--primary-color);
+                color: white;
+                width: 40px;
+                height: 40px;
+                border: 3px solid black;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                opacity: 0;
+                transition: opacity 0.3s ease, border-color 0.3s ease;
+                box-shadow: var(--shadow);
+            }
+
+            #back-to-top:active {
+                border-color: gray;
+            }
+
+            #back-to-top.visible {
+                opacity: 1;
+            }
+
+            /* Spiel-Styles */
+            .game-container {
+                background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(39, 174, 96, 0.1));
+                padding: 2rem;
+                border-radius: 15px;
+                margin: 2rem 0;
+                text-align: center;
+            }
+
+            #gameCanvas {
+                background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 100%);
+                display: block;
+                margin: 2rem auto;
+                border-radius: 10px;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+                border: 3px solid var(--primary-color);
+                max-width: 100%;
+                height: auto;
+            }
+
+            .game-controls {
+                margin: 2rem 0;
+                padding: 1.5rem;
+                background: white;
+                border-radius: 10px;
+                box-shadow: var(--shadow);
+            }
+
+            .game-controls p {
+                font-size: 1.1rem;
+                margin: 0.5rem 0;
+                color: var(--text-color);
+            }
+
+            .game-instructions {
+                background: #f0f9ff;
+                border-left: 4px solid var(--primary-color);
+                padding: 1.5rem;
+                margin: 2rem 0;
+                border-radius: 8px;
+            }
+
+            .game-instructions h3 {
+                color: var(--primary-color);
+                margin-bottom: 1rem;
+            }
+
+            .game-instructions ul {
+                text-align: left;
+                margin-left: 2rem;
+            }
+
+            .game-instructions li {
+                margin: 0.5rem 0;
+            }
+
+            /* Button Varianten */
+            .button-start {
+                margin-top: 2rem;
+                width: auto;
+                padding: 15px 40px;
+                font-size: 1.1rem;
+            }
+
+            .button-reset {
+                width: auto;
+                padding: 10px 30px;
+                margin-top: 1rem;
+            }
+
+            /* Container Varianten */
+            #gameContainer {
+                display: none;
+            }
+
+            #gameContainer.active {
+                display: block;
+            }
+
+            #gameMenu.hide {
+                display: none;
+            }
+
+            /* Bild Styles */
+            .section-image {
+                width: 100%;
+                max-width: 600px;
+                border-radius: 10px;
+                margin: 20px 0;
+            }
+
+            /* Upcycling Box */
+            .upcycling-box {
+                background-color: #f5f5f5;
+                padding: 20px;
+                border-radius: 10px;
+                margin-top: 30px;
+            }
+        </style>
+
+    </head>
+    <body>
+
+    <div class="hero">
+        <div class="container">
+            <h1>AK Nachhaltigkeit</h1>
+            <p>Gemeinsam für eine nachhaltige Zukunft am Gymnasium München Feldmoching</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <section>
+            <h1>Wer wir sind:</h1>
+            <p>Der AK Nachhaltigkeit kümmert sich um die Nachhaltigkeit an dem <a
+                    href="https://gymnasiumfeldmoching.musin.de/">Gymnasium München Feldmoching</a>. Er besteht aus
+                Schülern - weder Lehrer noch andere Erwachsene leiten ihn!</p>
+            <ul class="ul">
+                <li><a class="dont-show-loading" href="#importance">
+                    <button class="button">Warum ist Klimaschutz wichtig?</button>
+                </a></li>
+                <li><a class="dont-show-loading" href="#done">
+                    <button class="button">Was haben wir, der AK Nachhaltigkeit, schon gemacht?</button>
+                </a></li>
+                <li><a class="dont-show-loading" href="#help">
+                    <button class="button">Wie kann ich der Umwelt helfen?</button>
+                </a></li>
+                <li><a class="dont-show-loading" href="#upcycling">
+                    <button class="button">Upycling Ideen</button>
+                </a></li>
+                <li><a class="dont-show-loading" href="#calculate">
+                    <button class="button">CO2 Rechner</button>
+                </a></li>
+                <li><a class="dont-show-loading" href="#game">
+                    <button class="button">Müll-Sammel Spiel</button>
+                </a></li>
+            </ul>
+            <img src="{% static 'images/aknachhaltigkeit/fff.jpg' %}" alt="AK Nachhaltigkeit bei Fridays for Future" class="section-image">
+
+        </section>
+
+        <section>
+            <h1 id="importance">Warum ist Klimaschutz wichtig?</h1>
+            <p>Klimaschutz ist wichtig für unser Leben. Denn die Erderwärmung zerstört bereits jetzt tausende von Leben,
+                z.B. durch extreme Wetterereignisse wie Überschwemmungen oder Dürre. Früher Jahrhundertereignisse
+                genannt sind Naturkatastrophen heutzutage keine Seltenheit mehr. Aktuell sind ca. 3,3 Milliarden
+                Menschen von der Klimakrise bedroht, aber auch viele Tiere, die sich an die steigenden Temperaturen
+                schwer anpassen können. Gleichzeitig wird die Umwelt z.B. durch Plastikabfälle, in denen sich Vögel,
+                Schildkröten, Fische o.Ä. verheddern und sterben, oder Bebauung, bei denen viele Tieren und Pflanzen
+                ihren Lebensraum verlieren, gefährdet. Unter anderem aus diesen Grunden sterben täglich 130 - 150
+                Tierarten aus! Dies waren nur einige der Gründe, warum Klimaschutz unerlässlich ist und wir uns für ihn
+                einsetzen. </p>
+            <p>Am besten, du informierst dich im Internet, in der Bücherei oder in anderen Quellen noch mehr dazu nach.
+                Weitere Informationen findest du z.B. <a
+                        href="https://www.wwf.at/artikel/warum-klima-schuetzen/">hier</a>, <a
+                        href="https://www.greenpeace.de/biodiversitaet/artenkrise/artensterben">hier</a>, <a
+                        href="https://www.greenpeace.de/klimaschutz/klimakrise/folgen-klimawandels">hier</a> oder <a
+                        href="https://www.wwf.de/themen-projekte/plastik/geisternetze">hier</a>!</p>
+        </section>
+
+        <section>
+            <h1 id="done">Was hat der AK Nachhaltigkeit schon gemacht?</h1>
+            <img src="{% static 'images/aknachhaltigkeit/kronkorken.jpg' %}" alt="Gesammelte Kronkorken vom AK Nachhaltigkeit" class="section-image">
+            <ul>
+                <li>Schokoverkauf von der <a class="dont-show-loading" class="a" href="https://www.plant-for-the-planet.org/de/chocolate/">Guten
+                    Schokolade.</a></li>
+                <li>Halloweenverkauf</li>
+                <li>Schüler:innen wurde der Besuch von <a class="dont-show-loading" class="a" href="https://fff-muc.de/">Fridays-for-Future</a>
+                    ermöglicht
+                </li>
+                <li>Korken für die <a class="dont-show-loading" class="a"
+                                      href="https://www.nabu.de/umwelt-und-ressourcen/aktionen-und-projekte/korkampagne/index.html">Korkkampagne</a>
+                    gesammelt
+                </li>
+                <li>Kronkorken gesammelt</li>
+                <li>Kleidertauschparty</li>
+                <li>Müll an Silvester gesammelt und ausgestellt</li>
+                <li>Müllsystem erarbeitet</li>
+                <li>Plakate</li>
+                <li>Bücherschrank</li>
+            </ul>
+            <img src="{% static 'images/aknachhaltigkeit/fff.jpg' %}" alt="AK Nachhaltigkeit bei Fridays for Future" class="section-image">
+        </section>
+
+        <section>
+            <h1 id="help">Wie kann ich der Umwelt im Alltag helfen?</h1>
+            <ul>
+                <li>Müll vermeiden und trennen</li>
+                <li>Müll sammeln</li>
+                <li>andere aufklären</li>
+                <li>alternative Zahnbürsten/Waschmittel/etc. verwenden</li>
+                <li>Energie sparen</li>
+                <li>Wasser sparen</li>
+                <li>Fahrrad statt Auto</li>
+                <li>Zug statt Flug</li>
+                <li>auf tierische Lebensmittel verzichten</li>
+                <li>Bio-Produkte kaufen</li>
+                <li>Recycling-Produkte kaufen</li>
+                <li>Ökostrom nutzen</li>
+                <li>Zu Klimaschutzdemos gehen</li>
+                <li>Reparieren/Upcyclen/anders Verwenden statt Wegschmeißen</li>
+                <li>Wasser sparen</li>
+                <li>Demonstrieren</li>
+                <li>Dem AK Nachhaltigkeit beitreten <i>Wir treffen uns jeden Mittwoch in der Mittagspause</i></li>
+                <li>sich bei Umweltschutzorganisationen engagieren:
+                    <ul>
+                        <li><a class="dont-show-loading" class="a" href="https://www.wwf.de/">WWF</a></li>
+                        <li><a class="dont-show-loading" class="a" href="https://www.wwf.de/">BUND</a></li>
+                        <li><a class="dont-show-loading" class="a" href="https://www.lbv.de/">LBV</a></li>
+                        <li><a class="dont-show-loading" class="a" href="https://www.peta.de/">PETA</a></li>
+                        <li><a class="dont-show-loading" class="a" href="https://www.wir-retten-rehkitze.com/">Rehkitzrettung</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h1 id="upcycling">Upcycling Ideen</h1>
+            <p>Hier findest du einige Ideen und Links, wie du Dinge upcyceln kannst.</p>
+            <ul>
+                <li><h4><b>Geldbeutel aus Tetrapacks</b></h4>
+                    <p>
+                        <a class="dont-show-loading" href="https://www.nabu-muensterland.de/wp-content/uploads/2020/07/Tipp_NABU-M%C3%BCnsterland_Tetrapak-Geldbeutel.pdf">https://www.nabu-muensterland.de/wp-content/uploads/2020/07/Tipp_NABU-M%C3%BCnsterland_Tetrapak-Geldbeutel.pdf</a>
+                    </p></li>
+                <li><h4><b>Blumen aus Eierkartons</b></h4>
+                    <p>
+                        <a class="dont-show-loading" href="https://www.youtube.com/watch?v=gFLUwXtkpjc">https://www.youtube.com/watch?v=gFLUwXtkpjc</a>
+                    </p></li>
+                <li><h4><b>Kleister aus Mehl</b></h4>
+                    <p><a class="dont-show-loading" href="https://www.farbkekse.de/ratgeber/anleitungen/kleister-selber-machen/">https://www.farbkekse.de/ratgeber/anleitungen/kleister-selber-machen/</a>
+                    </p></li>
+                <li><h4><b>Pappmaché aus Zeitungen und altem Papier</b></h4>
+                    <p><a class="dont-show-loading" href="https://www.farbkekse.de/ratgeber/anleitungen/pappmache-und-pulpe-selber-machen/">https://www.farbkekse.de/ratgeber/anleitungen/pappmache-und-pulpe-selber-machen/</a>
+                    </p></li>
+            </ul>
+
+            <div class="upcycling-box">
+                <h3>Warum ist Upcycling so wichtig?</h3>
+                <p>Upcycling ist ein wichtiger Bestandteil des nachhaltigen Lebens und bedeutet, aus alten oder
+                    weggeworfenen Materialien etwas Neues und Wertvolles zu erschaffen. Anders als beim Recycling wird
+                    das Material nicht industriell aufbereitet, sondern direkt wiederverwendet. Das ist besonders
+                    wichtig, weil:</p>
+                <ul>
+                    <li>dadurch weniger Müll produziert wird</li>
+                    <li>keine zusätzliche Energie für die Aufbereitung benötigt wird</li>
+                    <li>wertvolle Ressourcen geschont werden</li>
+                    <li>es eine kreative Möglichkeit ist, Geld zu sparen</li>
+                    <li>jeder mitmachen und einen Beitrag zum Umweltschutz leisten kann</li>
+                </ul>
+                <p>Durch Upcycling können wir zeigen, dass "Müll" oft gar kein Müll ist, sondern wertvolles Material für
+                    neue, schöne und nützliche Dinge. Das hilft nicht nur der Umwelt, sondern macht auch noch Spaß!</p>
+            </div>
+        </section>
+
+        <section>
+            <h1 id="calculate">CO2 Rechner</h1>
+
+            <div class="div">
+                <form id="co2Form">
+                    <label class="label">Wie viel Gramm CO2 stößt dein Auto pro 100 Kilometer aus? <a
+                            href="https://www.co2online.de/klima-schuetzen/mobilitaet/auto-co2-ausstoss/#c162641"
+                            target="_blank">Richtwerte</a></label>
+                    <input type="number" class="input" id="ausstoß" min="0" step="1" required>
+
+                    <label class="label">Wie viele Kilometer bist du mit dem Fahrrad gefahren?</label>
+                    <input type="number" class="input" id="kilometer_gefahren" min="0" step="1" required>
+
+                    <button type="submit" class="button">Berechnen</button>
+                </form>
+            </div>
+
+            <script nonce="{{ request.csp_script_nonce }}">
+                // CO2 Calculator
+                const co2Form = document.getElementById('co2Form');
+                if (co2Form) {
+                    co2Form.addEventListener('submit', function (e) {
+                        e.preventDefault();
+                        berechnen();
+                    });
+                }
+
+                function berechnen() {
+                    let ausstoß = document.getElementById('ausstoß').value;
+                    let kilometer_gefahren = document.getElementById('kilometer_gefahren').value;
+
+                    ausstoß = parseFloat(ausstoß);
+                    kilometer_gefahren = parseFloat(kilometer_gefahren);
+
+                    if (isNaN(ausstoß) || isNaN(kilometer_gefahren)) {
+                        alert("Bitte gib gültige Zahlen für den CO2-Ausstoß und die gefahrenen Kilometer ein.");
+                        return false;
+                    }
+
+                    let gespart = (ausstoß / 100) * kilometer_gefahren;
+
+                    alert("Du hast " + gespart + " Gramm CO2 im Vergleich zu einer Autofahrt gespart!\n\nBereits ca. 0,2 Gramm CO2 in einem Liter Luft zu Kopfschmerzen führen!");
+                    return false;
+                }
+            </script>
+        </section>
+
+        <section>
+            <h1 id="game">Müll-Sammel Spiel</h1>
+            <div id="gameMenu" class="game-instructions">
+                <h3>Wie funktioniert das Spiel?</h3>
+                <ul>
+                    <li><strong>Ziel:</strong> Sammle alle Müllteile ein, die auf dich zukommen!</li>
+                    <li><strong>Desktop:</strong> Drücke die <strong>Leertaste</strong> um hochzufliegen</li>
+                    <li><strong>Handy:</strong> Tippe auf das Spielfeld um hochzufliegen</li>
+                </ul>
+                <button id="startGameBtn" class="button button-start">Spiel Starten</button>
+            </div>
+
+            <div id="gameContainer" class="game-container">
+                <canvas id="gameCanvas" width="800" height="400"></canvas>
+
+                <div class="game-controls">
+                    <p><strong>Desktop:</strong> Leertaste zum Fliegen</p>
+                    <p><strong>Handy:</strong> Tippe auf das Spielfeld</p>
+                    <button id="resetGameBtn" class="button button-reset">Neustarten</button>
+                </div>
+            </div>
+
+            <script nonce="{{ request.csp_script_nonce }}">
+                const canvas = document.getElementById("gameCanvas");
+                const context = canvas.getContext("2d");
+                const gameMenu = document.getElementById("gameMenu");
+                const gameContainer = document.getElementById("gameContainer");
+
+                const player = {
+                    x: 50,
+                    y: 200,
+                    width: 20,
+                    height: 20,
+                    color: '#2ecc71',
+                    gravity: 1,
+                    lift: -15,
+                    velocity: 0
+                };
+                const coins = [];
+                let score = 0;
+                let gameActive = false;
+                let animationId = null;
+
+                function getRandomRGB() {
+                    const colors = ['#FF6B6B', '#FFA500', '#FFD700', '#FF4444', '#FF8800'];
+                    return colors[Math.floor(Math.random() * colors.length)];
+                }
+
+                function startGame() {
+                    gameMenu.classList.add('hide');
+                    gameContainer.classList.add('active');
+                    gameActive = true;
+                    resetGameState();
+                    draw();
+                }
+
+                function resetGame() {
+                    if (gameActive) {
+                        location.reload();
+                    }
+                }
+
+                // Event Listener für Button
+                document.getElementById('startGameBtn').addEventListener('click', startGame);
+                document.getElementById('resetGameBtn').addEventListener('click', resetGame);
+
+                function resetGameState() {
+                    player.x = 50;
+                    player.y = 200;
+                    player.velocity = 0;
+                    score = 0;
+                    coins.length = 0;
+                }
+
+                function movePlayer(e) {
+                    if (gameActive && e.code === "Space") {
+                        e.preventDefault();
+                        player.velocity = player.lift;
+                    }
+                }
+
+                // Touch event für Handy
+                canvas.addEventListener("touchstart", function (e) {
+                    if (gameActive) {
+                        e.preventDefault();
+                        player.velocity = player.lift;
+                    }
+                });
+
+                // Click event für Handy (als Fallback)
+                canvas.addEventListener("click", function () {
+                    if (gameActive) {
+                        player.velocity = player.lift;
+                    }
+                });
+
+                document.addEventListener("keydown", movePlayer);
+
+                function addCoin() {
+                    coins.push({
+                        x: canvas.width,
+                        y: Math.random() * canvas.height,
+                        width: 10,
+                        height: 10,
+                        color: getRandomRGB()
+                    });
+                }
+
+                function draw() {
+                    if (!gameActive) return;
+
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+
+                    // Draw player
+                    context.fillStyle = player.color;
+                    context.fillRect(player.x, player.y, player.width, player.height);
+
+                    // Apply gravity
+                    player.velocity += player.gravity;
+                    player.y += player.velocity;
+
+                    // Prevent player from falling off the screen
+                    if (player.y > canvas.height - player.height) {
+                        player.y = canvas.height - player.height;
+                        player.velocity = 0;
+                    }
+
+                    if (player.y < 0) {
+                        player.y = 0;
+                        player.velocity = 0;
+                    }
+
+                    // Draw and move coins
+                    coins.forEach((coin, index) => {
+                        context.fillStyle = coin.color;
+                        context.fillRect(coin.x, coin.y, coin.width, coin.height);
+                        coin.x -= 2;
+
+                        // Check for collision with player
+                        if (
+                            player.x < coin.x + coin.width &&
+                            player.x + player.width > coin.x &&
+                            player.y < coin.y + coin.height &&
+                            player.y + player.height > coin.y
+                        ) {
+                            coins.splice(index, 1);
+                            score++;
+                        }
+
+                        // Remove coin if it goes off screen
+                        if (coin.x + coin.width < 0) {
+                            coins.splice(index, 1);
+                        }
+                    });
+
+                    // Display score
+                    context.fillStyle = "#2c3e50";
+                    context.font = "bold 20px Poppins";
+                    context.fillText("Score: " + score, 10, canvas.height - 20);
+
+                    // Add new coins at intervals
+                    if (Math.random() < 0.02) {
+                        addCoin();
+                    }
+
+                    animationId = requestAnimationFrame(draw);
+                }
+            </script>
+        </section>
+    </div>
+
+    <script nonce="{{ request.csp_script_nonce }}">
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        const sections = document.querySelectorAll('section');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Sobald die Animation abgeschlossen ist, den Observer entfernen
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+    </body>
+    </html>
+{% endblock %}
