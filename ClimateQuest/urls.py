@@ -29,6 +29,7 @@ from personals.sitemaps import *
 from users.sitemaps import *
 from aktionen.sitemaps import *
 from presents.sitemaps import *
+from pages.sitemaps import *
 
 sitemaps = {
     "home": HomeSitemap(),
@@ -68,6 +69,9 @@ sitemaps = {
 
     "presents_overview": PresentsOverviewSitemap(),
     "add_present": AddPresentSitemap(),
+
+    "testers": TestersSitemap(),
+    "aknachhaltigkeit": AknachhaltigkeitSitemap()
 }
 
 urlpatterns = [
