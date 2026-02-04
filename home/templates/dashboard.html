@@ -647,7 +647,7 @@
                     <summary>mehr</summary>
                     <div class="event-extra">
                         <p><strong>Zuletzt bearbeitet:</strong> <span class="event-date"
-                                                                      data-date="{{ single_artikel.date_time|date:'c' }}">{{ single_artikel.date_time|date:"d.m.Y, H:i" }}</span>
+                                                                      data-date="{{ single_artikel.date_time|date:'c' }}">{{ single_artikel.date_time|date:"d.m.Y" }}</span>
                         </p>
                         <p><strong>Ersteller:</strong> <a
                                 href="{% url 'user_detail' single_artikel.creator.id %}">{{ single_artikel.creator.username }}</a>

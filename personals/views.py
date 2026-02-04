@@ -281,7 +281,7 @@ def settings_view(request):
             return redirect('settings_view')
 
         elif 'change_statement' in request.POST:
-            statement = request.POST.get('statement')
+            statement = request.POST.get('content')
             password = request.POST.get('password_statement')
             if not request.user.check_password(password):
                 messages.error(request, all_messages["invalid_password"])

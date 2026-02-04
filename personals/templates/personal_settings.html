@@ -241,9 +241,7 @@
         <input type="password" name="password_statement" id="password_statement" placeholder="Passwort" required>
         <label for="content_editor">Statement</label>
         <div id="content_editor" class="quill-editor">{{ user.usererweitert.statement|safe }}</div>
-        <small>Wenn du die Quill-Cookies abgelehnt hast, können Design-Elemente nicht richtig angezeigt werden.
-            Stattdessen wirst du seltsame Tags wie &lt;p&gt; sehen.</small>
-        <input type="hidden" name="statement">
+        <input type="hidden" name="content">
         <button type="submit" name="change_statement">Speichern</button>
     </form>
 

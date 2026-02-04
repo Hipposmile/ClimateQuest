@@ -136,9 +136,6 @@ def edit_artikel(request, artikel_id):
             artikel.delete()
             messages.success(request, all_messages["successfully_deleted_artikel"])
             return redirect('artikel_overview')
-        else:
-            messages.error(request, all_messages["internal_error"])
-            return redirect('artikel_overview')
 
     return render(request, 'edit_artikel.html', {'artikel': artikel})
 

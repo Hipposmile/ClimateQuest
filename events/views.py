@@ -188,7 +188,7 @@ def edit_event(request, event_id):
     if request.method == 'POST':
         if 'edit' in request.POST:
             name = request.POST.get('name')
-            description = request.POST.get('description')
+            description = request.POST.get('content')
             date_time = request.POST.get('date_time')
             duration = request.POST.get('duration')
             adress = request.POST.get('adress')

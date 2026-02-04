@@ -8,7 +8,7 @@
 
 {% block content %}
 
-    <h1>Artikel bearbeiten</h1>
+    <h2>Artikel <a href="{% url 'artikel_detail' artikel.id %}">{{ artikel.name }}</a> bearbeiten</h2>
 
     {% if messages %}
         {% for message in messages %}
@@ -16,7 +16,6 @@
         {% endfor %}
     {% endif %}
 
-    <h2>Artikel <i>{{ artikel.name }}</i></h2>
     <div class="artikel-content"><p>{{ artikel.content|safe }}</p></div>
 
     <form method="post" class="fill-editor">
@@ -26,8 +25,6 @@
 
         <label for="content_editor">Beschreibung</label>
         <div id="content_editor" class="quill-editor">{{ artikel.content|safe }}</div>
-        <small>Wenn du die Quill-Cookies abgelehnt hast, können Design-Elemente nicht richtig angezeigt werden.
-            Stattdessen wirst du seltsame Tags wie &lt;p&gt; sehen.</small>
         <input type="hidden" name="content">
 
         <label class="custom-checkbox">

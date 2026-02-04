@@ -26,7 +26,7 @@ class Artikel(models.Model):
     comments = models.ManyToManyField(Comment, related_name='artikel', blank=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     like = models.ManyToManyField(User, blank=True, related_name='artikel_like')
-    date_time = models.DateTimeField(auto_now=True)
+    date_time = models.DateField(auto_now=True)
 
     def like_count(self):
         return self.like.count()

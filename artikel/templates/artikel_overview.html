@@ -62,7 +62,7 @@
                     <h2 class="event-title">{{ single_artikel.name }}</h2>
                     {% if ordered_by == 'Zuletzt bearbeitet' %}
                         <p><strong>Zuletzt bearbeitet:</strong> <span class="event-date"
-                                                                      data-date="{{ single_artikel.date_time|date:'c' }}">{{ single_artikel.date_time|date:"d.m.Y, H:i" }}</span>
+                                                                      data-date="{{ single_artikel.date_time|date:'c' }}">{{ single_artikel.date_time|date:"d.m.Y" }}</span>
                         </p>
 
                     {% elif ordered_by == 'Ersteller' %}
@@ -80,7 +80,7 @@
                         </p>
                         {% if ordered_by != 'Zuletzt bearbeitet' %}
                             <p><strong>Zuletzt bearbeitet:</strong> <span class="event-date"
-                                                                          data-date="{{ single_artikel.date_time|date:'c' }}">{{ single_artikel.date_time|date:"d.m.Y, H:i" }}</span>
+                                                                          data-date="{{ single_artikel.date_time|date:'c' }}">{{ single_artikel.date_time|date:"d.m.Y" }}</span>
                             </p>
                         {% endif %}
                         {% if ordered_by != 'Ersteller' %}

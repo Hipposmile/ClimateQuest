@@ -68,7 +68,7 @@
     <p>Erstellt von <a  href="{% url 'user_detail' artikel.creator.id %}">{{ artikel.creator }}</a></p>
     {% if artikel.creator.is_superuser %}
         <p><span class="emoji">&#x1F4A1;</span> Ein offizieller Artikel von ClimateQuest</p>{% endif %}
-    <p>Zuletzt bearbeitet: {{ artikel.date_time|date:"d.m.Y H:i" }}</p>
+    <p>Zuletzt bearbeitet: {{ artikel.date_time|date:"d.m.Y" }}</p>
 
     <div class="like-button {% if has_liked %}liked{% endif %}">
         <form action="{% url 'add_like_artikel' artikel.id %}" method="post">

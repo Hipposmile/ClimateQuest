@@ -25,12 +25,11 @@
         <input type="text" id="name" name="name" placeholder="Name" maxlength="100" value="{{ event.name }}" required>
 
         <label for="content_editor">Beschreibung</label>
-        <div id="content_editor">{{ event.description|safe }}</div>
-        <small>Wenn du die Quill-Cookies abgelehnt hast, können Design-Elemente nicht richtig angezeigt werden. Stattdessen wirst du seltsame Tags wie &lt;p&gt; sehen.</small>
+        <div id="content_editor" class="quill-editor">{{ event.description|safe }}</div>
         <input type="hidden" name="content">
 
         <label for="date_time">Datum und Uhrzeit (Beginn)</label>
-        <input type="datetime-local" id="date_time" name="date_time" value="{{ event.date_time|date:"d.m.Y, H:i" }}"
+        <input type="datetime-local" id="date_time" name="date_time" value="{{ event.date_time|date:"Y-m-d\\TH:i" }}"
                required>
 
         <label for="duration">geschätze Dauer in Minuten</label>
@@ -38,7 +37,8 @@
                required>
 
         <label for="adress">Adresse</label>
-        <input type="text" id="adress" name="adress" placeholder="Adresse" value="{{ event.adress }}" maxlength="100" required>
+        <input type="text" id="adress" name="adress" placeholder="Adresse" value="{{ event.adress }}" maxlength="100"
+               required>
 
         <label class="custom-checkbox">
             <input type="checkbox" name="is_truth">

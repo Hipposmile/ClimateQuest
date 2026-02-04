@@ -1144,6 +1144,11 @@
         const form = event.target;
         event.preventDefault();
         let content = "";
+        const btn_name = form.querySelector('button[type=submit]').name;
+        const hidden = document.createElement('input');
+        hidden.type = 'hidden';
+        hidden.name = btn_name;
+        form.appendChild(hidden);
         if (getCookiePreferences().quill) {
             try {
                 content = quill.root.innerHTML;
@@ -1153,7 +1158,7 @@
                 return false;
             }
         } else {
-            content = document.getElementById('textarea-content').content;
+            content = document.getElementById('textarea-content').value;
         }
         form.querySelector('input[name=content]').value = content;
         form.submit();
