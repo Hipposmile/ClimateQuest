@@ -4,7 +4,8 @@
     <meta name="description"
           content="Sieh dir deine Aktions-Historie bei ClimateQuest an.">
 {% endblock %}
-{% block title %}ClimateQuest - Aktions-Historie von {% if user == request.user %}mir{% else %}{% endif %}{{ user }}{% endblock %}
+{% block title %}ClimateQuest - Aktions-Historie von {% if user == request.user %}mir{% else %}{% endif %}
+    {{ user }}{% endblock %}
 {% block content %}
     <h1>Aktions-Historie von {% if user == request.user %} <a href="{% url 'user_detail' user.id %}">mir</a>{% else %}
         <a href="{% url 'user_detail' user.id %}">{{ user }}</a>{% endif %}</h1>

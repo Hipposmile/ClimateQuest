@@ -795,8 +795,8 @@
                         <span class="nav-link inactive-link">Konto ▾</span>
                         <div class="dropdown-content">
                             <p>{{ user.username }}</p>
-                            <a  href="{% url 'level_view' request.user.id %}">Level</a>
-                            <a  href="{% url 'klimapunkte_view' request.user.id %}">Klimapunkte</a>
+                            <a  href="{% url 'level_me' %}">Level</a>
+                            <a  href="{% url 'klimapunkte_me' %}">Klimapunkte</a>
                             <a  href="{% url 'settings_view' %}">Profil bearbeiten</a>
                             <a  href="{% url 'users_overview' %}">User</a>
                             <a  href="{% url 'presents_overview' %}">Geschenke</a>

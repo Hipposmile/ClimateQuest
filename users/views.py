@@ -102,7 +102,7 @@ def history(request, user_id):
         return redirect('dashboard')
 
     actions = Aktion.objects.filter(user=user).order_by('-date')
-    return render(request, './history.html', {'actions': actions})
+    return render(request, './history.html', {'actions': actions, 'user': user})
 
 
 def users_overview(request):
