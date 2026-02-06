@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic import TemplateView
+from django.conf.urls.static import static
+from django.conf import settings
 
 from home.sitemaps import *
 from artikel.sitemaps import *
@@ -100,6 +102,8 @@ urlpatterns = [
     # Hot Reload
     path("__reload__/", include("django_browser_reload.urls")),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler400 = 'core.views.custom_400'
 handler403 = 'core.views.custom_403'

@@ -144,6 +144,7 @@ form input[type="date"],
 form input[type="datetime-local"],
 form input[type="email"],
 form input[type="search"],
+form input[type="file"],
 form select {
     width: 100%;
     padding: 1rem;
@@ -961,6 +962,7 @@ summary {
     form input[type="datetime-local"],
     form input[type="email"],
     form input[type="search"],
+    form input[type="file"],
     form select,
     form textarea {
         font-size: 16px;

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <meta name="description" content="Füge eine Petition zu ClimateQuest hinzu">
+{% endblock %}
+
+{% block title %}ClimateQuest - Petition hinzufügen{% endblock %}
+
+{% block content %}
+    <h1>Petition hinzufügen</h1>
+
+    <form method="post" class="fill-editor" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="title">Titel</label>
+        <input type="text" name="title" id="title" placeholder="Titel" maxlength="100">
+
+        <label for="content_editor">Beschreibung</label>
+        <div id="content_editor" class="quill-editor"></div>
+        <input type="hidden" name="content">
+
+        <label for="img">Bild (optional)</label>
+        <input type="file" name="img" id="img" accept="image/avif, image/webp, image/jpeg, image/png">
+
+        <label class="custom-checkbox">
+            <input type="checkbox" name="is_truth">
+            <span class="checkmark"></span>
+            <span class="label-text">Ich bestätige, dass die Petition mit den <a
+                    href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmt. </span>
+        </label>
+
+        <button type="submit">Speichern</button>
+    </form>
+
+    <div class="cookie-blocked" data-requires="quill"
+         data-content='<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />'>
+    </div>
+
+    <script nonce="{{ request.csp_script_nonce }}">
+        document.addEventListener('DOMContentLoaded', initializeQuill);
+    </script>
+{% endblock %}

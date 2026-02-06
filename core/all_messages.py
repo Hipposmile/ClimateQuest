@@ -215,4 +215,17 @@ all_messages = {
     "present_not_found": "Geschenkseite nicht gefunden",
     "congratulation_added": "Glückwunschnachricht erfolgreich hinzugefügt",
     "present_deleted": "Geschenkseite erfolgreich gelöscht",
+
+    # --------
+    # Petition
+    # --------
+    "petition_added": "Petition hinzugefügt",
+
+    # --------
+    # Image Upload
+    # --------
+    "size_exceeded_maximum": "Maximal {max_size_mb} MB erlaubt",
+    "invalid_file_extension": "Ungültige Dateiendung",
+    "invalid_img": "Ungültiges Bild",
+    "invalid_file_type": "Ungültiger Dateityp"
 }
