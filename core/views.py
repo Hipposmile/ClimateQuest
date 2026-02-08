@@ -42,7 +42,7 @@ from functools import wraps
 def production(view_func):
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
-        if not settings.DEBUG:
+        if not settings.DEBUG or (request.user.is_authenticated and request.user.is_staff):
             return render(request, "production.html")
         return view_func(request, *args, **kwargs)
     return wrapper
