@@ -34,6 +34,20 @@ def custom_503(request, exception=""):
     return render(request, '5xx.html', status=503)
 
 
+from django.conf import settings
+from django.shortcuts import render
+from functools import wraps
+
+
+def production(view_func):
+    @wraps(view_func)
+    def wrapper(request, *args, **kwargs):
+        if not settings.DEBUG:
+            return render(request, "production.html")
+        return view_func(request, *args, **kwargs)
+    return wrapper
+
+
 factory = RequestFactory()
 fake_request = factory.get('/')
 

@@ -1,9 +1,11 @@
 from PIL import Image
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.shortcuts import render
 
 from core.all_messages import all_messages
+from core.views import production
 from petitions.models import *
 from utils.functions import clean_html, clean_img
 
@@ -13,6 +15,8 @@ ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/avif", ]
 MAX_SIZE_MB = 5
 
 
+@production
+@login_required
 def add_petition(request):
     categories = Category.objects.all().order_by('title')
     if request.method == 'POST':
@@ -27,7 +31,7 @@ def add_petition(request):
         try:
             category = Category.objects.get(title=category_input)
         except Category.DoesNotExist:
-            messages.error(request, all_messages["petition_invalid_category"])
+            messages.error(request, all_messages["internal_error"])
             return redirect("add_petition")
 
         content = clean_html(content)
@@ -39,7 +43,7 @@ def add_petition(request):
         img = response
         width, height = Image.open(img).size
         print(width, height)
-        if width / height != 16/9:
+        if width / height != 16 / 9:
             messages.error(request, all_messages["invalid_img_proportions"])
             return redirect("add_petition")
 
@@ -49,6 +53,8 @@ def add_petition(request):
 
     return render(request, "./add_petition.html", {'categories': categories})
 
+
+@production
 def petition_detail(request, petition_id):
     try:
         petition = Petition.objects.get(id=petition_id)
@@ -58,10 +64,18 @@ def petition_detail(request, petition_id):
 
     if request.method == 'POST':
         if request.user.is_authenticated:
-            petition.signs.add(request.user)
-            petition.save()
+            if request.user not in petition.signs.all():
+                petition.signs.add(request.user)
+                petition.save()
+                messages.success(request, all_messages["petition_signed"])
+            else:
+                petition.signs.remove(request.user)
+                petition.save()
+                messages.success(request, all_messages["petition_unsigned"])
 
     return render(request, "./petition_detail.html", {"petition": petition})
 
+
+@production
 def petitions_overview(request):
     return render(request, "./petitions_overview.html")

@@ -221,7 +221,8 @@ all_messages = {
     # --------
     "petition_added": "Petition hinzugefügt",
     "petition_not_found": "Petition nicht gefunden",
-    "petition_invalid_category"
+    "petition_signed": "Petition erfolgreich unterschrieben",
+    "petition_unsigned": "Unterschrift erfolgreich entfernt",
 
     # --------
     # Image Upload
