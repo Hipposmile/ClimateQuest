@@ -1,13 +1,3 @@
-const style_confetti = document.createElement('style');
-style_confetti.textContent = `canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        z-index: 9999;
-    }`;
-document.body.appendChild(style_confetti);
-
 const canvas = document.createElement('canvas');
 canvas.id = 'confetti-canvas';
 document.body.appendChild(canvas);

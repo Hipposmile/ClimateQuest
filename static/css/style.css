@@ -1384,6 +1384,18 @@ input[type="file"]::-webkit-file-upload-button {
     margin: 15px;
 }
 
+/* Ende Cookie Styling */
+
+/* Konfetti Styling */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* Ende Konfetti Styling */
 
 .display-none {
     display: none;
