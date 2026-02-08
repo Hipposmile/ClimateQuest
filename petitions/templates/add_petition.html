@@ -9,6 +9,7 @@
 {% block title %}ClimateQuest - Petition hinzufügen{% endblock %}
 
 {% block content %}
+    <!--Using Cropper.js: https://fengyuanchen.github.io/cropperjs/-->
     <script src="{% static 'cropperjs/cropper.js' %}"></script>
     <style nonce="{{ request.csp_style_nonce }}">
         .cropper-wrapper {

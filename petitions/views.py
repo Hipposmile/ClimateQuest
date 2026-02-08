@@ -55,7 +55,7 @@ def add_petition(request):
 
 
 @production
-def petition_detail(request, petition_id):
+def petition_detail(request, petition_id): # ToDo: Add comments
     try:
         petition = Petition.objects.get(id=petition_id)
     except Petition.DoesNotExist:
@@ -75,7 +75,8 @@ def petition_detail(request, petition_id):
 
     return render(request, "./petition_detail.html", {"petition": petition})
 
+# ToDo: Add update functionality
 
 @production
-def petitions_overview(request):
+def petitions_overview(request): # ToDo: Add functionality, e.g. like artikel_overview, but using categories
     return render(request, "./petitions_overview.html")
