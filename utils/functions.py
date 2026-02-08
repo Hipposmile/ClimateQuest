@@ -1,3 +1,4 @@
+import io
 import logging
 import random
 import string
@@ -5,8 +6,10 @@ import traceback
 from datetime import timedelta, date
 
 import bleach
+from PIL import Image
 from django.contrib import messages
 from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.mail import EmailMultiAlternatives
 from django.core.validators import validate_email
 from django.db.models import Sum, F
@@ -17,6 +20,7 @@ from ClimateQuest import settingsprod
 from aktionen.models import *
 from artikel.models import Artikel
 from community.models import *
+from core.all_messages import all_messages
 from home.models import *
 from personals.models import *
 
@@ -437,6 +441,7 @@ def get_klimapunkte_from_likes(user):
             break
     return streak"""
 
+
 def get_streak_from_user(user):
     weekly_goal = user.usererweitert.weekly_goal
 
@@ -483,3 +488,28 @@ def get_streak_from_user(user):
             break
 
     return successful_weeks
+
+
+def clean_img(img, ALLOWED_EXTENSIONS=["jpg", "jpeg", "png", "webp", "avif"],
+              ALLOWED_MIME_TYPES=["image/jpeg", "image/png", "image/webp", "image/avif", ], ALLOWED_FORMATS=["JPEG", "PNG", "WEBP", "AVIF"], MAX_SIZE_MB=5):
+    if img.size > MAX_SIZE_MB * 1024 * 1024:
+        return False, all_messages["size_exceeded_maximum"].format(max_size_mb=MAX_SIZE_MB)
+
+    ext = img.name.split(".")[-1].lower()
+    if ext not in ALLOWED_EXTENSIONS:
+        return False, all_messages["invalid_file_extension"]
+
+    try:
+        image = Image.open(img)
+        image.verify()
+    except Exception:
+        return False, all_messages["invalid_img"]
+
+    if image.format not in ALLOWED_FORMATS:
+        return False, all_messages["invalid_file_type"]
+
+    if img.content_type not in ALLOWED_MIME_TYPES:
+        return False, all_messages["invalid_mime_type"]
+
+    img.seek(0)
+    return True, img

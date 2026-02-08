@@ -11,5 +11,4 @@ push.sh
 staticfiles/
 .pylintrc
 tests/
-test.html
-test.py
+try/

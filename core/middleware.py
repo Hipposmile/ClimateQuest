@@ -40,12 +40,13 @@ class GenerateCSPNonceMiddleware:
         response = self.get_response(request)
 
         csp = (
-            f"default-src 'self'; "
+            "default-src 'self'; "
             f"script-src 'self' 'nonce-{script_nonce}' {allowed_script_sources}; "
             f"style-src 'self' 'nonce-{style_nonce}' {allowed_style_sources}; "
-            f"img-src 'self' data: https://www.gstatic.com/recaptcha/; "
-            f"frame-src https://www.google.com/recaptcha/; "
-            f"connect-src 'self' https://www.google.com/recaptcha/;"
+            "img-src 'self' data: blob: https://www.gstatic.com/recaptcha/; "
+            "frame-src https://www.google.com/recaptcha/; "
+            "connect-src 'self' blob: https://www.google.com/recaptcha/;"
+            "media-src blob:;"
         )
         response["Content-Security-Policy"] = csp
 

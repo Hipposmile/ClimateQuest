@@ -541,11 +541,7 @@
 {% csrf_token %}
 <header id="header">
     <nav class="tabbar">
-        {% if user.is_authenticated %}
-            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="profile">
-                <span class="tab-icon"><span class="emoji">&#x1F464;</span></span>
-                <span class="tab-label">Profil</span>
-            </a>
+        {% if request.user.is_authenticated %}
             <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="aktionen">
                 <span class="tab-icon"><span class="emoji">&#x1F4CA;</span></span>
                 <span class="tab-label">Aktionen</span>
@@ -562,6 +558,10 @@
             <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="education">
                 <span class="tab-icon"><span class="emoji">&#x1F393;</span></span>
                 <span class="tab-label">Bildung</span>
+            </a>
+            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="more">
+                <span class="tab-icon"><span class="emoji">&#xE250;</span></span>
+                <span class="tab-label">Mehr</span>
             </a>
         {% else %}
             <a href="{% url 'home' %}" class="tab-item">
@@ -583,40 +583,7 @@
         {% endif %}
     </nav>
 
-    {% if user.is_authenticated %}
-        <div class="mobile-menu-overlay" data-menu="profile">
-            <div class="mobile-menu-modal">
-                <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
-                <h2><span class="emoji">&#x1F464;</span> {{ request.user.username }}</h2>
-                <nav class="mobile-menu-nav">
-                    <a href="{% url 'dashboard' %}"><span class="emoji">&#x1F5A5;</span>
-                        Dashboard</a>
-                    <a href="{% url 'home' %}"><span class="emoji">&#x1F3E1;</span> Home</a>
-                    <a href="#" class="openShareOverlay"><span class="emoji">&#xE253;</span> Teilen</a>
-                    <a href="{% url 'benachrichtigungen_view' %}"><span
-                            class="emoji">&#x1F514;</span>
-                        Benachrichtigungen</a>
-                    <a href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span>
-                        Level</a>
-                    <a href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span>
-                        Klimapunkte</a>
-                    <a href="{% url 'users_overview' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
-                        User</a>
-                    <a href="{% url 'presents_overview' %}"><span class="emoji">&#x1F381;</span>
-                        Geschenke</a>
-                    <a href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span>
-                        Einstellungen</a>
-                    <a href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span>
-                        Logout</a>
-                    {% if user.is_superuser %}
-                        <a href="/ClimateQuestAdmin/" target="_blank"><span class="emoji">&#x1F451;</span> Admin (I)</a>
-                        <a href="{% url 'admin' %}"><span class="emoji">&#x1F451;</span> Admin
-                            (II)</a>
-                    {% endif %}
-                </nav>
-            </div>
-        </div>
-
+    {% if request.user.is_authenticated %}
         <div class="mobile-menu-overlay" data-menu="aktionen">
             <div class="mobile-menu-modal">
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
@@ -669,7 +636,7 @@
                 <div class="mobile-menu-section">
                     <div class="mobile-menu-section-title"><span class="emoji">&#x1F4F0;</span> Artikel</div>
                     <a class="mobile-menu-sub" href="{% url 'artikel_overview' %}">Überblick</a>
-                    {% if user.is_authenticated %}
+                    {% if request.user.is_authenticated %}
                         <a class="mobile-menu-sub" href="{% url 'add_artikel' %}">Artikel hinzufügen</a>
                     {% endif %}
                 </div>
@@ -677,7 +644,7 @@
                 <div class="mobile-menu-section">
                     <div class="mobile-menu-section-title"><span class="emoji">&#x1F389;</span> Events</div>
                     <a class="mobile-menu-sub" href="{% url 'events_overview' %}">Überblick</a>
-                    {% if user.is_authenticated %}
+                    {% if request.user.is_authenticated %}
                         <a class="mobile-menu-sub" href="{% url 'add_event' %}">Event erstellen</a>
                     {% endif %}
                 </div>
@@ -685,10 +652,55 @@
                 <div class="mobile-menu-section">
                     <div class="mobile-menu-section-title"><span class="emoji">&#x1F4AC;</span> Forum</div>
                     <a class="mobile-menu-sub" href="{% url 'forum_overview' %}">Überblick</a>
-                    {% if user.is_authenticated %}
+                    {% if request.user.is_authenticated %}
                         <a class="mobile-menu-sub" href="{% url 'add_forum_post' %}">Beitrag hinzufügen</a>
                     {% endif %}
                 </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="mobile-menu-overlay" data-menu="more">
+        <div class="mobile-menu-modal">
+            <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
+            <h2><span class="emoji">&#x1F464;</span> {{ request.user.username }}</h2>
+            <nav class="mobile-menu-nav">
+                <div class="mobile-menu-section">
+                    <div class="mobile-menu-section-title"><span class="emoji">&#x1F4C4;</span> Seite</div>
+                    <a href="{% url 'dashboard' %}"><span class="emoji">&#x1F5A5;</span>
+                        Dashboard</a>
+                    <a href="{% url 'home' %}"><span class="emoji">&#x1F3E1;</span> Home</a>
+                    <a href="#" class="openShareOverlay"><span class="emoji">&#xE253;</span> Teilen</a>
+                    <a href="{% url 'benachrichtigungen_view' %}"><span
+                            class="emoji">&#x1F514;</span>
+                        Benachrichtigungen</a>
+                </div>
+                <div class="mobile-menu-section">
+                    <div class="mobile-menu-section-title"><span class="emoji">&#x1F464;</span> Konto</div>
+                    <a href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span>
+                        Level</a>
+                    <a href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span>
+                        Klimapunkte</a>
+                    <a href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span>
+                        Einstellungen</a>
+                    <a href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span>
+                        Logout</a>
+                </div>
+                <div class="mobile-menu-section">
+                    <div class="mobile-menu-section-title"><span class="emoji">&#x1F5C2;</span> Sonstiges</div>
+                    <a href="{% url 'users_overview' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
+                        User</a>
+                    <a href="{% url 'presents_overview' %}"><span class="emoji">&#x1F381;</span>
+                        Geschenke</a>
+                </div>
+                {% if request.user.is_staff %}
+                    <div class="mobile-menu-section">
+                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F451;</span> Admin</div>
+                        <a href="{% url 'admin:index' %}" target="_blank"><span class="emoji">&#x1F3DB;</span> Admin (I)</a>
+                        <a href="{% url 'admin' %}"><span class="emoji">&#x1F3F0;</span> Admin
+                            (II)</a>
+                    </div>
+                {% endif %}
             </nav>
         </div>
     </div>
@@ -766,7 +778,7 @@
 
     const renderDesktopNav = () => {
         header.innerHTML = `
-                <a href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}/{% endif %}" class="logo-link">
+                <a href="{% if request.user.is_authenticated %}{% url 'dashboard' %}{% else %}/{% endif %}" class="logo-link">
                     <picture>
                 <source type="image/avif" srcset="
                     {% static 'icons/ClimateQuest-320.avif' %} 320w,
@@ -790,19 +802,19 @@
                 <nav>
                     <a href="#" class="openShareOverlay">Teilen</a>
 
-                    {% if user.is_authenticated %}
+                    {% if request.user.is_authenticated %}
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Konto ▾</span>
                         <div class="dropdown-content">
-                            <p>{{ user.username }}</p>
+                            <p>{{ request.user.username }}</p>
                             <a  href="{% url 'level_me' %}">Level</a>
                             <a  href="{% url 'klimapunkte_me' %}">Klimapunkte</a>
                             <a  href="{% url 'settings_view' %}">Profil bearbeiten</a>
                             <a  href="{% url 'users_overview' %}">User</a>
                             <a  href="{% url 'presents_overview' %}">Geschenke</a>
                             <a  href="{% url 'logout_view' %}">Logout</a>
-                            {% if user.is_staff %}
-                            <a href="/ClimateQuestAdmin/" target="_blank">Admin-Bereich (I)</a>
+                            {% if request.user.is_staff %}
+                            <a href="{% url 'admin:index' %}" target="_blank">Admin-Bereich (I)</a>
                             <a  href="{% url 'admin' %}">Admin-Bereich (II)</a>
                             {% endif %}
                         </div>
@@ -843,7 +855,7 @@
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Events ▾</span>
                         <div class="dropdown-content">
-                            {% if user.is_authenticated %}<a  href="{% url 'add_event' %}
+                            {% if request.user.is_authenticated %}<a  href="{% url 'add_event' %}
             ">Event hinzufügen</a>{% endif %}
                             <a  href="{% url 'events_overview' %}">Überblick</a>
                         </div>
@@ -851,7 +863,7 @@
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Artikel ▾</span>
                         <div class="dropdown-content">
-                            {% if user.is_authenticated %}<a  href="{% url 'add_artikel' %}
+                            {% if request.user.is_authenticated %}<a  href="{% url 'add_artikel' %}
             ">Artikel hinzufügen</a>{% endif %}
                             <a  href="{% url 'artikel_overview' %}">Überblick</a>
                         </div>
@@ -859,7 +871,7 @@
                     <div class="dropdown">
                         <span class="nav-link inactive-link">Forum ▾</span>
                         <div class="dropdown-content">
-                            {% if user.is_authenticated %}<a  href="{% url 'add_forum_post' %}
+                            {% if request.user.is_authenticated %}<a  href="{% url 'add_forum_post' %}
             ">Beitrag hinzufügen</a>{% endif %}
                             <a  href="{% url 'forum_overview' %}">Überblick</a>
                         </div>
@@ -888,7 +900,7 @@
                 .forEach(el => el.classList.remove('visible'));
         });
 
-        {% if user.is_authenticated %}
+        {% if request.user.is_authenticated %}
             ladeBenachrichtigungenAnzahl();
         {% endif %}
     }
@@ -934,7 +946,7 @@
     });
 </script>
 
-{% if user.is_authenticated %}
+{% if request.user.is_authenticated %}
     <script nonce="{{ request.csp_script_nonce }}">
         const maxTries = 99;
         let tries = 0;
@@ -995,7 +1007,7 @@
                     </div>
                 {% endif %}
 
-                <p class="h3_size">Folgende URL teilen: <a href="#">{{ url }}</a></p>
+                <p class="h3_size">Folgende URL teilen: <a href="">{{ url }}</a></p>
 
                 <button class="share-btn native-share" id="share">Teilen über Gerät</button>
 

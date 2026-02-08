@@ -220,6 +220,8 @@ all_messages = {
     # Petition
     # --------
     "petition_added": "Petition hinzugefügt",
+    "petition_not_found": "Petition nicht gefunden",
+    "petition_invalid_category"
 
     # --------
     # Image Upload
@@ -227,5 +229,7 @@ all_messages = {
     "size_exceeded_maximum": "Maximal {max_size_mb} MB erlaubt",
     "invalid_file_extension": "Ungültige Dateiendung",
     "invalid_img": "Ungültiges Bild",
-    "invalid_file_type": "Ungültiger Dateityp"
+    "invalid_file_type": "Ungültiger Dateityp",
+    "invalid_mime_type": "Ungültiger MIME-Typ",
+    "invalid_img_proportions": "Ungültiges Seitenverhältnis"
 }

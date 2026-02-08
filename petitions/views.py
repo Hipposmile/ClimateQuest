@@ -1,7 +1,11 @@
+from PIL import Image
+from django.contrib import messages
+from django.shortcuts import redirect
 from django.shortcuts import render
 
 from core.all_messages import all_messages
 from petitions.models import *
+from utils.functions import clean_html, clean_img
 
 # Create your views here.
 ALLOWED_EXTENSIONS = ["jpg", "jpeg", "png", "webp", "avif"]
@@ -10,68 +14,54 @@ MAX_SIZE_MB = 5
 
 
 def add_petition(request):
+    categories = Category.objects.all().order_by('title')
     if request.method == 'POST':
         title = request.POST.get('title')
         content = request.POST.get('content')
         img = request.FILES.get('img')
+        category_input = request.POST.get('category')
 
         if not title or not content or not img:
             messages.error(request, all_messages["missing_required_inputs"])
 
-        if img.size > MAX_SIZE_MB * 1024 * 1024:
-            messages.error(request, all_messages["size_exceeded_maximum"].format(max_size_mb=MAX_SIZE_MB))
-            return redirect("add_petition")
-
-        ext = img.name.split(".")[-1].lower()
-        if ext not in ALLOWED_EXTENSIONS:
-            messages.error(request, all_messages["invalid_file_extension"])
-            return redirect("add_petition")
-
         try:
-            image = Image.open(img)
-            image.verify()
-        except Exception:
-            messages.error(request, all_messages["invalid_img"])
+            category = Category.objects.get(title=category_input)
+        except Category.DoesNotExist:
+            messages.error(request, all_messages["petition_invalid_category"])
             return redirect("add_petition")
 
-        if image.format not in ALLOWED_FORMATS:
-            messages.error(request, all_messages["invalid_file_type"])
+        content = clean_html(content)
+
+        valid, response = clean_img(img)
+        if not valid:
+            messages.error(request, response)
+            return redirect("add_petition")
+        img = response
+        width, height = Image.open(img).size
+        print(width, height)
+        if width / height != 16/9:
+            messages.error(request, all_messages["invalid_img_proportions"])
             return redirect("add_petition")
 
-        img.seek(0)
-
-        petition = Petition.objects.create(title=title, content=content, img=img)
+        petition = Petition.objects.create(title=title, content=content, img=img, category=category)
         messages.success(request, all_messages["petition_added"])
-        return redirect("home")
+        return redirect("petition_detail", petition.id)
 
-    return render(request, "./add_petition.html")
+    return render(request, "./add_petition.html", {'categories': categories})
 
+def petition_detail(request, petition_id):
+    try:
+        petition = Petition.objects.get(id=petition_id)
+    except Petition.DoesNotExist:
+        messages.error(request, all_messages["petition_not_found"])
+        return redirect("petitions_overview")
 
-from PIL import Image
-from django.contrib import messages
-from django.shortcuts import redirect
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            petition.signs.add(request.user)
+            petition.save()
 
-MAX_SIZE_MB = 5
-ALLOWED_EXTENSIONS = ["jpg", "jpeg", "png", "webp", "avif"]
-ALLOWED_FORMATS = ["JPEG", "PNG", "WEBP", "AVIF"]
+    return render(request, "./petition_detail.html", {"petition": petition})
 
-
-def upload_image_view(request):
-    if request.method == "POST":
-        img = request.FILES.get("image")
-
-        if not img:
-            messages.error(request, "Bitte eine Datei auswählen.")
-            return redirect("upload")
-
-        # 1. Dateigröße prüfen
-
-        # Wenn alles ok → speichern
-        profile = request.user.profile
-        profile.avatar = img
-        profile.save()
-
-        messages.success(request, "Bild erfolgreich hochgeladen.")
-        return redirect("profile")
-
-    return redirect("upload")
+def petitions_overview(request):
+    return render(request, "./petitions_overview.html")

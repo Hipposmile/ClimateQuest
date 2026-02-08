@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <meta name="description" content="Siehe dir die Petition {{ petition.title }} an">
+{% endblock %}
+
+{% block title %}ClimateQuest - Petition {{ petition.title }}{% endblock %}
+
+{% block content %}
+    <style nonce="{{ request.csp_style_nonce }}">
+        .petition-img {
+            height: 50vh;
+            width: auto;
+            border-radius: 16px;
+        }
+    </style>
+    <h1>Petition <i>{{ petition.title }}</i></h1>
+    <img src="{{ petition.img.url }}" class="petition-img" alt="Petitionsbild">
+    <p><strong>{{ petition.signs.count }}</strong> Unterschriften</p>
+    <div class="artikel-content"><p>{{ petition.content|safe }}</p></div>
+    <p>Kategorie <strong>{{ petition.category.title }}</strong></p>
+    {% if request.user not in petition.signs or not user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            {% if request.user.is_authenticated %}
+                <button type="submit">Unterschreiben</button>
+            {% else %}
+                <p><a href="{% url 'register_view' %}">Registriere dich</a>, um zu unterschreiben</p>
+            {% endif %}
+        </form>
+    {% else %}
+        <p>Du hast bereits unterschrieben</p>
+    {% endif %}
+{% endblock %}

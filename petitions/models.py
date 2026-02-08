@@ -9,13 +9,26 @@ class Update(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.title
+
+
+class Category(models.Model):
+    title = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.title
+
 
 class Petition(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
-    img = models.ImageField(upload_to='petitions/', blank=True, null=True)
+    img = models.ImageField(upload_to='petitions/', blank=True, null=True, validators=[validate_image])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    signs = models.ManyToManyField(User, blank=True, null=True, related_name='petition_sign')
-    update = models.ForeignKey(Update, on_delete=models.CASCADE, related_name='petition_update', blank=True,
-                               validators=[validate_image])
+    signs = models.ManyToManyField(User, blank=True, related_name='petition_sign')
+    update = models.ForeignKey(Update, on_delete=models.CASCADE, related_name='petition_update', blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='petition_category')
+
+    def __str__(self):
+        return self.title
