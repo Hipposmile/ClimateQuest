@@ -1,4 +1,4 @@
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
+importScripts('/static/pwa/workbox-sw.js');
 
 const CACHE = "pwabuilder-page";
 
@@ -17,7 +17,7 @@ self.addEventListener('install', async (event) => {
   );
 });
 
-if (workbox.navigationPreload.isSupported()) {
+if (self.workbox &&workbox.navigationPreload.isSupported()) {
   workbox.navigationPreload.enable();
 }
 

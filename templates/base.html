@@ -409,9 +409,7 @@
             hideLoading();
         }
     });
-</script>
 
-<script nonce="{{ request.csp_script_nonce }}">
     function createPwaNav() {
         const isStandalone =
             window.matchMedia('(display-mode: standalone)').matches ||
@@ -465,9 +463,19 @@
         }
     }
 
-    // Beim Laden prüfen
-    document.addEventListener('DOMContentLoaded', createPwaNav);
+    // 1. Direkt prüfen (falls schon gesetzt)
+    createPwaNav();
 
+    // 2. Wenn Chrome den Modus später setzt
+    window.addEventListener('visibilitychange', createPwaNav);
+
+    // 3. Chrome-spezifisches Event
+    window.matchMedia('(display-mode: standalone)').addEventListener('change', createPwaNav);
+
+    // 4. Fallback: nach load nochmal prüfen
+    window.addEventListener('load', () => {
+        setTimeout(createPwaNav, 50);
+    });
 
     function removeHoverStyles() {
         const canHover = window.matchMedia("(hover: hover)").matches;
