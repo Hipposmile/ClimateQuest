@@ -1,125 +1,97 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block meta %}
-    <meta name="description" content="Erstelle eine neue Community bei ClimateQuest, um sich mit anderen Families zu vergleichen und auszutauschen.">
+    <meta name="description"
+          content="Erstelle eine neue Community bei ClimateQuest, um sich mit anderen Families zu vergleichen und auszutauschen.">
 {% endblock %}
 {% block title %}Community erstellen{% endblock %}
 
 {% block content %}
-<h1>Community erstellen</h1>
-{% if messages %}
-{% for message in messages %}
-<p class="{{message.level_tag}}-message">{{ message }}</p>
-{% endfor %}
-{% endif %}
-<form method="post" >
-    {% csrf_token %}
-    <small id="communityname-feedback"></small>
-    <label for="communityname">Communityname:</label>
-    <input type="text" id="communityname" name="communityname" placeholder="Communityname" maxlength="100" required>
-    <label for="password">Passwort:</label>
-    <input type="password" id="password" name="community_password" placeholder="Passwort" maxlength="100" required>
-    <label for="community_admin_password">Admin Passwort:</label>
-    <input type="password" name="community_admin_password" placeholder="Admin Passwort"
-           id="community_admin_password" maxlength="100" required>
-    <label for="familyname">Familyname:</label>
-    <small id="familyname-feedback"></small>
-    <input type="text" id="familyname" name="familyname" placeholder="Familyname" required>
-    <label for="family_admin_password">Family Admin Passwort:</label>
-    <input type="password" id="family_admin_password" name="family_admin_password" placeholder="Family Admin Passwort"
-        required>
-    <div>
-        <h4>Wir empfehlen folgende Admin-Passwort-Anforderungen, um die Community vor unerlaubter Bearbeitung zu schützen:
-        </h4>
-        <ul class="criteria-list">
-            <li id="length" class="error-message">Mindestens acht Zeichen</li>
-            <li id="uppercase" class="error-message">Mindestens ein Großbuchstabe</li>
-            <li id="lowercase" class="error-message">Mindestens ein Kleinbuchstabe</li>
-            <li id="number" class="error-message">Mindestens eine Zahl</li>
-            <li id="punctuation" class="error-message">Mindestens ein Sonderzeichen</li>
-        </ul>
-    </div>
-    <button type="submit" id="create-button">Community erstellen</button>
-</form>
-<p>Oder <a  href="{% url 'join_community' %}">einer bestehenden Community beitreten</a>.</p>
+    <h1>Community erstellen</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <label for="communityname">Communityname:</label>
+        <small id="communityname-feedback"></small>
+        <input type="text" id="communityname" name="communityname" placeholder="Communityname" maxlength="100" required>
+        <label for="password">Passwort:</label>
+        <input type="password" id="password" name="community_password" placeholder="Passwort" maxlength="100" required>
+        <label for="community_admin_password">Admin Passwort:</label>
+        <input type="password" name="community_admin_password" placeholder="Admin Passwort"
+               id="community_admin_password" maxlength="100" required>
+        <label for="familyname">Familyname:</label>
+        <input type="text" id="familyname" name="familyname" placeholder="Familyname" required>
+        <label for="family_admin_password">Family Admin Passwort:</label>
+        <input type="password" id="family_admin_password" name="family_admin_password"
+               placeholder="Family Admin Passwort"
+               required>
+        <div>
+            <h4>Wir empfehlen folgende Admin-Passwort-Anforderungen, um die Community vor unerlaubter Bearbeitung zu
+                schützen:
+            </h4>
+            <ul class="criteria-list">
+                <li id="length" class="error-message">Mindestens acht Zeichen</li>
+                <li id="uppercase" class="error-message">Mindestens ein Großbuchstabe</li>
+                <li id="lowercase" class="error-message">Mindestens ein Kleinbuchstabe</li>
+                <li id="number" class="error-message">Mindestens eine Zahl</li>
+                <li id="punctuation" class="error-message">Mindestens ein Sonderzeichen</li>
+            </ul>
+        </div>
+        <button type="submit" id="create-button">Community erstellen</button>
+    </form>
+    <p>Oder <a href="{% url 'join_community' %}">einer bestehenden Community beitreten</a>.</p>
 
-<script nonce="{{ request.csp_script_nonce }}">
-    const passwordInput = document.getElementById('community_admin_password')
-    const password_lenght = document.getElementById('length')
-    const uppercase = document.getElementById('uppercase')
-    const lowercase = document.getElementById('lowercase')
-    const number = document.getElementById('number')
-    const punctuation = document.getElementById('punctuation')
+    <script nonce="{{ request.csp_script_nonce }}">
+        const passwordInput = document.getElementById('community_admin_password')
+        const password_lenght = document.getElementById('length')
+        const uppercase = document.getElementById('uppercase')
+        const lowercase = document.getElementById('lowercase')
+        const number = document.getElementById('number')
+        const punctuation = document.getElementById('punctuation')
 
-    passwordInput.addEventListener('input', function () {
-        let password = this.value;
+        passwordInput.addEventListener('input', function () {
+            let password = this.value;
 
-        password_lenght.className = password.length >= 8 ? "success-message" : "error-message"
-        uppercase.className = /[A-Z]/.test(password) ? "success-message" : "error-message"
-        lowercase.className = /[a-z]/.test(password) ? "success-message" : "error-message"
-        number.className = /\d/.test(password) ? "success-message" : "error-message"
-        punctuation.className = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(password) ? "success-message" : "error-message";
-    });
+            password_lenght.className = password.length >= 8 ? "success-message" : "error-message"
+            uppercase.className = /[A-Z]/.test(password) ? "success-message" : "error-message"
+            lowercase.className = /[a-z]/.test(password) ? "success-message" : "error-message"
+            number.className = /\d/.test(password) ? "success-message" : "error-message"
+            punctuation.className = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(password) ? "success-message" : "error-message";
+        });
 
-    document.getElementById('communityname').addEventListener('input', function () {
-        const communityname = this.value;
-        const feedback = document.getElementById('communityname-feedback');
-        const registerButton = document.getElementById('register-button');
+        document.getElementById('communityname').addEventListener('input', function () {
+            const communityname = this.value;
+            const feedback = document.getElementById('communityname-feedback');
+            const registerButton = document.getElementById('register-button');
 
-        const errorMessage = document.getElementById('register-error');
-        if (errorMessage) {
-            errorMessage.style.display = 'none';
-        }
-
-
-        if (communityname.length > 0) {
-            feedback.textContent = 'Überprüfe, ob Communityname bereits existiert...';
-            feedback.style.color = 'grey';
-            fetch(`/community/check-communityname/?communityname=${encodeURIComponent(communityname)}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.exists) {
-                        feedback.textContent = 'Communitynname bereits vorhanden';
-                        feedback.style.color = 'red';
-                    } else {
-                        feedback.textContent = 'Communityname noch nicht vorhanden';
-                        feedback.style.color = 'green';
-                    }
-                });
-        } else {
-            feedback.textContent = '';
-        }
-    });
-
-    document.getElementById('familyname').addEventListener('input', function () {
-        const familyname = this.value;
-        const feedback = document.getElementById('familyname-feedback');
-        const registerButton = document.getElementById('register-button');
-
-        const errorMessage = document.getElementById('register-error');
-        if (errorMessage) {
-            errorMessage.style.display = 'none';
-        }
+            const errorMessage = document.getElementById('register-error');
+            if (errorMessage) {
+                errorMessage.style.display = 'none';
+            }
 
 
-        if (familyname.length > 0) {
-            feedback.textContent = 'Überprüfe, ob Familyname bereits existiert...';
-            feedback.style.color = 'grey';
-            fetch(`/family/check-familyname/?familyname=${encodeURIComponent(familyname)}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.exists) {
-                        feedback.textContent = 'Familyname vorhanden';
-                        feedback.style.color = 'green';
-                    } else {
-                        feedback.textContent = 'Familyname nicht vorhanden';
-                        feedback.style.color = 'red';
-                    }
-                });
-        } else {
-            feedback.textContent = '';
-        }
-    });
-</script>
+            if (communityname.length > 0) {
+                feedback.textContent = 'Überprüfe, ob Communityname bereits existiert...';
+                feedback.style.color = 'grey';
+                fetch(`/community/check-communityname/?communityname=${encodeURIComponent(communityname)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            feedback.textContent = 'Communitynname bereits vorhanden';
+                            feedback.style.color = 'red';
+                        } else {
+                            feedback.textContent = 'Communityname noch nicht vorhanden';
+                            feedback.style.color = 'green';
+                        }
+                    });
+            } else {
+                feedback.textContent = '';
+            }
+        });
+    </script>
 
 {% endblock %}

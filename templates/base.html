@@ -436,6 +436,7 @@
             backBtn.innerHTML = '<span class="emoji">&#x2B05;&#xFE0F;</span>';
             backBtn.onclick = () => {
                 if (window.history.length > 1) {
+                    showLoading();
                     history.back();
                 }
             };
@@ -445,6 +446,7 @@
             reloadBtn.innerHTML = '<span class="emoji">&#x1F504;</span>';
             reloadBtn.onclick = () => {
                 if (window.history.length > 1) {
+                    showLoading();
                     location.reload();
                 }
             };
@@ -453,6 +455,7 @@
             const forwardBtn = document.createElement('button');
             forwardBtn.innerHTML = '<span class="emoji">&#x27A1;&#xFE0F;</span>';
             forwardBtn.onclick = () => {
+                showLoading();
                 history.forward();
             };
 
