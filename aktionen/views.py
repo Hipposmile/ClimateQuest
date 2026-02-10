@@ -3,8 +3,7 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-
-from core.all_messages import all_messages
+from django.urls import reverse
 from utils.functions import *
 
 
@@ -89,7 +88,8 @@ def add(request):
         if old_level['level_number'] < new_level['level_number']:
             create_notification(request,
                                 f'Du hast eine neue Aktion vom Typen {action_type} erstellt und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>',
-                                request.user)
+                                request.user,
+                                reverse('level_me'))
             messages.success(request,
                              f'Du hast eine neue Aktion vom Typen {action_type} erstellt und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>')
         if old_streak < new_streak:

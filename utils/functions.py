@@ -329,7 +329,7 @@ def create_internal_error(request, beschreibung, fehlermeldung="interner Fehler"
         file.write(f'{error_message}\n\n')
 
 
-def create_notification(request, notification, user=None):
+def create_notification(request, notification, user=None, url=None):
     if user is None:
         user = request.user
     Benachrichtigung.objects.create(benachrichtigung=notification, user=user)
@@ -341,15 +341,15 @@ def create_notification(request, notification, user=None):
         recipient_list=user.email,
         user=user
     )
-    res = send_push(benachrichtigung=notification, user=user)
+    res = send_push(benachrichtigung=notification, user=user, url=url)
     if res == 500:
         create_internal_error(request, "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.",
                               "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.")
 
 
-def send_push(benachrichtigung, user, head="Neue Benachrichtigung"):
+def send_push(benachrichtigung, user, url='/benachrichtigungen/', head="Neue Benachrichtigung"):
     try:
-        payload = {'head': head, 'body': benachrichtigung}
+        payload = {'head': head, 'body': benachrichtigung, 'url': url}
         send_user_notification(user=user, payload=payload, ttl=1000)
 
         return 200
