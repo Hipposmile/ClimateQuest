@@ -4,71 +4,80 @@
     <meta name="description" content="Eine Übersicht über all deine Families bei ClimateQuest.">
 {% endblock %}
 
-{% block title %}ClimateQuest - Meine Families{% endblock %}
+{% block title %}Meine Families{% endblock %}
 {% block content %}
 
-<style nonce="{{ request.csp_style_nonce }}">
-    .families-section {
-        max-width: 960px;
-        margin: 2rem auto;
-        padding: 1rem;
-        text-align: center;
-    }
+    <style nonce="{{ request.csp_style_nonce }}">
+        .families-section {
+            max-width: 960px;
+            margin: 2rem auto;
+            padding: 1rem;
+            text-align: center;
+        }
 
-    .families-section h2 {
-        font-size: 1.8rem;
-        color: var(--color-header-bg);
-        margin-bottom: 1.5rem;
-    }
+        .families-section h2 {
+            font-size: 1.8rem;
+            color: var(--color-header-bg);
+            margin-bottom: 1.5rem;
+        }
 
-    .families-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
-        padding: 0;
-    }
+        .families-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            padding: 0;
+        }
 
-    .family-card {
-        background-color: var(--color-white);
-        border-radius: 8px;
-        box-shadow: var(--shadow-md);
-        padding: 1.5rem;
-        text-align: left;
-    }
+        .family-card {
+            background-color: var(--color-white);
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem;
+            text-align: left;
+        }
 
-    .family-card h3 {
-        margin-top: 0;
-        font-size: 1.3rem;
-        color: var(--color-blue-dark);
-    }
+        .family-card h3 {
+            margin-top: 0;
+            font-size: 1.3rem;
+            color: var(--color-blue-dark);
+        }
 
-    .family-card p {
-        color: var(--color-muted);
-        font-size: 0.95rem;
-        margin: 0.5rem 0 1rem;
-    }
-</style>
+        .family-card p {
+            color: var(--color-muted);
+            font-size: 0.95rem;
+            margin: 0.5rem 0 1rem;
+        }
+    </style>
 
-<h1>Meine Families</h1>
-{% if messages %}
-{% for message in messages %}
-<p class="{{message.level_tag}}-message">{{ message }}</p>
-{% endfor %}
-{% endif %}
-{% if families %}
-<section class="families-section">
-    <div class="families-grid">
-        {% for family in families %}
-        <div class="family-card">
-            <h3>{{ family.name }}</h3>
-            <p>Mitglieder: {{ family.members.count }}</p>
-            <a  href="{% url 'family_detail' family.id %}" class="card-btn">Details ansehen</a>
-        </div>
+    <h1>Meine Families</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
         {% endfor %}
-    </div>
-</section>
+    {% endif %}
+    <a href="{% url 'create_family' %}" class="redirect-link">
+        <span>Family hinzufügen</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+    <br>
+    <a href="{% url 'join_family' %}" class="redirect-link">
+        <span>Family beitreten</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+    {% if families %}
+        <section class="families-section">
+            <div class="families-grid">
+                {% for family in families %}
+                    <div class="family-card">
+                        <h3>{{ family.name }}</h3>
+                        <p>Mitglieder: {{ family.members.count }}</p>
+                        <a href="{% url 'family_detail' family.id %}" class="card-btn">Details ansehen</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
 
-{% else %}
-<p>Du bist keiner Family beigetreten.</p>
-{% endif %}
+    {% else %}
+        <p>Du bist keiner Family beigetreten.</p>
+    {% endif %}
 {% endblock %}

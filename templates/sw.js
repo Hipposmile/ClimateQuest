@@ -56,3 +56,5 @@ self.addEventListener('push', function (event) {
         })
     );
 });
+
+// ToDo: Bugs fixen

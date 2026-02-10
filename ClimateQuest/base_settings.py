@@ -64,7 +64,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    "core.middleware.AddCORSHeaderMiddleware",
+    'core.middleware.AddCORSHeaderMiddleware',
     'servestatic.middleware.ServeStaticMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

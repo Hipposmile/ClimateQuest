@@ -33,7 +33,7 @@
     <meta name="vapid-key" content="{{ vapid_public_key }}">
     <meta name="cps-style-nonce" content="{{ request.cps_style_nonce }}">
 
-    <title>{% block title %}ClimateQuest{% endblock %}</title>
+    <title>{% block title %}MyPage{% endblock %} - ClimateQuest</title>
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="icon" href="{% static 'icons/favicon.ico' %}" type="image/x-icon">
@@ -641,29 +641,10 @@
             <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
             <h2><span class="emoji">&#x1F393;</span> Bildung</h2>
             <nav class="mobile-menu-nav">
-                <div class="mobile-menu-section">
-                    <div class="mobile-menu-section-title"><span class="emoji">&#x1F4F0;</span> Artikel</div>
-                    <a class="mobile-menu-sub" href="{% url 'artikel_overview' %}">&#x1F4DA; Überblick</a>
-                    {% if request.user.is_authenticated %}
-                        <a class="mobile-menu-sub" href="{% url 'add_artikel' %}">&#x2795; Artikel hinzufügen</a>
-                    {% endif %}
-                </div>
-
-                <div class="mobile-menu-section">
-                    <div class="mobile-menu-section-title"><span class="emoji">&#x1F389;</span> Events</div>
-                    <a class="mobile-menu-sub" href="{% url 'events_overview' %}">&#x1F4DA; Überblick</a>
-                    {% if request.user.is_authenticated %}
-                        <a class="mobile-menu-sub" href="{% url 'add_event' %}">&#x2795; Event erstellen</a>
-                    {% endif %}
-                </div>
-
-                <div class="mobile-menu-section">
-                    <div class="mobile-menu-section-title"><span class="emoji">&#x1F4AC;</span> Forum</div>
-                    <a class="mobile-menu-sub" href="{% url 'forum_overview' %}">&#x1F4DA; Überblick</a>
-                    {% if request.user.is_authenticated %}
-                        <a class="mobile-menu-sub" href="{% url 'add_forum_post' %}">&#x2795; Beitrag hinzufügen</a>
-                    {% endif %}
-                </div>
+                <a href="{% url 'artikel_overview' %}"><span class="emoji">&#x1F4F0;</span> Artikel</a>
+                <a href="{% url 'events_overview' %}"><span class="emoji">&#x1F389;</span> Events</a>
+                <a href="{% url 'forum_overview' %}"><span class="emoji">&#x1F4AC;</span> Forum</a>
+                <a href="{% url 'petitions_overview' %}"><span class="emoji">&#x270D;</span> Petitionen</a>
             </nav>
         </div>
     </div>
@@ -742,7 +723,6 @@
         try {
             clearTimeout(timeoutId);
         } catch (error) {
-            console.log("No timeout to clear!")
         }
 
         header.innerHTML = mobileHeader;
@@ -861,28 +841,15 @@
                     <a  href="{% url 'users_overview' %}">User</a>
                     {% endif %}
                     <div class="dropdown">
-                        <span class="nav-link inactive-link">Events ▾</span>
+                        <span class="nav-link inactive-link">Bildung ▾</span>
                         <div class="dropdown-content">
-                            {% if request.user.is_authenticated %}<a  href="{% url 'add_event' %}
-            ">Event hinzufügen</a>{% endif %}
-                            <a  href="{% url 'events_overview' %}">Überblick</a>
+                            <a  href="{% url 'events_overview' %}">Events</a>
+                            <a  href="{% url 'artikel_overview' %}">Artikel</a>
+                            <a  href="{% url 'forum_overview' %}">Forum</a>
+                            <a  href="{% url 'petitions_overview' %}">Petitionen</a>
                         </div>
                     </div>
-                    <div class="dropdown">
-                        <span class="nav-link inactive-link">Artikel ▾</span>
-                        <div class="dropdown-content">
-                            {% if request.user.is_authenticated %}<a  href="{% url 'add_artikel' %}
-            ">Artikel hinzufügen</a>{% endif %}
-                            <a  href="{% url 'artikel_overview' %}">Überblick</a>
-                        </div>
-                    </div>
-                    <div class="dropdown">
-                        <span class="nav-link inactive-link">Forum ▾</span>
-                        <div class="dropdown-content">
-                            {% if request.user.is_authenticated %}<a  href="{% url 'add_forum_post' %}
-            ">Beitrag hinzufügen</a>{% endif %}
-                            <a  href="{% url 'forum_overview' %}">Überblick</a>
-                        </div>
+
                     </div>
                 </nav>
             `;
@@ -895,7 +862,6 @@
             toggle.addEventListener('click', (e) => {
                 e.stopPropagation();
                 content.classList.toggle('visible');
-                console.log("hallo");
             });
 
             content.addEventListener('click', (e) => {
@@ -1183,6 +1149,33 @@
         form.querySelector('input[name=content]').value = content;
         form.submit();
     }
+
+    document.querySelectorAll(".accordion").forEach((accordion) => {
+        const toggleBtn = accordion.querySelector(".accordion-toggle");
+        const contentWrapper = accordion.querySelector(".accordion-content-wrapper");
+
+        function setMaxHeight(open) {
+            if (open) {
+                const content = contentWrapper.firstElementChild;
+                contentWrapper.style.maxHeight = content.scrollHeight + "px";
+            } else {
+                contentWrapper.style.maxHeight = "0px";
+            }
+        }
+
+        toggleBtn.addEventListener("click", () => {
+            const isOpen = accordion.classList.toggle("open");
+            toggleBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+            setMaxHeight(isOpen);
+        });
+
+        // Höhe bei Fenster-Resize aktualisieren
+        window.addEventListener("resize", () => {
+            if (accordion.classList.contains("open")) {
+                setMaxHeight(true);
+            }
+        });
+    });
 </script>
 </body>
 </html>

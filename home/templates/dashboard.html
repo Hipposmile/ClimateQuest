@@ -3,7 +3,7 @@
 
 {% block meta %}{% endblock %}
 
-{% block title %}ClimateQuest - Dashboard{% endblock %}
+{% block title %}Dashboard{% endblock %}
 
 {% block content %}
     <a href="{% url 'home' %}" class="redirect-link ">
@@ -381,11 +381,6 @@
 
     <h2>Communities</h2>
 
-    {% if messages %}
-        {% for message in messages %}
-            <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
-        {% endfor %}
-    {% endif %}
     {% if communities_with_user_families %}
         <script nonce="{{ request.csp_script_nonce }}">
             let family_select;

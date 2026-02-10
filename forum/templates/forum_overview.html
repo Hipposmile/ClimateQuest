@@ -5,19 +5,20 @@
           content="Sieh dir die Übersicht aller Posts im Forum von ClimateQuest an. Finde Antworten zu deinen Fragen zur Klimakrise oder zur Organisation und Durchführung von Aktionen zum Klima-Themen.">
 {% endblock %}
 
-{% block title %}ClimateQuest - Forum-Übersicht{% endblock %}
+{% block title %}Forum-Übersicht{% endblock %}
 
 {% block content %}
-
     <h1>Forum-Übersicht</h1>
-
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
-
-    <form method="post" >
+    <a href="{% url 'add_forum_post' %}" class="redirect-link">
+        <span>Beitrag hinzufügen</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+    <form method="post">
         {% csrf_token %}
         <div id="search_keyword_div">
             <label for="search_keyword">Suchwort:</label>

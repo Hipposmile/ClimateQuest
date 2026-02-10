@@ -4,7 +4,7 @@
     <meta name="description"
           content="Sieh dir deine Aktions-Historie bei ClimateQuest an.">
 {% endblock %}
-{% block title %}ClimateQuest - Aktions-Historie von {% if user == request.user %}mir{% else %}{% endif %}
+{% block title %}Aktions-Historie von {% if user == request.user %}mir{% else %}{% endif %}
     {{ user }}{% endblock %}
 {% block content %}
     <h1>Aktions-Historie von {% if user == request.user %} <a href="{% url 'user_detail' user.id %}">mir</a>{% else %}
@@ -14,6 +14,10 @@
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
+    <a href="{% url 'add' %}" class="redirect-link">
+        <span>Aktion hinzufügen</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
     {% if actions %}
         <ul class="action-list">
             {% for action in actions %}

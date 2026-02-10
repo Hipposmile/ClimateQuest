@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{% static 'cropperjs/cropper.css' %}">
 {% endblock %}
 
-{% block title %}ClimateQuest - Petition hinzufügen{% endblock %}
+{% block title %}Petition hinzufügen{% endblock %}
 
 {% block content %}
     <!--Using Cropper.js: https://fengyuanchen.github.io/cropperjs/-->
@@ -119,6 +119,7 @@
 
         function handle_submit(event) {
             if (!cropper) {
+                fillEditor(event);
                 form.submit();
                 return;
             }

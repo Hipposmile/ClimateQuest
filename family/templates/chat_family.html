@@ -6,7 +6,7 @@
 
 {% load static %}
 
-{% block title %}ClimateQuest - {% if family %}Chat: Family {{ family.name }}{% else %}Die Family konnte nicht geladen
+{% block title %}{% if family %}Chat: Family {{ family.name }}{% else %}Die Family konnte nicht geladen
     werden.{% endif %} {% endblock %}
 
 {% block content %}

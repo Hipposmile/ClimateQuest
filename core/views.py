@@ -42,9 +42,10 @@ from functools import wraps
 def production(view_func):
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
-        if not settings.DEBUG or (request.user.is_authenticated and request.user.is_staff): # ToDo: Staff can´t access page, is redirected to production, too
+        if not settings.DEBUG:
             return render(request, "production.html")
         return view_func(request, *args, **kwargs)
+
     return wrapper
 
 
@@ -63,3 +64,7 @@ def create_reminder():
         except Exception as e:
             error_message = f'Cronjob: {timezone.now().isoformat()} Create Reminder for User: {user}: Exception: {e}'
             create_internal_error(fake_request, error_message)
+
+
+def get_default_user():
+    return User.objects.filter(is_superuser=True).first().id

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from core.validators import validate_image
+from django.utils import timezone
 
 
 # Create your models here.
@@ -20,15 +21,38 @@ class Category(models.Model):
         return self.title
 
 
+class Answer(models.Model):
+    answer = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='petition_answer')
+    date_time = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.answer
+
+
+class Comment(models.Model):
+    comment = models.TextField()
+    answers = models.ManyToManyField(Answer, related_name='comment', blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='petition_comment')
+    date_time = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.comment
+
+
 class Petition(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
     img = models.ImageField(upload_to='petitions/', blank=True, null=True, validators=[validate_image])
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     signs = models.ManyToManyField(User, blank=True, related_name='petition_sign')
-    update = models.ForeignKey(Update, on_delete=models.CASCADE, related_name='petition_update', blank=True, null=True)
+    updates = models.ManyToManyField(Update, related_name='petition_update', blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='petition_category')
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='petition_creator')
+    comments = models.ManyToManyField(Comment, related_name='petition_comment')
+
+    def signs_count(self):
+        return self.signs.count()
 
     def __str__(self):
         return self.title

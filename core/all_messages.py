@@ -2,7 +2,7 @@ from django.utils.safestring import mark_safe
 
 all_messages = {
     # --------
-    #Allgemein
+    # Allgemein
     # --------
 
     "not_authorized_to_visit": "Du hast nicht die Berechtigung, diese Seite zu besuchen.",
@@ -18,35 +18,35 @@ all_messages = {
     "too_long_input": "Ein oder mehrere Input-Felder sind zu lang",
     "not_a_number": "Der Input muss eine Zahl sein.",
 
-    #Zeitraum
+    # Zeitraum
     "invalid_date_range": "Startdatum muss vor Enddatum liegen",
     "date_in_future": "Datum darf nicht in der Zukunft liegen",
     "date_in_past": "Datum darf nicht in der Vergangenheit liegen",
     "invalid_date": "Ungültiges Datum",
     "invalid_time_period": "Ungültiger Zeitraum",
 
-    #--------
-    #Community
-    #--------
+    # --------
+    # Community
+    # --------
 
-    #Create
+    # Create
     "community_exists": "Community mit diesem Namen existiert bereits",
     "community__invalid_family_credentials": "Family-Anmeldedaten ungültig",
     "community_created": "Community erfolgreich erstellt",
     "family_already_in_community": "Family ist bereits Teil der Community",
 
-    #Join
+    # Join
     "community_joined": "Deine Family {family} ist der Community {community} beigetreten",
     "invalid_community_credentials": "Community-Anmeldedaten ungültig",
 
-    #Login
+    # Login
     "community_id_missing": "Community ID wurde nicht übergeben",
     "community_not_found": "Community wurde nicht gefunden",
     "community__family_id_missing": "Family ID wurde nicht übergeben.",
     "community__family_not_found": "Family wurde nicht gefunden",
     "community__not_member_of_family": "Du bist nicht Mitglied der eingeloggten Family.",
 
-    #Edit
+    # Edit
     "community_name_changed": "Communityname erfolgreich geändert.",
     "community_password_changed": "Passwort erfolgreich geändert.",
     "community_admin_password_changed": "Admin-Passwort erfolgreich geändert.",
@@ -58,25 +58,25 @@ all_messages = {
 
     "chat_disabled_for_community": "Der Chat für diese Community ist deaktiviert",
     # --------
-    #Family
+    # Family
     # --------
 
-    #Create
+    # Create
     "family_exists": "Family mit diesem Namen existiert bereits",
     "family_name_forbidden": "Du darfst \"worldwide ranking\" nicht als Family verwenden",
     "family_created": "Family erfolgreich erstellt",
 
-    #Join
+    # Join
     "invalid_family_credentials": "Ungültige Family-Anmeldedaten.",
     "family_joined": "Du bist der Family {family.name} beigetreten.",
     "family_already_joined": "Du bist der Family {family.name} bereits beigetreten.",
 
-    #Login
+    # Login
     "family_id_missing": "Family ID wurde nicht übergeben",
     "family_not_found": "Family wurde nicht gefunden",
     "not_part_of_family": "Du bist nicht Teil der Family {family.name}.",
 
-    #Edit
+    # Edit
     "family_name_changed": "Familyname erfolgreich geändert",
     "family_password_changed": "Passwort erfolgreich geändert",
     "family_admin_password_changed": "Admin-Passwort erfolgreich geändert",
@@ -87,15 +87,15 @@ all_messages = {
     "family_deleted": "Family erfolgreich gelöscht",
     "family_user_not_found": "Dieser User existiert in dieser Family nicht",
 
-    #Allgemein
+    # Allgemein
     "chat_disabled_for_family": "Der Chat für diese Family ist deaktiviert",
     "chat_not_enabled_for_worldwide_ranking": "Die Chatfunktion bei \"worldwide ranking\" ist nicht freigeschaltet",
 
     # --------
-    #Personals
+    # Personals
     # --------
 
-    #Login
+    # Login
     "successfully_signed_up": "Erfolgreich registriert",
     "successfully_signed_up_email_not_verified": "Erfolgreich registriert, aber E-Mail-Adresse noch nicht verifiziert.",
     "robot": "Es besteht die Gefahr, dass du ein Roboter bist. Bitte versuche es erneut.",
@@ -107,7 +107,7 @@ all_messages = {
     "datenschutz_not_accepted": "Du musst die Datenschutzerklärung akzeptieren",
     "invalid_verification_link": "Ungültiger Verifizierungslink",
 
-    #Edit
+    # Edit
     "invalid_password": "Passwort ist falsch",
     "username_belongs_to_you": "Benutzername gehört bereits dir",
     "username_changed": "Benutzername erfolgreich geändert",
@@ -129,9 +129,8 @@ all_messages = {
     "successfully_changed_goal": "Wöchentliches Ziel erfolgreich geändert.",
     "weekly_goal_too_small": "Das wöchentliche Ziel ist zu klein.",
 
-
     # --------
-    #Aktion
+    # Aktion
     # --------
 
     "select_action_type": "Wähle einen Aktionstyp aus",
@@ -146,11 +145,12 @@ all_messages = {
     "action_edited": "Aktion erfolgreich bearbeitet",
     "action_deleted": "Aktion erfolgreich gelöscht",
     "action_invalid_quantity": "Ungültige Menge",
-    "max_action_quantity": mark_safe("Die angegebene Menge ist zu hoch, um realistisch zu sein. Weitere Informationen findest du in <a href='https://climate-quest.de/artikel/artikel_detail/9'>diesem Artikel</a>."),
+    "max_action_quantity": mark_safe(
+        "Die angegebene Menge ist zu hoch, um realistisch zu sein. Weitere Informationen findest du in <a href='https://climate-quest.de/artikel/artikel_detail/9'>diesem Artikel</a>."),
     "action_too_past": "Das Datum liegt zu weit in der Vergangenheit, um realistisch zu sein.",
 
     # --------
-    #Event
+    # Event
     # --------
 
     "date_must_be_tomorrow": "Das Datum muss mindestens einen Tag in der Zukunft liegen.",
@@ -167,7 +167,7 @@ all_messages = {
     "teilnehmeranzahl_search_keyword_not_a_number": "Wenn du nach der Teilnehmeranzahl filterst, muss das Suchwort eine Zahl sein",
 
     # --------
-    #Artikel
+    # Artikel
     # --------
 
     "successfully_created_artikel": "Artikel erfolgreich erstellt",
@@ -182,20 +182,20 @@ all_messages = {
     "likes_search_keyword_not_a_number": "Wenn du nach Likes filterst, muss das Suchwort eine Zahl sein",
 
     # --------
-    #Forum
+    # Forum
     # --------
 
     "post_not_found": "Post nicht gefunden",
 
     # --------
-    #Users
+    # Users
     # --------
     "user_not_found": "User nicht gefunden",
     "msg_created": "Nachricht erfolgreich gesendet",
     "reported_user": "Der User wurde erfolgreich gemeldet.",
 
     # --------
-    #Admin
+    # Admin
     # --------
     "admin__user_not_found": "User wurde nicht gefunden",
     "admin__family_not_found": "Family wurde nicht gefunden",
@@ -209,7 +209,7 @@ all_messages = {
     "added_everyone_user_erweitert": "Jedem User wurde ein UserErweitert hinzugefügt, sofern noch nicht vorhanden",
 
     # --------
-    #Presents
+    # Presents
     # --------
     "present_created": "Geschenkseite erfolgreich erstellt",
     "present_not_found": "Geschenkseite nicht gefunden",
@@ -223,6 +223,7 @@ all_messages = {
     "petition_not_found": "Petition nicht gefunden",
     "petition_signed": "Petition erfolgreich unterschrieben",
     "petition_unsigned": "Unterschrift erfolgreich entfernt",
+    "signs_search_keyword_not_a_number": "Wenn du nach Unterschriften filterst, muss das Suchwort eine Zahl sein",
 
     # --------
     # Image Upload

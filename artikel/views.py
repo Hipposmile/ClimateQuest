@@ -148,29 +148,30 @@ def artikel_detail(request, artikel_id):
         return redirect('artikel_overview')
 
     if request.method == 'POST':
-        if 'add_comment' in request.POST:
-            comment_text = request.POST.get('comment')
-            comment = Comment.objects.create(comment=comment_text, user=request.user)
-            artikel.comments.add(comment)
+        if request.user.is_authenticated:
+            if 'add_comment' in request.POST:
+                comment_text = request.POST.get('comment')
+                comment = Comment.objects.create(comment=comment_text, user=request.user)
+                artikel.comments.add(comment)
 
-            messages.success(request, all_messages["successfully_asked_comment"])
-            return redirect('artikel_detail', artikel_id)
+                messages.success(request, all_messages["successfully_asked_comment"])
+                return redirect('artikel_detail', artikel_id)
 
-        elif 'answer_comment' in request.POST:
-            comment_id = request.POST.get('comment_id')
-            try:
-                comment = Comment.objects.get(id=comment_id)
-            except Comment.DoesNotExist:
-                messages.error(request, all_messages["internal_error"])
-                return redirect('artikels_overview')
+            elif 'answer_comment' in request.POST:
+                comment_id = request.POST.get('comment_id')
+                try:
+                    comment = Comment.objects.get(id=comment_id)
+                except Comment.DoesNotExist:
+                    messages.error(request, all_messages["internal_error"])
+                    return redirect('artikels_overview')
 
-            answer_text = request.POST.get('answer')
+                answer_text = request.POST.get('answer')
 
-            answer = Answer.objects.create(answer=answer_text, user=request.user)
-            comment.answers.add(answer)
+                answer = Answer.objects.create(answer=answer_text, user=request.user)
+                comment.answers.add(answer)
 
-            messages.success(request, all_messages["successfully_answered_comment"])
-            return redirect('artikel_detail', artikel_id)
+                messages.success(request, all_messages["successfully_answered_comment"])
+                return redirect('artikel_detail', artikel_id)
 
     has_liked = False
     if request.user.is_authenticated:

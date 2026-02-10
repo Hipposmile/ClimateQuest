@@ -491,7 +491,8 @@ def get_streak_from_user(user):
 
 
 def clean_img(img, ALLOWED_EXTENSIONS=["jpg", "jpeg", "png", "webp", "avif"],
-              ALLOWED_MIME_TYPES=["image/jpeg", "image/png", "image/webp", "image/avif", ], ALLOWED_FORMATS=["JPEG", "PNG", "WEBP", "AVIF"], MAX_SIZE_MB=5):
+              ALLOWED_MIME_TYPES=["image/jpeg", "image/png", "image/webp", "image/avif", ],
+              ALLOWED_FORMATS=["JPEG", "PNG", "WEBP", "AVIF"], MAX_SIZE_MB=5):
     if img.size > MAX_SIZE_MB * 1024 * 1024:
         return False, all_messages["size_exceeded_maximum"].format(max_size_mb=MAX_SIZE_MB)
 
@@ -513,3 +514,11 @@ def clean_img(img, ALLOWED_EXTENSIONS=["jpg", "jpeg", "png", "webp", "avif"],
 
     img.seek(0)
     return True, img
+
+
+def check_is_truth(request):
+    is_truth = request.POST.get('is_truth') == 'on'
+    if not is_truth:
+        messages.error(request, all_messages["not_is_truth"])
+        return False
+    return True

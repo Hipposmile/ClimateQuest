@@ -5,7 +5,7 @@
           content="Übersicht aller Artikel bei ClimateQuest. Finde Artikel, die anderen Usern erstellt wurden, und informiere dich über verschiedene Themen zu Klimaschutz.">
 {% endblock %}
 
-{% block title %}ClimateQuest - Artikel - Übersicht{% endblock %}
+{% block title %}Artikel - Übersicht{% endblock %}
 
 {% block content %}
     <h1 class="section-title">Artikel - Übersicht</h1>
@@ -14,6 +14,10 @@
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
+    <a href="{% url 'add_artikel' %}" class="redirect-link">
+        <span>Artikel hinzufügen</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
     <form method="post" >
         {% csrf_token %}
         <div id="search_keyword_div">

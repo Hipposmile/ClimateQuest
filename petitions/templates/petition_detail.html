@@ -4,14 +4,26 @@
     <meta name="description" content="Siehe dir die Petition {{ petition.title }} an">
 {% endblock %}
 
-{% block title %}ClimateQuest - Petition {{ petition.title }}{% endblock %}
+{% block title %}Petition {{ petition.title }}{% endblock %}
 
 {% block content %}
     <style nonce="{{ request.csp_style_nonce }}">
         .petition-img {
-            height: 50vh;
+            max-height: 50vh;
             width: auto;
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
             border-radius: 16px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .updates {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
     </style>
     <h1>Petition <i>{{ petition.title }}</i></h1>
@@ -20,21 +32,157 @@
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
-    <img src="{{ petition.img.url }}" class="petition-img" alt="Petitionsbild">
+    {% if petition.img %}
+        <img src="{{ petition.img.url }}" class="petition-img" alt="Petitionsbild">
+    {% endif %}
     <p><strong>{{ petition.signs.count }}</strong> Unterschriften</p>
     <div class="artikel-content"><p>{{ petition.content|safe }}</p></div>
     <p>Kategorie <strong>{{ petition.category.title }}</strong></p>
+    <p>Erstellt am {{ petition.created_at|date:"d.m.Y" }}</p>
+    <p>Erstellt von <a href="{% url 'user_detail' petition.creator.id %}">{{ petition.creator.username }}</a></p>
+
+    <hr>
+
     <form method="post">
         {% csrf_token %}
         {% if request.user not in petition.signs.all %}
             {% if request.user.is_authenticated %}
-                <button type="submit">Unterschreiben</button>
+                <button type="submit" name="sign">Unterschreiben</button>
             {% else %}
                 <p><a href="{% url 'register_view' %}">Registriere dich</a>, um zu unterschreiben</p>
             {% endif %}
         {% else %}
             <p>Du hast bereits unterschrieben</p>
-            <button type="submit">Unterschrift zurücknehmen</button>
+            <button type="submit" name="sign">Unterschrift zurücknehmen</button>
         {% endif %}
     </form>
+
+    <hr>
+
+    <h2>Updates</h2>
+    <div class="updates">
+        {% for update in petition.updates.all %}
+            <div class="accordion">
+                <div class="accordion-header">
+                    <div>
+                        <div class="accordion-title">{{ update.title }}</div>
+                        <div class="accordion-meta">{{ update.created_at }}</div>
+                    </div>
+                    <button class="accordion-toggle" aria-expanded="false"
+                            aria-controls="accordionContent">
+                        <span></span>
+                    </button>
+                </div>
+                <div class="accordion-content-wrapper">
+                    <div class="accordion-content">
+                        <p>{{ update.content|safe }}</p>
+
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="no-comments"><i>Noch keine Updates vorhanden.</i></p>
+        {% endfor %}
+
+        {% if request.user == petition.creator %}
+            <a class="update-add-btn" href="{% url 'update_petition' petition.id %}">
+                Update hinzufügen
+            </a>
+        {% endif %}
+    </div>
+
+    <hr>
+
+    <h2 class="section-title">Kommentare</h2>
+    <div class="comment-section">
+        {% if petition.comments.all %}
+            {% for comment in petition.comments.all %}
+                <div class="comment">
+                    <div class="text-wrapper">
+                        <div class="comment-header">
+                            <span class="comment-user"><a
+                                    href="{% url 'user_detail' comment.user.id %}">{{ comment.user }}</a></span>
+                            <span class="comment-date">{{ comment.date_time|date:"d.m.Y H:i" }}</span>
+                        </div>
+                        <div class="comment-text expandable-text blur-enabled">{{ comment.comment }}</div>
+                        <div class="answers">
+                            {% for answer in comment.answers.all %}
+                                <div class="answer-header">
+                                    <span class="answer-user"><a
+                                            href="{% url 'user_detail' comment.user.id %}">{{ answer.user }}</a></span>
+                                    <span class="answer-date">{{ answer.date_time|date:"d.m.Y H:i" }}</span>
+                                </div>
+                                <div class="answer expandable-text blur-enabled">{{ answer.answer }}</div>
+                            {% empty %}
+                                <div class="no-answer">Noch keine Antworten.</div>
+                            {% endfor %}
+                        </div>
+                        <button class="toggle-button">Mehr anzeigen</button>
+                        <details>
+                            <summary>selbst antworten</summary>
+                            {% if user.is_authenticated %}
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                                    <label for="answer">Antwort:</label>
+                                    <input type="text" id="answer" name="answer" placeholder="Antwort">
+                                    <button name="answer_comment">Antworten</button>
+                                </form>
+                            {% else %}
+                                <p><a href="{% url 'login_view' %}">Logge dich ein</a>, um den Kommentar zu beantworten
+                                </p>
+                            {% endif %}
+                        </details>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-comments"><i>Noch keine Kommentare vorhanden</i></p>
+        {% endif %}
+    </div>
+
+    <script nonce="{{ request.csp_script_nonce }}">
+        document.addEventListener("DOMContentLoaded", function () {
+            const comments = document.querySelectorAll(".comment");
+
+            comments.forEach(comment => {
+                const button = comment.querySelector(".toggle-button");
+                const wrapper = comment.querySelector(".text-wrapper");
+                const expandableElements = comment.querySelectorAll(".expandable-text");
+
+                let shouldBlur = false;
+
+                expandableElements.forEach(el => {
+                    const textLength = el.textContent.trim().length;
+                    if (textLength > 100) {
+                        shouldBlur = true;
+                        el.classList.add("blur-enabled");
+                    } else {
+                        el.classList.remove("blur-enabled");
+                    }
+                });
+
+                if (shouldBlur) {
+                    button.style.display = "inline-block";
+                    button.addEventListener("click", () => {
+                        wrapper.classList.toggle("expanded");
+                        button.textContent = wrapper.classList.contains("expanded") ? "Weniger anzeigen" : "Mehr anzeigen";
+                    });
+                } else {
+                    button.style.display = "none";
+                }
+            });
+        });
+    </script>
+    {% if user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            <label for="comment">Neuen Kommentar hinzufügen:</label>
+            <input type="text" id="comment" name="comment" placeholder="Kommentar hinzufügen">
+            <button type="submit" name="add_comment">Kommentar hinzufügen</button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'login_view' %}">Logge dich ein</a>, um einen Kommentar zu verfassen
+        </p>
+    {% endif %}
 {% endblock %}

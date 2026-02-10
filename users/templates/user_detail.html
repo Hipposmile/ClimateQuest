@@ -4,7 +4,7 @@
     <meta name="description" content="Suchen Sie nach bestimmten Usern von ClimateQuest">
 {% endblock %}
 
-{% block title %}ClimateQuest - User {{ user_expanded.user.username }}{% endblock %}
+{% block title %}User {{ user_expanded.user.username }}{% endblock %}
 
 {% block content %}
     <h1>User {{ user_expanded.user.username }} {% if request.user == user_expanded.user %}(Du){% endif %}</h1>

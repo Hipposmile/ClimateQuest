@@ -1,111 +1,121 @@
 {% extends 'base.html' %}
 {% block meta %}
-    <meta name="description" content="Übersicht über deine Communities bei ClimateQuest. Vergleiche deine Families mit anderen und tausche dich aus.">
+    <meta name="description"
+          content="Übersicht über deine Communities bei ClimateQuest. Vergleiche deine Families mit anderen und tausche dich aus.">
 {% endblock %}
-{% block title %}ClimateQuest - Meine Communities{% endblock %}
+{% block title %}Meine Communities{% endblock %}
 {% block content %}
 
-<style nonce="{{ request.csp_style_nonce }}">
-    .communities-section {
-    max-width: 960px;
-    margin: 2rem auto;
-    padding: 1rem;
-    text-align: center;
-}
+    <style nonce="{{ request.csp_style_nonce }}">
+        .communities-section {
+            max-width: 960px;
+            margin: 2rem auto;
+            padding: 1rem;
+            text-align: center;
+        }
 
-.communities-section h2 {
-    font-size: 1.8rem;
-    color: var(--color-header-bg);
-    margin-bottom: 1.5rem;
-}
+        .communities-section h2 {
+            font-size: 1.8rem;
+            color: var(--color-header-bg);
+            margin-bottom: 1.5rem;
+        }
 
-.communities-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    padding: 0;
-}
+        .communities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            padding: 0;
+        }
 
-.community-card {
-    background-color: var(--color-white);
-    border-radius: 8px;
-    box-shadow: var(--shadow-md);
-    padding: 1.5rem;
-    text-align: left;
-}
+        .community-card {
+            background-color: var(--color-white);
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem;
+            text-align: left;
+        }
 
-.community-card h3 {
-    margin-top: 0;
-    font-size: 1.3rem;
-    color: var(--color-blue-dark);
-}
+        .community-card h3 {
+            margin-top: 0;
+            font-size: 1.3rem;
+            color: var(--color-blue-dark);
+        }
 
-.community-card p {
-    color: var(--color-muted);
-    font-size: 0.95rem;
-    margin: 0.5rem 0 1rem;
-}
+        .community-card p {
+            color: var(--color-muted);
+            font-size: 0.95rem;
+            margin: 0.5rem 0 1rem;
+        }
 
-.family-select {
-    margin: 20px;
-}
-</style>
+        .family-select {
+            margin: 20px;
+        }
+    </style>
 
-<h1>Meine Communities</h1>
+    <h1>Meine Communities</h1>
 
-{% if messages %}
-{% for message in messages %}
-<p class="{{message.level_tag}}-message">{{ message }}</p>
-{% endfor %}
-{% endif %}
-{% if communities_with_user_families %}
-<script nonce="{{ request.csp_script_nonce }}">
-    let family_select;
-    let community_detail_link;
-    let communityId;
-    let familyId;
-</script>
-<section class="communities-section">
-    <div class="communities-grid">
-        {% for item in communities_with_user_families %}
-        <div class="community-card">
-            <h3>{{ item.community.name }}</h3>
-            <p>Mitglieder: {{ item.community.members.count }}</p>
-            <label for="family-select">Family zum Login auswählen: </label>
-            <select class="family-select" id="family-select" data-community-id="{{ item.community.id }}">
-                <option value="" disabled selected>Family zum Login auswählen ▾</option>
-                {% for family in item.families %}
-                <option value="{{ family.id }}">{{ family.name }}</option>
-                {% endfor %}
-            </select>
-            <a href="#" class="card-btn disabled-link community-detail-link"
-                data-community-id="{{ item.community.id }}">Details ansehen</a>
-        </div>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
         {% endfor %}
-    </div>
-</section>
-<script nonce="{{ request.csp_script_nonce }}">
-    document.addEventListener('DOMContentLoaded', function () {
-        const selects = document.querySelectorAll('.family-select');
+    {% endif %}
+    <a href="{% url 'create_community' %}" class="redirect-link">
+        <span>Community hinzufügen</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+    <br>
+    <a href="{% url 'join_community' %}" class="redirect-link">
+        <span>Community beitreten</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+    {% if communities_with_user_families %}
+        <script nonce="{{ request.csp_script_nonce }}">
+            let family_select;
+            let community_detail_link;
+            let communityId;
+            let familyId;
+        </script>
+        <section class="communities-section">
+            <div class="communities-grid">
+                {% for item in communities_with_user_families %}
+                    <div class="community-card">
+                        <h3>{{ item.community.name }}</h3>
+                        <p>Mitglieder: {{ item.community.members.count }}</p>
+                        <label for="family-select">Family zum Login auswählen: </label>
+                        <select class="family-select" id="family-select" data-community-id="{{ item.community.id }}">
+                            <option value="" disabled selected>Family zum Login auswählen ▾</option>
+                            {% for family in item.families %}
+                                <option value="{{ family.id }}">{{ family.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <a href="#" class="card-btn disabled-link community-detail-link"
+                           data-community-id="{{ item.community.id }}">Details ansehen</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        <script nonce="{{ request.csp_script_nonce }}">
+            document.addEventListener('DOMContentLoaded', function () {
+                const selects = document.querySelectorAll('.family-select');
 
-        selects.forEach(select => {
-            const communityId = select.dataset.communityId;
-            const detailLink = document.querySelector(`.community-detail-link[data-community-id="${communityId}"]`);
+                selects.forEach(select => {
+                    const communityId = select.dataset.communityId;
+                    const detailLink = document.querySelector(`.community-detail-link[data-community-id="${communityId}"]`);
 
-            select.addEventListener('change', function () {
-                const familyId = this.value;
-                if (familyId) {
-                    detailLink.href = `/community/community/${communityId}/${familyId}/`; // Achtung: Hier wird nicht name, sondern die URL verwendet! Bei Änderung der URL muss dieser Link angepasst werden.
-                    detailLink.classList.remove('disabled-link');
-                } else {
-                    detailLink.href = '#';
-                    detailLink.classList.add('disabled-link');
-                }
+                    select.addEventListener('change', function () {
+                        const familyId = this.value;
+                        if (familyId) {
+                            detailLink.href = `/community/community/${communityId}/${familyId}/`;
+                            detailLink.classList.remove('disabled-link');
+                        } else {
+                            detailLink.href = '#';
+                            detailLink.classList.add('disabled-link');
+                        }
+                    });
+                });
             });
-        });
-    });
-</script>
-{% else %}
-<p>Du bist keiner Community beigetreten.</p>
-{% endif %}
+        </script>
+    {% else %}
+        <p>Du bist keiner Community beigetreten.</p>
+    {% endif %}
 {% endblock %}

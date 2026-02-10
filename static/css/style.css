@@ -1412,3 +1412,107 @@ canvas {
 .fontSize-0-95em {
     font-size: 0.95em;
 }
+
+.accordion {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+    padding: 18px 20px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+}
+
+.accordion-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.accordion-meta {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-top: 4px;
+}
+
+/* --- Toggle Button --- */
+.accordion-toggle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: #0f172a;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.accordion-toggle:hover {
+    background: #0057ff;
+}
+
+.accordion-toggle::before,
+.accordion-toggle::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.25s ease;
+}
+
+.accordion-toggle::before {
+    transform: rotate(0deg);
+}
+
+.accordion-toggle::after {
+    transform: rotate(90deg);
+}
+
+/* --- X Zustand --- */
+.accordion.open .accordion-toggle {
+    background: #e11d48;
+    transform: rotate(180deg);
+}
+
+.accordion.open .accordion-toggle:hover {
+    background: #b30229;
+}
+
+.accordion.open .accordion-toggle::before {
+    transform: rotate(45deg);
+}
+
+.accordion.open .accordion-toggle::after {
+    transform: rotate(-45deg);
+}
+
+/* --- Content Wrapper --- */
+
+.accordion-content-wrapper {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.35s ease;
+}
+
+.accordion-content {
+    padding: 14px 0 14px 0;
+    color: #4b5563;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    border-top: 1px solid #e5e7eb;
+    margin-top: 12px;
+}
