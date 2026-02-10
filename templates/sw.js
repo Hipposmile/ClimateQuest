@@ -2,7 +2,7 @@
 
 importScripts('/static/pwa/workbox/workbox-sw.js');
 
-workbox.setConf({
+workbox.setConfig({
     modulePathPrefix: '/static/pwa/workbox/'
 });
 
