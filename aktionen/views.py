@@ -95,7 +95,8 @@ def add(request):
         if old_streak < new_streak:
             create_notification(request,
                                 f'Du hast eine neue Aktion vom Typen {action_type} erstellt und so nicht nur dein wöchentliches Ziel erreicht, sondern auch deine Streak verlängert. <span class="emoji">&#x1F973;</span>',
-                                request.user)
+                                request.user,
+                                reverse('dashboard'))
             messages.success(request,
                              f'Du hast eine neue Aktion vom Typen {action_type} erstellt und so nicht nur dein wöchentliches Ziel erreicht, sondern auch deine Streak verlängert. <span class="emoji">&#x1F973;</span>')
         messages.success(request, all_messages["action_added"])
