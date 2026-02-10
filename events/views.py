@@ -1,11 +1,12 @@
+from datetime import datetime, timedelta
+
+from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.shortcuts import render, redirect
+from django.urls import reverse
 
-from core.all_messages import all_messages
 from utils.functions import *
 from .models import *
-from django.contrib.auth.decorators import login_required
-from datetime import datetime, timedelta
 
 
 def events_overview(request):
@@ -231,7 +232,8 @@ def edit_event(request, event_id):
             for participant in event.participants.all():
                 create_notification(request,
                                     f'Ein Event, bei dem du Teilnehmer bist und das jetzt {name} heißt, wurde bearbeitet.',
-                                    participant)
+                                    participant,
+                                    url=reverse('event_detail', args=[event_id]))
 
             messages.success(request, all_messages["successfully_edited_event"])
             return redirect('event_detail', event_id)
@@ -239,7 +241,8 @@ def edit_event(request, event_id):
         elif 'delete' in request.POST:
             for participant in event.participants.all():
                 create_notification(request, f'Das Event {event.name}, bei dem du Teilnehmer bist, wurde gelöscht',
-                                    participant)
+                                    participant,
+                                    url=reverse('events_overview'))
             event.delete()
             messages.success(request, all_messages["successfully_deleted_event"])
             return redirect('events_overview')

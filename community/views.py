@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse
 
-from core.all_messages import all_messages
 from utils.functions import *
 
 
@@ -44,7 +44,9 @@ def create_community(request):
         for user_to_message in family.members.all().exclude(id=request.user.id):
             create_notification(request,
                                 f'Die Family {family.name}, in der auch du Mitglied bist, ist der Community {community.name} beigetreten',
-                                user_to_message)
+                                user_to_message,
+                                url=reverse('community_detail',
+                                            kwargs={'community_id': community.id, 'family_id': family.id}))
         messages.success(request, all_messages["community_created"])
         return redirect('communities_view')
 
@@ -81,7 +83,9 @@ def join_community(request):
                 for user_to_message in family.members.all().exclude(id=request.user.id):
                     create_notification(request,
                                         f'Die Family {family.name}, in der auch du Mitglied bist, ist der Community {community.name} beigetreten',
-                                        user_to_message)
+                                        user_to_message,
+                                        url=reverse('community_detail',
+                                                    kwargs={'community_id': community.id, 'family_id': family.id}))
                 community.members.add(family)
                 messages.success(request, all_messages["community_joined"].format(family=family, community=community))
                 return redirect('communities_view')
@@ -161,9 +165,14 @@ def edit_community(request, community_id, family_id):
                 community.save()
                 messages.success(request, all_messages["community_name_changed"])
                 for user_to_message in community.user_members().exclude(id=request.user.id):
+                    user_to_message_family_id = Family.objects.filter(community__id=community.id,
+                                                                      members=user_to_message).first().id
                     create_notification(request,
                                         f'Der Communityname der Community {old_communityname} wurde von {request.user} zu {communityname} geändert',
-                                        user_to_message)
+                                        user_to_message,
+                                        url=reverse('community_detail', kwargs={'community_id': community.id,
+                                                                                'family_id': user_to_message_family_id}) if user_to_message_family_id else None
+                                        )
 
         if 'change_password' in request.POST:
             admin_password = request.POST.get('admin_password_password')
@@ -181,9 +190,14 @@ def edit_community(request, community_id, family_id):
                 community.password = password
                 community.save()
                 for user_to_message in community.user_members().exclude(id=request.user.id):
+                    user_to_message_family_id = Family.objects.filter(community__id=community.id,
+                                                                      members=user_to_message).first().id
                     create_notification(request,
                                         f'Das Passwort der Community {community.name} wurde von {request.user} geändert.',
-                                        user_to_message)
+                                        user_to_message,
+                                        url=reverse('community_detail', kwargs={'community_id': community.id,
+                                                                                'family_id': user_to_message_family_id}) if user_to_message_family_id else None
+                                        )
                 messages.success(request, all_messages["community_password_changed"])
 
         if 'change_admin_password' in request.POST:
@@ -202,9 +216,14 @@ def edit_community(request, community_id, family_id):
                 community.admin_password = new_admin_password
                 community.save()
                 for user_to_message in community.user_members().exclude(id=request.user.id):
+                    user_to_message_family_id = Family.objects.filter(community__id=community.id,
+                                                                      members=user_to_message).first().id
                     create_notification(request,
                                         f'Das Admin-Passwort der Community {community.name} wurde von {request.user} geändert',
-                                        user_to_message)
+                                        user_to_message,
+                                        url=reverse('community_detail', kwargs={'community_id': community.id,
+                                                                                'family_id': user_to_message_family_id}) if user_to_message_family_id else None
+                                        )
                 messages.success(request, all_messages["community_admin_password_changed"])
 
         if 'remove_member' in request.POST:
@@ -218,9 +237,14 @@ def edit_community(request, community_id, family_id):
             elif family_name == family.name:
                 community.members.remove(family)
                 for user_to_message in community.user_members().exclude(id=request.user.id):
+                    user_to_message_family_id = Family.objects.filter(community__id=community.id,
+                                                                      members=user_to_message).first().id
                     create_notification(request,
                                         f'Die Family {family.name} wurde von {request.user} aus der Community {community.name} entfernt',
-                                        user_to_message)
+                                        user_to_message,
+                                        url=reverse('community_detail', kwargs={'community_id': community.id,
+                                                                                'family_id': user_to_message_family_id}) if user_to_message_family_id else None
+                                        )
                 messages.success(request, all_messages["family_left_community"])
                 return redirect('dashboard')
             else:
@@ -232,9 +256,14 @@ def edit_community(request, community_id, family_id):
                 community = Community.objects.get(id=community_id)
                 community.members.remove(family_to_remove)
                 for user_to_message in community.user_members().exclude(id=request.user.id):
+                    user_to_message_family_id = Family.objects.filter(community__id=community.id,
+                                                                      members=user_to_message).first().id
                     create_notification(request,
                                         f'Die Family {family.name} wurde von {request.user} aus der Community {community.name} entfernt',
-                                        user_to_message)
+                                        user_to_message,
+                                        url=reverse('community_detail', kwargs={'community_id': community.id,
+                                                                                'family_id': user_to_message_family_id}) if user_to_message_family_id else None
+                                        )
                 messages.success(request, all_messages["community__family_removed"])
 
         if 'leave_community' in request.POST:
@@ -246,9 +275,14 @@ def edit_community(request, community_id, family_id):
             else:
                 community.members.remove(family)
                 for user_to_message in community.user_members().exclude(id=request.user.id):
+                    user_to_message_family_id = Family.objects.filter(community__id=community.id,
+                                                                      members=user_to_message).first().id
                     create_notification(request,
                                         f'Die Family {family.name} wurde von {request.user} aus der Community {community.name} entfernt',
-                                        user_to_message)
+                                        user_to_message,
+                                        url=reverse('community_detail', kwargs={'community_id': community.id,
+                                                                                'family_id': user_to_message_family_id}) if user_to_message_family_id else None
+                                        )
                 messages.success(request, all_messages["family_left_community"])
                 return redirect('dashboard')
 
@@ -274,8 +308,13 @@ def edit_community(request, community_id, family_id):
                 messages.error(request, all_messages["invalid_admin_password"])
             else:
                 for user_to_message in community.user_members():
+                    user_to_message_family_id = Family.objects.filter(community__id=community.id,
+                                                                      members=user_to_message).first().id
                     create_notification(request, f'Die Community {community.name} wurde von {request.user} gelöscht',
-                                        user_to_message)
+                                        user_to_message,
+                                        url=reverse('community_detail', kwargs={'community_id': community.id,
+                                                                                'family_id': user_to_message_family_id}) if user_to_message_family_id else None
+                                        )
                 community.delete()
                 messages.success(request, all_messages["community_deleted"])
                 return redirect('dashboard')
@@ -315,9 +354,14 @@ def chat_community(request, community_id, family_id):
         msg = request.POST.get('message')
         CommunityChatMessage.objects.create(community=community, user=request.user, message=msg, family=family)
         for user_to_message in community.user_members().exclude(id=request.user.id):
+            user_to_message_family_id = Family.objects.filter(community__id=community.id,
+                                                              members=user_to_message).first().id
             create_notification(request,
                                 f'Neue Nachricht in Community {community.name} von Family {family.name} / User {request.user}: {msg}',
-                                user_to_message)
+                                user_to_message,
+                                url=reverse('community_detail', kwargs={'community_id': community.id,
+                                                                        'family_id': user_to_message_family_id}) if user_to_message_family_id else None
+                                )
         return redirect('chat_community', community_id=community.id, family_id=family.id)
 
     msgs = CommunityChatMessage.objects.filter(community_id=community_id)

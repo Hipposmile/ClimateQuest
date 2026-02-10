@@ -341,7 +341,7 @@ def settings_view(request):
                             if user.id not in contacted_user_ids:
                                 contacted_user_ids.add(user.id)
                                 create_notification(request,
-                                                    f'User {request.user.username}, mit dem du zusammen in einer Community warst, hat seinen Account gelöscht. Nachrichten von ihm werden auch gelöscht.',
+                                                    f'User {request.user.username}, mit dem du zusammen in einer Community warst, hat seinen Account gelöscht. Von {request.user.username} gesendete Nachrichten werden auch gelöscht.',
                                                     user)
                 request.user.delete()
                 logout(request)

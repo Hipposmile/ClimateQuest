@@ -1,14 +1,13 @@
-from datetime import datetime, timedelta, date
+from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
-from core.all_messages import all_messages
 from utils.functions import *
-from aktionen.models import *
 from .models import *
+from django.urls import reverse
 
 
 @login_required
@@ -56,7 +55,7 @@ def join_family(request):
                 messages.error(request, all_messages["family_already_joined"])
             if check_password(family_password, family.password):
                 for user_to_message in family.members.all().exclude(id=request.user.id):
-                    create_notification(request, f'User {request.user} ist der Family {family} beigetreten', user_to_message)
+                    create_notification(request, f'User {request.user} ist der Family {family} beigetreten', user_to_message, url=reverse('family_detail', args=[family.id]))
                 family.members.add(request.user)
                 messages.success(request, all_messages["family_joined"].format(family=family))
                 return redirect('families_view')
@@ -97,7 +96,7 @@ def chat_family(request, family_id):
         FamilyChatMessage.objects.create(family=family, user=request.user, message=msg)
         for user_to_message in family.members.all().exclude(id=request.user.id):
             if user_to_message != request.user:
-                create_notification(request, f'Neue Nachricht in Family {family.name} von User {request.user}: {msg}', user_to_message)
+                create_notification(request, f'Neue Nachricht in Family {family.name} von User {request.user}: {msg}', user_to_message, url=reverse('chat_family', args=[family_id]))
         return redirect('chat_family', family_id=family.id)
     
     msgs = FamilyChatMessage.objects.filter(family=family)
@@ -151,7 +150,7 @@ def edit_family(request, family_id):
                 family.name = familyname
                 family.save()
                 for user_to_message in family.members.all().exclude(id=request.user.id):
-                    create_notification(request, f'Der Familyname der Family {old_familyname} wurde von {request.user} zu {familyname} geändert', user_to_message)
+                    create_notification(request, f'Der Familyname der Family {old_familyname} wurde von {request.user} zu {familyname} geändert', user_to_message, url=reverse('family_detail', args=[family_id]))
                 messages.success(request, all_messages["family_name_changed"])
 
         if 'change_password' in request.POST:
@@ -170,7 +169,7 @@ def edit_family(request, family_id):
                 family.password = password
                 family.save()
                 for user_to_message in family.members.all().exclude(id=request.user.id):
-                    create_notification(request, f'Passwort bei Family {family.name} wurde von User {request.user} geändert', user_to_message)
+                    create_notification(request, f'Passwort bei Family {family.name} wurde von User {request.user} geändert', user_to_message, url=reverse('family_detail', args=[family_id]))
                 messages.success(request, all_messages["family_password_changed"])
 
         if 'change_admin_password' in request.POST:
@@ -189,7 +188,7 @@ def edit_family(request, family_id):
                 family.admin_password = new_admin_password
                 family.save()
                 for user_to_message in family.members.all().exclude(id=request.user.id):
-                    create_notification(request, f'Das Family-Admin-Passwort der Family {family.name} wurde von User {request.user} geändert', user_to_message)
+                    create_notification(request, f'Das Family-Admin-Passwort der Family {family.name} wurde von User {request.user} geändert', user_to_message, url=reverse('family_detail', args=[family_id]))
                 messages.success(request, all_messages["family_admin_password_changed"])
         
         if 'remove_member' in request.POST:
@@ -213,9 +212,9 @@ def edit_family(request, family_id):
                 family.members.remove(user)
                 for user_to_message in family.members.all():
                     if user_to_message == user:
-                        create_notification(request, f'Du wurdest von User {request.user} aus der Family {family.name} entfernt', user_to_message)
+                        create_notification(request, f'Du wurdest von User {request.user} aus der Family {family.name} entfernt', user_to_message, url=reverse('families_view'))
                     else:
-                        create_notification(request, f'User {user} wurde von User {request.user} aus Family {family.name} entfernt.', user_to_message)
+                        create_notification(request, f'User {user} wurde von User {request.user} aus Family {family.name} entfernt.', user_to_message, url=reverse('family_detail', args=[family_id]))
                 messages.error(request, all_messages["family_user_removed"])
         
         if 'leave_family' in request.POST:
@@ -244,7 +243,7 @@ def edit_family(request, family_id):
                 messages.error(request, all_messages["invalid_admin_password"])
             else:
                 for user_to_message in family.members.all().exclude(id=request.user.id):
-                    create_notification(request, f'Family {family.name} wurde von User {request.user} gelöscht.', user_to_message)
+                    create_notification(request, f'Family {family.name} wurde von User {request.user} gelöscht.', user_to_message, url=reverse('families_view'))
                 family.delete()
                 messages.success(request, all_messages["family_deleted"])
                 return redirect('dashboard')

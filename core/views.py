@@ -1,7 +1,8 @@
-from django.shortcuts import render
-from utils.functions import *
-from django.test import RequestFactory
 from django.contrib.auth.models import User
+from django.test import RequestFactory
+from django.urls import reverse
+
+from utils.functions import *
 
 
 # Create your views here.
@@ -60,7 +61,8 @@ def create_reminder():
                 fake_request = fake_request.user = user
                 create_notification(fake_request,
                                     notification=f"Hey {user.username}, du hast dein wöchentliches Ziel noch nicht erreicht! Trage jetzt noch eine Aktion ein, die du durchgeführt hast, und erreiche nicht nur dein Ziel, sondern verlängere auch deine Streak!",
-                                    user=user)
+                                    user=user,
+                                    url=reverse('dashboard'))
         except Exception as e:
             error_message = f'Cronjob: {timezone.now().isoformat()} Create Reminder for User: {user}: Exception: {e}'
             create_internal_error(fake_request, error_message)

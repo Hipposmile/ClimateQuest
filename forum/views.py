@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.urls import reverse
 
-from core.all_messages import all_messages
 from utils.functions import *
 from .models import *
 
@@ -91,6 +91,6 @@ def post_detail(request, post_id):
         clean_html(content)
 
         Answer.objects.create(content=content, creator=request.user, forum_post=post)
-        create_notification(request, "Deine Forumsfrage wurde beantwortet", post.creator)
+        create_notification(request, "Deine Forumsfrage wurde beantwortet", post.creator, url=reverse('post_detail', args=[post_id]))
         return redirect('post_detail', post_id=post_id)
     return render(request, './forum_detail.html', {'post': post, 'answers': post.answers.all()})

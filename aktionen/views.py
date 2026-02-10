@@ -194,25 +194,30 @@ def edit_action(request, action_id):
             if old_level['level_number'] < new_level['level_number']:
                 create_notification(request,
                                     f'Du hast eine Aktion vom Typen {action_type} bearbeitet und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>',
-                                    request.user)
+                                    request.user,
+                                    url=reverse('level_me'))
                 messages.success(request,
                                  f'Du hast eine Aktion vom Typen {action_type} bearbeitet und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>')
             elif old_level['level_number'] > new_level['level_number']:
                 create_notification(request,
                                     f'Du hast eine Aktion vom Typen {action_type} bearbeitet, dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>',
-                                    request.user)
+                                    request.user,
+                                    url=reverse('level_me'))
                 messages.success(request,
-                                 f'Du hast eine Aktion vom Typen {action_type} bearbeitet, dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>')
+                                 f'Du hast eine Aktion vom Typen {action_type} bearbeitet, dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>',
+                                 )
             if old_streak < new_streak:
                 create_notification(request,
                                     f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so nicht nur dein wöchentliches Ziel erreicht, sondern auch deine Streak verlängert. <span class="emoji">&#x1F973;</span>',
-                                    request.user)
+                                    request.user,
+                                    url=reverse('dashboard'))
                 messages.success(request,
                                  f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so nicht nur dein wöchentliches Ziel erreicht, sondern auch deine Streak verlängert. <span class="emoji">&#x1F973;</span>')
             elif old_streak > new_streak:
                 create_notification(request,
                                     f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so nicht nur dein wöchentliches Ziel verloren, sondern auch deine Streak verkürzt. <span class="emoji">&#x1F622;</span>',
-                                    request.user)
+                                    request.user,
+                                    url=reverse('dashboard'))
                 messages.success(request,
                                  f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so nicht nur dein wöchentliches Ziel verloren, sondern auch deine Streak verkürzt. <span class="emoji">&#x1F622;</span>')
 
@@ -229,13 +234,15 @@ def edit_action(request, action_id):
             if old_level['level_number'] > new_level['level_number']:
                 create_notification(request,
                                     f'Du hast eine Aktion vom Typen {action_type} gelöscht, dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>',
-                                    request.user)
+                                    request.user,
+                                    url=reverse('level_me'))
                 messages.success(request,
                                  f'Du hast eine Aktion vom Typen {action_type} gelöscht, dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>')
             if old_streak > new_streak:
                 create_notification(request,
                                     f'Du hast eine neue Aktion vom Typen {action_type} gelöscht und so nicht nur dein wöchentliches Ziel verloren, sondern auch deine Streak verkürzt. <span class="emoji">&#x1F622;</span>',
-                                    request.user)
+                                    request.user,
+                                    url=reverse('dashboard'))
                 messages.success(request,
                                  f'Du hast eine neue Aktion vom Typen {action_type} gelöscht und so nicht nur dein wöchentliches Ziel verloren, sondern auch deine Streak verkürzt. <span class="emoji">&#x1F622;</span>')
             messages.success(request, all_messages["action_deleted"])
