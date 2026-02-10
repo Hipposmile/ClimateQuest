@@ -17,10 +17,8 @@ self.addEventListener("message", (event) => {
 });
 
 self.addEventListener('install', async (event) => {
-    event.waitUntil(
-        caches.open(CACHE)
-            .then((cache) => cache.add(offlineFallbackPage))
-    );
+    event.waitUntil(caches.open(CACHE)
+        .then((cache) => cache.add(offlineFallbackPage)));
 });
 
 if (self.workbox && workbox.navigationPreload.isSupported()) {
@@ -54,13 +52,33 @@ self.addEventListener('push', function (event) {
     const data = JSON.parse(eventInfo);
     const head = data.head || 'New Notification 🕺🕺';
     const body = data.body || 'This is default content. Your notification didn\'t have one 🙄🙄';
+    const url = data.url || '/benachrichtigungen/'
 
     // Keep the service worker alive until the notification is created.
-    event.waitUntil(
-        self.registration.showNotification(head, {
-            body: body,
-        })
-    );
+    event.waitUntil(self.registration.showNotification(head, {
+        body: body, data: {url: url}
+    }));
 });
 
-// ToDo: Bugs fixen
+self.addEventListener('notificationclick', function (event) {
+    event.notification.close();
+
+    const data = event.notification.data || {};
+    const urlToOpen = data.url || '/'; // Fallback: Startseite
+
+    event.waitUntil(clients.matchAll({type: 'window', includeUncontrolled: true}).then(windowClients => {
+        // Prüfen, ob die Seite schon offen ist
+        for (const client of windowClients) {
+            if (client.url.includes(urlToOpen) && 'focus' in client) {
+                return client.focus();
+            }
+        }
+
+        // Sonst neue Seite öffnen
+        if (clients.openWindow) {
+            return clients.openWindow(urlToOpen);
+        }
+    }));
+});
+
+// ToDo: Bugs fixen, redirect to correct page

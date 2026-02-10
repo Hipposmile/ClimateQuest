@@ -35,7 +35,7 @@
 
     <script nonce="{{ request.csp_script_nonce }}">
         async function requestPermissionNotification() {
-            if (Notification.permission === 'default') {
+            if (Notification.permission === 'default' || Notification.permission === 'denied') {
                 const div = document.getElementById('request_permission_notification');
                 div.innerHTML = `
                     <button id="reqBtnMsg" class="btn">Benachrichtigungen anfordern</button>
