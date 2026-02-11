@@ -1402,7 +1402,7 @@ canvas {
 }
 
 .color-red {
-    color: red;
+    color: red !important;
 }
 
 .color-888 {

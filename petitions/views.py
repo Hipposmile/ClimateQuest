@@ -21,6 +21,7 @@ def add_petition(request):
     if request.method == 'POST':
         title = request.POST.get('title')
         content = request.POST.get('content')
+        goal = request.POST.get('goal')
         img = request.FILES.get('img')
         category_input = request.POST.get('category')
 
@@ -28,8 +29,17 @@ def add_petition(request):
         if not is_truth:
             return redirect("add_petition")
 
-        if not title or not content:
+        if not title or not content or not goal:
             messages.error(request, all_messages["missing_required_inputs"])
+            return redirect("add_petition")
+
+        try:
+            goal = int(goal)
+        except ValueError:
+            messages.error(request, all_messages["invalid_goal"])
+            return redirect("add_petition")
+        if goal < 10:
+            messages.error(request, all_messages["goal_too_small"])
             return redirect("add_petition")
 
         try:
@@ -54,6 +64,7 @@ def add_petition(request):
 
         petition = Petition.objects.create(title=title,
                                            content=content,
+                                           goal=goal,
                                            img=img if img else None,
                                            category=category,
                                            creator=request.user)
@@ -63,7 +74,7 @@ def add_petition(request):
     return render(request, "./add_petition.html", {'categories': categories})
 
 
-def petition_detail(request, petition_id):  # ToDo: Add comments
+def petition_detail(request, petition_id):
     try:
         petition = Petition.objects.get(id=petition_id)
     except Petition.DoesNotExist:
@@ -105,6 +116,33 @@ def petition_detail(request, petition_id):  # ToDo: Add comments
                 messages.success(request, all_messages["successfully_answered_comment"])
                 return redirect('petition_detail', petition_id)
 
+            elif 'change_goal' in request.POST:
+                goal = request.POST.get('goal')
+                if not goal:
+                    messages.error(request, all_messages["missing_required_inputs"])
+                try:
+                    goal = int(goal)
+                except ValueError:
+                    messages.error(request, all_messages["invalid_goal"])
+                    return redirect("add_petition")
+                if goal < 10:
+                    messages.error(request, all_messages["goal_too_small"])
+                    return redirect("add_petition")
+
+                petition.goal = goal
+                petition.save()
+                messages.success(request, all_messages["successfully_updated_goal"])
+
+            elif 'success' in request.POST:
+                if petition.success:
+                    petition.success = False
+                    messages.error(request, all_messages["removed_success"])
+                else:
+                    petition.success = True
+                    messages.success(request, all_messages["added_success"])
+                petition.save()
+                return redirect("petition_detail", petition_id)
+
     return render(request, "./petition_detail.html", {"petition": petition})
 
 
@@ -141,10 +179,14 @@ def update_petition(request, petition_id):
     return render(request, "./add_update.html", {'petition': petition})
 
 
-def petitions_overview(request):  # ToDo: Add filter for categories
-    all_petitions = Petition.objects.all()
+def petitions_overview(request):
     search_keyword = None
     if request.method == 'POST':
+        success_visible = request.POST.get('success_visible') == 'on'
+        if success_visible:
+            all_petitions = Petition.objects.all()
+        else:
+            all_petitions = Petition.objects.filter(success=False)
         already_ordered = False
         ordered_by = request.POST.get('order_by')
         search_keyword = request.POST.get('search_keyword')
@@ -186,8 +228,9 @@ def petitions_overview(request):  # ToDo: Add filter for categories
                 petitions = all_petitions
             petitions = petitions.order_by(order_by)
     else:
+        success_visible = False
         ordered_by = "Titel"
-        petitions = all_petitions.order_by('title')
+        petitions = Petition.objects.filter(success=False).order_by('title')
 
     return render(request, './petitions_overview.html',
-                  {'petitions': petitions, 'ordered_by': ordered_by, 'search_keyword': search_keyword})
+                  {'petitions': petitions, 'ordered_by': ordered_by, 'search_keyword': search_keyword, 'success_visible': success_visible})

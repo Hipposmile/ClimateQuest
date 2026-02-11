@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 
+{% load html_math %}
+{% load static %}
+
 {% block meta %}
     <meta name="description" content="Siehe dir die Petition {{ petition.title }} an">
 {% endblock %}
@@ -26,6 +29,11 @@
             margin-top: 2rem;
         }
     </style>
+    {% if petition.success %}
+        <script src="{% static 'js/confetti.js' %}"></script>
+        <script nonce="{{ request.csp_script_nonce }}">startConfetti();</script>
+    {% endif %}
+
     <h1>Petition <i>{{ petition.title }}</i></h1>
     {% if messages %}
         {% for message in messages %}
@@ -35,14 +43,46 @@
     {% if petition.img %}
         <img src="{{ petition.img.url }}" class="petition-img" alt="Petitionsbild">
     {% endif %}
-    <p><strong>{{ petition.signs.count }}</strong> Unterschriften</p>
+    {% if petition.success %}
+        <h2>Die Petition hatte Erfolg!</h2>
+    {% endif %}
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    <style nonce="{{ request.csp_style_nonce }}">
+        .progress-container {
+            margin-top: 20px;
+        }
+
+        #progress-bar {
+            width: {{ petition.signs.count|percent:petition.goal|floatformat:0 }}%;
+            max-width: 100%;
+        }
+    </style>
+    <p><strong>{{ petition.signs.count }}</strong> Unterschriften gesammelt</p>
+    <p>Ziel: <strong>{{ petition.goal }}</strong></p>
+    {% if petition.signs.count >= petition.goal and not petition.success %}
+        <p>Obwohl das Unterschriftenziel bereits erreicht wurde, heißt das nicht, dass die Petition auch erfolgreich
+            ist. Deine Stimme ist immer noch wichtig!</p>
+    {% endif %}
+    {% if request.user == petition.creator %}
+        <a href="#change_goal" class="redirect-link dont-show-loading">
+            <span>Ziel ändern</span>
+            <span class="redirect-link-icon">→</span>
+        </a>
+    {% endif %}
+    <hr>
     <div class="artikel-content"><p>{{ petition.content|safe }}</p></div>
     <p>Kategorie <strong>{{ petition.category.title }}</strong></p>
     <p>Erstellt am {{ petition.created_at|date:"d.m.Y" }}</p>
     <p>Erstellt von <a href="{% url 'user_detail' petition.creator.id %}">{{ petition.creator.username }}</a></p>
 
     <hr>
-
+    <h2>Unterschreiben</h2>
+    {% if petition.success %}
+        <p>Du kannst auch unterschreiben, obwohl die Petition bereits Erfolg hatte, um zu verdeutlichen, dass auch dir
+            das Thema wichtig ist!</p>
+    {% endif %}
     <form method="post">
         {% csrf_token %}
         {% if request.user not in petition.signs.all %}
@@ -85,15 +125,33 @@
         {% endfor %}
 
         {% if request.user == petition.creator %}
-            <a class="update-add-btn" href="{% url 'update_petition' petition.id %}">
-                Update hinzufügen
+            <a href="{% url 'update_petition' petition.id %}" class="redirect-link">
+                <span>Update hinzufügen</span>
+                <span class="redirect-link-icon">→</span>
             </a>
         {% endif %}
     </div>
+    {% if request.user == petition.creator %}
+        <hr>
+        <h2 id="change_goal">Ziel ändern</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label for="goal">Ziel</label>
+            <input type="number" name="goal" id="goal" min="10" step="1" value="{{ petition.goal }}">
+            <button name="change_goal">Speichern</button>
+        </form>
+        <hr>
+        <h2>Erfolg</h2>
+        <form method="post">
+            {% csrf_token %}
+            <button name="success" class="color-red">{% if petition.success %}Erfolg der Petition löschen{% else %}
+                Petition zum Erfolg erklären{% endif %}</button>
+        </form>
+    {% endif %}
 
     <hr>
 
-    <h2 class="section-title">Kommentare</h2>
+    <h2>Kommentare</h2>
     <div class="comment-section">
         {% if petition.comments.all %}
             {% for comment in petition.comments.all %}

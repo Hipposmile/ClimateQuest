@@ -224,7 +224,11 @@ all_messages = {
     "petition_signed": "Petition erfolgreich unterschrieben",
     "petition_unsigned": "Unterschrift erfolgreich entfernt",
     "signs_search_keyword_not_a_number": "Wenn du nach Unterschriften filterst, muss das Suchwort eine Zahl sein",
-
+    "goal_not_a_number": "Das Ziel muss eine Zahl sein",
+    "goal_too_small": "Das Ziel muss mindestens 10 sein",
+    "successfully_updated_goal": "Ziel erfolgreich aktualisiert",
+    "added_success": "Du hast die Petition zu Erfolg erklärt!",
+    "removed_success": "Du hast den Erfolg der Petition gelöscht",
     # --------
     # Image Upload
     # --------

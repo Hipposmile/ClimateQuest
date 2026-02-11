@@ -43,6 +43,7 @@ class Comment(models.Model):
 class Petition(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
+    goal = models.IntegerField()
     img = models.ImageField(upload_to='petitions/', blank=True, null=True, validators=[validate_image])
     created_at = models.DateTimeField(auto_now_add=True)
     signs = models.ManyToManyField(User, blank=True, related_name='petition_sign')
@@ -50,6 +51,7 @@ class Petition(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='petition_category')
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='petition_creator')
     comments = models.ManyToManyField(Comment, related_name='petition_comment')
+    success = models.BooleanField(default=False)
 
     def signs_count(self):
         return self.signs.count()

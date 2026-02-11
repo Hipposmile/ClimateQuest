@@ -80,5 +80,3 @@ self.addEventListener('notificationclick', function (event) {
         }
     }));
 });
-
-// ToDo: Bugs fixen, redirect to correct page

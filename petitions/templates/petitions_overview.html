@@ -36,6 +36,12 @@
                     <option value="von mir unterschriebene Petitionen">von mir unterschriebene Petitionen</option>
                 {% endif %}
             </select>
+
+            <label class="custom-checkbox">
+                <input type="checkbox" name="success_visible">
+                <span class="checkmark"></span>
+                <span class="label-text">Erfolgreiche einblenden</span>
+            </label>
         </label>
 
         <button type="submit">Anwenden</button>
@@ -57,12 +63,18 @@
     {% if search_keyword %}
         <p>Suchwort: {{ search_keyword }}</p>
     {% endif %}
+    {% if success_visible %}
+        <p>Erfolgreiche Petitionen eingeblendet</p>
+    {% endif %}
     {% if petitions %}
         {% for single_petition in petitions %}
-            <section
-                    class="event-card{% if request.user == single_petition.creator %} event-card-creator{% endif %}">
+            <section class="event-card{% if request.user == single_petition.creator %} event-card-creator{% endif %}">
                 <div class="event-main">
                     <h2 class="event-title">{{ single_petition.title }}</h2>
+                    {% if single_petition.success %}
+                        <p><span class="emoji">&#x1F389;</span><strong class="color-red">Diese Petition hatte
+                            Erfolg</strong><span class="emoji">&#x1F389;</span></p>
+                    {% endif %}
                     {% if ordered_by == 'Zuletzt bearbeitet' %}
                         <p><strong>Zuletzt bearbeitet:</strong> <span class="event-date"
                                                                       data-date="{{ single_petition.updated_at|date:'c' }}">{{ single_petition.updated_at|date:"d.m.Y" }}</span>
