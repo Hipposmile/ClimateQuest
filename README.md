@@ -2,6 +2,9 @@
 
 Dieses Projekt ist eine Django Webanwendung, die Nutzerinnen und Nutzer dazu motiviert, mehr für den Klimaschutz zu tun, und zusätzlich Wissen zu dieser Thematik verbreitet. Die App ist unter [https://climate-quest.de](https://climate-quest.de) verfügbar. Weitere Informationen zu der Funktionsweise der App findest du [hier](https://climate-quest.de/artikel/artikel_detail/5). 
 
+---
+---
+
 # Lokale Installation
 
 Wenn du das Projekt lokal ausführen odeer bearbeiten möchtest, folge dieser Anleitung. Sie erklärt Schritt für Schritt, ...
@@ -12,7 +15,8 @@ Wenn du das Projekt lokal ausführen odeer bearbeiten möchtest, folge dieser An
 - wie du die Datenbank vorbereitest  
 - wie du den lokalen Server startest  
 
-**Beachte allerdings, dass dieses Projekt nicht für externe Mitarbeit gedacht ist. Daher bitte keine Pull Requests, Issues oder Feature‑Vorschläge einreichen. Feedback und Verbesserungsvorschläge können allerdings gerne unter [diesem Formular](https://docs.google.com/forms/d/e/1FAIpQLSdRLG2HmXiJ0cT74Tfd1EmOPguJHS7xLNngVFjQY5BVKcD8mA/viewform) gegeben werden. **
+> [!CAUTION]
+> Beachte allerdings, dass dieses Projekt nicht für externe Mitarbeit gedacht ist. Daher bitte keine Pull Requests, Issues oder Feature‑Vorschläge einreichen. Feedback und Verbesserungsvorschläge können allerdings gerne unter [diesem Formular](https://docs.google.com/forms/d/e/1FAIpQLSdRLG2HmXiJ0cT74Tfd1EmOPguJHS7xLNngVFjQY5BVKcD8mA/viewform) gegeben werden.
 
 ---
 
