@@ -38,8 +38,8 @@ Um das Projekt auszuführen, benötigst du:
 Klonen des Repositories:
 
 ```bash
-git clone https://github.com/<dein-username>/<dein-repo>.git
-cd <dein-repo>
+git clone https://github.com/Hipposmile/ClimateQuest.git
+cd ClimateQuest
 ```
 
 **Warum?**  
