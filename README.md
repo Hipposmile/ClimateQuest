@@ -84,22 +84,6 @@ Damit Django und alle weiteren Bibliotheken verfügbar sind.
 
 ---
 
-## Umgebungsvariablen konfigurieren
-
-Erstelle eine Datei `.env` im Hauptverzeichnis:
-
-```
-DEBUG=True
-SECRET_KEY=dein-geheimer-schluessel
-DATABASE_URL=sqlite:///db.sqlite3
-```
-
-**Warum?**  
-Django benötigt diese Werte, um korrekt zu starten.  
-Der `SECRET_KEY` ist essenziell für Sessions und kryptografische Funktionen.
-
----
-
 ## Datenbank vorbereiten
 
 Django verwendet Migrationen, um die Datenbankstruktur zu erstellen.
@@ -133,35 +117,6 @@ http://127.0.0.1:8000/
 
 **Warum?**  
 Dies startet den integrierten Django‑Entwicklungsserver, ideal für lokale Entwicklung.
-
----
-
-## Projektstruktur (Beispiel)
-
-```
-├── manage.py
-├── requirements.txt
-├── projectname/
-│   ├── settings.py
-│   ├── urls.py
-│   ├── wsgi.py
-│   └── asgi.py
-└── appname/
-    ├── models.py
-    ├── views.py
-    ├── urls.py
-    └── templates/
-```
-
-**Warum?**  
-Damit du dich im Projekt zurechtfindest und weißt, wo welche Logik liegt.
-
----
-
-## Hinweise zu Beiträgen
-
-Dieses Repository ist **nicht** für externe Mitarbeit gedacht.  
-Bitte keine Pull Requests, Issues oder Feature‑Vorschläge einreichen.
 
 ---
 
