@@ -1102,7 +1102,7 @@
     </script>
 {% endwith %}
 <script nonce="{{ request.csp_script_nonce }}">
-    const a_showLoading = document.querySelectorAll('a:not(.dont-show-loading):not(.mobile-menu-trigger)');
+    const a_showLoading = document.querySelectorAll('a:not(.dont-show-loading):not(.mobile-menu-trigger):not([target="_blank"])');
     a_showLoading.forEach((el) => {
         el.addEventListener('click', showLoading);
     });

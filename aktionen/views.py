@@ -4,7 +4,41 @@ from dateutil.relativedelta import relativedelta
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
+
 from utils.functions import *
+
+
+def get_period_start(end, quantity, unit):
+    if unit == "tag":
+        delta = timedelta(days=quantity)
+    elif unit == "woche":
+        delta = timedelta(weeks=quantity)
+    elif unit == "monat":
+        delta = timedelta(days=30 * quantity)
+    else:
+        return None, end
+
+    start = end - delta
+    return start, end
+
+
+def aktion_exists_in_period(action_type, end_date, quantity, user, exclude_id=None):
+    start, end = get_period_start(end_date, quantity, action_type.mengeBeschreibungSingular.lower())
+    if not start:
+        return False
+
+    if exclude_id:
+        return Aktion.objects.filter(
+            user=user,
+            aktion=action_type,
+            date__range=(start, end)
+        ).exclude(id=exclude_id).exists()
+    else:
+        return Aktion.objects.filter(
+            user=user,
+            aktion=action_type,
+            date__range=(start, end)
+        ).exists()
 
 
 @login_required
@@ -64,6 +98,9 @@ def add(request):
         elif (Aktion.objects.filter(user=request.user, aktion=action).aggregate(total=Sum('quantity'))[
                   "total"] or 0) + action_quantity > action.max:
             messages.error(request, all_messages["max_action_quantity"])
+            return redirect('add')
+        if aktion_exists_in_period(action, action_date, action_quantity, request.user):
+            messages.error(request, all_messages["action_already_set_in_period"])
             return redirect('add')
 
         aktion_existing = any(aktion.name == action_type for aktion in aktionen)
@@ -171,6 +208,10 @@ def edit_action(request, action_id):
             elif (Aktion.objects.filter(user=request.user, aktion=action).aggregate(total=Sum('quantity'))[
                       "total"] or 0) + action_quantity > action.max:
                 messages.error(request, all_messages["max_action_quantity"])
+                return redirect('edit_action', action_id)
+
+            if aktion_exists_in_period(action, action_date, action_quantity, request.user, action_id):
+                messages.error(request, all_messages["action_already_set_in_period"])
                 return redirect('edit_action', action_id)
 
             action_existing = any(aktion.name == action_type for aktion in aktionen)

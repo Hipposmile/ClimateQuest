@@ -148,6 +148,7 @@ all_messages = {
     "max_action_quantity": mark_safe(
         "Die angegebene Menge ist zu hoch, um realistisch zu sein. Weitere Informationen findest du in <a href='https://climate-quest.de/artikel/artikel_detail/9'>diesem Artikel</a>."),
     "action_too_past": "Das Datum liegt zu weit in der Vergangenheit, um realistisch zu sein.",
+    "action_already_set_in_period": "Diese Aktion wurde im gleichen Zeitraum schon einmal eingetragen",
 
     # --------
     # Event

@@ -179,7 +179,7 @@ def update_petition(request, petition_id):
     return render(request, "./add_update.html", {'petition': petition})
 
 
-def petitions_overview(request):
+def petitions_overview(request): # ToDo: Add category filter
     search_keyword = None
     if request.method == 'POST':
         success_visible = request.POST.get('success_visible') == 'on'
