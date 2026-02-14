@@ -228,7 +228,7 @@ all_messages = {
     "goal_not_a_number": "Das Ziel muss eine Zahl sein",
     "goal_too_small": "Das Ziel muss mindestens 10 sein",
     "successfully_updated_goal": "Ziel erfolgreich aktualisiert",
-    "added_success": "Du hast die Petition zu Erfolg erklärt!",
+    "added_success": "Du hast die Petition zum Erfolg erklärt!",
     "removed_success": "Du hast den Erfolg der Petition gelöscht",
     # --------
     # Image Upload

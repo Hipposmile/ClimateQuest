@@ -460,56 +460,49 @@
     }
   ],
   "id": "qQZ&lt;u0*hjXM}#`NR.4ht[9Ig&gt;B(7rY",
-  "categories": ["lifestyle"],
+  "categories": [
+    "lifestyle"
+  ],
   "lang": "de",
   "shortcuts": [
     {
       "name": "Aktion hinzufügen",
       "short_name": "Aktion",
       "description": "Neue Klimaschutz-Aktion hinzufügen",
-      "url": "/aktionen/add/"
-    },
-    {
-      "name": "Meine Families",
-      "short_name": "Families",
-      "description": "Übersicht deiner Familiengruppen",
-      "url": "/family/families/"
-    },
-    {
-      "name": "Meine Communities",
-      "short_name": "Communities",
-      "description": "Übersicht deiner Communities",
-      "url": "/community/communities/"
+      "url": "https://climate-quest.de/aktionen/add/",
+      "icons": [
+        {
+          "src": "https://climate-quest.de/static/icons/shortcuts/plus.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     },
     {
       "name": "Level",
       "short_name": "Level",
       "description": "Dein aktuelles Level anzeigen",
-      "url": "/users/klimapunkte/me/"
+      "url": "https://climate-quest.de/users/level/me/",
+      "icons": [
+        {
+          "src": "https://climate-quest.de/static/icons/shortcuts/level.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     },
     {
       "name": "Klimapunkte",
       "short_name": "Punkte",
-      "description": "Deine gesammelten Klimapunkte",
-      "url": "/users/klimapunkte/me/"
-    },
-    {
-      "name": "Events Überblick",
-      "short_name": "Events",
-      "description": "Alle Events im Überblick",
-      "url": "/events/overview/"
-    },
-    {
-      "name": "Artikel Überblick",
-      "short_name": "Artikel",
-      "description": "Alle Artikel im Überblick",
-      "url": "/artikel/artikel_overview/"
-    },
-    {
-      "name": "Forum Überblick",
-      "short_name": "Forum",
-      "description": "Alle Forums-Beiträge im Überblick",
-      "url": "/forum/forum_overview/"
+      "description": "Deine gesammelten Klimapunkte anzeigen",
+      "url": "https://climate-quest.de/users/klimapunkte/me/",
+      "icons": [
+        {
+          "src": "https://climate-quest.de/static/icons/shortcuts/klimapunkte.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }
