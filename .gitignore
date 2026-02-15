@@ -12,3 +12,4 @@ staticfiles/
 .pylintrc
 tests/
 try/
+media/

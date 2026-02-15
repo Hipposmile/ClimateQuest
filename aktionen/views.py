@@ -4,6 +4,7 @@ from dateutil.relativedelta import relativedelta
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.db.models.functions import Lower
 
 from utils.functions import *
 
@@ -16,29 +17,49 @@ def get_period_start(end, quantity, unit):
     elif unit == "monat":
         delta = timedelta(days=30 * quantity)
     else:
-        return None, end
+        return None
 
     start = end - delta
-    return start, end
+    return start
 
 
 def aktion_exists_in_period(action_type, end_date, quantity, user, exclude_id=None):
-    start, end = get_period_start(end_date, quantity, action_type.mengeBeschreibungSingular.lower())
-    if not start:
+    start = get_period_start(end_date, quantity, action_type.mengeBeschreibungSingular.lower())
+    if start is None:
         return False
 
     if exclude_id:
         return Aktion.objects.filter(
             user=user,
             aktion=action_type,
-            date__range=(start, end)
+            date__range=(start, end_date)
         ).exclude(id=exclude_id).exists()
     else:
         return Aktion.objects.filter(
             user=user,
             aktion=action_type,
-            date__range=(start, end)
+            date__range=(start, end_date)
         ).exists()
+
+
+def aktion_is_in_different_action_period(action_type, end_date, quantity, user):
+    actions = Aktion.objects.filter(
+        user=user,
+        aktion=action_type,
+        date__gte=end_date,
+    ).values('date', 'quantity', unit=Lower('aktion__mengeBeschreibungSingular'))
+
+    for action in actions:
+        if end_date > get_period_start(action.get('date'), action.get('quantity'), action.get('unit')):
+            return True
+    return False
+
+def aktion_date_invalid(action_type, end_date, quantity, user, exclude_id=None):
+    if aktion_exists_in_period(action_type, end_date, quantity, user, exclude_id):
+        return True
+    if aktion_is_in_different_action_period(action_type, end_date, quantity, user):
+        return True
+    return False
 
 
 @login_required
@@ -99,7 +120,7 @@ def add(request):
                   "total"] or 0) + action_quantity > action.max:
             messages.error(request, all_messages["max_action_quantity"])
             return redirect('add')
-        if aktion_exists_in_period(action, action_date, action_quantity, request.user):
+        if aktion_date_invalid(action, action_date, action_quantity, request.user):
             messages.error(request, all_messages["action_already_set_in_period"])
             return redirect('add')
 
@@ -131,11 +152,11 @@ def add(request):
                              f'Du hast eine neue Aktion vom Typen {action_type} erstellt und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>')
         if old_streak < new_streak:
             create_notification(request,
-                                f'Du hast eine neue Aktion vom Typen {action_type} erstellt und so nicht nur dein wöchentliches Ziel erreicht, sondern auch deine Streak verlängert. <span class="emoji">&#x1F973;</span>',
+                                f'Du hast eine neue Aktion vom Typen {action_type} erstellt und so deine Streak verlängert. <span class="emoji">&#x1F973;</span>',
                                 request.user,
                                 reverse('dashboard'))
             messages.success(request,
-                             f'Du hast eine neue Aktion vom Typen {action_type} erstellt und so nicht nur dein wöchentliches Ziel erreicht, sondern auch deine Streak verlängert. <span class="emoji">&#x1F973;</span>')
+                             f'Du hast eine neue Aktion vom Typen {action_type} erstellt und deine Streak verlängert. <span class="emoji">&#x1F973;</span>')
         messages.success(request, all_messages["action_added"])
         return redirect('history_me')
 
@@ -210,7 +231,7 @@ def edit_action(request, action_id):
                 messages.error(request, all_messages["max_action_quantity"])
                 return redirect('edit_action', action_id)
 
-            if aktion_exists_in_period(action, action_date, action_quantity, request.user, action_id):
+            if aktion_date_invalid(action, action_date, action_quantity, request.user, action_id):
                 messages.error(request, all_messages["action_already_set_in_period"])
                 return redirect('edit_action', action_id)
 
@@ -249,18 +270,18 @@ def edit_action(request, action_id):
                                  )
             if old_streak < new_streak:
                 create_notification(request,
-                                    f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so nicht nur dein wöchentliches Ziel erreicht, sondern auch deine Streak verlängert. <span class="emoji">&#x1F973;</span>',
+                                    f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so deine Streak verlängert. <span class="emoji">&#x1F973;</span>',
                                     request.user,
                                     url=reverse('dashboard'))
                 messages.success(request,
-                                 f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so nicht nur dein wöchentliches Ziel erreicht, sondern auch deine Streak verlängert. <span class="emoji">&#x1F973;</span>')
+                                 f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so deine Streak verlängert. <span class="emoji">&#x1F973;</span>')
             elif old_streak > new_streak:
                 create_notification(request,
-                                    f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so nicht nur dein wöchentliches Ziel verloren, sondern auch deine Streak verkürzt. <span class="emoji">&#x1F622;</span>',
+                                    f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so deine Streak verkürzt. <span class="emoji">&#x1F622;</span>',
                                     request.user,
                                     url=reverse('dashboard'))
                 messages.success(request,
-                                 f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so nicht nur dein wöchentliches Ziel verloren, sondern auch deine Streak verkürzt. <span class="emoji">&#x1F622;</span>')
+                                 f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so deine Streak verkürzt. <span class="emoji">&#x1F622;</span>')
 
             messages.success(request, all_messages["action_edited"])
             return redirect('history_me')
@@ -281,11 +302,11 @@ def edit_action(request, action_id):
                                  f'Du hast eine Aktion vom Typen {action_type} gelöscht, dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>')
             if old_streak > new_streak:
                 create_notification(request,
-                                    f'Du hast eine neue Aktion vom Typen {action_type} gelöscht und so nicht nur dein wöchentliches Ziel verloren, sondern auch deine Streak verkürzt. <span class="emoji">&#x1F622;</span>',
+                                    f'Du hast eine neue Aktion vom Typen {action_type} gelöscht und so deine Streak verkürzt. <span class="emoji">&#x1F622;</span>',
                                     request.user,
                                     url=reverse('dashboard'))
                 messages.success(request,
-                                 f'Du hast eine neue Aktion vom Typen {action_type} gelöscht und so nicht nur dein wöchentliches Ziel verloren, sondern auch deine Streak verkürzt. <span class="emoji">&#x1F622;</span>')
+                                 f'Du hast eine neue Aktion vom Typen {action_type} gelöscht und so deine Streak verkürzt. <span class="emoji">&#x1F622;</span>')
             messages.success(request, all_messages["action_deleted"])
             return redirect('history_me')
 

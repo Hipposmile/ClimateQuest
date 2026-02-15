@@ -46,7 +46,7 @@
     <form method="post" id="petition-form" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="title">Titel</label>
-        <input type="text" name="title" id="title" placeholder="Titel" maxlength="100">
+        <input type="text" name="title" id="title" placeholder="Titel" maxlength="100" required>
 
         <label for="content_editor">Beschreibung</label>
         <div id="content_editor" class="quill-editor"></div>
@@ -54,7 +54,7 @@
 
         <label for="goal">Ziel</label>
         <small>Das Ziel kann im Nachhinein aktualisiert werden</small>
-        <input type="number" name="goal" id="goal" min="10" step="1">
+        <input type="number" name="goal" id="goal" min="10" step="1" required>
 
         <label for="img">Bild (optional)</label>
         <input type="file" name="img" id="img" accept="image/avif, image/webp, image/jpeg, image/png">

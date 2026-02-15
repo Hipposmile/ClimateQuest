@@ -28,8 +28,6 @@
         <input type="text" name="new_communityname" id="new_communityname" placeholder="Neuer Communityname" required>
         <button type="submit" name="change_communityname">Speichern</button>
     </form>
-    {% if communityname_error %}<p class="error-message">{{ communityname_error }}</p>{% endif %}
-    {% if communityname_success %}<p class="success-message">{{ communityname_success }}</p>{% endif %}
 
     <script nonce="{{ request.csp_script_nonce }}">
         document.getElementById('new_communityname').addEventListener('input', function () {
@@ -68,8 +66,6 @@
         <input type="password" name="new_password" id="new_password" placeholder="Neues Passwort" required>
         <button type="submit" name="change_password">Speichern</button>
     </form>
-    {% if password_error %}<p class="error-message">{{ password_error }}</p>{% endif %}
-    {% if password_success %}<p class="success-message">{{ password_success }}</p>{% endif %}
 
     <hr>
 
@@ -115,8 +111,6 @@
         });
 
     </script>
-    {% if admin_password_error %}<p class="error-message">{{ admin_password_error }}</p>{% endif %}
-    {% if admin_password_success %}<p class="success-message">{{ admin_password_success }}</p>{% endif %}
 
     <hr>
 
@@ -127,10 +121,8 @@
         <input type="password" name="admin_password_remove" id="admin_password_remove" placeholder="Admin Passwort" required>
         <label for="family_name">Familyname:</label>
         <input type="text" name="family_name" id="family_name" placeholder="Familyname" required>
-        <button type="submit" name="remove_member">Speichern</button>
+        <button type="submit" name="remove_member" class="color-red">Speichern</button>
     </form>
-    {% if remove_error %}<p class="error-message">{{ remove_error }}</p>{% endif %}
-    {% if remove_success %}<p class="success-message">{{ remove_success }}</p>{% endif %}
 
     <hr>
 
@@ -142,7 +134,6 @@
                placeholder="Family-Admin-Passwort" required>
         <button type="submit" name="leave_community" class="color-red">Diese Community verlassen</button>
     </form>
-    {% if leave_error %}<p class="color-red">{{ leave_error }}</p>{% endif %}
 
     <hr>
 
@@ -180,6 +171,5 @@
         <input type="password" name="admin_password_delete" id="admin_password_delete" placeholder="Admin-Passwort" required>
         <button type="submit" name="delete_community" class="color-red">Diese Community löschen</button>
     </form>
-    {% if delete_error %}<p class="color-red">{{ delete_error }}</p>{% endif %}
 
 {% endblock %}

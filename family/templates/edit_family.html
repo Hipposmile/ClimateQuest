@@ -26,8 +26,6 @@
         <input type="text" name="new_familyname" id="new_familyname" placeholder="Neuer Familyname" required>
         <button type="submit" name="change_familyname">Speichern</button>
     </form>
-    {% if familyname_error %}<p class="error-message">{{ familyname_error }}</p>{% endif %}
-    {% if familyname_success %}<p class="success-message">{{ familyname_success }}</p>{% endif %}
 
     <script nonce="{{ request.csp_script_nonce }}">
         document.getElementById('new_familyname').addEventListener('input', function () {
@@ -66,8 +64,6 @@
         <input type="password" name="new_password" id="new_password" placeholder="Neues Passwort" required>
         <button type="submit" name="change_password">Ändern</button>
     </form>
-    {% if password_error %}<p class="error-message">{{ password_error }}</p>{% endif %}
-    {% if password_success %}<p class="success-message">{{ password_success }}</p>{% endif %}
 
     <hr>
 
@@ -113,8 +109,6 @@
         });
 
     </script>
-    {% if admin_password_error %}<p class="error-message">{{ admin_password_error }}</p>{% endif %}
-    {% if admin_password_success %}<p class="success-message">{{ admin_password_success }}</p>{% endif %}
 
     <hr>
 
@@ -125,19 +119,16 @@
         <input type="password" name="admin_password_remove" id="admin_password_remove" placeholder="Admin Passwort" required>
         <label for="username">Username:</label>
         <input type="text" name="username" id="username" placeholder="Username" required>
-        <button type="submit" name="remove_member">Ändern</button>
+        <button type="submit" class="color-red" name="remove_member">Ändern</button>
     </form>
-    {% if remove_error %}<p class="error-message">{{ remove_error }}</p>{% endif %}
-    {% if remove_success %}<p class="success-message">{{ remove_success }}</p>{% endif %}
 
     <hr>
 
     <h3>Family verlassen</h3>
     <form method="post" class="form-confirm" data-confirm="Willst du diese Family wirklich verlassen?">
         {% csrf_token %}
-        <button type="submit" name="leave_family" class="color-red;">Diese Family verlassen</button>
+        <button type="submit" name="leave_family" class="color-red">Diese Family verlassen</button>
     </form>
-    {% if leave_error %}<p class="color-red">{{ leave_error }}</p>{% endif %}
 
     <hr>
 
@@ -175,6 +166,5 @@
         <input type="password" name="admin_password_delete" id="admin_password_delete" placeholder="Admin-Passwort" required>
         <button type="submit" name="delete_family" class="color-red">Diese Family löschen</button>
     </form>
-    {% if delete_error %}<p class="color-red">{{ delete_error }}</p>{% endif %}
 
 {% endblock %}

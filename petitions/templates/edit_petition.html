@@ -7,12 +7,14 @@
 {% block title %}Update zur Petition {{ petition }} hinzufügen{% endblock %}
 
 {% block content %}
-    <h1>Update zur Petition <i>{{ petition }}</i> hinzufügen</h1>
+    <h1>Petition <a href="{% url 'petition_detail' petition.id %}">{{ petition }}</a> bearbeiten</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
+
+    <h2>Update hinzufügen</h2>
 
     <form method="post" class="fill-editor">
         {% csrf_token %}
@@ -40,4 +42,21 @@
     <script nonce="{{ request.csp_script_nonce }}">
         document.addEventListener('DOMContentLoaded', initializeQuill);
     </script>
+
+    <hr>
+
+    <h2 id="change_goal">Ziel ändern</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="goal">Ziel</label>
+        <input type="number" name="goal" id="goal" min="10" step="1" value="{{ petition.goal }}">
+        <button name="change_goal">Speichern</button>
+    </form>
+    <hr>
+    <h2>Erfolg</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button name="success" class="color-red">{% if petition.success %}Erfolg der Petition löschen{% else %}
+            Petition zum Erfolg erklären{% endif %}</button>
+    </form>
 {% endblock %}

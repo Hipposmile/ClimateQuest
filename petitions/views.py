@@ -36,7 +36,7 @@ def add_petition(request):
         try:
             goal = int(goal)
         except ValueError:
-            messages.error(request, all_messages["invalid_goal"])
+            messages.error(request, all_messages["goal_not_a_number"])
             return redirect("add_petition")
         if goal < 10:
             messages.error(request, all_messages["goal_too_small"])
@@ -116,38 +116,11 @@ def petition_detail(request, petition_id):
                 messages.success(request, all_messages["successfully_answered_comment"])
                 return redirect('petition_detail', petition_id)
 
-            elif 'change_goal' in request.POST:
-                goal = request.POST.get('goal')
-                if not goal:
-                    messages.error(request, all_messages["missing_required_inputs"])
-                try:
-                    goal = int(goal)
-                except ValueError:
-                    messages.error(request, all_messages["invalid_goal"])
-                    return redirect("add_petition")
-                if goal < 10:
-                    messages.error(request, all_messages["goal_too_small"])
-                    return redirect("add_petition")
-
-                petition.goal = goal
-                petition.save()
-                messages.success(request, all_messages["successfully_updated_goal"])
-
-            elif 'success' in request.POST:
-                if petition.success:
-                    petition.success = False
-                    messages.error(request, all_messages["removed_success"])
-                else:
-                    petition.success = True
-                    messages.success(request, all_messages["added_success"])
-                petition.save()
-                return redirect("petition_detail", petition_id)
-
     return render(request, "./petition_detail.html", {"petition": petition})
 
 
 @login_required
-def update_petition(request, petition_id):
+def edit_petition(request, petition_id):
     try:
         petition = Petition.objects.get(id=petition_id)
     except Petition.DoesNotExist:
@@ -159,24 +132,54 @@ def update_petition(request, petition_id):
         return redirect("add_petition")
 
     if request.method == 'POST':
-        title = request.POST.get('title')
-        content = request.POST.get('content')
+        if 'update' in request.POST:
+            title = request.POST.get('title')
+            content = request.POST.get('content')
 
-        content = clean_html(content)
+            content = clean_html(content)
 
-        is_truth = check_is_truth(request)
-        if not is_truth:
-            return redirect("update_petition", petition_id)
+            is_truth = check_is_truth(request)
+            if not is_truth:
+                return redirect("edit_petition", petition_id)
 
-        if not title or not content:
-            messages.error(request, all_messages["missing_required_inputs"])
-            return redirect("update_petition", petition_id)
+            if not title or not content:
+                messages.error(request, all_messages["missing_required_inputs"])
+                return redirect("edit_petition", petition_id)
 
-        update = Update.objects.create(title=title, content=content)
-        petition.updates.add(update)
-        return redirect("petition_detail", petition_id)
+            update = Update.objects.create(title=title, content=content)
+            petition.updates.add(update)
+            return redirect("petition_detail", petition_id)
 
-    return render(request, "./add_update.html", {'petition': petition})
+        elif 'change_goal' in request.POST:
+            goal = request.POST.get('goal')
+            if not goal:
+                messages.error(request, all_messages["missing_required_inputs"])
+                return redirect("petition_detail", petition_id)
+            try:
+                goal = int(goal)
+            except ValueError:
+                messages.error(request, all_messages["goal_not_a_number"])
+                return redirect("add_petition")
+            if goal < 10:
+                messages.error(request, all_messages["goal_too_small"])
+                return redirect("add_petition")
+
+            petition.goal = goal
+            petition.save()
+            messages.success(request, all_messages["successfully_updated_goal"])
+            return redirect("petition_detail", petition_id)
+
+        elif 'success' in request.POST:
+            if petition.success:
+                petition.success = False
+                messages.error(request, all_messages["removed_success"])
+            else:
+                petition.success = True
+                messages.success(request, all_messages["added_success"])
+            petition.save()
+            return redirect("petition_detail", petition_id)
+
+    return render(request, "./edit_petition.html", {'petition': petition})
 
 
 def petitions_overview(request): # ToDo: Add category filter

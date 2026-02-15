@@ -65,12 +65,6 @@
         <p>Obwohl das Unterschriftenziel bereits erreicht wurde, heißt das nicht, dass die Petition auch erfolgreich
             ist. Deine Stimme ist immer noch wichtig!</p>
     {% endif %}
-    {% if request.user == petition.creator %}
-        <a href="#change_goal" class="redirect-link dont-show-loading">
-            <span>Ziel ändern</span>
-            <span class="redirect-link-icon">→</span>
-        </a>
-    {% endif %}
     <hr>
     <div class="artikel-content"><p>{{ petition.content|safe }}</p></div>
     <p>Kategorie <strong>{{ petition.category.title }}</strong></p>
@@ -123,31 +117,7 @@
         {% empty %}
             <p class="no-comments"><i>Noch keine Updates vorhanden.</i></p>
         {% endfor %}
-
-        {% if request.user == petition.creator %}
-            <a href="{% url 'update_petition' petition.id %}" class="redirect-link">
-                <span>Update hinzufügen</span>
-                <span class="redirect-link-icon">→</span>
-            </a>
-        {% endif %}
     </div>
-    {% if request.user == petition.creator %}
-        <hr>
-        <h2 id="change_goal">Ziel ändern</h2>
-        <form method="post">
-            {% csrf_token %}
-            <label for="goal">Ziel</label>
-            <input type="number" name="goal" id="goal" min="10" step="1" value="{{ petition.goal }}">
-            <button name="change_goal">Speichern</button>
-        </form>
-        <hr>
-        <h2>Erfolg</h2>
-        <form method="post">
-            {% csrf_token %}
-            <button name="success" class="color-red">{% if petition.success %}Erfolg der Petition löschen{% else %}
-                Petition zum Erfolg erklären{% endif %}</button>
-        </form>
-    {% endif %}
 
     <hr>
 
@@ -242,5 +212,12 @@
     {% else %}
         <p><a href="{% url 'login_view' %}">Logge dich ein</a>, um einen Kommentar zu verfassen
         </p>
+    {% endif %}
+    {% if request.user.is_authenticated and request.user == petition.creator %}
+        <hr>
+        <a href="{% url 'edit_petition' petition.id %}" class="redirect-link">
+            <span>Bearbeiten</span>
+            <span class="redirect-link-icon">→</span>
+        </a>
     {% endif %}
 {% endblock %}
