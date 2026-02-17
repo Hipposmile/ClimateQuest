@@ -480,7 +480,7 @@
         setTimeout(createPwaNav, 50);
     });
 
-    /*function removeHoverStyles() {
+    function removeHoverStyles() {
         const canHover = window.matchMedia("(hover: hover)").matches;
         if (canHover) return;
 
@@ -515,85 +515,7 @@
                 }
             }
         }
-    }*/
-
-    function removeHoverStyles() {
-        const canHover = window.matchMedia("(hover: hover)").matches;
-        if (canHover) return;
-
-        for (const sheet of document.styleSheets) {
-            let rules;
-            try {
-                rules = sheet.cssRules;
-            } catch (e) {
-                // Cross-origin Stylesheets ignorieren
-                continue;
-            }
-
-            if (!rules) continue;
-
-            processRules(sheet, rules);
-        }
-
-        function processRules(sheet, rules) {
-            // Rückwärts iterieren, damit das Löschen stabil bleibt
-            for (let i = rules.length - 1; i >= 0; i--) {
-                const rule = rules[i];
-
-                // --- 1) Normale CSSStyleRule ---
-                if (rule.selectorText && rule.selectorText.includes(":hover")) {
-
-                    // Neue :active-Regel erzeugen
-                    const activeSelector = rule.selectorText
-                        .split(",")
-                        .map(s => s.trim().replace(":hover", ":active"))
-                        .join(", ");
-
-                    const cssText = rule.style.cssText;
-
-                    // Neue Regel einfügen
-                    sheet.insertRule(`${activeSelector} { ${cssText} }`, sheet.cssRules.length);
-
-                    // Hover-Regel löschen
-                    sheet.deleteRule(i);
-                    continue;
-                }
-
-                // --- 2) Verschachtelte Regeln (z.B. @media) ---
-                if (rule.cssRules) {
-                    processNestedRules(rule);
-                }
-            }
-        }
-
-        function processNestedRules(parentRule) {
-            const nested = parentRule.cssRules;
-
-            for (let j = nested.length - 1; j >= 0; j--) {
-                const rule = nested[j];
-
-                if (rule.selectorText && rule.selectorText.includes(":hover")) {
-
-                    const activeSelector = rule.selectorText
-                        .split(",")
-                        .map(s => s.trim().replace(":hover", ":active"))
-                        .join(", ");
-
-                    const cssText = rule.style.cssText;
-
-                    parentRule.insertRule(`${activeSelector} { ${cssText} }`, parentRule.cssRules.length);
-
-                    parentRule.deleteRule(j);
-                    continue;
-                }
-
-                if (rule.cssRules) {
-                    processNestedRules(rule);
-                }
-            }
-        }
     }
-
 
     document.addEventListener("DOMContentLoaded", removeHoverStyles);
 
@@ -1081,7 +1003,7 @@
                     <a href="https://api.whatsapp.com/send?text={{ url }}" target="_blank">
                         <button class="share-btn whatsapp">WhatsApp</button>
                     </a>
-                    <a href="mailto:?subject=Schau mal!&body={{ url }}">
+                    <a href="mailto:?subject=Schau mal!&body={{ url }}" class="dont-show-loading">
                         <button class="share-btn email">E-Mail</button>
                     </a>
                     <button class="share-btn copy" id="copy_button">Link kopieren
@@ -1180,7 +1102,7 @@
     </script>
 {% endwith %}
 <script nonce="{{ request.csp_script_nonce }}">
-    const a_showLoading = document.querySelectorAll('a:not(.dont-show-loading):not(.mobile-menu-trigger):not([target="_blank"])');
+    const a_showLoading = document.querySelectorAll('a:not(.dont-show-loading):not(.mobile-menu-trigger):not([target="_blank"]):not([download])');
     a_showLoading.forEach((el) => {
         el.addEventListener('click', showLoading);
     });
