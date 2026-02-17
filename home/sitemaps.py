@@ -13,6 +13,17 @@ class HomeSitemap(Sitemap):
         return reverse(item)
 
 
+class DashboardSitemap(Sitemap):
+    changefreq = "monthly"
+    priority = 1.0
+
+    def items(self):
+        return ['dashboard']
+
+    def location(self, item):
+        return reverse(item)
+
+
 class NutzungsbedingungenSitemap(Sitemap):
     changefreq = "yearly"
     priority = 0.5
