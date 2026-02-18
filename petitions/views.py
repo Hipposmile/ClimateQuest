@@ -182,7 +182,7 @@ def edit_petition(request, petition_id):
     return render(request, "./edit_petition.html", {'petition': petition})
 
 
-def petitions_overview(request): # ToDo: Add category filter
+def petitions_overview(request):  # ToDo: Add category filter
     search_keyword = None
     if request.method == 'POST':
         success_visible = request.POST.get('success_visible') == 'on'
@@ -236,4 +236,5 @@ def petitions_overview(request): # ToDo: Add category filter
         petitions = Petition.objects.filter(success=False).order_by('title')
 
     return render(request, './petitions_overview.html',
-                  {'petitions': petitions, 'ordered_by': ordered_by, 'search_keyword': search_keyword, 'success_visible': success_visible})
+                  {'petitions': petitions, 'ordered_by': ordered_by, 'search_keyword': search_keyword,
+                   'success_visible': success_visible})

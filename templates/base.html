@@ -1045,7 +1045,9 @@
         function initializeShareBtns() {
             document.getElementById('share').addEventListener('click', sharePage)
             document.getElementById('copy_button').addEventListener('click', copyURL)
-            document.getElementById('generateQrCode').addEventListener('click', generateQrCode)
+            document.getElementById('generateQrCode').addEventListener('click', () => {
+                generateQrCode("{{ url }}");
+            });
         }
 
         function sharePage(url = "{{ url }}") {
