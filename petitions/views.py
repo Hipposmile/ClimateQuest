@@ -22,7 +22,7 @@ def add_petition(request):
         title = request.POST.get('title')
         content = request.POST.get('content')
         goal = request.POST.get('goal')
-        img = request.FILES.get('img')
+        #img = request.FILES.get('img')
         category_input = request.POST.get('category')
 
         is_truth = check_is_truth(request)
@@ -50,7 +50,7 @@ def add_petition(request):
 
         content = clean_html(content)
 
-        if img:
+        """if img:
             valid, response = clean_img(img)
             if not valid:
                 messages.error(request, response)
@@ -60,12 +60,12 @@ def add_petition(request):
             print(width, height)
             if width / height != 16 / 9:
                 messages.error(request, all_messages["invalid_img_proportions"])
-                return redirect("add_petition")
+                return redirect("add_petition")"""
 
         petition = Petition.objects.create(title=title,
                                            content=content,
                                            goal=goal,
-                                           img=img if img else None,
+                                           #img=img if img else None,
                                            category=category,
                                            creator=request.user)
         messages.success(request, all_messages["petition_added"])

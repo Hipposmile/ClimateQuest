@@ -56,8 +56,8 @@
         <small>Das Ziel kann im Nachhinein aktualisiert werden</small>
         <input type="number" name="goal" id="goal" min="10" step="1" required>
 
-        <label for="img">Bild (optional)</label>
-        <input type="file" name="img" id="img" accept="image/avif, image/webp, image/jpeg, image/png">
+        {% comment %}<label for="img">Bild (optional)</label>
+        <input type="file" name="img" id="img" accept="image/avif, image/webp, image/jpeg, image/png">{% endcomment %}
 
         <div class="cropper-wrapper">
             <img id="preview" class="cropper-image">

@@ -44,7 +44,7 @@ class Petition(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
     goal = models.IntegerField()
-    img = models.ImageField(upload_to='petitions/', blank=True, null=True, validators=[validate_image])
+    #img = models.ImageField(upload_to='petitions/', blank=True, null=True, validators=[validate_image])
     created_at = models.DateTimeField(auto_now_add=True)
     signs = models.ManyToManyField(User, blank=True, related_name='petition_sign')
     updates = models.ManyToManyField(Update, related_name='petition_update', blank=True)
