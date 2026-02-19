@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from attr.filters import exclude
 from dateutil.relativedelta import relativedelta
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -42,22 +43,32 @@ def aktion_exists_in_period(action_type, end_date, quantity, user, exclude_id=No
         ).exists()
 
 
-def aktion_is_in_different_action_period(action_type, end_date, quantity, user):
-    actions = Aktion.objects.filter(
-        user=user,
-        aktion=action_type,
-        date__gte=end_date,
-    ).values('date', 'quantity', unit=Lower('aktion__mengeBeschreibungSingular'))
+def aktion_is_in_different_action_period(action_type, end_date, user, exclude_id=None):
+    if exclude_id:
+        actions = Aktion.objects.filter(
+            user=user,
+            aktion=action_type,
+            date__gte=end_date,
+        ).exclude(id=exclude_id).values('date', 'quantity', unit=Lower('aktion__mengeBeschreibungSingular'))
+    else:
+        actions = Aktion.objects.filter(
+            user=user,
+            aktion=action_type,
+            date__gte=end_date,
+        ).values('date', 'quantity', unit=Lower('aktion__mengeBeschreibungSingular'))
 
     for action in actions:
-        if end_date > get_period_start(action.get('date'), action.get('quantity'), action.get('unit')):
+        start = get_period_start(action.get('date'), action.get('quantity'), action.get('unit'))
+        if start is None:
+            break
+        if end_date > start:
             return True
     return False
 
 def aktion_date_invalid(action_type, end_date, quantity, user, exclude_id=None):
     if aktion_exists_in_period(action_type, end_date, quantity, user, exclude_id):
         return True
-    if aktion_is_in_different_action_period(action_type, end_date, quantity, user):
+    if aktion_is_in_different_action_period(action_type, end_date, user, exclude_id):
         return True
     return False
 

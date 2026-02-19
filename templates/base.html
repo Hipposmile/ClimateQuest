@@ -1109,7 +1109,7 @@
         el.addEventListener('click', showLoading);
     });
 
-    const form_showLoading = document.querySelectorAll('form:not(.dont-show-loading)');
+    const form_showLoading = document.querySelectorAll('form:not(.dont-show-loading):not(.form-confirm)');
     form_showLoading.forEach((el) => {
         el.addEventListener('submit', showLoading);
     });
@@ -1120,6 +1120,9 @@
             const msg = el.dataset.confirm || "Bist du sicher?";
             if (!confirm(msg)) {
                 event.preventDefault();
+            }
+            else {
+                showLoading();
             }
         });
     });
