@@ -180,7 +180,6 @@
                 </p>-->
                 <p>Momentan gibt es noch keine Möglichkeit, die mobile ClimateQuest App auf einem iOS-Handy zu
                     testen. Du kannst die App natürlich dennoch über das Web testen.</p>
-
             </div>
         </div>
     </div>
@@ -237,34 +236,5 @@
     </ul>
     <p>Aber auch wenn du diese Aspekte ignorierst, freuen wir uns natürlich sehr über deine Unterstützung!</p>
     <p class="h2_size">Vielen Dank! <span class="emoji">&#x1F973;</span></p>
-
-    <script nonce="{{ request.csp_script_nonce }}">
-        document.querySelectorAll(".accordion").forEach((accordion) => {
-            const toggleBtn = accordion.querySelector(".accordion-toggle");
-            const contentWrapper = accordion.querySelector(".accordion-content-wrapper");
-
-            function setMaxHeight(open) {
-                if (open) {
-                    const content = contentWrapper.firstElementChild;
-                    contentWrapper.style.maxHeight = content.scrollHeight + "px";
-                } else {
-                    contentWrapper.style.maxHeight = "0px";
-                }
-            }
-
-            toggleBtn.addEventListener("click", () => {
-                const isOpen = accordion.classList.toggle("open");
-                toggleBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
-                setMaxHeight(isOpen);
-            });
-
-            // Höhe bei Fenster-Resize aktualisieren
-            window.addEventListener("resize", () => {
-                if (accordion.classList.contains("open")) {
-                    setMaxHeight(true);
-                }
-            });
-        });
-    </script>
 
 {% endblock %}
