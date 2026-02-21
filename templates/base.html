@@ -662,7 +662,7 @@
                     <a href="{% url 'dashboard' %}"><span class="emoji">&#x1F5A5;</span>
                         Dashboard</a>
                     <a href="{% url 'home' %}"><span class="emoji">&#x1F3E1;</span> Home</a>
-                    <a href="#" class="openShareOverlay"><span class="emoji">&#xE253;</span> Teilen</a>
+                    <a class="openShareOverlay"><span class="emoji">&#xE253;</span> Teilen</a>
                     <a href="{% url 'benachrichtigungen_view' %}"><span
                             class="emoji">&#x1F514;</span>
                         Benachrichtigungen</a>
@@ -791,7 +791,7 @@
             </picture>
                 </a>
                 <nav>
-                    <a href="#" class="openShareOverlay">Teilen</a>
+                    <a class="openShareOverlay">Teilen</a>
 
                     {% if request.user.is_authenticated %}
                     <div class="dropdown">
@@ -1043,8 +1043,12 @@
         }
 
         function initializeShareBtns() {
-            document.getElementById('share').addEventListener('click', sharePage)
-            document.getElementById('copy_button').addEventListener('click', copyURL)
+            document.getElementById('share').addEventListener('click', () => {
+                sharePage("{{ url }}");
+            });
+            document.getElementById('copy_button').addEventListener('click', () => {
+                copyURL("{{ url }}");
+            });
             document.getElementById('generateQrCode').addEventListener('click', () => {
                 generateQrCode("{{ url }}");
             });
@@ -1104,7 +1108,7 @@
     </script>
 {% endwith %}
 <script nonce="{{ request.csp_script_nonce }}">
-    const a_showLoading = document.querySelectorAll('a:not(.dont-show-loading):not(.mobile-menu-trigger):not([target="_blank"]):not([download])');
+    const a_showLoading = document.querySelectorAll('a[href]:not([href^="#"]):not(.dont-show-loading):not(.mobile-menu-trigger):not([target="_blank"]):not([download])');
     a_showLoading.forEach((el) => {
         el.addEventListener('click', showLoading);
     });
@@ -1120,8 +1124,7 @@
             const msg = el.dataset.confirm || "Bist du sicher?";
             if (!confirm(msg)) {
                 event.preventDefault();
-            }
-            else {
+            } else {
                 showLoading();
             }
         });
