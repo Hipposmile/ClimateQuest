@@ -36,10 +36,8 @@ function addCookieBanner() {
                 <input type="checkbox" id="${key}" ${required ? 'disabled checked' : ''}>
                 ${label}
               </label>
-              ${!required ? `
                 <button class="toggle-expl" data-target="${key}-expl">Erklärung anzeigen</button>
                 <span class="explanation" id="${key}-expl">${explanation}</span>
-              ` : `<span class="explanation">${explanation}</span>`}
             </div>
           `).join('')}
           <button id="btn-save">Einstellungen speichern</button>
