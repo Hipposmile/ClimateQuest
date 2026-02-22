@@ -43,7 +43,7 @@
         {% endfor %}
     {% endif %}
 
-    <form method="post" id="petition-form" enctype="multipart/form-data">
+    <form method="post" id="petition-form" class="fill-editor" {% comment %}enctype="multipart/form-data"{% endcomment %}>
         {% csrf_token %}
         <label for="title">Titel</label>
         <input type="text" name="title" id="title" placeholder="Titel" maxlength="100" required>
@@ -57,11 +57,11 @@
         <input type="number" name="goal" id="goal" min="10" step="1" required>
 
         {% comment %}<label for="img">Bild (optional)</label>
-        <input type="file" name="img" id="img" accept="image/avif, image/webp, image/jpeg, image/png">{% endcomment %}
+        <input type="file" name="img" id="img" accept="image/avif, image/webp, image/jpeg, image/png">
 
         <div class="cropper-wrapper">
             <img id="preview" class="cropper-image">
-        </div>
+        </div>{% endcomment %}
 
         <label for="category">Kategorie</label>
         <select id="category" name="category">
@@ -80,7 +80,7 @@
         <button type="submit">Speichern</button>
     </form>
 
-    <script nonce="{{ request.csp_script_nonce }}">
+    {% comment %}<script nonce="{{ request.csp_script_nonce }}">
         const fileInput = document.getElementById("img");
         const preview = document.getElementById("preview");
         const wrapper = document.querySelector('.cropper-wrapper');
@@ -157,7 +157,7 @@
                 form.submit();
             }, "image/jpeg", 0.9);
         }
-    </script>
+    </script>{% endcomment %}
 
 
     <div class="cookie-blocked" data-requires="quill"
