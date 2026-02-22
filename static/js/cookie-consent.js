@@ -2,18 +2,8 @@
 const cookieCategories = {
     essential: {
         label: "Essenzielle Cookies",
-        explanation: "Unverzichtbar für den Betrieb der Website.",
+        explanation: "Unverzichtbar für den Betrieb der Website. Dazu gehört die Verwendung des localStorage.",
         required: true
-    },
-    analytics: {
-        label: "Analytics",
-        explanation: "Hilft uns, die Website zu verbessern.",
-        required: false
-    },
-    marketing: {
-        label: "Marketing",
-        explanation: "Erlaubt z.B. die Anzeige von YouTube-Videos.",
-        required: false
     },
     recaptcha: {
         label: "reCAPTCHA",
@@ -23,11 +13,6 @@ const cookieCategories = {
     quill: {
         label: "Quill",
         explanation: "Hiermit kannst du manche Text-Inputs schöner stylen, z.B. fett, kursiv, unterstrichen oder mit Links.",
-        required: false
-    },
-    trustpilot: {
-        label: "Trustpilot",
-        explanation: "Ermöglicht die Implementierung von Trustpilot auf der Website.",
         required: false
     }
 };
