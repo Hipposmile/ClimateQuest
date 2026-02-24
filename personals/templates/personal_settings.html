@@ -80,7 +80,7 @@
 
     <hr>
     <h3 id="password_h3">Passwort ändern</h3>
-    <form method="post" id="register_form">
+    <form method="post" id="register_form" class="dont-show-loading">
         {% csrf_token %}
         <label for="current_password">Aktuelles Passwort:</label>
         <input type="password" name="current_password" id="current_password" placeholder="Aktuelles Passwort" required>
@@ -88,9 +88,8 @@
         <a id="showPassword" class="color-red dont-show-loading">Passwort anzeigen</a>
         <input type="password" name="new_password" id="new_password" placeholder="Neues Passwort" required>
         <div>
-            <h4>Wir empfehlen folgende Passwortanforderungen, um deinen Account vor Hackingangriffen und
-                Accountübernahmen
-                zu schützen:</h4>
+            <h4>Unsere Empfehlungen für ein sicheres Passwort, um deinen Account vor Hackingangriffen und
+                Accountübernahmenzu schützen:</h4>
             <ul class="criteria-list">
                 <li id="length" class="error-message">Mindestens acht Zeichen</li>
                 <li id="uppercase" class="error-message">Mindestens ein Großbuchstabe</li>
@@ -131,12 +130,11 @@
         function register(event) {
             event.preventDefault(); // verhindert sofortiges Abschicken
             if (!passwordRecommendation) {
-                if (!confirm('Das Passwort erfüllt nicht die Passwortanforderungen. Trotzdem fortfahren?')) {
+                if (!confirm('Das Passwort entspricht nicht den Empfehlungen. Trotzdem fortfahren?')) {
                     return false;
                 }
             }
-            // ensure the server receives which button was used (when submitting via JS the
-            // clicked button's name/value is not included, so append it manually)
+
             const form = event.target;
             const btn = form.querySelector('button[name=change_password]');
             if (btn) {
@@ -212,7 +210,8 @@
     <form method="post">
         {% csrf_token %}
         <label for="password_email_settings">Passwort:</label>
-        <input type="password" name="password_email_settings" id="password_email_settings" placeholder="Passwort" required>
+        <input type="password" name="password_email_settings" id="password_email_settings" placeholder="Passwort"
+               required>
         <label class="custom-checkbox">
             <input type="checkbox" name="mailinglist" id="mailinglist_checkbox">
             <span class="checkmark"></span>
@@ -271,7 +270,8 @@
     <form method="post" class="form-confirm" data-confirm="Willst du deinen Account wirklich löschen?">
         {% csrf_token %}
         <label for="password_delete_account">Passwort:</label>
-        <input type="password" name="password_delete_account" id="password_delete_account" placeholder="Passwort" required>
+        <input type="password" name="password_delete_account" id="password_delete_account" placeholder="Passwort"
+               required>
         <button type="submit" name="delete_account" class="color-red">Diesen Account löschen</button>
         <p>Dadurch werden alle mit deinem Konto verknüpften Daten wie Aktionen oder Chat-Nachrichten gelöscht. Alle
             Mitglieder deiner Families und Communities werden darüber benachrichtigt werden.</p>

@@ -39,7 +39,7 @@
                     <p class="action-list-description">{{ action.aktion.mengeBeschreibung }}</p>
                     <p class="action-list-value">{{ action.quantity }} {{ action.einheit }}</p>
 
-                    <a href="{% url 'edit_action' action.id %}">Bearbeiten</a>
+                    {% if request.user == user %}<a href="{% url 'edit_action' action.id %}">Bearbeiten</a>{% endif %}
                 </li>
             {% endfor %}
         </ul>

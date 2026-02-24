@@ -14,7 +14,7 @@
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
-    <form method="post" id="register_form">
+    <form method="post" id="register_form" class="dont-show-loading">
         {% csrf_token %}
         <label for="username">Benutzername:</label>
         <small id="username-feedback"></small>
@@ -32,7 +32,7 @@
             musst es also nicht machen.</small>
 
         <div>
-            <h4>Wir empfehlen folgende Passwortanforderungen, um deinen Account vor Hackingangriffen und
+            <h4>Unsere Empfehlungen für ein sicheres Passwort, um deinen Account vor Hackingangriffen und
                 Accountübernahmenzu schützen:</h4>
             <ul class="criteria-list">
                 <li id="length" class="error-message">Mindestens acht Zeichen</li>
@@ -75,9 +75,9 @@
         });
 
         function register(event) {
-            event.preventDefault(); // verhindert sofortiges Abschicken
+            event.preventDefault();
             if (!passwordRecommendation) {
-                if (!confirm('Das Passwort erfüllt nicht die Passwortanforderungen. Trotzdem fortfahren?')) {
+                if (!confirm('Das Passwort entspricht nicht den Empfehlungen. Trotzdem fortfahren?')) {
                     return false;
                 }
             }

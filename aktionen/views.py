@@ -124,7 +124,7 @@ def add(request):
         except ValueError:
             messages.error(request, all_messages["action_invalid_quantity"])
             return redirect('add')
-        if action_quantity < 0 or action_quantity is False:
+        if action_quantity <= 0 or action_quantity is False:
             messages.error(request, all_messages["invalid_quantity"])
             return redirect('add')
         elif (Aktion.objects.filter(user=request.user, aktion=action).aggregate(total=Sum('quantity'))[
@@ -234,7 +234,7 @@ def edit_action(request, action_id):
             except ValueError:
                 messages.error(request, all_messages["action_invalid_quantity"])
                 return redirect('edit_action', action_id)
-            if action_quantity < 0 or action_quantity is False:
+            if action_quantity <= 0 or action_quantity is False:
                 messages.error(request, all_messages["invalid_quantity"])
                 return redirect('edit_action', action_id)
             elif (Aktion.objects.filter(user=request.user, aktion=action).aggregate(total=Sum('quantity'))[
