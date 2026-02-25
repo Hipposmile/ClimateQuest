@@ -117,9 +117,3 @@ http://127.0.0.1:8000/
 
 **Warum?**  
 Dies startet den integrierten Django‑Entwicklungsserver, ideal für lokale Entwicklung.
-
----
-
-## Lizenz
-
-Die Lizenz findest du in der Datei `LICENSE` im Projektverzeichnis.
