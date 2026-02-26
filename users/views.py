@@ -124,10 +124,11 @@ def user_detail(request, user_id):
     weekly_goal, weekly_klimapunkte, weekly_goal_progress_percent = get_weekly_goal_from_user(user)
     streak = get_streak_from_user(user)
 
-    if request.method == 'POST':
-        reason = request.POST.get('reason')
-        report_user(request, user, request.user, reason)
-        messages.success(request, all_messages["reported_user"])
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            reason = request.POST.get('reason')
+            report_user(request, user, request.user, reason)
+            messages.success(request, all_messages["reported_user"])
 
     return render(request, './user_detail.html', {'user_expanded': user_expanded, 'weekly_goal': weekly_goal,
                                                   'weekly_goal_progress_percent': weekly_goal_progress_percent,

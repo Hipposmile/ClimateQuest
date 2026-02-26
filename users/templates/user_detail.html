@@ -16,13 +16,13 @@
     {% endif %}
 
     <div class="btns">
-        <a  href="{% url 'klimapunkte_view' user_expanded.user.id %}">
+        <a href="{% url 'klimapunkte_view' user_expanded.user.id %}">
             <button class="btn">Klimapunkte</button>
         </a>
-        <a  href="{% url 'level_view' user_expanded.user.id %}">
+        <a href="{% url 'level_view' user_expanded.user.id %}">
             <button class="btn">Level</button>
         </a>
-        <a  href="{% url 'history' user_expanded.user.id %}">
+        <a href="{% url 'history' user_expanded.user.id %}">
             <button class="btn">Aktions-Historie</button>
         </a>
     </div>
@@ -153,27 +153,29 @@
         </div>
     </div>
 
-    <hr>
+    {% if request.user.is_authenticated %}
+        <hr>
+        <h2>User melden</h2>
+        <form method="post" class="form-confirm" data-confirm="Bist du sicher, dass du diesen User melden möchtest.">
+            {% csrf_token %}
+            <label for="reason">Begründung</label>
+            <textarea id="reason" name="reason" class="quill-editor"></textarea>
+            <button id="report_user" name="report_user" type="submit" class="color-red">User melden</button>
+            <p>Dies wird eine Nachricht mit folgenden Daten an ClimateQuest senden:</p>
+            <ul>
+                <li>Dein Userprofil</li>
+                <li>Das Userprofil, welches du meldest</li>
+                <li>Deine Begründung</li>
+            </ul>
+            <p>Wenn du einen User wegen von ihm erstellten Content meldest, füge bitte alle für das Auffinden dieses
+                Contents relevanten Informationen wie die URL hinzu.</p>
+            <p>Durch das Melden eines Users erhältst du selbst keine Vorteile.</p>
+            <p>User können vor allem wegen Verstößen gegen die Nutzungsbedingungen gemeldet werden.</p>
 
-    <h2>User melden</h2>
-    <form method="post" class="form-confirm" data-confirm="Bist du sicher, dass du diesen User melden möchtest.">
-        {% csrf_token %}
-        <label for="reason">Begründung</label>
-        <textarea id="reason" name="reason" class="quill-editor"></textarea>
-        <button id="report_user" name="report_user" type="submit" class="color-red">User melden</button>
-        <p>Dies wird eine Nachricht mit folgenden Daten an ClimateQuest senden:</p>
-        <ul>
-            <li>Dein Userprofil</li>
-            <li>Das Userprofil, welches du meldest</li>
-            <li>Deine Begründung</li>
-        </ul>
-        <p>Wenn du einen User wegen von ihm erstellten Content meldest, füge bitte alle für das Auffinden dieses
-            Contents relevanten Informationen wie die URL hinzu.</p>
-        <p>Durch das Melden eines Users erhältst du selbst keine Vorteile.</p>
-        <p>User können vor allem wegen Verstößen gegen die Nutzungsbedingungen gemeldet werden.</p>
-
-        <p class="color-red">Wenn du User willkürlich und ohne konkrete Begründung meldest, ist auch dies ein Verstoß
-            gegen die
-            Nutzungsbedingungen.</p>
-    </form>
+            <p class="color-red">Wenn du User willkürlich und ohne konkrete Begründung meldest, ist auch dies ein
+                Verstoß
+                gegen die
+                Nutzungsbedingungen.</p>
+        </form>
+    {% endif %}
 {% endblock %}
