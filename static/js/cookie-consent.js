@@ -21,7 +21,7 @@ function addCookieBanner() {
     const banner = document.createElement('div');
     banner.innerHTML = `<div id="cookie-overlay"></div>
       <div role="dialog" aria-label="Cookie-Einstellungen" aria-modal="true" id="cookie-banner">
-        <p><strong>Wir verwenden Cookies</strong> für Funktion, Analyse und Marketing. <a href="../rechtliches/Datenschutz.pdf">Mehr erfahren</a>.</p>
+        <p><strong>Wir verwenden Cookies</strong> für Funktion, Analyse und Marketing. <a href="https://climate-quest.de/datenschutz/">Mehr erfahren</a>.</p>
         <p>Durch das Akzeptieren der Cookies bestätigst du, dass du volljährig bist oder dass eine erziehungsberechtigte Person diese Einwilligung erteilt hat.</p>
         <div class="buttons">
           <button id="btn-accept">Alle akzeptieren</button>
