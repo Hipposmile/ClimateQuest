@@ -93,7 +93,7 @@
                         const input = document.getElementById('recaptchaToken');
                         if (input) {
                             input.value = token;
-                            // Jetzt das Formular manuell abschicken
+                            showLoading();
                             event.target.submit();
                         } else {
                             console.error("recaptchaToken-Element nicht gefunden.");
