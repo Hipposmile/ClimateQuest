@@ -181,6 +181,9 @@ all_messages = {
     "successfully_added_like": "Du hast den Artikel erfolgreich geliket.",
     "successfully_removed_like": "Du hast den Like zum Artikel erfolgreich entfernt.",
     "likes_search_keyword_not_a_number": "Wenn du nach Likes filterst, muss das Suchwort eine Zahl sein",
+    "successfully_verified_article": "Artikel erfolgreich verifiziert",
+    "successfully_unverified_article": "Verifizierung erfolgreich gelöscht",
+    "successfully_blocked_article": "Erfolgreich Nachricht aktualisiert",
 
     # --------
     # Forum

@@ -63,11 +63,105 @@
         {% endfor %}
     {% endif %}
 
+    {% if msg_if_wrong != None or msg_if_wrong != "" %}
+        <style nonce="{{ request.csp_style_nonce }}">
+            .fn-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.55);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+            }
+
+            .fn-popup {
+                background: #ffffff;
+                max-width: 420px;
+                width: 90%;
+                padding: 1.5rem 1.75rem;
+                border-radius: 8px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+                position: relative;
+            }
+
+            .fn-popup h2 {
+                margin: 0 0 0.75rem;
+                font-size: 1.4rem;
+                color: #c62828;
+            }
+
+            .fn-popup p {
+                margin: 0;
+                font-size: 0.95rem;
+                line-height: 1.5;
+                color: #333333;
+            }
+
+            .fn-close {
+                position: absolute;
+                top: 0.5rem;
+                right: 0.6rem;
+                border: none;
+                background: transparent;
+                font-size: 1.4rem;
+                cursor: pointer;
+                color: #555;
+                padding: 0;
+            }
+
+
+            .fn-close:hover {
+                color: #000000;
+            }
+        </style>
+        <script nonce="{{ request.csp_script_nonce }}">
+            function add_fake_new_overlay() {
+                const overlay = document.getElementById('fake-news-overlay');
+                if (!overlay) return;
+
+                const popup = overlay.querySelector('.fn-popup');
+                const closeBtn = overlay.querySelector('.fn-close');
+
+                function closePopup() {
+                    overlay.style.display = 'none';
+                }
+
+                closeBtn.addEventListener('click', closePopup);
+
+                overlay.addEventListener('click', function (event) {
+                    if (!popup.contains(event.target)) {
+                        closePopup();
+                    }
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', add_fake_new_overlay);
+        </script>
+        <h1>Hello</h1>
+        <div id="fake-news-overlay" class="fn-overlay">
+            <div class="fn-popup">
+                <button class="fn-close">&#x2717;</button>
+                <h2 id="fn-title">Gesperrt</h2>
+                <p>{{ artikel.msg_if_wrong }}</p>
+            </div>
+        </div>
+    {% endif %}
+
     <div class="artikel-content"><p>{{ artikel.content|safe }}</p></div>
     <br>
     <p>Erstellt von <a href="{% url 'user_detail' artikel.creator.id %}">{{ artikel.creator }}</a></p>
-    {% if artikel.creator.is_superuser %}
-        <p><span class="emoji">&#x1F4A1;</span> Ein offizieller Artikel von ClimateQuest</p>{% endif %}
+
+    {% if artikel.creator.is_staff %}
+        <p><span class="emoji">&#x1F4A1;</span> Ein offizieller Artikel von ClimateQuest</p>
+    {% endif %}
+    {% if artikel.verified %}
+        <p><span class="emoji">&#x2714;</span> Geprüfte und verifizierte Informationen</p>
+    {% endif %}
+    {% if msg_if_wrong != None or msg_if_wrong != "" %}
+        <p><span class="emoji">&#x274C;</span> Fake News</p>
+    {% endif %}
+
     <p>Zuletzt bearbeitet: {{ artikel.date_time|date:"d.m.Y" }}</p>
 
     <div class="like-button {% if has_liked %}liked{% endif %}">
@@ -178,6 +272,23 @@
     {% else %}
         <p><a href="{% url 'login_view' %}">Logge dich ein</a>, um einen Kommentar zu verfassen
         </p>
+    {% endif %}
+
+    {% if request.user.is_staff %}
+        <hr>
+
+        <form method="post">
+            {% csrf_token %}
+            <button name="verify">{% if artikel.verified %}Verifizierung löschen{% else %}
+                Verifizieren{% endif %}</button>
+        </form>
+
+        <form method="post">
+            {% csrf_token %}
+            <label for="block_msg">Nachricht</label>
+            <input id="block_msg" type="text" name="block_msg" maxlength="100">
+            <button class="color-red" name="block">Sperren</button>
+        </form>
     {% endif %}
 
 {% endblock %}

@@ -172,6 +172,30 @@ def artikel_detail(request, artikel_id):
 
                 messages.success(request, all_messages["successfully_answered_comment"])
                 return redirect('artikel_detail', artikel_id)
+            if request.user.is_staff:
+                if 'verify' in request.POST:
+                    if artikel.verified:
+                        artikel.verified = False
+                        artikel.save()
+                        messages.success(request, all_messages["successfully_unverified_article"])
+                    else:
+                        artikel.msg_if_wrong = None
+                        artikel.verified = True
+                        artikel.save()
+                        messages.success(request, all_messages["successfully_verified_article"])
+                    return redirect('artikel_detail', artikel_id)
+                elif 'block' in request.POST:
+                    msg = request.POST.get('block_msg')
+
+                    if not msg:
+                        messages.error(request, all_messages["missing_required_inputs"])
+                        return redirect('artikel_detail', artikel_id)
+
+                    artikel.verified = False
+                    artikel.msg_if_wrong = msg
+                    artikel.save()
+                    messages.success(request, all_messages["successfully_blocked_article"])
+                    return redirect('artikel_detail', artikel_id)
 
     has_liked = False
     if request.user.is_authenticated:
