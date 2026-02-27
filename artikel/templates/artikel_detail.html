@@ -63,7 +63,7 @@
         {% endfor %}
     {% endif %}
 
-    {% if msg_if_wrong != None or msg_if_wrong != "" %}
+    {% comment %}{% if msg_if_wrong != None or msg_if_wrong != "" %}
         <style nonce="{{ request.csp_style_nonce }}">
             .fn-overlay {
                 position: fixed;
@@ -146,7 +146,7 @@
                 <p>{{ artikel.msg_if_wrong }}</p>
             </div>
         </div>
-    {% endif %}
+    {% endif %}{% endcomment %}
 
     <div class="artikel-content"><p>{{ artikel.content|safe }}</p></div>
     <br>
@@ -158,9 +158,9 @@
     {% if artikel.verified %}
         <p><span class="emoji">&#x2714;</span> Geprüfte und verifizierte Informationen</p>
     {% endif %}
-    {% if msg_if_wrong != None or msg_if_wrong != "" %}
+    {% comment %}{% if msg_if_wrong != "None" or msg_if_wrong != "" %}
         <p><span class="emoji">&#x274C;</span> Fake News</p>
-    {% endif %}
+    {% endif %}{% endcomment %}
 
     <p>Zuletzt bearbeitet: {{ artikel.date_time|date:"d.m.Y" }}</p>
 
