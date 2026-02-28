@@ -32,6 +32,7 @@ class Artikel(models.Model):
     like = models.ManyToManyField(User, blank=True, related_name='artikel_like')
     date_time = models.DateField(auto_now=True)
     verified = models.BooleanField(default=False)
+    blocked = models.BooleanField(default=False)
     msg_if_wrong = models.CharField(max_length=100, blank=True, null=True, default=None)
 
     def clean(self):

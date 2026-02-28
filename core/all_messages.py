@@ -183,7 +183,8 @@ all_messages = {
     "likes_search_keyword_not_a_number": "Wenn du nach Likes filterst, muss das Suchwort eine Zahl sein",
     "successfully_verified_article": "Artikel erfolgreich verifiziert",
     "successfully_unverified_article": "Verifizierung erfolgreich gelöscht",
-    "successfully_blocked_article": "Erfolgreich Nachricht aktualisiert",
+    "successfully_blocked_article": "Erfolgreich Artikel gesperrt",
+    "successfully_unblocked_article": "Sperrung erfolgreich gelöscht",
 
     # --------
     # Forum
