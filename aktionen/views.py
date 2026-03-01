@@ -1,11 +1,10 @@
 from datetime import datetime
 
-from attr.filters import exclude
 from dateutil.relativedelta import relativedelta
 from django.contrib.auth.decorators import login_required
+from django.db.models.functions import Lower
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.db.models.functions import Lower
 
 from utils.functions import *
 
@@ -65,6 +64,7 @@ def aktion_is_in_different_action_period(action_type, end_date, user, exclude_id
             return True
     return False
 
+
 def aktion_date_invalid(action_type, end_date, quantity, user, exclude_id=None):
     if aktion_exists_in_period(action_type, end_date, quantity, user, exclude_id):
         return True
@@ -98,24 +98,7 @@ def add(request):
         if len(action_description) > 200:
             messages.error(request, all_messages["too_long_input"])
 
-        action_date_raw = request.POST.get('action_date')
-        if not action_date_raw:
-            messages.error(request, all_messages["missing_required_inputs"])
-            return redirect('add')
-        try:
-            action_date = datetime.strptime(action_date_raw, '%Y-%m-%d').date()
-        except ValueError:
-            messages.error(request, all_messages["invalid_date"])
-            return redirect('add')
-        if action_date > datetime.now().date():
-            messages.error(request, all_messages["date_in_future"])
-            return redirect('add')
-        elif action_date < date.today() - relativedelta(years=100):
-            messages.error(request, all_messages["action_too_past"])
-            return redirect('add')
-
         action_quantity = request.POST.get('action_quantity')
-
         if not action_quantity:
             messages.error(request, all_messages["missing_required_inputs"])
             return redirect('add')
@@ -131,6 +114,31 @@ def add(request):
                   "total"] or 0) + action_quantity > action.max:
             messages.error(request, all_messages["max_action_quantity"])
             return redirect('add')
+
+        action_date_raw = request.POST.get('action_date')
+        if not action_date_raw:
+            messages.error(request, all_messages["missing_required_inputs"])
+            return redirect('add')
+        try:
+            action_date = datetime.strptime(action_date_raw, '%Y-%m-%d').date()
+        except ValueError:
+            messages.error(request, all_messages["invalid_date"])
+            return redirect('add')
+
+        action_start = get_period_start(action_date, action_quantity, action.mengeBeschreibungSingular.lower())
+
+        if action_date > datetime.now().date():
+            messages.error(request, all_messages["date_in_future"])
+            return redirect('add')
+        if action_start:
+            if action_start < date.today() - relativedelta(months=1):
+                messages.error(request, all_messages["action_too_past"])
+                return redirect('add')
+        else:
+            if action_date < date.today() - relativedelta(months=1):
+                messages.error(request, all_messages["action_too_past"])
+                return redirect('add')
+
         if aktion_date_invalid(action, action_date, action_quantity, request.user):
             messages.error(request, all_messages["action_already_set_in_period"])
             return redirect('add')
@@ -209,22 +217,6 @@ def edit_action(request, action_id):
             if len(action_description) > 200:
                 messages.error(request, all_messages["too_long_input"])
 
-            action_date_raw = request.POST.get('action_date')
-            if not action_date_raw:
-                messages.error(request, all_messages["missing_required_inputs"])
-                return redirect('edit_action', action_id)
-            try:
-                action_date = datetime.strptime(action_date_raw, '%Y-%m-%d').date()
-            except ValueError:
-                messages.error(request, all_messages["invalid_date"])
-                return redirect('edit_action', action_id)
-            if action_date > datetime.now().date():
-                messages.error(request, all_messages["date_in_future"])
-                return redirect('edit_action', action_id)
-            elif action_date < date.today() - relativedelta(years=100):
-                messages.error(request, all_messages["action_too_past"])
-                return redirect('edit_action', action_id)
-
             action_quantity = request.POST.get('action_quantity')
             if not action_quantity:
                 messages.error(request, all_messages["missing_required_inputs"])
@@ -241,6 +233,30 @@ def edit_action(request, action_id):
                       "total"] or 0) + action_quantity > action.max:
                 messages.error(request, all_messages["max_action_quantity"])
                 return redirect('edit_action', action_id)
+
+            action_date_raw = request.POST.get('action_date')
+            if not action_date_raw:
+                messages.error(request, all_messages["missing_required_inputs"])
+                return redirect('edit_action', action_id)
+            try:
+                action_date = datetime.strptime(action_date_raw, '%Y-%m-%d').date()
+            except ValueError:
+                messages.error(request, all_messages["invalid_date"])
+                return redirect('edit_action', action_id)
+
+            action_start = get_period_start(action_date, action_quantity, action.mengeBeschreibungSingular.lower())
+
+            if action_date > datetime.now().date():
+                messages.error(request, all_messages["date_in_future"])
+                return redirect('edit_action', action_id)
+            if action_start:
+                if action_start < date.today() - relativedelta(months=1):
+                    messages.error(request, all_messages["action_too_past"])
+                    return redirect('edit_action', action_id)
+            else:
+                if action_date < date.today() - relativedelta(months=1):
+                    messages.error(request, all_messages["action_too_past"])
+                    return redirect('add')
 
             if aktion_date_invalid(action, action_date, action_quantity, request.user, action_id):
                 messages.error(request, all_messages["action_already_set_in_period"])

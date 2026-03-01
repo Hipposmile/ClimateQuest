@@ -159,7 +159,7 @@
         <p><span class="emoji">&#x2714;</span> Geprüfte und verifizierte Informationen</p>
     {% endif %}
     {% if artikel.blocked %}
-        <p><span class="emoji">&#x274C;</span> Fake News: {{ artikel.msg_if_wrong }}</p>
+        <p><span class="emoji">&#x274C;</span> {{ artikel.msg_if_wrong }}</p>
     {% endif %}
 
     <p>Zuletzt bearbeitet: {{ artikel.date_time|date:"d.m.Y" }}</p>
