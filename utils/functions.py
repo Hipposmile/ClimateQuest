@@ -340,7 +340,7 @@ def create_notification(request, notification, user=None, url=None):
         request=request,
         fehlermeldung='Beim Erstellen einer Benachrichtigung ist beim Versenden der E-Mail ein Fehler aufgetreten. Die Benachrichtigung kann nur in dem Benachrichtigungsteil hier auf der Webseite gefunden werden!',
         subject='ClimateQuest - neue Benachrichtigung',
-        message=notification + f"<a href='{url}'>Details</a>",
+        message=notification,
         recipient_list=user.email,
         user=user
     )
