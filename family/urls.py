@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import *
+from .views import check_familyname, create_family, join_family, families_view, family_detail, edit_family, chat_family
 
 urlpatterns = [
     # Families

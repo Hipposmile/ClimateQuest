@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import *
 
+from .views import presents_overview, add_present, present_detail, delete_present
 
 urlpatterns = [
     path('', presents_overview, name='presents_overview'),

@@ -1,6 +1,7 @@
 from django.urls import path
 
-from .views import *
+from .views import communities_view, create_community, join_community, community_detail, edit_community, chat_community, \
+    check_communityname
 
 urlpatterns = [
     path('communities/', communities_view, name='communities_view'),

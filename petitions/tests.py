@@ -1,4 +1,4 @@
-import io
+"""import io
 
 from PIL import Image
 from django.contrib.messages import get_messages
@@ -38,7 +38,7 @@ class PetitionModelTest(TestCase):
         self.assertEqual(self.petition.signs.last(), self.user_2)
 
 
-"""def generate_test_image():
+def generate_test_image():
     file = io.BytesIO()
     image = Image.new("RGB", (10, 10), "white")
     image.save(file, "JPEG")

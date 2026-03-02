@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import *
+from .views import klimapunkte_view, klimapunkte_me, level_view, level_me, history, history_me, users_overview, user_detail
 
 urlpatterns = [
     path('klimapunkte/<int:user_id>', klimapunkte_view, name='klimapunkte_view'),

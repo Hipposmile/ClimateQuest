@@ -1,15 +1,21 @@
-import os
-
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.utils import timezone
 from dotenv import load_dotenv
 
+from aktionen.models import Aktion, AktionenListe
+from artikel.models import Artikel
+from community.models import Community
 from core.all_messages import all_messages
-from events.models import *
-from forum.models import *
-from utils.functions import *
+from events.models import Event
+from family.models import Family
+from forum.models import ForumPost
+from home.models import Benachrichtigung
+from utils.functions import get_streak_from_user, get_klimapunkte_from_likes, get_klimapunkte, \
+    get_weekly_goal_from_user, get_all_klimapunkte_from_user, get_level, get_families_of_user, create_notification
 
 load_dotenv()
 

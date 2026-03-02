@@ -1,10 +1,14 @@
-from datetime import datetime
+from datetime import datetime, date, timedelta
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib import messages
+from aktionen.models import Aktion
 
 from core.all_messages import all_messages
-from utils.functions import *
+from personals.models import UserErweitert
+from utils.functions import get_klimapunkte, get_klimapunkte_from_likes, get_weekly_goal_from_user, get_streak_from_user, send_mail_function, get_level
 
 
 def klimapunkte_view(request, user_id):

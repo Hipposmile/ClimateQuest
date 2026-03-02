@@ -1,13 +1,13 @@
-from PIL import Image
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.shortcuts import redirect
 from django.shortcuts import render
+from django.urls import reverse
 
 from core.all_messages import all_messages
-from petitions.models import *
-from utils.functions import clean_html, clean_img, check_is_truth
-from django.db.models import Count
+from .models import Petition, Comment, Category, Answer, Update
+from utils.functions import clean_html, check_is_truth, create_notification
 
 # Create your views here.
 ALLOWED_EXTENSIONS = ["jpg", "jpeg", "png", "webp", "avif"]
@@ -22,7 +22,7 @@ def add_petition(request):
         title = request.POST.get('title')
         content = request.POST.get('content')
         goal = request.POST.get('goal')
-        #img = request.FILES.get('img')
+        # img = request.FILES.get('img')
         category_input = request.POST.get('category')
 
         is_truth = check_is_truth(request)
@@ -65,7 +65,7 @@ def add_petition(request):
         petition = Petition.objects.create(title=title,
                                            content=content,
                                            goal=goal,
-                                           #img=img if img else None,
+                                           # img=img if img else None,
                                            category=category,
                                            creator=request.user)
         messages.success(request, all_messages["petition_added"])
@@ -148,6 +148,13 @@ def edit_petition(request, petition_id):
 
             update = Update.objects.create(title=title, content=content)
             petition.updates.add(update)
+
+            for user in petition.signs.all():
+                create_notification(request,
+                                    f"Der Petition {petition.title}, die du unterschrieben hast, wurde ein Update hinzugefügt!",
+                                    user,
+                                    reverse('petition_detail', args=(petition_id,)))
+
             return redirect("petition_detail", petition_id)
 
         elif 'change_goal' in request.POST:
@@ -173,10 +180,24 @@ def edit_petition(request, petition_id):
             if petition.success:
                 petition.success = False
                 messages.error(request, all_messages["removed_success"])
+
+                for user in petition.signs.all():
+                    create_notification(request,
+                                        f"Von der Petition {petition.title}, die du unterschrieben hast, wurde der Erfolg gelöscht!",
+                                        user,
+                                        reverse('petition_detail', args=(petition_id,)))
             else:
                 petition.success = True
                 messages.success(request, all_messages["added_success"])
+
+                for user in petition.signs.all():
+                    create_notification(request,
+                                        f"Die Petition {petition.title}, die du unterschrieben hast, war erfolgreich!",
+                                        user,
+                                        reverse('petition_detail', args=(petition_id,)))
+
             petition.save()
+
             return redirect("petition_detail", petition_id)
 
     return render(request, "./edit_petition.html", {'petition': petition})

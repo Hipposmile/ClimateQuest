@@ -21,17 +21,17 @@ from django.views.generic import TemplateView
 from django.conf.urls.static import static
 from django.conf import settings
 
-from home.sitemaps import *
-from artikel.sitemaps import *
-from events.sitemaps import *
-from forum.sitemaps import *
-from family.sitemaps import *
-from community.sitemaps import *
-from personals.sitemaps import *
-from users.sitemaps import *
-from aktionen.sitemaps import *
-from presents.sitemaps import *
-from pages.sitemaps import *
+from home.sitemaps import HomeSitemap, NutzungsbedingungenSitemap, AktionenTableSitemap
+from artikel.sitemaps import ArtikelDetailSitemap, ArtikelOverviewSitemap, AddArtikelSitemap
+from events.sitemaps import EventDetailSitemap, EventsOverviewSitemap, AddEventSitemap
+from forum.sitemaps import ForumOverviewSitemap, ForumPostDetailSitemap, AddForumPostSitemap
+from family.sitemaps import FamilyOverviewSitemap, AddFamilySitemap, JoinFamilySitemap
+from community.sitemaps import CommunityOverviewSitemap, AddCommunitySitemap, JoinCommunitySitemap
+from personals.sitemaps import LoginSitemap, RegisterSitemap, PersonalSettingsSitemap, ResetPasswordSitemap
+from users.sitemaps import KlimapunkteViewSitemap, LevelViewSitemap, HistorySitemap
+from aktionen.sitemaps import AddAktionenSitemap
+from presents.sitemaps import PresentsOverviewSitemap, AddPresentSitemap
+from pages.sitemaps import TestersSitemap, AknachhaltigkeitSitemap
 
 sitemaps = {
     "home": HomeSitemap(),

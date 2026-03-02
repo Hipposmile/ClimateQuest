@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import *
+from .views import add, edit_action
 
 urlpatterns = [
     path('add/', add, name='add'),

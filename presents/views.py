@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 
 from core.all_messages import all_messages
-from .models import *
+from .models import Present, Congratulation
 
 
 # Create your views here.

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import *
+from .views import forum_overview, add_forum_post, post_detail
 
 urlpatterns = [
     path('forum_overview/', forum_overview, name='forum_overview'),

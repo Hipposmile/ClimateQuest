@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import *
+from .views import login_view, register_view, logout_view, settings_view, reset_password, check_username, check_email, get_email_settings, activate, resend_verification_email
 
 urlpatterns = [
     # Personals

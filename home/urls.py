@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import *
+from .views import home, dashboard, count_benachrichtigungen, benachrichtigungen_view, delete_benachrichtigung, admin, nutzungsbedingungen, datenschutz, impressum, actions_table
 
 urlpatterns = [
     path('', home, name='home'),

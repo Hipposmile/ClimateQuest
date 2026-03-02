@@ -1,26 +1,29 @@
 import os
 
 import requests
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import get_user_model
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_encode
 from dotenv import load_dotenv
 
 from core.all_messages import all_messages
+from family.models import Family
+from personals.models import UserErweitert
+from utils.functions import create_notification, create_internal_error, ist_email_gueltig, send_mail_function, \
+    get_families_of_user, get_communities_of_user, generate_random_password
+from .tokens import email_verification_token
 
 load_dotenv()
-
-from utils.functions import *
-
-from django.utils.encoding import force_bytes
-from .tokens import email_verification_token
-from django.urls import reverse
-from django.utils.http import urlsafe_base64_encode
-from django.utils.http import urlsafe_base64_decode
-from django.contrib.auth import get_user_model
-from django.contrib.auth.hashers import check_password
 
 
 def generate_verification_link(request):

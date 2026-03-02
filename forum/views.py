@@ -1,9 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.contrib import messages
+from core.all_messages import all_messages
 
-from utils.functions import *
-from .models import *
+from utils.functions import clean_html, create_notification
+from .models import ForumPost, Answer
 
 
 # Create your views here.

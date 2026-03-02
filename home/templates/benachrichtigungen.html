@@ -4,118 +4,130 @@
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 {% block title %}
-  ClimateQuest - Benachrichtigungen
+    ClimateQuest - Benachrichtigungen
 {% endblock %}
 {% block content %}
-<style nonce="{{ request.csp_style_nonce }}">
-    .benachrichtigungen-list {
-    max-width: 480px;
-    margin: 2rem auto;
-    padding: 0;
-    background: var(--color-white);
-    border-radius: 12px;
-    box-shadow: var(--shadow-md);
-    list-style: none;
-    overflow: hidden;
-}
+    <style nonce="{{ request.csp_style_nonce }}">
+        .benachrichtigungen-list {
+            max-width: 480px;
+            margin: 2rem auto;
+            padding: 0;
+            background: var(--color-white);
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            list-style: none;
+            overflow: hidden;
+        }
 
-.benachrichtigungen-list li {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1.1rem 1.5rem;
-    border-bottom: 1px solid var(--color-bg);
-    font-size: 1.08rem;
-    color: var(--color-header-bg);
-    background: var(--color-bg);
-    transition: background 0.2s;
-}
+        .benachrichtigungen-list li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.1rem 1.5rem;
+            border-bottom: 1px solid var(--color-bg);
+            font-size: 1.08rem;
+            color: var(--color-header-bg);
+            background: var(--color-bg);
+            transition: background 0.2s;
+        }
 
-.benachrichtigungen-list li:last-child {
-    border-bottom: none;
-}
+        .benachrichtigungen-list li:last-child {
+            border-bottom: none;
+        }
 
-.benachrichtigungen-list li:hover {
-    background: var(--color-bg-dark);
-}
+        .benachrichtigungen-list li:hover {
+            background: var(--color-bg-dark);
+        }
 
-.benachrichtigungen-list li a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: auto;
-    color: var(--color-white);
-    border: none;
-    border-radius: 50%;
-    width: 2.1em;
-    height: 2.1em;
-    font-size: 1.2em;
-    text-decoration: none;
-    transition: background 0.2s, transform 0.15s;
-    cursor: pointer;
-}
+        .benachrichtigungen-list li .delete {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+            color: var(--color-white);
+            border: none;
+            border-radius: 50%;
+            width: 2.1em;
+            height: 2.1em;
+            font-size: 1.2em;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.15s;
+            cursor: pointer;
+        }
 
-.benachrichtigungen-list li a:hover {
-    transform: scale(1.12) rotate(-10deg);
-}
+        .benachrichtigungen-list li .delete:hover {
+            transform: scale(1.12) rotate(-10deg);
+        }
 
-.benachrichtigungen-list li {
-    display: flex;
-    flex-direction: column;
-    padding: 1.1rem 1.5rem;
-    border-bottom: 1px solid var(--color-bg);
-    font-size: 1.08rem;
-    background: var(--color-bg);
-    transition: background 0.2s;
-    position: relative;
-}
+        .benachrichtigungen-list li .more-link {
+            color: var(--color-primary);
+        }
 
-.benachrichtigung-inhalt {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    color: var(--color-header-bg);
-}
+        .benachrichtigungen-list li {
+            display: flex;
+            flex-direction: column;
+            padding: 1.1rem 1.5rem;
+            border-bottom: 1px solid var(--color-bg);
+            font-size: 1.08rem;
+            background: var(--color-bg);
+            transition: background 0.2s;
+            position: relative;
+        }
 
-.benachrichtigungen-list li::before {
-    font-size: 1.2rem;
-    color: var(--color-primary);
-    margin-right: 0.5rem;
-}
+        .benachrichtigung-inhalt {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--color-header-bg);
+        }
 
-.benachrichtigung-datum {
-    margin-top: 6px;
-    text-align: right;
-    color: var(--color-muted);
-    font-size: 0.85rem;
-}
+        .benachrichtigungen-list li::before {
+            font-size: 1.2rem;
+            color: var(--color-primary);
+            margin-right: 0.5rem;
+        }
 
-.benachrichtigungen-list li a {
-    margin-left: auto;
-    color: var(--color-white);
-}
-</style>
-  {% if messages %}
-    {% for message in messages %}
-      <p class="{{ message.level_tag }}-message">{{ message }}</p>
-    {% endfor %}
-  {% endif %}
-  {% if benachrichtigungen %}
-    <ul class="benachrichtigungen-list" id="benachrichtigungen-list-id">
-      {% for benachrichtigung in benachrichtigungen %}
-        <li>
-        <p class="emoji">&#x1F514;</p>
-          <div class="benachrichtigung-inhalt">
-            <p>{{ benachrichtigung.benachrichtigung|safe }}</p>
-            <a  href="{% url 'delete_benachrichtigung' benachrichtigung.id %}"><p class="emoji">&#x1F5D1;</p></a>
-          </div>
-          <div class="benachrichtigung-datum">
-            <small>{{ benachrichtigung.date|date:'d.m.Y H:i' }}</small>
-          </div>
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>Du hast keine Benachrichtigungen</p>
-  {% endif %}
+        .benachrichtigung-datum {
+            margin-top: 6px;
+            text-align: right;
+            color: var(--color-muted);
+            font-size: 0.85rem;
+        }
+
+        .benachrichtigungen-list li a {
+            margin-left: auto;
+            color: var(--color-white);
+        }
+    </style>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    {% if benachrichtigungen %}
+        <ul class="benachrichtigungen-list" id="benachrichtigungen-list-id">
+            {% for benachrichtigung in benachrichtigungen %}
+                <li>
+                    <p class="emoji">&#x1F514;</p>
+                    <div class="benachrichtigung-inhalt">
+                        <p>{{ benachrichtigung.benachrichtigung|safe }}
+                            <a href="{{ benachrichtigung.url }}" class="redirect-link more-link">
+                                <span>Mehr</span>
+                                <span class="redirect-link-icon">→</span>
+                            </a>
+                        </p>
+                        <a href="{% url 'delete_benachrichtigung' benachrichtigung.id %}" class="delete"><p
+                                class="emoji">
+                            &#x1F5D1;</p>
+                        </a>
+                    </div>
+                    <div class="benachrichtigung-datum">
+                        <small>{{ benachrichtigung.date|date:'d.m.Y H:i' }}</small>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Du hast keine Benachrichtigungen</p>
+    {% endif %}
 {% endblock %}

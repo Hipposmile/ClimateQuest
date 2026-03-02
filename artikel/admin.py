@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import *
+from .models import Artikel, Comment, Answer
 
 
 class ArtikelAdmin(admin.ModelAdmin):

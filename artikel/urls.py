@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import *
+
+from .views import artikel_overview, add_artikel, artikel_detail, edit_artikel, add_like
 
 urlpatterns = [
     path('artikel_overview/', artikel_overview, name='artikel_overview'),

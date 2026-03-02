@@ -1,12 +1,15 @@
 from datetime import datetime, timedelta
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.utils import timezone
 
-from utils.functions import *
-from .models import *
+from core.all_messages import all_messages
+from utils.functions import clean_html, create_notification
+from .models import Event, Question, Answer
 
 
 def events_overview(request):

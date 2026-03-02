@@ -3,8 +3,9 @@ from django.db.models import Count
 from django.shortcuts import render, redirect
 
 from core.all_messages import all_messages
-from utils.functions import *
-from .models import *
+from django.contrib import messages
+from utils.functions import clean_html
+from .models import Artikel, Comment, Answer
 
 
 # Create your views here.

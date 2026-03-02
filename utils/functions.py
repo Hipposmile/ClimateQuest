@@ -1,4 +1,3 @@
-import io
 import logging
 import random
 import string
@@ -9,20 +8,22 @@ import bleach
 from PIL import Image
 from django.contrib import messages
 from django.core.exceptions import ValidationError
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.mail import EmailMultiAlternatives
 from django.core.validators import validate_email
 from django.db.models import Sum, F
 from django.db.models.functions import TruncWeek
+from django.urls import reverse
+from django.utils import timezone
 from webpush import send_user_notification
 
 from ClimateQuest import settingsprod
-from aktionen.models import *
+from aktionen.models import Aktion
 from artikel.models import Artikel
-from community.models import *
+from community.models import Community
 from core.all_messages import all_messages
-from home.models import *
-from personals.models import *
+from family.models import Family
+from home.models import Benachrichtigung
+from personals.models import UserErweitert, Level
 
 dezimalstellen = 4
 
@@ -332,12 +333,14 @@ def create_internal_error(request, beschreibung, fehlermeldung="interner Fehler"
 def create_notification(request, notification, user=None, url=None):
     if user is None:
         user = request.user
-    Benachrichtigung.objects.create(benachrichtigung=notification, user=user)
+    if url is None:
+        url = reverse('dashboard')
+    Benachrichtigung.objects.create(benachrichtigung=notification, user=user, url=url)
     send_mail_function(
         request=request,
         fehlermeldung='Beim Erstellen einer Benachrichtigung ist beim Versenden der E-Mail ein Fehler aufgetreten. Die Benachrichtigung kann nur in dem Benachrichtigungsteil hier auf der Webseite gefunden werden!',
         subject='ClimateQuest - neue Benachrichtigung',
-        message=notification,
+        message=notification + f"<a href='{url}'>Details</a>",
         recipient_list=user.email,
         user=user
     )
