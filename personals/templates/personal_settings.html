@@ -245,10 +245,6 @@
         <button type="submit" name="change_statement">Speichern</button>
     </form>
 
-    <div class="cookie-blocked" data-requires="quill"
-         data-content='<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />'>
-    </div>
-
     <script nonce="{{ request.csp_script_nonce }}">
         document.addEventListener('DOMContentLoaded', initializeQuill);
     </script>

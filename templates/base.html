@@ -36,6 +36,7 @@
     <title>{% block title %}MyPage{% endblock %} - ClimateQuest</title>
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'libraries/quill/quill.snow.css' %}">
     <link rel="icon" href="{% static 'icons/favicon.ico' %}" type="image/x-icon">
     <script src="{% static 'js/cookie-consent.js' %}" defer></script>
 
@@ -523,29 +524,25 @@
 
     function initializeQuill() {
         let editor = document.getElementById('content_editor')
-        if (getCookiePreferences().quill) {
-            const script = document.createElement("script");
-            script.src = "https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js";
-            document.body.appendChild(script);
-            script.onload = function () {
-                if (editor) {
-                    quill = new Quill(editor, {
-                        theme: 'snow',
-                        modules: {
-                            toolbar: [
-                                [{header: [1, 2, false]}],
-                                ['bold', 'italic', 'underline'],
-                                [{'list': 'ordered'}, {'list': 'bullet'}],
-                                ['link']
-                            ]
-                        }
-                    });
-                } else {
-                    console.warn("Editor not found");
-                }
+        const script = document.createElement("script");
+        script.src = "{% static 'libraries/quill/quill.js' %}";
+        document.body.appendChild(script);
+        script.onload = function () {
+            if (editor) {
+                quill = new Quill(editor, {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: [
+                            [{header: [1, 2, false]}],
+                            ['bold', 'italic', 'underline'],
+                            [{'list': 'ordered'}, {'list': 'bullet'}],
+                            ['link']
+                        ]
+                    }
+                });
+            } else {
+                console.warn("Editor not found");
             }
-        } else {
-            editor.innerHTML = `<textarea placeholder="Beschreibung" class="quill-editor" id="textarea-content"></textarea>`;
         }
     }
 </script>
@@ -1146,16 +1143,12 @@
         hidden.type = 'hidden';
         hidden.name = btn_name;
         form.appendChild(hidden);
-        if (getCookiePreferences().quill) {
-            try {
-                content = quill.root.innerHTML;
-            } catch {
-                console.error("Variable Quill not found");
-                alert("Ein interner Fehler ist aufgetreten. Probiere es später bitte erneut!");
-                return false;
-            }
-        } else {
-            content = document.getElementById('textarea-content').value;
+        try {
+            content = quill.root.innerHTML;
+        } catch {
+            console.error("Variable Quill not found");
+            alert("Ein interner Fehler ist aufgetreten. Probiere es später bitte erneut!");
+            return false;
         }
         form.querySelector('input[name=content]').value = content;
         form.submit();

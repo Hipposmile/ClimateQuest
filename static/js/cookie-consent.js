@@ -9,11 +9,6 @@ const cookieCategories = {
         label: "reCAPTCHA",
         explanation: "Wird zur Registrierung benötigt.",
         required: false
-    },
-    quill: {
-        label: "Quill",
-        explanation: "Hiermit kannst du manche Text-Inputs schöner stylen, z.B. fett, kursiv, unterstrichen oder mit Links.",
-        required: false
     }
 };
 

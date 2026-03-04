@@ -40,11 +40,6 @@
         <button type="submit">Hinzufügen</button>
     </form>
 
-    <!-- Quill CSS -->
-    <div class="cookie-blocked" data-requires="quill"
-         data-content='<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />'>
-    </div>
-
     <script nonce="{{ request.csp_script_nonce }}">
         document.addEventListener('DOMContentLoaded', function () {
             const day_after_tomorrow = new Date(Date.now() + 48 * 60 * 60 * 1000);

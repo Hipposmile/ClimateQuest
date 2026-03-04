@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block meta %}
-    <meta name="description" content="Sieh dir den Post im Forum von ClimateQuest an und lies die Antworten anderer User zu diesem Thema. Antworte selbst auf den Post, um dein Wissen zu teilen.">
+    <meta name="description"
+          content="Sieh dir den Post im Forum von ClimateQuest an und lies die Antworten anderer User zu diesem Thema. Antworte selbst auf den Post, um dein Wissen zu teilen.">
 {% endblock %}
 
 {% block title %}Post {{ post.title }}{% endblock %}
@@ -35,13 +36,13 @@
 
     <div class="artikel-content"><p>{{ post.content|safe }}</p></div>
     <br>
-    <p>Erstellt von <a  href="{% url 'user_detail' post.creator.id %}">{{ post.creator }}</a></p>
+    <p>Erstellt von <a href="{% url 'user_detail' post.creator.id %}">{{ post.creator }}</a></p>
     <p>Erstellt am: {{ post.date_time|date:"d.m.Y H:i" }}</p>
 
     {% for answer in answers %}
         <div class="answer">
             <p>{{ answer.content|safe }}</p>
-            <p><small>Antwort von <a  href="{% url 'user_detail' answer.creator.id %}">{{ answer.creator }}</a>
+            <p><small>Antwort von <a href="{% url 'user_detail' answer.creator.id %}">{{ answer.creator }}</a>
                 am {{ answer.date_time|date:"d.m.Y H:i" }}</small></p>
         </div>
     {% endfor %}
@@ -62,11 +63,6 @@
 
         <button type="submit">Antworten</button>
     </form>
-
-    <!-- Quill CSS -->
-    <div class="cookie-blocked" data-requires="quill"
-         data-content='<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />'>
-    </div>
 
     <script nonce="{{ request.csp_script_nonce }}">
         document.addEventListener('DOMContentLoaded', initializeQuill);

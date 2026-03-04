@@ -3,14 +3,14 @@
 
 {% block meta %}
     <meta name="description" content="Füge eine Petition zu ClimateQuest hinzu">
-    <link rel="stylesheet" href="{% static 'cropperjs/cropper.css' %}">
+    {% comment %}<link rel="stylesheet" href="{% static 'libraries/cropperjs/cropper.css' %}">{% endcomment %}
 {% endblock %}
 
 {% block title %}Petition hinzufügen{% endblock %}
 
 {% block content %}
-    <!--Using Cropper.js: https://fengyuanchen.github.io/cropperjs/-->
-    <script src="{% static 'cropperjs/cropper.js' %}"></script>
+    {% comment %}<!--Using Cropper.js: https://fengyuanchen.github.io/cropperjs/-->
+    <script src="{% static 'libraries/cropperjs/cropper.js' %}"></script>
     <style nonce="{{ request.csp_style_nonce }}">
         .cropper-wrapper {
             width: 100%;
@@ -34,7 +34,7 @@
             object-fit: contain;
             display: none;
         }
-    </style>
+    </style>{% endcomment %}
     <h1>Petition hinzufügen</h1>
 
     {% if messages %}
@@ -43,7 +43,8 @@
         {% endfor %}
     {% endif %}
 
-    <form method="post" id="petition-form" class="fill-editor" {% comment %}enctype="multipart/form-data"{% endcomment %}>
+    <form method="post" id="petition-form"
+          class="fill-editor" {% comment %}enctype="multipart/form-data"{% endcomment %}>
         {% csrf_token %}
         <label for="title">Titel</label>
         <input type="text" name="title" id="title" placeholder="Titel" maxlength="100" required>
@@ -158,11 +159,6 @@
             }, "image/jpeg", 0.9);
         }
     </script>{% endcomment %}
-
-
-    <div class="cookie-blocked" data-requires="quill"
-         data-content='<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />'>
-    </div>
 
     <script nonce="{{ request.csp_script_nonce }}">
         document.addEventListener('DOMContentLoaded', initializeQuill);
