@@ -14,6 +14,6 @@ class ProductionNode(template.Node):
         self.nodelist = nodelist
 
     def render(self, context):
-        if settings.DEBUG:
+        if not settings.DEBUG:
             return self.nodelist.render(context)
         return ""
