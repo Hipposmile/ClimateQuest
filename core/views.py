@@ -41,11 +41,11 @@ from django.shortcuts import render
 from functools import wraps
 
 
-def production(view_func):
+def development_only(view_func):
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
         if not settings.DEBUG:
-            return render(request, "production.html")
+            return render(request, "development_only.html")
         return view_func(request, *args, **kwargs)
 
     return wrapper

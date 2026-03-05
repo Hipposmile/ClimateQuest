@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load development %}
 <html lang="de">
 
 <head>
@@ -670,6 +671,8 @@
                         Level</a>
                     <a href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span>
                         Klimapunkte</a>
+                    {% development %}<a href="{% url 'credit_view' %}"><span class="emoji">&#x1F333;</span>
+                        Credits / Bäume</a>{% enddevelopment %}
                     <a href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span>
                         Einstellungen</a>
                     <a href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span>
@@ -797,6 +800,7 @@
                             <p>{{ request.user.username }}</p>
                             <a  href="{% url 'level_me' %}">Level</a>
                             <a  href="{% url 'klimapunkte_me' %}">Klimapunkte</a>
+                            {% development %}<a href="{% url 'credit_view' %}">Credits / Bäume</a>{% enddevelopment %}
                             <a  href="{% url 'settings_view' %}">Profil bearbeiten</a>
                             <a  href="{% url 'users_overview' %}">User</a>
                             <a  href="{% url 'presents_overview' %}">Geschenke</a>

@@ -9,6 +9,7 @@ class UserErweitert(models.Model):
     mail_verified = models.BooleanField(default=False)
     statement = models.TextField(default="Hallo. Ich benutze ClimateQuest.")
     weekly_goal = models.PositiveIntegerField(default=20, validators=[MinValueValidator(1)])
+    given_credits = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.user.username

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <meta name="description" content="Sieh dir all deine Credits bei ClimateQuest an!">
+{% endblock %}
+
+{% block title %}Credits - ClimateQuest{% endblock %}
+
+{% block content %}
+    <h1>Credits</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <p>Du brauchst 1000 Klimapunkte, um einen Credit zu verdienen</p>
+
+    <p>Zur Verfügung stehende Credits: {{ available_credits }}</p>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    <style nonce="{{ request.csp_style_nonce }}">
+        #progress-bar {
+            width: {{ percent_done }}%;
+            max-width: 100%;
+        }
+    </style>
+    <p>{{ percent_done }} % bis zum nächsten Credit geschafft</p>
+    <form method="post">
+        {% csrf_token %}
+        <button {% if available_credits <= 0 %}disabled{% endif %}>Baum pflanzen</button>
+    <small>Das kostet einen Credit</small>
+    </form>
+    <p>Bereits {{ request.user.usererweitert.given_credits }} Bäume gepflanzt</p>
+{% endblock %}

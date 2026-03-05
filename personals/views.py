@@ -1,4 +1,5 @@
 import os
+import math
 
 import requests
 from django.contrib import messages
@@ -17,10 +18,11 @@ from django.utils.http import urlsafe_base64_encode
 from dotenv import load_dotenv
 
 from core.all_messages import all_messages
+from core.views import development_only
 from family.models import Family
 from personals.models import UserErweitert
 from utils.functions import create_notification, create_internal_error, ist_email_gueltig, send_mail_function, \
-    get_families_of_user, get_communities_of_user, generate_random_password
+    get_families_of_user, get_communities_of_user, generate_random_password, get_all_klimapunkte_from_user
 from .tokens import email_verification_token
 
 load_dotenv()
@@ -419,3 +421,27 @@ def get_email_settings(request):
         create_internal_error(request, f'UserErweitert zu User {request.user} existiert nicht')
     mailinglist = user_erweitert.mailinglist
     return JsonResponse({'mailinglist': mailinglist})
+
+
+@login_required
+@development_only
+def credit_view(request):
+    klimapunkte_for_credit = 1000
+    klimapunkte = get_all_klimapunkte_from_user(request.user)
+
+    total_credits = klimapunkte / klimapunkte_for_credit
+
+    available_credits = math.floor(total_credits - request.user.usererweitert.given_credits)
+
+    rest = klimapunkte % klimapunkte_for_credit
+    percent_done = int((rest / klimapunkte_for_credit) * 100)
+
+    if request.method == 'POST':
+        if available_credits > 0:
+            user_extended = request.user.usererweitert
+            user_extended.given_credits += 1
+            user_extended.save()
+            return redirect('credit_view')
+
+    return render(request, './credit_view.html',
+                  {'available_credits': available_credits, "percent_done": percent_done})
