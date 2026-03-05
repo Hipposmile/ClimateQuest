@@ -6,7 +6,7 @@ class AktionenListe(models.Model):
     name = models.CharField(max_length=100, unique=True)
     klimapunkte = models.FloatField()
     mengeBeschreibung = models.CharField(max_length=100)
-    mengeBeschreibungSingular = models.CharField(max_length=100, default=mengeBeschreibung)
+    mengeBeschreibungSingular = models.CharField(max_length=100)
     anmerkung = models.CharField(max_length=500)
     source = models.CharField(max_length=1000)
     max = models.FloatField(default=0.0)
