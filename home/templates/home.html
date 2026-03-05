@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% load production %}
+{% load development %}
 {% block meta %}
     <meta name="description"
           content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
@@ -246,7 +246,9 @@
         </a></div>
         <hr>
     {% endif %}
-    {% production %}<h2>Übersicht</h2>{% endproduction %}
+    {% development %}<h2>Übersicht</h2>{% enddevelopment %}
+        {% production %}<h2>Übersicht II</h2>{% endproduction %}
+
 
     <input type="hidden" id="user_count" value="{{ user_count }}">
     <input type="hidden" id="klimapunkte" value="{{ klimapunkte|floatformat:-4 }}">
