@@ -180,7 +180,7 @@ def artikel_detail(request, artikel_id):
                         artikel.save()
                         messages.success(request, all_messages["successfully_unverified_article"])
                     else:
-                        artikel.msg_if_wrong = None
+                        artikel.blocked = False
                         artikel.verified = True
                         artikel.save()
                         messages.success(request, all_messages["successfully_verified_article"])
