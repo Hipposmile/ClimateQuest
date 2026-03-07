@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.test import RequestFactory
 from django.urls import reverse
 from django.utils import timezone
+from django.shortcuts import render
 
 from utils.functions import create_internal_error, get_weekly_goal_from_user, create_notification
 
@@ -34,21 +35,6 @@ def custom_500(request, exception=""):
 def custom_503(request, exception=""):
     create_internal_error(request, f'Dienst nicht verfügbar (503): {exception}')
     return render(request, '5xx.html', status=503)
-
-
-from django.conf import settings
-from django.shortcuts import render
-from functools import wraps
-
-
-def development_only(view_func):
-    @wraps(view_func)
-    def wrapper(request, *args, **kwargs):
-        if not settings.DEBUG:
-            return render(request, "development_only.html")
-        return view_func(request, *args, **kwargs)
-
-    return wrapper
 
 
 factory = RequestFactory()

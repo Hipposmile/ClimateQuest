@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django_crontab',
     'webpush',
     'core',
+    'production_conf',
     'home',
     'personals',
     'aktionen',
