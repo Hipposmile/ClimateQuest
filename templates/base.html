@@ -393,6 +393,15 @@
     <div class="loading" id="loading"></div>
 </div>
 <script nonce="{{ request.csp_script_nonce }}">
+    let isStandalone = false;
+
+    function getIfStandalone() {
+        isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        if (isStandalone) {
+            createPwaNav();
+        }
+    }
+
     function showLoading() {
         document.getElementById('loading').style.display = 'flex';
         document.getElementById('loading-div').style.display = 'flex';
@@ -413,10 +422,6 @@
     });
 
     function createPwaNav() {
-        const isStandalone =
-            window.matchMedia('(display-mode: standalone)').matches ||
-            window.navigator.standalone === true;
-
         if (isStandalone) {
             // Auf- / Zuklapper erstellen
             const navToggle = document.createElement('div');
@@ -469,17 +474,17 @@
     }
 
     // 1. Direkt prüfen (falls schon gesetzt)
-    createPwaNav();
+    getIfStandalone();
 
     // 2. Wenn Chrome den Modus später setzt
-    window.addEventListener('visibilitychange', createPwaNav);
+    window.addEventListener('visibilitychange', getIfStandalone);
 
     // 3. Chrome-spezifisches Event
-    window.matchMedia('(display-mode: standalone)').addEventListener('change', createPwaNav);
+    window.matchMedia('(display-mode: standalone)').addEventListener('change', getIfStandalone);
 
     // 4. Fallback: nach load nochmal prüfen
     window.addEventListener('load', () => {
-        setTimeout(createPwaNav, 50);
+        setTimeout(getIfStandalone, 50);
     });
 
     function removeHoverStyles() {

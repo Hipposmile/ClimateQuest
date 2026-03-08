@@ -17,7 +17,7 @@ from django.utils import timezone
 from webpush import send_user_notification
 
 from ClimateQuest import settingsprod
-from aktionen.models import Aktion
+from aktionen.models import Aktion, Category
 from artikel.models import Artikel
 from community.models import Community
 from core.all_messages import all_messages
@@ -525,3 +525,16 @@ def check_is_truth(request):
         messages.error(request, all_messages["not_is_truth"])
         return False
     return True
+
+
+def get_perfect_week_progress(user, date_given):
+    week_start = date_given - timedelta(days=date_given.weekday())
+    week_end = week_start + timedelta(days=6)
+
+    output = {}
+    for category in Category.objects.all():
+        has_action = Aktion.objects.filter(user=user, aktion__category=category,
+                                           date__range=(week_start, week_end)).exists()
+        output[category.name] = has_action
+
+    return output

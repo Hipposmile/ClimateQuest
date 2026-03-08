@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -15,7 +17,8 @@ from family.models import Family
 from forum.models import ForumPost
 from home.models import Benachrichtigung
 from utils.functions import get_streak_from_user, get_klimapunkte_from_likes, get_klimapunkte, \
-    get_weekly_goal_from_user, get_all_klimapunkte_from_user, get_level, get_families_of_user, create_notification
+    get_weekly_goal_from_user, get_all_klimapunkte_from_user, get_level, get_families_of_user, create_notification, \
+    get_perfect_week_progress
 
 load_dotenv()
 
@@ -39,6 +42,12 @@ def dashboard(request):
     weekly_goal, weekly_klimapunkte, weekly_goal_progress_percent = get_weekly_goal_from_user(request.user)
 
     streak = get_streak_from_user(request.user)
+
+    perfect_week_progress = get_perfect_week_progress(request.user, date.today())
+
+    perfect_week = False
+    if weekly_goal_progress_percent >= 100:
+        perfect_week = all(perfect_week_progress.values())
 
     aktionen = Aktion.objects.filter(user=request.user).order_by('date')[:2]
 
@@ -71,6 +80,7 @@ def dashboard(request):
     return render(request, './dashboard.html',
                   {'weekly_goal': weekly_goal, 'weekly_goal_progress_percent': weekly_goal_progress_percent,
                    'weekly_klimapunkte': weekly_klimapunkte, 'streak': streak,
+                   'perfect_week_progress': perfect_week_progress, "perfect_week": perfect_week,
                    'aktionen': aktionen, 'klimapunkte': klimapunkte, 'level': level, 'families': families,
                    'communities_with_user_families': communities_with_user_families, 'created_events': created_events,
                    'events': events, 'created_artikel': created_artikel, 'artikel': artikel,

@@ -162,6 +162,10 @@
                 }
             }
         }
+
+        #mobile-app-div {
+            display: none;
+        }
     </style>
     {% if messages %}
         {% for message in messages %}
@@ -270,14 +274,19 @@
         </div>
     </div>
 
-    <!--Tester-->
-    <hr>
-    Möchtest du ClimateQuest unterstützen?
-    <a href="{% url 'testers' %}" class="redirect-link ">
-        <span>Tester werden</span>
-        <span class="redirect-link-icon">→</span>
-    </a>
-    <!--Tester Ende -->
+    <div id="mobile-app-div">
+        <hr>
+        <p>Keine Lust, ClimateQuest als Webseite zu verwenden?</p>
+        <a href="{% url 'mobile_apps' %}" class="redirect-link">
+            <span>ClimateQuest als App downloaden</span>
+            <span class="redirect-link-icon">→</span>
+        </a>
+    </div>
+    <script>
+        if (!isStandalone) {
+            document.getElementById("mobile-app-div").style.display = "block";
+        }
+    </script>
 
     <hr>
     {% if user.is_authenticated %}
