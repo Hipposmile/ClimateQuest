@@ -16,6 +16,15 @@
         {% endfor %}
     {% endif %}
 
+    <style nonce="{{ request.csp_style_nonce }}">
+        .apple-badge {
+            width: 246px;
+            height: 82px;
+            vertical-align: middle;
+            object-fit: contain;
+        }
+    </style>
+
     <div class="accordion">
         <div class="accordion-header">
             <div>
@@ -33,8 +42,7 @@
                         href="https://apps.apple.com/de/app/climatequest/id6759392266">https://apple.co/477awy3</a></p>
                 <a href="https://apps.apple.com/de/app/climatequest/id6759392266">
                     <img src="{% static 'icons/apple/badge-black.svg' %}"
-                         alt="Download on the App Store"
-                         style="width: 246px; height: 82px; vertical-align: middle; object-fit: contain;"/>
+                         alt="Download on the App Store" class="apple-badge"/>
                 </a>
             </div>
         </div>
@@ -53,7 +61,9 @@
         </div>
         <div class="accordion-content-wrapper">
             <div class="accordion-content">
-                <p>Momentan ist ClimateQuest noch im PlayStore verfügbar, dies wird sich allerdings bald ändern! Wie benachrichtigen alle User, sobald es soweit ist. Bis dahin kannst du die App als Webseite nutzen oder einen kleinen Workaround nutzen, der in <i>Alle anderen Betriebssysteme</i> erklärt ist.</p>
+                <p>Momentan ist ClimateQuest noch im PlayStore verfügbar, dies wird sich allerdings bald ändern! Wie
+                    benachrichtigen alle User, sobald es soweit ist. Bis dahin kannst du die App als Webseite nutzen
+                    oder einen kleinen Workaround nutzen, der in <i>Alle anderen Betriebssysteme</i> erklärt ist.</p>
             </div>
         </div>
     </div>
@@ -62,7 +72,9 @@
         <div class="accordion-header">
             <div>
                 <div class="accordion-title">Alle anderen Betriebssysteme</div>
-                <div class="accordion-meta">Wenn du ein anderes Betriebssystem nutzt oder die App nicht über den App / Play Store installieren willst / kannst.</div>
+                <div class="accordion-meta">Wenn du ein anderes Betriebssystem nutzt oder die App nicht über den App /
+                    Play Store installieren willst / kannst.
+                </div>
             </div>
             <button class="accordion-toggle" aria-expanded="false"
                     aria-controls="accordionContent">
@@ -71,12 +83,19 @@
         </div>
         <div class="accordion-content-wrapper">
             <div class="accordion-content">
-                <p>Wenn du weder Zugriff auf den AppStore noch auf den PlayStore hast, kannst du die App entweder weiterhin als Webseite nutzen oder über einen kleinen Workaround installieren. Das geht so:</p>
+                <p>Wenn du weder Zugriff auf den AppStore noch auf den PlayStore hast, kannst du die App entweder
+                    weiterhin als Webseite nutzen oder über einen kleinen Workaround installieren. Das geht so:</p>
                 <ol>
-                    <li>Öffne die Webseite über Safari (iOS) oder Chrome (Android). Der Workaround funktioniert aber auch mit den meisten anderen Browsern.</li>
-                    <li>Klicke auf die drei Punkte und dann <i>Zum Home-Bildschirm hinzufügen</i> (Bei Safari findest du diese Option erst, wenn du auf Teilen gehst)</li>
+                    <li>Öffne die Webseite über Safari (iOS) oder Chrome (Android). Der Workaround funktioniert aber
+                        auch mit den meisten anderen Browsern.
+                    </li>
+                    <li>Klicke auf die drei Punkte und dann <i>Zum Home-Bildschirm hinzufügen</i> (Bei Safari findest du
+                        diese Option erst, wenn du auf Teilen gehst)
+                    </li>
                     <li>Klicke auf <i>Installieren</i> bzw. <i>Hinzufügen</i></li>
-                    <li>Die App erscheint nun auf dem Home-Bildschirm. Wenn du sie öffnest, siehst du keine Browser-Elemente mehr und kannst sogar, wenn du es erlaubst, Push-Nachrichten erhalten!</li>
+                    <li>Die App erscheint nun auf dem Home-Bildschirm. Wenn du sie öffnest, siehst du keine
+                        Browser-Elemente mehr und kannst sogar, wenn du es erlaubst, Push-Nachrichten erhalten!
+                    </li>
                 </ol>
             </div>
         </div>
