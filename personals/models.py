@@ -11,6 +11,8 @@ class UserErweitert(models.Model):
     weekly_goal = models.PositiveIntegerField(default=20, validators=[MinValueValidator(1)])
     given_credits = models.PositiveIntegerField(default=0)
 
+    allows_data_view = models.BooleanField(default=False)
+
     def __str__(self):
         return self.user.username
 

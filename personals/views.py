@@ -283,6 +283,24 @@ def settings_view(request):
                 messages.success(request, all_messages["mailinglist_disabled"])
             return redirect('settings_view')
 
+        elif 'change_block_data_settings' in request.POST:
+            block_data_settings = request.POST.get('block_data_settings') == 'on'
+            password = request.POST.get('password_block_data_settings')
+            if not request.user.check_password(password):
+                messages.error(request, all_messages["invalid_password"])
+                return redirect('settings_view')
+            try:
+                user_erweitert = UserErweitert.objects.get(user=request.user)
+            except UserErweitert.DoesNotExist:
+                create_internal_error(request, f'UserErweitert zu User {request.user} existiert nicht')
+            user_erweitert.allows_data_view = block_data_settings
+            user_erweitert.save()
+            if user_erweitert.allows_data_view:
+                messages.success(request, all_messages["allows_data_view_enabled"])
+            else:
+                messages.success(request, all_messages["allows_data_view_disabled"])
+
+
         elif 'change_statement' in request.POST:
             statement = request.POST.get('content')
             password = request.POST.get('password_statement')
@@ -422,6 +440,12 @@ def get_email_settings(request):
 
 
 @login_required
+def get_block_data_settings(request):
+    block_data_settings = request.user.usererweitert.allows_data_view
+    return JsonResponse({'block_data_settings': block_data_settings})
+
+
+@login_required
 @development_only
 def credit_view(request):
     klimapunkte_for_credit = 1000
@@ -481,7 +505,6 @@ def plant_tree_view(request):
             "type": "gift"
         }
     }
-
 
     try:
         response = requests.post(url, json=payload, headers=headers)

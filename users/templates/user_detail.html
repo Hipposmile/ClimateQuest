@@ -15,17 +15,21 @@
         {% endfor %}
     {% endif %}
 
-    <div class="btns">
-        <a href="{% url 'klimapunkte_view' user_expanded.user.id %}">
-            <button class="btn">Klimapunkte</button>
-        </a>
-        <a href="{% url 'level_view' user_expanded.user.id %}">
-            <button class="btn">Level</button>
-        </a>
-        <a href="{% url 'history' user_expanded.user.id %}">
-            <button class="btn">Aktions-Historie</button>
-        </a>
-    </div>
+    {% if user_expanded.user != request.user and not user_expanded.user.usererweitert.allows_data_view %}
+        <p>{{ user.username }}<i> hat die Ansicht der Daten gesperrt.</i></p>
+    {% else %}
+        <div class="btns">
+            <a href="{% url 'klimapunkte_view' user_expanded.user.id %}">
+                <button class="btn">Klimapunkte</button>
+            </a>
+            <a href="{% url 'level_view' user_expanded.user.id %}">
+                <button class="btn">Level</button>
+            </a>
+            <a href="{% url 'history' user_expanded.user.id %}">
+                <button class="btn">Aktions-Historie</button>
+            </a>
+        </div>
+    {% endif %}
 
     <hr>
 
@@ -34,124 +38,129 @@
 
     <hr>
 
-    <h2>Wöchentliches Ziel</h2>
-    <div class="progress-container">
-        <div class="progress-bar" id="progress-bar"></div>
-    </div>
-    <style nonce="{{ request.csp_style_nonce }}">
-        #progress-bar {
-            width: {{ weekly_goal_progress_percent }}%;
-            max-width: 100%;
-        }
-    </style>
-    <p>{{ weekly_klimapunkte|floatformat:-4 }} Klimapunkte bis zum wöchentlichen Ziel von {{ weekly_goal }} Klimapunkten
-        geschafft</p>
+    {% if user_expanded.user != request.user and not user_expanded.user.usererweitert.allows_data_view %}
+        <p>{{ user.username }}<i> hat die Ansicht der Daten gesperrt.</i></p>
+    {% else %}
+        <h2>Wöchentliches Ziel</h2>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <style nonce="{{ request.csp_style_nonce }}">
+            #progress-bar {
+                width: {{ weekly_goal_progress_percent }}%;
+                max-width: 100%;
+            }
+        </style>
+        <p>{{ weekly_klimapunkte|floatformat:-4 }} Klimapunkte bis zum wöchentlichen Ziel von {{ weekly_goal }}
+            Klimapunkten
+            geschafft</p>
 
-    <hr>
+        <hr>
 
-    <style nonce="{{ request.csp_style_nonce }}">
-        .streak-card-container .streak-card {
-            background: var(--color-white);
-            border-radius: 16px;
-            padding: 16px 20px;
-            display: inline-flex;
-            align-items: center;
-            gap: 14px;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--color-border);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .streak-card-container .streak-icon-wrap {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            background: linear-gradient(
-                    135deg,
-                    #ffe8c7 0%,
-                    #ffb56b 40%,
-                    #ff7a00 100%
-            );
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 6px 16px rgba(255, 140, 0, 0.35);
-        }
-
-        .streak-card-container .streak-icon {
-            font-size: 22px;
-        }
-
-        .streak-card-container .streak-content {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .streak-card-container .streak-label {
-            font-size: 11px;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--color-muted);
-        }
-
-        .streak-card-container .streak-row {
-            display: flex;
-            align-items: baseline;
-            gap: 6px;
-        }
-
-        .streak-card-container .streak-value {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--color-text);
-        }
-
-        .streak-card-container .streak-unit {
-            font-size: 12px;
-            color: var(--color-muted);
-        }
-
-        .streak-card-container .streak-card {
-            animation: flame-glow 2.4s ease-in-out infinite;
-        }
-
-        @keyframes flame-glow {
-            0% {
+        <style nonce="{{ request.csp_style_nonce }}">
+            .streak-card-container .streak-card {
+                background: var(--color-white);
+                border-radius: 16px;
+                padding: 16px 20px;
+                display: inline-flex;
+                align-items: center;
+                gap: 14px;
                 box-shadow: var(--shadow-md);
+                border: 1px solid var(--color-border);
+                position: relative;
+                overflow: hidden;
             }
-            25% {
-                box-shadow: 0 3px 14px rgba(255, 140, 0, 0.25);
-            }
-            50% {
-                box-shadow: 0 4px 18px rgba(255, 120, 0, 0.32);
-            }
-            75% {
-                box-shadow: 0 2px 12px rgba(255, 160, 0, 0.22);
-            }
-            100% {
-                box-shadow: var(--shadow-md);
-            }
-        }
-    </style>
-    <h2>Streak</h2>
-    <div class="streak-card-container">
-        <div class="streak-card">
-            <div class="streak-icon-wrap">
-                <span class="streak-icon emoji">&#x1F525;</span>
-            </div>
 
-            <div class="streak-content">
-                <span class="streak-label">Aktuelle Streak</span>
+            .streak-card-container .streak-icon-wrap {
+                width: 42px;
+                height: 42px;
+                border-radius: 12px;
+                background: linear-gradient(
+                        135deg,
+                        #ffe8c7 0%,
+                        #ffb56b 40%,
+                        #ff7a00 100%
+                );
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 6px 16px rgba(255, 140, 0, 0.35);
+            }
 
-                <div class="streak-row">
-                    <span class="streak-value">{{ streak }}</span>
-                    <span class="streak-unit">Wochen mit erreichtem wöchentlichen Ziel</span>
+            .streak-card-container .streak-icon {
+                font-size: 22px;
+            }
+
+            .streak-card-container .streak-content {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+
+            .streak-card-container .streak-label {
+                font-size: 11px;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--color-muted);
+            }
+
+            .streak-card-container .streak-row {
+                display: flex;
+                align-items: baseline;
+                gap: 6px;
+            }
+
+            .streak-card-container .streak-value {
+                font-size: 22px;
+                font-weight: 700;
+                color: var(--color-text);
+            }
+
+            .streak-card-container .streak-unit {
+                font-size: 12px;
+                color: var(--color-muted);
+            }
+
+            .streak-card-container .streak-card {
+                animation: flame-glow 2.4s ease-in-out infinite;
+            }
+
+            @keyframes flame-glow {
+                0% {
+                    box-shadow: var(--shadow-md);
+                }
+                25% {
+                    box-shadow: 0 3px 14px rgba(255, 140, 0, 0.25);
+                }
+                50% {
+                    box-shadow: 0 4px 18px rgba(255, 120, 0, 0.32);
+                }
+                75% {
+                    box-shadow: 0 2px 12px rgba(255, 160, 0, 0.22);
+                }
+                100% {
+                    box-shadow: var(--shadow-md);
+                }
+            }
+        </style>
+        <h2>Streak</h2>
+        <div class="streak-card-container">
+            <div class="streak-card">
+                <div class="streak-icon-wrap">
+                    <span class="streak-icon emoji">&#x1F525;</span>
+                </div>
+
+                <div class="streak-content">
+                    <span class="streak-label">Aktuelle Streak</span>
+
+                    <div class="streak-row">
+                        <span class="streak-value">{{ streak }}</span>
+                        <span class="streak-unit">Wochen mit erreichtem wöchentlichen Ziel</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 
     {% if request.user.is_authenticated %}
         <hr>

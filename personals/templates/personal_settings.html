@@ -56,7 +56,6 @@
         document.getElementById('new_username').addEventListener('input', function () {
             const username = this.value;
             const feedback = document.getElementById('username-feedback');
-            const registerButton = document.getElementById('register-button');
 
             if (username.length > 0) {
                 feedback.textContent = 'Überprüfe, ob Benutzername bereits existiert...';
@@ -233,6 +232,32 @@
                 }
             })
     </script>
+    <hr>
+
+    <h3 id="block_data_h3">Einsicht persönlicher Daten</h3>
+    <form method="post">
+        {% csrf_token %}
+        <label for="password_block_data_settings">Passwort:</label>
+        <input type="password" name="password_block_data_settings" id="password_block_data_settings"
+               placeholder="Passwort"
+               required>
+        <label class="custom-checkbox">
+            <input type="checkbox" name="block_data_settings" id="block_data_checkbox">
+            <span class="checkmark"></span>
+            <span class="label-text">Einsicht der persönlichen Daten (Level, Klimapunkte, Aktionen, wöchentliches Ziel, Streak) für andere User erlauben</span>
+        </label>
+        <button type="submit" name="change_block_data_settings">Speichern</button>
+    </form>
+
+    <script nonce="{{ request.csp_script_nonce }}">
+        const block_data_checkbox = document.getElementById('block_data_checkbox');
+        fetch(`/personals/get_block_data_settings`)
+            .then(response => response.json())
+            .then(data => {
+                block_data_checkbox.checked = !!data.block_data_settings;
+            })
+    </script>
+
     <hr>
     <h3 id="statement_h3">Statement ändern</h3>
     <form method="post" class="fill-editor">

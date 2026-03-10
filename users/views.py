@@ -16,12 +16,22 @@ from utils.functions import dezimalstellen, get_klimapunkte, get_klimapunkte_fro
     get_streak_from_user, send_mail_function, get_level, create_notification
 
 
-def klimapunkte_view(request, user_id):
+def get_user(request, user_id, allow_needed=True):
     try:
         user = User.objects.get(id=user_id)
     except User.DoesNotExist:
         messages.error(request, all_messages["user_not_found"])
-        return redirect('dashboard')
+        return False
+    if allow_needed and user != request.user and not user.usererweitert.allows_data_view:
+        messages.error(request, all_messages["user_blocked_view"])
+        return False
+    return user
+
+
+def klimapunkte_view(request, user_id):
+    user = get_user(request, user_id)
+    if not user:
+        return redirect('user_detail', user_id)
 
     zeitraum = 'gesamt'
     aktionen = Aktion.objects.filter(user=user)
@@ -93,22 +103,18 @@ def klimapunkte_view(request, user_id):
 
 
 def level_view(request, user_id):
-    try:
-        user = User.objects.get(id=user_id)
-    except User.DoesNotExist:
-        messages.error(request, all_messages["user_not_found"])
-        return redirect('dashboard')
+    user = get_user(request, user_id)
+    if not user:
+        return redirect('user_detail', user_id)
 
     level_data = get_level(user)
     return render(request, './level.html', {'level_data': level_data, 'user': user})
 
 
 def history(request, user_id):
-    try:
-        user = User.objects.get(id=user_id)
-    except User.DoesNotExist:
-        messages.error(request, all_messages["user_not_found"])
-        return redirect('dashboard')
+    user = get_user(request, user_id)
+    if not user:
+        return redirect('user_detail', user_id)
 
     actions = Aktion.objects.filter(user=user).order_by('-date')
     return render(request, './history.html', {'actions': actions, 'user': user})
@@ -123,11 +129,9 @@ def users_overview(request):
 
 
 def user_detail(request, user_id):
-    try:
-        user = User.objects.get(id=user_id)
-    except User.DoesNotExist:
-        messages.error(request, all_messages["user_not_found"])
-        return redirect('users_overview')
+    user = get_user(request, user_id, False)
+    if not user:
+        return redirect('dashboard')
 
     user_expanded = UserErweitert.objects.get(user=user)
     weekly_goal, weekly_klimapunkte, weekly_goal_progress_percent = get_weekly_goal_from_user(user)
@@ -145,11 +149,9 @@ def user_detail(request, user_id):
 
 
 def action_detail(request, action_id, user_id):
-    try:
-        user = User.objects.get(id=user_id)
-    except User.DoesNotExist:
-        messages.error(request, all_messages["user_not_found"])
-        return redirect('users_overview')
+    user = get_user(request, user_id)
+    if not user:
+        return redirect('user_detail', user_id)
 
     try:
         current_action = Aktion.objects.get(id=action_id, user=user)
@@ -302,7 +304,8 @@ def action_detail(request, action_id, user_id):
                 messages.success(request, all_messages["action_deleted"])
                 return redirect('history_me')
 
-    return render(request, './action_detail.html', {'categories': categories, 'current_action': current_action, 'user': user})
+    return render(request, './action_detail.html',
+                  {'categories': categories, 'current_action': current_action, 'user': user})
 
 
 @login_required
@@ -320,6 +323,7 @@ def history_me(request):
     return redirect('history', request.user.id)
 
 
+@login_required
 def report_user(request, reported_user, reporting_user, reason):
     admin = User.objects.get(is_superuser=True, is_staff=True, username='admin')
     send_mail_function(

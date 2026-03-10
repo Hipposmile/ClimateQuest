@@ -115,6 +115,8 @@ all_messages = {
     "email_changed": "E-Mail-Adresse erfolgreich geändert",
     "mailinglist_enabled": "E-Mail Benachrichtigungen aktiviert",
     "mailinglist_disabled": "E-Mail Benachrichtigungen deaktiviert",
+    "allows_data_view_enabled": "Persönliche Daten Ansicht aktiviert",
+    "allows_data_view_disabled": "Persönliche Daten Ansicht blockiert",
     "account_deleted": "Account erfolgreich gelöscht",
     "email_not_found": "E-Mail-Adresse nicht vorhanden",
     "password_reset_mail_sent": "Wir haben dir eine Nachricht mit deinem Benutzernamen und einem neuen, zufällig generiertem Passwort geschickt. Melde dich damit an und ändere aus Sicherheitsgründen möglichst bald dein Passwort unter \"Profil bearbeiten\".",
@@ -198,6 +200,7 @@ all_messages = {
     "user_not_found": "User nicht gefunden",
     "msg_created": "Nachricht erfolgreich gesendet",
     "reported_user": "Der User wurde erfolgreich gemeldet.",
+    "user_blocked_view": "Der User hat die Ansicht seiner Daten geblockt.",
 
     # --------
     # Admin
