@@ -1300,10 +1300,10 @@
 {% endwith %}
 
 <script nonce="{{ request.csp_script_nonce }}">
-    const a_showLoading = document.querySelectorAll('a[href]:not([href^="#"]):not(.dont-show-loading):not(.mobile-menu-trigger):not([target="_blank"]):not([download])');
+    /*const a_showLoading = document.querySelectorAll('a[href]:not([href^="#"]):not(.dont-show-loading):not(.mobile-menu-trigger):not([target="_blank"]):not([download])');
     a_showLoading.forEach((el) => {
         el.addEventListener('click', showLoading);
-    });
+    });*/
 
     const form_showLoading = document.querySelectorAll('form:not(.dont-show-loading):not(.form-confirm)');
     form_showLoading.forEach((el) => {
