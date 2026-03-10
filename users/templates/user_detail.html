@@ -16,7 +16,7 @@
     {% endif %}
 
     {% if user_expanded.user != request.user and not user_expanded.user.usererweitert.allows_data_view %}
-        <p>{{ user.username }}<i> hat die Ansicht der Daten gesperrt.</i></p>
+        <p>{{ user_expanded.user.username }}<i> hat die Ansicht der Daten gesperrt.</i></p>
     {% else %}
         <div class="btns">
             <a href="{% url 'klimapunkte_view' user_expanded.user.id %}">
@@ -39,7 +39,7 @@
     <hr>
 
     {% if user_expanded.user != request.user and not user_expanded.user.usererweitert.allows_data_view %}
-        <p>{{ user.username }}<i> hat die Ansicht der Daten gesperrt.</i></p>
+        <p>{{ user_expanded.user.username }}<i> hat die Ansicht der Daten gesperrt.</i></p>
     {% else %}
         <h2>Wöchentliches Ziel</h2>
         <div class="progress-container">
