@@ -973,6 +973,7 @@
     </script>
 {% endif %}
 <script src="{% static 'pwa/register_sw.js' %}"></script>
+{% comment %}
 {% with url=request.build_absolute_uri %}
     <!--Teilen-->
     <div id="shareOverlay" class="overlay">
@@ -1113,6 +1114,191 @@
         }
     </script>
 {% endwith %}
+{% endcomment %}
+
+{% with url=request.build_absolute_uri %}
+    <!--Teilen-->
+    <div id="shareOverlay" class="overlay">
+        <div class="overlay-content">
+            <button class="closeShareOverlay"><span class="emoji">&#x2717;</span></button>
+
+            <div class="share-container">
+                <h1>Seite teilen</h1>
+
+                {% if messages %}
+                    <div class="message-box">
+                        {% for message in messages %}
+                            <p class="message {{ message.level_tag }}">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <p class="h3_size">
+                    Folgende URL teilen:
+                    <span id="share-url-display">{{ url }}</span>
+                </p>
+
+                <button class="share-btn native-share" id="share">Teilen über Gerät</button>
+
+                <p class="divider">ODER</p>
+
+                <div class="share-panel">
+                    <a data-share-platform="facebook" target="_blank">
+                        <button class="share-btn facebook">Facebook</button>
+                    </a>
+                    <a data-share-platform="twitter" target="_blank">
+                        <button class="share-btn x">X (Twitter)</button>
+                    </a>
+                    <a data-share-platform="linkedin" target="_blank">
+                        <button class="share-btn linkedin">LinkedIn</button>
+                    </a>
+                    <a data-share-platform="whatsapp" target="_blank">
+                        <button class="share-btn whatsapp">WhatsApp</button>
+                    </a>
+                    <a data-share-platform="email" class="dont-show-loading">
+                        <button class="share-btn email">E-Mail</button>
+                    </a>
+
+                    <button class="share-btn copy" id="copy_button">Link kopieren</button>
+                    <button class="share-btn qrcode" id="generateQrCode">QR-Code erstellen</button>
+                </div>
+
+                <div id="qrcodeContainer">
+                    <canvas id="qrcode"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/qrcode.min.js' %}"></script>
+    <script nonce="{{ request.csp_script_nonce }}">
+
+        let currentShareUrl = "{{ url }}";
+
+        function openOverlay() {
+            document.getElementById("shareOverlay").style.display = "flex";
+
+            document.getElementById("shareOverlay").addEventListener("click", function (e) {
+                if (e.target === this) {
+                    this.style.display = "none";
+                }
+            });
+        }
+
+        function closeOverlay() {
+            document.getElementById("shareOverlay").style.display = "none";
+        }
+
+        function resetOverlayTriggers() {
+            document.querySelectorAll('.openShareOverlay').forEach((el) => {
+                el.addEventListener('click', openOverlay);
+            });
+            document.querySelectorAll('.closeShareOverlay').forEach((el) => {
+                el.addEventListener('click', closeOverlay);
+            });
+        }
+
+        function initializeShareBtns() {
+            document.getElementById('share').onclick = () => sharePage(currentShareUrl);
+            document.getElementById('copy_button').onclick = () => copyURL(currentShareUrl);
+            document.getElementById('generateQrCode').onclick = () => generateQrCode(currentShareUrl);
+        }
+
+        function updateShareUrl(newUrl) {
+            currentShareUrl = newUrl;
+
+            document.getElementById('share').onclick = () => sharePage(currentShareUrl);
+
+            document.getElementById('copy_button').onclick = () => copyURL(currentShareUrl);
+
+            document.getElementById('generateQrCode').onclick = () => generateQrCode(currentShareUrl);
+
+            document.querySelectorAll("[data-share-platform]").forEach(el => {
+                const platform = el.dataset.sharePlatform;
+
+                const urls = {
+                    facebook: `https://www.facebook.com/sharer/sharer.php?u=${currentShareUrl}`,
+                    twitter: `https://twitter.com/intent/tweet?url=${currentShareUrl}`,
+                    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${currentShareUrl}`,
+                    whatsapp: `https://api.whatsapp.com/send?text=${currentShareUrl}`,
+                    email: `mailto:?subject=Schau mal!&body=${currentShareUrl}`
+                };
+
+                el.href = urls[platform];
+            });
+
+            const urlDisplay = document.getElementById("share-url-display");
+            if (urlDisplay) {
+                urlDisplay.textContent = currentShareUrl;
+            }
+        }
+
+        function sharePage(url) {
+            if (navigator.share) {
+                navigator.share({url: url}).catch(console.error);
+            } else {
+                alert("Teilen wird auf diesem Gerät nicht unterstützt.");
+            }
+        }
+
+        function generateQrCode(url) {
+            let qrcodeContainer = document.getElementById("qrcodeContainer");
+            qrcodeContainer.innerHTML = "";
+            qrcodeContainer.style.display = "block";
+
+            new QRCode(qrcodeContainer, {
+                text: url,
+                width: 400,
+                height: 400,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            let downloadButton = document.createElement("button");
+            downloadButton.id = "qrcodeDownload";
+            downloadButton.textContent = "Download";
+            downloadButton.addEventListener("click", downloadQrCode);
+            qrcodeContainer.appendChild(downloadButton);
+        }
+
+        function downloadQrCode() {
+            const qrCodeImg = document.querySelector('#qrcodeContainer canvas');
+            const dataUrl = qrCodeImg.toDataURL("image/png");
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = 'qrcode.png';
+            link.click();
+        }
+
+        function copyURL(url) {
+            const copy_button = document.getElementById('copy_button');
+
+            navigator.clipboard.writeText(url)
+                .then(() => {
+                    copy_button.textContent = "Link kopiert";
+                    setTimeout(() => copy_button.textContent = "Link kopieren", 1000);
+                })
+                .catch(() => {
+                    copy_button.textContent = "Kopieren fehlgeschlagen";
+                    setTimeout(() => copy_button.textContent = "Link kopieren", 1000);
+                });
+        }
+
+        function shareDifferentLink(url) {
+            updateShareUrl(url);
+            openOverlay();
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            resetOverlayTriggers();
+            initializeShareBtns();
+            updateShareUrl(currentShareUrl);
+        });
+
+    </script>
+{% endwith %}
+
 <script nonce="{{ request.csp_script_nonce }}">
     const a_showLoading = document.querySelectorAll('a[href]:not([href^="#"]):not(.dont-show-loading):not(.mobile-menu-trigger):not([target="_blank"]):not([download])');
     a_showLoading.forEach((el) => {

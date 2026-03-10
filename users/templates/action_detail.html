@@ -1,0 +1,526 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+
+{% block title %}Aktion
+    {{ current_action.aktion.name }}{% if not request.user == user %} von {{ user }}{% endif %}{% endblock %}
+
+{% block content %}
+    <h1>Aktion <i>{{ current_action.aktion.name }}</i>{% if not request.user == user %} von <a href="{% url 'user_detail' user.id %}">{{ user }}</a>{% endif %}</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% if error %}
+        {% for single_error in error %}
+            <p class="error-message">{{ error }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <ul class="action-list">
+        <li class="action-list-container">
+            <p class="action-list-description">Aktion:</p>
+            <p class="action-list-value">{{ current_action.aktion.name }}</p>
+
+            {% if current_action.date %}
+                <p class="action-list-description">Datum:</p>
+                <p class="action-list-value">{{ current_action.date|date:"d.m.Y" }}</p>
+            {% endif %}
+
+            {% if current_action.description %}
+                <p class="action-list-description">Beschreibung:</p>
+                <p class="action-list-value">{{ current_action.description }}</p>
+            {% endif %}
+
+            <p class="action-list-description">Klimapunkte:</p>
+            <p class="action-list-value">{{ current_action.impact|floatformat:4 }}</p>
+
+            <p class="action-list-description">{{ current_action.aktion.mengeBeschreibung }}</p>
+            <p class="action-list-value">{{ current_action.quantity }} {{ current_action.einheit }}</p>
+        </li>
+    </ul>
+
+    {% if user == request.user %}
+        <div class="accordion">
+            <div class="accordion-header">
+                <div>
+                    <div class="accordion-title">Bearbeiten</div>
+                </div>
+                <button class="accordion-toggle" aria-expanded="false"
+                        aria-controls="accordionContent">
+                    <span></span>
+                </button>
+            </div>
+            <div class="accordion-content-wrapper">
+                <div class="accordion-content">
+                    <p id="source-label" class="action-label"></p>
+                    <p>Bitte gib bei Aktionen, die länger als einen Tag gedauert haben, das Enddatum an.</p>
+                    <button class="info-btn display-none" id="anmerkung-button" type="button">?
+                    </button>
+                    <div id="anmerkung-box" class="anmerkung-box display-none"></div>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <label for="action_type">Ausgewähltes Element:</label>
+                        <input type="text" id="action_type" name="action_type" value="{{ current_action.aktion.name }}"
+                               data-name="{{ current_action.aktion.name }}"
+                               data-klimapunkte="{{ current_action.aktion.klimapunkte|floatformat:-4 }}"
+                               data-anmerkung="{{ current_action.anmerkung }}"
+                               data-mengebeschreibung="{{ current_action.aktion.mengeBeschreibung }}"
+                               data-mengebeschreibungsingular="{{ current_action.aktion.mengeBeschreibungSingular }}"
+                               data-source="{{ current_action.aktion.source }}"
+                               data-categories="
+
+                                       {% for action_category in current_action.aktion.category.all %}{{ action_category }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+                               readonly>
+
+                        <button type="button" id="openModal">Element auswählen</button>
+
+                        <br>
+                        <br>
+                        <p id="categories-label" class="action-label"></p>
+                        <p id="klimapunkte_anzeige" class="action-label"></p>
+                        <br>
+
+                        <label for="action_description" class="action-label">Beschreibung:</label>
+                        <input type="text" id="action_description" name="action_description" placeholder="Optional"
+                               value="{{ current_action.description }}" maxlength="200"/>
+                        <br/>
+
+                        <label for="action_quantity" class="action-label" id="action_quantity_label">Menge:</label>
+                        <input type="text" id="action_quantity" name="action_quantity"
+                               value="{{ current_action.quantity }}"
+                               required/>
+                        <br/>
+
+                        <p id="impact_anzeige" class="action-label"></p>
+
+                        <label for="action_date" class="action-label">Datum:</label>
+                        <input type="date" id="action_date" name="action_date"
+                               value="{{ current_action.date|date:"Y-m-d" }}" required/>
+                        <br/>
+
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="is_truth">
+                            <span class="checkmark"></span>
+                            <span class="label-text">Ich bestätige, dass alle Angaben der Wahrheit entsprechen und mit den <a
+                                    href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmen.</span>
+                        </label>
+
+                        <button type="submit" name="edit_action">Speichern</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script nonce="{{ request.csp_script_nonce }}">
+            function toggleAnmerkung() {
+                const box = document.getElementById('anmerkung-box');
+                if (box.classList.contains('display-none')) {
+                    box.classList.remove('display-none');
+                } else {
+                    box.classList.add('display-none');
+                }
+            }
+
+            document.getElementById("anmerkung-button").addEventListener('click', toggleAnmerkung);
+        </script>
+
+        <div id="modal" class="modal">
+            <div class="modal-content">
+
+                <div id="page-categories">
+                    <h2>Kategorien</h2>
+                    <ul>
+                        {% for category in categories %}
+                            <li>
+                                <button class="category-btn"
+                                        data-categoryid="{{ category.id }}">{{ category.name }}</button>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div id="page-items" class="display-none">
+                    <h2 id="items-title"></h2>
+                    <ul id="items-list"></ul>
+                    <button id="backToCategories">Zurück</button>
+                </div>
+
+                <button class="closeModal" id="closeModal"><span class="emoji">&#x2717;</span></button>
+
+            </div>
+        </div>
+
+        <style nonce="{{ request.csp_style_nonce }}">
+            .modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.2);
+                backdrop-filter: blur(3px);
+                z-index: 9999;
+                padding: 1.5rem;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .modal.active {
+                display: flex;
+                animation: fadeIn 0.2s ease;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideUp {
+                from {
+                    transform: translateY(20px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            .modal-content {
+                background: var(--color-white);
+                width: 100%;
+                max-width: 500px;
+                padding: 2rem;
+                border-radius: 16px;
+                position: relative;
+                max-height: 85vh;
+                overflow-y: auto;
+                z-index: 10000;
+                box-shadow: var(--shadow-md);
+                animation: slideUp 0.3s ease;
+                border: 1px solid rgba(0, 0, 0, 0.04);
+            }
+
+            .modal-content h2 {
+                color: var(--color-text);
+                font-size: 1.5rem;
+                margin-top: 0;
+                margin-bottom: 1.5rem;
+                font-weight: 700;
+            }
+
+            .modal-content ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .modal-content li {
+                margin-bottom: 0.75rem;
+            }
+
+            .modal-content button {
+                width: 100%;
+                padding: 1rem;
+                margin-bottom: 0.75rem;
+                background-color: var(--color-white);
+                border: 1px solid var(--color-border);
+                color: var(--color-text);
+                border-radius: 12px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 0.95rem;
+                -webkit-appearance: none;
+                appearance: none;
+            }
+
+            .modal-content button:hover {
+                background-color: var(--color-bg-light);
+                border-color: var(--color-primary);
+                color: var(--color-primary);
+                box-shadow: 0 2px 8px rgba(4, 51, 255, 0.1);
+            }
+
+            .modal-content button:active {
+                transform: scale(0.98);
+            }
+
+            .category-btn,
+            .item-btn {
+                width: 100%;
+            }
+
+            #backToCategories {
+                background-color: var(--color-bg);
+                border: 1px solid var(--color-border);
+                color: var(--color-text);
+                margin-top: 1rem;
+            }
+
+            #backToCategories:hover {
+                background-color: var(--color-bg-light);
+                border-color: var(--color-primary);
+                color: var(--color-primary);
+            }
+
+            .closeModal {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: var(--color-bg);
+                border: 1px solid var(--color-border);
+                border-radius: 50%;
+                width: 10px !important;
+                height: 10px !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                color: var(--color-text);
+                font-size: 1.3rem;
+                transition: all 0.2s ease;
+                padding: 0;
+                z-index: 10001;
+                -webkit-appearance: none;
+                appearance: none;
+            }
+
+            .closeModal:hover {
+                background-color: var(--color-error);
+                color: var(--color-white);
+                border-color: var(--color-error);
+                transform: scale(1.1);
+            }
+
+            @media (max-width: 1200px) {
+                .modal-content {
+                    max-width: 70%;
+                    border-radius: 16px;
+                    max-height: 90vh;
+                }
+
+                .modal {
+                    padding: 1rem;
+                }
+            }
+        </style>
+
+        <script nonce="{{ request.csp_script_nonce }}">
+            const data = {
+                {% for category in categories %}
+                    "{{ category.id }}": {
+                        name: "{{ category.name }}",
+                        actions: [
+                            {% for action in category.actions.all %}
+                                {
+                                    id: "{{ action.id }}",
+                                    name: `{{ action.name }}`,
+                                    klimapunkte: `{{ action.klimapunkte|floatformat:-4 }}`,
+                                    anmerkung: `{{ action.anmerkung|safe }}`,
+                                    mengebeschreibung: `{{ action.mengeBeschreibung }}`,
+                                    mengebeschreibungsingular: `{{ action.mengeBeschreibungSingular }}`,
+                                    source: `{{ action.source|safe }}`,
+                                    categories: `{% for action_category in action.category.all %}{{ action_category }}{% if not forloop.last %}, {% endif %}{% endfor %}`
+                                },
+                            {% endfor %}
+                        ]
+                    },
+                {% endfor %}
+            };
+
+            const modal = document.getElementById("modal");
+            const openModal = document.getElementById("openModal");
+            const closeModal = document.getElementById("closeModal");
+
+            const pageCategories = document.getElementById("page-categories");
+            const pageItems = document.getElementById("page-items");
+            const itemsTitle = document.getElementById("items-title");
+            const itemsList = document.getElementById("items-list");
+            const backToCategories = document.getElementById("backToCategories");
+
+            const selectedItemInput = document.getElementById("action_type");
+
+            // Modal öffnen
+            openModal.onclick = (e) => {
+                e.preventDefault();
+                modal.classList.add("active");
+            };
+
+            // Modal schließen
+            closeModal.onclick = (e) => {
+                e.preventDefault();
+                modal.classList.remove("active");
+            };
+
+            // Modal auch bei Klick auf Hintergrund schließen
+            modal.onclick = (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove("active");
+                }
+            };
+
+            // Kategorien anklicken
+            document.querySelectorAll(".category-btn").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const categoryId = btn.dataset.categoryid;
+                    const category = data[categoryId];
+
+                    // Titel setzen
+                    itemsTitle.textContent = "Wähle eine Aktion aus: " + category.name;
+
+                    // Aktionen anzeigen
+                    itemsList.innerHTML = "";
+                    category.actions.forEach(action => {
+                        const li = document.createElement("li");
+                        li.innerHTML = `<button class='item-btn' data-id='${action.id}' data-name='${action.name}' data-klimapunkte='${action.klimapunkte}' data-anmerkung='${action.anmerkung}' data-mengebeschreibung='${action.mengebeschreibung}' data-mengebeschreibungsingular='${action.mengebeschreibungsingular}' data-source='${action.source}' data-categories='${action.categories}'>${action.name}</button>`;
+                        itemsList.appendChild(li);
+                    });
+
+                    // Seiten wechseln
+                    pageCategories.style.display = "none";
+                    pageItems.style.display = "block";
+                });
+            });
+
+            // Aktion auswählen
+            itemsList.addEventListener("click", (e) => {
+                if (e.target.classList.contains("item-btn")) {
+                    e.preventDefault();
+                    selectedItemInput.value = e.target.textContent;
+                    selectedItemInput.dataset.name = e.target.dataset.name;
+                    selectedItemInput.dataset.klimapunkte = e.target.dataset.klimapunkte;
+                    selectedItemInput.dataset.anmerkung = e.target.dataset.anmerkung;
+                    selectedItemInput.dataset.mengebeschreibung = e.target.dataset.mengebeschreibung;
+                    selectedItemInput.dataset.mengebeschreibungsingular = e.target.dataset.mengebeschreibungsingular;
+                    selectedItemInput.dataset.source = e.target.dataset.source;
+                    selectedItemInput.dataset.categories = e.target.dataset.categories;
+                    changeActionType();
+                    modal.classList.remove("active");
+                    pageItems.style.display = "none";
+                    pageCategories.style.display = "block";
+                }
+            });
+
+            // Zurück zu Kategorien
+            backToCategories.onclick = (e) => {
+                e.preventDefault();
+                pageItems.style.display = "none";
+                pageCategories.style.display = "block";
+            };
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const today = new Date().toISOString().split("T")[0];
+                let dateInput = document.getElementById('action_date');
+                dateInput.setAttribute('max', today);
+            });
+
+            function validateNumber(input) {
+                input = input.toString();
+                if (input === "" || input.includes('.')) {
+                    return false;
+                }
+                input = input.replace(',', '.');
+                try {
+                    input = parseFloat(input);
+                } catch (e) {
+                    console.warn(e);
+                    return false;
+                }
+                if (input <= 0) {
+                    return false;
+                }
+                return input;
+            }
+
+            function changeActionType() {
+                const action_type = document.getElementById('action_type');
+
+                const anmerkungBox = document.getElementById('anmerkung-box');
+                const anmerkungButton = document.getElementById('anmerkung-button');
+
+                const klimapunkte_anzeige = document.getElementById('klimapunkte_anzeige');
+                const action_quantity_label = document.getElementById('action_quantity_label');
+
+                const sourceLabel = document.getElementById('source-label');
+                const categoryLabel = document.getElementById('categories-label');
+
+                let anmerkung = action_type.dataset.anmerkung;
+                let klimapunkte = action_type.dataset.klimapunkte;
+                let mengeBeschreibung = action_type.dataset.mengebeschreibung;
+                let mengeBeschreibungSingular = action_type.dataset.mengebeschreibungsingular;
+                let source = action_type.dataset.source;
+                let categories = action_type.dataset.categories;
+
+                sourceLabel.innerHTML = `Quelle: ${source}`;
+                categoryLabel.textContent = `Kategorien: ${categories}`;
+
+                action_quantity_label.textContent = mengeBeschreibung;
+                klimapunkte_anzeige.textContent = `Klimapunkte pro ${mengeBeschreibungSingular}: ${klimapunkte}`;
+                calculateImpact();
+
+                if (anmerkung !== '-') {
+                    anmerkungButton.classList.remove('display-none');
+                    anmerkungBox.textContent = anmerkung;
+                } else {
+                    anmerkungButton.classList.add('display-none');
+                    anmerkungBox.textContent = '';
+                    anmerkungBox.classList.add('display-none');
+                }
+            }
+
+            document.getElementById('action_quantity').addEventListener('input', calculateImpact);
+
+            function calculateImpact() {
+                const action_type = document.getElementById('action_type');
+                const impact_anzeige = document.getElementById('impact_anzeige');
+
+                let klimapunkte = action_type.dataset.klimapunkte;
+                klimapunkte = validateNumber(klimapunkte);
+
+                const quantityInput = document.getElementById('action_quantity');
+                let quantity = quantityInput.value.trim();
+                quantity = validateNumber(quantity);
+
+                if (quantity === false) {
+                    impact_anzeige.textContent = '';
+                    return;
+                }
+
+                let impact = klimapunkte * quantity;
+
+                if (isNaN(impact)) {
+                    impact_anzeige.textContent = '';
+                } else {
+                    impact = Intl.NumberFormat('de-DE', {
+                        minimumFractionDigits: 4,
+                        maximumFractionDigits: 4
+                    }).format(impact);
+                    impact_anzeige.textContent = 'Insgesamt durch diese Aktion gewonnene Klimapunkte: ' + impact;
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                changeActionType();
+            });
+        </script>
+
+        <form method="post" class="form-confirm" data-confirm="Willst du diese Aktion wirklich löschen?">
+            {% csrf_token %}
+            <button type="submit" name="delete_action" class="color-red">Diese Aktion löschen</button>
+        </form>
+    {% endif %}
+{% endblock %}

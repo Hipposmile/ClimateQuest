@@ -1,14 +1,19 @@
 from datetime import datetime, date, timedelta
 
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
+from dateutil.relativedelta import relativedelta
 from django.contrib import messages
-from aktionen.models import Aktion
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.db.models import Sum
+from django.shortcuts import render, redirect
+from django.urls import reverse
 
+from aktionen.models import Aktion, AktionenListe, Category
+from aktionen.views import validate_number, get_period_start, aktion_date_invalid
 from core.all_messages import all_messages
 from personals.models import UserErweitert
-from utils.functions import get_klimapunkte, get_klimapunkte_from_likes, get_weekly_goal_from_user, get_streak_from_user, send_mail_function, get_level
+from utils.functions import dezimalstellen, get_klimapunkte, get_klimapunkte_from_likes, get_weekly_goal_from_user, \
+    get_streak_from_user, send_mail_function, get_level, create_notification
 
 
 def klimapunkte_view(request, user_id):
@@ -137,6 +142,167 @@ def user_detail(request, user_id):
     return render(request, './user_detail.html', {'user_expanded': user_expanded, 'weekly_goal': weekly_goal,
                                                   'weekly_goal_progress_percent': weekly_goal_progress_percent,
                                                   'weekly_klimapunkte': weekly_klimapunkte, 'streak': streak})
+
+
+def action_detail(request, action_id, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        messages.error(request, all_messages["user_not_found"])
+        return redirect('users_overview')
+
+    try:
+        current_action = Aktion.objects.get(id=action_id, user=user)
+    except Aktion.DoesNotExist:
+        messages.error(request, all_messages["action_not_found"])
+        return redirect('history_me')
+
+    aktionen = AktionenListe.objects.all().order_by('name')
+    categories = Category.objects.all().order_by('name')
+
+    if request.user == user:
+        if request.method == 'POST':
+            if 'edit_action' in request.POST:
+                is_truth = request.POST.get('is_truth') == 'on'
+                if not is_truth:
+                    messages.error(request, all_messages["not_is_truth"])
+                    return redirect('edit_action', action_id=action_id)
+
+                action_type = request.POST.get('action_type')
+                if not action_type:
+                    messages.error(request, all_messages["action_name_missing"])
+                    return redirect('edit_action', action_id)
+
+                try:
+                    action = AktionenListe.objects.get(name=action_type)
+                except AktionenListe.DoesNotExist:
+                    messages.error(request, all_messages["action_not_found"])
+
+                action_description = request.POST.get('action_description')
+                if len(action_description) > 200:
+                    messages.error(request, all_messages["too_long_input"])
+
+                action_quantity = request.POST.get('action_quantity')
+                if not action_quantity:
+                    messages.error(request, all_messages["missing_required_inputs"])
+                    return redirect('edit_action', action_id)
+                try:
+                    action_quantity = validate_number(action_quantity, dezimalstellen)
+                except ValueError:
+                    messages.error(request, all_messages["action_invalid_quantity"])
+                    return redirect('edit_action', action_id)
+                if action_quantity <= 0 or action_quantity is False:
+                    messages.error(request, all_messages["invalid_quantity"])
+                    return redirect('edit_action', action_id)
+                elif (Aktion.objects.filter(user=request.user, aktion=action).aggregate(total=Sum('quantity'))[
+                          "total"] or 0) + action_quantity > action.max:
+                    messages.error(request, all_messages["max_action_quantity"])
+                    return redirect('edit_action', action_id)
+
+                action_date_raw = request.POST.get('action_date')
+                if not action_date_raw:
+                    messages.error(request, all_messages["missing_required_inputs"])
+                    return redirect('edit_action', action_id)
+                try:
+                    action_date = datetime.strptime(action_date_raw, '%Y-%m-%d').date()
+                except ValueError:
+                    messages.error(request, all_messages["invalid_date"])
+                    return redirect('edit_action', action_id)
+
+                action_start = get_period_start(action_date, action_quantity, action.mengeBeschreibungSingular.lower())
+
+                if action_date > datetime.now().date():
+                    messages.error(request, all_messages["date_in_future"])
+                    return redirect('edit_action', action_id)
+                if action_start:
+                    if action_start < date.today() - relativedelta(months=1):
+                        messages.error(request, all_messages["action_too_past"])
+                        return redirect('edit_action', action_id)
+                else:
+                    if action_date < date.today() - relativedelta(months=1):
+                        messages.error(request, all_messages["action_too_past"])
+                        return redirect('add')
+
+                if aktion_date_invalid(action, action_date, action_quantity, request.user, action_id):
+                    messages.error(request, all_messages["action_already_set_in_period"])
+                    return redirect('edit_action', action_id)
+
+                action_existing = any(aktion.name == action_type for aktion in aktionen)
+                if not action_existing:
+                    messages.error(request, all_messages["invalid_action_type"])
+                    return redirect('edit_action', action_id)
+
+                old_level = get_level(request.user)
+                old_streak = get_streak_from_user(request.user)
+
+                current_action.aktion = action
+                current_action.description = action_description
+                current_action.user = request.user
+                current_action.quantity = action_quantity
+                current_action.date = action_date
+                current_action.save()
+
+                new_level = get_level(request.user)
+                new_streak = get_streak_from_user(request.user)
+
+                if old_level['level_number'] < new_level['level_number']:
+                    create_notification(request,
+                                        f'Du hast eine Aktion vom Typen {action_type} bearbeitet und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>',
+                                        request.user,
+                                        url=reverse('level_me'))
+                    messages.success(request,
+                                     f'Du hast eine Aktion vom Typen {action_type} bearbeitet und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>')
+                elif old_level['level_number'] > new_level['level_number']:
+                    create_notification(request,
+                                        f'Du hast eine Aktion vom Typen {action_type} bearbeitet, dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>',
+                                        request.user,
+                                        url=reverse('level_me'))
+                    messages.success(request,
+                                     f'Du hast eine Aktion vom Typen {action_type} bearbeitet, dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>',
+                                     )
+                if old_streak < new_streak:
+                    create_notification(request,
+                                        f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so deine Streak verlängert. <span class="emoji">&#x1F973;</span>',
+                                        request.user,
+                                        url=reverse('dashboard'))
+                    messages.success(request,
+                                     f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so deine Streak verlängert. <span class="emoji">&#x1F973;</span>')
+                elif old_streak > new_streak:
+                    create_notification(request,
+                                        f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so deine Streak verkürzt. <span class="emoji">&#x1F622;</span>',
+                                        request.user,
+                                        url=reverse('dashboard'))
+                    messages.success(request,
+                                     f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so deine Streak verkürzt. <span class="emoji">&#x1F622;</span>')
+
+                messages.success(request, all_messages["action_edited"])
+                return redirect('history_me')
+
+            if 'delete_action' in request.POST:
+                old_level = get_level(request.user)
+                old_streak = get_streak_from_user(request.user)
+                action_type = current_action.aktion.name
+                current_action.delete()
+                new_level = get_level(request.user)
+                new_streak = get_streak_from_user(request.user)
+                if old_level['level_number'] > new_level['level_number']:
+                    create_notification(request,
+                                        f'Du hast eine Aktion vom Typen {action_type} gelöscht, dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>',
+                                        request.user,
+                                        url=reverse('level_me'))
+                    messages.success(request,
+                                     f'Du hast eine Aktion vom Typen {action_type} gelöscht, dadurch Klimapunkte verloren und bist so ins Level {new_level["current_level"].description} abgestiegen. <span class="emoji">&#x1F622;</span>')
+                if old_streak > new_streak:
+                    create_notification(request,
+                                        f'Du hast eine neue Aktion vom Typen {action_type} gelöscht und so deine Streak verkürzt. <span class="emoji">&#x1F622;</span>',
+                                        request.user,
+                                        url=reverse('dashboard'))
+                    messages.success(request,
+                                     f'Du hast eine neue Aktion vom Typen {action_type} gelöscht und so deine Streak verkürzt. <span class="emoji">&#x1F622;</span>')
+                messages.success(request, all_messages["action_deleted"])
+                return redirect('history_me')
+
+    return render(request, './action_detail.html', {'categories': categories, 'current_action': current_action, 'user': user})
 
 
 @login_required

@@ -49,7 +49,7 @@ def dashboard(request):
     if weekly_goal_progress_percent >= 100:
         perfect_week = all(perfect_week_progress.values())
 
-    aktionen = Aktion.objects.filter(user=request.user).order_by('date')[:2]
+    aktionen = Aktion.objects.filter(user=request.user).order_by('-date')[:2]
 
     klimapunkte = get_all_klimapunkte_from_user(request.user)
 

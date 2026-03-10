@@ -416,7 +416,7 @@
                     <p class="action-list-description">{{ aktion.aktion.mengeBeschreibung }}</p>
                     <p class="action-list-value">{{ aktion.quantity }} {{ aktion.einheit }}</p>
 
-                    <a href="{% url 'edit_action' aktion.id %}">Bearbeiten</a>
+                    <a href="{% url 'action_detail' aktion.id request.user.id %}">Details</a>
                 </li>
             {% endfor %}
         </ul>

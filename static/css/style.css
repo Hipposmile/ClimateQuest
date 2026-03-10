@@ -362,12 +362,28 @@ main {
     max-width: 500px;
     margin: 2rem auto;
     padding: 0;
-    background: var(--color-white);
+    background-color: var(--color-white);
     border-radius: 8px;
     box-shadow: var(--shadow-md);
     list-style: none;
     overflow: hidden;
     text-align: center;
+}
+
+.action-list-container.is-focused {
+    animation: focus 2s forwards 1;
+}
+
+@keyframes focus {
+    0% {
+        background-color: var(--color-white);
+    }
+    50% {
+        background-color: #ff5500;
+    }
+    100% {
+        background-color: var(--color-white);
+    }
 }
 
 .action-list li {
