@@ -163,7 +163,7 @@ def add_event(request):
             messages.error(request, all_messages["date_must_be_tomorrow"])
             return redirect('add_event')
 
-        Event.objects.create(
+        event = Event.objects.create(
             name=name,
             description=content,
             adress=adress,
@@ -173,7 +173,7 @@ def add_event(request):
         )
 
         messages.success(request, all_messages["successfully_created_event"])
-        return redirect('events_overview')
+        return redirect('event_detail', event.id)
 
     return render(request, './add_event.html')
 

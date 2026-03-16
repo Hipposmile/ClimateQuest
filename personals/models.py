@@ -1,6 +1,15 @@
 from django.contrib.auth.models import User
-from django.db import models
 from django.core.validators import MinValueValidator
+from django.db import models
+
+class TreeCodes(models.Model):
+    code = models.CharField(max_length=100)
+    redeemURL = models.URLField()
+    sponsor = models.CharField(max_length=100)
+    planted = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.sponsor} --> {self.code}'
 
 
 class UserErweitert(models.Model):
@@ -9,9 +18,21 @@ class UserErweitert(models.Model):
     mail_verified = models.BooleanField(default=False)
     statement = models.TextField(default="Hallo. Ich benutze ClimateQuest.")
     weekly_goal = models.PositiveIntegerField(default=20, validators=[MinValueValidator(1)])
-    given_credits = models.PositiveIntegerField(default=0)
-
+    planted_trees = models.ManyToManyField(TreeCodes)
     allows_data_view = models.BooleanField(default=False)
+
+    @property
+    def given_credits(self):
+        return self.planted_trees.count()
+
+    def plant_tree(self):
+        tree_code = TreeCodes.objects.filter(planted=False).first()
+        if not tree_code:
+            return False
+        tree_code.planted = True
+        tree_code.save()
+        self.planted_trees.add(tree_code)
+        return True
 
     def __str__(self):
         return self.user.username

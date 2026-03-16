@@ -45,7 +45,9 @@ def forum_overview(request):
         forum_posts = forum_posts.order_by('title')
         ordered_by = "Titel"
         search_keyword = None
-    return render(request, './forum_overview.html', {'forum_posts': forum_posts, 'ordered_by': ordered_by, 'search_keyword': search_keyword})
+    return render(request, './forum_overview.html',
+                  {'forum_posts': forum_posts, 'ordered_by': ordered_by, 'search_keyword': search_keyword})
+
 
 @login_required
 def add_forum_post(request):
@@ -68,9 +70,11 @@ def add_forum_post(request):
 
         clean_html(content)
 
-        ForumPost.objects.create(title=title, content=content, creator=request.user)
-        return redirect('forum_overview')
+        post = ForumPost.objects.create(title=title, content=content, creator=request.user)
+
+        return redirect('post_detail', post.id)
     return render(request, './add_forum_post.html')
+
 
 def post_detail(request, post_id):
     try:
@@ -78,7 +82,7 @@ def post_detail(request, post_id):
     except ForumPost.DoesNotExist:
         messages.error(request, all_messages['post_not_found'])
         return redirect('forum_overview')
-    
+
     if request.method == 'POST':
         is_truth = request.POST.get('is_truth') == 'on'
         if not is_truth:
@@ -93,6 +97,7 @@ def post_detail(request, post_id):
         clean_html(content)
 
         Answer.objects.create(content=content, creator=request.user, forum_post=post)
-        create_notification(request, "Deine Forumsfrage wurde beantwortet", post.creator, url=reverse('post_detail', args=[post_id]))
+        create_notification(request, "Deine Forumsfrage wurde beantwortet", post.creator,
+                            url=reverse('post_detail', args=[post_id]))
         return redirect('post_detail', post_id=post_id)
     return render(request, './forum_detail.html', {'post': post, 'answers': post.answers.all()})

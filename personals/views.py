@@ -1,6 +1,7 @@
 import math
 import os
 
+import requests
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
@@ -8,6 +9,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils.encoding import force_bytes
@@ -16,12 +18,13 @@ from django.utils.http import urlsafe_base64_encode
 from dotenv import load_dotenv
 
 from core.all_messages import all_messages
-from production_conf.views import development_only
 from family.models import Family
 from personals.models import UserErweitert
+from production_conf.views import development_only
 from utils.functions import create_notification, create_internal_error, ist_email_gueltig, send_mail_function, \
     get_families_of_user, get_communities_of_user, generate_random_password, get_all_klimapunkte_from_user
 from .tokens import email_verification_token
+from .models import TreeCodes
 
 load_dotenv()
 
@@ -460,63 +463,11 @@ def credit_view(request):
 
     if request.method == 'POST':
         if available_credits > 0:
-            response = plant_tree_view(request)
-            return response
-            # user_extended = request.user.usererweitert
-            # user_extended.given_credits += 1
-            # user_extended.save()
-            # return redirect('credit_view')
+            worked = request.user.usererweitert.plant_tree()
+            if not worked:
+                messages.error(request, all_messages["error_planting_tree"])
+                create_internal_error(request, f'{all_messages["error_planting_tree"]} (vermutlich sind keine Baumcodes mehr vorhanden)', all_messages["error_planting_tree"])
+            return redirect('credit_view')
 
     return render(request, './credit_view.html',
                   {'available_credits': available_credits, "percent_done": percent_done})
-
-
-import requests
-import uuid
-from django.http import JsonResponse
-
-
-def plant_tree_view(request):
-    api_key = "23869213-ca2d-4985-a31e-59089ea17690"
-    project_id = "0z8ct02U1fmM1yU"
-    username = request.user.username
-
-    # Der Endpunkt für Spenden/Pflanzungen
-    url = "https://app.plant-for-the-planet.org/app/donations"
-
-    # Header mit Ihrem API-Key und einer Idempotency-Key zur Sicherheit
-    headers = {
-        "X-TOKEN-API": api_key,
-        "Content-Type": "application/json",
-        "IDEMPOTENCY-KEY": str(uuid.uuid4())  # Verhindert doppelte Buchung bei Re-clicks [10, 11]
-    }
-
-    # Payload: Wir pflanzen 1 Baum (unit: 1) als Geschenk
-    payload = {
-        "lineItems": [
-            {
-                "projectId": project_id,
-                "units": 1,
-                "purpose": "gift"
-            }
-        ],
-        "gift": {
-            "recipientName": username,
-            "type": "gift"
-        }
-    }
-
-    try:
-        response = requests.post(url, json=payload, headers=headers)
-        data = response.json()
-
-        if response.status_code == 200:
-            # Der 'token' kann genutzt werden, um das Zertifikat aufzurufen
-            tree_token = data.get("token")
-            # Außerhalb der Quellen: Meistens wird hier ein Link zum Zertifikat generiert
-            return JsonResponse({"status": "success", "token": tree_token})
-        else:
-            return JsonResponse({"status": "error", "message": data}, status=400)
-
-    except Exception as e:
-        return JsonResponse({"status": "error", "message": str(e)}, status=500)

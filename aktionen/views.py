@@ -13,6 +13,12 @@ from django.db.models import Sum
 from utils.functions import dezimalstellen, get_level, get_streak_from_user, create_notification
 
 
+def get_if_timely_action(unit):
+    unit = unit.lower()
+    if unit == "tag" or unit == "woche" or unit == "monat":
+        return True
+    return False
+
 def get_period_start(end, quantity, unit):
     if unit == "tag":
         delta = timedelta(days=quantity)
@@ -114,7 +120,7 @@ def add(request):
         if action_quantity <= 0 or action_quantity is False:
             messages.error(request, all_messages["invalid_quantity"])
             return redirect('add')
-        elif (Aktion.objects.filter(user=request.user, aktion=action).aggregate(total=Sum('quantity'))[
+        elif not get_if_timely_action(action.mengeBeschreibungSingular) and (Aktion.objects.filter(user=request.user, aktion=action, date=date.today()).aggregate(total=Sum('quantity'))[
                   "total"] or 0) + action_quantity > action.max:
             messages.error(request, all_messages["max_action_quantity"])
             return redirect('add')
@@ -155,7 +161,7 @@ def add(request):
         old_level = get_level(request.user)
         old_streak = get_streak_from_user(request.user)
 
-        Aktion.objects.create(
+        aktion = Aktion.objects.create(
             aktion=action,
             description=action_description,
             user=request.user,
@@ -181,7 +187,7 @@ def add(request):
             messages.success(request,
                              f'Du hast eine neue Aktion vom Typen {action_type} erstellt und deine Streak verlängert. <span class="emoji">&#x1F973;</span>')
         messages.success(request, all_messages["action_added"])
-        return redirect('history_me')
+        return redirect('action_detail', aktion.id, request.user.id)
 
     return render(request, './add.html', {'categories': categories})
 

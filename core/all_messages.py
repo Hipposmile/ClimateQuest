@@ -131,6 +131,8 @@ all_messages = {
     "successfully_changed_goal": "Wöchentliches Ziel erfolgreich geändert.",
     "weekly_goal_too_small": "Das wöchentliche Ziel ist zu klein.",
 
+    "error_planting_tree": "Beim Pflanzen deines Baumes ist ein Fehler aufgetreten",
+
     # --------
     # Aktion
     # --------

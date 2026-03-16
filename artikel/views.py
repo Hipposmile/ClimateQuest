@@ -82,7 +82,7 @@ def add_artikel(request):
 
         content = clean_html(content)
 
-        Artikel.objects.create(
+        artikel = Artikel.objects.create(
             name=name,
             content=content,
             creator=request.user
@@ -90,7 +90,7 @@ def add_artikel(request):
 
         messages.success(request, all_messages["successfully_created_artikel"])
 
-        return redirect('artikel_overview')
+        return redirect('artikel_detail', artikel.id)
 
     return render(request, 'add_artikel.html')
 
