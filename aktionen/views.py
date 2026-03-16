@@ -42,13 +42,13 @@ def aktion_exists_in_period(action_type, end_date, quantity, user, exclude_id=No
         return Aktion.objects.filter(
             user=user,
             aktion=action_type,
-            date__range=(start, end_date)
+            date__range=(start + relativedelta(days=1), end_date)
         ).exclude(id=exclude_id).exists()
     else:
         return Aktion.objects.filter(
             user=user,
             aktion=action_type,
-            date__range=(start, end_date)
+            date__range=(start + relativedelta(days=1), end_date)
         ).exists()
 
 
@@ -67,9 +67,9 @@ def aktion_is_in_different_action_period(action_type, end_date, user, exclude_id
         ).values('date', 'quantity', unit=Lower('aktion__mengeBeschreibungSingular'))
 
     for action in actions:
-        start = get_period_start(action.get('date'), action.get('quantity'), action.get('unit'))
-        if start is None:
-            break
+        start = get_period_start(action.get('date'), action.get('quantity'), action.get('unit')) + relativedelta(days=1)
+        #if start is None:
+        #    break
         if end_date > start:
             return True
     return False
