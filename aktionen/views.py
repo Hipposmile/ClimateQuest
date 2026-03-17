@@ -70,6 +70,8 @@ def aktion_is_in_different_action_period(action_type, end_date, user, exclude_id
         start = get_period_start(action.get('date'), action.get('quantity'), action.get('unit')) + relativedelta(days=1)
         #if start is None:
         #    break
+        if start is not None:
+            start += relativedelta(days=1)
         if end_date > start:
             return True
     return False
