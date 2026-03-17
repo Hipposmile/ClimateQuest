@@ -67,7 +67,7 @@ def aktion_is_in_different_action_period(action_type, end_date, user, exclude_id
         ).values('date', 'quantity', unit=Lower('aktion__mengeBeschreibungSingular'))
 
     for action in actions:
-        start = get_period_start(action.get('date'), action.get('quantity'), action.get('unit')) + relativedelta(days=1)
+        start = get_period_start(action.get('date'), action.get('quantity'), action.get('unit'))
         #if start is None:
         #    break
         if start is not None:
