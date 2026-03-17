@@ -68,8 +68,8 @@ def aktion_is_in_different_action_period(action_type, end_date, user, exclude_id
 
     for action in actions:
         start = get_period_start(action.get('date'), action.get('quantity'), action.get('unit'))
-        #if start is None:
-        #    break
+        if start is None:
+            break
         if start is not None:
             start += relativedelta(days=1)
         if end_date > start:
@@ -110,6 +110,16 @@ def add(request):
         if len(action_description) > 200:
             messages.error(request, all_messages["too_long_input"])
 
+        action_date_raw = request.POST.get('action_date')
+        if not action_date_raw:
+            messages.error(request, all_messages["missing_required_inputs"])
+            return redirect('add')
+        try:
+            action_date = datetime.strptime(action_date_raw, '%Y-%m-%d').date()
+        except ValueError:
+            messages.error(request, all_messages["invalid_date"])
+            return redirect('add')
+
         action_quantity = request.POST.get('action_quantity')
         if not action_quantity:
             messages.error(request, all_messages["missing_required_inputs"])
@@ -122,19 +132,11 @@ def add(request):
         if action_quantity <= 0 or action_quantity is False:
             messages.error(request, all_messages["invalid_quantity"])
             return redirect('add')
-        elif not get_if_timely_action(action.mengeBeschreibungSingular) and (Aktion.objects.filter(user=request.user, aktion=action, date=date.today()).aggregate(total=Sum('quantity'))[
-                  "total"] or 0) + action_quantity > action.max:
+        elif not get_if_timely_action(action.mengeBeschreibungSingular) and (
+                Aktion.objects.filter(user=request.user, aktion=action, date=action_date).aggregate(
+                        total=Sum('quantity'))[
+                    "total"] or 0) + action_quantity > action.max:
             messages.error(request, all_messages["max_action_quantity"])
-            return redirect('add')
-
-        action_date_raw = request.POST.get('action_date')
-        if not action_date_raw:
-            messages.error(request, all_messages["missing_required_inputs"])
-            return redirect('add')
-        try:
-            action_date = datetime.strptime(action_date_raw, '%Y-%m-%d').date()
-        except ValueError:
-            messages.error(request, all_messages["invalid_date"])
             return redirect('add')
 
         action_start = get_period_start(action_date, action_quantity, action.mengeBeschreibungSingular.lower())
