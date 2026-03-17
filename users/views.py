@@ -277,7 +277,7 @@ def action_detail(request, action_id, user_id):
                                      f'Du hast eine neue Aktion vom Typen {action_type} bearbeitet und so deine Streak verkürzt. <span class="emoji">&#x1F622;</span>')
 
                 messages.success(request, all_messages["action_edited"])
-                return redirect('history_me')
+                return redirect('action_detail', action_id, user_id)
 
             if 'delete_action' in request.POST:
                 old_level = get_level(request.user)
