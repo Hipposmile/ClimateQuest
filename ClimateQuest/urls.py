@@ -31,7 +31,7 @@ from personals.sitemaps import LoginSitemap, RegisterSitemap, PersonalSettingsSi
 from users.sitemaps import KlimapunkteViewSitemap, LevelViewSitemap, HistorySitemap
 from aktionen.sitemaps import AddAktionenSitemap
 from presents.sitemaps import PresentsOverviewSitemap, AddPresentSitemap
-from pages.sitemaps import TestersSitemap, AknachhaltigkeitSitemap
+from pages.sitemaps import MobileAppsSitemap, AknachhaltigkeitSitemap
 
 sitemaps = {
     "home": HomeSitemap(),
@@ -72,7 +72,7 @@ sitemaps = {
     "presents_overview": PresentsOverviewSitemap(),
     "add_present": AddPresentSitemap(),
 
-    "testers": TestersSitemap(),
+    "mobile_apps": MobileAppsSitemap(),
     "aknachhaltigkeit": AknachhaltigkeitSitemap()
 }
 

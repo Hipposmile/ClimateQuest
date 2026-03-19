@@ -2,12 +2,12 @@ from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
 
-class TestersSitemap(Sitemap):
+class MobileAppsSitemap(Sitemap):
     changefreq = "monthly"
     priority = 4.0
 
     def items(self):
-        return ['testers']
+        return ['mobile_apps']
 
     def location(self, item):
         return reverse(item)
