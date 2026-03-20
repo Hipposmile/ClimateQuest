@@ -8,7 +8,8 @@
     {{ current_action.aktion.name }}{% if not request.user == user %} von {{ user }}{% endif %}{% endblock %}
 
 {% block content %}
-    <h1>Aktion <i>{{ current_action.aktion.name }}</i>{% if not request.user == user %} von <a href="{% url 'user_detail' user.id %}">{{ user }}</a>{% endif %}</h1>
+    <h1>Aktion <i>{{ current_action.aktion.name }}</i>{% if not request.user == user %} von
+        <a href="{% url 'user_detail' user.id %}">{{ user }}</a>{% endif %}</h1>
 
     {% if messages %}
         {% for message in messages %}
@@ -21,6 +22,11 @@
             <p class="error-message">{{ error }}</p>
         {% endfor %}
     {% endif %}
+
+    <a href="{% url 'add' %}" class="redirect-link">
+        <span>Aktion hinzufügen</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
 
     <ul class="action-list">
         <li class="action-list-container">
@@ -75,6 +81,7 @@
                                data-mengebeschreibungsingular="{{ current_action.aktion.mengeBeschreibungSingular }}"
                                data-source="{{ current_action.aktion.source }}"
                                data-categories="
+
 
                                        {% for action_category in current_action.aktion.category.all %}{{ action_category }}{% if not forloop.last %}, {% endif %}{% endfor %}"
                                readonly>
