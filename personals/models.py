@@ -18,7 +18,7 @@ class UserErweitert(models.Model):
     mail_verified = models.BooleanField(default=False)
     statement = models.TextField(default="Hallo. Ich benutze ClimateQuest.")
     weekly_goal = models.PositiveIntegerField(default=20, validators=[MinValueValidator(1)])
-    planted_trees = models.ManyToManyField(TreeCodes)
+    planted_trees = models.ManyToManyField(TreeCodes, null=True, blank=True)
     allows_data_view = models.BooleanField(default=False)
 
     @property
