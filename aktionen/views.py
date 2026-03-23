@@ -208,3 +208,6 @@ def validate_number(number, input_decimals):
         except ValueError:
             return False
     return round(number, input_decimals)
+
+def test():
+    pass
