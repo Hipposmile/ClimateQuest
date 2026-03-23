@@ -97,8 +97,10 @@ urlpatterns = [
     path('sw.js', TemplateView.as_view(template_name='sw.js', content_type='application/x-javascript')),
     path('.well-known/assetlinks.json',
          TemplateView.as_view(template_name='assetlinks.json', content_type='application/json')),
-    path('apple-app-site-association', TemplateView.as_view(template_name='aasa.json', content_type='application/json')),
+    path('apple-app-site-association',
+         TemplateView.as_view(template_name='aasa.json', content_type='application/json')),
 
+    # Webpush
     path('webpush/', include('webpush.urls')),
 
     # Hot Reload
