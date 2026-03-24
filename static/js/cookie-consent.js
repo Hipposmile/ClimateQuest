@@ -1,14 +1,10 @@
-// 🧠 Konfiguration: Cookie-Kategorien und ihre Erklärungen
 const cookieCategories = {
     essential: {
         label: "Essenzielle Cookies",
         explanation: "Unverzichtbar für den Betrieb der Website. Dazu gehört die Verwendung des localStorage.",
         required: true
-    },
-    recaptcha: {
-        label: "reCAPTCHA",
-        explanation: "Wird zur Registrierung benötigt.",
-        required: false
+    }, recaptcha: {
+        label: "reCAPTCHA", explanation: "Wird zur Registrierung benötigt.", required: false
     }
 };
 
@@ -40,7 +36,6 @@ function addCookieBanner() {
       </div>`;
     document.body.appendChild(banner);
 
-// 🧩 Eventhandler definieren
     document.getElementById('btn-accept').addEventListener('click', () => {
         const consent = {};
         for (const key in cookieCategories) {
@@ -81,7 +76,6 @@ function addCookieBanner() {
     });
 }
 
-// 💾 Consent speichern und Banner entfernen
 function setConsent(consent) {
     localStorage.setItem('cookieConsent', JSON.stringify(consent));
     ['cookie-banner', 'cookie-overlay'].forEach(id => document.getElementById(id)?.remove());
