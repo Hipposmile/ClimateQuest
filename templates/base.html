@@ -558,22 +558,22 @@
 <header id="header">
     <nav class="tabbar">
         {% if request.user.is_authenticated %}
-            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="aktionen">
-                <span class="tab-icon"><span class="emoji">&#x1F4CA;</span></span>
-                <span class="tab-label">Aktionen</span>
+            <a href="{% url 'dashboard' %}" class="tab-item">
+                <span class="tab-icon"><span class="emoji">&#x1F5A5;</span></span>
+                <span class="tab-label">Dashboard</span>
             </a>
-            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="family">
+            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="people">
                 <span class="tab-icon"><span
                         class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span></span>
-                <span class="tab-label">Family</span>
-            </a>
-            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="community">
-                <span class="tab-icon"><span class="emoji">&#x1F465;</span></span>
-                <span class="tab-label">Community</span>
+                <span class="tab-label">User</span>
             </a>
             <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="education">
                 <span class="tab-icon"><span class="emoji">&#x1F393;</span></span>
                 <span class="tab-label">Bildung</span>
+            </a>
+            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="fast">
+                <span class="tab-icon"><span class="emoji">&#x26A1;</span></span>
+                <span class="tab-label">Schnellzugriff</span>
             </a>
             <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="more">
                 <span class="tab-icon"><span class="emoji">&#xE250;</span></span>
@@ -589,7 +589,7 @@
                 <span class="tab-label">Bildung</span>
             </a>
             <a href="{% url 'users_overview' %}" class="tab-item">
-                <span class="tab-icon"><span class="emoji">&#x1F3E0;</span></span>
+                <span class="tab-icon"><span class="emoji">&#x1F64B;</span></span>
                 <span class="tab-label">User</span>
             </a>
             <a href="{% url 'login_view' %}" class="tab-item">
@@ -598,51 +598,6 @@
             </a>
         {% endif %}
     </nav>
-
-    {% if request.user.is_authenticated %}
-        <div class="mobile-menu-overlay" data-menu="aktionen">
-            <div class="mobile-menu-modal">
-                <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
-                <h2><span class="emoji">&#x1F4CA;</span> Aktionen</h2>
-                <nav class="mobile-menu-nav">
-                    <a href="{% url 'add' %}"><span class="emoji">&#x2795;</span> Aktion
-                        hinzufügen</a>
-                    <a href="{% url 'history_me' %}"><span class="emoji">&#x1F4DC;</span>
-                        Aktions-Historie</a>
-                </nav>
-            </div>
-        </div>
-
-        <div class="mobile-menu-overlay" data-menu="family">
-            <div class="mobile-menu-modal">
-                <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
-                <h2><span class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span> Family</h2>
-                <nav class="mobile-menu-nav">
-                    <a href="{% url 'create_family' %}"><span class="emoji">&#x2795;</span>
-                        Family erstellen</a>
-                    <a href="{% url 'join_family' %}"><span class="emoji">&#x1F91D;</span>
-                        Family beitreten</a>
-                    <a href="{% url 'families_view' %}"><span class="emoji">&#x1F440;</span>
-                        Meine Families</a>
-                </nav>
-            </div>
-        </div>
-
-        <div class="mobile-menu-overlay" data-menu="community">
-            <div class="mobile-menu-modal">
-                <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
-                <h2><span class="emoji">&#x1F465;</span> Community</h2>
-                <nav class="mobile-menu-nav">
-                    <a href="{% url 'create_community' %}"><span class="emoji">&#x2795;</span>
-                        Community erstellen</a>
-                    <a href="{% url 'join_community' %}"><span class="emoji">&#x1F91D;</span>
-                        Community beitreten</a>
-                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F440;</span>
-                        Meine Communities</a>
-                </nav>
-            </div>
-        </div>
-    {% endif %}
 
     <div class="mobile-menu-overlay" data-menu="education">
         <div class="mobile-menu-modal">
@@ -657,52 +612,76 @@
         </div>
     </div>
 
-    <div class="mobile-menu-overlay" data-menu="more">
-        <div class="mobile-menu-modal">
-            <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
-            <h2><span class="emoji">&#x1F464;</span> {{ request.user.username }}</h2>
-            <nav class="mobile-menu-nav">
-                <div class="mobile-menu-section">
-                    <div class="mobile-menu-section-title"><span class="emoji">&#x1F4C4;</span> Seite</div>
-                    <a href="{% url 'dashboard' %}"><span class="emoji">&#x1F5A5;</span>
-                        Dashboard</a>
-                    <a href="{% url 'home' %}"><span class="emoji">&#x1F3E1;</span> Home</a>
-                    <a class="openShareOverlay"><span class="emoji">&#xE253;</span> Teilen</a>
-                    <a href="{% url 'benachrichtigungen_view' %}"><span
-                            class="emoji">&#x1F514;</span>
-                        Benachrichtigungen</a>
-                </div>
-                <div class="mobile-menu-section">
-                    <div class="mobile-menu-section-title"><span class="emoji">&#x1F464;</span> Konto</div>
-                    <a href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span>
-                        Level</a>
-                    <a href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span>
-                        Klimapunkte</a>
-                    {% development %}<a href="{% url 'credit_view' %}"><span class="emoji">&#x1F333;</span>
-                        Credits / Bäume</a>{% enddevelopment %}
-                    <a href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span>
-                        Einstellungen</a>
-                    <a href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span>
-                        Logout</a>
-                </div>
-                <div class="mobile-menu-section">
-                    <div class="mobile-menu-section-title"><span class="emoji">&#x1F5C2;</span> Sonstiges</div>
-                    <a href="{% url 'users_overview' %}"><span class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
+    {% if request.user.is_authenticated %}
+        <div class="mobile-menu-overlay" data-menu="people">
+            <div class="mobile-menu-modal">
+                <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
+                <h2><span class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span> Family</h2>
+                <nav class="mobile-menu-nav">
+                    <a href="{% url 'families_view' %}"><span class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span>
+                        Families</a>
+                    <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F3D8;</span>
+                        Communities</a>
+                    <a href="{% url 'users_overview' %}"><span class="emoji">&#x1F64B;</span>
                         User</a>
-                    <a href="{% url 'presents_overview' %}"><span class="emoji">&#x1F381;</span>
-                        Geschenke</a>
-                </div>
-                {% if request.user.is_staff %}
-                    <div class="mobile-menu-section">
-                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F451;</span> Admin</div>
-                        <a href="{% url 'admin:index' %}" target="_blank"><span class="emoji">&#x1F3DB;</span> Admin (I)</a>
-                        <a href="{% url 'admin' %}"><span class="emoji">&#x1F3F0;</span> Admin
-                            (II)</a>
-                    </div>
-                {% endif %}
-            </nav>
+                </nav>
+            </div>
         </div>
-    </div>
+
+        <div class="mobile-menu-overlay" data-menu="fast">
+            <div class="mobile-menu-modal">
+                <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
+                <h2><span class="emoji">&#x1F393;</span> Schnellzugriff</h2>
+                <nav class="mobile-menu-nav">
+                    <a href="{% url 'history_me' %}"><span class="emoji">&#x2795;</span> Aktion eintragen</a>
+                    <a href="{% url 'history_me' %}"><span class="emoji">&#x1F4DC;</span> Aktions-Historie</a>
+                    <a href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
+                    <a href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span> Klimapunkte</a>
+                    {% development %}<a href="{% url 'credit_view' %}"><span class="emoji">&#x1F333;</span> Credits / Bäume</a>{% enddevelopment %}
+                </nav>
+            </div>
+        </div>
+
+        <div class="mobile-menu-overlay" data-menu="more">
+            <div class="mobile-menu-modal">
+                <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
+                <h2><span class="emoji">&#x1F464;</span> {{ request.user.username }}</h2>
+                <nav class="mobile-menu-nav">
+                    <div class="mobile-menu-section">
+                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F4C4;</span> Seite</div>
+                        <a class="openShareOverlay"><span class="emoji">&#xE253;</span> Teilen</a>
+                        <a href="{% url 'benachrichtigungen_view' %}"><span
+                                class="emoji">&#x1F514;</span>
+                            Benachrichtigungen</a>
+                    </div>
+                    <div class="mobile-menu-section">
+                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F464;</span> Konto</div>
+                        <a href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span>
+                            Einstellungen</a>
+                        <a href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span>
+                            Logout</a>
+                    </div>
+                    <div class="mobile-menu-section">
+                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F5C2;</span> Sonstiges</div>
+                        <a href="{% url 'users_overview' %}"><span
+                                class="emoji">&#x1F64B;&#x200D;&#x2640;&#xFe0F;</span>
+                            User</a>
+                        <a href="{% url 'presents_overview' %}"><span class="emoji">&#x1F381;</span>
+                            Geschenke</a>
+                    </div>
+                    {% if request.user.is_staff %}
+                        <div class="mobile-menu-section">
+                            <div class="mobile-menu-section-title"><span class="emoji">&#x1F451;</span> Admin</div>
+                            <a href="{% url 'admin:index' %}" target="_blank"><span class="emoji">&#x1F3DB;</span> Admin
+                                (I)</a>
+                            <a href="{% url 'admin' %}"><span class="emoji">&#x1F3F0;</span> Admin
+                                (II)</a>
+                        </div>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+    {% endif %}
 </header>
 
 <main>

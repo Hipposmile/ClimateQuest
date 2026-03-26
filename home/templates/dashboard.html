@@ -35,6 +35,12 @@
     {% endif %}
     <div id="request_permission_notification"></div>
 
+    <div class="btns">
+        <a href="{% url 'add' %}">
+            <button class="btn">Aktion eintragen</button>
+        </a>
+    </div>
+
     <script nonce="{{ request.csp_script_nonce }}">
         async function requestPermissionNotification() {
             if (Notification.permission === 'default' || Notification.permission === 'denied') {
