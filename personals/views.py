@@ -465,7 +465,6 @@ def credit_view(request):
         if available_credits > 0:
             worked = request.user.usererweitert.plant_tree()
             if not worked:
-                messages.error(request, all_messages["error_planting_tree"])
                 create_internal_error(request, f'{all_messages["error_planting_tree"]} (vermutlich sind keine Baumcodes mehr vorhanden)', all_messages["error_planting_tree"])
             return redirect('credit_view')
 
