@@ -276,7 +276,7 @@
     </div>
 
     {% development %}
-        <script defer="" src="https://widgets.plant-for-the-planet.org/build/tree-map.js" id="treeMapScript"></script>
+        <script defer="" src="{% static 'libraries/plant-for-the-planet/tree-map.js' %}" id="treeMapScript"></script>
         <tree-map user="climate-quest" tenantkey="ten_nxjq55pm" theme="forest" id="treeMap" style="width: 100%;" community="false" forestname=""></tree-map>
     {% enddevelopment %}
 
