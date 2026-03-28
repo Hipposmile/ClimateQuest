@@ -30,12 +30,12 @@
     <p>{{ percent_done }} % bis zum nächsten Credit geschafft</p>
     <form method="post">
         {% csrf_token %}
-        <button {% if available_credits <= 0 %}disabled{% endif %}>1 m<sup>2</sup> Wald restaurieren</button>
+        <button {% if available_credits <= 0 %}disabled{% endif %}>1 Baum pflanzen</button>
     <small>Das kostet einen Credit</small>
     </form>
     <ul>
     {% for tree in request.user.usererweitert.planted_trees.all %}
-        <li>1 m<sup>2</sup> restaurierter Wald (Sponsor: {{ tree.sponsor }}) durch Plant-for-the-Planet: <a href="{{ tree.redeemURL }}">Zertifikat</a></li>
+        <li>1 gepflanzter Baum (Sponsor: {{ tree.sponsor }}) durch Plant-for-the-Planet: <a href="{{ tree.redeemURL }}">Zertifikat</a></li>
     {% endfor %}
     </ul>
 {% endblock %}
