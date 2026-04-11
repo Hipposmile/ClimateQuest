@@ -16,6 +16,9 @@
     {% endif %}
     <form method="post" id="register_form" class="dont-show-loading">
         {% csrf_token %}
+        <div class="cookie-blocked" data-requires="recaptcha"
+             data-content='<script src="https://www.google.com/recaptcha/api.js?render=6Ld_S6orAAAAANqPdHX27TNVkzL0WmlG_XQhTD2l"></script>' data-text="Zur Registrierung musst du die reCAPTCHA-Cookies erlauben" data-important="true"></div>
+
         <label for="username">Benutzername:</label>
         <small id="username-feedback"></small>
         <input type="text" name="username" id="username" placeholder="Benutzername" required>
@@ -55,8 +58,6 @@
             <span class="label-text">Ich habe die <a href="{% url 'datenschutz' %}">Datenschutzerklärung</a> gelesen und bin mit der beschriebenen Verarbeitung meiner personenbezogenen Daten einverstanden. Sofern ich noch nicht volljährig bin, bestätige ich, dass diese Einwilligung durch eine erziehungsberechtigte Person erfolgt ist.</span>
         </label>
 
-        <div class="cookie-blocked" data-requires="recaptcha"
-             data-content='<script src="https://www.google.com/recaptcha/api.js?render=6Ld_S6orAAAAANqPdHX27TNVkzL0WmlG_XQhTD2l"></script>'></div>
         <input type="hidden" name="recaptchaToken" id="recaptchaToken">
         <button type="submit" id="register-button">Registrieren</button>
     </form>

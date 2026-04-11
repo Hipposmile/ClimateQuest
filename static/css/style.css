@@ -1405,6 +1405,13 @@ input[type="file"]::-webkit-file-upload-button {
     border-radius: 8px;
     margin: 15px;
 }
+.cookie-forbidden-div.important {
+    background: red;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px;
+    color: white;
+}
 
 /* Ende Cookie Styling */
 

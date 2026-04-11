@@ -127,9 +127,8 @@ function handleCookieBlocks(consentState) {
                 el.innerHTML = content;
             }
         } else {
-            el.innerHTML = `<div class="cookie-forbidden-div">
-          Dieses Element ist blockiert. Bitte '${type}'-Cookies erlauben, um es zu sehen. Evtl. musst du die Seite anschließend neu laden.
-        </div>`;
+            const text = el.dataset.text || `Dieses Element ist blockiert. Bitte '${type}'-Cookies erlauben, um es zu sehen. Evtl. musst du die Seite anschließend neu laden.\n`;
+            el.innerHTML = `<div class="cookie-forbidden-div${el.dataset.important === 'true' ? ' important' : ''}">${text}</div>`;
         }
     });
 }
