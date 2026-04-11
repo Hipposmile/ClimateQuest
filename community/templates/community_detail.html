@@ -103,5 +103,10 @@
             </script>
         {% endfor %}
     </ul>
-    <a href="#me" class="me-btn">Zu mir</a>
+    <a id="to-me" class="me-btn">Zu mir</a>
+        <script nonce="{{ request.csp_script_nonce }}">
+        document.getElementById('to-me').addEventListener('click', () => {
+            document.getElementById('me').scrollIntoView();
+        });
+    </script>
 {% endblock %}

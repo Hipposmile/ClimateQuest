@@ -246,6 +246,7 @@ main {
 
 .me-btn:hover {
     background-color: var(--color-primary-hover);
+    color: var(--color-white);
 }
 
 .dropdown {
@@ -356,6 +357,7 @@ main {
 
 .card-btn:hover {
     background-color: var(--color-primary-hover);
+    color: var(--color-white);
 }
 
 .action-list-container {

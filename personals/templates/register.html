@@ -8,7 +8,7 @@
 {% block title %}Registrieren{% endblock %}
 
 {% block content %}
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         .grecaptcha-badge {
             visibility: hidden;
         }
