@@ -1,4 +1,5 @@
 from datetime import datetime, date, timedelta
+from re import search
 
 from dateutil.relativedelta import relativedelta
 from django.contrib import messages
@@ -125,7 +126,7 @@ def users_overview(request):
     if request.method == 'POST':
         search_keyword = request.POST.get('search_keyword')
         users = User.objects.filter(username__icontains=search_keyword)
-        return render(request, 'users_overview.html', {'users': users})
+        return render(request, 'users_overview.html', {'users': users, 'search_keyword': search_keyword})
     return render(request, 'users_overview.html')
 
 

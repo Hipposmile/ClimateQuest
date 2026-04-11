@@ -8,32 +8,40 @@
 
 {% block content %}
 
-<h1>User-Übersicht</h1>
+    <h1>User-Übersicht</h1>
 
-{% if messages %}
-{% for message in messages %}
-<p class="{{message.level_tag}}-message">{{ message }}</p>
-{% endfor %}
-{% endif %}
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
 
-<form method="post" >
-    {% csrf_token %}
-    <label for="search_keyword">Suchwort</label>
-    <input type="search" id="search_keyword" name="search_keyword" placeholder="Suchwort" required>
-    <button type="submit">Suchen</button>
-</form>
+    <form method="post">
+        {% csrf_token %}
+        <label for="search_keyword">Suchwort</label>
+        <input type="search" id="search_keyword" name="search_keyword" placeholder="Suchwort" required>
+        <button type="submit">Suchen</button>
+    </form>
 
-{% if users %}
-{% for user in users %}
-<section
-    class="event-card{% if request.user == user %} event-card-creator{% endif %}">
-    <div class="event-main">
-        <h2 class="event-title">{{ user.username }}</h2>
-    </div>
+    {% if search_keyword %}
+        <p>Suchwort: {{ search_keyword }}</p>
+    {% endif %}
 
-    <a class="event-link" href="{% url 'user_detail' user.id %}">Details ansehen</a>
-</section>
-{% endfor %}
-{% endif %}
+    {% if users %}
+        {% for user in users %}
+            <section
+                    class="event-card{% if request.user == user %} event-card-creator{% endif %}">
+                <div class="event-main">
+                    <h2 class="event-title">{{ user.username }}</h2>
+                </div>
+
+                <a class="event-link" href="{% url 'user_detail' user.id %}">Details ansehen</a>
+            </section>
+        {% endfor %}
+    {% else %}
+        {% if search_keyword %}
+            <p>Es wurden keine User gefunden</p>
+        {% endif %}
+    {% endif %}
 
 {% endblock %}
