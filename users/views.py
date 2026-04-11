@@ -13,7 +13,8 @@ from aktionen.views import validate_number, get_period_start, aktion_date_invali
 from core.all_messages import all_messages
 from personals.models import UserErweitert
 from utils.functions import dezimalstellen, get_klimapunkte, get_klimapunkte_from_likes, get_weekly_goal_from_user, \
-    get_streak_from_user, send_mail_function, get_level, create_notification
+    get_streak_from_user, send_mail_function, get_level, create_notification, get_all_klimapunkte_from_user, \
+    get_worldwide_ranking_rank_from_user
 
 
 def get_user(request, user_id, allow_needed=True):
@@ -136,6 +137,8 @@ def user_detail(request, user_id):
     user_expanded = UserErweitert.objects.get(user=user)
     weekly_goal, weekly_klimapunkte, weekly_goal_progress_percent = get_weekly_goal_from_user(user)
     streak = get_streak_from_user(user)
+    all_klimapunkte = get_all_klimapunkte_from_user(user)
+    worldwide_ranking_rank = get_worldwide_ranking_rank_from_user(user)
 
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -145,7 +148,9 @@ def user_detail(request, user_id):
 
     return render(request, './user_detail.html', {'user_expanded': user_expanded, 'weekly_goal': weekly_goal,
                                                   'weekly_goal_progress_percent': weekly_goal_progress_percent,
-                                                  'weekly_klimapunkte': weekly_klimapunkte, 'streak': streak})
+                                                  'weekly_klimapunkte': weekly_klimapunkte, 'streak': streak,
+                                                  'all_klimapunkte': all_klimapunkte,
+                                                  'worldwide_ranking_rank': worldwide_ranking_rank})
 
 
 def action_detail(request, action_id, user_id):
@@ -196,7 +201,9 @@ def action_detail(request, action_id, user_id):
                 if action_quantity <= 0 or action_quantity is False:
                     messages.error(request, all_messages["invalid_quantity"])
                     return redirect('action_detail', action_id)
-                elif not get_if_timely_action(action.mengeBeschreibungSingular) and (Aktion.objects.filter(user=request.user, aktion=action, date=date.today()).aggregate(total=Sum('quantity'))["total"] or 0) + action_quantity > action.max:
+                elif not get_if_timely_action(action.mengeBeschreibungSingular) and (
+                        Aktion.objects.filter(user=request.user, aktion=action, date=date.today()).aggregate(
+                                total=Sum('quantity'))["total"] or 0) + action_quantity > action.max:
                     messages.error(request, all_messages["max_action_quantity"])
                     return redirect('action_detail', action_id)
 

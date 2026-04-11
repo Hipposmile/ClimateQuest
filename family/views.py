@@ -368,7 +368,6 @@ def family_detail(request, family_id):
 
     # Sortierung anwenden
     try:
-        print(members_with_klimapunkte)
         members_with_klimapunkte_sortiert = sorted(
             members_with_klimapunkte,
             key=lambda x: x['klimapunkte'],

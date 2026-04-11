@@ -526,7 +526,6 @@ def community_detail(request, community_id, family_id):
             members_with_klimapunkte.append(
                 {'member': community_member, 'klimapunkte': klimapunkte})
 
-    print(members_with_klimapunkte)
     # Sortierung anwenden
     try:
         members_with_klimapunkte_sortiert = sorted(

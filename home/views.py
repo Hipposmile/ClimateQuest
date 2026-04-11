@@ -133,16 +133,13 @@ def admin(request):
                     create_notification(request, msg, user)
             messages.success(request, all_messages["admin__successfully_sent_notification"])
         elif receiver == 'event-participants':
-            print("Sending to event participants")
             try:
                 event = Event.objects.get(id=name)
             except Event.DoesNotExist:
                 messages.error(request, all_messages["admin__event_not_found"])
                 return redirect('admin')
-            print(event)
             for participant in event.participants.all():
                 create_notification(request, msg, participant)
-                print(participant.username)
 
             messages.success(request, all_messages["admin__successfully_sent_notification"])
         else:
