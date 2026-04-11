@@ -8,6 +8,11 @@
 {% block title %}Registrieren{% endblock %}
 
 {% block content %}
+    <style>
+        .grecaptcha-badge {
+            visibility: hidden;
+        }
+    </style>
     <h1>Registrierung</h1>
     {% if messages %}
         {% for message in messages %}
@@ -17,7 +22,8 @@
     <form method="post" id="register_form" class="dont-show-loading">
         {% csrf_token %}
         <div class="cookie-blocked" data-requires="recaptcha"
-             data-content='<script src="https://www.google.com/recaptcha/api.js?render=6Ld_S6orAAAAANqPdHX27TNVkzL0WmlG_XQhTD2l"></script>' data-text="Zur Registrierung musst du die reCAPTCHA-Cookies erlauben" data-important="true"></div>
+             data-content='<script src="https://www.google.com/recaptcha/api.js?render=6Ld_S6orAAAAANqPdHX27TNVkzL0WmlG_XQhTD2l"></script>'
+             data-text="Zur Registrierung musst du die reCAPTCHA-Cookies erlauben" data-important="true"></div>
 
         <label for="username">Benutzername:</label>
         <small id="username-feedback"></small>
@@ -60,6 +66,7 @@
 
         <input type="hidden" name="recaptchaToken" id="recaptchaToken">
         <button type="submit" id="register-button">Registrieren</button>
+        <small>This site is protected by reCAPTCHA</small>
     </form>
 
     <p>Bereits registriert? <a href="{% url 'login_view' %}">Zum Login</a></p>
