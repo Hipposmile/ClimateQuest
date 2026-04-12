@@ -1345,11 +1345,28 @@
             setMaxHeight(isOpen);
         });
 
-        // Höhe bei Fenster-Resize aktualisieren
-        window.addEventListener("resize", () => {
+
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach(mutation => {
+                resize();
+            });
+        });
+        observer.observe(contentWrapper, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            characterData: true
+        });
+
+        function resize() {
             if (accordion.classList.contains("open")) {
                 setMaxHeight(true);
             }
+        }
+
+        // Höhe bei Fenster-Resize aktualisieren
+        window.addEventListener("resize", () => {
+            resize();
         });
     });
 </script>
