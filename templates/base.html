@@ -400,7 +400,7 @@
     function getIfStandalone() {
         isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
         if (isStandalone) {
-            createPwaNav();
+            //createPwaNav();
         }
     }
 
@@ -423,7 +423,7 @@
         }
     });
 
-    function createPwaNav() {
+    /*function createPwaNav() {
         if (isStandalone) {
             // Auf- / Zuklapper erstellen
             const navToggle = document.createElement('div');
@@ -470,7 +470,7 @@
             nav.appendChild(forwardBtn);
             document.body.appendChild(nav);
         }
-    }
+    }*/
 
     // 1. Direkt prüfen (falls schon gesetzt)
     getIfStandalone();
@@ -1364,7 +1364,6 @@
             }
         }
 
-        // Höhe bei Fenster-Resize aktualisieren
         window.addEventListener("resize", () => {
             resize();
         });
