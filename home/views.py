@@ -102,7 +102,7 @@ def admin(request):
         if url is None or url == "":
             url = reverse('dashboard')
 
-        if len(msg) > 100:
+        if len(msg) > 500:
             messages.error(request, all_messages["too_long_input"])
             return redirect('admin')
 
