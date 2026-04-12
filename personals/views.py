@@ -449,7 +449,6 @@ def get_block_data_settings(request):
 
 
 @login_required
-@development_only
 def credit_view(request):
     klimapunkte_for_credit = 1000
     klimapunkte = get_all_klimapunkte_from_user(request.user)

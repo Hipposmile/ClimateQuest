@@ -634,8 +634,8 @@
                     <a href="{% url 'history_me' %}"><span class="emoji">&#x1F4DC;</span> Aktions-Historie</a>
                     <a href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
                     <a href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span> Klimapunkte</a>
-                    {% development %}<a href="{% url 'credit_view' %}"><span class="emoji">&#x1F333;</span> Credits /
-                        Bäume</a>{% enddevelopment %}
+                    <a href="{% url 'credit_view' %}"><span class="emoji">&#x1F333;</span> Credits /
+                        Bäume</a>
                 </nav>
             </div>
         </div>
@@ -781,7 +781,7 @@
                             <p>{{ request.user.username }}</p>
                             <a  href="{% url 'level_me' %}">Level</a>
                             <a  href="{% url 'klimapunkte_me' %}">Klimapunkte</a>
-                            {% development %}<a href="{% url 'credit_view' %}">Credits / Bäume</a>{% enddevelopment %}
+                            <a href="{% url 'credit_view' %}">Credits / Bäume</a>
                             <a  href="{% url 'settings_view' %}">Profil bearbeiten</a>
                             <a  href="{% url 'users_overview' %}">User</a>
                             <a  href="{% url 'presents_overview' %}">Geschenke</a>
