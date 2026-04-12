@@ -1410,6 +1410,7 @@ input[type="file"]::-webkit-file-upload-button {
     border-radius: 8px;
     margin: 15px;
 }
+
 .cookie-forbidden-div.important {
     background: red;
     padding: 15px;
@@ -1549,4 +1550,12 @@ canvas {
     line-height: 1.6;
     border-top: 1px solid #e5e7eb;
     margin-top: 12px;
+}
+
+.show-password {
+    color: red;
+    user-select: none;
+    -webkit-user-select: none; /* Für Safari */
+    -moz-user-select: none; /* Für Firefox */
+    -ms-user-select: none; /* Für Internet Explorer/Edge */
 }
