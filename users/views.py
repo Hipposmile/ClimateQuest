@@ -179,7 +179,7 @@ def action_detail(request, action_id, user_id):
                 action_type = request.POST.get('action_type')
                 if not action_type:
                     messages.error(request, all_messages["action_name_missing"])
-                    return redirect('action_detail', action_id)
+                    return redirect('action_detail', action_id, user_id)
 
                 try:
                     action = AktionenListe.objects.get(name=action_type)
@@ -193,40 +193,32 @@ def action_detail(request, action_id, user_id):
                 action_quantity = request.POST.get('action_quantity')
                 if not action_quantity:
                     messages.error(request, all_messages["missing_required_inputs"])
-                    return redirect('action_detail', action_id)
+                    return redirect('action_detail', action_id, user_id)
                 try:
                     action_quantity = validate_number(action_quantity, dezimalstellen)
                 except ValueError:
                     messages.error(request, all_messages["action_invalid_quantity"])
-                    return redirect('action_detail', action_id)
+                    return redirect('action_detail', action_id, user_id)
                 if action_quantity <= 0 or action_quantity is False:
                     messages.error(request, all_messages["invalid_quantity"])
-                    return redirect('action_detail', action_id)
+                    return redirect('action_detail', action_id, user_id)
                 elif not get_if_timely_action(action.mengeBeschreibungSingular) and (
                         Aktion.objects.filter(user=request.user, aktion=action, date=date.today()).aggregate(
                                 total=Sum('quantity'))["total"] or 0) + action_quantity > action.max:
                     messages.error(request, all_messages["max_action_quantity"])
-                    return redirect('action_detail', action_id)
+                    return redirect('action_detail', action_id, user_id)
 
-                action_date_raw = request.POST.get('action_date')
-                if not action_date_raw:
-                    messages.error(request, all_messages["missing_required_inputs"])
-                    return redirect('action_detail', action_id)
-                try:
-                    action_date = datetime.strptime(action_date_raw, '%Y-%m-%d').date()
-                except ValueError:
-                    messages.error(request, all_messages["invalid_date"])
-                    return redirect('action_detail', action_id)
+                action_date = current_action.date
 
                 action_start = get_period_start(action_date, action_quantity, action.mengeBeschreibungSingular.lower())
 
                 if action_date > datetime.now().date():
                     messages.error(request, all_messages["date_in_future"])
-                    return redirect('action_detail', action_id)
+                    return redirect('action_detail', action_id, user_id)
                 if action_start:
                     if action_start < date.today() - relativedelta(months=1):
                         messages.error(request, all_messages["action_too_past"])
-                        return redirect('action_detail', action_id)
+                        return redirect('action_detail', action_id, user_id)
                 else:
                     if action_date < date.today() - relativedelta(months=1):
                         messages.error(request, all_messages["action_too_past"])
@@ -234,12 +226,12 @@ def action_detail(request, action_id, user_id):
 
                 if aktion_date_invalid(action, action_date, action_quantity, request.user, action_id):
                     messages.error(request, all_messages["action_already_set_in_period"])
-                    return redirect('action_detail', action_id)
+                    return redirect('action_detail', action_id, user_id)
 
                 action_existing = any(aktion.name == action_type for aktion in aktionen)
                 if not action_existing:
                     messages.error(request, all_messages["invalid_action_type"])
-                    return redirect('action_detail', action_id)
+                    return redirect('action_detail', action_id, user_id)
 
                 old_level = get_level(request.user)
                 old_streak = get_streak_from_user(request.user)
@@ -248,7 +240,6 @@ def action_detail(request, action_id, user_id):
                 current_action.description = action_description
                 current_action.user = request.user
                 current_action.quantity = action_quantity
-                current_action.date = action_date
                 current_action.save()
 
                 new_level = get_level(request.user)
