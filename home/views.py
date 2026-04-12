@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.utils import timezone
 from dotenv import load_dotenv
 
@@ -96,6 +97,10 @@ def admin(request):
         receiver = request.POST.get('receiver')
         name = request.POST.get('name')
         msg = request.POST.get('msg')
+        url = request.POST.get('url')
+
+        if url is None or url == "":
+            url = reverse('dashboard')
 
         if len(msg) > 100:
             messages.error(request, all_messages["too_long_input"])
@@ -111,7 +116,7 @@ def admin(request):
             except User.DoesNotExist:
                 messages.error(request, all_messages["admin__user_not_found"])
                 return redirect('admin')
-            create_notification(request, msg, user)
+            create_notification(request, msg, user, url)
             messages.success(request, all_messages["admin__successfully_sent_notification"])
         elif receiver == 'family-members':
             try:
@@ -120,7 +125,7 @@ def admin(request):
                 messages.error(request, all_messages["admin__family_not_found"])
                 return redirect('admin')
             for user in family.members.all():
-                create_notification(request, msg, user)
+                create_notification(request, msg, user, url)
             messages.success(request, all_messages["admin__successfully_sent_notification"])
         elif receiver == 'community-members':
             try:
@@ -130,7 +135,7 @@ def admin(request):
                 return redirect('admin')
             for family in community.members.all():
                 for user in family.members.all():
-                    create_notification(request, msg, user)
+                    create_notification(request, msg, user, url)
             messages.success(request, all_messages["admin__successfully_sent_notification"])
         elif receiver == 'event-participants':
             try:
@@ -139,7 +144,7 @@ def admin(request):
                 messages.error(request, all_messages["admin__event_not_found"])
                 return redirect('admin')
             for participant in event.participants.all():
-                create_notification(request, msg, participant)
+                create_notification(request, msg, participant, url)
 
             messages.success(request, all_messages["admin__successfully_sent_notification"])
         else:

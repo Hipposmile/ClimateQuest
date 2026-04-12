@@ -25,6 +25,8 @@
         <input type="text" name="name" id="name" placeholder="Username" required/>
         <label for="msg">Nachricht:</label>
         <input type="text" name="msg" id="msg" placeholder="Nachricht" maxlength="500" required/>
+        <label for="url">Nachricht:</label>
+        <input type="text" name="url" id="url" placeholder="URL" maxlength="500"/>
         <button type="submit" name="benachrichtigung">Erstellen</button>
         <small>Wenn alle User erreicht werden sollen, bitte Family 'worldwide ranking' angeben</small>
     </form>
@@ -32,13 +34,13 @@
         document.getElementById('receiver').addEventListener('change', function () {
             const receiver = this.value;
             const nameInput = document.getElementById('name');
-            if (receiver == 'user') {
+            if (receiver === 'user') {
                 nameInput.placeholder = 'Username';
-            } else if (receiver == 'family-members') {
+            } else if (receiver === 'family-members') {
                 nameInput.placeholder = 'Family-Name';
-            } else if (receiver == 'community-members') {
+            } else if (receiver === 'community-members') {
                 nameInput.placeholder = 'Community-Name';
-            } else if (receiver == 'event-participants') {
+            } else if (receiver === 'event-participants') {
                 nameInput.placeholder = 'Event-Id';
             }
         });
