@@ -253,6 +253,7 @@
 
     <input type="hidden" id="user_count" value="{{ user_count }}">
     <input type="hidden" id="klimapunkte" value="{{ klimapunkte|floatformat:-4 }}">
+    <input type="hidden" id="tree_count" value="{{ tree_count }}">
 
     <div id="counters">
         <div id="user_zaehler_div">
@@ -272,15 +273,22 @@
             <p class="h3_size" id="co2_zaehler"></p>
             <p> Tonnen CO2e eingespart</p>
         </div>
+
+        <div id="tree_zaehler_div">
+            <p>Außerdem wurden insgesamt</p>
+            <p class="h3_size" id="tree_zaehler">{{ tree_count }}</p>
+            <p> Bäume gepflanzt</p>
+        </div>
     </div>
 
     <div id="mobile-app-div">
         <hr>
-        <p>Keine Lust, ClimateQuest als Webseite zu verwenden?</p>
-        <a href="{% url 'mobile_apps' %}" class="redirect-link">
-            <span>ClimateQuest als App downloaden</span>
-            <span class="redirect-link-icon">→</span>
-        </a>
+        <p>Keine Lust, ClimateQuest als Webseite zu verwenden?
+            <a href="{% url 'mobile_apps' %}" class="redirect-link">
+                <span>ClimateQuest als App downloaden</span>
+                <span class="redirect-link-icon">→</span>
+            </a>
+        </p>
     </div>
     <script nonce="{{ request.csp_script_nonce }}">
         if (!isStandalone) {
@@ -319,21 +327,24 @@
     <script nonce="{{ request.csp_script_nonce }}">
         document.addEventListener("DOMContentLoaded", function () {
             const user_zaehler = document.getElementById('user_zaehler');
-
             const klimapunkte_zaehler = document.getElementById('klimapunkte_zaehler');
             const co2_zaehler = document.getElementById('co2_zaehler');
+            const tree_zaehler = document.getElementById('tree_zaehler');
 
             let user_count = document.getElementById('user_count').value;
             let klimapunkte = document.getElementById('klimapunkte').value;
+            let tree_count = document.getElementById('tree_count').value;
 
             user_count = formatToFloat(user_count);
             klimapunkte = formatToFloat(klimapunkte);
+            tree_count = formatToFloat(tree_count);
 
             let co2 = Math.floor(klimapunkte / 1000);
 
             animateCount(user_zaehler, user_count);
             animateCount(klimapunkte_zaehler, klimapunkte);
             animateCount(co2_zaehler, co2);
+            animateCount(tree_zaehler, tree_count);
         });
 
         function formatToFloat(str) {
@@ -344,11 +355,9 @@
         function animateCount(element, endValue, maxDuration = 1500) {
             let startValue = 0;
 
-            // Berechne Schrittzeit
-            let stepTime = 10; // alle 50ms ein Schritt
+            let stepTime = 10;
             let steps = Math.floor(maxDuration / stepTime);
 
-            // Wenn zu viele Schritte nötig waeren, starte höher
             if (endValue > steps) {
                 startValue = endValue - steps;
             }

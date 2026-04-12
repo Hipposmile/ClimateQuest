@@ -17,6 +17,7 @@ from events.models import Event
 from family.models import Family
 from forum.models import ForumPost
 from home.models import Benachrichtigung
+from personals.models import TreeCodes
 from utils.functions import get_streak_from_user, get_klimapunkte_from_likes, get_klimapunkte, \
     get_weekly_goal_from_user, get_all_klimapunkte_from_user, get_level, get_families_of_user, create_notification, \
     get_perfect_week_progress
@@ -33,7 +34,8 @@ def home(request):
         klimapunkte += get_klimapunkte_from_likes(user)
         klimapunkte_gesamt += klimapunkte
         user_count += 1
-    return render(request, './home.html', {'klimapunkte': klimapunkte_gesamt, 'user_count': user_count})
+    tree_count = TreeCodes.objects.filter(planted=True).count()
+    return render(request, './home.html', {'klimapunkte': klimapunkte_gesamt, 'user_count': user_count, 'tree_count': tree_count})
 
 
 def dashboard(request):
