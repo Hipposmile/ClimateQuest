@@ -454,17 +454,14 @@
             const reloadBtn = document.createElement('button');
             reloadBtn.innerHTML = '<span class="emoji">&#x1F504;</span>';
             reloadBtn.onclick = () => {
-                if (window.history.length > 1) {
-                    showLoading();
-                    location.reload();
-                }
+                showLoading();
+                location.reload();
             };
 
             // Forward-Button
             const forwardBtn = document.createElement('button');
             forwardBtn.innerHTML = '<span class="emoji">&#x27A1;&#xFE0F;</span>';
             forwardBtn.onclick = () => {
-                showLoading();
                 history.forward();
             };
 
@@ -637,7 +634,8 @@
                     <a href="{% url 'history_me' %}"><span class="emoji">&#x1F4DC;</span> Aktions-Historie</a>
                     <a href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
                     <a href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span> Klimapunkte</a>
-                    {% development %}<a href="{% url 'credit_view' %}"><span class="emoji">&#x1F333;</span> Credits / Bäume</a>{% enddevelopment %}
+                    {% development %}<a href="{% url 'credit_view' %}"><span class="emoji">&#x1F333;</span> Credits /
+                        Bäume</a>{% enddevelopment %}
                 </nav>
             </div>
         </div>

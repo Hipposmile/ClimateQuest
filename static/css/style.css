@@ -55,6 +55,9 @@ body {
     user-select: text;
     position: relative;
     overflow-x: hidden;
+
+    hyphens: auto;
+    overflow-wrap: break-word;
 }
 
 @supports (padding: max(0px)) {
