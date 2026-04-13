@@ -203,7 +203,9 @@ def edit_petition(request, petition_id):
     return render(request, "./edit_petition.html", {'petition': petition})
 
 
-def petitions_overview(request):  # ToDo: Add category filter
+def petitions_overview(request):
+    all_categories = Category.objects.values_list('title', flat=True)
+
     search_keyword = None
     if request.method == 'POST':
         success_visible = request.POST.get('success_visible') == 'on'
@@ -211,6 +213,11 @@ def petitions_overview(request):  # ToDo: Add category filter
             all_petitions = Petition.objects.all()
         else:
             all_petitions = Petition.objects.filter(success=False)
+
+        category = request.POST.get('category')
+        if category != "Alle":
+            all_petitions = all_petitions.filter(category__title=category)
+
         already_ordered = False
         ordered_by = request.POST.get('order_by')
         search_keyword = request.POST.get('search_keyword')
@@ -254,8 +261,9 @@ def petitions_overview(request):  # ToDo: Add category filter
     else:
         success_visible = False
         ordered_by = "Titel"
+        category = "Alle"
         petitions = Petition.objects.filter(success=False).order_by('title')
 
     return render(request, './petitions_overview.html',
-                  {'petitions': petitions, 'ordered_by': ordered_by, 'search_keyword': search_keyword,
-                   'success_visible': success_visible})
+                  {'petitions': petitions, 'ordered_by': ordered_by, 'category': category, 'search_keyword': search_keyword,
+                   'success_visible': success_visible, 'all_categories': all_categories})

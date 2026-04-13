@@ -26,18 +26,16 @@
             <input type="search" id="search_keyword" name="search_keyword" placeholder="Suchwort">
         </div>
         <label for="order_by">Sortieren nach:</label>
-        <label>
-            <select name="order_by" required>
-                <option value="Name" selected>Name</option>
-                <option value="Ersteller">Ersteller</option>
-                <option value="Zuletzt bearbeitet">Zuletzt bearbeitet</option>
-                <option value="Likes">Likes</option>
-                {% if user.is_authenticated %}
-                    <option value="von mir erstellte Artikel">von mir erstellte Artikel</option>
-                    <option value="von mir gelikte Artikel">von mir gelikte Artikel</option>
-                {% endif %}
-            </select>
-        </label>
+        <select name="order_by" id="order_by" required>
+            <option value="Name" selected>Name</option>
+            <option value="Ersteller">Ersteller</option>
+            <option value="Zuletzt bearbeitet">Zuletzt bearbeitet</option>
+            <option value="Likes">Likes</option>
+            {% if user.is_authenticated %}
+                <option value="von mir erstellte Artikel">von mir erstellte Artikel</option>
+                <option value="von mir gelikte Artikel">von mir gelikte Artikel</option>
+            {% endif %}
+        </select>
 
         <button type="submit">Anwenden</button>
     </form>

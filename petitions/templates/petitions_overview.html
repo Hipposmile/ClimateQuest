@@ -30,23 +30,30 @@
             <input type="search" id="search_keyword" name="search_keyword" placeholder="Suchwort">
         </div>
         <label for="order_by">Sortieren nach:</label>
-        <label>
-            <select name="order_by" required>
-                <option value="Titel" selected>Titel</option>
-                <option value="Ersteller">Ersteller</option>
-                <option value="Zuletzt bearbeitet">Zuletzt bearbeitet</option>
-                <option value="Unterschriften">Unterschriften</option>
-                {% if user.is_authenticated %}
-                    <option value="von mir erstellte Petitionen">von mir erstellte Petitionen</option>
-                    <option value="von mir unterschriebene Petitionen">von mir unterschriebene Petitionen</option>
-                {% endif %}
-            </select>
+        <select name="order_by" id="order_by" required>
+            <option value="Titel" selected>Titel</option>
+            <option value="Ersteller">Ersteller</option>
+            <option value="Zuletzt bearbeitet">Zuletzt bearbeitet</option>
+            <option value="Unterschriften">Unterschriften</option>
+            {% if user.is_authenticated %}
+                <option value="von mir erstellte Petitionen">von mir erstellte Petitionen</option>
+                <option value="von mir unterschriebene Petitionen">von mir unterschriebene Petitionen</option>
+            {% endif %}
+        </select>
 
-            <label class="custom-checkbox">
-                <input type="checkbox" name="success_visible">
-                <span class="checkmark"></span>
-                <span class="label-text">Erfolgreiche einblenden</span>
-            </label>
+
+        <label for="category">Kategorie:</label>
+        <select name="category" id="category" required>
+            <option value="Alle" selected>Alle</option>
+            {% for category in all_categories %}
+                <option value="{{ category.title }}">{{ category.title }}</option>
+            {% endfor %}
+        </select>
+
+        <label class="custom-checkbox">
+            <input type="checkbox" name="success_visible">
+            <span class="checkmark"></span>
+            <span class="label-text">Erfolgreiche einblenden</span>
         </label>
 
         <button type="submit">Anwenden</button>
@@ -68,6 +75,7 @@
     {% if search_keyword %}
         <p>Suchwort: {{ search_keyword }}</p>
     {% endif %}
+    <p>Kategorie: {{ category }}</p>
     {% if success_visible %}
         <p>Erfolgreiche Petitionen eingeblendet</p>
     {% endif %}
@@ -76,6 +84,7 @@
             <section class="event-card{% if request.user == single_petition.creator %} event-card-creator{% endif %}">
                 <div class="event-main">
                     <h2 class="event-title">{{ single_petition.title }}</h2>
+                    <p>Kategorie: {{ single_petition.category.title }}</p>
                     {% if single_petition.success %}
                         <p><span class="emoji">&#x1F389;</span><strong class="color-red">Diese Petition hatte
                             Erfolg</strong><span class="emoji">&#x1F389;</span></p>
