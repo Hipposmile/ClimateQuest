@@ -41,7 +41,7 @@ class Artikel(models.Model):
     verified = models.BooleanField(default=False)
     blocked = models.BooleanField(default=False)
     msg_if_wrong = models.CharField(max_length=100, blank=True, null=True, default=None)
-    #category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='artikel_category')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='artikel_category')
 
     def clean(self):
         if self.verified and self.msg_if_wrong:
