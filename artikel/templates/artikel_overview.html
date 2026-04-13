@@ -18,7 +18,7 @@
         <span>Artikel hinzufügen</span>
         <span class="redirect-link-icon">→</span>
     </a>
-    <form method="post" >
+    <form method="post">
         {% csrf_token %}
         <div id="search_keyword_div">
             <small>Leer lassen, um alle Artikel anzuzeigen</small>
@@ -64,6 +64,11 @@
                     class="event-card{% if request.user == single_artikel.creator %} event-card-creator{% endif %}">
                 <div class="event-main">
                     <h2 class="event-title">{{ single_artikel.name }}</h2>
+                    {% if single_artikel.blocked %}<p>
+                        <p><span class="emoji">&#x274C;</span> {{ single_artikel.msg_if_wrong }}</p>
+                    {% elif single_artikel.verified %}
+                        <p><span class="emoji">&#x2714;</span> Geprüfte und verifizierte Informationen</p>
+                    {% endif %}
                     {% if ordered_by == 'Zuletzt bearbeitet' %}
                         <p><strong>Zuletzt bearbeitet:</strong> <span class="event-date"
                                                                       data-date="{{ single_artikel.date_time|date:'c' }}">{{ single_artikel.date_time|date:"d.m.Y" }}</span>

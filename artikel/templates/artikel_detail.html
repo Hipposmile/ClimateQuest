@@ -155,11 +155,10 @@
     {% if artikel.creator.is_staff %}
         <p><span class="emoji">&#x1F4A1;</span> Ein offizieller Artikel von ClimateQuest</p>
     {% endif %}
-    {% if artikel.verified %}
-        <p><span class="emoji">&#x2714;</span> Geprüfte und verifizierte Informationen</p>
-    {% endif %}
     {% if artikel.blocked %}
         <p><span class="emoji">&#x274C;</span> {{ artikel.msg_if_wrong }}</p>
+    {% elif artikel.verified %}
+        <p><span class="emoji">&#x2714;</span> Geprüfte und verifizierte Informationen</p>
     {% endif %}
 
     <p>Zuletzt bearbeitet: {{ artikel.date_time|date:"d.m.Y" }}</p>
