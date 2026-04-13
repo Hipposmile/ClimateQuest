@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Artikel, Comment, Answer
+from .models import Artikel, Comment, Answer, Category
 
 
 class ArtikelAdmin(admin.ModelAdmin):
@@ -14,3 +14,4 @@ class CommentAdmin(admin.ModelAdmin):
 admin.site.register(Artikel, ArtikelAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Answer)
+admin.site.register(Category)

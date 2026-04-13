@@ -37,6 +37,14 @@
             {% endif %}
         </select>
 
+        <label for="category">Kategorie:</label>
+        <select name="category" id="category" required>
+            <option value="Alle" selected>Alle</option>
+            {% for category in all_categories %}
+                <option value="{{ category.title }}">{{ category.title }}</option>
+            {% endfor %}
+        </select>
+
         <button type="submit">Anwenden</button>
     </form>
     <script nonce="{{ request.csp_script_nonce }}">
