@@ -16,6 +16,7 @@ class ForumPost(models.Model):
     content = models.TextField()
     date_time = models.DateTimeField(default=timezone.now)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='forum_category')
 
     def __str__(self):
         return self.title
