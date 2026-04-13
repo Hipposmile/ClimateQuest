@@ -18,7 +18,7 @@
             {% endfor %}
         {% endif %}
 
-        <p><strong>{{ all_klimapunkte }}</strong> Klimapunkte besitzt {{ username }}</p>
+        <p><strong>{{ all_klimapunkte|floatformat:-4 }}</strong> Klimapunkte besitzt {{ username }}</p>
         <p><strong>#{{ worldwide_ranking_rank }}</strong> ist {{ username }} im worldwide ranking</p>
 
         {% if not user_expanded.user.usererweitert.allows_data_view %}
