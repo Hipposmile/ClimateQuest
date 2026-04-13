@@ -21,6 +21,8 @@
         <p><strong>{{ all_klimapunkte|floatformat:-4 }}</strong> Klimapunkte besitzt {{ username }}</p>
         <p><strong>#{{ worldwide_ranking_rank }}</strong> ist {{ username }} im worldwide ranking</p>
 
+        <hr>
+
         {% if not user_expanded.user.usererweitert.allows_data_view %}
             <p>{{ username }}<i> hat die Ansicht der Daten gesperrt.</i></p>
         {% else %}
