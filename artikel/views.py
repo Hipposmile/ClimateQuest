@@ -5,14 +5,20 @@ from django.shortcuts import render, redirect
 from core.all_messages import all_messages
 from django.contrib import messages
 from utils.functions import clean_html
-from .models import Artikel, Comment, Answer
+from .models import Artikel, Comment, Answer, Category
 
 
 # Create your views here.
 def artikel_overview(request):
+    all_categories = Category.objects.values_list('title', flat=True)
+
     all_artikel = Artikel.objects.all()
     search_keyword = None
     if request.method == 'POST':
+        category = request.POST.get('category')
+        if category != "Alle":
+            all_artikel = all_artikel.filter(category__title=category)
+
         already_ordered = False
         ordered_by = request.POST.get('order_by')
         search_keyword = request.POST.get('search_keyword')
@@ -56,13 +62,17 @@ def artikel_overview(request):
     else:
         ordered_by = "Name"
         artikel = all_artikel.order_by('name')
+        category = "Alle"
 
     return render(request, 'artikel_overview.html',
-                  {'artikel': artikel, 'ordered_by': ordered_by, 'search_keyword': search_keyword})
+                  {'artikel': artikel, 'ordered_by': ordered_by, 'search_keyword': search_keyword, 'category': category,
+                   'all_categories': all_categories})
 
 
 @login_required
 def add_artikel(request):
+    all_categories = Category.objects.values_list('title', flat=True)
+
     if request.method == 'POST':
         is_truth = request.POST.get('is_truth') == 'on'
         if not is_truth:
@@ -71,6 +81,13 @@ def add_artikel(request):
 
         name = request.POST.get('name')
         content = request.POST.get('content')
+        category = request.POST.get('category')
+
+        try:
+            category = Category.objects.get(title=category)
+        except Category.DoesNotExist:
+            messages.error(request, all_messages["internal_error"])
+            return redirect('add_artikel')
 
         if len(name) > 100:
             messages.error(request, all_messages["too_long_input"])
@@ -85,14 +102,15 @@ def add_artikel(request):
         artikel = Artikel.objects.create(
             name=name,
             content=content,
-            creator=request.user
+            creator=request.user,
+            category=category
         )
 
         messages.success(request, all_messages["successfully_created_artikel"])
 
         return redirect('artikel_detail', artikel.id)
 
-    return render(request, 'add_artikel.html')
+    return render(request, 'add_artikel.html', {'categories': all_categories})
 
 
 @login_required
@@ -107,6 +125,8 @@ def edit_artikel(request, artikel_id):
         messages.error(request, all_messages["not_authorized_to_visit"])
         return redirect('artikel_detail', artikel.id)
 
+    all_categories = Category.objects.values_list('title', flat=True)
+
     if request.method == 'POST':
         if 'edit_artikel' in request.POST:
             is_truth = request.POST.get('is_truth') == 'on'
@@ -116,10 +136,17 @@ def edit_artikel(request, artikel_id):
 
             name = request.POST.get('name')
             content = request.POST.get('content')
+            category = request.POST.get('category')
+
+            try:
+                category = Category.objects.get(title=category)
+            except Category.DoesNotExist:
+                messages.error(request, all_messages["internal_error"])
+                return redirect('edit_artikel', artikel_id=artikel_id)
 
             if len(name) > 100:
                 messages.error(request, all_messages["too_long_input"])
-                return redirect('add_artikel')
+                return redirect('edit_artikel', artikel_id=artikel_id)
 
             if not name or not content:
                 messages.error(request, all_messages["missing_required_inputs"])
@@ -129,6 +156,7 @@ def edit_artikel(request, artikel_id):
 
             artikel.name = name
             artikel.content = content
+            artikel.category = category
             artikel.save()
 
             messages.success(request, all_messages["successfully_edited_artikel"])
@@ -138,7 +166,7 @@ def edit_artikel(request, artikel_id):
             messages.success(request, all_messages["successfully_deleted_artikel"])
             return redirect('artikel_overview')
 
-    return render(request, 'edit_artikel.html', {'artikel': artikel})
+    return render(request, 'edit_artikel.html', {'artikel': artikel, 'categories': all_categories})
 
 
 def artikel_detail(request, artikel_id):

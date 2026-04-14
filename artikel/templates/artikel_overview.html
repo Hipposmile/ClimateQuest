@@ -64,12 +64,16 @@
     {% if search_keyword %}
         <p>Suchwort: {{ search_keyword }}</p>
     {% endif %}
+    <p>Kategorie: {{ category }}</p>
+    <p>{{ artikel.count }} Suchergebnisse</p>
+
     {% if artikel %}
         {% for single_artikel in artikel %}
             <section
                     class="event-card{% if request.user == single_artikel.creator %} event-card-creator{% endif %}">
                 <div class="event-main">
                     <h2 class="event-title">{{ single_artikel.name }}</h2>
+                    <p>Kategorie: {{ single_artikel.category.title }}</p>
                     {% if single_artikel.blocked %}<p>
                         <p><span class="emoji">&#x274C;</span> {{ single_artikel.msg_if_wrong }}</p>
                     {% elif single_artikel.verified %}

@@ -65,7 +65,7 @@
         search_keyword_div = document.getElementById('search_keyword_div');
 
         order_by.addEventListener('change', function () {
-            if (order_by.value == "von mir erstellte Events" || order_by.value == "Events, bei denen ich Teilnehmer bin") {
+            if (order_by.value === "von mir erstellte Events" || order_by.value === "Events, bei denen ich Teilnehmer bin") {
                 search_keyword_div.style.display = "none";
             } else {
                 search_keyword_div.style.display = "block";
@@ -82,6 +82,7 @@
     {% else %}
         <p>Vergange Events nicht eingeblendet</p>
     {% endif %}
+    <p>{{ events.count }} Suchergebnisse</p>
 
     {% if events %}
         {% for event in events %}

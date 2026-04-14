@@ -79,6 +79,8 @@
     {% if success_visible %}
         <p>Erfolgreiche Petitionen eingeblendet</p>
     {% endif %}
+    <p>{{ petitions.count }} Suchergebnisse</p>
+
     {% if petitions %}
         {% for single_petition in petitions %}
             <section class="event-card{% if request.user == single_petition.creator %} event-card-creator{% endif %}">

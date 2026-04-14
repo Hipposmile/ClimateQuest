@@ -163,6 +163,8 @@
 
     <p>Zuletzt bearbeitet: {{ artikel.date_time|date:"d.m.Y" }}</p>
 
+    <p>Kategorie: {{ artikel.category.title }}</p>
+
     <div class="like-button {% if has_liked %}liked{% endif %}">
         <form action="{% url 'add_like_artikel' artikel.id %}" method="post">
             {% csrf_token %}

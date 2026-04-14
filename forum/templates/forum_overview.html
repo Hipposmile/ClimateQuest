@@ -55,6 +55,8 @@
     {% if search_keyword %}
         <p>Suchwort: {{ search_keyword }}</p>
     {% endif %}
+    <p>{{ forum_posts.count }} Suchergebnisse</p>
+
     {% if forum_posts %}
         {% for post in forum_posts %}
             <section
