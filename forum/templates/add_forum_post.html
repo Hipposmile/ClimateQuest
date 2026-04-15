@@ -27,6 +27,13 @@
         <div id="content_editor" class="quill-editor"></div>
         <input type="hidden" name="content">
 
+        <label for="category">Kategorie</label>
+        <select id="category" name="category">
+            {% for category in categories %}
+                <option value="{{ category }}">{{ category }}</option>
+            {% endfor %}
+        </select>
+
         <label class="custom-checkbox">
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>

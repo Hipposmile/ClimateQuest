@@ -5,13 +5,20 @@ from django.contrib import messages
 from core.all_messages import all_messages
 
 from utils.functions import clean_html, create_notification
-from .models import ForumPost, Answer
+from .models import ForumPost, Answer, Category
 
 
 # Create your views here.
 def forum_overview(request):
+    all_categories = Category.objects.values_list('title', flat=True)
+
     forum_posts = ForumPost.objects.all()
     if request.method == 'POST':
+
+        category = request.POST.get('category')
+        if category != "Alle":
+            forum_posts = forum_posts.filter(category__title=category)
+
         already_ordered = False
         ordered_by = request.POST.get('order_by')
         search_keyword = request.POST.get('search_keyword')
@@ -45,12 +52,16 @@ def forum_overview(request):
         forum_posts = forum_posts.order_by('title')
         ordered_by = "Titel"
         search_keyword = None
+        category = "Alle"
+
     return render(request, './forum_overview.html',
-                  {'forum_posts': forum_posts, 'ordered_by': ordered_by, 'search_keyword': search_keyword})
+                  {'forum_posts': forum_posts, 'ordered_by': ordered_by, 'search_keyword': search_keyword, 'category': category, 'all_categories': all_categories})
 
 
 @login_required
 def add_forum_post(request):
+    all_categories = Category.objects.values_list('title', flat=True)
+
     if request.method == 'POST':
         is_truth = request.POST.get('is_truth') == 'on'
         if not is_truth:
@@ -59,6 +70,13 @@ def add_forum_post(request):
 
         title = request.POST.get('title')
         content = request.POST.get('content')
+        category = request.POST.get('category')
+
+        try:
+            category = Category.objects.get(title=category)
+        except Category.DoesNotExist:
+            messages.error(request, all_messages["internal_error"])
+            return redirect('add_artikel')
 
         if len(title) > 100:
             messages.error(request, all_messages["too_long_input"])
@@ -70,10 +88,10 @@ def add_forum_post(request):
 
         clean_html(content)
 
-        post = ForumPost.objects.create(title=title, content=content, creator=request.user)
+        post = ForumPost.objects.create(title=title, content=content, creator=request.user, category=category)
 
         return redirect('post_detail', post.id)
-    return render(request, './add_forum_post.html')
+    return render(request, './add_forum_post.html', {'categories': all_categories})
 
 
 def post_detail(request, post_id):

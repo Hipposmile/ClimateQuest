@@ -25,6 +25,7 @@
             <small>Leer lassen, um alle Artikel anzuzeigen</small>
             <input type="search" name="search_keyword" id="search_keyword" placeholder="Suchwort">
         </div>
+
         <label for="order_by">Sortieren nach:</label>
         <select name="order_by" id="order_by" required>
             <option value="Titel" selected>Titel</option>
@@ -34,6 +35,14 @@
                 <option value="von mir erstellte Posts">von mir erstellte Posts</option>
                 <option value="von mir beantwortete Posts">von mir beantwortete Posts</option>
             {% endif %}
+        </select>
+
+        <label for="category">Kategorie:</label>
+        <select name="category" id="category" required>
+            <option value="Alle" selected>Alle</option>
+            {% for category in all_categories %}
+                <option value="{{ category.title }}">{{ category.title }}</option>
+            {% endfor %}
         </select>
 
         <button type="submit">Anwenden</button>
@@ -55,6 +64,7 @@
     {% if search_keyword %}
         <p>Suchwort: {{ search_keyword }}</p>
     {% endif %}
+    <p>Kategorie: {{ category }}</p>
     <p>{{ forum_posts.count }} Suchergebnisse</p>
 
     {% if forum_posts %}
@@ -63,6 +73,7 @@
                     class="event-card{% if request.user == post.creator %} event-card-creator{% endif %}">
                 <div class="event-main">
                     <h2 class="event-title">{{ post.title }}</h2>
+                    <p>Kategorie: {{ post.category.title }}</p>
                     {% if ordered_by == 'Erstellt am' %}
                         <p><strong>Erstellt am:</strong> <span class="event-date"
                                                                data-date="{{ post.date_time|date:'c' }}">{{ post.date_time|date:"d.m.Y, H:i" }}</span>

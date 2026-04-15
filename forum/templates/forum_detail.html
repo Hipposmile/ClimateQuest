@@ -35,9 +35,12 @@
     {% endif %}
 
     <div class="artikel-content"><p>{{ post.content|safe }}</p></div>
+
     <br>
+
     <p>Erstellt von <a href="{% url 'user_detail' post.creator.id %}">{{ post.creator }}</a></p>
     <p>Erstellt am: {{ post.date_time|date:"d.m.Y H:i" }}</p>
+    <p>Kategorie: {{ post.category.title }}</p>
 
     {% for answer in answers %}
         <div class="answer">
