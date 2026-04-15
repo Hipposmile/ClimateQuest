@@ -18,7 +18,7 @@
             margin-right: 4px;
         }
     </style>
-    <h1>Events - Übersicht</h1>
+    <h1><a href="{% url 'events_overview' %}">Events</a> - Übersicht</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
