@@ -35,7 +35,8 @@ def home(request):
         klimapunkte_gesamt += klimapunkte
         user_count += 1
     tree_count = TreeCodes.objects.filter(planted=True).count()
-    return render(request, './home.html', {'klimapunkte': klimapunkte_gesamt, 'user_count': user_count, 'tree_count': tree_count})
+    return render(request, './home.html',
+                  {'klimapunkte': klimapunkte_gesamt, 'user_count': user_count, 'tree_count': tree_count})
 
 
 def dashboard(request):
@@ -193,3 +194,15 @@ def datenschutz(request):
 
 def impressum(request):
     return render(request, 'impressum.html')
+
+
+def companies_and_schools(request):
+    return render(request, './companies_and_schools.html')
+
+
+def support(request):
+    return render(request, './support.html')
+
+
+def feedback(request):
+    return render(request, './feedback.html')

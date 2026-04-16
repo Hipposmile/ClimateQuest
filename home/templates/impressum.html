@@ -11,7 +11,17 @@
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
-    <body>
+    <a href="{% url 'support' %}" class="redirect-link">
+        <span>Support</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+    <br>
+    <a href="{% url 'feedback' %}" class="redirect-link">
+        <span>Feedback</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+    <br>
+    <br>
     <p>Fraqment Film GbR</p>
     <p>Kuckucksblumenstr. 23</p>
     <p>80469 München</p>
@@ -28,15 +38,24 @@
     <p>E-Mail: <a href="mailto:kontakt@climate-quest.de">kontakt@climate-quest.de</a></p>
     <br>
     <h2>Haftungsausschluss</h2>
-    <p>Der Webseitenbetreiber übernimmt keinerlei Haftung für den Wahrheitsgehalt der hochgeladenen Artikel, Events und Forumsbeiträge, da sie von Nutzern erstellt wurden. Sollten diese nicht mit Nutzungsbedingungen übereinstimmen oder falsch sein, können Sie dies jederzeit unter Angabe der URL sowie einer Begründung unter kontakt@climate-quest.de melden, woraufhin der Inhalt geprüft und ggf. gelöscht wird. Dies kann allerdings einige Zeit dauern.</p>
+    <p>Der Webseitenbetreiber übernimmt keinerlei Haftung für den Wahrheitsgehalt der hochgeladenen Artikel, Events und
+        Forumsbeiträge, da sie von Nutzern erstellt wurden. Sollten diese nicht mit Nutzungsbedingungen übereinstimmen
+        oder falsch sein, können Sie dies jederzeit unter Angabe der URL sowie einer Begründung unter
+        kontakt@climate-quest.de melden, woraufhin der Inhalt geprüft und ggf. gelöscht wird. Dies kann allerdings
+        einige Zeit dauern.</p>
     <br>
     <h2>Quellen</h2>
     <ul>
-        <li>Emojis: <a href="https://openmoji.org">OpenMoji</a>, lizenziert unter <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Es wurden keine Änderungen vorgenommen</li>
+        <li>Emojis: <a href="https://openmoji.org">OpenMoji</a>, lizenziert unter <a
+                href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Es wurden keine Änderungen
+            vorgenommen
+        </li>
         <li>Bilder: <a href="https://pixabay.com">Pixabay</a> und selbst geschossen</li>
     </ul>
 
     <h2>Änderungen dieses Impressums</h2>
-    <p>Wir behalten uns vor, dieses Impressum anzupassen, um es an geänderte rechtliche Rahmenbedingungen oder bei Änderungen der Dienstleistung anzupassen. Die aktuelle Version ist stets unter <a  href="{% url 'impressum' %}">dieser URL</a> zu finden.</p>
+    <p>Wir behalten uns vor, dieses Impressum anzupassen, um es an geänderte rechtliche Rahmenbedingungen oder bei
+        Änderungen der Dienstleistung anzupassen. Die aktuelle Version ist stets unter <a href="{% url 'impressum' %}">dieser
+            URL</a> zu finden.</p>
 
 {% endblock %}
