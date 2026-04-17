@@ -21,7 +21,7 @@
         }
     </style>
 
-    <h1 class="event-title">Event <i>{{ event.name }}</i></h1>
+    <h1><a href="{% url 'events_overview' %}">Event</a> <i>{{ event.name }}</i></h1>
 
     {% if request.user != event.creator %}
         <p class="participant-status">

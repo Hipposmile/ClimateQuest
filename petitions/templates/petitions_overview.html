@@ -7,7 +7,7 @@
 {% block title %}Petitionen{% endblock %}
 
 {% block content %}
-    <h1><a href="{% url 'petitions_overview' %}">Petitionen</a> - Übersicht</h1>
+    <h1>Petitionen - Übersicht</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>

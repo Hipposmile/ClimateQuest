@@ -34,7 +34,7 @@
         <script nonce="{{ request.csp_script_nonce }}">startConfetti();</script>
     {% endif %}
 
-    <h1>Petition <i>{{ petition.title }}</i></h1>
+    <h1><a href="{% url 'petitions_overview' %}">Petition</a> <i>{{ petition.title }}</i></h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
