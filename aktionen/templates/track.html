@@ -19,7 +19,7 @@
         {% if action.tracked_actions.first %}
             <form method="post" class="form-confirm" data-confirm="Möchtest du das Tracking für {{ action.name }} wirklich stoppen?">
                 {% csrf_token %}
-                {{ action.name }} wird getrackt seit {{ action.tracked_actions.first.since }}.
+                <i>{{ action.name }}</i> wird getrackt seit {{ action.tracked_actions.first.since }}.
                 <button type="submit" class="color-red" name="weekly_track" value="{{ action.id }}">Stoppen</button>
             </form>
 
