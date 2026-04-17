@@ -540,23 +540,19 @@ def get_perfect_week_progress(user, date_given):
     return output
 
 
-def get_worldwide_ranking_rank_from_user(user):
-    try:
-        family = Family.objects.get(name='worldwide ranking')
-        members_with_klimapunkte = []
-        members = family.members.all()
+def get_family_rank_from_user(user, family):
+    members_with_klimapunkte = []
+    members = family.members.all()
 
-        for member in members:
-            klimapunkte = get_all_klimapunkte_from_user(member)
-            members_with_klimapunkte.append({'member': member, 'klimapunkte': klimapunkte})
+    for member in members:
+        klimapunkte = get_all_klimapunkte_from_user(member)
+        members_with_klimapunkte.append({'member': member, 'klimapunkte': klimapunkte})
 
-        members_with_klimapunkte_sortiert = sorted(
-            members_with_klimapunkte,
-            key=lambda x: x['klimapunkte'],
-            reverse=True
-        )
+    members_with_klimapunkte_sortiert = sorted(
+        members_with_klimapunkte,
+        key=lambda x: x['klimapunkte'],
+        reverse=True
+    )
 
-        rank = next(i for i, d in enumerate(members_with_klimapunkte_sortiert) if d['member'] == user)
-        return rank + 1
-    except Exception:
-        return None
+    rank = next(i for i, d in enumerate(members_with_klimapunkte_sortiert) if d['member'] == user)
+    return rank + 1

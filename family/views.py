@@ -115,7 +115,6 @@ def chat_family(request, family_id):
 
 @login_required
 def families_view(request):
-    check_worldwide_ranking_exists(request)
     families = get_families_of_user(request.user)
     return render(request, './families.html', {'families': families})
 

@@ -12,10 +12,11 @@ from django.urls import reverse
 from aktionen.models import Aktion, AktionenListe, Category
 from aktionen.views import validate_number, get_period_start, aktion_date_invalid, get_if_timely_action
 from core.all_messages import all_messages
+from family.models import Family
 from personals.models import UserErweitert
 from utils.functions import dezimalstellen, get_klimapunkte, get_klimapunkte_from_likes, get_weekly_goal_from_user, \
     get_streak_from_user, send_mail_function, get_level, create_notification, get_all_klimapunkte_from_user, \
-    get_worldwide_ranking_rank_from_user
+    get_family_rank_from_user
 
 
 def get_user(request, user_id, allow_needed=True):
@@ -139,7 +140,7 @@ def user_detail(request, user_id):
     weekly_goal, weekly_klimapunkte, weekly_goal_progress_percent = get_weekly_goal_from_user(user)
     streak = get_streak_from_user(user)
     all_klimapunkte = get_all_klimapunkte_from_user(user)
-    worldwide_ranking_rank = get_worldwide_ranking_rank_from_user(user)
+    worldwide_ranking_rank = get_family_rank_from_user(user, Family.objects.get(name='worldwide ranking'))
 
     if request.user.is_authenticated:
         if request.method == 'POST':
