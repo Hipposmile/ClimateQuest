@@ -1368,6 +1368,28 @@
             resize();
         });
     });
+
+    // Max bei Text-Inputs
+    document.querySelectorAll('input[type="text"][maxlength], textarea[maxlength]').forEach(input => {
+        const max = input.getAttribute('maxlength');
+
+        const counter = document.createElement('span');
+        counter.textContent = `0 / ${max}`;
+        counter.classList.add('input-max-span');
+
+        input.insertAdjacentElement('beforebegin', counter);
+
+        input.addEventListener('input', () => {
+            const current = input.value.length;
+            counter.textContent = `${current} / ${max}`;
+
+            if (current >= max * 0.9) {
+                counter.classList.add('full');
+            } else {
+                counter.classList.remove('full');
+            }
+        });
+    });
 </script>
 </body>
 </html>
