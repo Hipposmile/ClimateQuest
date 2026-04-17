@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from aktionen.models import Aktion, AktionenListe, Category
-from aktionen.views import validate_number, get_period_start, aktion_date_invalid, get_if_timely_action
+from aktionen.views import validate_number, get_period_start, action_date_invalid, get_if_timely_action
 from core.all_messages import all_messages
 from family.models import Family
 from personals.models import UserErweitert
@@ -225,7 +225,7 @@ def action_detail(request, action_id, user_id):
                         messages.error(request, all_messages["action_too_past"])
                         return redirect('add')
 
-                if aktion_date_invalid(action, action_date, action_quantity, request.user, action_id):
+                if action_date_invalid(action, action_date, action_quantity, request.user, action_id):
                     messages.error(request, all_messages["action_already_set_in_period"])
                     return redirect('action_detail', action_id, user_id)
 

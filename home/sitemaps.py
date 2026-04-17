@@ -66,3 +66,5 @@ class AktionenTableSitemap(Sitemap):
 
     def location(self, item):
         return reverse(item)
+
+# ToDo: Sitemaps mit Support und Feedback ausstatten

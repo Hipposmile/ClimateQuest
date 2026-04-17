@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
+
 class AktionenListe(models.Model):
     name = models.CharField(max_length=100, unique=True)
     klimapunkte = models.FloatField()
@@ -10,9 +11,12 @@ class AktionenListe(models.Model):
     anmerkung = models.CharField(max_length=500)
     source = models.CharField(max_length=1000)
     max = models.FloatField(default=0.0)
+    track_weekly = models.BooleanField(default=False)
+    track_distance = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -20,6 +24,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Aktion(models.Model):
     description = models.CharField(max_length=200, blank=True, null=True)
@@ -34,3 +39,12 @@ class Aktion(models.Model):
 
     def __str__(self):
         return f"{self.aktion.name} ({self.user})"
+
+
+class TrackedActions(models.Model):
+    action = models.ForeignKey(AktionenListe, on_delete=models.CASCADE, related_name='tracked_actions')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tracked_actions')
+    since = models.DateField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.action.name} --> ({self.user})"

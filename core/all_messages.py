@@ -11,7 +11,7 @@ all_messages = {
     "invalid_action": "Ungültige Aktion",
     "notification_deleted": "Benachrichtigung erfolgreich gelöscht",
     "delete_notification_error": "interner Fehler: Benachrichtigung bereits gelöscht",
-    "internal_error": "interner Fehler. Probiere es später erneut",
+    "internal_error": "Interner Fehler. Probiere es später erneut",
     "no_admin_auth": "Du darfst nicht auf die Admin-Funktionen zugreifen",
     "user_not_exist": "User existiert nicht",
     "not_is_truth": "Du musst bestätigen, dass alle Angaben der Wahrheit entsprechen",
@@ -153,6 +153,9 @@ all_messages = {
         "Die angegebene Menge ist zu hoch, um realistisch zu sein. Weitere Informationen findest du in <a href='https://climate-quest.de/artikel/artikel_detail/9'>diesem Artikel</a>."),
     "action_too_past": mark_safe("Das angegebene Datum liegt zu weit in der Vergangenheit. Weitere Informationen findest du in <a href='https://climate-quest.de/artikel/artikel_detail/18'>diesem Artikel</a>."),
     "action_already_set_in_period": "Diese Aktion wurde im gleichen Zeitraum schon einmal eingetragen",
+
+    "tracking_action": "Aktion wird jetzt getrackt",
+    "stopped_tracking": "Aktion wird nicht mehr getrackt",
 
     # --------
     # Event

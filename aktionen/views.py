@@ -1,16 +1,16 @@
 from datetime import datetime, timedelta, date
 
 from dateutil.relativedelta import relativedelta
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
 from django.db.models.functions import Lower
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from aktionen.models import Aktion, AktionenListe, Category
-from django.contrib import messages
-from core.all_messages import all_messages
-from django.db.models import Sum
 
+from core.all_messages import all_messages
 from utils.functions import dezimalstellen, get_level, get_streak_from_user, create_notification
+from .models import Aktion, AktionenListe, Category, TrackedActions
 
 
 def get_if_timely_action(unit):
@@ -18,6 +18,7 @@ def get_if_timely_action(unit):
     if unit == "tag" or unit == "woche" or unit == "monat":
         return True
     return False
+
 
 def get_period_start(end, quantity, unit):
     if unit == "tag":
@@ -77,7 +78,7 @@ def aktion_is_in_different_action_period(action_type, end_date, user, exclude_id
     return False
 
 
-def aktion_date_invalid(action_type, end_date, quantity, user, exclude_id=None):
+def action_date_invalid(action_type, end_date, quantity, user, exclude_id=None):
     if aktion_exists_in_period(action_type, end_date, quantity, user, exclude_id):
         return True
     if aktion_is_in_different_action_period(action_type, end_date, user, exclude_id):
@@ -134,7 +135,7 @@ def add(request):
             return redirect('add')
         elif not get_if_timely_action(action.mengeBeschreibungSingular) and (
                 Aktion.objects.filter(user=request.user, aktion=action, date=action_date).aggregate(
-                        total=Sum('quantity'))[
+                    total=Sum('quantity'))[
                     "total"] or 0) + action_quantity > action.max:
             messages.error(request, all_messages["max_action_quantity"])
             return redirect('add')
@@ -153,7 +154,7 @@ def add(request):
                 messages.error(request, all_messages["action_too_past"])
                 return redirect('add')
 
-        if aktion_date_invalid(action, action_date, action_quantity, request.user):
+        if action_date_invalid(action, action_date, action_quantity, request.user):
             messages.error(request, all_messages["action_already_set_in_period"])
             return redirect('add')
 
@@ -194,6 +195,46 @@ def add(request):
         return redirect('action_detail', aktion.id, request.user.id)
 
     return render(request, './add.html', {'categories': categories})
+
+
+@login_required
+def track_actions(request):
+    trackable_actions_weekly = AktionenListe.objects.filter(track_weekly=True).order_by('name')
+    trackable_actions_distance = AktionenListe.objects.filter(track_distance=True).order_by('name')
+
+    if request.method == 'POST':
+        if 'weekly_track' in request.POST:
+            action_id = request.POST.get('weekly_track')
+            try:
+                action = AktionenListe.objects.get(id=action_id)
+            except AktionenListe.DoesNotExist:
+                messages.error(request, all_messages["internal_error"])
+                return redirect('track_actions')
+
+            if TrackedActions.objects.filter(action=action, user=request.user).exists():
+                TrackedActions.objects.filter(action=action, user=request.user).delete()
+                messages.success(request, all_messages["stopped_tracking"])
+                return redirect('track_actions')
+            else:
+                TrackedActions.objects.create(action=action, user=request.user)
+                messages.success(request, all_messages["tracking_action"])
+                return redirect('track_actions')
+
+    return render(request, './track.html', {'trackable_actions_weekly': trackable_actions_weekly,
+                                            'trackable_actions_distance': trackable_actions_distance})
+
+
+def add_weekly_tracking_action():
+    all_actions = TrackedActions.objects.all()
+
+    for tracked_action in all_actions:
+        user = tracked_action.user
+        action = tracked_action.action
+        today = date.today()
+
+        if (today - tracked_action.since).days >= 6 and not action_date_invalid(action, today, 1, user):
+            Aktion.objects.create(user=user, aktion=action, quantity=1, date=today,
+                                  description="Eingetragen vom ClimateQuest Tracking Service")
 
 
 def validate_number(number, input_decimals):
