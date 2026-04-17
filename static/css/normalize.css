@@ -157,3 +157,28 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     display: block;
     cursor: pointer;
 }
+
+/* Nativen Pfeil in allen Browsern entfernen */
+summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+summary::-webkit-details-marker {
+    display: none; /* Chrome/Safari */
+}
+
+/* Eigener Pfeil per Pseudo-Element */
+summary::before {
+    content: "▶";
+    display: inline-block;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+}
+
+details[open] > summary::before {
+    transform: rotate(90deg);
+}

@@ -52,7 +52,7 @@
 
     <details class="event-details">
         <summary>
-            <p><strong>Teilnehmeranzahl:</strong> {{ event.participants_count }}</p>
+            <strong>Teilnehmeranzahl:</strong> {{ event.participants_count }}
         </summary>
         <ul class="participant-list">
             {% for participant in event.participants.all %}
