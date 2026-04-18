@@ -200,7 +200,7 @@ def add(request):
 @login_required
 def track_actions(request):
     trackable_actions_weekly = AktionenListe.objects.filter(track_weekly=True).order_by('name')
-    trackable_actions_distance = AktionenListe.objects.filter(track_distance=True).order_by('name')
+    trackable_actions_distance = AktionenListe.objects.filter(track_kilometerly=True).order_by('name')
 
     if request.method == 'POST':
         if 'weekly_track' in request.POST:

@@ -51,36 +51,42 @@
             </div>
         </div>
     </div>
-    {% comment %}
-        <div class="accordion">
-                <div class="accordion-header">
-                    <div>
-                        <div class="accordion-title">Distanz</div>
-                        <div class="accordion-meta">Wenn du deine Fahrrad-, ÖPNV- oder Zugstrecken tracken willst</div>
-                    </div>
-                    <button class="accordion-toggle" aria-expanded="false"
-                            aria-controls="accordionContent">
-                        <span></span>
-                    </button>
-                </div>
-                <div class="accordion-content-wrapper">
-                    <div class="accordion-content">
 
-                    </div>
-                </div>
+    <div class="accordion">
+        <div class="accordion-header">
+            <div>
+                <div class="accordion-title">Distanz</div>
+                <div class="accordion-meta">Wenn du deine Fahrrad-, ÖPNV- oder Zugstrecken tracken willst</div>
             </div>
+            <button class="accordion-toggle" aria-expanded="false"
+                    aria-controls="accordionContent">
+                <span></span>
+            </button>
+        </div>
+        <div class="accordion-content-wrapper">
+            <div class="accordion-content">
+                <p>Diese Funktion ist aktuell noch nicht verfügbar. Wir arbeiten daran.</p>
+            </div>
+        </div>
+    </div>
 
     <script nonce="{{ request.csp_script_nonce }}">
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
-                console.log(lat, lon);
-            },
-            (error) => {
-                console.error("Fehler:", error.message);
-            }
-        );
+        function distanceBetween(lan1, lan2, lon1, lon2) {
+            const R = 6371e3; // Erdradius in Metern
+
+            const φ1 = lat1 * Math.PI / 180;
+            const φ2 = lat2 * Math.PI / 180;
+
+            const Δφ = (lat2 - lat1) * Math.PI / 180;
+            const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+            const a = Math.sin(Δφ / 2) ** 2 +
+                Math.cos(φ1) * Math.cos(φ2) *
+                Math.sin(Δλ / 2) ** 2;
+
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+            return R * c; // Ergebnis in Metern
+        }
     </script>
-    {% endcomment %}
 {% endblock %}
