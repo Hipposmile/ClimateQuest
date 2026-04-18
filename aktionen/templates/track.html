@@ -51,8 +51,25 @@
             </div>
         </div>
     </div>
-
     {% comment %}
+        <div class="accordion">
+                <div class="accordion-header">
+                    <div>
+                        <div class="accordion-title">Distanz</div>
+                        <div class="accordion-meta">Wenn du deine Fahrrad-, ÖPNV- oder Zugstrecken tracken willst</div>
+                    </div>
+                    <button class="accordion-toggle" aria-expanded="false"
+                            aria-controls="accordionContent">
+                        <span></span>
+                    </button>
+                </div>
+                <div class="accordion-content-wrapper">
+                    <div class="accordion-content">
+
+                    </div>
+                </div>
+            </div>
+
     <script nonce="{{ request.csp_script_nonce }}">
         navigator.geolocation.getCurrentPosition(
             (position) => {

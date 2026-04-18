@@ -12,7 +12,7 @@ class AktionenListe(models.Model):
     source = models.CharField(max_length=1000)
     max = models.FloatField(default=0.0)
     track_weekly = models.BooleanField(default=False)
-    track_distance = models.BooleanField(default=False)
+    track_kilometerly = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
