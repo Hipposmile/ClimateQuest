@@ -52,22 +52,18 @@
         </div>
     </div>
 
-    <p id="location"></p>
-
+    {% comment %}
     <script nonce="{{ request.csp_script_nonce }}">
-        const p = document.getElementById('location');
-        p.textContent = `Fehler`;
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
                 console.log(lat, lon);
-                p.textContent = `${lat} --- ${lon}`;
             },
             (error) => {
-                p.textContent = `Fehler: ${error.message}`;
                 console.error("Fehler:", error.message);
             }
         );
     </script>
+    {% endcomment %}
 {% endblock %}
