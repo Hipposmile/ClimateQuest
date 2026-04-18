@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load development %}
 {% block meta %}
     <meta name="description" content="Tracke deine Aktionen automatisch!">
 {% endblock %}
@@ -30,7 +30,7 @@
         <div class="accordion-content-wrapper">
             <div class="accordion-content">
                 {% for action in trackable_actions_weekly %}
-                    {% if action.tracked_actions.first %}
+                    {% if action.tracked_actions.first.user == request.user %}
                         <form method="post" class="form-confirm"
                               data-confirm="Möchtest du das Tracking für {{ action.name }} wirklich stoppen?">
                             {% csrf_token %}
@@ -39,7 +39,6 @@
                                 Stoppen
                             </button>
                         </form>
-
                     {% else %}
                         <form method="post">
                             {% csrf_token %}
@@ -52,41 +51,45 @@
         </div>
     </div>
 
-    <div class="accordion">
-        <div class="accordion-header">
-            <div>
-                <div class="accordion-title">Distanz</div>
-                <div class="accordion-meta">Wenn du deine Fahrrad-, ÖPNV- oder Zugstrecken tracken willst</div>
+    {% development %}
+        <div class="accordion">
+            <div class="accordion-header">
+                <div>
+                    <div class="accordion-title">Distanz</div>
+                    <div class="accordion-meta">Wenn du deine Fahrrad-, ÖPNV- oder Zugstrecken tracken willst</div>
+                </div>
+                <button class="accordion-toggle" aria-expanded="false"
+                        aria-controls="accordionContent">
+                    <span></span>
+                </button>
             </div>
-            <button class="accordion-toggle" aria-expanded="false"
-                    aria-controls="accordionContent">
-                <span></span>
-            </button>
-        </div>
-        <div class="accordion-content-wrapper">
-            <div class="accordion-content">
-                <p>Diese Funktion ist aktuell noch nicht verfügbar. Wir arbeiten daran.</p>
+            <div class="accordion-content-wrapper">
+                <div class="accordion-content">
+                    {% for action in trackable_actions_kilometerly %}
+
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
 
-    <script nonce="{{ request.csp_script_nonce }}">
-        function distanceBetween(lat1, lon1, lat2, lon2) {
-            const R = 6371e3; // Erdradius in Metern
+        <script nonce="{{ request.csp_script_nonce }}">
+            function distanceBetween(lat1, lon1, lat2, lon2) {
+                const R = 6371e3; // Erdradius in Metern
 
-            const φ1 = lat1 * Math.PI / 180;
-            const φ2 = lat2 * Math.PI / 180;
+                const φ1 = lat1 * Math.PI / 180;
+                const φ2 = lat2 * Math.PI / 180;
 
-            const Δφ = (lat2 - lat1) * Math.PI / 180;
-            const Δλ = (lon2 - lon1) * Math.PI / 180;
+                const Δφ = (lat2 - lat1) * Math.PI / 180;
+                const Δλ = (lon2 - lon1) * Math.PI / 180;
 
-            const a = Math.sin(Δφ / 2) ** 2 +
-                Math.cos(φ1) * Math.cos(φ2) *
-                Math.sin(Δλ / 2) ** 2;
+                const a = Math.sin(Δφ / 2) ** 2 +
+                    Math.cos(φ1) * Math.cos(φ2) *
+                    Math.sin(Δλ / 2) ** 2;
 
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-            return R * c; // Ergebnis in Metern
-        }
-    </script>
+                return R * c; // Ergebnis in Metern
+            }
+        </script>
+    {% enddevelopment %}
 {% endblock %}
