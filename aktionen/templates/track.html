@@ -35,136 +35,134 @@
     <p id="distance-tracking-info"></p>
     <button id="distance-tracking-button" class="btn">Stoppen</button>
 
-    {% development %}
-        <div class="accordion" id="distance-tracking">
-            <div class="accordion-header">
-                <div>
-                    <div class="accordion-title">Distanz</div>
-                    <div class="accordion-meta">Wenn du deine Fahrrad-, ÖPNV- oder Zugstrecken tracken willst</div>
-                </div>
-                <button class="accordion-toggle" aria-expanded="false"
-                        aria-controls="accordionContent">
-                    <span></span>
-                </button>
+    <div class="accordion" id="distance-tracking">
+        <div class="accordion-header">
+            <div>
+                <div class="accordion-title">Distanz</div>
+                <div class="accordion-meta">Wenn du deine Fahrrad-, ÖPNV- oder Zugstrecken tracken willst</div>
             </div>
-            <div class="accordion-content-wrapper">
-                <div class="accordion-content">
-                    {% for action in trackable_actions_kilometerly %}
-                        <form>
-                            <button type="button" class="btn-start-distance-tracking"
-                                    id="{{ action.id }}">{{ action.name }}</button>
-                        </form>
-                    {% endfor %}
-                </div>
+            <button class="accordion-toggle" aria-expanded="false"
+                    aria-controls="accordionContent">
+                <span></span>
+            </button>
+        </div>
+        <div class="accordion-content-wrapper">
+            <div class="accordion-content">
+                {% for action in trackable_actions_kilometerly %}
+                    <form>
+                        <button type="button" class="btn-start-distance-tracking"
+                                id="{{ action.id }}">{{ action.name }}</button>
+                    </form>
+                {% endfor %}
             </div>
         </div>
+    </div>
 
-        <script nonce="{{ request.csp_script_nonce }}">
-            function startTracking(id) {
-                document.getElementById('distance-tracking').style.display = 'none';
+    <script nonce="{{ request.csp_script_nonce }}">
+        function startTracking(id) {
+            document.getElementById('distance-tracking').style.display = 'none';
 
-                const btn = document.getElementById('distance-tracking-button');
-                btn.style.display = 'block';
-                btn.addEventListener('click', () => {
-                    navigator.geolocation.clearWatch(watchId);
-                    stopTracking(distance.toFixed(0), id);
-                });
-
-                document.getElementById('distance-tracking-alert').textContent = 'Bitte Seite nicht aktualisieren oder verlassen, während die Distanz getrackt wird!!!';
-
-                let info = document.getElementById('distance-tracking-info');
-                info.textContent = 'Insgesamt getrackte Distanz: 0 Meter';
-
-                let distance = 0;
-                let oldPosition;
-
-                const watchId = navigator.geolocation.watchPosition((position) => {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-
-                    if (oldPosition) {
-                        const delta = distanceBetween(oldPosition.lat, oldPosition.lon, lat, lon);
-
-                        if (delta > 2) {
-                            distance += delta;
-                            info.textContent = 'Insgesamt getrackte Distanz: ' + distance.toFixed(0) + ' Meter';
-                        }
-                    }
-
-                    oldPosition = {lat, lon};
-                }, (error) => {
-                    console.error('Fehler:', error);
-                }, {
-                    enableHighAccuracy: true,
-                    maximumAge: 5000,
-                    timeout: 10000
-                });
-            }
-
-            function stopTracking(distance, id) {
-                document.getElementById('distance-tracking').style.display = 'block';
-                document.getElementById('distance-tracking-alert').textContent = '';
-
-                document.getElementById('distance-tracking-info').textContent = '';
-
-                document.getElementById('distance-tracking-button').style.display = 'none';
-
-                if (distance <= 0) {
-                    document.getElementById('js-tracking-msg').textContent = 'Da du dich nicht bewegt hast, wurde nichts eingetragen.';
-                    document.getElementById('js-tracking-msg').classList.add('error-message');
-                } else {
-                    const formData = new FormData();
-                    formData.append('kilometerly_track', '1');
-                    formData.append('distance', distance);
-                    formData.append('action_id', id);
-                    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
-
-                    fetch(window.location.href, {
-                        method: 'POST',
-                        body: formData
-                    }).then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                document.getElementById('js-tracking-msg').innerHTML = `Distanz erfolgreich getrackt! <a href="/users/action_detail/${data.action_id}/${data.user_id}" class="redirect-link more-link"><span>Mehr</span><span class="redirect-link-icon">→</span></a>`;
-                                document.getElementById('js-tracking-msg').classList.add('success-message');
-                            } else {
-                                document.getElementById('js-tracking-msg').textContent = `Fehler beim Eintragen der Aktion: ${data.error}`;
-                                document.getElementById('js-tracking-msg').classList.add('error-message');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Fehler:', error);
-                            document.getElementById('js-tracking-msg').textContent = 'Fehler beim Eintragen der Aktion.';
-                            document.getElementById('js-tracking-msg').classList.add('error-message');
-                        });
-                }
-            }
-
-            document.querySelectorAll('.btn-start-distance-tracking').forEach((btn) => {
-                btn.addEventListener('click', () => {
-                    startTracking(btn.id);
-                });
+            const btn = document.getElementById('distance-tracking-button');
+            btn.style.display = 'block';
+            btn.addEventListener('click', () => {
+                navigator.geolocation.clearWatch(watchId);
+                stopTracking(distance.toFixed(0), id);
             });
 
-            function distanceBetween(lat1, lon1, lat2, lon2) {
-                const R = 6371e3; // Erdradius in Metern
+            document.getElementById('distance-tracking-alert').textContent = 'Bitte Seite nicht aktualisieren oder verlassen, während die Distanz getrackt wird!!!';
 
-                const φ1 = lat1 * Math.PI / 180;
-                const φ2 = lat2 * Math.PI / 180;
+            let info = document.getElementById('distance-tracking-info');
+            info.textContent = 'Insgesamt getrackte Distanz: 0 Meter';
 
-                const Δφ = (lat2 - lat1) * Math.PI / 180;
-                const Δλ = (lon2 - lon1) * Math.PI / 180;
+            let distance = 0;
+            let oldPosition;
 
-                const a = Math.sin(Δφ / 2) ** 2 +
-                    Math.cos(φ1) * Math.cos(φ2) *
-                    Math.sin(Δλ / 2) ** 2;
+            const watchId = navigator.geolocation.watchPosition((position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
 
-                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                if (oldPosition) {
+                    const delta = distanceBetween(oldPosition.lat, oldPosition.lon, lat, lon);
 
-                return R * c; // Ergebnis in Metern
+                    if (delta > 2) {
+                        distance += delta;
+                        info.textContent = 'Insgesamt getrackte Distanz: ' + distance.toFixed(0) + ' Meter';
+                    }
+                }
+
+                oldPosition = {lat, lon};
+            }, (error) => {
+                console.error('Fehler:', error);
+            }, {
+                enableHighAccuracy: true,
+                maximumAge: 5000,
+                timeout: 10000
+            });
+        }
+
+        function stopTracking(distance, id) {
+            document.getElementById('distance-tracking').style.display = 'block';
+            document.getElementById('distance-tracking-alert').textContent = '';
+
+            document.getElementById('distance-tracking-info').textContent = '';
+
+            document.getElementById('distance-tracking-button').style.display = 'none';
+
+            if (distance <= 0) {
+                document.getElementById('js-tracking-msg').textContent = 'Da du dich nicht bewegt hast, wurde nichts eingetragen.';
+                document.getElementById('js-tracking-msg').classList.add('error-message');
+            } else {
+                const formData = new FormData();
+                formData.append('kilometerly_track', '1');
+                formData.append('distance', distance);
+                formData.append('action_id', id);
+                formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+                fetch(window.location.href, {
+                    method: 'POST',
+                    body: formData
+                }).then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById('js-tracking-msg').innerHTML = `Distanz erfolgreich getrackt! <a href="/users/action_detail/${data.action_id}/${data.user_id}" class="redirect-link more-link"><span>Mehr</span><span class="redirect-link-icon">→</span></a>`;
+                            document.getElementById('js-tracking-msg').classList.add('success-message');
+                        } else {
+                            document.getElementById('js-tracking-msg').textContent = `Fehler beim Eintragen der Aktion: ${data.error}`;
+                            document.getElementById('js-tracking-msg').classList.add('error-message');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Fehler:', error);
+                        document.getElementById('js-tracking-msg').textContent = 'Fehler beim Eintragen der Aktion.';
+                        document.getElementById('js-tracking-msg').classList.add('error-message');
+                    });
             }
-        </script>
-    {% enddevelopment %}
+        }
+
+        document.querySelectorAll('.btn-start-distance-tracking').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                startTracking(btn.id);
+            });
+        });
+
+        function distanceBetween(lat1, lon1, lat2, lon2) {
+            const R = 6371e3; // Erdradius in Metern
+
+            const φ1 = lat1 * Math.PI / 180;
+            const φ2 = lat2 * Math.PI / 180;
+
+            const Δφ = (lat2 - lat1) * Math.PI / 180;
+            const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+            const a = Math.sin(Δφ / 2) ** 2 +
+                Math.cos(φ1) * Math.cos(φ2) *
+                Math.sin(Δλ / 2) ** 2;
+
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+            return R * c; // Ergebnis in Metern
+        }
+    </script>
 
     <div class="accordion">
         <div class="accordion-header">
