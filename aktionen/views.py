@@ -7,6 +7,7 @@ from django.db.models import Sum
 from django.db.models.functions import Lower
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.http import JsonResponse
 
 from core.all_messages import all_messages
 from utils.functions import dezimalstellen, get_level, get_streak_from_user, create_notification
@@ -219,6 +220,28 @@ def track_actions(request):
                 TrackedActions.objects.create(action=action, user=request.user)
                 messages.success(request, all_messages["tracking_action"])
                 return redirect('track_actions')
+
+        if 'kilometerly_track' in request.POST:
+            distance = request.POST.get('distance')
+
+            try:
+                distance = int(distance)
+            except ValueError:
+                messages.error(request, all_messages["internal_error"])
+                return redirect('track_actions')
+
+            action_id = request.POST.get('action_id')
+
+            try:
+                action = AktionenListe.objects.get(id=action_id)
+            except AktionenListe.DoesNotExist:
+                return JsonResponse({'success': False, 'error': all_messages["internal_error"]})
+
+            action = Aktion.objects.create(aktion=action, user=request.user, quantity=(distance / 1000),
+                                  date=date.today(),
+                                  description='Diese Aktion wurde vom ClimateQuest Tracking Service automatisch getrackt.')
+
+            return JsonResponse({'success': True, 'action_id': action.id, 'user_id': request.user.id})
 
     return render(request, './track.html', {'trackable_actions_weekly': trackable_actions_weekly,
                                             'trackable_actions_kilometerly': trackable_actions_kilometerly})
