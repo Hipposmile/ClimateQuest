@@ -21,6 +21,32 @@
         .more-link:hover {
             color: var(--color-primary);
         }
+
+        #distance-tracking {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .accordion {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .beta-banner::after {
+            content: 'BETA';
+            position: absolute;
+            top: 8px;
+            right: -25px;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            padding: 4px 40px;
+            font-weight: bold;
+            font-size: 11px;
+            letter-spacing: 4px;
+            transform: rotate(45deg);
+            box-shadow: 8px 2px 16px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+        }
     </style>
     <h1>Tracken</h1>
     <p id="js-tracking-msg"></p>
@@ -36,6 +62,8 @@
     <button id="distance-tracking-button" class="btn">Stoppen</button>
 
     <div class="accordion" id="distance-tracking">
+        <div class="beta-banner"></div>
+
         <div class="accordion-header">
             <div>
                 <div class="accordion-title">Distanz</div>
@@ -165,6 +193,8 @@
     </script>
 
     <div class="accordion">
+        <div class="beta-banner"></div>
+
         <div class="accordion-header">
             <div>
                 <div class="accordion-title">Wöchentliche Aktionen</div>
