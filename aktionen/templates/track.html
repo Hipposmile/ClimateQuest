@@ -88,6 +88,15 @@
     </div>
 
     <script nonce="{{ request.csp_script_nonce }}">
+        function autostartDistance() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get("autostart-distance-id");
+            window.history.replaceState({}, "", window.location.pathname);
+            if (id) {
+                startTracking(id);
+            }
+        }
+
         function startTracking(id) {
             document.getElementById('distance-tracking').style.display = 'none';
 
@@ -173,6 +182,8 @@
                 startTracking(btn.id);
             });
         });
+
+        document.addEventListener('DOMContentLoaded', autostartDistance);
 
         function distanceBetween(lat1, lon1, lat2, lon2) {
             const R = 6371e3; // Erdradius in Metern
