@@ -81,7 +81,8 @@
                 {% for action in trackable_actions_kilometerly %}
                     <form>
                         <button type="button" class="btn-start-distance-tracking"
-                                id="{{ action.id }}">{{ action.name }}</button>
+                                id="{{ action.id }}">{% if request.LANGUAGE_CODE == "de" %}{{ action.name }}{% else %}
+                            {{ action.name_en }}{% endif %}</button>
                     </form>
                 {% endfor %}
             </div>
@@ -222,7 +223,8 @@
                 {% for action in trackable_actions_weekly %}
                     {% if action.tracked_actions.first.user == request.user %}
                         <form method="post" class="form-confirm"
-                              data-confirm="{% blocktrans with name=action.name %}Möchtest du das Tracking für {{ name }} wirklich stoppen?{% endblocktrans %}">
+                              data-confirm="
+                                      {% if request.LANGUAGE_CODE == "de" %}Bist du sicher, dass du das Tracken der Aktion {{ action.name }} beenden willst?{% else %}Are you sure you want to stop tracking {{ action.name_en }}{% endif %}">
                             {% csrf_token %}
                             <i>{{ action.name }}</i> {% trans 'wird getrackt seit' %} {{ action.tracked_actions.first.since }}.
                             <button type="submit" class="color-red" name="weekly_track" value="{{ action.id }}">
@@ -232,7 +234,9 @@
                     {% else %}
                         <form method="post">
                             {% csrf_token %}
-                            <button type="submit" name="weekly_track" value="{{ action.id }}">{{ action.name }}</button>
+                            <button type="submit" name="weekly_track" value="{{ action.id }}">
+                                {% if request.LANGUAGE_CODE == "de" %}{{ action.name }}{% else %}
+                                    {{ action.name_en }}{% endif %}</button>
                         </form>
 
                     {% endif %}
