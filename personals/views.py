@@ -20,11 +20,9 @@ from dotenv import load_dotenv
 from core.all_messages import all_messages
 from family.models import Family
 from personals.models import UserErweitert
-from production_conf.views import development_only
 from utils.functions import create_notification, create_internal_error, ist_email_gueltig, send_mail_function, \
     get_families_of_user, get_communities_of_user, generate_random_password, get_all_klimapunkte_from_user
 from .tokens import email_verification_token
-from .models import TreeCodes
 
 load_dotenv()
 
@@ -343,6 +341,26 @@ def settings_view(request):
             messages.success(request, all_messages["successfully_changed_goal"])
             return redirect('dashboard')
 
+        elif 'change_lang' in request.POST:
+            lang = request.POST.get('lang')
+            password = request.POST.get('password_weekly_goal')
+            if not request.user.check_password(password):
+                messages.error(request, all_messages["invalid_password"])
+                return redirect('settings_view')
+
+            if lang != 'de' and lang != 'en':
+                messages.error(request, all_messages["internal_error"])
+                return redirect('settings_view')
+            else:
+                user_extended = request.user.usererweitert
+                user_extended.lang = lang
+                user_extended.save()
+                if lang == "de":
+                    messages.success(request, "Sprache erfolgreich geändert")
+                else:
+                    messages.success(request, "Language successfully changed")
+                return redirect('settings_view')
+
         elif 'delete_account' in request.POST:
             password = request.POST.get('password_delete_account')
             if not request.user.check_password(password):
@@ -358,6 +376,7 @@ def settings_view(request):
                                 contacted_user_ids.add(user.id)
                                 create_notification(request,
                                                     f'User {request.user.username}, mit dem / der du zusammen in einer Family warst, hat den eigenen Account gelöscht. Von {request.user.username} gesendete Nachrichten werden auch gelöscht.',
+                                                    f'User {request.user.username}, with who you were in a family, deleted his / her account. His / her messages will also be deleted.',
                                                     user)
                 for community in communities:
                     for family in community.members.all():
@@ -366,6 +385,7 @@ def settings_view(request):
                                 contacted_user_ids.add(user.id)
                                 create_notification(request,
                                                     f'User {request.user.username}, mit dem du zusammen in einer Community warst, hat seinen Account gelöscht. Von {request.user.username} gesendete Nachrichten werden auch gelöscht.',
+                                                    f'User {request.user.username}, with who you were in a community, deleted his / her account. His / her messages will also be deleted.',
                                                     user)
                 request.user.delete()
                 logout(request)
@@ -417,7 +437,7 @@ def actions_after_registration(request, user):
         Family.objects.get(name='worldwide ranking').members.add(user)
     except Family.DoesNotExist:
         create_internal_error(request, 'Family "worldwide ranking" existiert nicht')
-    UserErweitert.objects.create(user=user)
+    UserErweitert.objects.create(user=user, lang=request.LANGUAGE_CODE)
 
 
 def check_username(request):
@@ -464,7 +484,9 @@ def credit_view(request):
         if available_credits > 0:
             worked = request.user.usererweitert.plant_tree()
             if not worked:
-                create_internal_error(request, f'{all_messages["error_planting_tree"]} (vermutlich sind keine Baumcodes mehr vorhanden)', all_messages["error_planting_tree"])
+                create_internal_error(request,
+                                      f'{all_messages["error_planting_tree"]} (vermutlich sind keine Baumcodes mehr vorhanden)',
+                                      all_messages["error_planting_tree"])
             return redirect('credit_view')
 
     return render(request, './credit_view.html',

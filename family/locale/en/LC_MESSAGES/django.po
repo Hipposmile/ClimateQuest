@@ -1,0 +1,481 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-27 13:49+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: family/templates/chat_family.html:10
+#, python-format
+msgid "Chat: Family %(name)s"
+msgstr "Chat: Family %(name)s"
+
+#: family/templates/chat_family.html:10 family/templates/edit_family.html:8
+#: family/templates/family_detail.html:9
+msgid "Die Family konnte nicht geladen werden."
+msgstr "The family could not be loaded."
+
+#: family/templates/chat_family.html:115
+#, python-format
+msgid "Chat: Family <a href=\"%(url)s\">%(name)s</a>"
+msgstr "Chat: Family <a href=\"%(url)s\">%(name)s</a>"
+
+#: family/templates/chat_family.html:124
+msgid "Chat aktualisieren"
+msgstr "Update chat"
+
+#: family/templates/chat_family.html:142
+msgid "Refresh"
+msgstr "Refresh"
+
+#: family/templates/chat_family.html:148
+msgid ""
+"Ich werde morgen um 15:00 am See Müll sammeln gehen. Wer will mitmachen?"
+msgstr ""
+"I will go litter picking at the lake tomorrow at 15:00. Who wants to join?"
+
+#: family/templates/chat_family.html:149 family/templates/chat_family.html:155
+msgid "Beispiel"
+msgstr "Example"
+
+#: family/templates/chat_family.html:154
+msgid ""
+"Wir machen eine Challenge: Wer schafft es von heute bis nächste Woche "
+"Sonntag am meisten Klimapunkte zu sammeln?"
+msgstr ""
+"We are doing a challenge: Who can collect the most climate points from today "
+"until next Sunday?"
+
+#: family/templates/chat_family.html:162
+#, python-format
+msgid "<a href=\"%(url)s\" class=\"chat-family-meta\">%(username)s</a>"
+msgstr "<a href=\"%(url)s\" class=\"chat-family-meta\">%(username)s</a>"
+
+#: family/templates/chat_family.html:163
+#, python-format
+msgid "%(date)s"
+msgstr "%(date)s"
+
+#: family/templates/chat_family.html:167
+msgid "Noch keine Nachrichten."
+msgstr "No messages yet."
+
+#: family/templates/chat_family.html:172
+msgid "Nachricht eingeben"
+msgstr "Enter message"
+
+#: family/templates/chat_family.html:174
+msgid "Nachricht eingeben..."
+msgstr "Enter message..."
+
+#: family/templates/chat_family.html:176
+msgid "Senden"
+msgstr "Send"
+
+#: family/templates/create_family.html:6
+msgid ""
+"Erstelle eine neue Family bei ClimateQuest, um dich mit anderen Nutzern zu "
+"vergleichen und auszutauschen."
+msgstr ""
+"Create a new family on ClimateQuest to compare and exchange with other users."
+
+#: family/templates/create_family.html:9 family/templates/create_family.html:12
+#: family/templates/create_family.html:37
+msgid "Family erstellen"
+msgstr "Create family"
+
+#: family/templates/create_family.html:20 family/templates/join_family.html:19
+msgid "Familyname:"
+msgstr "Family name:"
+
+#: family/templates/create_family.html:22 family/templates/join_family.html:20
+msgid "Familyname"
+msgstr "Family name"
+
+#: family/templates/create_family.html:23 family/templates/join_family.html:21
+msgid "Passwort:"
+msgstr "Password:"
+
+#: family/templates/create_family.html:24 family/templates/join_family.html:22
+msgid "Passwort"
+msgstr "Password"
+
+#: family/templates/create_family.html:25 family/templates/edit_family.html:22
+#: family/templates/edit_family.html:65 family/templates/edit_family.html:120
+#: family/templates/edit_family.html:140 family/templates/edit_family.html:167
+msgid "Admin Passwort:"
+msgstr "Admin password:"
+
+#: family/templates/create_family.html:26 family/templates/edit_family.html:23
+#: family/templates/edit_family.html:66 family/templates/edit_family.html:121
+msgid "Admin Passwort"
+msgstr "Admin password"
+
+#: family/templates/create_family.html:28 family/templates/edit_family.html:84
+msgid ""
+"Wir empfehlen folgende Admin-Passwort-Anforderungen, um die Family vor "
+"unerlaubter Bearbeitung zu schützen:"
+msgstr ""
+"We recommend the following admin password requirements to protect the family "
+"from unauthorized editing:"
+
+#: family/templates/create_family.html:30 family/templates/edit_family.html:86
+msgid "Mindestens acht Zeichen"
+msgstr "At least eight characters"
+
+#: family/templates/create_family.html:31 family/templates/edit_family.html:87
+msgid "Mindestens ein Großbuchstabe"
+msgstr "At least one uppercase letter"
+
+#: family/templates/create_family.html:32 family/templates/edit_family.html:88
+msgid "Mindestens ein Kleinbuchstabe"
+msgstr "At least one lowercase letter"
+
+#: family/templates/create_family.html:33 family/templates/edit_family.html:89
+msgid "Mindestens eine Zahl"
+msgstr "At least one number"
+
+#: family/templates/create_family.html:34 family/templates/edit_family.html:90
+msgid "Mindestens ein Sonderzeichen"
+msgstr "At least one special character"
+
+#: family/templates/create_family.html:39
+#, python-format
+msgid "Oder <a href=\"%(url)s\">einer bestehenden Family beitreten</a>."
+msgstr "Or <a href=\"%(url)s\">join an existing family</a>."
+
+#: family/templates/create_family.html:41 family/templates/edit_family.html:30
+msgid "Überprüfe, ob Familyname bereits existiert..."
+msgstr "Check if family name already exists..."
+
+#: family/templates/create_family.html:42 family/templates/edit_family.html:31
+msgid "Familyname bereits vorhanden"
+msgstr "Family name already exists"
+
+#: family/templates/create_family.html:43 family/templates/edit_family.html:32
+msgid "Familyname noch nicht vorhanden"
+msgstr "Family name does not exist yet"
+
+#: family/templates/edit_family.html:8
+#, python-format
+msgid "Family %(name)s bearbeiten"
+msgstr "Edit Family %(name)s"
+
+#: family/templates/edit_family.html:12
+#, python-format
+msgid "Family <a href=\"%(url)s\">%(name)s</a> bearbeiten"
+msgstr "Edit Family <a href=\"%(url)s\">%(name)s</a>"
+
+#: family/templates/edit_family.html:19
+msgid "Benutzernamen ändern"
+msgstr "Change family name"
+
+#: family/templates/edit_family.html:24
+msgid "Neuer Familyname:"
+msgstr "New family name:"
+
+#: family/templates/edit_family.html:26
+msgid "Neuer Familyname"
+msgstr "New family name"
+
+#: family/templates/edit_family.html:27 family/templates/edit_family.html:148
+msgid "Speichern"
+msgstr "Save"
+
+#: family/templates/edit_family.html:62
+msgid "Passwort ändern"
+msgstr "Change password"
+
+#: family/templates/edit_family.html:67
+msgid "Neues Passwort:"
+msgstr "New password:"
+
+#: family/templates/edit_family.html:68
+msgid "Neues Passwort"
+msgstr "New password"
+
+#: family/templates/edit_family.html:69 family/templates/edit_family.html:93
+#: family/templates/edit_family.html:124
+msgid "Ändern"
+msgstr "Change"
+
+#: family/templates/edit_family.html:74
+msgid "Admin Passwort ändern"
+msgstr "Change admin password"
+
+#: family/templates/edit_family.html:77
+msgid "Aktuelles Admin Passwort:"
+msgstr "Current admin password:"
+
+#: family/templates/edit_family.html:79
+msgid "aktuelles Admin Passwort"
+msgstr "current admin password"
+
+#: family/templates/edit_family.html:80
+msgid "Neues Admin Passwort:"
+msgstr "New admin password:"
+
+#: family/templates/edit_family.html:81
+msgid "neues Admin Passwort"
+msgstr "new admin password"
+
+#: family/templates/edit_family.html:117
+msgid "Mitglieder entfernen"
+msgstr "Remove members"
+
+#: family/templates/edit_family.html:122
+msgid "Username:"
+msgstr "Username:"
+
+#: family/templates/edit_family.html:123
+msgid "Username"
+msgstr "Username"
+
+#: family/templates/edit_family.html:129
+msgid "Family verlassen"
+msgstr "Leave family"
+
+#: family/templates/edit_family.html:130
+msgid "Willst du diese Family wirklich verlassen?"
+msgstr "Do you really want to leave this family?"
+
+#: family/templates/edit_family.html:132
+msgid "Diese Family verlassen"
+msgstr "Leave this family"
+
+#: family/templates/edit_family.html:137
+msgid "Chat-Einstellungen"
+msgstr "Chat settings"
+
+#: family/templates/edit_family.html:141 family/templates/edit_family.html:168
+msgid "Admin-Passwort"
+msgstr "Admin password"
+
+#: family/templates/edit_family.html:146
+msgid "Chat-Funktion aktivieren / deaktivieren"
+msgstr "Enable / disable chat function"
+
+#: family/templates/edit_family.html:164
+msgid "Family löschen"
+msgstr "Delete family"
+
+#: family/templates/edit_family.html:165
+msgid "Willst du diese Family wirklich löschen?"
+msgstr "Do you really want to delete this family?"
+
+#: family/templates/edit_family.html:169
+msgid "Diese Family löschen"
+msgstr "Delete this family"
+
+#: family/templates/families.html:5
+msgid "Eine Übersicht über all deine Families bei ClimateQuest."
+msgstr "An overview of all your families on ClimateQuest."
+
+#: family/templates/families.html:8 family/templates/families.html:53
+msgid "Meine Families"
+msgstr "My families"
+
+#: family/templates/families.html:60
+msgid "Family hinzufügen"
+msgstr "Add family"
+
+#: family/templates/families.html:65 family/templates/join_family.html:9
+#: family/templates/join_family.html:11 family/templates/join_family.html:23
+msgid "Family beitreten"
+msgstr "Join family"
+
+#: family/templates/families.html:74 family/templates/family_detail.html:85
+#, python-format
+msgid "Mitglieder: %(count)s"
+msgstr "Members: %(count)s"
+
+#: family/templates/families.html:75
+msgid "Details ansehen"
+msgstr "View details"
+
+#: family/templates/families.html:82
+msgid "Du bist keiner Family beigetreten."
+msgstr "You have not joined any family."
+
+#: family/templates/family_detail.html:8
+#, python-format
+msgid "Family %(name)s"
+msgstr "Family %(name)s"
+
+#: family/templates/family_detail.html:12
+#, python-format
+msgid "Family <i>%(name)s</i>"
+msgstr "Family <i>%(name)s</i>"
+
+#: family/templates/family_detail.html:21
+#, python-format
+msgid ""
+"\n"
+"            <a href=\"%(url)s\">Bearbeiten</a>"
+msgstr ""
+"\n"
+"            <a href=\"%(url)s\">Edit</a>"
+
+#: family/templates/family_detail.html:24
+#, python-format
+msgid ""
+"\n"
+"                <a href=\"%(url)s\">Chatten</a>"
+msgstr ""
+"\n"
+"                <a href=\"%(url)s\">Chat</a>"
+
+#: family/templates/family_detail.html:27
+msgid "Die Chat-Funktion ist für diese Family deaktiviert."
+msgstr "The chat function is disabled for this family."
+
+#: family/templates/family_detail.html:30
+msgid ""
+"Weder die Chat-Funktion noch die Bearbeiten-Funktion sind für die Family "
+"worldwide ranking freigeschaltet"
+msgstr ""
+"Neither the chat function nor the edit function are available for the family "
+"worldwide ranking"
+
+#: family/templates/family_detail.html:36
+msgid "Zeitraum"
+msgstr "Time period"
+
+#: family/templates/family_detail.html:38 family/views.py:416
+msgid "Gesamt"
+msgstr "Total"
+
+#: family/templates/family_detail.html:39
+msgid "Heute"
+msgstr "Today"
+
+#: family/templates/family_detail.html:40
+msgid "7 Tage"
+msgstr "7 days"
+
+#: family/templates/family_detail.html:41
+msgid "30 Tage"
+msgstr "30 days"
+
+#: family/templates/family_detail.html:42
+msgid "365 Tage"
+msgstr "365 days"
+
+#: family/templates/family_detail.html:43
+msgid "Benutzerdefiniert"
+msgstr "Custom"
+
+#: family/templates/family_detail.html:47
+msgid "Startdatum:"
+msgstr "Start date:"
+
+#: family/templates/family_detail.html:48
+msgid "Startdatum"
+msgstr "Start date"
+
+#: family/templates/family_detail.html:49
+msgid "Enddatum:"
+msgstr "End date:"
+
+#: family/templates/family_detail.html:50
+msgid "Enddatum"
+msgstr "End date"
+
+#: family/templates/family_detail.html:53
+msgid "Anwenden"
+msgstr "Apply"
+
+#: family/templates/family_detail.html:79
+#, python-format
+msgid ""
+"Durchschnittliche Klimapunkte:\n"
+"            %(avg)s"
+msgstr "Average climate points: %(avg)s"
+
+#: family/templates/family_detail.html:81
+#, python-format
+msgid ""
+"Gesamte Klimapunkte:\n"
+"            %(total)s"
+msgstr "Total climate points: %(total)s"
+
+#: family/templates/family_detail.html:86
+#, python-format
+msgid "Zeitraum: %(period)s"
+msgstr "Time period: %(period)s"
+
+#: family/templates/family_detail.html:99
+#, python-format
+msgid ""
+"\n"
+"                            <a href=\"%(url)s\">%(username)s</a>"
+msgstr ""
+"\n"
+"                            <a href=\"%(url)s\">%(username)s</a>"
+
+#: family/templates/family_detail.html:102
+#, python-format
+msgid "(%(points)s Klimapunkte)"
+msgstr "(%(points)s Klimapunkte)"
+
+#: family/templates/family_detail.html:119
+msgid "Zu mir"
+msgstr "To me"
+
+#: family/templates/join_family.html:6
+msgid ""
+"Tritt einer Family bei ClimateQuest bei, um dich mit anderen Nutzern zu "
+"vergleichen und auszutauschen."
+msgstr ""
+"Join a family on ClimateQuest to compare and exchange with other users."
+
+#: family/templates/join_family.html:26
+#, python-format
+msgid "Oder <a href=\"%(url)s\">eine Family gründen</a>."
+msgstr "Or <a href=\"%(url)s\">create a family</a>."
+
+#: family/views.py:405
+msgid "Familien-ID fehlt."
+msgstr ""
+
+#: family/views.py:411
+msgid "Familie nicht gefunden."
+msgstr "The family could not be found."
+
+#: family/views.py:423
+msgid "Ungültiger Zeitraum."
+msgstr "Invalid time period."
+
+#: family/views.py:431
+msgid "Bitte Start- und Enddatum angeben."
+msgstr "Please enter start and end date."
+
+#: family/views.py:438
+msgid "Ungültiges Datumsformat."
+msgstr "Invalid date format."
+
+#: family/views.py:442
+msgid "Das Startdatum muss vor dem Enddatum liegen."
+msgstr "The start date must be before the end date."
+
+#: family/views.py:445
+msgid "Das Enddatum darf nicht in der Zukunft liegen."
+msgstr "The end date cannot be in the future."
+
+#: family/views.py:448
+#, python-format
+msgid "%(start)s bis %(end)s"
+msgstr "%(start)s to %(end)s"

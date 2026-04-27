@@ -1,0 +1,328 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-25 19:20+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: artikel/templates/add_artikel.html:5
+msgid ""
+"Füge einen neuen Artikel bei ClimateQuest hinzu, um andere User über "
+"Klimaschutz zu informieren oder Tipps zu geben."
+msgstr ""
+"Add a new article on ClimateQuest to inform other users about climate "
+"protection or give tips."
+
+#: artikel/templates/add_artikel.html:7 artikel/templates/add_artikel.html:11
+#: artikel/templates/artikel_overview.html:19
+msgid "Artikel hinzufügen"
+msgstr "Add Article"
+
+#: artikel/templates/add_artikel.html:21 artikel/templates/add_artikel.html:22
+#: artikel/templates/artikel_overview.html:31
+#: artikel/templates/edit_artikel.html:24
+#: artikel/templates/edit_artikel.html:25
+msgid "Name"
+msgstr "Name"
+
+#: artikel/templates/add_artikel.html:24
+msgid "Inhalt"
+msgstr "Content"
+
+#: artikel/templates/add_artikel.html:28 artikel/templates/edit_artikel.html:31
+msgid "Kategorie"
+msgstr "Category"
+
+#: artikel/templates/add_artikel.html:31
+#: artikel/templates/artikel_overview.html:45
+#: artikel/templates/edit_artikel.html:34
+#, python-format
+msgid "%(cat)s"
+msgstr "%(cat)s"
+
+#: artikel/templates/add_artikel.html:39 artikel/templates/edit_artikel.html:42
+#, python-format
+msgid ""
+"Ich bestätige, dass alle Angaben der Wahrheit entsprechen, mit mindestens "
+"zwei Quellen, welche im Text vorkommen, übereinstimmen und dass der Artikel "
+"mit den <a href=\"%(url)s\">Nutzungsbedingungen</a> übereinstimmt."
+msgstr ""
+"I confirm that all information is true, corresponds with at least two "
+"sources mentioned in the text, and that the article complies with the <a "
+"href=\"%(url)s\">Terms of Use</a>."
+
+#: artikel/templates/add_artikel.html:42 artikel/templates/edit_artikel.html:45
+msgid "Speichern"
+msgstr "Save"
+
+#: artikel/templates/artikel_detail.html:5
+#, python-format
+msgid ""
+"Lies den Artikel '%(name)s' bei ClimateQuest. Hinterlasse Kommentare oder "
+"Antworten, um konstruktive Kritik, Fragen oder Anmerkungen hinzuzufügen."
+msgstr ""
+"Read the article '%(name)s' on ClimateQuest. Leave comments or replies to "
+"add constructive criticism, questions, or notes."
+
+#: artikel/templates/artikel_detail.html:8
+#, python-format
+msgid "Artikel %(name)s"
+msgstr "Article %(name)s"
+
+#: artikel/templates/artikel_detail.html:59
+#, python-format
+msgid "<a href=\"%(url)s\">Artikel</a> <i>%(name)s</i>"
+msgstr "<a href=\"%(url)s\">Article</a> <i>%(name)s</i>"
+
+#: artikel/templates/artikel_detail.html:146
+msgid "Gesperrt"
+msgstr "Blocked"
+
+#: artikel/templates/artikel_detail.html:155
+#, python-format
+msgid "Erstellt von <a href=\"%(url)s\">%(creator)s</a>"
+msgstr "Created by <a href=\"%(url)s\">%(creator)s</a>"
+
+#: artikel/templates/artikel_detail.html:158
+msgid "Ein offizieller Artikel von ClimateQuest"
+msgstr "An official article from ClimateQuest"
+
+#: artikel/templates/artikel_detail.html:163
+#: artikel/templates/artikel_overview.html:81
+msgid "Geprüfte und verifizierte Informationen"
+msgstr "Checked and verified information"
+
+#: artikel/templates/artikel_detail.html:166
+#, python-format
+msgid "Zuletzt bearbeitet: %(date)s"
+msgstr "Last edited: %(date)s"
+
+#: artikel/templates/artikel_detail.html:168
+#: artikel/templates/artikel_overview.html:68
+#: artikel/templates/artikel_overview.html:77
+#, python-format
+msgid "Kategorie: %(cat)s"
+msgstr "Category: %(cat)s"
+
+#: artikel/templates/artikel_detail.html:184
+#, python-format
+msgid "<a href=\"%(url)s\">Artikel bearbeiten</a>"
+msgstr "<a href=\"%(url)s\">Edit Article</a>"
+
+#: artikel/templates/artikel_detail.html:188
+msgid "Kommentare"
+msgstr "Comments"
+
+#: artikel/templates/artikel_detail.html:209
+msgid "Noch keine Antworten."
+msgstr "No replies yet."
+
+#: artikel/templates/artikel_detail.html:212
+#: artikel/templates/artikel_detail.html:261
+msgid "Mehr anzeigen"
+msgstr "Show more"
+
+#: artikel/templates/artikel_detail.html:214
+msgid "selbst antworten"
+msgstr "reply yourself"
+
+#: artikel/templates/artikel_detail.html:219
+msgid "Antwort:"
+msgstr "Reply:"
+
+#: artikel/templates/artikel_detail.html:220
+msgid "Antwort"
+msgstr "Reply"
+
+#: artikel/templates/artikel_detail.html:221
+msgid "Antworten"
+msgstr "Reply"
+
+#: artikel/templates/artikel_detail.html:225
+#, python-format
+msgid "<a href=\"%(url)s\">Logge dich ein</a>, um den Kommentar zu beantworten"
+msgstr "<a href=\"%(url)s\">Log in</a> to reply to the comment"
+
+#: artikel/templates/artikel_detail.html:232
+msgid "Noch keine Kommentare vorhanden"
+msgstr "No comments yet"
+
+#: artikel/templates/artikel_detail.html:261
+msgid "Weniger anzeigen"
+msgstr "Show less"
+
+#: artikel/templates/artikel_detail.html:272
+msgid "Neuen Kommentar hinzufügen:"
+msgstr "Add new comment:"
+
+#: artikel/templates/artikel_detail.html:273
+#: artikel/templates/artikel_detail.html:274
+msgid "Kommentar hinzufügen"
+msgstr "Add comment"
+
+#: artikel/templates/artikel_detail.html:278
+#, python-format
+msgid "<a href=\"%(url)s\">Logge dich ein</a>, um einen Kommentar zu verfassen"
+msgstr "<a href=\"%(url)s\">Log in</a> to write a comment"
+
+#: artikel/templates/artikel_detail.html:286
+msgid "Verifizierung löschen"
+msgstr "Delete verification"
+
+#: artikel/templates/artikel_detail.html:286
+msgid "Verifizieren"
+msgstr "Verify"
+
+#: artikel/templates/artikel_detail.html:292
+msgid "Nachricht"
+msgstr "Message"
+
+#: artikel/templates/artikel_detail.html:294
+msgid "Sperren"
+msgstr "Block"
+
+#: artikel/templates/artikel_detail.html:296
+msgid "Sperrung aufheben"
+msgstr "Unblock"
+
+#: artikel/templates/artikel_overview.html:5
+msgid ""
+"Übersicht aller Artikel bei ClimateQuest. Finde Artikel, die anderen Usern "
+"erstellt wurden, und informiere dich über verschiedene Themen zu Klimaschutz."
+msgstr ""
+"Overview of all articles on ClimateQuest. Find articles created by other "
+"users and learn about various topics on climate protection."
+
+#: artikel/templates/artikel_overview.html:8
+#: artikel/templates/artikel_overview.html:11
+msgid "Artikel - Übersicht"
+msgstr "Articles - Overview"
+
+#: artikel/templates/artikel_overview.html:25
+msgid "Leer lassen, um alle Artikel anzuzeigen"
+msgstr "Leave empty to show all articles"
+
+#: artikel/templates/artikel_overview.html:26
+msgid "Suchwort:"
+msgstr "Search term:"
+
+#: artikel/templates/artikel_overview.html:27
+msgid "Suchwort"
+msgstr "Search term"
+
+#: artikel/templates/artikel_overview.html:29
+msgid "Sortieren nach:"
+msgstr "Sort by:"
+
+#: artikel/templates/artikel_overview.html:32
+msgid "Ersteller"
+msgstr "Creator"
+
+#: artikel/templates/artikel_overview.html:33
+msgid "Zuletzt bearbeitet"
+msgstr "Last edited"
+
+#: artikel/templates/artikel_overview.html:34
+msgid "Likes"
+msgstr "Likes"
+
+#: artikel/templates/artikel_overview.html:36
+msgid "von mir erstellte Artikel"
+msgstr "articles created by me"
+
+#: artikel/templates/artikel_overview.html:37
+msgid "von mir gelikte Artikel"
+msgstr "articles liked by me"
+
+#: artikel/templates/artikel_overview.html:41
+msgid "Kategorie:"
+msgstr "Category:"
+
+#: artikel/templates/artikel_overview.html:43
+msgid "Alle"
+msgstr "All"
+
+#: artikel/templates/artikel_overview.html:49
+msgid "Anwenden"
+msgstr "Apply"
+
+#: artikel/templates/artikel_overview.html:64
+#, python-format
+msgid "Sortiert nach: %(ordered)s"
+msgstr "Sorted by: %(ordered)s"
+
+#: artikel/templates/artikel_overview.html:66
+#, python-format
+msgid "Suchwort: %(keyword)s"
+msgstr "Search term: %(keyword)s"
+
+#: artikel/templates/artikel_overview.html:69
+#, python-format
+msgid "%(count)s Suchergebnisse"
+msgstr "%(count)s search results"
+
+#: artikel/templates/artikel_overview.html:84
+#: artikel/templates/artikel_overview.html:102
+msgid "Zuletzt bearbeitet:"
+msgstr "Last edited:"
+
+#: artikel/templates/artikel_overview.html:90
+#: artikel/templates/artikel_overview.html:108
+msgid "Ersteller:"
+msgstr "Creator:"
+
+#: artikel/templates/artikel_overview.html:92
+#: artikel/templates/artikel_overview.html:110
+msgid "(Du)"
+msgstr "(You)"
+
+#: artikel/templates/artikel_overview.html:94
+#: artikel/templates/artikel_overview.html:113
+msgid "Likes:"
+msgstr "Likes:"
+
+#: artikel/templates/artikel_overview.html:99
+msgid "mehr"
+msgstr "more"
+
+#: artikel/templates/artikel_overview.html:119
+msgid "Details ansehen"
+msgstr "View details"
+
+#: artikel/templates/artikel_overview.html:123
+msgid "Es gibt derzeit keine Artikel mit diesem Filter."
+msgstr "There are currently no articles with this filter."
+
+#: artikel/templates/edit_artikel.html:7
+#, python-format
+msgid "Artikel %(name)s bearbeiten"
+msgstr "Edit Article %(name)s"
+
+#: artikel/templates/edit_artikel.html:12
+#, python-format
+msgid "Artikel <a href=\"%(url)s\">%(name)s</a> bearbeiten"
+msgstr "Edit Article <a href=\"%(url)s\">%(name)s</a>"
+
+#: artikel/templates/edit_artikel.html:27
+msgid "Beschreibung"
+msgstr "Description"
+
+#: artikel/templates/edit_artikel.html:52
+msgid "Willst du diesen Artikel wirklich löschen?"
+msgstr "Do you really want to delete this article?"
+
+#: artikel/templates/edit_artikel.html:54
+msgid "Diesen Artikel löschen"
+msgstr "Delete this article"

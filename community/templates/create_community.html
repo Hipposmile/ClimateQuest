@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block meta %}
     <meta name="description"
-          content="Erstelle eine neue Community bei ClimateQuest, um sich mit anderen Families zu vergleichen und auszutauschen.">
+          content="{% trans 'Erstelle eine neue Community bei ClimateQuest, um sich mit anderen Families zu vergleichen und auszutauschen.' %}">
 {% endblock %}
-{% block title %}Community erstellen{% endblock %}
+{% block title %}{% trans "Community erstellen" %}{% endblock %}
 
 {% block content %}
-    <h1>Community erstellen</h1>
+    <h1>{% trans "Community erstellen" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message }}</p>
@@ -15,35 +16,34 @@
     {% endif %}
     <form method="post">
         {% csrf_token %}
-        <label for="communityname">Communityname:</label>
+        <label for="communityname">{% trans "Communityname:" %}</label>
         <small id="communityname-feedback"></small>
-        <input type="text" id="communityname" name="communityname" placeholder="Communityname" maxlength="100" required>
-        <label for="password">Passwort:</label>
-        <input type="password" id="password" name="community_password" placeholder="Passwort" maxlength="100" required>
-        <label for="community_admin_password">Admin Passwort:</label>
-        <input type="password" name="community_admin_password" placeholder="Admin Passwort"
+        <input type="text" id="communityname" name="communityname" placeholder="{% trans 'Communityname' %}" maxlength="100" required>
+        <label for="password">{% trans "Passwort:" %}</label>
+        <input type="password" id="password" name="community_password" placeholder="{% trans 'Passwort' %}" maxlength="100" required>
+        <label for="community_admin_password">{% trans "Admin Passwort:" %}</label>
+        <input type="password" name="community_admin_password" placeholder="{% trans 'Admin Passwort' %}"
                id="community_admin_password" maxlength="100" required>
-        <label for="familyname">Familyname:</label>
-        <input type="text" id="familyname" name="familyname" placeholder="Familyname" required>
-        <label for="family_admin_password">Family Admin Passwort:</label>
+        <label for="familyname">{% trans "Familyname:" %}</label>
+        <input type="text" id="familyname" name="familyname" placeholder="{% trans 'Familyname' %}" required>
+        <label for="family_admin_password">{% trans "Family Admin Passwort:" %}</label>
         <input type="password" id="family_admin_password" name="family_admin_password"
-               placeholder="Family Admin Passwort"
+               placeholder="{% trans 'Family Admin Passwort' %}"
                required>
         <div>
-            <h4>Wir empfehlen folgende Admin-Passwort-Anforderungen, um die Community vor unerlaubter Bearbeitung zu
-                schützen:
-            </h4>
+            <h4>{% trans "Wir empfehlen folgende Admin-Passwort-Anforderungen, um die Community vor unerlaubter Bearbeitung zu schützen:" %}</h4>
             <ul class="criteria-list">
-                <li id="length" class="error-message">Mindestens acht Zeichen</li>
-                <li id="uppercase" class="error-message">Mindestens ein Großbuchstabe</li>
-                <li id="lowercase" class="error-message">Mindestens ein Kleinbuchstabe</li>
-                <li id="number" class="error-message">Mindestens eine Zahl</li>
-                <li id="punctuation" class="error-message">Mindestens ein Sonderzeichen</li>
+                <li id="length" class="error-message">{% trans "Mindestens acht Zeichen" %}</li>
+                <li id="uppercase" class="error-message">{% trans "Mindestens ein Großbuchstabe" %}</li>
+                <li id="lowercase" class="error-message">{% trans "Mindestens ein Kleinbuchstabe" %}</li>
+                <li id="number" class="error-message">{% trans "Mindestens eine Zahl" %}</li>
+                <li id="punctuation" class="error-message">{% trans "Mindestens ein Sonderzeichen" %}</li>
             </ul>
         </div>
-        <button type="submit" id="create-button">Community erstellen</button>
+        <button type="submit" id="create-button">{% trans "Community erstellen" %}</button>
     </form>
-    <p>Oder <a href="{% url 'join_community' %}">einer bestehenden Community beitreten</a>.</p>
+    {% url 'join_community' as join_community_link %}
+    <p>{% blocktrans with join_community_link=join_community_link %}Oder <a href="{{ join_community_link }}">einer bestehenden Community beitreten</a>.{% endblocktrans %}</p>
 
     <script nonce="{{ request.csp_script_nonce }}">
         const passwordInput = document.getElementById('community_admin_password')
@@ -75,16 +75,16 @@
 
 
             if (communityname.length > 0) {
-                feedback.textContent = 'Überprüfe, ob Communityname bereits existiert...';
+                feedback.textContent = '{% trans "Überprüfe, ob Communityname bereits existiert..." %}';
                 feedback.style.color = 'grey';
                 fetch(`/community/check-communityname/?communityname=${encodeURIComponent(communityname)}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.exists) {
-                            feedback.textContent = 'Communitynname bereits vorhanden';
+                            feedback.textContent = '{% trans "Communityname bereits vorhanden" %}';
                             feedback.style.color = 'red';
                         } else {
-                            feedback.textContent = 'Communityname noch nicht vorhanden';
+                            feedback.textContent = '{% trans "Communityname noch nicht vorhanden" %}';
                             feedback.style.color = 'green';
                         }
                     });

@@ -1,209 +1,209 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block meta %}
-    <meta name="description" content="Die Datenschutzerklärung von ClimateQuest.">
+    <meta name="description" content="{% trans 'Die Datenschutzerklärung von ClimateQuest.' %}">
 {% endblock %}
-{% block title %}Datenschutzerklärung{% endblock %}
+{% block title %}{% trans "Datenschutzerklärung" %}{% endblock %}
 
 {% block content %}
-    <h1>Datenschutzerklärung</h1>
+    <h1>{% trans "Datenschutzerklärung" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
 
-    <h2>1. Verantwortliche</h2>
-    <p>Verantwortlich für die Verarbeitung personenbezogener Daten im Sinne der Datenschutz-Grundverordnung (DSGVO)
-        ist:</p>
-    <p>Fraqment Film GbR</p>
-    <p>Kuckucksblumenstr. 23</p>
-    <p>80469 München</p>
+    <h2>{% trans "1. Verantwortliche" %}</h2>
+    {% blocktrans %}Verantwortlich für die Verarbeitung personenbezogener Daten im Sinne der Datenschutz-Grundverordnung (DSGVO)
+        ist:{% endblocktrans %}
+    {% blocktrans %}Fraqment Film GbR{% endblocktrans %}
+    {% blocktrans %}Kuckucksblumenstr. 23{% endblocktrans %}
+    {% blocktrans %}80469 München{% endblocktrans %}
     <br>
-    <p>Telefon: +49 89 99954892</p>
+    {% blocktrans %}Telefon: +49 89 99954892{% endblocktrans %}
     <br>
-    <p>E-Mail: <a href="mailto:info@fraqment.com">info@fraqment.com</a></p>
+    {% blocktrans %}E-Mail: <a href="mailto:info@fraqment.com">info@fraqment.com</a>{% endblocktrans %}
     <br>
-    <h3>Vertreten durch</h3>
-    <p>Götz Hudelmaier</p>
-    <p>David Purviance</p>
+    <h3>{% trans "Vertreten durch" %}</h3>
+    {% blocktrans %}Götz Hudelmaier{% endblocktrans %}
+    {% blocktrans %}David Purviance{% endblocktrans %}
     <br>
-    <h3>Kontakt</h3>
-    <p>E-Mail: <a href="mailto:kontakt@climate-quest.de">kontakt@climate-quest.de</a></p>
-    <p>Die datenschutzrechtliche Verantwortung liegt ausschließlich bei den oben genannten volljährigen
-        Verantwortlichen.</p>
-    <p>Diese Datenschutzerklärung bezieht sich sowohl auf die Webseite als auch auf die mobile App.</p>
+    <h3>{% trans "Kontakt" %}</h3>
+    {% blocktrans %}E-Mail: <a href="mailto:kontakt@climate-quest.de">kontakt@climate-quest.de</a>{% endblocktrans %}
+    {% blocktrans %}Die datenschutzrechtliche Verantwortung liegt ausschließlich bei den oben genannten volljährigen
+        Verantwortlichen.{% endblocktrans %}
+    {% blocktrans %}Diese Datenschutzerklärung bezieht sich sowohl auf die Webseite als auch auf die mobile App.{% endblocktrans %}
 
-    <h2>2. Allgemeine Hinweise zur Datenverarbeitung</h2>
-    <p>Wir verarbeiten personenbezogene Daten der Nutzer nur, soweit dies zur Bereitstellung einer funktionsfähigen App
+    <h2>{% trans "2. Allgemeine Hinweise zur Datenverarbeitung" %}</h2>
+    {% blocktrans %}Wir verarbeiten personenbezogene Daten der Nutzer nur, soweit dies zur Bereitstellung einer funktionsfähigen App
         sowie unserer Inhalte und Leistungen erforderlich ist. Die Verarbeitung erfolgt auf Grundlage der
-        Datenschutz-Grundverordnung (DSGVO) und des Telekommunikation-Digitaldienste-Datenschutz-Gesetzes (TDDDG).</p>
+        Datenschutz-Grundverordnung (DSGVO) und des Telekommunikation-Digitaldienste-Datenschutz-Gesetzes (TDDDG).{% endblocktrans %}
 
-    <h2>3. Rechtsgrundlagen der Datenverarbeitung</h2>
-    <p>
-        Die Verarbeitung personenbezogener Daten erfolgt ausschließlich im Einklang mit der DSGVO auf folgenden
-        Rechtsgrundlagen:
-    </p>
+    <h2>{% trans "3. Rechtsgrundlagen der Datenverarbeitung" %}</h2>
+    {% blocktrans %}Die Verarbeitung personenbezogener Daten erfolgt ausschließlich im Einklang mit der DSGVO auf folgenden
+        Rechtsgrundlagen:{% endblocktrans %}
     <ul>
-        <li><strong>Art. 6 Abs. 1 lit. a DSGVO (Einwilligung):</strong> für alle einwilligungspflichtigen Dienste,
+        <li>{% blocktrans %}<strong>Art. 6 Abs. 1 lit. a DSGVO (Einwilligung):</strong> für alle einwilligungspflichtigen Dienste,
             insbesondere externe Inhalte wie YouTube, Google reCAPTCHA sowie vergleichbare Drittanbieterdienste.
-        </li>
-        <li><strong>Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung):</strong> für die Registrierung, Bereitstellung von
+        {% endblocktrans %}</li>
+        <li>{% blocktrans %}<strong>Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung):</strong> für die Registrierung, Bereitstellung von
             Nutzerkonten und
             Durchführung des Nutzungsvertrags.
-        </li>
-        <li><strong>Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse):</strong> für technisch notwendige Maßnahmen zur
+        {% endblocktrans %}</li>
+        <li>{% blocktrans %}<strong>Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse):</strong> für technisch notwendige Maßnahmen zur
             Sicherstellung des Betriebs, zur IT-Sicherheit sowie zur Missbrauchs- und Fehlerprävention.
-        </li>
+        {% endblocktrans %}</li>
     </ul>
-    <p>
-        Eine Verarbeitung auf Grundlage berechtigter Interessen erfolgt nur, sofern keine überwiegenden Interessen oder
-        Grundrechte der betroffenen Personen entgegenstehen.
-    </p>
+    {% blocktrans %}Eine Verarbeitung auf Grundlage berechtigter Interessen erfolgt nur, sofern keine überwiegenden Interessen oder
+        Grundrechte der betroffenen Personen entgegenstehen.{% endblocktrans %}
 
 
-    <h2>4. Eingesetzte Dienste und Drittanbieter</h2>
+    <h2>{% trans "4. Eingesetzte Dienste und Drittanbieter" %}</h2>
 
-    <h3>4.1 Google reCAPTCHA (Google LLC)</h3>
-    <p>Zur Absicherung gegen automatisierte Zugriffe verwenden wir Google reCAPTCHA. Dabei werden Nutzerdaten wie
-        IP-Adresse, Mausbewegungen und ggf. weitere technische Merkmale an Google übermittelt.</p>
-    <p>Die Einbindung erfolgt erst nach aktiver Zustimmung des Nutzers.</p>
+    <h3>{% trans "4.1 Google reCAPTCHA (Google LLC)" %}</h3>
+    {% blocktrans %}Zur Absicherung gegen automatisierte Zugriffe verwenden wir Google reCAPTCHA. Dabei werden Nutzerdaten wie
+        IP-Adresse, Mausbewegungen und ggf. weitere technische Merkmale an Google übermittelt.{% endblocktrans %}
+    {% blocktrans %}Die Einbindung erfolgt erst nach aktiver Zustimmung des Nutzers.{% endblocktrans %}
 
-    <h3>4.2 Quill (Instructure Inc.)</h3>
-    <p>Wir verwenden Quill als Rich-Text-Editor zur Eingabe von Inhalten. Quill selbst verarbeitet keine
+    <h3>{% trans "4.2 Quill (Instructure Inc.)" %}</h3>
+    {% blocktrans %}Wir verwenden Quill als Rich-Text-Editor zur Eingabe von Inhalten. Quill selbst verarbeitet keine
         personenbezogenen Daten, jedoch können durch die Nutzung personenbezogene Inhalte eingegeben und gespeichert
-        werden.</p>
-    <p>Die Einbindung erfolgt lokal (siehe 4.4).</p>
-    <p>Datenschutzerklärung von Quill: <a href="https://quilljs.com/" target="_blank">https://quilljs.com/</a></p>
+        werden.{% endblocktrans %}
+    {% blocktrans %}Die Einbindung erfolgt lokal (siehe 4.4).{% endblocktrans %}
+    {% blocktrans %}Datenschutzerklärung von Quill: <a href="https://quilljs.com/" target="_blank">https://quilljs.com/</a>{% endblocktrans %}
 
-    <h3>4.3 Verwendung von localStorage</h3>
-    <p>Unsere App verwendet den sogenannten localStorage Ihres Browsers zur Speicherung bestimmter Einstellungen, um die
-        Benutzerfreundlichkeit zu verbessern und Ihre Einwilligungen zu dokumentieren.</p>
-    <h4>Zweck der Speicherung</h4>
+    <h3>{% trans "4.3 Verwendung von localStorage" %}</h3>
+    {% blocktrans %}Unsere App verwendet den sogenannten localStorage Ihres Browsers zur Speicherung bestimmter Einstellungen, um die
+        Benutzerfreundlichkeit zu verbessern und Ihre Einwilligungen zu dokumentieren.{% endblocktrans %}
+    <h4>{% trans "Zweck der Speicherung" %}</h4>
     <ul>
-        <li>Cookie-Einstellungen: Ihre Auswahl bezüglich der Verwendung von Cookies und Drittanbieterdiensten wird lokal
+        <li>{% blocktrans %}Cookie-Einstellungen: Ihre Auswahl bezüglich der Verwendung von Cookies und Drittanbieterdiensten wird lokal
             gespeichert, damit Sie bei erneutem Besuch der App nicht erneut gefragt werden.
-        </li>
+        {% endblocktrans %}</li>
     </ul>
-    <h4>Speicherdauer</h4>
-    <p>Die im localStorage gespeicherten Daten bleiben gespeichert, bis Sie die Cookie-Einstellungen verändern oder den
-        localStorage bzw. den Browser Cache manuell löschen.</p>
-    <h4>Hinweis</h4>
-    <p>localStorage speichert Daten ausschließlich auf Ihrem Endgerät. Es erfolgt keine automatische Übertragung dieser
-        Informationen an unsere Server oder Dritte.</p>
-    <p>Die Nutzung von localStorage erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO, da sie für den technisch
+    <h4>{% trans "Speicherdauer" %}</h4>
+    {% blocktrans %}Die im localStorage gespeicherten Daten bleiben gespeichert, bis Sie die Cookie-Einstellungen verändern oder den
+        localStorage bzw. den Browser Cache manuell löschen.{% endblocktrans %}
+    <h4>{% trans "Hinweis" %}</h4>
+    {% blocktrans %}localStorage speichert Daten ausschließlich auf Ihrem Endgerät. Es erfolgt keine automatische Übertragung dieser
+        Informationen an unsere Server oder Dritte.{% endblocktrans %}
+    {% blocktrans %}Die Nutzung von localStorage erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO, da sie für den technisch
         fehlerfreien Betrieb der App erforderlich ist. Sofern Einwilligungen gespeichert werden, erfolgt dies auf
-        Grundlage von Art. 6 Abs. 1 lit. a DSGVO.</p>
+        Grundlage von Art. 6 Abs. 1 lit. a DSGVO.{% endblocktrans %}
 
-    <h3>Übermittlung von Daten in Drittländer</h3>
-    <p>Bei der Nutzung bestimmter Dienste (z. B. YouTube oder Google reCAPTCHA) kann es zu einer Übermittlung
-        personenbezogener Daten an Server der Google LLC mit Sitz in den USA kommen.</p>
-    <p>Google ist nach dem EU-U.S. Data Privacy Framework zertifiziert. Dennoch besteht bei Datenübermittlungen in die
+    <h3>{% trans "Übermittlung von Daten in Drittländer" %}</h3>
+    {% blocktrans %}Bei der Nutzung bestimmter Dienste (z. B. YouTube oder Google reCAPTCHA) kann es zu einer Übermittlung
+        personenbezogener Daten an Server der Google LLC mit Sitz in den USA kommen.{% endblocktrans %}
+    {% blocktrans %}Google ist nach dem EU-U.S. Data Privacy Framework zertifiziert. Dennoch besteht bei Datenübermittlungen in die
         USA ein Restrisiko, dass US-Behörden auf personenbezogene Daten zugreifen können, ohne dass Betroffenen
-        hiergegen effektive Rechtsbehelfe zur Verfügung stehen.</p>
-    <p>Die Nutzung dieser Dienste erfolgt ausschließlich nach ausdrücklicher Einwilligung gemäß Art. 6 Abs. 1 lit. a
-        DSGVO.</p>
+        hiergegen effektive Rechtsbehelfe zur Verfügung stehen.{% endblocktrans %}
+    {% blocktrans %}Die Nutzung dieser Dienste erfolgt ausschließlich nach ausdrücklicher Einwilligung gemäß Art. 6 Abs. 1 lit. a
+        DSGVO.{% endblocktrans %}
 
 
-    <h2>5. Speicherdauer</h2>
-    <p>Personenbezogene Daten werden nur so lange gespeichert, wie dies für die jeweiligen Zwecke erforderlich ist.</p>
+    <h2>{% trans "5. Speicherdauer" %}</h2>
+    {% blocktrans %}Personenbezogene Daten werden nur so lange gespeichert, wie dies für die jeweiligen Zwecke erforderlich ist.{% endblocktrans %}
 
     <ul>
-        <li>Accountdaten: bis zur Löschung des Nutzerkontos.</li>
-        <li>Inhalte (Artikel, Kommentare etc.): bis zur Löschung durch den Nutzer oder Beendigung des
+        <li>{% trans "Accountdaten: bis zur Löschung des Nutzerkontos." %}</li>
+        <li>{% blocktrans %}Inhalte (Artikel, Kommentare etc.): bis zur Löschung durch den Nutzer oder Beendigung des
             Nutzungsverhältnisses,
             sofern keine gesetzlichen Aufbewahrungspflichten bestehen.
-        </li>
-        <li>Server-Logfiles: Server-Logfiles werden zunächst mit IP-Adresse erhoben und unmittelbar anonymisiert. Die
+        {% endblocktrans %}</li>
+        <li>{% blocktrans %}Server-Logfiles: Server-Logfiles werden zunächst mit IP-Adresse erhoben und unmittelbar anonymisiert. Die
             anonymisierten Protokolldaten werden für maximal 14 Tage gespeichert.
-        </li>
-        <li>Fehlerprotokolle: maximal 14 Tage, sofern keine sicherheitsrelevanten Vorfälle eine längere
+        {% endblocktrans %}</li>
+        <li>{% blocktrans %}Fehlerprotokolle: maximal 14 Tage, sofern keine sicherheitsrelevanten Vorfälle eine längere
             Speicherung
             erforderlich machen.
-        </li>
-        <li>Sicherungskopien (Backups): werden regelmäßig überschrieben und spätestens nach 30 Tagen gelöscht.</li>
+        {% endblocktrans %}</li>
+        <li>{% trans "Sicherungskopien (Backups): werden regelmäßig überschrieben und spätestens nach 30 Tagen gelöscht." %}</li>
     </ul>
-    <p>Gesetzliche Aufbewahrungspflichten bleiben unberührt.</p>
+    {% blocktrans %}Gesetzliche Aufbewahrungspflichten bleiben unberührt.{% endblocktrans %}
 
-    <h2>6. Betroffenenrechte</h2>
-    <p>Nutzer haben das Recht auf:</p>
+    <h2>{% trans "6. Betroffenenrechte" %}</h2>
+    {% blocktrans %}Nutzer haben das Recht auf:{% endblocktrans %}
     <ul>
-        <li>Auskunft über die gespeicherten Daten (Art. 15 DSGVO)</li>
-        <li>Berichtigung unrichtiger Daten (Art. 16 DSGVO)</li>
-        <li>Löschung der Daten (Art. 17 DSGVO)</li>
-        <li>Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
-        <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
-        <li>Widerruf erteilter Einwilligungen (Art. 7 Abs. 3 DSGVO)</li>
-        <li>Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)</li>
+        <li>{% trans "Auskunft über die gespeicherten Daten (Art. 15 DSGVO)" %}</li>
+        <li>{% trans "Berichtigung unrichtiger Daten (Art. 16 DSGVO)" %}</li>
+        <li>{% trans "Löschung der Daten (Art. 17 DSGVO)" %}</li>
+        <li>{% trans "Einschränkung der Verarbeitung (Art. 18 DSGVO)" %}</li>
+        <li>{% trans "Datenübertragbarkeit (Art. 20 DSGVO)" %}</li>
+        <li>{% trans "Widerruf erteilter Einwilligungen (Art. 7 Abs. 3 DSGVO)" %}</li>
+        <li>{% trans "Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)" %}</li>
     </ul>
 
-    <h2>7. Datenspeicherung</h2>
-    <p>Wir speichern personenbezogene Daten auf einem eigenen, passwortgeschützten Server in Nürnberg, Deutschland. Die
+    <h2>{% trans "7. Datenspeicherung" %}</h2>
+    {% blocktrans %}Wir speichern personenbezogene Daten auf einem eigenen, passwortgeschützten Server in Nürnberg, Deutschland. Die
         Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO zur Durchführung des Nutzungsvertrags sowie
         Art. 6 Abs. 1 lit. f DSGVO zur Sicherstellung der IT-Sicherheit. Um
         Datenverluste zu
         vermeiden, werden Sicherungskopien der Daten in verschlüsselter Form bei Google Drive gespeichert. Mit Google
         besteht ein Vertrag zur Auftragsverarbeitung gemäß Art. 28 DSGVO. Eine Übermittlung in die USA kann nicht
-        ausgeschlossen werden. Google ist nach dem EU-U.S. Data Privacy Framework zertifiziert.</p>
-    <p>Der Zugriff auf diese Daten ist auf berechtigte Personen beschränkt. Die Daten werden gelöscht, sobald der Zweck
-        der Speicherung entfällt und keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
+        ausgeschlossen werden. Google ist nach dem EU-U.S. Data Privacy Framework zertifiziert.{% endblocktrans %}
+    {% blocktrans %}Der Zugriff auf diese Daten ist auf berechtigte Personen beschränkt. Die Daten werden gelöscht, sobald der Zweck
+        der Speicherung entfällt und keine gesetzlichen Aufbewahrungspflichten bestehen.{% endblocktrans %}
 
-    <h2>8. Hinweise zur Nutzung des Standorts</h2>
-    <p>Zur Bereitstellung der <a href="{% url 'track_actions' %}">Tracking-Funktion</a> ist der Zugriff auf
+    <h2>{% trans "8. Hinweise zur Nutzung des Standorts" %}</h2>
+    {% url 'track_actions' as track_actions %}
+    {% blocktrans with track_actions=track_actions %}Zur Bereitstellung der <a href="{{ track_actions}}">Tracking-Funktion</a> ist der Zugriff auf
         Standortdaten Ihres Endgeräts erforderlich. Die
         Verarbeitung der Standortdaten erfolgt ausschließlich lokal auf Ihrem Endgerät (Frontend) und dient
-        ausschließlich der Berechnung der zurückgelegten Distanz.</p>
+        ausschließlich der Berechnung der zurückgelegten Distanz.{% endblocktrans %}
 
-    <p>Eine Übermittlung konkreter Standortdaten an unsere Server oder an Dritte findet nicht statt. Die Standortdaten
+    {% blocktrans %}Eine Übermittlung konkreter Standortdaten an unsere Server oder an Dritte findet nicht statt. Die Standortdaten
         werden ausschließlich temporär im Arbeitsspeicher Ihres Endgeräts verarbeitet und nicht dauerhaft
-        gespeichert.</p>
+        gespeichert.{% endblocktrans %}
 
-    <p>Die im Rahmen der lokalen Verarbeitung berechnete zurückgelegte Distanz wird an unsere Server übermittelt und
+    {% blocktrans %}Die im Rahmen der lokalen Verarbeitung berechnete zurückgelegte Distanz wird an unsere Server übermittelt und
         dort personenbezogen gespeichert, um Ihnen die Nutzung der Tracking-Funktion sowie die Anzeige Ihrer
-        zurückgelegten Distanz zu ermöglichen. Eine Speicherung konkreter Standortdaten erfolgt zu keinem Zeitpunkt.</p>
+        zurückgelegten Distanz zu ermöglichen. Eine Speicherung konkreter Standortdaten erfolgt zu keinem Zeitpunkt.{% endblocktrans %}
 
-    <p>Die Speicherung der personenbezogenen Distanzdaten erfolgt bis zur manuellen Löschung durch Sie oder bis zur
-        Löschung Ihres Nutzerkontos.</p>
+    {% blocktrans %}Die Speicherung der personenbezogenen Distanzdaten erfolgt bis zur manuellen Löschung durch Sie oder bis zur
+        Löschung Ihres Nutzerkontos.{% endblocktrans %}
 
-    <p>Rechtsgrundlage für die Verarbeitung der Standortdaten ist Ihre Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO.
+    {% blocktrans %}Rechtsgrundlage für die Verarbeitung der Standortdaten ist Ihre Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO.
         Die Speicherung der Distanzdaten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, soweit dies zur
-        Bereitstellung der Tracking-Funktion erforderlich ist.</p>
+        Bereitstellung der Tracking-Funktion erforderlich ist.{% endblocktrans %}
 
-    <p>Sie können Ihre Einwilligung jederzeit über die Einstellungen Ihres Endgeräts oder Browsers widerrufen.</p>
+    {% blocktrans %}Sie können Ihre Einwilligung jederzeit über die Einstellungen Ihres Endgeräts oder Browsers widerrufen.{% endblocktrans %}
 
 
-    <h2>9. Datenverarbeitung bei Nutzung der App</h2>
-    <p>Beim Aufruf der App werden technisch notwendige Zugriffsdaten verarbeitet. Dazu gehören Datum und Uhrzeit des
-        Zugriffs, aufgerufene Seiten, Browsertyp, Betriebssystem sowie anonymisierte IP-Adressen.</p>
-    <p>Die IP-Adresse wird unmittelbar nach Erhebung anonymisiert, sodass ein Personenbezug nicht mehr hergestellt
-        werden kann.</p>
-    <p>Zur Fehleranalyse und Sicherstellung der Funktionsfähigkeit der App werden zusätzlich technische Protokolldaten
+    <h2>{% trans "9. Datenverarbeitung bei Nutzung der App" %}</h2>
+    {% blocktrans %}Beim Aufruf der App werden technisch notwendige Zugriffsdaten verarbeitet. Dazu gehören Datum und Uhrzeit des
+        Zugriffs, aufgerufene Seiten, Browsertyp, Betriebssystem sowie anonymisierte IP-Adressen.{% endblocktrans %}
+    {% blocktrans %}Die IP-Adresse wird unmittelbar nach Erhebung anonymisiert, sodass ein Personenbezug nicht mehr hergestellt
+        werden kann.{% endblocktrans %}
+    {% blocktrans %}Zur Fehleranalyse und Sicherstellung der Funktionsfähigkeit der App werden zusätzlich technische Protokolldaten
         (z. B. Zeitpunkt, ausgeführte Aktion, Fehlermeldungen) gespeichert. Diese Fehlerprotokolle enthalten keine
-        IP-Adressen und keine unmittelbar identifizierenden personenbezogenen Daten.</p>
-    <p>Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an IT-Sicherheit
-        und Stabilität der Plattform).</p>
+        IP-Adressen und keine unmittelbar identifizierenden personenbezogenen Daten.{% endblocktrans %}
+    {% blocktrans %}Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an IT-Sicherheit
+        und Stabilität der Plattform).{% endblocktrans %}
 
 
-    <h2>10. Beschwerderecht bei der Aufsichtsbehörde</h2>
-    <p>Betroffene Personen haben das Recht, sich bei einer Datenschutzaufsichtsbehörde zu beschweren, wenn sie der
-        Ansicht sind, dass die Verarbeitung ihrer personenbezogenen Daten gegen die DSGVO verstößt.</p>
-    <p>Zuständig ist in der Regel die Datenschutzaufsichtsbehörde des Bundeslandes Ihres Wohnsitzes.</p>
+    <h2>{% trans "10. Beschwerderecht bei der Aufsichtsbehörde" %}</h2>
+    {% blocktrans %}Betroffene Personen haben das Recht, sich bei einer Datenschutzaufsichtsbehörde zu beschweren, wenn sie der
+        Ansicht sind, dass die Verarbeitung ihrer personenbezogenen Daten gegen die DSGVO verstößt.{% endblocktrans %}
+    {% blocktrans %}Zuständig ist in der Regel die Datenschutzaufsichtsbehörde des Bundeslandes Ihres Wohnsitzes.{% endblocktrans %}
 
-    <h2>Besondere Hinweise zum Schutz von Kindern und Jugendlichen</h2>
-    <p>Diese App richtet sich auch an junge Nutzerinnen und Nutzer. Der Schutz personenbezogener Daten von Kindern und
+    <h2>{% trans "Besondere Hinweise zum Schutz von Kindern und Jugendlichen" %}</h2>
+    {% blocktrans %}Diese App richtet sich auch an junge Nutzerinnen und Nutzer. Der Schutz personenbezogener Daten von Kindern und
         Jugendlichen hat
-        für uns besondere Bedeutung.</p>
-    <p>Sofern für bestimmte Funktionen oder Dienste eine Einwilligung erforderlich ist, darf diese nur durch eine
+        für uns besondere Bedeutung.{% endblocktrans %}
+    {% blocktrans %}Sofern für bestimmte Funktionen oder Dienste eine Einwilligung erforderlich ist, darf diese nur durch eine
         volljährige oder erziehungsberechtigte Person erteilt werden. Nutzer bestätigen im Rahmen der Einwilligung,
-        hierzu berechtigt zu sein.</p>
-    <p>Die datenschutzrechtliche Verantwortung für die App liegt bei einer volljährigen Person. Minderjährige handeln
-        nicht als Verantwortliche im Sinne der DSGVO.</p>
+        hierzu berechtigt zu sein.{% endblocktrans %}
+    {% blocktrans %}Die datenschutzrechtliche Verantwortung für die App liegt bei einer volljährigen Person. Minderjährige handeln
+        nicht als Verantwortliche im Sinne der DSGVO.{% endblocktrans %}
 
-    <h2>Kontakt für Datenschutzfragen</h2>
-    <p>Für Datenschutzanliegen wenden Sie sich bitte an den oben angegebenen Kontakt (siehe auch <a
-            href="{% url 'impressum' %}">Impressum</a>)</p>
+    <h2>{% trans "Kontakt für Datenschutzfragen" %}</h2>
+    {% url 'impressum' as impressum %}
+    {% blocktrans with impressum=impressum %}Für Datenschutzanliegen wenden Sie sich bitte an den oben angegebenen Kontakt (siehe auch <a
+            href="{{ impressum }}">Impressum</a>){% endblocktrans %}
 
-    <h2>Änderungen dieser Datenschutzerklärung</h2>
-    <p>Wir behalten uns vor, diese Datenschutzerklärung anzupassen, um sie an geänderte rechtliche Rahmenbedingungen
+    <h2>{% trans "Änderungen dieser Datenschutzerklärung" %}</h2>
+    {% url 'datenschutz' as datenschutz %}
+    {% blocktrans with datenschutz=datenschutz %}Wir behalten uns vor, diese Datenschutzerklärung anzupassen, um sie an geänderte rechtliche Rahmenbedingungen
         oder bei Änderungen der Dienstleistung anzupassen. Die aktuelle Version ist stets unter <a
-                href="{% url 'datenschutz' %}">dieser URL</a> zu finden.</p>
+                href="{{ datenschutz }}">dieser URL</a> zu finden.{% endblocktrans %}
 {% endblock %}

@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block meta %}
     <meta name="description"
-          content="Füge einen neuen Artikel bei ClimateQuest hinzu, um andere User über Klimaschutz zu informieren oder Tipps zu geben.">
+          content="{% trans 'Füge einen neuen Artikel bei ClimateQuest hinzu, um andere User über Klimaschutz zu informieren oder Tipps zu geben.' %}">
 {% endblock %}
-{% block title %}Artikel hinzufügen{% endblock %}
+{% block title %}{% trans 'Artikel hinzufügen' %}{% endblock %}
 
 {% block content %}
 
-    <h1>Artikel hinzufügen</h1>
+    <h1>{% trans 'Artikel hinzufügen' %}</h1>
 
     {% if messages %}
         {% for message in messages %}
@@ -17,28 +18,28 @@
 
     <form method="post" class="fill-editor">
         {% csrf_token %}
-        <label for="name">Name</label>
-        <input type="text" name="name" id="name" placeholder="Name" maxlength="100" required>
+        <label for="name">{% trans 'Name' %}</label>
+        <input type="text" name="name" id="name" placeholder="{% trans 'Name' %}" maxlength="100" required>
 
-        <label for="content_editor">Inhalt</label>
+        <label for="content_editor">{% trans 'Inhalt' %}</label>
         <div id="content_editor" class="quill-editor"></div>
         <input type="hidden" name="content">
 
-        <label for="category">Kategorie</label>
+        <label for="category">{% trans 'Kategorie' %}</label>
         <select id="category" name="category">
             {% for category in categories %}
-                <option value="{{ category }}">{{ category }}</option>
+                <option value="{{ category }}">{% blocktrans with cat=category %}{{ cat }}{% endblocktrans %}</option>
             {% endfor %}
         </select>
 
         <label class="custom-checkbox">
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
-            <span class="label-text">Ich bestätige, dass alle Angaben der Wahrheit entsprechen, mit mindestens zwei Quellen, welche im Text vorkommen, übereinstimmen und dass der Artikel mit den <a
-                    href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmt. </span>
+            {% url 'nutzungsbedingungen' as nutzungs_url %}
+            <span class="label-text">{% blocktrans with url=nutzungs_url %}Ich bestätige, dass alle Angaben der Wahrheit entsprechen, mit mindestens zwei Quellen, welche im Text vorkommen, übereinstimmen und dass der Artikel mit den <a href="{{ url }}">Nutzungsbedingungen</a> übereinstimmt.{% endblocktrans %}</span>
         </label>
 
-        <button type="submit">Speichern</button>
+        <button type="submit">{% trans 'Speichern' %}</button>
     </form>
 
     <script nonce="{{ request.csp_script_nonce }}">

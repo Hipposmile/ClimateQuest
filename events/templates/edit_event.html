@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block meta %}
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
-{% block title %}Event {{ event.name }} bearbeiten{% endblock %}
+{% block title %}{% blocktrans with name=event.name %}Event {{ name }} bearbeiten{% endblocktrans %}{% endblock %}
 
 {% block content %}
-    <h1>Event <i>{{ event.name }}</i> bearbeiten</h1>
+    <h1>{% blocktrans with name=event.name %}Event <i>{{ name }}</i> bearbeiten{% endblocktrans %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
@@ -14,44 +15,44 @@
 
     <input type="hidden" id="durationHidden" value="{{ event.duration }}">
 
-    <p><strong>Beschreibung:</strong> {{ event.description|safe }}</p>
-    <p><strong>Datum und Uhrzeit (Beginn):</strong> {{ event.date_time|date:"d.m.Y, H:i" }}</p>
-    <p><strong>geschätzte Dauer in Minuten:</strong> {{ event.duration }}</p>
-    <p><strong>Adresse:</strong> {{ event.adress }}</p>
+    <p><strong>{% trans "Beschreibung:" %}</strong> {{ event.description|safe }}</p>
+    <p><strong>{% trans "Datum und Uhrzeit (Beginn):" %}</strong> {{ event.date_time|date:"SHORT_DATETIME_FORMAT" }}</p>
+    <p><strong>{% trans "geschätzte Dauer in Minuten:" %}</strong> {{ event.duration }}</p>
+    <p><strong>{% trans "Adresse:" %}</strong> {{ event.adress }}</p>
 
     <form method="post" class="fill-editor">
         {% csrf_token %}
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" placeholder="Name" maxlength="100" value="{{ event.name }}" required>
+        <label for="name">{% trans "Name" %}</label>
+        <input type="text" id="name" name="name" placeholder="{% trans "Name" %}" maxlength="100" value="{{ event.name }}" required>
 
-        <label for="content_editor">Beschreibung</label>
+        <label for="content_editor">{% trans "Beschreibung" %}</label>
         <div id="content_editor" class="quill-editor">{{ event.description|safe }}</div>
         <input type="hidden" name="content">
 
-        <label for="date_time">Datum und Uhrzeit (Beginn)</label>
+        <label for="date_time">{% trans "Datum und Uhrzeit (Beginn)" %}</label>
         <input type="datetime-local" id="date_time" name="date_time" value="{{ event.date_time|date:"Y-m-d\\TH:i" }}"
                required>
 
-        <label for="duration">geschätze Dauer in Minuten</label>
-        <input type="number" min="0" id="duration" name="duration" placeholder="Dauer"
+        <label for="duration">{% trans "geschätze Dauer in Minuten" %}</label>
+        <input type="number" min="0" id="duration" name="duration" placeholder="{% trans "Dauer" %}"
                required>
 
-        <label for="adress">Adresse</label>
-        <input type="text" id="adress" name="adress" placeholder="Adresse" value="{{ event.adress }}" maxlength="100"
+        <label for="adress">{% trans "Adresse" %}</label>
+        <input type="text" id="adress" name="adress" placeholder="{% trans "Adresse" %}" value="{{ event.adress }}" maxlength="100"
                required>
 
         <label class="custom-checkbox">
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
-            <span class="label-text">Ich bestätige, dass alle Angaben der Wahrheit entsprechen und mit den <a
-                    href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmen. Außerdem verpflichte ich mich, bei dem Event selbst teilzunehmen.</span>
+            {% url 'nutzungsbedingungen' as nutzungsbedingungen_url %}
+            <span class="label-text">{% blocktrans with url=nutzungsbedingungen_url %}Ich bestätige, dass alle Angaben der Wahrheit entsprechen und mit den <a href="{{ url }}">Nutzungsbedingungen</a> übereinstimmen. Außerdem verpflichte ich mich, bei dem Event selbst teilzunehmen.{% endblocktrans %}</span>
         </label>
 
-        <button type="submit" name="edit">Speichern</button>
+        <button type="submit" name="edit">{% trans "Speichern" %}</button>
     </form>
-    <form method="post" class="form-confirm" data-confirm="Möchtest du dieses Event wirklich löschen?">
+    <form method="post" class="form-confirm" data-confirm="{% trans "Möchtest du dieses Event wirklich löschen?" %}">
         {% csrf_token %}
-        <button type="submit" name="delete" class="color-red">Event löschen</button>
+        <button type="submit" name="delete" class="color-red">{% trans "Event löschen" %}</button>
     </form>
 
     <script nonce="{{ request.csp_script_nonce }}">

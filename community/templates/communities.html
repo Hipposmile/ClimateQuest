@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block meta %}
     <meta name="description"
-          content="Übersicht über deine Communities bei ClimateQuest. Vergleiche deine Families mit anderen und tausche dich aus.">
+          content="{% trans 'Übersicht über deine Communities bei ClimateQuest. Vergleiche deine Families mit anderen und tausche dich aus.' %}">
 {% endblock %}
-{% block title %}Meine Communities{% endblock %}
+{% block title %}{% trans "Meine Communities" %}{% endblock %}
 {% block content %}
 
     <style nonce="{{ request.csp_style_nonce }}">
@@ -52,7 +53,7 @@
         }
     </style>
 
-    <h1>Meine Communities</h1>
+    <h1>{% trans "Meine Communities" %}</h1>
 
     {% if messages %}
         {% for message in messages %}
@@ -60,12 +61,12 @@
         {% endfor %}
     {% endif %}
     <a href="{% url 'create_community' %}" class="redirect-link">
-        <span>Community hinzufügen</span>
+        <span>{% trans "Community hinzufügen" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <br>
     <a href="{% url 'join_community' %}" class="redirect-link">
-        <span>Community beitreten</span>
+        <span>{% trans "Community beitreten" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
     {% if communities_with_user_families %}
@@ -80,16 +81,16 @@
                 {% for item in communities_with_user_families %}
                     <div class="community-card">
                         <h3>{{ item.community.name }}</h3>
-                        <p>Mitglieder: {{ item.community.members.count }}</p>
-                        <label for="family-select">Family zum Login auswählen: </label>
+                        <p>{% blocktrans with count=item.community.members.count %}Mitglieder: {{ count }}{% endblocktrans %}</p>
+                        <label for="family-select">{% trans "Family zum Login auswählen: " %}</label>
                         <select class="family-select" id="family-select" data-community-id="{{ item.community.id }}">
-                            <option value="" disabled selected>Family zum Login auswählen ▾</option>
+                            <option value="" disabled selected>{% trans "Family zum Login auswählen ▾" %}</option>
                             {% for family in item.families %}
                                 <option value="{{ family.id }}">{{ family.name }}</option>
                             {% endfor %}
                         </select>
                         <a href="#" class="card-btn disabled-link community-detail-link"
-                           data-community-id="{{ item.community.id }}">Details ansehen</a>
+                           data-community-id="{{ item.community.id }}">{% trans "Details ansehen" %}</a>
                     </div>
                 {% endfor %}
             </div>
@@ -116,6 +117,6 @@
             });
         </script>
     {% else %}
-        <p>Du bist keiner Community beigetreten.</p>
+        <p>{% trans "Du bist keiner Community beigetreten." %}</p>
     {% endif %}
 {% endblock %}

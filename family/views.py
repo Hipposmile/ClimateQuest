@@ -1,4 +1,4 @@
-from datetime import datetime, date, timedelta
+from datetime import datetime, date
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -7,11 +7,10 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.utils.translation import gettext as _
 
-from aktionen.models import Aktion
 from core.all_messages import all_messages
-from utils.functions import create_notification, check_worldwide_ranking_exists, get_families_of_user, get_klimapunkte, \
-    get_klimapunkte_from_likes
+from utils.functions import create_notification, get_families_of_user, get_date_range, get_klimapunkte_fuer_member
 from .models import Family, FamilyChatMessage
 
 
@@ -62,6 +61,7 @@ def join_family(request):
             if check_password(family_password, family.password):
                 for user_to_message in family.members.all().exclude(id=request.user.id):
                     create_notification(request, f'User {request.user} ist der Family {family} beigetreten',
+                                        f'User {request.user} has joined the family {family}',
                                         user_to_message, url=reverse('family_detail', args=[family.id]))
                 family.members.add(request.user)
                 messages.success(request, all_messages["family_joined"].format(family=family))
@@ -105,6 +105,7 @@ def chat_family(request, family_id):
         for user_to_message in family.members.all().exclude(id=request.user.id):
             if user_to_message != request.user:
                 create_notification(request, f'Neue Nachricht in Family {family.name} von User {request.user}: {msg}',
+                                    f'New message in family {family.name} from User {request.user}: {msg}',
                                     user_to_message, url=reverse('chat_family', args=[family_id]))
         return redirect('chat_family', family_id=family.id)
 
@@ -162,6 +163,7 @@ def edit_family(request, family_id):
                 for user_to_message in family.members.all().exclude(id=request.user.id):
                     create_notification(request,
                                         f'Der Familyname der Family {old_familyname} wurde von {request.user} zu {familyname} geändert',
+                                        f'The familyname of the family {old_familyname} hast been updated by {request.user} to {familyname}',
                                         user_to_message, url=reverse('family_detail', args=[family_id]))
                 messages.success(request, all_messages["family_name_changed"])
 
@@ -182,7 +184,8 @@ def edit_family(request, family_id):
                 family.save()
                 for user_to_message in family.members.all().exclude(id=request.user.id):
                     create_notification(request,
-                                        f'Passwort bei Family {family.name} wurde von User {request.user} geändert',
+                                        f'Passwort der Family {family.name} wurde von User {request.user} geändert',
+                                        f'Password of family {family.name} hast been updated by {request.user}',
                                         user_to_message, url=reverse('family_detail', args=[family_id]))
                 messages.success(request, all_messages["family_password_changed"])
 
@@ -204,6 +207,7 @@ def edit_family(request, family_id):
                 for user_to_message in family.members.all().exclude(id=request.user.id):
                     create_notification(request,
                                         f'Das Family-Admin-Passwort der Family {family.name} wurde von User {request.user} geändert',
+                                        f'Admin-Password of family {family.name} hast been updated by {request.user}',
                                         user_to_message, url=reverse('family_detail', args=[family_id]))
                 messages.success(request, all_messages["family_admin_password_changed"])
 
@@ -230,10 +234,12 @@ def edit_family(request, family_id):
                     if user_to_message == user:
                         create_notification(request,
                                             f'Du wurdest von User {request.user} aus der Family {family.name} entfernt',
+                                            f'You have been removed from family {family.name}',
                                             user_to_message, url=reverse('families_view'))
                     else:
                         create_notification(request,
                                             f'User {user} wurde von User {request.user} aus Family {family.name} entfernt.',
+                                            f'User {user} has been removed from family {family.name}',
                                             user_to_message, url=reverse('family_detail', args=[family_id]))
                 messages.error(request, all_messages["family_user_removed"])
 
@@ -264,6 +270,7 @@ def edit_family(request, family_id):
             else:
                 for user_to_message in family.members.all().exclude(id=request.user.id):
                     create_notification(request, f'Family {family.name} wurde von User {request.user} gelöscht.',
+                                        f'Family {family.name} hast been deleted by {request.user}',
                                         user_to_message, url=reverse('families_view'))
                 family.delete()
                 messages.success(request, all_messages["family_deleted"])
@@ -272,7 +279,7 @@ def edit_family(request, family_id):
     return render(request, 'edit_family.html', {'family': family})
 
 
-@login_required
+"""@login_required
 def family_detail(request, family_id):
     if not family_id:
         messages.error(request, all_messages["family_id_missing"])
@@ -319,7 +326,7 @@ def family_detail(request, family_id):
                 messages.error(request, all_messages["invalid_date"])
                 return redirect('family_detail', family_id)
 
-            zeitraum_text = f"von {start_datum.strftime('%d.%m.%Y')} bis {end_datum.strftime('%d.%m.%Y')}"
+            zeitraum_text = f"von {start_datum.strftime('%d.%m.%Y')} bis {end_datum.strftime('%d.%m.%Y')}"  # ToDo: Internationalisierung
 
         elif zeitraum not in ['heute', 'sieben Tage', 'dreißig Tage', 'dreihundertfünfundsechzig Tage', 'gesamt']:
             messages.error(request, all_messages["invalid_time_period"])
@@ -383,6 +390,104 @@ def family_detail(request, family_id):
         'family': family,
         'members': members_with_klimapunkte_sortiert,
         'zeitraum': zeitraum,
+        'average_klimapunkte': average_klimapunkte,
+        'total_klimapunkte': total_klimapunkte,
+        'members_count': members_count,
+    })"""
+
+VALID_ZEITRAEUME = {'Heute', 'Sieben Tage', 'Dreißig Tage', 'Dreihundertfünfundsechzig Tage', 'Gesamt',
+                    'Benutzerdefiniert'}
+
+
+@login_required
+def family_detail(request, family_id):
+    if not family_id:
+        messages.error(request, _("Familien-ID fehlt."))
+        return redirect('dashboard')
+
+    try:
+        family = Family.objects.get(id=family_id)
+    except Family.DoesNotExist:
+        messages.error(request, _("Familie nicht gefunden."))
+        return redirect('dashboard')
+
+    heute = date.today()
+    zeitraum = 'Gesamt'
+    zeitraum_text = _("Gesamt")
+    start_datum = end_datum = None
+
+    if request.method == 'POST':
+        zeitraum = request.POST.get('zeitraum', 'Gesamt')
+
+        if zeitraum not in VALID_ZEITRAEUME:
+            messages.error(request, _("Ungültiger Zeitraum."))
+            return redirect('family_detail', family_id)
+
+        if zeitraum == 'Benutzerdefiniert':
+            raw_start = request.POST.get('start_date')
+            raw_end = request.POST.get('end_date')
+
+            if not raw_start or not raw_end:
+                messages.error(request, _("Bitte Start- und Enddatum angeben."))
+                return redirect('family_detail', family_id)
+
+            try:
+                start_datum = datetime.strptime(raw_start, '%Y-%m-%d').date()
+                end_datum = datetime.strptime(raw_end, '%Y-%m-%d').date()
+            except ValueError:
+                messages.error(request, _("Ungültiges Datumsformat."))
+                return redirect('family_detail', family_id)
+
+            if start_datum > end_datum:
+                messages.error(request, _("Das Startdatum muss vor dem Enddatum liegen."))
+                return redirect('family_detail', family_id)
+            if end_datum > heute:
+                messages.error(request, _("Das Enddatum darf nicht in der Zukunft liegen."))
+                return redirect('family_detail', family_id)
+
+            zeitraum_text = _("%(start)s bis %(end)s") % {
+                'start': start_datum.strftime('%d.%m.%Y') if request.LANGUAGE_CODE == 'de' else start_datum.strftime(
+                    '%m/%d/%Y'),
+                'end': end_datum.strftime('%d.%m.%Y') if request.LANGUAGE_CODE == 'de' else end_datum.strftime(
+                    '%m/%d/%Y'),
+            }
+        else:
+            start_datum, end_datum = get_date_range(zeitraum, heute)
+
+            if zeitraum == 'heute':
+                start_datum = end_datum = heute
+
+            if request.LANGUAGE_CODE == 'en':
+                zeitraum_text_translations = {
+                    'Gesamt': 'Total',
+                    'Heute': 'Today',
+                    'Sieben Tage': 'Seven days',
+                    'Dreißig Tage': 'Thirty days',
+                    'Dreihundertfünfundsechzig Tage': 'Threehundredsixtyfive days',
+                }
+                zeitraum_text = zeitraum_text_translations.get(zeitraum)
+
+    members = family.members.all()
+
+    members_with_klimapunkte = [
+        {'member': member, 'klimapunkte': get_klimapunkte_fuer_member(member, start_datum, end_datum)}
+        for member in members
+    ]
+
+    members_with_klimapunkte_sortiert = sorted(
+        members_with_klimapunkte,
+        key=lambda x: x['klimapunkte'],
+        reverse=True,
+    )
+
+    total_klimapunkte = sum(m['klimapunkte'] for m in members_with_klimapunkte_sortiert)
+    members_count = len(members_with_klimapunkte_sortiert)
+    average_klimapunkte = total_klimapunkte / members_count if members_count else 0
+
+    return render(request, './family_detail.html', {
+        'family': family,
+        'members': members_with_klimapunkte_sortiert,
+        'zeitraum': zeitraum_text,
         'average_klimapunkte': average_klimapunkte,
         'total_klimapunkte': total_klimapunkte,
         'members_count': members_count,

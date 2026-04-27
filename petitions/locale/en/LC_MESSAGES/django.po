@@ -1,0 +1,377 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-27 12:43+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: petitions/templates/add_petition.html:6
+msgid "Füge eine Petition zu ClimateQuest hinzu"
+msgstr "Add a petition to ClimateQuest"
+
+#: petitions/templates/add_petition.html:11
+#: petitions/templates/add_petition.html:41
+#: petitions/templates/petitions_overview.html:20
+msgid "Petition hinzufügen"
+msgstr "Add petition"
+
+#: petitions/templates/add_petition.html:53
+#: petitions/templates/add_petition.html:54
+#: petitions/templates/edit_petition.html:23
+#: petitions/templates/petitions_overview.html:37
+msgid "Titel"
+msgstr "Title"
+
+#: petitions/templates/add_petition.html:56
+msgid "Beschreibung"
+msgstr "Description"
+
+#: petitions/templates/add_petition.html:60
+#: petitions/templates/edit_petition.html:49
+#: petitions/templates/petition_detail.html:67
+msgid "Ziel"
+msgstr "Goal"
+
+#: petitions/templates/add_petition.html:61
+msgid "Das Ziel kann im Nachhinein aktualisiert werden"
+msgstr "The goal can be updated afterwards"
+
+#: petitions/templates/add_petition.html:72
+#: petitions/templates/petition_detail.html:73
+#: petitions/templates/petitions_overview.html:81
+#: petitions/templates/petitions_overview.html:92
+msgid "Kategorie"
+msgstr "Category"
+
+#: petitions/templates/add_petition.html:83
+#, python-format
+msgid ""
+"<span class=\"label-text\">Ich bestätige, dass die Petition mit den <a\n"
+"                    href=\"%(url)s\">Nutzungsbedingungen</a> übereinstimmt. "
+"</span>"
+msgstr ""
+"<span class=\"label-text\">I confirm that the petition complies with the <a\n"
+"                    href=\"%(url)s\">terms of use</a>. </span>"
+
+#: petitions/templates/add_petition.html:87
+#: petitions/templates/edit_petition.html:37
+#: petitions/templates/edit_petition.html:51
+msgid "Speichern"
+msgstr "Save"
+
+#: petitions/templates/edit_petition.html:8
+#, python-format
+msgid "Update zur Petition %(petition_name)s hinzufügen"
+msgstr "Add update to petition %(petition_name)s"
+
+#: petitions/templates/edit_petition.html:11
+#: petitions/templates/petition_detail.html:38
+msgid "Petition"
+msgstr "Petition"
+
+#: petitions/templates/edit_petition.html:11
+msgid "bearbeiten"
+msgstr "edit"
+
+#: petitions/templates/edit_petition.html:18
+msgid "Update hinzufügen"
+msgstr "Add update"
+
+#: petitions/templates/edit_petition.html:22
+msgid "Name"
+msgstr "Name"
+
+#: petitions/templates/edit_petition.html:25
+msgid "Inhalt"
+msgstr "Content"
+
+#: petitions/templates/edit_petition.html:33
+#, python-format
+msgid ""
+"<span class=\"label-text\">Ich bestätige, dass alle Angaben mit den <a\n"
+"                    href=\"%(url)s\">Nutzungsbedingungen</a> übereinstimmen."
+"</span>"
+msgstr ""
+"<span class=\"label-text\">I confirm that all information complies with the "
+"<a\n"
+"                    href=\"%(url)s\">terms of use</a>.</span>"
+
+#: petitions/templates/edit_petition.html:46
+msgid "Ziel ändern"
+msgstr "Change goal"
+
+#: petitions/templates/edit_petition.html:54
+msgid "Erfolg"
+msgstr "Success"
+
+#: petitions/templates/edit_petition.html:57
+msgid "Erfolg der Petition löschen"
+msgstr "Delete petition success"
+
+#: petitions/templates/edit_petition.html:58
+msgid "Petition zum Erfolg erklären"
+msgstr "Declare petition successful"
+
+#: petitions/templates/petition_detail.html:8
+#, python-format
+msgid ""
+"<meta name=\"description\" content=\"Siehe dir die Petition "
+"%(petition_title)s an\">"
+msgstr ""
+"<meta name=\"description\" content=\"Take a look at the petition "
+"%(petition_title)s\">"
+
+#: petitions/templates/petition_detail.html:11
+#, python-format
+msgid "Petition %(petition_title)s"
+msgstr "Petition %(petition_title)s"
+
+#: petitions/templates/petition_detail.html:51
+msgid "Die Petition hatte Erfolg!"
+msgstr "The petition was successful!"
+
+#: petitions/templates/petition_detail.html:66
+msgid "Unterschriften gesammelt"
+msgstr "Signatures collected"
+
+#: petitions/templates/petition_detail.html:69
+msgid ""
+"Obwohl das Unterschriftenziel bereits erreicht wurde, heißt das nicht, dass "
+"die Petition auch erfolgreich ist. Deine Stimme ist immer noch wichtig!"
+msgstr ""
+"Although the signature goal has already been reached, that does not mean "
+"that the petition is also successful. Your voice is still important!"
+
+#: petitions/templates/petition_detail.html:74
+msgid "Erstellt am"
+msgstr "Created on"
+
+#: petitions/templates/petition_detail.html:75
+msgid "Erstellt von"
+msgstr "Created by"
+
+#: petitions/templates/petition_detail.html:78
+#: petitions/templates/petition_detail.html:86
+msgid "Unterschreiben"
+msgstr "Sign"
+
+#: petitions/templates/petition_detail.html:80
+msgid ""
+"Du kannst auch unterschreiben, obwohl die Petition bereits Erfolg hatte, um "
+"zu verdeutlichen, dass auch dir das Thema wichtig ist!"
+msgstr ""
+"You can also sign, even though the petition has already been successful, to "
+"emphasize that the topic is important to you too!"
+
+#: petitions/templates/petition_detail.html:88
+msgid "Registriere dich"
+msgstr "Register"
+
+#: petitions/templates/petition_detail.html:88
+msgid "um zu unterschreiben"
+msgstr "to sign"
+
+#: petitions/templates/petition_detail.html:91
+msgid "Du hast bereits unterschrieben"
+msgstr "You have already signed"
+
+#: petitions/templates/petition_detail.html:92
+msgid "Unterschrift zurücknehmen"
+msgstr "Withdraw signature"
+
+#: petitions/templates/petition_detail.html:98
+msgid "Updates"
+msgstr "Updates"
+
+#: petitions/templates/petition_detail.html:120
+msgid "Noch keine Updates vorhanden."
+msgstr "No updates available yet."
+
+#: petitions/templates/petition_detail.html:126
+msgid "Kommentare"
+msgstr "Comments"
+
+#: petitions/templates/petition_detail.html:147
+msgid "Noch keine Antworten."
+msgstr "No replies yet."
+
+#: petitions/templates/petition_detail.html:150
+#: petitions/templates/petition_detail.html:199
+msgid "Mehr anzeigen"
+msgstr "Show more"
+
+#: petitions/templates/petition_detail.html:152
+msgid "selbst antworten"
+msgstr "reply yourself"
+
+#: petitions/templates/petition_detail.html:157
+#: petitions/templates/petition_detail.html:158
+msgid "Antwort"
+msgstr "Reply"
+
+#: petitions/templates/petition_detail.html:159
+msgid "Antworten"
+msgstr "Replies"
+
+#: petitions/templates/petition_detail.html:162
+#: petitions/templates/petition_detail.html:215
+msgid "Logge dich ein"
+msgstr "Log in"
+
+#: petitions/templates/petition_detail.html:162
+msgid "um den Kommentar zu beantworten"
+msgstr "to reply to the comment"
+
+#: petitions/templates/petition_detail.html:170
+msgid "Noch keine Kommentare vorhanden"
+msgstr "No comments available yet"
+
+#: petitions/templates/petition_detail.html:199
+msgid "Weniger anzeigen"
+msgstr "Show less"
+
+#: petitions/templates/petition_detail.html:210
+msgid "Neuen Kommentar hinzufügen:"
+msgstr "Add new comment:"
+
+#: petitions/templates/petition_detail.html:211
+#: petitions/templates/petition_detail.html:212
+msgid "Kommentar hinzufügen"
+msgstr "Add comment"
+
+#: petitions/templates/petition_detail.html:215
+msgid "um einen Kommentar zu verfassen"
+msgstr "to write a comment"
+
+#: petitions/templates/petition_detail.html:221
+msgid "Bearbeiten"
+msgstr "Edit"
+
+#: petitions/templates/petitions_overview.html:6
+msgid "Guck dir alle Petitionen bei ClimateQuest an"
+msgstr "Check out all petitions on ClimateQuest"
+
+#: petitions/templates/petitions_overview.html:9
+msgid "Petitionen"
+msgstr "Petitions"
+
+#: petitions/templates/petitions_overview.html:12
+msgid "Petitionen - Übersicht"
+msgstr "Petitions - Overview"
+
+#: petitions/templates/petitions_overview.html:25
+msgid "Petition für mehr Begrünung in München"
+msgstr "Petition for more greening in Munich"
+
+#: petitions/templates/petitions_overview.html:31
+msgid "Leer lassen, um alle Petitionen anzuzeigen"
+msgstr "Leave blank to display all petitions"
+
+#: petitions/templates/petitions_overview.html:32
+msgid "Suchwort:"
+msgstr "Search term:"
+
+#: petitions/templates/petitions_overview.html:33
+#: petitions/templates/petitions_overview.html:79
+msgid "Suchwort"
+msgstr "Search term"
+
+#: petitions/templates/petitions_overview.html:35
+msgid "Sortieren nach:"
+msgstr "Sort by:"
+
+#: petitions/templates/petitions_overview.html:38
+msgid "Ersteller"
+msgstr "Creator"
+
+#: petitions/templates/petitions_overview.html:39
+msgid "Zuletzt bearbeitet"
+msgstr "Last edited"
+
+#: petitions/templates/petitions_overview.html:40
+msgid "Unterschriften"
+msgstr "Signatures"
+
+#: petitions/templates/petitions_overview.html:42
+msgid "von mir erstellte Petitionen"
+msgstr "petitions created by me"
+
+#: petitions/templates/petitions_overview.html:43
+msgid "von mir unterschriebene Petitionen"
+msgstr "petitions signed by me"
+
+#: petitions/templates/petitions_overview.html:48
+msgid "Kategorie:"
+msgstr "Category:"
+
+#: petitions/templates/petitions_overview.html:50
+msgid "Alle"
+msgstr "All"
+
+#: petitions/templates/petitions_overview.html:59
+msgid "Erfolgreiche einblenden"
+msgstr "Include successful"
+
+#: petitions/templates/petitions_overview.html:62
+msgid "Anwenden"
+msgstr "Apply"
+
+#: petitions/templates/petitions_overview.html:77
+msgid "Sortiert nach"
+msgstr "Sorted by"
+
+#: petitions/templates/petitions_overview.html:83
+msgid "Erfolgreiche Petitionen eingeblendet"
+msgstr "Successful petitions included"
+
+#: petitions/templates/petitions_overview.html:85
+msgid "Suchergebnisse"
+msgstr "Search results"
+
+#: petitions/templates/petitions_overview.html:94
+msgid "Diese Petition hatte Erfolg"
+msgstr "This petition was successful"
+
+#: petitions/templates/petitions_overview.html:97
+#: petitions/templates/petitions_overview.html:114
+msgid "Zuletzt bearbeitet:"
+msgstr "Last edited:"
+
+#: petitions/templates/petitions_overview.html:102
+#: petitions/templates/petitions_overview.html:119
+msgid "Ersteller:"
+msgstr "Creator:"
+
+#: petitions/templates/petitions_overview.html:104
+#: petitions/templates/petitions_overview.html:121
+msgid "Du"
+msgstr "You"
+
+#: petitions/templates/petitions_overview.html:106
+#: petitions/templates/petitions_overview.html:124
+msgid "Unterschriften:"
+msgstr "Signatures:"
+
+#: petitions/templates/petitions_overview.html:111
+msgid "mehr"
+msgstr "more"
+
+#: petitions/templates/petitions_overview.html:129
+msgid "Details ansehen"
+msgstr "View details"
+
+#: petitions/templates/petitions_overview.html:133
+msgid "Es gibt derzeit keine Petitionen mit diesem Filter."
+msgstr "There are currently no petitions with this filter."

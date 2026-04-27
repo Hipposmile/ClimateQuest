@@ -1,0 +1,489 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-25 19:36+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: community/templates/chat_community.html:9
+#, python-format
+msgid "Chat: Community %(name)s"
+msgstr "Chat: Community %(name)s"
+
+#: community/templates/chat_community.html:9
+#: community/templates/community_detail.html:9
+#: community/templates/edit_community.html:9
+msgid "Die Community konnte nicht geladen werden."
+msgstr "The community could not be loaded."
+
+#: community/templates/chat_community.html:107
+#, python-format
+msgid "Chat: Community <a href=\"%(url)s\">%(name)s</a>"
+msgstr "Chat: Community <a href=\"%(url)s\">%(name)s</a>"
+
+#: community/templates/chat_community.html:109
+#: community/templates/community_detail.html:17
+#: community/templates/edit_community.html:16
+#, python-format
+msgid "Eingeloggt mit Family <a href=\"%(url)s\">%(name)s</a>"
+msgstr "Logged in with Family <a href=\"%(url)s\">%(name)s</a>"
+
+#: community/templates/chat_community.html:118
+msgid "Chat aktualisieren"
+msgstr "Update chat"
+
+#: community/templates/chat_community.html:136
+msgid "Refresh"
+msgstr "Refresh"
+
+#: community/templates/chat_community.html:142
+msgid ""
+"Ich werde morgen um 15:00 am See Müll sammeln gehen. Wer will mitmachen?"
+msgstr ""
+"I will go garbage collecting at the lake tomorrow at 15:00. Who wants to "
+"join?"
+
+#: community/templates/chat_community.html:143
+#: community/templates/chat_community.html:149
+msgid "Beispiel"
+msgstr "Example"
+
+#: community/templates/chat_community.html:148
+msgid ""
+"Wir machen eine Challenge: Wer schafft es von heute bis nächste Woche "
+"Sonntag am meisten Klimapunkte zu sammeln?"
+msgstr ""
+"We are doing a challenge: Who can collect the most climate points from today "
+"until next Sunday?"
+
+#: community/templates/chat_community.html:157
+#, python-format
+msgid ""
+"<a href=\"%(url)s\" class=\"chat-community-meta\">%(username)s</a> aus "
+"Family %(family_name)s"
+msgstr ""
+"<a href=\"%(url)s\" class=\"chat-community-meta\">%(username)s</a> from "
+"Family %(family_name)s"
+
+#: community/templates/chat_community.html:158
+#, python-format
+msgid "%(date)s"
+msgstr "%(date)s"
+
+#: community/templates/chat_community.html:162
+msgid "Noch keine Nachrichten."
+msgstr "No messages yet."
+
+#: community/templates/chat_community.html:166
+msgid "Nachricht"
+msgstr "Message"
+
+#: community/templates/chat_community.html:167
+msgid "Nachricht eingeben..."
+msgstr "Enter message..."
+
+#: community/templates/chat_community.html:168
+msgid "Senden"
+msgstr "Send"
+
+#: community/templates/communities.html:5
+msgid ""
+"Übersicht über deine Communities bei ClimateQuest. Vergleiche deine Families "
+"mit anderen und tausche dich aus."
+msgstr ""
+"Overview of your communities on ClimateQuest. Compare your families with "
+"others and exchange ideas."
+
+#: community/templates/communities.html:7
+#: community/templates/communities.html:56
+msgid "Meine Communities"
+msgstr "My Communities"
+
+#: community/templates/communities.html:64
+msgid "Community hinzufügen"
+msgstr "Add Community"
+
+#: community/templates/communities.html:69
+#: community/templates/join_community.html:8
+#: community/templates/join_community.html:10
+#: community/templates/join_community.html:28
+msgid "Community beitreten"
+msgstr "Join Community"
+
+#: community/templates/communities.html:84
+#, python-format
+msgid "Mitglieder: %(count)s"
+msgstr "Members: %(count)s"
+
+#: community/templates/communities.html:85
+msgid "Family zum Login auswählen: "
+msgstr "Select Family for login: "
+
+#: community/templates/communities.html:87
+msgid "Family zum Login auswählen ▾"
+msgstr "Select Family for login ▾"
+
+#: community/templates/communities.html:93
+msgid "Details ansehen"
+msgstr "View details"
+
+#: community/templates/communities.html:120
+msgid "Du bist keiner Community beigetreten."
+msgstr "You have not joined any community."
+
+#: community/templates/community_detail.html:9
+#, python-format
+msgid "Community %(name)s"
+msgstr "Community %(name)s"
+
+#: community/templates/community_detail.html:15
+#, python-format
+msgid "Community <i>%(name)s</i>"
+msgstr "Community <i>%(name)s</i>"
+
+#: community/templates/community_detail.html:25
+msgid "Bearbeiten"
+msgstr "Edit"
+
+#: community/templates/community_detail.html:27
+msgid "Chatten"
+msgstr "Chat"
+
+#: community/templates/community_detail.html:29
+msgid "Die Chat-Funktion ist für diese Community deaktiviert."
+msgstr "The chat function is disabled for this community."
+
+#: community/templates/community_detail.html:34
+msgid "Zeitraum auswählen"
+msgstr "Select time period"
+
+#: community/templates/community_detail.html:36
+msgid "Gesamt"
+msgstr "Total"
+
+#: community/templates/community_detail.html:37
+msgid "Heute"
+msgstr "Today"
+
+#: community/templates/community_detail.html:38
+msgid "7 Tage"
+msgstr "7 days"
+
+#: community/templates/community_detail.html:39
+msgid "30 Tage"
+msgstr "30 days"
+
+#: community/templates/community_detail.html:40
+msgid "365 Tage"
+msgstr "365 days"
+
+#: community/templates/community_detail.html:41
+msgid "Benutzerdefiniert"
+msgstr "Custom"
+
+#: community/templates/community_detail.html:45
+msgid "Startdatum:"
+msgstr "Start date:"
+
+#: community/templates/community_detail.html:46
+msgid "Startdatum"
+msgstr "Start date"
+
+#: community/templates/community_detail.html:47
+msgid "Enddatum:"
+msgstr "End date:"
+
+#: community/templates/community_detail.html:48
+msgid "Enddatum"
+msgstr "End date"
+
+#: community/templates/community_detail.html:51
+msgid "Anwenden"
+msgstr "Apply"
+
+#: community/templates/community_detail.html:55
+#, python-format
+msgid "Zeitraum: %(z)s"
+msgstr "Time period: %(z)s"
+
+#: community/templates/community_detail.html:91
+#, python-format
+msgid "(durchschnittlich %(avg)s Klimapunkte)"
+msgstr "(average %(avg)s climate points)"
+
+#: community/templates/community_detail.html:108
+msgid "Zu mir"
+msgstr "To me"
+
+#: community/templates/create_community.html:6
+msgid ""
+"Erstelle eine neue Community bei ClimateQuest, um sich mit anderen Families "
+"zu vergleichen und auszutauschen."
+msgstr ""
+"Create a new community on ClimateQuest to compare yourself with other "
+"families and exchange ideas."
+
+#: community/templates/create_community.html:8
+#: community/templates/create_community.html:11
+#: community/templates/create_community.html:43
+msgid "Community erstellen"
+msgstr "Create Community"
+
+#: community/templates/create_community.html:19
+#: community/templates/join_community.html:18
+msgid "Communityname:"
+msgstr "Community name:"
+
+#: community/templates/create_community.html:21
+#: community/templates/join_community.html:19
+msgid "Communityname"
+msgstr "Community name"
+
+#: community/templates/create_community.html:22
+#: community/templates/join_community.html:20
+msgid "Passwort:"
+msgstr "Password:"
+
+#: community/templates/create_community.html:23
+#: community/templates/join_community.html:21
+msgid "Passwort"
+msgstr "Password"
+
+#: community/templates/create_community.html:24
+#: community/templates/edit_community.html:27
+#: community/templates/edit_community.html:66
+#: community/templates/edit_community.html:121
+#: community/templates/edit_community.html:144
+msgid "Admin Passwort:"
+msgstr "Admin Password:"
+
+#: community/templates/create_community.html:25
+#: community/templates/edit_community.html:28
+#: community/templates/edit_community.html:67
+#: community/templates/edit_community.html:122
+msgid "Admin Passwort"
+msgstr "Admin Password"
+
+#: community/templates/create_community.html:27
+#: community/templates/edit_community.html:123
+#: community/templates/join_community.html:23
+msgid "Familyname:"
+msgstr "Family name:"
+
+#: community/templates/create_community.html:28
+#: community/templates/edit_community.html:124
+#: community/templates/join_community.html:24
+msgid "Familyname"
+msgstr "Family name"
+
+#: community/templates/create_community.html:29
+#: community/templates/join_community.html:25
+msgid "Family Admin Passwort:"
+msgstr "Family Admin Password:"
+
+#: community/templates/create_community.html:31
+#: community/templates/join_community.html:27
+msgid "Family Admin Passwort"
+msgstr "Family Admin Password"
+
+#: community/templates/create_community.html:34
+#: community/templates/edit_community.html:85
+msgid ""
+"Wir empfehlen folgende Admin-Passwort-Anforderungen, um die Community vor "
+"unerlaubter Bearbeitung zu schützen:"
+msgstr ""
+"We recommend the following admin password requirements to protect the "
+"community from unauthorized editing:"
+
+#: community/templates/create_community.html:36
+#: community/templates/edit_community.html:87
+msgid "Mindestens acht Zeichen"
+msgstr "At least eight characters"
+
+#: community/templates/create_community.html:37
+#: community/templates/edit_community.html:88
+msgid "Mindestens ein Großbuchstabe"
+msgstr "At least one uppercase letter"
+
+#: community/templates/create_community.html:38
+#: community/templates/edit_community.html:89
+msgid "Mindestens ein Kleinbuchstabe"
+msgstr "At least one lowercase letter"
+
+#: community/templates/create_community.html:39
+#: community/templates/edit_community.html:90
+msgid "Mindestens eine Zahl"
+msgstr "At least one number"
+
+#: community/templates/create_community.html:40
+#: community/templates/edit_community.html:91
+msgid "Mindestens ein Sonderzeichen"
+msgstr "At least one special character"
+
+#: community/templates/create_community.html:46
+#, fuzzy, python-format
+#| msgid "Oder einer bestehenden Community beitreten."
+msgid ""
+"Oder <a href=\"%(join_community_link)s\">einer bestehenden Community "
+"beitreten</a>."
+msgstr "Or join an existing community."
+
+#: community/templates/create_community.html:78
+#: community/templates/edit_community.html:42
+msgid "Überprüfe, ob Communityname bereits existiert..."
+msgstr "Checking if community name already exists..."
+
+#: community/templates/create_community.html:84
+#: community/templates/edit_community.html:48
+msgid "Communityname bereits vorhanden"
+msgstr "Community name already exists"
+
+#: community/templates/create_community.html:87
+#: community/templates/edit_community.html:51
+msgid "Communityname noch nicht vorhanden"
+msgstr "Community name does not exist yet"
+
+#: community/templates/edit_community.html:9
+#, python-format
+msgid "Community %(name)s bearbeiten"
+msgstr "Edit Community %(name)s"
+
+#: community/templates/edit_community.html:14
+#, python-format
+msgid "Community <a href=\"%(url)s\">%(name)s</a> bearbeiten"
+msgstr "Edit Community <a href=\"%(url)s\">%(name)s</a>"
+
+#: community/templates/edit_community.html:24
+msgid "Communityname ändern"
+msgstr "Change community name"
+
+#: community/templates/edit_community.html:29
+msgid "Neuer Communityname:"
+msgstr "New community name:"
+
+#: community/templates/edit_community.html:31
+msgid "Neuer Communityname"
+msgstr "New community name"
+
+#: community/templates/edit_community.html:32
+#: community/templates/edit_community.html:70
+#: community/templates/edit_community.html:94
+#: community/templates/edit_community.html:125
+#: community/templates/edit_community.html:152
+msgid "Speichern"
+msgstr "Save"
+
+#: community/templates/edit_community.html:63
+msgid "Passwort ändern"
+msgstr "Change password"
+
+#: community/templates/edit_community.html:68
+msgid "Neues Passwort:"
+msgstr "New password:"
+
+#: community/templates/edit_community.html:69
+msgid "Neues Passwort"
+msgstr "New password"
+
+#: community/templates/edit_community.html:75
+msgid "Admin Passwort ändern"
+msgstr "Change admin password"
+
+#: community/templates/edit_community.html:78
+msgid "Aktuelles Admin Passwort:"
+msgstr "Current admin password:"
+
+#: community/templates/edit_community.html:80
+msgid "aktuelles Admin Passwort"
+msgstr "current admin password"
+
+#: community/templates/edit_community.html:81
+msgid "Neues Admin Passwort:"
+msgstr "New admin password:"
+
+#: community/templates/edit_community.html:82
+msgid "neues Admin Passwort"
+msgstr "new admin password"
+
+#: community/templates/edit_community.html:118
+msgid "Mitglieder entfernen"
+msgstr "Remove members"
+
+#: community/templates/edit_community.html:130
+msgid "Community verlassen"
+msgstr "Leave community"
+
+#: community/templates/edit_community.html:131
+msgid "Willst du diese Community wirklich verlassen?"
+msgstr "Do you really want to leave this community?"
+
+#: community/templates/edit_community.html:133
+msgid "Family-Admin-Passwort:"
+msgstr "Family admin password:"
+
+#: community/templates/edit_community.html:135
+msgid "Family-Admin-Passwort"
+msgstr "Family admin password"
+
+#: community/templates/edit_community.html:136
+msgid "Diese Community verlassen"
+msgstr "Leave this community"
+
+#: community/templates/edit_community.html:141
+msgid "Chat-Einstellungen"
+msgstr "Chat settings"
+
+#: community/templates/edit_community.html:145
+#: community/templates/edit_community.html:172
+msgid "Admin-Passwort"
+msgstr "Admin password"
+
+#: community/templates/edit_community.html:150
+msgid "Chat-Funktion aktivieren / deaktivieren"
+msgstr "Enable / disable chat function"
+
+#: community/templates/edit_community.html:168
+msgid "Community löschen"
+msgstr "Delete community"
+
+#: community/templates/edit_community.html:169
+msgid "Willst du diese Community wirklich löschen?"
+msgstr "Do you really want to delete this community?"
+
+#: community/templates/edit_community.html:171
+msgid "Admin-Passwort:"
+msgstr "Admin password:"
+
+#: community/templates/edit_community.html:173
+msgid "Diese Community löschen"
+msgstr "Delete this community"
+
+#: community/templates/join_community.html:6
+msgid ""
+"Tritt einer Community bei ClimateQuest bei, um dich mit anderen Families zu "
+"vergleichen und auszutauschen."
+msgstr ""
+"Join a community on ClimateQuest to compare yourself with other families and "
+"exchange ideas."
+
+#: community/templates/join_community.html:32
+#, python-format
+msgid ""
+"Oder\n"
+"        <a href=\"%(create_community_link)s\">eine Community gründen</a>."
+msgstr "Or\n <a href=\"%(create_community_link)s\">found a community</a>."
+
+#~ msgid "Oder eine Community gründen."
+#~ msgstr "Or found a community."

@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block meta %}
-    <meta name="description" content="Eine Übersicht über all deine Families bei ClimateQuest.">
+    <meta name="description" content="{% trans "Eine Übersicht über all deine Families bei ClimateQuest." %}">
 {% endblock %}
 
-{% block title %}Meine Families{% endblock %}
+{% block title %}{% trans "Meine Families" %}{% endblock %}
 {% block content %}
 
     <style nonce="{{ request.csp_style_nonce }}">
@@ -49,19 +50,19 @@
         }
     </style>
 
-    <h1>Meine Families</h1>
+    <h1>{% trans "Meine Families" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message }}</p>
         {% endfor %}
     {% endif %}
     <a href="{% url 'create_family' %}" class="redirect-link">
-        <span>Family hinzufügen</span>
+        <span>{% trans "Family hinzufügen" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <br>
     <a href="{% url 'join_family' %}" class="redirect-link">
-        <span>Family beitreten</span>
+        <span>{% trans "Family beitreten" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
     {% if families %}
@@ -70,14 +71,14 @@
                 {% for family in families %}
                     <div class="family-card">
                         <h3>{{ family.name }}</h3>
-                        <p>Mitglieder: {{ family.members.count }}</p>
-                        <a href="{% url 'family_detail' family.id %}" class="card-btn">Details ansehen</a>
+                        <p>{% blocktrans with count=family.members.count %}Mitglieder: {{ count }}{% endblocktrans %}</p>
+                        <a href="{% url 'family_detail' family.id %}" class="card-btn">{% trans "Details ansehen" %}</a>
                     </div>
                 {% endfor %}
             </div>
         </section>
 
     {% else %}
-        <p>Du bist keiner Family beigetreten.</p>
+        <p>{% trans "Du bist keiner Family beigetreten." %}</p>
     {% endif %}
 {% endblock %}

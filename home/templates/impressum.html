@@ -1,23 +1,24 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block meta %}
-    <meta name="description" content="Das Impressum von ClimateQuest.">
+    <meta name="description" content="{% trans 'Das Impressum von ClimateQuest.' %}">
 {% endblock %}
-{% block title %}Impressum{% endblock %}
+{% block title %}{% trans "Impressum" %}{% endblock %}
 
 {% block content %}
-    <h1>Impressum</h1>
+    <h1>{% trans "Impressum" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
     <a href="{% url 'support' %}" class="redirect-link">
-        <span>Support</span>
+        <span>{% trans "Support" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <br>
     <a href="{% url 'feedback' %}" class="redirect-link">
-        <span>Feedback</span>
+        <span>{% trans "Feedback" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <br>
@@ -26,36 +27,27 @@
     <p>Kuckucksblumenstr. 23</p>
     <p>80469 München</p>
     <br>
-    <p>Telefon: +49 89 99954892</p>
+    <p>{% trans "Telefon:" %} +49 89 99954892</p>
     <br>
-    <p>E-Mail: <a href="mailto:info@fraqment.com">info@fraqment.com</a></p>
+    <p>{% trans "E-Mail:" %} <a href="mailto:info@fraqment.com">info@fraqment.com</a></p>
     <br>
-    <h2>Vertreten durch</h2>
+    <h2>{% trans "Vertreten durch" %}</h2>
     <p>Götz Hudelmaier</p>
     <p>David Purviance</p>
     <br>
-    <h2>Kontakt</h2>
-    <p>E-Mail: <a href="mailto:kontakt@climate-quest.de">kontakt@climate-quest.de</a></p>
+    <h2>{% trans "Kontakt" %}</h2>
+    <p>{% trans "E-Mail:" %} <a href="mailto:kontakt@climate-quest.de">kontakt@climate-quest.de</a></p>
     <br>
-    <h2>Haftungsausschluss</h2>
-    <p>Der Webseitenbetreiber übernimmt keinerlei Haftung für den Wahrheitsgehalt der hochgeladenen Artikel, Events und
-        Forumsbeiträge, da sie von Nutzern erstellt wurden. Sollten diese nicht mit Nutzungsbedingungen übereinstimmen
-        oder falsch sein, können Sie dies jederzeit unter Angabe der URL sowie einer Begründung unter
-        kontakt@climate-quest.de melden, woraufhin der Inhalt geprüft und ggf. gelöscht wird. Dies kann allerdings
-        einige Zeit dauern.</p>
+    <h2>{% trans "Haftungsausschluss" %}</h2>
+    <p>{% blocktrans %}Der Webseitenbetreiber übernimmt keinerlei Haftung für den Wahrheitsgehalt der hochgeladenen Artikel, Events und Forumsbeiträge, da sie von Nutzern erstellt wurden. Sollten diese nicht mit Nutzungsbedingungen übereinstimmen oder falsch sein, können Sie dies jederzeit unter Angabe der URL sowie einer Begründung unter kontakt@climate-quest.de melden, woraufhin der Inhalt geprüft und ggf. gelöscht wird. Dies kann allerdings einige Zeit dauern.{% endblocktrans %}</p>
     <br>
-    <h2>Quellen</h2>
+    <h2>{% trans "Quellen" %}</h2>
     <ul>
-        <li>Emojis: <a href="https://openmoji.org">OpenMoji</a>, lizenziert unter <a
-                href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Es wurden keine Änderungen
-            vorgenommen
-        </li>
-        <li>Bilder: <a href="https://pixabay.com">Pixabay</a> und selbst geschossen</li>
+        <li>{% trans "Emojis:" %} <a href="https://openmoji.org">OpenMoji</a>, {% trans "lizenziert unter" %} <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> {% trans "Es wurden keine Änderungen vorgenommen" %}</li>
+        <li>{% trans "Bilder:" %} <a href="https://pixabay.com">Pixabay</a> {% trans "und selbst geschossen" %}</li>
     </ul>
 
-    <h2>Änderungen dieses Impressums</h2>
-    <p>Wir behalten uns vor, dieses Impressum anzupassen, um es an geänderte rechtliche Rahmenbedingungen oder bei
-        Änderungen der Dienstleistung anzupassen. Die aktuelle Version ist stets unter <a href="{% url 'impressum' %}">dieser
-            URL</a> zu finden.</p>
+    <h2>{% trans "Änderungen dieses Impressums" %}</h2>
+    <p>{% blocktrans %}Wir behalten uns vor, dieses Impressum anzupassen, um es an geänderte rechtliche Rahmenbedingungen oder bei Änderungen der Dienstleistung anzupassen. Die aktuelle Version ist stets unter{% endblocktrans %} <a href="{% url 'impressum' %}">{% trans "dieser URL" %}</a> {% trans "zu finden." %}</p>
 
 {% endblock %}

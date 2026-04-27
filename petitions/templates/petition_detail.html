@@ -2,12 +2,13 @@
 
 {% load html_math %}
 {% load static %}
+{% load i18n %}
 
 {% block meta %}
-    <meta name="description" content="Siehe dir die Petition {{ petition.title }} an">
+    {% blocktrans with petition_title=petition.title %}<meta name="description" content="Siehe dir die Petition {{ petition_title }} an">{% endblocktrans %}
 {% endblock %}
 
-{% block title %}Petition {{ petition.title }}{% endblock %}
+{% block title %}{% blocktrans with petition_title=petition.title %}Petition {{ petition_title }}{% endblocktrans %}{% endblock %}
 
 {% block content %}
     <style nonce="{{ request.csp_style_nonce }}">
@@ -34,7 +35,7 @@
         <script nonce="{{ request.csp_script_nonce }}">startConfetti();</script>
     {% endif %}
 
-    <h1><a href="{% url 'petitions_overview' %}">Petition</a> <i>{{ petition.title }}</i></h1>
+    <h1><a href="{% url 'petitions_overview' %}">{% trans "Petition" %}</a> <i>{{ petition.title }}</i></h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
@@ -46,7 +47,7 @@
     {% endif %}
     {% endcomment %}
     {% if petition.success %}
-        <h2>Die Petition hatte Erfolg!</h2>
+        <h2>{% trans "Die Petition hatte Erfolg!" %}</h2>
     {% endif %}
     <div class="progress-container">
         <div class="progress-bar" id="progress-bar"></div>
@@ -61,41 +62,39 @@
             max-width: 100%;
         }
     </style>
-    <p><strong>{{ petition.signs.count }}</strong> Unterschriften gesammelt</p>
-    <p>Ziel: <strong>{{ petition.goal }}</strong></p>
+    <p><strong>{{ petition.signs.count }}</strong> {% trans "Unterschriften gesammelt" %}</p>
+    <p>{% trans "Ziel" %}: <strong>{{ petition.goal }}</strong></p>
     {% if petition.signs.count >= petition.goal and not petition.success %}
-        <p>Obwohl das Unterschriftenziel bereits erreicht wurde, heißt das nicht, dass die Petition auch erfolgreich
-            ist. Deine Stimme ist immer noch wichtig!</p>
+        <p>{% trans "Obwohl das Unterschriftenziel bereits erreicht wurde, heißt das nicht, dass die Petition auch erfolgreich ist. Deine Stimme ist immer noch wichtig!" %}</p>
     {% endif %}
     <hr>
     <div class="artikel-content"><p>{{ petition.content|safe }}</p></div>
-    <p>Kategorie <strong>{{ petition.category.title }}</strong></p>
-    <p>Erstellt am {{ petition.created_at|date:"d.m.Y" }}</p>
-    <p>Erstellt von <a href="{% url 'user_detail' petition.creator.id %}">{{ petition.creator.username }}</a></p>
+    <p>{% trans "Kategorie" %}: <strong>{{ petition.category.title }}</strong></p>
+    <p>{% trans "Erstellt am" %} {{ petition.created_at|date:"SHORT_DATE_FORMAT" }}</p>
+    <p>{% trans "Erstellt von" %}: <a href="{% url 'user_detail' petition.creator.id %}">{{ petition.creator.username }}</a></p>
 
     <hr>
-    <h2>Unterschreiben</h2>
+    <h2>{% trans "Unterschreiben" %}</h2>
     {% if petition.success %}
-        <p>Du kannst auch unterschreiben, obwohl die Petition bereits Erfolg hatte, um zu verdeutlichen, dass auch dir
-            das Thema wichtig ist!</p>
+        <p>{% trans "Du kannst auch unterschreiben, obwohl die Petition bereits Erfolg hatte, um zu verdeutlichen, dass auch dir das Thema wichtig ist!" %}</p>
     {% endif %}
     <form method="post">
         {% csrf_token %}
         {% if request.user not in petition.signs.all %}
             {% if request.user.is_authenticated %}
-                <button type="submit" name="sign">Unterschreiben</button>
+                <button type="submit" name="sign">{% trans "Unterschreiben" %}</button>
             {% else %}
-                <p><a href="{% url 'register_view' %}">Registriere dich</a>, um zu unterschreiben</p>
+                <p><a href="{% url 'register_view' %}">{% trans "Registriere dich" %}</a>, {% trans "um zu unterschreiben" %}</p>
             {% endif %}
         {% else %}
-            <p>Du hast bereits unterschrieben</p>
-            <button type="submit" name="sign">Unterschrift zurücknehmen</button>
+            <p>{% trans "Du hast bereits unterschrieben" %}</p>
+            <button type="submit" name="sign">{% trans "Unterschrift zurücknehmen" %}</button>
         {% endif %}
     </form>
 
     <hr>
 
-    <h2>Updates</h2>
+    <h2>{% trans "Updates" %}</h2>
     <div class="updates">
         {% for update in petition.updates.all %}
             <div class="accordion">
@@ -117,13 +116,13 @@
                 </div>
             </div>
         {% empty %}
-            <p class="no-comments"><i>Noch keine Updates vorhanden.</i></p>
+            <p class="no-comments"><i>{% trans "Noch keine Updates vorhanden." %}</i></p>
         {% endfor %}
     </div>
 
     <hr>
 
-    <h2>Kommentare</h2>
+    <h2>{% trans "Kommentare" %}</h2>
     <div class="comment-section">
         {% if petition.comments.all %}
             {% for comment in petition.comments.all %}
@@ -132,7 +131,7 @@
                         <div class="comment-header">
                             <span class="comment-user"><a
                                     href="{% url 'user_detail' comment.user.id %}">{{ comment.user }}</a></span>
-                            <span class="comment-date">{{ comment.date_time|date:"d.m.Y H:i" }}</span>
+                            <span class="comment-date">{{ comment.date_time|date:"SHORT_DATETIME_FORMAT" }}</span>
                         </div>
                         <div class="comment-text expandable-text blur-enabled">{{ comment.comment }}</div>
                         <div class="answers">
@@ -140,26 +139,26 @@
                                 <div class="answer-header">
                                     <span class="answer-user"><a
                                             href="{% url 'user_detail' comment.user.id %}">{{ answer.user }}</a></span>
-                                    <span class="answer-date">{{ answer.date_time|date:"d.m.Y H:i" }}</span>
+                                    <span class="answer-date">{{ answer.date_time|date:"SHORT_DATETIME_FORMAT" }}</span>
                                 </div>
                                 <div class="answer expandable-text blur-enabled">{{ answer.answer }}</div>
                             {% empty %}
-                                <div class="no-answer">Noch keine Antworten.</div>
+                                <div class="no-answer">{% trans "Noch keine Antworten." %}</div>
                             {% endfor %}
                         </div>
-                        <button class="toggle-button">Mehr anzeigen</button>
+                        <button class="toggle-button">{% trans "Mehr anzeigen" %}</button>
                         <details>
-                            <summary>selbst antworten</summary>
+                            <summary>{% trans "selbst antworten" %}</summary>
                             {% if user.is_authenticated %}
                                 <form method="post">
                                     {% csrf_token %}
                                     <input type="hidden" name="comment_id" value="{{ comment.id }}">
-                                    <label for="answer">Antwort:</label>
-                                    <input type="text" id="answer" name="answer" placeholder="Antwort">
-                                    <button name="answer_comment">Antworten</button>
+                                    <label for="answer">{% trans "Antwort" %}:</label>
+                                    <input type="text" id="answer" name="answer" placeholder="{% trans "Antwort" %}">
+                                    <button name="answer_comment">{% trans "Antworten" %}</button>
                                 </form>
                             {% else %}
-                                <p><a href="{% url 'login_view' %}">Logge dich ein</a>, um den Kommentar zu beantworten
+                                <p><a href="{% url 'login_view' %}">{% trans "Logge dich ein" %}</a>, {% trans "um den Kommentar zu beantworten" %}
                                 </p>
                             {% endif %}
                         </details>
@@ -167,7 +166,7 @@
                 </div>
             {% endfor %}
         {% else %}
-            <p class="no-comments"><i>Noch keine Kommentare vorhanden</i></p>
+            <p class="no-comments"><i>{% trans "Noch keine Kommentare vorhanden" %}</i></p>
         {% endif %}
     </div>
 
@@ -196,7 +195,7 @@
                     button.style.display = "inline-block";
                     button.addEventListener("click", () => {
                         wrapper.classList.toggle("expanded");
-                        button.textContent = wrapper.classList.contains("expanded") ? "Weniger anzeigen" : "Mehr anzeigen";
+                        button.textContent = wrapper.classList.contains("expanded") ? "{% trans "Weniger anzeigen" %}" : "{% trans "Mehr anzeigen" %}";
                     });
                 } else {
                     button.style.display = "none";
@@ -207,18 +206,18 @@
     {% if user.is_authenticated %}
         <form method="post">
             {% csrf_token %}
-            <label for="comment">Neuen Kommentar hinzufügen:</label>
-            <input type="text" id="comment" name="comment" placeholder="Kommentar hinzufügen">
-            <button type="submit" name="add_comment">Kommentar hinzufügen</button>
+            <label for="comment">{% trans "Neuen Kommentar hinzufügen:" %}</label>
+            <input type="text" id="comment" name="comment" placeholder="{% trans "Kommentar hinzufügen" %}">
+            <button type="submit" name="add_comment">{% trans "Kommentar hinzufügen" %}</button>
         </form>
     {% else %}
-        <p><a href="{% url 'login_view' %}">Logge dich ein</a>, um einen Kommentar zu verfassen
+        <p><a href="{% url 'login_view' %}">{% trans "Logge dich ein" %}</a>, {% trans "um einen Kommentar zu verfassen" %}
         </p>
     {% endif %}
     {% if request.user.is_authenticated and request.user == petition.creator %}
         <hr>
         <a href="{% url 'edit_petition' petition.id %}" class="redirect-link">
-            <span>Bearbeiten</span>
+            <span>{% trans "Bearbeiten" %}</span>
             <span class="redirect-link-icon">→</span>
         </a>
     {% endif %}

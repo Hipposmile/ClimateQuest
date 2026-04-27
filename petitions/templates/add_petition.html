@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block meta %}
-    <meta name="description" content="Füge eine Petition zu ClimateQuest hinzu">
+    <meta name="description" content="{% trans "Füge eine Petition zu ClimateQuest hinzu" %}">
     {% comment %}<link rel="stylesheet" href="{% static 'libraries/cropperjs/cropper.css' %}">{% endcomment %}
 {% endblock %}
 
-{% block title %}Petition hinzufügen{% endblock %}
+{% block title %}{% trans "Petition hinzufügen" %}{% endblock %}
 
 {% block content %}
     {% comment %}<!--Using Cropper.js: https://fengyuanchen.github.io/cropperjs/-->
@@ -35,7 +36,7 @@
             display: none;
         }
     </style>{% endcomment %}
-    <h1>Petition hinzufügen</h1>
+    <h1>{% trans "Petition hinzufügen" %}</h1>
 
     {% if messages %}
         {% for message in messages %}
@@ -46,15 +47,15 @@
     <form method="post" id="petition-form"
           class="fill-editor" {% comment %}enctype="multipart/form-data"{% endcomment %}>
         {% csrf_token %}
-        <label for="title">Titel</label>
-        <input type="text" name="title" id="title" placeholder="Titel" maxlength="100" required>
+        <label for="title">{% trans "Titel" %}</label>
+        <input type="text" name="title" id="title" placeholder="{% trans "Titel" %}" maxlength="100" required>
 
-        <label for="content_editor">Beschreibung</label>
+        <label for="content_editor">{% trans "Beschreibung" %}</label>
         <div id="content_editor" class="quill-editor"></div>
         <input type="hidden" name="content">
 
-        <label for="goal">Ziel</label>
-        <small>Das Ziel kann im Nachhinein aktualisiert werden</small>
+        <label for="goal">{% trans "Ziel" %}</label>
+        <small>{% trans "Das Ziel kann im Nachhinein aktualisiert werden" %}</small>
         <input type="number" name="goal" id="goal" min="10" step="1" required>
 
         {% comment %}<label for="img">Bild (optional)</label>
@@ -64,7 +65,7 @@
             <img id="preview" class="cropper-image">
         </div>{% endcomment %}
 
-        <label for="category">Kategorie</label>
+        <label for="category">{% trans "Kategorie" %}</label>
         <select id="category" name="category">
             {% for category in categories %}
                 <option value="{{ category }}">{{ category }}</option>
@@ -74,11 +75,12 @@
         <label class="custom-checkbox">
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
-            <span class="label-text">Ich bestätige, dass die Petition mit den <a
-                    href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmt. </span>
+            {% url 'nutzungsbedingungen' as nutzungsbedingungen_url %}
+            {% blocktrans with url=nutzungsbedingungen_url %}<span class="label-text">Ich bestätige, dass die Petition mit den <a
+                    href="{{ url }}">Nutzungsbedingungen</a> übereinstimmt. </span>{% endblocktrans %}
         </label>
 
-        <button type="submit">Speichern</button>
+        <button type="submit">{% trans "Speichern" %}</button>
     </form>
 
     {% comment %}<script nonce="{{ request.csp_script_nonce }}">

@@ -1,0 +1,214 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-27 13:06+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: aktionen/templates/add.html:6
+msgid ""
+"Erstelle eine neue Aktion bei ClimateQuest, um Klimapunkte zu sammeln und "
+"dich mit anderen Nutzern zu vergleichen."
+msgstr ""
+"Create a new action on ClimateQuest to collect climate points and compare "
+"yourself with other users."
+
+#: aktionen/templates/add.html:10
+msgid "ClimateQuest - Aktion hinzufügen"
+msgstr "ClimateQuest - Add Action"
+
+#: aktionen/templates/add.html:14
+msgid "Aktion hinzufügen"
+msgstr "Add Action"
+
+#: aktionen/templates/add.html:23
+msgid ""
+"Bitte gib bei Aktionen, die länger als einen Tag gedauert haben, das "
+"Enddatum an."
+msgstr ""
+"Please provide the end date for actions that lasted longer than one day."
+
+#: aktionen/templates/add.html:43
+msgid "Ausgewähltes Element:"
+msgstr "Selected Item:"
+
+#: aktionen/templates/add.html:47
+msgid "Element auswählen"
+msgstr "Select Item"
+
+#: aktionen/templates/add.html:59
+msgid "Erweiterte Einstellungen"
+msgstr "Advanced Settings"
+
+#: aktionen/templates/add.html:69
+msgid "Beschreibung:"
+msgstr "Description:"
+
+#: aktionen/templates/add.html:71
+msgid "Optional"
+msgstr "Optional"
+
+#: aktionen/templates/add.html:75
+msgid "Menge:"
+msgstr "Quantity:"
+
+#: aktionen/templates/add.html:76
+msgid "Bitte verwenden Sie keinen 1000-Seperator"
+msgstr "Please do not use a 1000 separator"
+
+#: aktionen/templates/add.html:81
+msgid "Datum:"
+msgstr "Date:"
+
+#: aktionen/templates/add.html:91
+#, python-format
+msgid ""
+"Ich bestätige,\n"
+"                dass alle Angaben der Wahrheit entsprechen und mit den\n"
+"                <a href=\"%(nutzungsbedingungen_url)s\">Nutzungsbedingungen</"
+"a>\n"
+"                übereinstimmen."
+msgstr ""
+"I confirm that all information is true and complies with the <a "
+"href=\"%(nutzungsbedingungen_url)s\">Terms of Use</a>."
+
+#: aktionen/templates/add.html:97
+msgid "Hinzufügen"
+msgstr "Add"
+
+#: aktionen/templates/add.html:105
+msgid "Kategorien"
+msgstr "Categories"
+
+#: aktionen/templates/add.html:121
+msgid "Zurück"
+msgstr "Back"
+
+#: aktionen/templates/add.html:377
+msgid "Wähle eine Aktion aus:"
+msgstr "Choose an action:"
+
+#: aktionen/templates/add.html:476
+msgid "Quelle:"
+msgstr "Source:"
+
+#: aktionen/templates/add.html:477
+msgid "Kategorien:"
+msgstr "Categories:"
+
+#: aktionen/templates/add.html:480
+msgid "Klimapunkte pro"
+msgstr "Climate points per"
+
+#: aktionen/templates/add.html:522
+msgid "Insgesamt durch diese Aktion gewonnene Klimapunkte:"
+msgstr "Total climate points earned through this action:"
+
+#: aktionen/templates/track.html:5
+msgid "Tracke deine Aktionen automatisch!"
+msgstr "Track your actions automatically!"
+
+#: aktionen/templates/track.html:8
+msgid "Tracken - ClimateQuest"
+msgstr "Tracking - ClimateQuest"
+
+#: aktionen/templates/track.html:52
+msgid "Tracken"
+msgstr "Tracking"
+
+#: aktionen/templates/track.html:63 aktionen/templates/track.html:229
+msgid "Stoppen"
+msgstr "Stop"
+
+#: aktionen/templates/track.html:70
+msgid "Distanz"
+msgstr "Distance"
+
+#: aktionen/templates/track.html:71
+msgid "Wenn du deine Fahrrad-, ÖPNV- oder Zugstrecken tracken willst"
+msgstr "If you want to track your bicycle, public transport, or train routes"
+
+#: aktionen/templates/track.html:80
+msgid "Wir speichern keine Standortdaten auf unserem Server!"
+msgstr "We do not store location data on our server!"
+
+#: aktionen/templates/track.html:111
+msgid ""
+"Bitte Seite nicht aktualisieren oder verlassen, während die Distanz getrackt "
+"wird!!!"
+msgstr ""
+"Please do not refresh or leave the page while the distance is being "
+"tracked!!!"
+
+#: aktionen/templates/track.html:114 aktionen/templates/track.html:128
+msgid "Insgesamt getrackte Distanz:"
+msgstr "Total tracked distance:"
+
+#: aktionen/templates/track.html:114 aktionen/templates/track.html:128
+msgid "Meter"
+msgstr "Meters"
+
+#: aktionen/templates/track.html:151
+msgid "Da du dich nicht bewegt hast, wurde nichts eingetragen."
+msgstr "Since you did not move, nothing was entered."
+
+#: aktionen/templates/track.html:166
+msgid "Distanz erfolgreich getrackt!"
+msgstr "Distance successfully tracked!"
+
+#: aktionen/templates/track.html:169
+msgid "Fehler beim Eintragen der Aktion:"
+msgstr "Error entering the action:"
+
+#: aktionen/templates/track.html:175
+msgid "Fehler beim Eintragen der Aktion."
+msgstr "Error entering the action."
+
+#: aktionen/templates/track.html:212
+msgid "Wöchentliche Aktionen"
+msgstr "Weekly Actions"
+
+#: aktionen/templates/track.html:213
+msgid ""
+"Wenn du wöchentliche Aktionen immer durchführst und sie nicht jede Woche "
+"eintragen willst"
+msgstr ""
+"If you always perform weekly actions and do not want to enter them every week"
+
+#: aktionen/templates/track.html:225
+#, python-format
+msgid "Möchtest du das Tracking für %(name)s wirklich stoppen?"
+msgstr "Do you really want to stop tracking for %(name)s?"
+
+#: aktionen/templates/track.html:227
+msgid "wird getrackt seit"
+msgstr "has been tracked since"
+
+#, python-format
+#~ msgid ""
+#~ "Du hast eine neue Aktion vom Typen %(action_type)s erstellt und bist so "
+#~ "ins Level %(new_level)s aufgestiegen. <span class=\"emoji\">&#x1F973;"
+#~ msgstr ""
+#~ "You created a new action of type %(action_type)s and leveled up to level "
+#~ "%(new_level)s. <span class=\"emoji\">&#x1F973;"
+
+#, python-format
+#~ msgid ""
+#~ "Du hast eine neue Aktion vom Typen %(action_type)s erstellt und deine "
+#~ "Streak verlängert. <span class=\"emoji\">&#x1F973;</span>"
+#~ msgstr ""
+#~ "You created a new action of type %(action_type)s and extended your "
+#~ "streak. <span class=\"emoji\">&#x1F973;</span>"

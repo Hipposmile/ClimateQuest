@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 
+{% load i18n %}
+
 {% block meta %}
     <meta name="description"
-          content="Registriere dich für ein ClimateQuest Konto, um personalisierte Funktionen zu nutzen und deinen Beitrag im Kampf gegen den Klimawandel zu verfolgen.">
+          content="{% trans 'Registriere dich für ein ClimateQuest Konto, um personalisierte Funktionen zu nutzen und deinen Beitrag im Kampf gegen den Klimawandel zu verfolgen.' %}">
 {% endblock %}
 
-{% block title %}Registrieren{% endblock %}
+{% block title %}{% trans "Registrieren" %}{% endblock %}
 
 {% block content %}
     <style nonce="{{ request.csp_style_nonce }}">
@@ -13,7 +15,7 @@
             visibility: hidden;
         }
     </style>
-    <h1>Registrierung</h1>
+    <h1>{% trans "Registrierung" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
@@ -23,53 +25,53 @@
         {% csrf_token %}
         <div class="cookie-blocked" data-requires="recaptcha"
              data-content='<script src="https://www.google.com/recaptcha/api.js?render=6Ld_S6orAAAAANqPdHX27TNVkzL0WmlG_XQhTD2l"></script>'
-             data-text="Zur Registrierung musst du die reCAPTCHA-Cookies erlauben" data-important="true"></div>
+             data-text="{% trans 'Zur Registrierung musst du die reCAPTCHA-Cookies erlauben' %}" data-important="true"></div>
 
-        <label for="username">Benutzername:</label>
+        <label for="username">{% trans "Benutzername:" %}</label>
         <small id="username-feedback"></small>
-        <input type="text" name="username" id="username" placeholder="Benutzername" required>
+        <input type="text" name="username" id="username" placeholder="{% trans 'Benutzername' %}" required>
 
-        <label for="password">Passwort:</label>
-        <a id="showPassword" class="show-password dont-show-loading">Passwort anzeigen</a>
-        <input type="password" name="password" id="password" placeholder="Passwort" required>
+        <label for="password">{% trans "Passwort:" %}</label>
+        <a id="showPassword" class="show-password dont-show-loading">{% trans "Passwort anzeigen" %}</a>
+        <input type="password" name="password" id="password" placeholder="{% trans 'Passwort' %}" required>
 
-        <label for="email">E-Mail-Adresse:</label>
+        <label for="email">{% trans "E-Mail-Adresse:" %}</label>
         <small id="email-feedback"></small>
-        <input type="email" name="email" id="email" placeholder="E-Mail (Optional)">
-        <small>Du kannst eine E-Mail-Adresse angeben, um Benachrichtigungen zu erhalten und, falls du deinen
-            Benutzernamen oder dein Passwort vergessen hast, diese zurückzusetzen. Dies ist allerdings optional, du
-            musst es also nicht machen.</small>
+        <input type="email" name="email" id="email" placeholder="{% trans 'E-Mail (Optional)' %}">
+        <small>{% trans "Du kannst eine E-Mail-Adresse angeben, um Benachrichtigungen zu erhalten und, falls du deinen Benutzernamen oder dein Passwort vergessen hast, diese zurückzusetzen. Dies ist allerdings optional, du musst es also nicht machen." %}</small>
 
         <div>
-            <h4>Unsere Empfehlungen für ein sicheres Passwort, um deinen Account vor Hackingangriffen und
-                Accountübernahmenzu schützen:</h4>
+            <h4>{% trans "Unsere Empfehlungen für ein sicheres Passwort, um deinen Account vor Hackingangriffen und Accountübernahmen zu schützen:" %}</h4>
             <ul class="criteria-list">
-                <li id="length" class="error-message">Mindestens acht Zeichen</li>
-                <li id="uppercase" class="error-message">Mindestens ein Großbuchstabe</li>
-                <li id="lowercase" class="error-message">Mindestens ein Kleinbuchstabe</li>
-                <li id="number" class="error-message">Mindestens eine Zahl</li>
-                <li id="punctuation" class="error-message">Mindestens ein Sonderzeichen</li>
+                <li id="length" class="error-message">{% trans "Mindestens acht Zeichen" %}</li>
+                <li id="uppercase" class="error-message">{% trans "Mindestens ein Großbuchstabe" %}</li>
+                <li id="lowercase" class="error-message">{% trans "Mindestens ein Kleinbuchstabe" %}</li>
+                <li id="number" class="error-message">{% trans "Mindestens eine Zahl" %}</li>
+                <li id="punctuation" class="error-message">{% trans "Mindestens ein Sonderzeichen" %}</li>
             </ul>
         </div>
 
         <label class="custom-checkbox">
             <input type="checkbox" name="nutzungsbedingungen_accepted">
             <span class="checkmark"></span>
-            <span class="label-text">Ich habe die <a href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> gelesen und akzeptiere diese. Sofern ich noch nicht volljährig bin, bestätige ich, dass die Zustimmung durch eine erziehungsberechtigte Person erfolgt ist.</span>
+            {% url 'nutzungsbedingungen' as nutzungsbedingungen_url %}
+            <span class="label-text">{% blocktrans with url=nutzungsbedingungen_url %}Ich habe die <a href="{{ url }}">Nutzungsbedingungen</a> gelesen und akzeptiere diese. Sofern ich noch nicht volljährig bin, bestätige ich, dass die Zustimmung durch eine erziehungsberechtigte Person erfolgt ist.{% endblocktrans %}</span>
         </label>
 
         <label class="custom-checkbox">
             <input type="checkbox" name="datenschutz_accepted">
             <span class="checkmark"></span>
-            <span class="label-text">Ich habe die <a href="{% url 'datenschutz' %}">Datenschutzerklärung</a> gelesen und bin mit der beschriebenen Verarbeitung meiner personenbezogenen Daten einverstanden. Sofern ich noch nicht volljährig bin, bestätige ich, dass diese Einwilligung durch eine erziehungsberechtigte Person erfolgt ist.</span>
+            {% url 'datenschutz' as datenschutz_url %}
+            <span class="label-text">{% blocktrans with url=datenschutz_url %}Ich habe die <a href="{{ url }}">Datenschutzerklärung</a> gelesen und bin mit der beschriebenen Verarbeitung meiner personenbezogenen Daten einverstanden. Sofern ich noch nicht volljährig bin, bestätige ich, dass diese Einwilligung durch eine erziehungsberechtigte Person erfolgt ist.{% endblocktrans %}</span>
         </label>
 
         <input type="hidden" name="recaptchaToken" id="recaptchaToken">
-        <button type="submit" id="register-button">Registrieren</button>
-        <small>This site is protected by reCAPTCHA</small>
+        <button type="submit" id="register-button">{% trans "Registrieren" %}</button>
+        <small>{% trans "Diese Seite wird geschützt von reCAPTCHA" %}</small>
     </form>
 
-    <p>Bereits registriert? <a href="{% url 'login_view' %}">Zum Login</a></p>
+    {% url 'login_view' as login_url %}
+    <p>{% blocktrans with url=login_url %}Bereits registriert? <a href="{{ url }}">Zum Login</a>{% endblocktrans %}</p>
 
     <script nonce="{{ request.csp_script_nonce }}">
         let passwordRecommendation = false;
@@ -78,14 +80,14 @@
             if (!getCookiePreferences().recaptcha) {
                 let register_button = document.getElementById('register-button');
                 register_button.disabled = true;
-                register_button.textContent = "Um sich zu registrieren, wird reCAPTCHA benötigt. Bitte akzeptiere diese, um sich zu registrieren.";
+                register_button.textContent = "{% trans 'Um sich zu registrieren, wird reCAPTCHA benötigt. Bitte akzeptiere diese, um sich zu registrieren.' %}";
             }
         });
 
         function register(event) {
             event.preventDefault();
             if (!passwordRecommendation) {
-                if (!confirm('Das Passwort entspricht nicht den Empfehlungen. Trotzdem fortfahren?')) {
+                if (!confirm('{% trans "Das Passwort entspricht nicht den Empfehlungen. Trotzdem fortfahren?" %}')) {
                     return false;
                 }
             }
@@ -146,21 +148,21 @@
             const registerButton = document.getElementById('register-button');
 
             if (username.length > 0) {
-                username_feedback.textContent = 'Überprüfe, ob Benutzername bereits existiert...';
+                username_feedback.textContent = '{% trans "Überprüfe, ob Benutzername bereits existiert..." %}';
                 username_feedback.style.color = 'grey';
                 fetch(`/personals/check-username/?username=${encodeURIComponent(username)}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.exists) {
-                            username_feedback.textContent = 'Benutzername bereits vorhanden';
+                            username_feedback.textContent = '{% trans "Benutzername bereits vorhanden" %}';
                             username_feedback.style.color = 'red';
                         } else {
-                            username_feedback.textContent = 'Name noch nicht vorhanden';
+                            username_feedback.textContent = '{% trans "Name noch nicht vorhanden" %}';
                             username_feedback.style.color = 'green';
                         }
                     })
                     .catch(error => {
-                        username_feedback.textContent = `Fehler beim Überprüfen des Benutzernamens: ${error}`;
+                        username_feedback.textContent = `{% trans "Fehler beim Überprüfen des Benutzernamens:" %} ${error}`;
                         username_feedback.style.color = 'red';
                     });
             } else {
@@ -173,16 +175,16 @@
             const email_feedback = document.getElementById('email-feedback');
 
             if (email.length > 0) {
-                email_feedback.textContent = 'Überprüfe, ob E-Mail-Adresse bereits existiert...';
+                email_feedback.textContent = '{% trans "Überprüfe, ob E-Mail-Adresse bereits existiert..." %}';
                 email_feedback.style.color = 'grey';
                 fetch(`/personals/check-email/?email=${encodeURIComponent(email)}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.exists) {
-                            email_feedback.textContent = 'E-Mail-Adresse bereits vorhanden';
+                            email_feedback.textContent = '{% trans "E-Mail-Adresse bereits vorhanden" %}';
                             email_feedback.style.color = 'red';
                         } else {
-                            email_feedback.textContent = 'E-Mail-Adresse noch nicht vorhanden';
+                            email_feedback.textContent = '{% trans "E-Mail-Adresse noch nicht vorhanden" %}';
                             email_feedback.style.color = 'green';
                         }
                     });

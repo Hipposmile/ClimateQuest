@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block meta %}
     <meta name="description"
-          content="Sieh dir den Post im Forum von ClimateQuest an und lies die Antworten anderer User zu diesem Thema. Antworte selbst auf den Post, um dein Wissen zu teilen.">
+          content="{% trans "Sieh dir den Post im Forum von ClimateQuest an und lies die Antworten anderer User zu diesem Thema. Antworte selbst auf den Post, um dein Wissen zu teilen." %}">
 {% endblock %}
 
-{% block title %}Post {{ post.title }}{% endblock %}
+{% block title %}{% blocktrans with title=post.title %}Post {{ title }}{% endblocktrans %}{% endblock %}
 
 {% block content %}
     <style nonce="{{ request.csp_style_nonce }}">
@@ -26,7 +27,7 @@
         }
     </style>
 
-    <h1><a href="{% url 'forum_overview' %}">Post</a> <i>{{ post.title }}</i></h1>
+    <h1>{% url 'forum_overview' as overview_url %}{% blocktrans with url=overview_url title=post.title %}<a href="{{ url }}">Post</a> <i>{{ title }}</i>{% endblocktrans %}</h1>
 
     {% if messages %}
         {% for message in messages %}
@@ -38,20 +39,19 @@
 
     <br>
 
-    <p>Erstellt von <a href="{% url 'user_detail' post.creator.id %}">{{ post.creator }}</a></p>
-    <p>Erstellt am: {{ post.date_time|date:"d.m.Y H:i" }}</p>
-    <p>Kategorie: {{ post.category.title }}</p>
+    <p>{% url 'user_detail' post.creator.id as creator_url %}{% blocktrans with url=creator_url creator=post.creator %}Erstellt von <a href="{{ url }}">{{ creator }}</a>{% endblocktrans %}</p>
+    <p>{% blocktrans with date=post.date_time|date:"SHORT_DATETIME_FORMAT" %}Erstellt am: {{ date }}{% endblocktrans %}</p>
+    <p>{% blocktrans with category=post.category.title %}Kategorie: {{ category }}{% endblocktrans %}</p>
 
     {% for answer in answers %}
         <div class="answer">
             <p>{{ answer.content|safe }}</p>
-            <p><small>Antwort von <a href="{% url 'user_detail' answer.creator.id %}">{{ answer.creator }}</a>
-                am {{ answer.date_time|date:"d.m.Y H:i" }}</small></p>
+            <p><small>{% url 'user_detail' answer.creator.id as answer_creator_url %}{% blocktrans with url=answer_creator_url creator=answer.creator date=answer.date_time|date:"SHORT_DATETIME_FORMAT" %}Antwort von <a href="{{ url }}">{{ creator }}</a> am {{ date }}{% endblocktrans %}</small></p>
         </div>
     {% endfor %}
 
 
-    <h3>Antworten</h3>
+    <h3>{% trans "Antworten" %}</h3>
     <form method="post" class="fill-editor">
         {% csrf_token %}
         <div id="content_editor" class="quill-editor"></div>
@@ -60,11 +60,10 @@
         <label class="custom-checkbox">
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
-            <span class="label-text">Ich bestätige, dass dies meines Wissens die Wahrheit und dass es mit den <a
-                    href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmt.</span>
+            <span class="label-text">{% url 'nutzungsbedingungen' as terms_url %}{% blocktrans with url=terms_url %}Ich bestätige, dass dies meines Wissens die Wahrheit und dass es mit den <a href="{{ url }}">Nutzungsbedingungen</a> übereinstimmt.{% endblocktrans %}</span>
         </label>
 
-        <button type="submit">Antworten</button>
+        <button type="submit">{% trans "Antworten" %}</button>
     </form>
 
     <script nonce="{{ request.csp_script_nonce }}">

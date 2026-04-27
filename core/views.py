@@ -47,7 +47,8 @@ def create_reminder():
             if get_weekly_goal_from_user(user)[-1] < 100:
                 fake_request = fake_request.user = user
                 create_notification(fake_request,
-                                    notification=f"Hey {user.username}, du hast dein wöchentliches Ziel noch nicht erreicht! Trage jetzt noch eine Aktion ein, die du durchgeführt hast, und erreiche nicht nur dein Ziel, sondern verlängere auch deine Streak!",
+                                    notification_de=f"Hey {user.username}, du hast dein wöchentliches Ziel noch nicht erreicht! Trage jetzt noch eine Aktion ein, die du durchgeführt hast, und erreiche nicht nur dein Ziel, sondern verlängere auch deine Streak!",
+                                    notification_en=f"Hey {user.username}, you haven´t reached you´re weekly goal yet! Add an action you have done now and not only reach your goal but also extend your streak!",
                                     user=user,
                                     url=reverse('dashboard'))
         except Exception as e:

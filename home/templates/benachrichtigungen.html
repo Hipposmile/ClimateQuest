@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block meta %}
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 {% block title %}
-    ClimateQuest - Benachrichtigungen
+    {% trans "Benachrichtigungen" %}
 {% endblock %}
 {% block content %}
     <style nonce="{{ request.csp_style_nonce }}">
@@ -110,9 +111,9 @@
                 <li>
                     <p class="emoji">&#x1F514;</p>
                     <div class="benachrichtigung-inhalt">
-                        <p>{{ benachrichtigung.benachrichtigung|safe }}
+                        <p>{% if request.LANGUAGE_CODE == "de" %}{{ benachrichtigung.benachrichtigung_de|safe }}{% else %}{{ benachrichtigung.benachrichtigung_en|safe }}{% endif %}
                             <a href="{{ benachrichtigung.url }}" class="redirect-link more-link">
-                                <span>Mehr</span>
+                                <span>{% trans "Mehr" %}</span>
                                 <span class="redirect-link-icon">→</span>
                             </a>
                         </p>
@@ -122,12 +123,12 @@
                         </a>
                     </div>
                     <div class="benachrichtigung-datum">
-                        <small>{{ benachrichtigung.date|date:'d.m.Y H:i' }}</small>
+                        <small>{{ benachrichtigung.date|date:'SHORT_DATETIME_FORMAT' }}</small>
                     </div>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <p>Du hast keine Benachrichtigungen</p>
+        <p>{% trans "Du hast keine Benachrichtigungen" %}</p>
     {% endif %}
 {% endblock %}

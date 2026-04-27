@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 {% load static %}
 {% load development %}
-<html lang="de">
+{% load i18n %}
+<html lang="{{ request.LANGUAGE_CODE }}">
 
 <head>
     {% block meta %}{% endblock %}
@@ -18,7 +19,7 @@
 
     <meta property="og:title" content="ClimateQuest">
     <meta property="og:description"
-          content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
+          content="{% trans 'Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.' %}">
     <meta property="og:image" content="https://climate-quest.de/static/icons/SocialMediaPreview.png">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:type" content="website">
@@ -26,11 +27,11 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ClimateQuest">
     <meta name="twitter:description"
-          content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
+          content="{% trans 'Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.' %}">
     <meta name="twitter:image" content="https://climate-quest.de/static/icons/SocialMediaPreview.png">
 
     <meta name="description"
-          content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
+          content="{% trans 'Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.' %}">
     <meta name="robots" content="index, follow">
 
     <meta name="vapid-key" content="{{ vapid_public_key }}">
@@ -557,41 +558,41 @@
         {% if request.user.is_authenticated %}
             <a href="{% url 'dashboard' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F5A5;</span></span>
-                <span class="tab-label">Dashboard</span>
+                <span class="tab-label">{% trans "Dashboard" %}</span>
             </a>
             <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="people">
                 <span class="tab-icon"><span
                         class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span></span>
-                <span class="tab-label">User</span>
+                <span class="tab-label">{% trans "User" %}</span>
             </a>
             <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="education">
                 <span class="tab-icon"><span class="emoji">&#x1F393;</span></span>
-                <span class="tab-label">Bildung</span>
+                <span class="tab-label">{% trans "Bildung" %}</span>
             </a>
             <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="fast">
                 <span class="tab-icon"><span class="emoji">&#x26A1;</span></span>
-                <span class="tab-label">Schnellzugriff</span>
+                <span class="tab-label">{% trans "Schnellzugriff" %}</span>
             </a>
             <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="more">
                 <span class="tab-icon"><span class="emoji">&#xE250;</span></span>
-                <span class="tab-label">Mehr</span>
+                <span class="tab-label">{% trans "Mehr" %}</span>
             </a>
         {% else %}
             <a href="{% url 'home' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F3E0;</span></span>
-                <span class="tab-label">Home</span>
+                <span class="tab-label">{% trans "Home" %}</span>
             </a>
             <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="education">
                 <span class="tab-icon"><span class="emoji">&#x1F393;</span></span>
-                <span class="tab-label">Bildung</span>
+                <span class="tab-label">{% trans "Bildung" %}</span>
             </a>
             <a href="{% url 'users_overview' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F64B;</span></span>
-                <span class="tab-label">User</span>
+                <span class="tab-label">{% trans "User" %}</span>
             </a>
             <a href="{% url 'login_view' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F510;</span></span>
-                <span class="tab-label">Login</span>
+                <span class="tab-label">{% trans "Login" %}</span>
             </a>
         {% endif %}
     </nav>
@@ -599,12 +600,12 @@
     <div class="mobile-menu-overlay" data-menu="education">
         <div class="mobile-menu-modal">
             <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
-            <h2><span class="emoji">&#x1F393;</span> Bildung</h2>
+            <h2><span class="emoji">&#x1F393;</span> {% trans "Bildung" %}</h2>
             <nav class="mobile-menu-nav">
-                <a href="{% url 'artikel_overview' %}"><span class="emoji">&#x1F4F0;</span> Artikel</a>
-                <a href="{% url 'events_overview' %}"><span class="emoji">&#x1F389;</span> Events</a>
-                <a href="{% url 'forum_overview' %}"><span class="emoji">&#x1F4AC;</span> Forum</a>
-                <a href="{% url 'petitions_overview' %}"><span class="emoji">&#x270D;</span> Petitionen</a>
+                <a href="{% url 'artikel_overview' %}"><span class="emoji">&#x1F4F0;</span> {% trans "Artikel" %}</a>
+                <a href="{% url 'events_overview' %}"><span class="emoji">&#x1F389;</span> {% trans "Events" %}</a>
+                <a href="{% url 'forum_overview' %}"><span class="emoji">&#x1F4AC;</span> {% trans "Forum" %}</a>
+                <a href="{% url 'petitions_overview' %}"><span class="emoji">&#x270D;</span> {% trans "Petitionen" %}</a>
             </nav>
         </div>
     </div>
@@ -613,14 +614,14 @@
         <div class="mobile-menu-overlay" data-menu="people">
             <div class="mobile-menu-modal">
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
-                <h2><span class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span> Family</h2>
+                <h2><span class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span> {% trans "Family" %}</h2>
                 <nav class="mobile-menu-nav">
                     <a href="{% url 'families_view' %}"><span class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span>
-                        Families</a>
+                        {% trans "Families" %}</a>
                     <a href="{% url 'communities_view' %}"><span class="emoji">&#x1F3D8;</span>
-                        Communities</a>
+                        {% trans "Communities" %}</a>
                     <a href="{% url 'users_overview' %}"><span class="emoji">&#x1F64B;</span>
-                        User</a>
+                        {% trans "User" %}</a>
                 </nav>
             </div>
         </div>
@@ -628,14 +629,13 @@
         <div class="mobile-menu-overlay" data-menu="fast">
             <div class="mobile-menu-modal">
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
-                <h2><span class="emoji">&#x1F393;</span> Schnellzugriff</h2>
+                <h2><span class="emoji">&#x1F393;</span> {% trans "Schnellzugriff" %}</h2>
                 <nav class="mobile-menu-nav">
-                    <a href="{% url 'add' %}"><span class="emoji">&#x2795;</span> Aktion eintragen</a>
-                    <a href="{% url 'history_me' %}"><span class="emoji">&#x1F4DC;</span> Aktions-Historie</a>
-                    <a href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span> Level</a>
-                    <a href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span> Klimapunkte</a>
-                    <a href="{% url 'credit_view' %}"><span class="emoji">&#x1F333;</span> Credits /
-                        Bäume</a>
+                    <a href="{% url 'add' %}"><span class="emoji">&#x2795;</span> {% trans "Aktion eintragen" %}</a>
+                    <a href="{% url 'history_me' %}"><span class="emoji">&#x1F4DC;</span> {% trans "Aktions-Historie" %}</a>
+                    <a href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span> {% trans "Level" %}</a>
+                    <a href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span> {% trans "Klimapunkte" %}</a>
+                    <a href="{% url 'credit_view' %}"><span class="emoji">&#x1F333;</span> {% trans "Credits / Bäume" %}</a>
                 </nav>
             </div>
         </div>
@@ -646,33 +646,29 @@
                 <h2><span class="emoji">&#x1F464;</span> {{ request.user.username }}</h2>
                 <nav class="mobile-menu-nav">
                     <div class="mobile-menu-section">
-                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F4C4;</span> Seite</div>
-                        <a class="openShareOverlay"><span class="emoji">&#xE253;</span> Teilen</a>
+                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F4C4;</span> {% trans "Seite" %}</div>
+                        <a class="openShareOverlay"><span class="emoji">&#xE253;</span> {% trans "Teilen" %}</a>
                         <a href="{% url 'benachrichtigungen_view' %}"><span
                                 class="emoji">&#x1F514;</span>
-                            Benachrichtigungen</a>
+                            {% trans "Benachrichtigungen" %}</a>
                     </div>
                     <div class="mobile-menu-section">
-                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F464;</span> Konto</div>
+                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F464;</span> {% trans "Konto" %}</div>
                         <a href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span>
-                            Einstellungen</a>
+                            {% trans "Einstellungen" %}</a>
                         <a href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span>
-                            Logout</a>
+                            {% trans "Logout" %}</a>
                     </div>
                     <div class="mobile-menu-section">
-                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F5C2;</span> Sonstiges</div>
-                        <a href="{% url 'presents_overview' %}"><span class="emoji">&#x1F381;</span>
-                            Geschenke</a>
+                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F5C2;</span> {% trans "Sonstiges" %}</div>
                         <a href="{% url 'track_actions' %}"><span class="emoji">&#x23F1;</span>
-                            Tracken</a>
+                            {% trans "Tracken" %}</a>
                     </div>
                     {% if request.user.is_staff %}
                         <div class="mobile-menu-section">
-                            <div class="mobile-menu-section-title"><span class="emoji">&#x1F451;</span> Admin</div>
-                            <a href="{% url 'admin:index' %}" target="_blank"><span class="emoji">&#x1F3DB;</span> Admin
-                                (I)</a>
-                            <a href="{% url 'admin' %}"><span class="emoji">&#x1F3F0;</span> Admin
-                                (II)</a>
+                            <div class="mobile-menu-section-title"><span class="emoji">&#x1F451;</span> {% trans "Admin" %}</div>
+                            <a href="{% url 'admin:index' %}" target="_blank"><span class="emoji">&#x1F3DB;</span> {% trans "Admin (I)" %}</a>
+                            <a href="{% url 'admin' %}"><span class="emoji">&#x1F3F0;</span> {% trans "Admin (II)" %}</a>
                         </div>
                     {% endif %}
                 </nav>
@@ -686,15 +682,15 @@
 </main>
 
 <footer>
-    <p><a href="{% url 'aktionenTable' %}">Alle Aktionen</a></p>
-    <p><a href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a></p>
-    <p><a href="{% url 'impressum' %}">Impressum</a></p>
-    <p><a href="{% url 'datenschutz' %}">Datenschutz</a></p>
+    <p><a href="{% url 'aktionenTable' %}">{% trans "Alle Aktionen" %}</a></p>
+    <p><a href="{% url 'nutzungsbedingungen' %}">{% trans "Nutzungsbedingungen" %}</a></p>
+    <p><a href="{% url 'impressum' %}">{% trans "Impressum" %}</a></p>
+    <p><a href="{% url 'datenschutz' %}">{% trans "Datenschutz" %}</a></p>
     <br>
     <br>
 </footer>
 
-<nav aria-label="Nach oben">
+<nav aria-label="{% trans 'Nach oben' %}">
     <button id="up-btn" class="emoji">&#x2B06;</button>
 </nav>
 <!--Nav-Leist-->
@@ -751,6 +747,37 @@
     }
 
     const renderDesktopNav = () => {
+        const navTranslations = {
+            share: "{% trans 'Teilen' %}",
+            account: "{% trans 'Konto' %}",
+            level: "{% trans 'Level' %}",
+            klimapunkte: "{% trans 'Klimapunkte' %}",
+            credits: "{% trans 'Credits / Bäume' %}",
+            profileEdit: "{% trans 'Profil bearbeiten' %}",
+            user: "{% trans 'User' %}",
+            logout: "{% trans 'Logout' %}",
+            adminI: "{% trans 'Admin-Bereich (I)' %}",
+            adminII: "{% trans 'Admin-Bereich (II)' %}",
+            actions: "{% trans 'Aktionen' %}",
+            addAction: "{% trans 'Aktion hinzufügen' %}",
+            actionHistory: "{% trans 'Aktions-Historie' %}",
+            track: "{% trans 'Tracken' %}",
+            family: "{% trans 'Family' %}",
+            createFamily: "{% trans 'Family erstellen' %}",
+            joinFamily: "{% trans 'Family beitreten' %}",
+            myFamilies: "{% trans 'Meine Families' %}",
+            community: "{% trans 'Community' %}",
+            createCommunity: "{% trans 'Community erstellen' %}",
+            joinCommunity: "{% trans 'Community beitreten' %}",
+            myCommunities: "{% trans 'Meine Communities' %}",
+            login: "{% trans 'Login' %}",
+            education: "{% trans 'Bildung' %}",
+            events: "{% trans 'Events' %}",
+            articles: "{% trans 'Artikel' %}",
+            forum: "{% trans 'Forum' %}",
+            petitions: "{% trans 'Petitionen' %}"
+        };
+
         header.innerHTML = `
                 <a href="{% if request.user.is_authenticated %}{% url 'dashboard' %}{% else %}/{% endif %}" class="logo-link">
                     <picture>
@@ -774,48 +801,47 @@
             </picture>
                 </a>
                 <nav>
-                    <a class="openShareOverlay">Teilen</a>
+                    <a class="openShareOverlay">${navTranslations.share}</a>
 
                     {% if request.user.is_authenticated %}
                     <div class="dropdown">
-                        <span class="nav-link inactive-link">Konto ▾</span>
+                        <span class="nav-link inactive-link">${navTranslations.account} ▾</span>
                         <div class="dropdown-content">
                             <p>{{ request.user.username }}</p>
-                            <a  href="{% url 'level_me' %}">Level</a>
-                            <a  href="{% url 'klimapunkte_me' %}">Klimapunkte</a>
-                            <a href="{% url 'credit_view' %}">Credits / Bäume</a>
-                            <a  href="{% url 'settings_view' %}">Profil bearbeiten</a>
-                            <a  href="{% url 'users_overview' %}">User</a>
-                            <a  href="{% url 'presents_overview' %}">Geschenke</a>
-                            <a  href="{% url 'logout_view' %}">Logout</a>
+                            <a  href="{% url 'level_me' %}">${navTranslations.level}</a>
+                            <a  href="{% url 'klimapunkte_me' %}">${navTranslations.klimapunkte}</a>
+                            <a href="{% url 'credit_view' %}">${navTranslations.credits}</a>
+                            <a  href="{% url 'settings_view' %}">${navTranslations.profileEdit}</a>
+                            <a  href="{% url 'users_overview' %}">${navTranslations.user}</a>
+                            <a  href="{% url 'logout_view' %}">${navTranslations.logout}</a>
                             {% if request.user.is_staff %}
-                            <a href="{% url 'admin:index' %}" target="_blank">Admin-Bereich (I)</a>
-                            <a  href="{% url 'admin' %}">Admin-Bereich (II)</a>
+                            <a href="{% url 'admin:index' %}" target="_blank">${navTranslations.adminI}</a>
+                            <a  href="{% url 'admin' %}">${navTranslations.adminII}</a>
                             {% endif %}
                         </div>
                     </div>
                     <div class="dropdown">
-                        <span class="nav-link inactive-link">Aktionen ▾</span>
+                        <span class="nav-link inactive-link">${navTranslations.actions} ▾</span>
                         <div class="dropdown-content">
-                            <a  href="{% url 'add' %}">Aktion hinzufügen</a>
-                            <a  href="{% url 'history_me' %}">Aktions-Historie</a>
-                            <a  href="{% url 'track_actions' %}">Tracken</a>
+                            <a  href="{% url 'add' %}">${navTranslations.addAction}</a>
+                            <a  href="{% url 'history_me' %}">${navTranslations.actionHistory}</a>
+                            <a  href="{% url 'track_actions' %}">${navTranslations.track}</a>
                         </div>
                     </div>
                     <div class="dropdown">
-                        <span class="nav-link inactive-link">Family ▾</span>
+                        <span class="nav-link inactive-link">${navTranslations.family} ▾</span>
                         <div class="dropdown-content">
-                            <a  href="{% url 'create_family' %}">Family erstellen</a>
-                            <a  href="{% url 'join_family' %}">Family beitreten</a>
-                            <a  href="{% url 'families_view' %}">Meine Families</a>
+                            <a  href="{% url 'create_family' %}">${navTranslations.createFamily}</a>
+                            <a  href="{% url 'join_family' %}">${navTranslations.joinFamily}</a>
+                            <a  href="{% url 'families_view' %}">${navTranslations.myFamilies}</a>
                         </div>
                     </div>
                     <div class="dropdown">
-                        <span class="nav-link inactive-link">Community ▾</span>
+                        <span class="nav-link inactive-link">${navTranslations.community} ▾</span>
                         <div class="dropdown-content">
-                            <a  href="{% url 'create_community' %}">Community erstellen</a>
-                            <a  href="{% url 'join_community' %}">Community beitreten</a>
-                            <a  href="{% url 'communities_view' %}">Meine Communities</a>
+                            <a  href="{% url 'create_community' %}">${navTranslations.createCommunity}</a>
+                            <a  href="{% url 'join_community' %}">${navTranslations.joinCommunity}</a>
+                            <a  href="{% url 'communities_view' %}">${navTranslations.myCommunities}</a>
                         </div>
                     </div>
                     <a  href="{% url 'benachrichtigungen_view' %}">
@@ -825,16 +851,16 @@
                         </div>
                     </a>
                     {% else %}
-                    <a  href="{% url 'login_view' %}">Login</a>
-                    <a  href="{% url 'users_overview' %}">User</a>
+                    <a  href="{% url 'login_view' %}">${navTranslations.login}</a>
+                    <a  href="{% url 'users_overview' %}">${navTranslations.user}</a>
                     {% endif %}
                     <div class="dropdown">
-                        <span class="nav-link inactive-link">Bildung ▾</span>
+                        <span class="nav-link inactive-link">${navTranslations.education} ▾</span>
                         <div class="dropdown-content">
-                            <a  href="{% url 'events_overview' %}">Events</a>
-                            <a  href="{% url 'artikel_overview' %}">Artikel</a>
-                            <a  href="{% url 'forum_overview' %}">Forum</a>
-                            <a  href="{% url 'petitions_overview' %}">Petitionen</a>
+                            <a  href="{% url 'events_overview' %}">${navTranslations.events}</a>
+                            <a  href="{% url 'artikel_overview' %}">${navTranslations.articles}</a>
+                            <a  href="{% url 'forum_overview' %}">${navTranslations.forum}</a>
+                            <a  href="{% url 'petitions_overview' %}">${navTranslations.petitions}</a>
                         </div>
                     </div>
 
@@ -1102,7 +1128,7 @@
             <button class="closeShareOverlay"><span class="emoji">&#x2717;</span></button>
 
             <div class="share-container">
-                <h1>Seite teilen</h1>
+                <h1>{% trans "Seite teilen" %}</h1>
 
                 {% if messages %}
                     <div class="message-box">
@@ -1113,33 +1139,33 @@
                 {% endif %}
 
                 <p class="h3_size">
-                    Folgende URL teilen:
+                    {% trans "Folgende URL teilen:" %}
                     <span id="share-url-display">{{ url }}</span>
                 </p>
 
-                <button class="share-btn native-share" id="share">Teilen über Gerät</button>
+                <button class="share-btn native-share" id="share">{% trans "Teilen über Gerät" %}</button>
 
-                <p class="divider">ODER</p>
+                <p class="divider">{% trans "ODER" %}</p>
 
                 <div class="share-panel">
                     <a data-share-platform="facebook" target="_blank">
-                        <button class="share-btn facebook">Facebook</button>
+                        <button class="share-btn facebook">{% trans "Facebook" %}</button>
                     </a>
                     <a data-share-platform="twitter" target="_blank">
-                        <button class="share-btn x">X (Twitter)</button>
+                        <button class="share-btn x">{% trans "X (Twitter)" %}</button>
                     </a>
                     <a data-share-platform="linkedin" target="_blank">
-                        <button class="share-btn linkedin">LinkedIn</button>
+                        <button class="share-btn linkedin">{% trans "LinkedIn" %}</button>
                     </a>
                     <a data-share-platform="whatsapp" target="_blank">
-                        <button class="share-btn whatsapp">WhatsApp</button>
+                        <button class="share-btn whatsapp">{% trans "WhatsApp" %}</button>
                     </a>
                     <a data-share-platform="email" class="dont-show-loading">
-                        <button class="share-btn email">E-Mail</button>
+                        <button class="share-btn email">{% trans "E-Mail" %}</button>
                     </a>
 
-                    <button class="share-btn copy" id="copy_button">Link kopieren</button>
-                    <button class="share-btn qrcode" id="generateQrCode">QR-Code erstellen</button>
+                    <button class="share-btn copy" id="copy_button">{% trans "Link kopieren" %}</button>
+                    <button class="share-btn qrcode" id="generateQrCode">{% trans "QR-Code erstellen" %}</button>
                 </div>
 
                 <div id="qrcodeContainer">
@@ -1153,6 +1179,12 @@
     <script nonce="{{ request.csp_script_nonce }}">
 
         let currentShareUrl = "{{ url }}";
+        let shareTexts = {
+            linkCopied: "{% trans 'Link kopiert' %}",
+            copyFailed: "{% trans 'Kopieren fehlgeschlagen' %}",
+            copyDefault: "{% trans 'Link kopieren' %}",
+            failedSharing: "{% trans 'Teilen wird auf diesem Gerät nicht unterstützt.' %}"
+        };
 
         function openOverlay() {
             document.getElementById("shareOverlay").style.display = "flex";
@@ -1216,7 +1248,7 @@
             if (navigator.share) {
                 navigator.share({url: url}).catch(console.error);
             } else {
-                alert("Teilen wird auf diesem Gerät nicht unterstützt.");
+                alert(shareTexts.failedSharing);
             }
         }
 
@@ -1236,7 +1268,7 @@
 
             let downloadButton = document.createElement("button");
             downloadButton.id = "qrcodeDownload";
-            downloadButton.textContent = "Download";
+            downloadButton.textContent = "{% trans 'Download' %}";
             downloadButton.addEventListener("click", downloadQrCode);
             qrcodeContainer.appendChild(downloadButton);
         }
@@ -1255,12 +1287,12 @@
 
             navigator.clipboard.writeText(url)
                 .then(() => {
-                    copy_button.textContent = "Link kopiert";
-                    setTimeout(() => copy_button.textContent = "Link kopieren", 1000);
+                    copy_button.textContent = shareTexts.linkCopied;
+                    setTimeout(() => copy_button.textContent = shareTexts.copyDefault, 1000);
                 })
                 .catch(() => {
-                    copy_button.textContent = "Kopieren fehlgeschlagen";
-                    setTimeout(() => copy_button.textContent = "Link kopieren", 1000);
+                    copy_button.textContent = shareTexts.copyFailed;
+                    setTimeout(() => copy_button.textContent = shareTexts.copyDefault, 1000);
                 });
         }
 
@@ -1292,7 +1324,7 @@
     const forms_confirm = document.querySelectorAll('.form-confirm');
     forms_confirm.forEach((el) => {
         el.addEventListener('submit', (event) => {
-            const msg = el.dataset.confirm || "Bist du sicher?";
+            const msg = el.dataset.confirm || "{% trans 'Bist du sicher?' %}";
             if (!confirm(msg)) {
                 event.preventDefault();
             } else {

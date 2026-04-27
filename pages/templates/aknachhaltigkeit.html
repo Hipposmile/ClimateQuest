@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 {% block meta %}
-    <meta name="description" content="AK Nachhaltigkeit des GMF">
+    <meta name="description" content="{% trans 'AK Nachhaltigkeit des GMF' %}">
 {% endblock %}
-{% block title %}AK Nachhaltigkeit des GMF{% endblock %}
+{% block title %}{% trans "AK Nachhaltigkeit des GMF" %}{% endblock %}
 
 {% block content %}
     <style nonce="{{ request.csp_style_nonce }}">
@@ -289,116 +290,116 @@
 
     <div class="hero">
         <div class="container">
-            <h1>AK Nachhaltigkeit</h1>
-            <p>Gemeinsam für eine nachhaltige Zukunft am Gymnasium München Feldmoching</p>
+            <h1>{% trans "AK Nachhaltigkeit" %}</h1>
+            <p>{% trans "Gemeinsam für eine nachhaltige Zukunft am Gymnasium München Feldmoching" %}</p>
         </div>
     </div>
 
     <div class="container">
         <section>
-            <h1>Wer wir sind:</h1>
-            <p>Der AK Nachhaltigkeit kümmert sich um die Nachhaltigkeit an dem <a
-                    href="https://gymnasiumfeldmoching.musin.de/">Gymnasium München Feldmoching</a>. Er besteht aus
-                Schülern - weder Lehrer noch andere Erwachsene leiten ihn!</p>
+            <h1>{% trans "Wer wir sind:" %}</h1>
+            <p>{% trans "Der AK Nachhaltigkeit kümmert sich um die Nachhaltigkeit an dem" %} <a
+                    href="https://gymnasiumfeldmoching.musin.de/">{% trans "Gymnasium München Feldmoching" %}</a>. {% trans "Er besteht aus Schülern - weder Lehrer noch andere Erwachsene leiten ihn!" %}
+            </p>
             <ul class="ul">
                 <li><a class="dont-show-loading" href="#importance">
-                    <button class="button">Warum ist Klimaschutz wichtig?</button>
+                    <button class="button">{% trans "Warum ist Klimaschutz wichtig?" %}</button>
                 </a></li>
                 <li><a class="dont-show-loading" href="#done">
-                    <button class="button">Was haben wir, der AK Nachhaltigkeit, schon gemacht?</button>
+                    <button class="button">{% trans "Was haben wir, der AK Nachhaltigkeit, schon gemacht?" %}</button>
                 </a></li>
                 <li><a class="dont-show-loading" href="#help">
-                    <button class="button">Wie kann ich der Umwelt helfen?</button>
+                    <button class="button">{% trans "Wie kann ich der Umwelt helfen?" %}</button>
                 </a></li>
                 <li><a class="dont-show-loading" href="#upcycling">
-                    <button class="button">Upycling Ideen</button>
+                    <button class="button">{% trans "Upycling Ideen" %}</button>
                 </a></li>
                 <li><a class="dont-show-loading" href="#calculate">
-                    <button class="button">CO2 Rechner</button>
+                    <button class="button">{% trans "CO2 Rechner" %}</button>
                 </a></li>
                 <li><a class="dont-show-loading" href="#game">
-                    <button class="button">Müll-Sammel Spiel</button>
+                    <button class="button">{% trans "Müll-Sammel Spiel" %}</button>
                 </a></li>
             </ul>
-            <img src="{% static 'images/aknachhaltigkeit/fff.jpg' %}" alt="AK Nachhaltigkeit bei Fridays for Future"
+            <img src="{% static 'images/aknachhaltigkeit/fff.jpg' %}"
+                 alt="{% trans 'AK Nachhaltigkeit bei Fridays for Future' %}"
                  class="section-image">
 
         </section>
 
         <section>
-            <h1 id="importance">Warum ist Klimaschutz wichtig?</h1>
-            <p>Klimaschutz ist wichtig für unser Leben. Denn die Erderwärmung zerstört bereits jetzt tausende von Leben,
-                z.B. durch extreme Wetterereignisse wie Überschwemmungen oder Dürre. Früher Jahrhundertereignisse
-                genannt sind Naturkatastrophen heutzutage keine Seltenheit mehr. Aktuell sind ca. 3,3 Milliarden
-                Menschen von der Klimakrise bedroht, aber auch viele Tiere, die sich an die steigenden Temperaturen
-                schwer anpassen können. Gleichzeitig wird die Umwelt z.B. durch Plastikabfälle, in denen sich Vögel,
-                Schildkröten, Fische o.Ä. verheddern und sterben, oder Bebauung, bei denen viele Tieren und Pflanzen
-                ihren Lebensraum verlieren, gefährdet. Unter anderem aus diesen Grunden sterben täglich 130 - 150
-                Tierarten aus! Dies waren nur einige der Gründe, warum Klimaschutz unerlässlich ist und wir uns für ihn
-                einsetzen. </p>
-            <p>Am besten, du informierst dich im Internet, in der Bücherei oder in anderen Quellen noch mehr dazu nach.
-                Weitere Informationen findest du z.B. <a
-                        href="https://www.wwf.at/artikel/warum-klima-schuetzen/">hier</a>, <a
-                        href="https://www.greenpeace.de/biodiversitaet/artenkrise/artensterben">hier</a>, <a
-                        href="https://www.greenpeace.de/klimaschutz/klimakrise/folgen-klimawandels">hier</a> oder <a
-                        href="https://www.wwf.de/themen-projekte/plastik/geisternetze">hier</a>!</p>
+            <h1 id="importance">{% trans "Warum ist Klimaschutz wichtig?" %}</h1>
+            <p>{% trans "Klimaschutz ist wichtig für unser Leben. Denn die Erderwärmung zerstört bereits jetzt tausende von Leben, z.B. durch extreme Wetterereignisse wie Überschwemmungen oder Dürre. Früher Jahrhundertereignisse genannt sind Naturkatastrophen heutzutage keine Seltenheit mehr. Aktuell sind ca. 3,3 Milliarden Menschen von der Klimakrise bedroht, aber auch viele Tiere, die sich an die steigenden Temperaturen schwer anpassen können. Gleichzeitig wird die Umwelt z.B. durch Plastikabfälle, in denen sich Vögel, Schildkröten, Fische o.Ä. verheddern und sterben, oder Bebauung, bei denen viele Tieren und Pflanzen ihren Lebensraum verlieren, gefährdet. Unter anderem aus diesen Grunden sterben täglich 130 - 150 Tierarten aus! Dies waren nur einige der Gründe, warum Klimaschutz unerlässlich ist und wir uns für ihn einsetzen." %}</p>
+            <p>{% trans "Am besten, du informierst dich im Internet, in der Bücherei oder in anderen Quellen noch mehr dazu nach. Weitere Informationen findest du z.B." %}
+                <a
+                        href="https://www.wwf.at/artikel/warum-klima-schuetzen/">{% trans "hier" %}</a>, <a
+                        href="https://www.greenpeace.de/biodiversitaet/artenkrise/artensterben">{% trans "hier" %}</a>,
+                <a
+                        href="https://www.greenpeace.de/klimaschutz/klimakrise/folgen-klimawandels">{% trans "hier" %}</a> {% trans "oder" %}
+                <a
+                        href="https://www.wwf.de/themen-projekte/plastik/geisternetze">{% trans "hier" %}</a>!</p>
         </section>
 
         <section>
-            <h1 id="done">Was hat der AK Nachhaltigkeit schon gemacht?</h1>
+            <h1 id="done">{% trans "Was hat der AK Nachhaltigkeit schon gemacht?" %}</h1>
             <img src="{% static 'images/aknachhaltigkeit/kronkorken.jpg' %}"
-                 alt="Gesammelte Kronkorken vom AK Nachhaltigkeit" class="section-image">
+                 alt="{% trans 'Gesammelte Kronkorken vom AK Nachhaltigkeit' %}" class="section-image">
             <ul>
-                <li>Schokoverkauf von der <a class="dont-show-loading" class="a"
-                                             href="https://www.plant-for-the-planet.org/de/chocolate/">Guten
-                    Schokolade.</a></li>
-                <li>Halloweenverkauf</li>
-                <li>Schüler:innen wurde der Besuch von <a class="dont-show-loading" class="a"
-                                                          href="https://fff-muc.de/">Fridays-for-Future</a>
-                    ermöglicht
+                <li>{% trans "Schokoverkauf von der" %} <a class="dont-show-loading" class="a"
+                                                           href="https://www.plant-for-the-planet.org/de/chocolate/">{% trans "Guten Schokolade." %}</a>
                 </li>
-                <li>Korken für die <a class="dont-show-loading" class="a"
-                                      href="https://www.nabu.de/umwelt-und-ressourcen/aktionen-und-projekte/korkampagne/index.html">Korkkampagne</a>
-                    gesammelt
+                <li>{% trans "Halloweenverkauf" %}</li>
+                <li>
+                    {% url 'https://fff-muc.de/' as fff_url %}
+                    {% blocktrans with url=fff_url %}Schüler:innen wurde der Besuch von
+                        <a class="dont-show-loading" href="{{ url }}">Fridays-for-Future</a>
+                        ermöglicht.{% endblocktrans %}
                 </li>
-                <li>Kronkorken gesammelt</li>
-                <li>Kleidertauschparty</li>
-                <li>Müll an Silvester gesammelt und ausgestellt</li>
-                <li>Müllsystem erarbeitet</li>
-                <li>Plakate</li>
-                <li>Bücherschrank</li>
+                <li>{% trans "Korken für die" %} <a class="dont-show-loading" class="a"
+                                                    href="https://www.nabu.de/umwelt-und-ressourcen/aktionen-und-projekte/korkampagne/index.html">{% trans "Korkkampagne" %}</a>
+                    {% trans "gesammelt" %}
+                </li>
+                <li>{% trans "Kronkorken gesammelt" %}</li>
+                <li>{% trans "Kleidertauschparty" %}</li>
+                <li>{% trans "Müll an Silvester gesammelt und ausgestellt" %}</li>
+                <li>{% trans "Müllsystem erarbeitet" %}</li>
+                <li>{% trans "Plakate" %}</li>
+                <li>{% trans "Bücherschrank" %}</li>
             </ul>
-            <img src="{% static 'images/aknachhaltigkeit/fff.jpg' %}" alt="AK Nachhaltigkeit bei Fridays for Future"
+            <img src="{% static 'images/aknachhaltigkeit/fff.jpg' %}"
+                 alt="{% trans 'AK Nachhaltigkeit bei Fridays for Future' %}"
                  class="section-image">
         </section>
 
         <section>
-            <h1 id="help">Wie kann ich der Umwelt im Alltag helfen?</h1>
+            <h1 id="help">{% trans "Wie kann ich der Umwelt im Alltag helfen?" %}</h1>
             <ul>
-                <li>Müll vermeiden und trennen</li>
-                <li>Müll sammeln</li>
-                <li>andere aufklären</li>
-                <li>alternative Zahnbürsten/Waschmittel/etc. verwenden</li>
-                <li>Energie sparen</li>
-                <li>Wasser sparen</li>
-                <li>Fahrrad statt Auto</li>
-                <li>Zug statt Flug</li>
-                <li>auf tierische Lebensmittel verzichten</li>
-                <li>Bio-Produkte kaufen</li>
-                <li>Recycling-Produkte kaufen</li>
-                <li>Ökostrom nutzen</li>
-                <li>Zu Klimaschutzdemos gehen</li>
-                <li>Reparieren/Upcyclen/anders Verwenden statt Wegschmeißen</li>
-                <li>Wasser sparen</li>
-                <li>Demonstrieren</li>
-                <li>Dem AK Nachhaltigkeit beitreten <i>Wir treffen uns jeden Mittwoch in der Mittagspause</i></li>
-                <li>sich bei Umweltschutzorganisationen engagieren:
+                <li>{% trans "Müll vermeiden und trennen" %}</li>
+                <li>{% trans "Müll sammeln" %}</li>
+                <li>{% trans "andere aufklären" %}</li>
+                <li>{% trans "alternative Zahnbürsten/Waschmittel/etc. verwenden" %}</li>
+                <li>{% trans "Energie sparen" %}</li>
+                <li>{% trans "Wasser sparen" %}</li>
+                <li>{% trans "Fahrrad statt Auto" %}</li>
+                <li>{% trans "Zug statt Flug" %}</li>
+                <li>{% trans "auf tierische Lebensmittel verzichten" %}</li>
+                <li>{% trans "Bio-Produkte kaufen" %}</li>
+                <li>{% trans "Recycling-Produkte kaufen" %}</li>
+                <li>{% trans "Ökostrom nutzen" %}</li>
+                <li>{% trans "Zu Klimaschutzdemos gehen" %}</li>
+                <li>{% trans "Reparieren/Upcyclen/anders Verwenden statt Wegschmeißen" %}</li>
+                <li>{% trans "Wasser sparen" %}</li>
+                <li>{% trans "Demonstrieren" %}</li>
+                <li>{% trans "Dem AK Nachhaltigkeit beitreten" %}
+                    <i>{% trans "Wir treffen uns jeden Mittwoch in der Mittagspause" %}</i></li>
+                <li>{% trans "sich bei Umweltschutzorganisationen engagieren:" %}
                     <ul>
                         <li><a class="dont-show-loading" class="a" href="https://www.wwf.de/">WWF</a></li>
                         <li><a class="dont-show-loading" class="a" href="https://www.wwf.de/">BUND</a></li>
                         <li><a class="dont-show-loading" class="a" href="https://www.lbv.de/">LBV</a></li>
                         <li><a class="dont-show-loading" class="a" href="https://www.peta.de/">PETA</a></li>
-                        <li><a class="dont-show-loading" class="a" href="https://www.wir-retten-rehkitze.com/">Rehkitzrettung</a>
+                        <li><a class="dont-show-loading" class="a"
+                               href="https://www.wir-retten-rehkitze.com/">{% trans "Rehkitzrettung" %}</a>
                         </li>
                     </ul>
                 </li>
@@ -406,60 +407,56 @@
         </section>
 
         <section>
-            <h1 id="upcycling">Upcycling Ideen</h1>
-            <p>Hier findest du einige Ideen und Links, wie du Dinge upcyceln kannst.</p>
+            <h1 id="upcycling">{% trans "Upcycling Ideen" %}</h1>
+            <p>{% trans "Hier findest du einige Ideen und Links, wie du Dinge upcyceln kannst." %}</p>
             <ul>
-                <li><h4><b>Geldbeutel aus Tetrapacks</b></h4>
+                <li><h4><b>{% trans "Geldbeutel aus Tetrapacks" %}</b></h4>
                     <p>
                         <a class="dont-show-loading"
                            href="https://www.nabu-muensterland.de/wp-content/uploads/2020/07/Tipp_NABU-M%C3%BCnsterland_Tetrapak-Geldbeutel.pdf">https://www.nabu-muensterland.de/wp-content/uploads/2020/07/Tipp_NABU-M%C3%BCnsterland_Tetrapak-Geldbeutel.pdf</a>
                     </p></li>
-                <li><h4><b>Blumen aus Eierkartons</b></h4>
+                <li><h4><b>{% trans "Blumen aus Eierkartons" %}</b></h4>
                     <p>
                         <a class="dont-show-loading" href="https://www.youtube.com/watch?v=gFLUwXtkpjc">https://www.youtube.com/watch?v=gFLUwXtkpjc</a>
                     </p></li>
-                <li><h4><b>Kleister aus Mehl</b></h4>
+                <li><h4><b>{% trans "Kleister aus Mehl" %}</b></h4>
                     <p><a class="dont-show-loading"
                           href="https://www.farbkekse.de/ratgeber/anleitungen/kleister-selber-machen/">https://www.farbkekse.de/ratgeber/anleitungen/kleister-selber-machen/</a>
                     </p></li>
-                <li><h4><b>Pappmaché aus Zeitungen und altem Papier</b></h4>
+                <li><h4><b>{% trans "Pappmaché aus Zeitungen und altem Papier" %}</b></h4>
                     <p><a class="dont-show-loading"
                           href="https://www.farbkekse.de/ratgeber/anleitungen/pappmache-und-pulpe-selber-machen/">https://www.farbkekse.de/ratgeber/anleitungen/pappmache-und-pulpe-selber-machen/</a>
                     </p></li>
             </ul>
 
             <div class="upcycling-box">
-                <h3>Warum ist Upcycling so wichtig?</h3>
-                <p>Upcycling ist ein wichtiger Bestandteil des nachhaltigen Lebens und bedeutet, aus alten oder
-                    weggeworfenen Materialien etwas Neues und Wertvolles zu erschaffen. Anders als beim Recycling wird
-                    das Material nicht industriell aufbereitet, sondern direkt wiederverwendet. Das ist besonders
-                    wichtig, weil:</p>
+                <h3>{% trans "Warum ist Upcycling so wichtig?" %}</h3>
+                <p>{% trans "Upcycling ist ein wichtiger Bestandteil des nachhaltigen Lebens und bedeutet, aus alten oder weggeworfenen Materialien etwas Neues und Wertvolles zu erschaffen. Anders als beim Recycling wird das Material nicht industriell aufbereitet, sondern direkt wiederverwendet. Das ist besonders wichtig, weil:" %}</p>
                 <ul>
-                    <li>dadurch weniger Müll produziert wird</li>
-                    <li>keine zusätzliche Energie für die Aufbereitung benötigt wird</li>
-                    <li>wertvolle Ressourcen geschont werden</li>
-                    <li>es eine kreative Möglichkeit ist, Geld zu sparen</li>
-                    <li>jeder mitmachen und einen Beitrag zum Umweltschutz leisten kann</li>
+                    <li>{% trans "dadurch weniger Müll produziert wird" %}</li>
+                    <li>{% trans "keine zusätzliche Energie für die Aufbereitung benötigt wird" %}</li>
+                    <li>{% trans "wertvolle Ressourcen geschont werden" %}</li>
+                    <li>{% trans "es eine kreative Möglichkeit ist, Geld zu sparen" %}</li>
+                    <li>{% trans "jeder mitmachen und einen Beitrag zum Umweltschutz leisten kann" %}</li>
                 </ul>
-                <p>Durch Upcycling können wir zeigen, dass "Müll" oft gar kein Müll ist, sondern wertvolles Material für
-                    neue, schöne und nützliche Dinge. Das hilft nicht nur der Umwelt, sondern macht auch noch Spaß!</p>
+                <p>{% trans 'Durch Upcycling können wir zeigen, dass "Müll" oft gar kein Müll ist, sondern wertvolles Material für neue, schöne und nützliche Dinge. Das hilft nicht nur der Umwelt, sondern macht auch noch Spaß!' %}</p>
             </div>
         </section>
 
         <section>
-            <h1 id="calculate">CO2 Rechner</h1>
+            <h1 id="calculate">{% trans "CO2 Rechner" %}</h1>
 
             <div class="div">
                 <form id="co2Form">
-                    <label class="label">Wie viel Gramm CO2 stößt dein Auto pro 100 Kilometer aus? <a
+                    <label class="label">{% trans "Wie viel Gramm CO2 stößt dein Auto pro 100 Kilometer aus?" %} <a
                             href="https://www.co2online.de/klima-schuetzen/mobilitaet/auto-co2-ausstoss/#c162641"
-                            target="_blank">Richtwerte</a></label>
+                            target="_blank">{% trans "Richtwerte" %}</a></label>
                     <input type="number" class="input" id="ausstoß" min="0" step="1" required>
 
-                    <label class="label">Wie viele Kilometer bist du mit dem Fahrrad gefahren?</label>
+                    <label class="label">{% trans "Wie viele Kilometer bist du mit dem Fahrrad gefahren?" %}</label>
                     <input type="number" class="input" id="kilometer_gefahren" min="0" step="1" required>
 
-                    <button type="submit" class="button">Berechnen</button>
+                    <button type="submit" class="button">{% trans "Berechnen" %}</button>
                 </form>
             </div>
 
@@ -481,37 +478,42 @@
                     kilometer_gefahren = parseFloat(kilometer_gefahren);
 
                     if (isNaN(ausstoß) || isNaN(kilometer_gefahren)) {
-                        alert("Bitte gib gültige Zahlen für den CO2-Ausstoß und die gefahrenen Kilometer ein.");
+                        alert("{% trans 'Bitte gib gültige Zahlen für den CO2-Ausstoß und die gefahrenen Kilometer ein.' %}");
                         return false;
                     }
 
                     let gespart = (ausstoß / 100) * kilometer_gefahren;
 
-                    alert("Du hast " + gespart + " Gramm CO2 im Vergleich zu einer Autofahrt gespart!\n\nBereits ca. 0,2 Gramm CO2 in einem Liter Luft zu Kopfschmerzen führen!");
+                    alert("{% blocktrans with gespart=gespart %}Du hast {{ gespart }}
+                        Gramm CO2 im Vergleich zu einer Autofahrt gespart!\n\nBereits ca. 0, 2 Gramm CO2 in einem Liter
+                        Luft zu Kopfschmerzen führen!{% endblocktrans %}");
                     return false;
                 }
             </script>
         </section>
 
         <section>
-            <h1 id="game">Müll-Sammel Spiel</h1>
+            <h1 id="game">{% trans "Müll-Sammel Spiel" %}</h1>
             <div id="gameMenu" class="game-instructions">
-                <h3>Wie funktioniert das Spiel?</h3>
+                <h3>{% trans "Wie funktioniert das Spiel?" %}</h3>
                 <ul>
-                    <li><strong>Ziel:</strong> Sammle alle Müllteile ein, die auf dich zukommen!</li>
-                    <li><strong>Desktop:</strong> Drücke die <strong>Leertaste</strong> um hochzufliegen</li>
-                    <li><strong>Handy:</strong> Tippe auf das Spielfeld um hochzufliegen</li>
+                    <li>
+                        <strong>{% trans "Ziel:" %}</strong> {% trans "Sammle alle Müllteile ein, die auf dich zukommen!" %}
+                    </li>
+                    <li><strong>{% trans "Desktop:" %}</strong> {% trans "Drücke die Leertaste um hochzufliegen" %}</li>
+                    <li><strong>{% trans "Handy:" %}</strong> {% trans "Tippe auf das Spielfeld um hochzufliegen" %}
+                    </li>
                 </ul>
-                <button id="startGameBtn" class="button button-start">Spiel Starten</button>
+                <button id="startGameBtn" class="button button-start">{% trans "Spiel Starten" %}</button>
             </div>
 
             <div id="gameContainer" class="game-container">
                 <canvas id="gameCanvas" width="800" height="400"></canvas>
 
                 <div class="game-controls">
-                    <p><strong>Desktop:</strong> Leertaste zum Fliegen</p>
-                    <p><strong>Handy:</strong> Tippe auf das Spielfeld</p>
-                    <button id="resetGameBtn" class="button button-reset">Neustarten</button>
+                    <p><strong>{% trans "Desktop:" %}</strong> {% trans "Leertaste zum Fliegen" %}</p>
+                    <p><strong>{% trans "Handy:" %}</strong> {% trans "Tippe auf das Spielfeld" %}</p>
+                    <button id="resetGameBtn" class="button button-reset">{% trans "Neustarten" %}</button>
                 </div>
             </div>
 
@@ -651,7 +653,7 @@
                     // Display score
                     context.fillStyle = "#2c3e50";
                     context.font = "bold 20px Poppins";
-                    context.fillText("Score: " + score, 10, canvas.height - 20);
+                    context.fillText("{% trans 'Score' %}: " + score, 10, canvas.height - 20);
 
                     // Add new coins at intervals
                     if (Math.random() < 0.02) {
@@ -664,25 +666,23 @@
         </section>
 
         <section>
-            <h1 id="survey">Mobilitätsumfrage</h1>
-            <p>Damit wir den ökologischen Fußabdruck unserer Schule berechnen können, müssen wir zuerst eine
-                Mobilitätsumfrage mit allen Schülerinnen, Schülern, Lehrkräften und Mitarbeitenden durchführen. Bitte
-                unterstütze uns und nimm an der Umfrage teil, wenn du eine Schülerin, ein Schüler, eine Lehrkraft, ein Mitarbeiter oder eine Mitarbeiterin des GMF bist.</p>
-            <p>Zur Mobilitätsumfrage für ...</p>
+            <h1 id="survey">{% trans "Mobilitätsumfrage" %}</h1>
+            <p>{% trans "Damit wir den ökologischen Fußabdruck unserer Schule berechnen können, müssen wir zuerst eine Mobilitätsumfrage mit allen Schülerinnen, Schülern, Lehrkräften und Mitarbeitenden durchführen. Bitte unterstütze uns und nimm an der Umfrage teil, wenn du eine Schülerin, ein Schüler, eine Lehrkraft, ein Mitarbeiter oder eine Mitarbeiterin des GMF bist." %}</p>
+            <p>{% trans "Zur Mobilitätsumfrage für ..." %}</p>
             <ul>
                 <li>
                     <a class="dont-show-loading"
                        href="https://co2-schulrechner.greenpeace.de/umfrage/226/p/0wjjT6GbarWvawbZehTw9x-JuD9DrgRGEuqSEyTSeOs">...
-                        Schülerinnen und Schüler</a>
+                        {% trans "Schülerinnen und Schüler" %}</a>
                     <img src="{% static 'images/aknachhaltigkeit/qrcode_mobilitätsumfrage_sus.png' %}"
-                         alt="QR-Code">
+                         alt="{% trans 'QR-Code' %}">
                 </li>
                 <li>
                     <a class="dont-show-loading"
                        href="https://co2-schulrechner.greenpeace.de/umfrage/226/t/KyiFHubRwOdHNJnGOBQoylWxtiN3IMvdd1Q4jaQWh1M">...
-                        Lehrkräfte und Mitarbeitende</a>
+                        {% trans "Lehrkräfte und Mitarbeitende" %}</a>
                     <img src="{% static 'images/aknachhaltigkeit/qrcode_mobilitätsumfrage_lehrkräfte.png' %}"
-                         alt="QR-Code">
+                         alt="{% trans 'QR-Code' %}">
                 </li>
             </ul>
         </section>

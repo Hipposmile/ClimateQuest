@@ -1,31 +1,35 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block meta %}
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 
-{% block title %}{% if family %}Family {{ family.name }} bearbeiten{% else %}Die Family konnte nicht
-    geladen werden.{% endif %} {% endblock %}
+{% block title %}{% if family %}{% blocktrans with name=family.name %}Family {{ name }} bearbeiten{% endblocktrans %}{% else %}{% trans "Die Family konnte nicht geladen werden." %}{% endif %} {% endblock %}
 
 {% block content %}
 
-    <h1>Family <a href="{% url 'family_detail' family.id %}">{{ family.name }}</a> bearbeiten</h1>
+    <h1>{% url 'family_detail' family.id as family_detail_url %}{% blocktrans with url=family_detail_url name=family.name %}Family <a href="{{ url }}">{{ name }}</a> bearbeiten{% endblocktrans %}</h1>
 
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
-    <h3>Benutzernamen ändern</h3>
+    <h3>{% trans "Benutzernamen ändern" %}</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="admin_password_familyname">Admin Passwort:</label>
-        <input type="password" name="admin_password_familyname" id="admin_password_familyname" placeholder="Admin Passwort" required>
-        <label for="new_familyname">Neuer Familyname:</label>
+        <label for="admin_password_familyname">{% trans "Admin Passwort:" %}</label>
+        <input type="password" name="admin_password_familyname" id="admin_password_familyname" placeholder="{% trans "Admin Passwort" %}" required>
+        <label for="new_familyname">{% trans "Neuer Familyname:" %}</label>
         <small id="familyname-feedback"></small>
-        <input type="text" name="new_familyname" id="new_familyname" placeholder="Neuer Familyname" required>
-        <button type="submit" name="change_familyname">Speichern</button>
+        <input type="text" name="new_familyname" id="new_familyname" placeholder="{% trans "Neuer Familyname" %}" required>
+        <button type="submit" name="change_familyname">{% trans "Speichern" %}</button>
     </form>
+
+    {% trans "Überprüfe, ob Familyname bereits existiert..." as checking_msg %}
+    {% trans "Familyname bereits vorhanden" as exists_msg %}
+    {% trans "Familyname noch nicht vorhanden" as not_exists_msg %}
 
     <script nonce="{{ request.csp_script_nonce }}">
         document.getElementById('new_familyname').addEventListener('input', function () {
@@ -34,16 +38,16 @@
             const registerButton = document.getElementById('register-button');
 
             if (familyname.length > 0) {
-                feedback.textContent = 'Überprüfe, ob Familyname bereits existiert...';
+                feedback.textContent = '{{ checking_msg }}';
                 feedback.style.color = 'grey';
                 fetch(`/family/check-familyname/?familyname=${encodeURIComponent(familyname)}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.exists) {
-                            feedback.textContent = 'Familyname bereits vorhanden';
+                            feedback.textContent = '{{ exists_msg }}';
                             feedback.style.color = 'red';
                         } else {
-                            feedback.textContent = 'Familyname noch nicht vorhanden';
+                            feedback.textContent = '{{ not_exists_msg }}';
                             feedback.style.color = 'green';
                         }
                     });
@@ -55,40 +59,38 @@
 
     <hr>
 
-    <h3>Passwort ändern</h3>
+    <h3>{% trans "Passwort ändern" %}</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="admin_password_password">Admin Passwort:</label>
-        <input type="password" name="admin_password_password" id="admin_password_password" placeholder="Admin Passwort" required>
-        <label for="new_password">Neues Passwort:</label>
-        <input type="password" name="new_password" id="new_password" placeholder="Neues Passwort" required>
-        <button type="submit" name="change_password">Ändern</button>
+        <label for="admin_password_password">{% trans "Admin Passwort:" %}</label>
+        <input type="password" name="admin_password_password" id="admin_password_password" placeholder="{% trans "Admin Passwort" %}" required>
+        <label for="new_password">{% trans "Neues Passwort:" %}</label>
+        <input type="password" name="new_password" id="new_password" placeholder="{% trans "Neues Passwort" %}" required>
+        <button type="submit" name="change_password">{% trans "Ändern" %}</button>
     </form>
 
     <hr>
 
-    <h3>Admin Passwort ändern</h3>
+    <h3>{% trans "Admin Passwort ändern" %}</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="current_admin_password">Aktuelles Admin Passwort:</label>
+        <label for="current_admin_password">{% trans "Aktuelles Admin Passwort:" %}</label>
         <input type="password" name="current_admin_password" id="current_admin_password"
-               placeholder="aktuelles Admin Passwort" required>
-        <label for="new_admin_password">Neues Admin Passwort:</label>
-        <input type="password" name="new_admin_password" id="new_admin_password" placeholder="neues Admin Passwort"
+               placeholder="{% trans "aktuelles Admin Passwort" %}" required>
+        <label for="new_admin_password">{% trans "Neues Admin Passwort:" %}</label>
+        <input type="password" name="new_admin_password" id="new_admin_password" placeholder="{% trans "neues Admin Passwort" %}"
                required>
         <div>
-            <h4>Wir empfehlen folgende Admin-Passwort-Anforderungen, um die Family vor unerlaubter Bearbeitung zu
-                schützen:
-            </h4>
+            <h4>{% trans "Wir empfehlen folgende Admin-Passwort-Anforderungen, um die Family vor unerlaubter Bearbeitung zu schützen:" %}</h4>
             <ul class="criteria-list">
-                <li id="length" class="error-message">Mindestens acht Zeichen</li>
-                <li id="uppercase" class="error-message">Mindestens ein Großbuchstabe</li>
-                <li id="lowercase" class="error-message">Mindestens ein Kleinbuchstabe</li>
-                <li id="number" class="error-message">Mindestens eine Zahl</li>
-                <li id="punctuation" class="error-message">Mindestens ein Sonderzeichen</li>
+                <li id="length" class="error-message">{% trans "Mindestens acht Zeichen" %}</li>
+                <li id="uppercase" class="error-message">{% trans "Mindestens ein Großbuchstabe" %}</li>
+                <li id="lowercase" class="error-message">{% trans "Mindestens ein Kleinbuchstabe" %}</li>
+                <li id="number" class="error-message">{% trans "Mindestens eine Zahl" %}</li>
+                <li id="punctuation" class="error-message">{% trans "Mindestens ein Sonderzeichen" %}</li>
             </ul>
         </div>
-        <button type="submit" name="change_admin_password">Ändern</button>
+        <button type="submit" name="change_admin_password">{% trans "Ändern" %}</button>
     </form>
     <script nonce="{{ request.csp_script_nonce }}">
         const passwordInput = document.getElementById('new_admin_password')
@@ -112,38 +114,38 @@
 
     <hr>
 
-    <h3>Mitglieder entfernen</h3>
+    <h3>{% trans "Mitglieder entfernen" %}</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="admin_password_remove">Admin Passwort:</label>
-        <input type="password" name="admin_password_remove" id="admin_password_remove" placeholder="Admin Passwort" required>
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" placeholder="Username" required>
-        <button type="submit" class="color-red" name="remove_member">Ändern</button>
+        <label for="admin_password_remove">{% trans "Admin Passwort:" %}</label>
+        <input type="password" name="admin_password_remove" id="admin_password_remove" placeholder="{% trans "Admin Passwort" %}" required>
+        <label for="username">{% trans "Username:" %}</label>
+        <input type="text" name="username" id="username" placeholder="{% trans "Username" %}" required>
+        <button type="submit" class="color-red" name="remove_member">{% trans "Ändern" %}</button>
     </form>
 
     <hr>
 
-    <h3>Family verlassen</h3>
-    <form method="post" class="form-confirm" data-confirm="Willst du diese Family wirklich verlassen?">
+    <h3>{% trans "Family verlassen" %}</h3>
+    <form method="post" class="form-confirm" data-confirm="{% trans "Willst du diese Family wirklich verlassen?" %}">
         {% csrf_token %}
-        <button type="submit" name="leave_family" class="color-red">Diese Family verlassen</button>
+        <button type="submit" name="leave_family" class="color-red">{% trans "Diese Family verlassen" %}</button>
     </form>
 
     <hr>
 
-    <h3>Chat-Einstellungen</h3>
+    <h3>{% trans "Chat-Einstellungen" %}</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="admin_password_chat_settings">Admin Passwort:</label>
-        <input type="password" name="admin_password_chat_settings" id="admin_password_chat_settings" placeholder="Admin-Passwort" required>
+        <label for="admin_password_chat_settings">{% trans "Admin Passwort:" %}</label>
+        <input type="password" name="admin_password_chat_settings" id="admin_password_chat_settings" placeholder="{% trans "Admin-Passwort" %}" required>
         <label class="custom-checkbox">
             <input type="hidden" id="chat_settings" value="{{ family.chat }}">
             <input type="checkbox" name="chat_checkbox" id="chat_checkbox">
             <span class="checkmark"></span>
-            <span class="label-text">Chat-Funktion aktivieren / deaktivieren</span>
+            <span class="label-text">{% trans "Chat-Funktion aktivieren / deaktivieren" %}</span>
         </label>
-        <button type="submit" name="change_chat_settings">Speichern</button>
+        <button type="submit" name="change_chat_settings">{% trans "Speichern" %}</button>
     </form>
 
     <script nonce="{{ request.csp_script_nonce }}">
@@ -159,12 +161,12 @@
 
     <hr>
 
-    <h3>Family löschen</h3>
-    <form method="post" class="form-confirm" data-confirm="Willst du diese Family wirklich löschen?">
+    <h3>{% trans "Family löschen" %}</h3>
+    <form method="post" class="form-confirm" data-confirm="{% trans "Willst du diese Family wirklich löschen?" %}">
         {% csrf_token %}
-        <label for="admin_password_delete">Admin Passwort:</label>
-        <input type="password" name="admin_password_delete" id="admin_password_delete" placeholder="Admin-Passwort" required>
-        <button type="submit" name="delete_family" class="color-red">Diese Family löschen</button>
+        <label for="admin_password_delete">{% trans "Admin Passwort:" %}</label>
+        <input type="password" name="admin_password_delete" id="admin_password_delete" placeholder="{% trans "Admin-Passwort" %}" required>
+        <button type="submit" name="delete_family" class="color-red">{% trans "Diese Family löschen" %}</button>
     </form>
 
 {% endblock %}

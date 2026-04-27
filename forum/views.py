@@ -55,7 +55,8 @@ def forum_overview(request):
         category = "Alle"
 
     return render(request, './forum_overview.html',
-                  {'forum_posts': forum_posts, 'ordered_by': ordered_by, 'search_keyword': search_keyword, 'category': category, 'all_categories': all_categories})
+                  {'forum_posts': forum_posts, 'ordered_by': ordered_by, 'search_keyword': search_keyword,
+                   'category': category, 'all_categories': all_categories})
 
 
 @login_required
@@ -115,7 +116,8 @@ def post_detail(request, post_id):
         clean_html(content)
 
         Answer.objects.create(content=content, creator=request.user, forum_post=post)
-        create_notification(request, "Deine Forumsfrage wurde beantwortet", post.creator,
+        create_notification(request, "Deine Forumsfrage wurde beantwortet", "You´re forum question has been answered",
+                            post.creator,
                             url=reverse('post_detail', args=[post_id]))
         return redirect('post_detail', post_id=post_id)
     return render(request, './forum_detail.html', {'post': post, 'answers': post.answers.all()})

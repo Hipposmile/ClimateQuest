@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block meta %}
-    <meta name="description" content="Eine Übersicht über all deine Aktivitäten und Erfolge bei ClimateQuest.">
+    <meta name="description"
+          content="{% trans 'Eine Übersicht über all deine Aktivitäten und Erfolge bei ClimateQuest.' %}">
 {% endblock %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}{% trans "Dashboard" %}{% endblock %}
 
 {% block content %}
     <a href="{% url 'home' %}" class="redirect-link ">
-        <span>Zur Homepage</span>
+        <span>{% trans "Zur Homepage" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
-    <h1>Dashboard</h1>
+    <h1>{% trans "Dashboard" %}</h1>
 
     {% if messages %}
         {% for message in messages %}
@@ -25,19 +27,18 @@
         </script>
     {% endif %}
 
-    <p>Willkommen, {{ user.username }}!</p>
+    <p>{% blocktrans with username=user.username %}Willkommen, {{ username }}!{% endblocktrans %}</p>
 
     {% if user.usererweitert.mail_verified == False and user.email != '' %}
-        <p>Bitte bestätige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. Falls du keine
-            Verifizierungsmail
-            erhalten hast, <a href="{% url 'resend_verification_email' %}">lasse dir eine neue
-                senden.</a></p>
+        <p>{% blocktrans %}Bitte bestätige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. Falls du keine
+            Verifizierungsmail erhalten hast,{% endblocktrans %} <a
+                href="{% url 'resend_verification_email' %}">{% trans "lasse dir eine neue senden." %}</a></p>
     {% endif %}
     <div id="request_permission_notification"></div>
 
     <div class="btns">
         <a href="{% url 'add' %}">
-            <button class="btn">Aktion eintragen</button>
+            <button class="btn">{% trans "Aktion eintragen" %}</button>
         </a>
     </div>
 
@@ -46,8 +47,8 @@
             if (Notification.permission === 'default' || Notification.permission === 'denied') {
                 const div = document.getElementById('request_permission_notification');
                 div.innerHTML = `
-                    <button id="reqBtnMsg" class="btn">Benachrichtigungen anfordern</button>
-                    <p>Über Push-Benachrichtigungen können wir dir Mitteilungen direkt an dieses Gerät senden.</p>
+                    <button id="reqBtnMsg" class="btn">{% trans "Benachrichtigungen anfordern" %}</button>
+                    <p>{% trans "Über Push-Benachrichtigungen können wir dir Mitteilungen direkt an dieses Gerät senden." %}</p>
                     <br>
                 `;
 
@@ -61,13 +62,12 @@
         window.addEventListener('load', requestPermissionNotification);
     </script>
 
-    <p>Tipp: Wenn andere Nutzer Artikel liken, die du selbst geschrieben hast, erhältst du Klimapunkte! Schreibe also
-        selbst einen guten Artikel, um mehr Klimapunkte zu erhalten!</p>
+    <p>{% blocktrans %}Tipp: Wenn andere Nutzer Artikel liken, die du selbst geschrieben hast, erhältst du Klimapunkte!
+        Schreibe also selbst einen guten Artikel, um mehr Klimapunkte zu erhalten!{% endblocktrans %}</p>
 
     <br>
-    <p>Es werden jeweils nur die ersten zwei Einträge angezeigt.</p>
     <a href="{% url 'user_detail' request.user.id %}" class="redirect-link ">
-        <span>Zur öffentlichen Profilseite</span>
+        <span>{% trans "Zur öffentlichen Profilseite" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <hr>
@@ -224,13 +224,13 @@
 
     </style>
 
-    <h2>Perfekte Woche</h2>
+    <h2>{% trans "Perfekte Woche" %}</h2>
     <div class="pw-wrapper">
         <div class="pw-card">
             <div class="pw-track">
                 <div class="pw-step {% if weekly_goal_progress_percent >= 100 %}is-done{% endif %}">
                     <span class="pw-dot"></span>
-                    <span class="pw-label">Wöchentliches Ziel</span>
+                    <span class="pw-label">{% trans "Wöchentliches Ziel" %}</span>
                 </div>
                 {% for name, done in perfect_week_progress.items %}
                     <div class="pw-step {% if done %}is-done{% endif %}">
@@ -241,7 +241,7 @@
                 {% if perfect_week %}
                     <div class="pw-step is-party">
                         <span class="pw-dot"></span>
-                        <span class="pw-label">Du hast eine perfekte Woche!</span>
+                        <span class="pw-label">{% trans "Du hast eine perfekte Woche!" %}</span>
                     </div>
                 {% endif %}
             </div>
@@ -250,7 +250,7 @@
 
     <hr>
 
-    <h2>Wöchentliches Ziel</h2>
+    <h2>{% trans "Wöchentliches Ziel" %}</h2>
     <div class="progress-container">
         <div class="progress-bar" id="progress-bar"></div>
     </div>
@@ -260,10 +260,10 @@
             max-width: 100%;
         }
     </style>
-    <p>{{ weekly_klimapunkte|floatformat:-4 }} Klimapunkte bis zum wöchentlichen Ziel von {{ weekly_goal }} Klimapunkten
-        geschafft</p>
+    <p>{% blocktrans with weekly_klimapunkte=weekly_klimapunkte|floatformat:-4 weekly_goal=weekly_goal %}{{ weekly_klimapunkte }} Klimapunkte bis zum wöchentlichen Ziel von
+        {{ weekly_goal }} Klimapunkten geschafft{% endblocktrans %}</p>
     <a href="{% url 'settings_view' %}#change_goal_h3" class="redirect-link ">
-        <span>Ziel ändern</span>
+        <span>{% trans "Ziel ändern" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <hr>
@@ -374,7 +374,7 @@
         }
     </style>
 
-    <h2>Streak</h2>
+    <h2>{% trans "Streak" %}</h2>
     <div class="streak-card-container">
         <div class="streak-card">
             <div class="streak-icon-wrap">
@@ -382,540 +382,35 @@
             </div>
 
             <div class="streak-content">
-                <span class="streak-label">Aktuelle Streak</span>
+                <span class="streak-label">{% trans "Aktuelle Streak" %}</span>
 
                 <div class="streak-row">
                     <span class="streak-value">{{ streak }}</span>
-                    <span class="streak-unit">Wochen mit erreichtem wöchentlichen Ziel</span>
+                    <span class="streak-unit">{% trans "Wochen mit erreichtem wöchentlichen Ziel" %}</span>
                 </div>
 
                 <div class="streak-pill">
-                    <span class="streak-pill-text">{% if weekly_goal_progress_percent >= 100 %}Du hast dein
-                        wöchentliches Ziel diese Woche bereits erreicht{% else %}Du hast dein wöchentliches Ziel diese
-                        Woche noch nicht erreicht{% endif %}</span>
+                    <span class="streak-pill-text">{% if weekly_goal_progress_percent >= 100 %}
+                        {% trans "Du hast dein wöchentliches Ziel diese Woche bereits erreicht" %}{% else %}
+                        {% trans "Du hast dein wöchentliches Ziel diese Woche noch nicht erreicht" %}{% endif %}</span>
                 </div>
             </div>
         </div>
     </div>
     <hr>
 
-
-    <h2>Aktionen</h2>
-    {% if aktionen %}
-        <ul class="action-list">
-            {% for aktion in aktionen %}
-                <li class="action-list-container">
-                    <p class="action-list-description">Aktion:</p>
-                    <p class="action-list-value">{{ aktion.aktion.name }}</p>
-
-                    <p class="action-list-description">Datum:</p>
-                    <p class="action-list-value">{{ aktion.date|date:"d.m.Y" }}</p>
-
-                    {% if aktion.description %}
-                        <p class="action-list-description">Beschreibung:</p>
-                        <p class="action-list-value">{{ aktion.description }}</p>
-                    {% endif %}
-
-                    <p class="action-list-description">Klimapunkte:</p>
-                    <p class="action-list-value">{{ aktion.impact|floatformat:4 }}</p>
-
-                    <p class="action-list-description">{{ aktion.aktion.mengeBeschreibung }}</p>
-                    <p class="action-list-value">{{ aktion.quantity }} {{ aktion.einheit }}</p>
-
-                    <a href="{% url 'action_detail' aktion.id request.user.id %}">Details</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Keine Aktionen gefunden.</p>
-    {% endif %}
-    <a href="{% url 'history_me' %}" class="redirect-link ">
-        <span>Zur Aktions-Historie</span>
-        <span class="redirect-link-icon">→</span>
-    </a>
-    <br>
-    <a href="{% url 'add' %}" class="redirect-link ">
-        <span>Aktion hinzufügen</span>
-        <span class="redirect-link-icon">→</span>
-    </a>
-    <hr>
-
-    <h2>Klimapunkte</h2>
-    <p>Du hast bereits {{ klimapunkte|floatformat:-4 }} Klimapunkte gesammelt.</p>
+    <h2>{% trans "Klimapunkte" %}</h2>
+    <p>{% blocktrans with klimapunkte=klimapunkte|floatformat:-4 %}Du hast bereits {{ klimapunkte }} Klimapunkte gesammelt.{% endblocktrans %}</p>
     <a href="{% url 'klimapunkte_me' %}" class="redirect-link ">
-        <span>Zu den Klimapunkten</span>
+        <span>{% trans "Zu den Klimapunkten" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <hr>
 
-    <h2>Level</h2>
-    <p>Du bist im Level {{ level.description }}.</p>
+    <h2>{% trans "Level" %}</h2>
+    <p>{% trans "Du bist im Level" %} {% if request.LANGUAGE_CODE == "de" %}{{ level.description }}{% else %}{{ level.description_en }}{% endif %}.</p>
     <a href="{% url 'level_me' %}" class="redirect-link ">
-        <span>Zu den Levels</span>
-        <span class="redirect-link-icon">→</span>
-    </a>
-    <hr>
-
-    <h2>Families</h2>
-    <style nonce="{{ request.csp_style_nonce }}">
-        .families-section {
-            max-width: 960px;
-            margin: 2rem auto;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .families-section h2 {
-            font-size: 1.8rem;
-            color: var(--color-header-bg);
-            margin-bottom: 1.5rem;
-        }
-
-        .families-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            padding: 0;
-        }
-
-        .family-card {
-            background-color: var(--color-white);
-            border-radius: 8px;
-            box-shadow: var(--shadow-md);
-            padding: 1.5rem;
-            text-align: left;
-        }
-
-        .family-card h3 {
-            margin-top: 0;
-            font-size: 1.3rem;
-            color: var(--color-blue-dark);
-        }
-
-        .family-card p {
-            color: var(--color-muted);
-            font-size: 0.95rem;
-            margin: 0.5rem 0 1rem;
-        }
-    </style>
-
-    {% if families %}
-        <section class="families-section">
-            <div class="families-grid">
-                {% for family in families %}
-                    <div class="family-card">
-                        <h3>{{ family.name }}</h3>
-                        <p>Mitglieder: {{ family.members.count }}</p>
-                        <a href="{% url 'family_detail' family.id %}" class="card-btn ">Details
-                            ansehen</a>
-                    </div>
-                {% endfor %}
-            </div>
-        </section>
-
-    {% else %}
-        <p>Du bist keiner Family beigetreten.</p>
-    {% endif %}
-    <a href="{% url 'families_view' %}" class="redirect-link ">
-        <span>Zu den Families</span>
-        <span class="redirect-link-icon">→</span>
-    </a>
-    <hr>
-
-    <style nonce="{{ request.csp_style_nonce }}">
-        .communities-section {
-            max-width: 960px;
-            margin: 2rem auto;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .communities-section h2 {
-            font-size: 1.8rem;
-            color: var(--color-header-bg);
-            margin-bottom: 1.5rem;
-        }
-
-        .communities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            padding: 0;
-        }
-
-        .community-card {
-            background-color: var(--color-white);
-            border-radius: 8px;
-            box-shadow: var(--shadow-md);
-            padding: 1.5rem;
-            text-align: left;
-        }
-
-        .community-card h3 {
-            margin-top: 0;
-            font-size: 1.3rem;
-            color: var(--color-blue-dark);
-        }
-
-        .community-card p {
-            color: var(--color-muted);
-            font-size: 0.95rem;
-            margin: 0.5rem 0 1rem;
-        }
-
-        .family-select {
-            margin: 20px;
-        }
-    </style>
-
-    <h2>Communities</h2>
-
-    {% if communities_with_user_families %}
-        <script nonce="{{ request.csp_script_nonce }}">
-            let family_select;
-            let community_detail_link;
-            let communityId;
-            let familyId;
-        </script>
-        <section class="communities-section">
-            <div class="communities-grid">
-                {% for item in communities_with_user_families %}
-                    <div class="community-card">
-                        <h3>{{ item.community.name }}</h3>
-                        <p>Mitglieder: {{ item.community.members.count }}</p>
-                        <label for="family-select">Family zum Login auswählen: </label>
-                        <select class="family-select" id="family-select" data-community-id="{{ item.community.id }}">
-                            <option value="" disabled selected>Family zum Login auswählen ▾</option>
-                            {% for family in item.families %}
-                                <option value="{{ family.id }}">{{ family.name }}</option>
-                            {% endfor %}
-                        </select>
-                        <a href="#" class="card-btn disabled-link community-detail-link"
-                           data-community-id="{{ item.community.id }}">Details ansehen</a>
-                    </div>
-                {% endfor %}
-            </div>
-        </section>
-        <script nonce="{{ request.csp_script_nonce }}">
-            document.addEventListener('DOMContentLoaded', function () {
-                const selects = document.querySelectorAll('.family-select');
-
-                selects.forEach(select => {
-                    const communityId = select.dataset.communityId;
-                    const detailLink = document.querySelector(`.community-detail-link[data-community-id="${communityId}"]`);
-
-                    select.addEventListener('change', function () {
-                        const familyId = this.value;
-                        if (familyId) {
-                            detailLink.href = `/community/community/${communityId}/${familyId}/`;
-                            detailLink.classList.remove('disabled-link');
-                        } else {
-                            detailLink.href = '#';
-                            detailLink.classList.add('disabled-link');
-                        }
-                    });
-                });
-            });
-        </script>
-    {% else %}
-        <p>Du bist keiner Community beigetreten.</p>
-    {% endif %}
-
-    <a href="{% url 'communities_view' %}" class="redirect-link ">
-        <span>Zu den Communities</span>
-        <span class="redirect-link-icon">→</span>
-    </a>
-    <hr>
-
-    <style nonce="{{ request.csp_style_nonce }}">
-        .event-date-relative {
-            font-weight: 100;
-            filter: grayscale(100%);
-            margin-bottom: 5px;
-        }
-
-        .event-date-relative::before {
-            content: "📅 ";
-            margin-right: 4px;
-        }
-    </style>
-
-    <h2>von mir erstellte Events</h2>
-    {% if created_events %}
-        {% for created_event in created_events %}
-            <section
-                    class="event-card{% if request.user in created_event.participants.all %} event-card-participant{% elif request.user == created_event.creator %} event-card-creator{% endif %}">
-                <div class="event-main">
-                    <h3 class="event-title">{{ created_event.name }}</h3>
-                    <span class="event-date-relative"></span>
-                </div>
-
-                <details class="event-details">
-                    <summary>mehr</summary>
-                    <div class="event-extra">
-                        <p class="description"><strong>Beschreibung:</strong></p>
-                        <div class="event-description">{{ created_event.description|safe }}</div>
-                        <p><strong>Datum und Uhrzeit (Beginn):</strong> <span class="event-date"
-                                                                              data-date="{{ created_event.date_time|date:'c' }}">{{ created_event.date_time|date:"d.m.Y, H:i" }}</span>
-                        </p>
-                        <p><strong>Dauer in Minuten:</strong> {{ created_event.duration }}</p>
-                        <p><strong>Adresse:</strong> {{ created_event.adress }}</p>
-                        <p><strong>Ersteller:</strong> <a
-                                href="{% url 'user_detail' created_event.creator.id %}">{{ created_event.creator.username }}</a>
-                            {% if request.user == created_event.creator %}(Du){% endif %}</p>
-                        <details class="event-details">
-                            <summary>
-                                <p><strong>Teilnehmeranzahl:</strong> {{ created_event.participants_count }}</p>
-                            </summary>
-                            <ul class="participant-list">
-                                {% for participant in created_event.participants.all %}
-                                    <li>{{ participant }}</li>
-                                {% endfor %}
-                            </ul>
-                        </details>
-                    </div>
-                </details>
-                <a class="event-link" href="{% url 'event_detail' created_event.id %}">Details ansehen</a>
-            </section>
-        {% endfor %}
-    {% else %}
-        <p>Derzeit nimmst du an keinen Events teil</p>
-    {% endif %}
-
-    <a href="{% url 'events_overview' %}" class="redirect-link ">
-        <span>Zu den Events</span>
-        <span class="redirect-link-icon">→</span>
-    </a>
-    <hr>
-
-    <h2>Events, bei denen ich teilnehme</h2>
-    {% if events %}
-        {% for event in events %}
-            <section
-                    class="event-card{% if request.user in event.participants.all %} event-card-participant{% elif request.user == event.creator %} event-card-creator{% endif %}">
-                <div class="event-main">
-                    <h2 class="event-title">{{ event.name }}</h2>
-                    <span class="event-date-relative"></span>
-                </div>
-
-                <details class="event-details">
-                    <summary>mehr</summary>
-                    <div class="event-extra">
-                        <p class="description"><strong>Beschreibung:</strong></p>
-                        <div class="event-description">{{ event.description|safe }}</div>
-                        <p><strong>Datum und Uhrzeit (Beginn):</strong> <span class="event-date"
-                                                                              data-date="{{ event.date_time|date:'c' }}">{{ event.date_time|date:"d.m.Y, H:i" }}</span>
-                        </p>
-                        <p><strong>Dauer in Minuten:</strong> {{ event.duration }}</p>
-                        <p><strong>Adresse:</strong> {{ event.adress }}</p>
-                        <p><strong>Ersteller:</strong> <a
-                                href="{% url 'user_detail' event.creator.id %}">{{ event.creator.username }}</a>
-                            {% if request.user == event.creator %}(Du){% endif %}</p>
-                        <details class="event-details">
-                            <summary>
-                                <p><strong>Teilnehmeranzahl:</strong> {{ event.participants_count }}</p>
-                            </summary>
-                            <ul class="participant-list">
-                                {% for participant in event.participants.all %}
-                                    <li>{{ participant }}</li>
-                                {% endfor %}
-                            </ul>
-                        </details>
-                    </div>
-                </details>
-                <a class="event-link" href="{% url 'event_detail' event.id %}">Details ansehen</a>
-            </section>
-        {% endfor %}
-    {% else %}
-        <p>Derzeit nimmst du an keinen Events teil</p>
-    {% endif %}
-
-    <a href="{% url 'events_overview' %}" class="redirect-link ">
-        <span>Zu den Events</span>
-        <span class="redirect-link-icon">→</span>
-    </a>
-    <hr>
-
-    <script nonce="{{ request.csp_script_nonce }}">
-        function getLabel(dateStr) {
-            const now = new Date();
-            const target = new Date(dateStr);
-
-            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            const targetDay = new Date(target.getFullYear(), target.getMonth(), target.getDate());
-
-            const diffDays = Math.round((targetDay - today) / (1000 * 60 * 60 * 24));
-
-            if (diffDays < 0) return "vergangen";
-            if (diffDays === 0) return "heute";
-            if (diffDays === 1) return "morgen";
-            if (diffDays === 2) return "übermorgen";
-            if (diffDays <= 7) return "innerhalb der nächsten Woche";
-            if (diffDays <= 30) return "innerhalb der nächsten 30 Tage";
-            if (diffDays <= 365) return "innerhalb des nächsten Jahres";
-            return "noch über ein Jahr entfernt";
-        }
-
-        document.querySelectorAll('.event-card').forEach(div => {
-            const dateSpan = div.querySelector('.event-date');
-            const labelSpan = div.querySelector('.event-date-relative');
-            const dateStr = dateSpan.dataset.date;
-
-            const label = getLabel(dateStr);
-            labelSpan.textContent = label;
-        });
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const descriptions = document.querySelectorAll(".description");
-
-            descriptions.forEach(description => {
-                const button = description.querySelector(".toggle-button");
-
-                let shouldBlur = false;
-
-                const textLength = description.textContent.trim().length;
-                if (textLength > 100) {
-                    shouldBlur = true;
-                    description.classList.add("blur-enabled");
-                } else {
-                    description.classList.remove("blur-enabled");
-                }
-            });
-        });
-    </script>
-
-    <h2>von mir erstellte Artikel</h2>
-    {% if created_artikel %}
-        {% for single_created_artikel in created_artikel %}
-            <section
-                    class="event-card{% if request.user == single_created_artikel.creator %} event-card-creator{% endif %}">
-                <div class="event-main">
-                    <h3 class="event-title">{{ single_created_artikel.name }}</h3>
-                </div>
-
-                <details class="event-details">
-                    <summary>mehr</summary>
-                    <div class="event-extra">
-                        <p><strong>Zuletzt bearbeitet:</strong> <span class="event-date"
-                                                                      data-date="{{ single_created_artikel.date_time|date:'c' }}">{{ single_created_artikel.date_time|date:"d.m.Y" }}</span>
-                        </p>
-                        <p><strong>Ersteller:</strong> <a
-                                href="{% url 'user_detail' single_created_artikel.creator.id %}">{{ single_created_artikel.creator.username }}</a>
-                            {% if request.user == single_created_artikel.creator %}(Du){% endif %}</p>
-                        <p><strong>Likes:</strong> {{ single_created_artikel.like_count }}</p>
-                    </div>
-                </details>
-                <a class="event-link" href="{% url 'artikel_detail' single_created_artikel.id %}">Details ansehen</a>
-            </section>        {% endfor %}
-    {% else %}
-        <p>Derzeit hast du keine Artikel erstellt</p>
-    {% endif %}
-
-    <a href="{% url 'artikel_overview' %}" class="redirect-link ">
-        <span>Zu den Artikeln</span>
-        <span class="redirect-link-icon">→</span>
-    </a>
-    <hr>
-
-
-    <h2>von mir gelikte Artikel</h2>
-    {% if artikel %}
-        {% for single_artikel in artikel %}
-            <section
-                    class="event-card{% if request.user == single_artikel.creator %} event-card-creator{% endif %}">
-                <div class="event-main">
-                    <h3 class="event-title">{{ single_artikel.name }}</h3>
-                </div>
-
-                <details class="event-details">
-                    <summary>mehr</summary>
-                    <div class="event-extra">
-                        <p><strong>Zuletzt bearbeitet:</strong> <span class="event-date"
-                                                                      data-date="{{ single_artikel.date_time|date:'c' }}">{{ single_artikel.date_time|date:"d.m.Y" }}</span>
-                        </p>
-                        <p><strong>Ersteller:</strong> <a
-                                href="{% url 'user_detail' single_artikel.creator.id %}">{{ single_artikel.creator.username }}</a>
-                            {% if request.user == single_artikel.creator %}(Du){% endif %}</p>
-                        <p><strong>Likes:</strong> {{ single_artikel.like_count }}</p>
-                    </div>
-                </details>
-                <a class="event-link" href="{% url 'artikel_detail' single_artikel.id %}">Details ansehen</a>
-            </section>
-        {% endfor %}
-    {% else %}
-        <p>Derzeit hast du keine Artikel geliket</p>
-    {% endif %}
-
-    <a href="{% url 'artikel_overview' %}" class="redirect-link ">
-        <span>Zu den Artikeln</span>
-        <span class="redirect-link-icon">→</span>
-    </a>
-    <hr>
-
-    <h2>von mir erstellte Forumsbeiträge</h2>
-    {% if created_forum_posts %}
-        {% for created_post in created_forum_posts %}
-            <section
-                    class="event-card{% if request.user == created_post.creator %} event-card-creator{% endif %}">
-                <div class="event-main">
-                    <h3 class="event-title">{{ created_post.title }}</h3>
-                </div>
-
-                <details class="event-details">
-                    <summary>mehr</summary>
-                    <div class="event-extra">
-                        <p><strong>Erstellt am:</strong> <span class="event-date"
-                                                               data-date="{{ created_post.date_time|date:'c' }}">{{ created_post.date_time|date:"d.m.Y, H:i" }}</span>
-                        </p>
-                        <p><strong>Ersteller:</strong> <a
-                                href="{% url 'user_detail' created_post.creator.id %}">{{ created_post.creator.username }}</a>
-                            {% if request.user == created_post.creator %}(Du){% endif %}</p>
-                    </div>
-                </details>
-
-                <a class="event-link" href="{% url 'post_detail' created_post.id %}">Details ansehen</a>
-            </section>
-        {% endfor %}
-    {% else %}
-        <p>Derzeit hast du keine Forumsbeiträge erstellt</p>
-    {% endif %}
-
-    <a href="{% url 'forum_overview' %}" class="redirect-link ">
-        <span>Zum Forum</span>
-        <span class="redirect-link-icon">→</span>
-    </a>
-    <hr>
-
-    <h2>von mir beantwortete Forumsbeiträge</h2>
-    {% if forum_posts %}
-        {% for post in forum_posts %}
-            <section
-                    class="event-card{% if request.user == post.creator %} event-card-creator{% endif %}">
-                <div class="event-main">
-                    <h3 class="event-title">{{ post.title }}</h3>
-                </div>
-
-                <details class="event-details">
-                    <summary>mehr</summary>
-                    <div class="event-extra">
-                        <p><strong>Erstellt am:</strong> <span class="event-date"
-                                                               data-date="{{ post.date_time|date:'c' }}">{{ post.date_time|date:"d.m.Y, H:i" }}</span>
-                        </p>
-                        <p><strong>Ersteller:</strong> <a
-                                href="{% url 'user_detail' post.creator.id %}">{{ post.creator.username }}</a>
-                            {% if request.user == post.creator %}(Du){% endif %}</p>
-                    </div>
-                </details>
-
-                <a class="event-link" href="{% url 'post_detail' post.id %}">Details ansehen</a>
-            </section>
-        {% endfor %}
-    {% else %}
-        <p>Derzeit hast du keine Forumsbeiträge beantwortet</p>
-    {% endif %}
-
-    <a href="{% url 'forum_overview' %}" class="redirect-link ">
-        <span>Zum Forum</span>
+        <span>{% trans "Zu den Levels" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
 {% endblock %}

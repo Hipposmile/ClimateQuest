@@ -1,47 +1,56 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block meta %}
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 
-{% block title %}Benachrichtigungen erstellen - Admin{% endblock %}
+{% block title %}{% trans "Benachrichtigungen erstellen - Admin" %}{% endblock %}
 
 {% block content %}
-    <h1>Benachrichtigungen erstellen - Admin</h1>
+    <h1>{% trans "Benachrichtigungen erstellen - Admin" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message }}</p>
         {% endfor %}
     {% endif %}
-    <h3>Benachrichtigung erstellen</h3>
-    <form method="post" class="form-confirm" data-confirm="Möchtest du diese Benachrichtigung wirklich erstellen?">
-        <label for="receiver">{% csrf_token %}</label><select name="receiver" id="receiver">
-        <option value="user" selected>User</option>
-        <option value="family-members">Family-Members</option>
-        <option value="community-members">Community-Members</option>
-        <option value="event-participants">Event-Teilnehmer</option>
-    </select>
-        <label for="name">Name:</label>
-        <input type="text" name="name" id="name" placeholder="Username" required/>
-        <label for="msg">Nachricht:</label>
-        <input type="text" name="msg" id="msg" placeholder="Nachricht" maxlength="500" required/>
-        <label for="url">URL:</label>
-        <input type="text" name="url" id="url" placeholder="URL" maxlength="500"/>
-        <button type="submit" name="benachrichtigung">Erstellen</button>
-        <small>Wenn alle User erreicht werden sollen, bitte Family 'worldwide ranking' angeben</small>
+    <h3>{% trans "Benachrichtigung erstellen" %}</h3>
+    <form method="post" class="form-confirm"
+          data-confirm="{% trans "Möchtest du diese Benachrichtigung wirklich erstellen?" %}">
+        {% csrf_token %}
+        <label for="receiver">{% trans "Empfänger-Typ:" %}</label>
+        <select name="receiver" id="receiver">
+            <option value="user" selected>{% trans "User" %}</option>
+            <option value="family-members">{% trans "Family-Members" %}</option>
+            <option value="community-members">{% trans "Community-Members" %}</option>
+            <option value="event-participants">{% trans "Event-Teilnehmer" %}</option>
+        </select>
+        <label for="name">{% trans "Name:" %}</label>
+        <input type="text" name="name" id="name" placeholder="{% trans "Username" %}" required/>
+
+        <label for="msg_de">{% trans "Nachricht (Deutsch):" %}</label>
+        <input type="text" name="msg_de" id="msg_de" placeholder="{% trans "Nachricht" %}" maxlength="500" required/>
+
+        <label for="msg_en">{% trans "Nachricht (Englisch):" %}</label>
+        <input type="text" name="msg_en" id="msg_en" placeholder="{% trans "Nachricht" %}" maxlength="500" required/>
+
+        <label for="url">{% trans "URL:" %}</label>
+        <input type="text" name="url" id="url" placeholder="{% trans "URL" %}" maxlength="500"/>
+        <button type="submit" name="benachrichtigung">{% trans "Erstellen" %}</button>
+        <small>{% trans "Wenn alle User erreicht werden sollen, bitte Family 'worldwide ranking' angeben" %}</small>
     </form>
     <script nonce="{{ request.csp_script_nonce }}">
         document.getElementById('receiver').addEventListener('change', function () {
             const receiver = this.value;
             const nameInput = document.getElementById('name');
             if (receiver === 'user') {
-                nameInput.placeholder = 'Username';
+                nameInput.placeholder = '{% trans "Username" %}';
             } else if (receiver === 'family-members') {
-                nameInput.placeholder = 'Family-Name';
+                nameInput.placeholder = '{% trans "Family-Name" %}';
             } else if (receiver === 'community-members') {
-                nameInput.placeholder = 'Community-Name';
+                nameInput.placeholder = '{% trans "Community-Name" %}';
             } else if (receiver === 'event-participants') {
-                nameInput.placeholder = 'Event-Id';
+                nameInput.placeholder = '{% trans "Event-Id" %}';
             }
         });
     </script>

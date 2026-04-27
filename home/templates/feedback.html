@@ -1,24 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block meta %}
     <meta name="description"
-          content="Gib uns Feedback zu ClimateQuest! Hier kannst du uns deine Meinung, Verbesserungsvorschläge oder Fehlerberichte mitteilen, damit wir ClimateQuest weiter verbessern können.">
+          content="{% trans 'Gib uns Feedback zu ClimateQuest! Hier kannst du uns deine Meinung, Verbesserungsvorschläge oder Fehlerberichte mitteilen, damit wir ClimateQuest weiter verbessern können.' %}">
 {% endblock %}
 
-{% block title %}Feedback - ClimateQuest{% endblock %}
+{% block title %}{% trans "Feedback - ClimateQuest" %}{% endblock %}
 
 {% block content %}
-    <h1>Feedback</h1>
+    <h1>{% trans "Feedback" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
-    <p>Feedback kannst du uns jederzeit mitteilen. Hierfür gibt es folgende Möglichkeiten:</p>
+    <p>{% trans "Feedback kannst du uns jederzeit mitteilen. Hierfür gibt es folgende Möglichkeiten:" %}</p>
     <ul>
-        <li>Per Mail: <a href="mailto:kontakt@climate-quest.de?subject=Feedback">kontakt@climate-quest.de</a></li>
-        <li>Per Feedback-Formular: <a href="https://forms.gle/RdYiE52u8PcUaX5b7">Feedback-Formular</a></li>
+        <li>{% trans "Per Mail:" %} <a href="mailto:kontakt@climate-quest.de?subject=Feedback">kontakt@climate-quest.de</a></li>
+        <li>{% trans "Per Feedback-Formular:" %} <a href="https://forms.gle/RdYiE52u8PcUaX5b7">{% trans "Feedback-Formular" %}</a></li>
     </ul>
-    <p>Wenn du die App testen möchtest, hilfst du uns damit sehr, denn so können wir von Fehlern erfahren! Am besten verwendest du dafür folgendes Feedback-Formular und sendest es uns ausgefüllt zurück: <a href="{% static 'documents/Testbogen_ClimateQuest.pdf' %}" download>Download</a></p>
+    
+    {% static 'documents/Testbogen_ClimateQuest.pdf' as testbogen %}
+    <p>{% blocktrans with testbogen_url=testbogen %}Wenn du die App testen möchtest, hilfst du uns damit sehr, denn so können wir von Fehlern erfahren! Am besten verwendest du dafür folgendes Feedback-Formular und sendest es uns ausgefüllt zurück: <a href="{{ testbogen_url }}" download>Download</a>{% endblocktrans %}</p>
 {% endblock %}

@@ -1,0 +1,584 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-26 08:31+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: pages/templates/aknachhaltigkeit.html:5
+#: pages/templates/aknachhaltigkeit.html:7
+msgid "AK Nachhaltigkeit des GMF"
+msgstr "AK Sustainability of GMF"
+
+#: pages/templates/aknachhaltigkeit.html:293
+msgid "AK Nachhaltigkeit"
+msgstr "AK Sustainability"
+
+#: pages/templates/aknachhaltigkeit.html:294
+msgid "Gemeinsam für eine nachhaltige Zukunft am Gymnasium München Feldmoching"
+msgstr "Together for a sustainable future at Gymnasium Munich Feldmoching"
+
+#: pages/templates/aknachhaltigkeit.html:300
+msgid "Wer wir sind:"
+msgstr "Who we are:"
+
+#: pages/templates/aknachhaltigkeit.html:301
+msgid "Der AK Nachhaltigkeit kümmert sich um die Nachhaltigkeit an dem"
+msgstr "AK Sustainability takes care of sustainability at"
+
+#: pages/templates/aknachhaltigkeit.html:302
+msgid "Gymnasium München Feldmoching"
+msgstr "Gymnasium Munich Feldmoching"
+
+#: pages/templates/aknachhaltigkeit.html:302
+msgid ""
+"Er besteht aus Schülern - weder Lehrer noch andere Erwachsene leiten ihn!"
+msgstr "It consists of students - neither teachers nor other adults lead it!"
+
+#: pages/templates/aknachhaltigkeit.html:306
+#: pages/templates/aknachhaltigkeit.html:331
+msgid "Warum ist Klimaschutz wichtig?"
+msgstr "Why is climate protection important?"
+
+#: pages/templates/aknachhaltigkeit.html:309
+msgid "Was haben wir, der AK Nachhaltigkeit, schon gemacht?"
+msgstr "What have we, AK Sustainability, already done?"
+
+#: pages/templates/aknachhaltigkeit.html:312
+msgid "Wie kann ich der Umwelt helfen?"
+msgstr "How can I help the environment?"
+
+#: pages/templates/aknachhaltigkeit.html:315
+msgid "Upycling Ideen"
+msgstr "Upcycling Ideas"
+
+#: pages/templates/aknachhaltigkeit.html:318
+#: pages/templates/aknachhaltigkeit.html:447
+msgid "CO2 Rechner"
+msgstr "CO2 Calculator"
+
+#: pages/templates/aknachhaltigkeit.html:321
+#: pages/templates/aknachhaltigkeit.html:496
+msgid "Müll-Sammel Spiel"
+msgstr "Trash Collection Game"
+
+#: pages/templates/aknachhaltigkeit.html:325
+#: pages/templates/aknachhaltigkeit.html:370
+msgid "AK Nachhaltigkeit bei Fridays for Future"
+msgstr "AK Sustainability at Fridays for Future"
+
+#: pages/templates/aknachhaltigkeit.html:332
+msgid ""
+"Klimaschutz ist wichtig für unser Leben. Denn die Erderwärmung zerstört "
+"bereits jetzt tausende von Leben, z.B. durch extreme Wetterereignisse wie "
+"Überschwemmungen oder Dürre. Früher Jahrhundertereignisse genannt sind "
+"Naturkatastrophen heutzutage keine Seltenheit mehr. Aktuell sind ca. 3,3 "
+"Milliarden Menschen von der Klimakrise bedroht, aber auch viele Tiere, die "
+"sich an die steigenden Temperaturen schwer anpassen können. Gleichzeitig "
+"wird die Umwelt z.B. durch Plastikabfälle, in denen sich Vögel, "
+"Schildkröten, Fische o.Ä. verheddern und sterben, oder Bebauung, bei denen "
+"viele Tieren und Pflanzen ihren Lebensraum verlieren, gefährdet. Unter "
+"anderem aus diesen Grunden sterben täglich 130 - 150 Tierarten aus! Dies "
+"waren nur einige der Gründe, warum Klimaschutz unerlässlich ist und wir uns "
+"für ihn einsetzen."
+msgstr ""
+"Climate protection is important for our lives. Because global warming is "
+"already destroying thousands of lives, for example through extreme weather "
+"events such as floods or droughts. What were once called century events are "
+"no longer rare natural disasters today. Currently, approximately 3.3 billion "
+"people are threatened by the climate crisis, but also many animals that "
+"struggle to adapt to rising temperatures. At the same time, the environment "
+"is endangered by, for example, plastic waste in which birds, turtles, fish, "
+"etc. get tangled and die, or construction where many animals and plants lose "
+"their habitat. Among other reasons, 130-150 animal species die out daily! "
+"These were just some of the reasons why climate protection is essential and "
+"we are committed to it."
+
+#: pages/templates/aknachhaltigkeit.html:333
+msgid ""
+"Am besten, du informierst dich im Internet, in der Bücherei oder in anderen "
+"Quellen noch mehr dazu nach. Weitere Informationen findest du z.B."
+msgstr ""
+"It's best to inform yourself more about it on the internet, in the library "
+"or in other sources. You can find more information e.g."
+
+#: pages/templates/aknachhaltigkeit.html:335
+#: pages/templates/aknachhaltigkeit.html:336
+#: pages/templates/aknachhaltigkeit.html:338
+#: pages/templates/aknachhaltigkeit.html:340
+msgid "hier"
+msgstr "here"
+
+#: pages/templates/aknachhaltigkeit.html:338
+msgid "oder"
+msgstr "or"
+
+#: pages/templates/aknachhaltigkeit.html:344
+msgid "Was hat der AK Nachhaltigkeit schon gemacht?"
+msgstr "What has AK Sustainability already done?"
+
+#: pages/templates/aknachhaltigkeit.html:346
+msgid "Gesammelte Kronkorken vom AK Nachhaltigkeit"
+msgstr "Collected bottle caps from AK Sustainability"
+
+#: pages/templates/aknachhaltigkeit.html:348
+msgid "Schokoverkauf von der"
+msgstr "Chocolate sale from"
+
+#: pages/templates/aknachhaltigkeit.html:349
+msgid "Guten Schokolade."
+msgstr "Change Chocolate."
+
+#: pages/templates/aknachhaltigkeit.html:351
+msgid "Halloweenverkauf"
+msgstr "Halloween sale"
+
+#: pages/templates/aknachhaltigkeit.html:354
+#, python-format
+msgid ""
+"Schüler:innen wurde der Besuch von\n"
+"                        <a class=\"dont-show-loading\" "
+"href=\"%(url)s\">Fridays-for-Future</a>\n"
+"                        ermöglicht."
+msgstr "Students werde enabled to visit <a class=\"dont-show-loading\" href=\"%(url)s\">Fridays-for-Future</a>."
+
+#: pages/templates/aknachhaltigkeit.html:358
+msgid "Korken für die"
+msgstr "Caps for the"
+
+#: pages/templates/aknachhaltigkeit.html:359
+msgid "Korkkampagne"
+msgstr "Cap campaign"
+
+#: pages/templates/aknachhaltigkeit.html:360
+msgid "gesammelt"
+msgstr "collected"
+
+#: pages/templates/aknachhaltigkeit.html:362
+msgid "Kronkorken gesammelt"
+msgstr "Bottle caps collected"
+
+#: pages/templates/aknachhaltigkeit.html:363
+msgid "Kleidertauschparty"
+msgstr "Clothing swap party"
+
+#: pages/templates/aknachhaltigkeit.html:364
+msgid "Müll an Silvester gesammelt und ausgestellt"
+msgstr "Trash collected and displayed on New Year's Eve"
+
+#: pages/templates/aknachhaltigkeit.html:365
+msgid "Müllsystem erarbeitet"
+msgstr "Waste system developed"
+
+#: pages/templates/aknachhaltigkeit.html:366
+msgid "Plakate"
+msgstr "Posters"
+
+#: pages/templates/aknachhaltigkeit.html:367
+msgid "Bücherschrank"
+msgstr "Bookcase"
+
+#: pages/templates/aknachhaltigkeit.html:375
+msgid "Wie kann ich der Umwelt im Alltag helfen?"
+msgstr "How can I help the environment in everyday life?"
+
+#: pages/templates/aknachhaltigkeit.html:377
+msgid "Müll vermeiden und trennen"
+msgstr "Avoid and separate waste"
+
+#: pages/templates/aknachhaltigkeit.html:378
+msgid "Müll sammeln"
+msgstr "Collect trash"
+
+#: pages/templates/aknachhaltigkeit.html:379
+msgid "andere aufklären"
+msgstr "educate others"
+
+#: pages/templates/aknachhaltigkeit.html:380
+msgid "alternative Zahnbürsten/Waschmittel/etc. verwenden"
+msgstr "use alternative toothbrushes/detergents/etc."
+
+#: pages/templates/aknachhaltigkeit.html:381
+msgid "Energie sparen"
+msgstr "Save energy"
+
+#: pages/templates/aknachhaltigkeit.html:382
+#: pages/templates/aknachhaltigkeit.html:391
+msgid "Wasser sparen"
+msgstr "Save water"
+
+#: pages/templates/aknachhaltigkeit.html:383
+msgid "Fahrrad statt Auto"
+msgstr "Bicycle instead of car"
+
+#: pages/templates/aknachhaltigkeit.html:384
+msgid "Zug statt Flug"
+msgstr "Train instead of flight"
+
+#: pages/templates/aknachhaltigkeit.html:385
+msgid "auf tierische Lebensmittel verzichten"
+msgstr "avoid animal products"
+
+#: pages/templates/aknachhaltigkeit.html:386
+msgid "Bio-Produkte kaufen"
+msgstr "Buy organic products"
+
+#: pages/templates/aknachhaltigkeit.html:387
+msgid "Recycling-Produkte kaufen"
+msgstr "Buy recycling products"
+
+#: pages/templates/aknachhaltigkeit.html:388
+msgid "Ökostrom nutzen"
+msgstr "Use green electricity"
+
+#: pages/templates/aknachhaltigkeit.html:389
+msgid "Zu Klimaschutzdemos gehen"
+msgstr "Go to climate protection demos"
+
+#: pages/templates/aknachhaltigkeit.html:390
+msgid "Reparieren/Upcyclen/anders Verwenden statt Wegschmeißen"
+msgstr "Repair/Upcycle/Reuse instead of throwing away"
+
+#: pages/templates/aknachhaltigkeit.html:392
+msgid "Demonstrieren"
+msgstr "Demonstrate"
+
+#: pages/templates/aknachhaltigkeit.html:393
+msgid "Dem AK Nachhaltigkeit beitreten"
+msgstr "Join AK Sustainability"
+
+#: pages/templates/aknachhaltigkeit.html:394
+msgid "Wir treffen uns jeden Mittwoch in der Mittagspause"
+msgstr "We meet every Wednesday during lunch break"
+
+#: pages/templates/aknachhaltigkeit.html:395
+msgid "sich bei Umweltschutzorganisationen engagieren:"
+msgstr "get involved with environmental organizations:"
+
+#: pages/templates/aknachhaltigkeit.html:402
+msgid "Rehkitzrettung"
+msgstr "Fawn rescue"
+
+#: pages/templates/aknachhaltigkeit.html:410
+msgid "Upcycling Ideen"
+msgstr "Upcycling Ideas"
+
+#: pages/templates/aknachhaltigkeit.html:411
+msgid "Hier findest du einige Ideen und Links, wie du Dinge upcyceln kannst."
+msgstr "Here you can find some ideas and links on how to upcycle things."
+
+#: pages/templates/aknachhaltigkeit.html:413
+msgid "Geldbeutel aus Tetrapacks"
+msgstr "Wallet from Tetra packs"
+
+#: pages/templates/aknachhaltigkeit.html:418
+msgid "Blumen aus Eierkartons"
+msgstr "Flowers from egg cartons"
+
+#: pages/templates/aknachhaltigkeit.html:422
+msgid "Kleister aus Mehl"
+msgstr "Paste from flour"
+
+#: pages/templates/aknachhaltigkeit.html:426
+msgid "Pappmaché aus Zeitungen und altem Papier"
+msgstr "Papier-mâché from newspapers and old paper"
+
+#: pages/templates/aknachhaltigkeit.html:433
+msgid "Warum ist Upcycling so wichtig?"
+msgstr "Why is upcycling so important?"
+
+#: pages/templates/aknachhaltigkeit.html:434
+msgid ""
+"Upcycling ist ein wichtiger Bestandteil des nachhaltigen Lebens und "
+"bedeutet, aus alten oder weggeworfenen Materialien etwas Neues und "
+"Wertvolles zu erschaffen. Anders als beim Recycling wird das Material nicht "
+"industriell aufbereitet, sondern direkt wiederverwendet. Das ist besonders "
+"wichtig, weil:"
+msgstr ""
+"Upcycling is an important part of sustainable living and means creating "
+"something new and valuable from old or discarded materials. Unlike "
+"recycling, the material is not processed industrially, but reused directly. "
+"This is particularly important because:"
+
+#: pages/templates/aknachhaltigkeit.html:436
+msgid "dadurch weniger Müll produziert wird"
+msgstr "less waste is produced"
+
+#: pages/templates/aknachhaltigkeit.html:437
+msgid "keine zusätzliche Energie für die Aufbereitung benötigt wird"
+msgstr "no additional energy is needed for processing"
+
+#: pages/templates/aknachhaltigkeit.html:438
+msgid "wertvolle Ressourcen geschont werden"
+msgstr "valuable resources are conserved"
+
+#: pages/templates/aknachhaltigkeit.html:439
+msgid "es eine kreative Möglichkeit ist, Geld zu sparen"
+msgstr "it is a creative way to save money"
+
+#: pages/templates/aknachhaltigkeit.html:440
+msgid "jeder mitmachen und einen Beitrag zum Umweltschutz leisten kann"
+msgstr "everyone can participate and contribute to environmental protection"
+
+#: pages/templates/aknachhaltigkeit.html:442
+msgid ""
+"Durch Upcycling können wir zeigen, dass \"Müll\" oft gar kein Müll ist, "
+"sondern wertvolles Material für neue, schöne und nützliche Dinge. Das hilft "
+"nicht nur der Umwelt, sondern macht auch noch Spaß!"
+msgstr "Through upcycling, we can show that \"trash\" is often not trash at all, but "
+"valuable material for new, beautiful and useful things. This not only helps the "
+"environment but also is fun!"
+
+#: pages/templates/aknachhaltigkeit.html:451
+msgid "Wie viel Gramm CO2 stößt dein Auto pro 100 Kilometer aus?"
+msgstr "How many grams of CO2 does your car emit per 100 kilometers?"
+
+#: pages/templates/aknachhaltigkeit.html:453
+msgid "Richtwerte"
+msgstr "Reference values"
+
+#: pages/templates/aknachhaltigkeit.html:456
+msgid "Wie viele Kilometer bist du mit dem Fahrrad gefahren?"
+msgstr "How many kilometers did you cycle?"
+
+#: pages/templates/aknachhaltigkeit.html:459
+msgid "Berechnen"
+msgstr "Calculate"
+
+#: pages/templates/aknachhaltigkeit.html:481
+msgid ""
+"Bitte gib gültige Zahlen für den CO2-Ausstoß und die gefahrenen Kilometer "
+"ein."
+msgstr ""
+"Please enter valid numbers for the CO2 emissions and the kilometers driven."
+
+#: pages/templates/aknachhaltigkeit.html:487
+#, fuzzy, python-format
+#| msgid ""
+#| "Du hast %(gespart)s Gramm CO2 im Vergleich zu einer Autofahrt gespart!\n"
+#| "\n"
+#| "Bereits ca. 0,2 Gramm CO2 in einem Liter Luft zu Kopfschmerzen führen!"
+msgid ""
+"Du hast %(gespart)s\n"
+"                        Gramm CO2 im Vergleich zu einer Autofahrt gespart!"
+"\\n\\nBereits ca. 0, 2 Gramm CO2 in einem Liter\n"
+"                        Luft zu Kopfschmerzen führen!"
+msgstr ""
+"You have saved %(gespart)s grams of CO2 compared to a car trip!\n"
+"\n"
+"Already about 0.2 grams of CO2 in one liter of air can cause headaches!"
+
+#: pages/templates/aknachhaltigkeit.html:498
+msgid "Wie funktioniert das Spiel?"
+msgstr "How does the game work?"
+
+#: pages/templates/aknachhaltigkeit.html:501
+msgid "Ziel:"
+msgstr "Goal:"
+
+#: pages/templates/aknachhaltigkeit.html:501
+msgid "Sammle alle Müllteile ein, die auf dich zukommen!"
+msgstr "Collect all the trash pieces that come towards you!"
+
+#: pages/templates/aknachhaltigkeit.html:503
+#: pages/templates/aknachhaltigkeit.html:514
+msgid "Desktop:"
+msgstr "Desktop:"
+
+#: pages/templates/aknachhaltigkeit.html:503
+msgid "Drücke die Leertaste um hochzufliegen"
+msgstr "Press the spacebar to fly up"
+
+#: pages/templates/aknachhaltigkeit.html:504
+#: pages/templates/aknachhaltigkeit.html:515
+msgid "Handy:"
+msgstr "Mobile:"
+
+#: pages/templates/aknachhaltigkeit.html:504
+msgid "Tippe auf das Spielfeld um hochzufliegen"
+msgstr "Tap on the playing field to fly up"
+
+#: pages/templates/aknachhaltigkeit.html:507
+msgid "Spiel Starten"
+msgstr "Start Game"
+
+#: pages/templates/aknachhaltigkeit.html:514
+msgid "Leertaste zum Fliegen"
+msgstr "Spacebar to fly"
+
+#: pages/templates/aknachhaltigkeit.html:515
+msgid "Tippe auf das Spielfeld"
+msgstr "Tap on the playing field"
+
+#: pages/templates/aknachhaltigkeit.html:516
+msgid "Neustarten"
+msgstr "Restart"
+
+#: pages/templates/aknachhaltigkeit.html:656
+msgid "Score"
+msgstr "Score"
+
+#: pages/templates/aknachhaltigkeit.html:669
+msgid "Mobilitätsumfrage"
+msgstr "Mobility survey"
+
+#: pages/templates/aknachhaltigkeit.html:670
+msgid ""
+"Damit wir den ökologischen Fußabdruck unserer Schule berechnen können, "
+"müssen wir zuerst eine Mobilitätsumfrage mit allen Schülerinnen, Schülern, "
+"Lehrkräften und Mitarbeitenden durchführen. Bitte unterstütze uns und nimm "
+"an der Umfrage teil, wenn du eine Schülerin, ein Schüler, eine Lehrkraft, "
+"ein Mitarbeiter oder eine Mitarbeiterin des GMF bist."
+msgstr ""
+"In order to calculate the ecological footprint of our school, we first need "
+"to conduct a mobility survey with all students, teachers and staff. Please "
+"support us and participate in the survey if you are a student, teacher or "
+"staff member of GMF."
+
+#: pages/templates/aknachhaltigkeit.html:671
+msgid "Zur Mobilitätsumfrage für ..."
+msgstr "To the mobility survey for ..."
+
+#: pages/templates/aknachhaltigkeit.html:676
+msgid "Schülerinnen und Schüler"
+msgstr "Students"
+
+#: pages/templates/aknachhaltigkeit.html:678
+#: pages/templates/aknachhaltigkeit.html:685
+msgid "QR-Code"
+msgstr "QR Code"
+
+#: pages/templates/aknachhaltigkeit.html:683
+msgid "Lehrkräfte und Mitarbeitende"
+msgstr "Teachers and staff"
+
+#: pages/templates/mobile_apps.html:7
+msgid "Lade dir die mobilen App von ClimateQuest herunter"
+msgstr "Download the ClimateQuest mobile app"
+
+#: pages/templates/mobile_apps.html:10
+msgid "Mobile Apps - ClimateQuest"
+msgstr "Mobile Apps - ClimateQuest"
+
+#: pages/templates/mobile_apps.html:13
+msgid "Mobile Apps"
+msgstr "Mobile Apps"
+
+#: pages/templates/mobile_apps.html:32
+msgid "iOS"
+msgstr "iOS"
+
+#: pages/templates/mobile_apps.html:33
+msgid "Wenn du ein iPhone hast und auf den App Store zugreifen kannst."
+msgstr "If you have an iPhone and can access the App Store."
+
+#: pages/templates/mobile_apps.html:42
+msgid ""
+"Wenn du ein iPhone, iPad oder MacBook hast, kannst du dir ClimateQuest im "
+"AppStore herunterladen:"
+msgstr ""
+"If you have an iPhone, iPad or MacBook, you can download ClimateQuest from "
+"the App Store:"
+
+#: pages/templates/mobile_apps.html:46
+msgid "Download on the App Store"
+msgstr "Download on the App Store"
+
+#: pages/templates/mobile_apps.html:55
+msgid "Android"
+msgstr "Android"
+
+#: pages/templates/mobile_apps.html:56
+msgid "Wenn du ein Android-Handy hast"
+msgstr "If you have an Android phone"
+
+#: pages/templates/mobile_apps.html:65
+msgid ""
+"Momentan ist ClimateQuest noch im PlayStore verfügbar, dies wird sich "
+"allerdings bald ändern! Wie benachrichtigen alle User, sobald es soweit ist. "
+"Bis dahin kannst du die App als Webseite nutzen oder einen kleinen "
+"Workaround nutzen, der in Alle anderen Betriebssysteme erklärt ist."
+msgstr ""
+"Currently, ClimateQuest is still available in the Play Store, but this will "
+"change soon! We will notify all users as soon as it happens. Until then, you "
+"can use the app as a website or use a small workaround explained in All "
+"other operating systems."
+
+#: pages/templates/mobile_apps.html:73
+msgid "Alle anderen Betriebssysteme"
+msgstr "All other operating systems"
+
+#: pages/templates/mobile_apps.html:74
+msgid ""
+"Wenn du ein anderes Betriebssystem nutzt oder die App nicht über den App / "
+"Play Store installieren willst / kannst."
+msgstr ""
+"If you use a different operating system or do not want / cannot install the "
+"app via the App / Play Store."
+
+#: pages/templates/mobile_apps.html:84
+msgid ""
+"Wenn du weder Zugriff auf den AppStore noch auf den PlayStore hast, kannst "
+"du die App entweder weiterhin als Webseite nutzen oder über einen kleinen "
+"Workaround installieren. Das geht so:"
+msgstr ""
+"If you have access to neither the App Store nor the Play Store, you can "
+"either continue to use the app as a website or install it via a small "
+"workaround. Here's how:"
+
+#: pages/templates/mobile_apps.html:86
+msgid ""
+"Öffne die Webseite über Safari (iOS) oder Chrome (Android). Der Workaround "
+"funktioniert aber auch mit den meisten anderen Browsern."
+msgstr ""
+"Open the website via Safari (iOS) or Chrome (Android). The workaround also "
+"works with most other browsers."
+
+#: pages/templates/mobile_apps.html:87
+#, fuzzy
+#| msgid ""
+#| "Klicke auf die drei Punkte und dann auf Zum Home-Bildschirm hinzufügen "
+#| "(Bei Safari findest du diese Option erst, wenn du auf Teilen gehst)"
+msgid ""
+"Klicke auf die drei Punkte und dann Zum Home-Bildschirm hinzufügen (Bei "
+"Safari findest du diese Option erst, wenn du auf Teilen gehst)"
+msgstr ""
+"Click on the three dots and then on Add to Home Screen (In Safari, you will "
+"find this option only after clicking on Share)"
+
+#: pages/templates/mobile_apps.html:88
+msgid "Klicke auf Installieren bzw. Hinzufügen"
+msgstr "Click on Install or Add"
+
+#: pages/templates/mobile_apps.html:89
+msgid ""
+"Die App erscheint nun auf dem Home-Bildschirm. Wenn du sie öffnest, siehst "
+"du keine Browser-Elemente mehr und kannst sogar, wenn du es erlaubst, Push-"
+"Nachrichten erhalten!"
+msgstr ""
+"The app now appears on the home screen. When you open it, you will no longer "
+"see browser elements and can even receive push notifications if you allow it!"
+
+#~ msgid "Schüler:innen wurde der Besuch von"
+#~ msgstr "Students were enabled to visit"
+
+#~ msgid "Fridays-for-Future"
+#~ msgstr "Fridays-for-Future"
+
+#~ msgid "ermöglicht"
+#~ msgstr "enabled"
+
+#~ msgid "Durch Upcycling können wir zeigen, dass "
+#~ msgstr "Through upcycling, we can show that"

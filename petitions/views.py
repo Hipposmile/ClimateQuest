@@ -152,6 +152,7 @@ def edit_petition(request, petition_id):
             for user in petition.signs.all():
                 create_notification(request,
                                     f"Der Petition {petition.title}, die du unterschrieben hast, wurde ein Update hinzugefügt!",
+                                    f"The petition {petition.title}, which you signed, has a new update!",
                                     user,
                                     reverse('petition_detail', args=(petition_id,)))
 
@@ -184,6 +185,7 @@ def edit_petition(request, petition_id):
                 for user in petition.signs.all():
                     create_notification(request,
                                         f"Von der Petition {petition.title}, die du unterschrieben hast, wurde der Erfolg gelöscht!",
+                                        f"The petition {petition.title}, which you signed, was deleted the success!",
                                         user,
                                         reverse('petition_detail', args=(petition_id,)))
             else:
@@ -193,6 +195,7 @@ def edit_petition(request, petition_id):
                 for user in petition.signs.all():
                     create_notification(request,
                                         f"Die Petition {petition.title}, die du unterschrieben hast, war erfolgreich!",
+                                        f"The petition {petition.title}, which you signed, was successful!",
                                         user,
                                         reverse('petition_detail', args=(petition_id,)))
 

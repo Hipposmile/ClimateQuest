@@ -6,16 +6,13 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.utils import timezone
 from dotenv import load_dotenv
 
 from aktionen.models import Aktion, AktionenListe
-from artikel.models import Artikel
 from community.models import Community
 from core.all_messages import all_messages
 from events.models import Event
 from family.models import Family
-from forum.models import ForumPost
 from home.models import Benachrichtigung
 from personals.models import TreeCodes
 from utils.functions import get_streak_from_user, get_klimapunkte_from_likes, get_klimapunkte, \
@@ -34,9 +31,11 @@ def home(request):
         klimapunkte += get_klimapunkte_from_likes(user)
         klimapunkte_gesamt += klimapunkte
         user_count += 1
+    klimapunkte_gesamt = int(klimapunkte_gesamt)
+    co2 = int(klimapunkte_gesamt / 1000)
     tree_count = TreeCodes.objects.filter(planted=True).count()
     return render(request, './home.html',
-                  {'klimapunkte': klimapunkte_gesamt, 'user_count': user_count, 'tree_count': tree_count})
+                  {'klimapunkte': klimapunkte_gesamt, 'user_count': user_count, 'co2': co2, 'tree_count': tree_count})
 
 
 def dashboard(request):
@@ -66,29 +65,17 @@ def dashboard(request):
     communities_with_user_families = []
 
     for community in communities:
-        families_in_community = community.members.all()  # alle Families in dieser Community
-        families_user_belongs_to = families_in_community & families  # Schnittmenge
+        families_in_community = community.members.all()
+        families_user_belongs_to = families_in_community & families
         communities_with_user_families.append({'community': community, 'families': families_user_belongs_to})
 
     families = families[:2]
-
-    created_events = Event.objects.filter(creator=request.user, date_time__gte=timezone.now()).order_by('-date_time')[
-        :2]
-    events = request.user.events.filter(date_time__gte=timezone.now()).order_by('-date_time')[:2]
-
-    created_artikel = Artikel.objects.filter(creator=request.user).order_by('-date_time')[:2]
-    artikel = request.user.artikel_like.all().order_by('-date_time')[:2]
-
-    created_forum_posts = ForumPost.objects.filter(creator=request.user).order_by('-date_time')[:2]
-    forum_posts = ForumPost.objects.filter(answers__creator=request.user).distinct().order_by('-date_time')[:2]
     return render(request, './dashboard.html',
                   {'weekly_goal': weekly_goal, 'weekly_goal_progress_percent': weekly_goal_progress_percent,
                    'weekly_klimapunkte': weekly_klimapunkte, 'streak': streak,
-                   'perfect_week_progress': perfect_week_progress, "perfect_week": perfect_week,
+                   'perfect_week_progress': perfect_week_progress, 'perfect_week': perfect_week,
                    'aktionen': aktionen, 'klimapunkte': klimapunkte, 'level': level, 'families': families,
-                   'communities_with_user_families': communities_with_user_families, 'created_events': created_events,
-                   'events': events, 'created_artikel': created_artikel, 'artikel': artikel,
-                   'created_forum_posts': created_forum_posts, 'forum_posts': forum_posts})
+                   'communities_with_user_families': communities_with_user_families})
 
 
 @login_required
@@ -99,17 +86,18 @@ def admin(request):
     if request.method == 'POST':
         receiver = request.POST.get('receiver')
         name = request.POST.get('name')
-        msg = request.POST.get('msg')
+        msg_de = request.POST.get('msg_de')
+        msg_en = request.POST.get('msg_en')
         url = request.POST.get('url')
 
         if url is None or url == "":
             url = reverse('dashboard')
 
-        if len(msg) > 500:
+        if len(msg_de) > 500 or len(msg_en) > 500:
             messages.error(request, all_messages["too_long_input"])
             return redirect('admin')
 
-        if not receiver or not name or not msg:
+        if not receiver or not name or not msg_de or not msg_en:
             messages.error(request, all_messages["missing_required_inputs"])
             return redirect('admin')
 
@@ -119,7 +107,7 @@ def admin(request):
             except User.DoesNotExist:
                 messages.error(request, all_messages["admin__user_not_found"])
                 return redirect('admin')
-            create_notification(request, msg, user, url)
+            create_notification(request, msg_de, msg_en, user, url)
             messages.success(request, all_messages["admin__successfully_sent_notification"])
         elif receiver == 'family-members':
             try:
@@ -128,7 +116,7 @@ def admin(request):
                 messages.error(request, all_messages["admin__family_not_found"])
                 return redirect('admin')
             for user in family.members.all():
-                create_notification(request, msg, user, url)
+                create_notification(request, msg_de, msg_en, user, url)
             messages.success(request, all_messages["admin__successfully_sent_notification"])
         elif receiver == 'community-members':
             try:
@@ -138,7 +126,7 @@ def admin(request):
                 return redirect('admin')
             for family in community.members.all():
                 for user in family.members.all():
-                    create_notification(request, msg, user, url)
+                    create_notification(request, msg_de, msg_en, user, url)
             messages.success(request, all_messages["admin__successfully_sent_notification"])
         elif receiver == 'event-participants':
             try:
@@ -147,7 +135,7 @@ def admin(request):
                 messages.error(request, all_messages["admin__event_not_found"])
                 return redirect('admin')
             for participant in event.participants.all():
-                create_notification(request, msg, participant, url)
+                create_notification(request, msg_de, msg_en, participant, url)
 
             messages.success(request, all_messages["admin__successfully_sent_notification"])
         else:

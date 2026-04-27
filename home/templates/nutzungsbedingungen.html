@@ -1,32 +1,33 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block meta %}
     <meta name="description"
-          content="Die Nutzungsbedingungen von ClimateQuest sollen sicherstellen, dass die Plattform nicht missbraucht wird, sondern nur dem Ziel folgt, dem Klima tatsächlich zu helfen.">
+          content="{% trans 'Die Nutzungsbedingungen von ClimateQuest sollen sicherstellen, dass die Plattform nicht missbraucht wird, sondern nur dem Ziel folgt, dem Klima tatsächlich zu helfen.' %}">
 {% endblock %}
-{% block title %}Nutzungsbedingungen{% endblock %}
+{% block title %}{% trans "Nutzungsbedingungen" %}{% endblock %}
 
 {% block content %}
-    <h1>Nutzungsbedingungen</h1>
+    <h1>{% trans "Nutzungsbedingungen" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
 
-    <h2>1. Allgemeines</h2>
-    <p>Diese App bietet registrierten Nutzern die Möglichkeit, eigene Artikel, Fragen, Antworten, Kommentare
+    <h2>{% trans "1. Allgemeines" %}</h2>
+    {% blocktrans %}Diese App bietet registrierten Nutzern die Möglichkeit, eigene Artikel, Fragen, Antworten, Kommentare
         und Events zu veröffentlichen sowie Aktionen hinzuzufügen und dafür Punkte zu erhalten. Die Nutzung der App
         setzt die Einhaltung dieser Nutzungsbedingungen voraus. Bei
-        Verstößen behalten wir uns das Recht vor, Nutzerkonten zu sperren oder zu löschen.</p>
-    <p>Mit der Registrierung kommt ein unentgeltlicher Nutzungsvertrag zwischen dem Nutzer und dem Betreiber zustande.
-        Ein Anspruch auf Registrierung oder dauerhafte Nutzung der Plattform besteht nicht.</p>
-    <p>Der Nutzer kann seinen Account jederzeit ohne Angabe von Gründen löschen.
+        Verstößen behalten wir uns das Recht vor, Nutzerkonten zu sperren oder zu löschen.{% endblocktrans %}
+    {% blocktrans %}Mit der Registrierung kommt ein unentgeltlicher Nutzungsvertrag zwischen dem Nutzer und dem Betreiber zustande.
+        Ein Anspruch auf Registrierung oder dauerhafte Nutzung der Plattform besteht nicht.{% endblocktrans %}
+    {% blocktrans %}Der Nutzer kann seinen Account jederzeit ohne Angabe von Gründen löschen.
         Der Betreiber kann den Nutzungsvertrag ordentlich mit einer Frist von 2 Wochen ab Zugang der Kündigungserklärung
         in Textform (z. B. per E-Mail) kündigen.
         Das Recht zur
-        außerordentlichen Kündigung aus wichtigem Grund (§ 314 BGB) bleibt unberührt.</p>
-    <p><strong>Alle Inhalte müssen mit Klimaschutz zu tun haben.</strong></p>
-    <p>Beim Hochladen von Inhalten sind die Urheberrechte Dritter zu beachten. Es dürfen keine Inhalte hochgeladen
+        außerordentlichen Kündigung aus wichtigem Grund (§ 314 BGB) bleibt unberührt.{% endblocktrans %}
+    {% blocktrans %}<strong>Alle Inhalte müssen mit Klimaschutz zu tun haben.</strong>{% endblocktrans %}
+    {% blocktrans %}Beim Hochladen von Inhalten sind die Urheberrechte Dritter zu beachten. Es dürfen keine Inhalte hochgeladen
         werden, für die nicht die entsprechenden Nutzungsrechte vorliegen.
         Mit dem Hochladen von Inhalten räumt der Nutzer dem Betreiber ein zeitlich, räumlich und inhaltlich
         unbeschränktes, unentgeltliches, einfaches Nutzungsrecht an den Inhalten ein. Dieses umfasst insbesondere das
@@ -34,120 +35,120 @@
         Speicherung, Vervielfältigung, Veröffentlichung, öffentlichen Zugänglichmachung, Bearbeitung, Verwendung im
         Rahmen der App und verbundener Angebote sowie zur technischen Anpassung im Rahmen der Plattform. Eine
         Übertragung an Dritte erfolgt nur, soweit dies zur
-        Bereitstellung der Plattform erforderlich ist. Das Urheberrecht verbleibt beim jeweiligen Nutzer.</p>
-    <p>Sofern Nutzer noch nicht volljährig sind, dürfen sie die App nur nutzen, wenn eine erziehungsberechtigte
+        Bereitstellung der Plattform erforderlich ist. Das Urheberrecht verbleibt beim jeweiligen Nutzer.{% endblocktrans %}
+    {% blocktrans %}Sofern Nutzer noch nicht volljährig sind, dürfen sie die App nur nutzen, wenn eine erziehungsberechtigte
         Person der Geltung dieser Nutzungsbedingungen zugestimmt hat. Mit der Nutzung bestätigen Nutzer, hierzu
-        berechtigt zu sein.</p>
-    <p>Inhalte und Bilder dürfen nicht gegen geltendes Recht der Bundesrepublik Deutschland verstoßen. Unzulässig sind
+        berechtigt zu sein.{% endblocktrans %}
+    {% blocktrans %}Inhalte und Bilder dürfen nicht gegen geltendes Recht der Bundesrepublik Deutschland verstoßen. Unzulässig sind
         insbesondere
         strafbare Inhalte, rassistische, antisemitische, diskriminierende, pornografische oder gewaltverherrlichende
-        Inhalte sowie Inhalte, die Rechte Dritter verletzen.</p>
-    <p>Es gilt das Recht der Bundesrepublik Deutschland. Für Kaufleute sowie für Nutzer ohne allgemeinen Gerichtsstand
-        in Deutschland ist ausschließlicher Gerichtsstand der Sitz des Betreibers.</p>
-    <p>Aus Gründen der besseren Lesbarkeit wird die männliche Form verwendet; sie gilt gleichermaßen für alle
-        Geschlechter.</p>
+        Inhalte sowie Inhalte, die Rechte Dritter verletzen.{% endblocktrans %}
+    {% blocktrans %}Es gilt das Recht der Bundesrepublik Deutschland. Für Kaufleute sowie für Nutzer ohne allgemeinen Gerichtsstand
+        in Deutschland ist ausschließlicher Gerichtsstand der Sitz des Betreibers.{% endblocktrans %}
+    {% blocktrans %}Aus Gründen der besseren Lesbarkeit wird die männliche Form verwendet; sie gilt gleichermaßen für alle
+        Geschlechter.{% endblocktrans %}
 
-    <h2>2. Nutzerpflichten</h2>
+    <h2>{% trans "2. Nutzerpflichten" %}</h2>
 
-    <h3>2.1 Aktionen</h3>
+    <h3>{% trans "2.1 Aktionen" %}</h3>
     <ul>
-        <li>Die Angaben müssen nach bestem Wissen und Gewissen gemacht werden.</li>
+        <li>{% trans "Die Angaben müssen nach bestem Wissen und Gewissen gemacht werden." %}</li>
     </ul>
 
-    <h3>2.2 Events</h3>
+    <h3>{% trans "2.2 Events" %}</h3>
     <ul>
-        <li>Das Event muss <strong>ernsthaft geplant sein</strong>.</li>
-        <li>Fiktive oder erfundene Events sind nicht erlaubt.</li>
-        <li>Die Erstellerin oder der Ersteller muss beabsichtigen, selbst an dem Event teilzunehmen.</li>
-        <li>Events dürfen keine Werbung, Affiliate-Links oder ähnliche kommerzielle Absichten und Inhalte enthalten.
-        </li>
+        <li>{% trans "Das Event muss ernsthaft geplant sein." %}</li>
+        <li>{% trans "Fiktive oder erfundene Events sind nicht erlaubt." %}</li>
+        <li>{% trans "Die Erstellerin oder der Ersteller muss beabsichtigen, selbst an dem Event teilzunehmen." %}</li>
+        <li>{% blocktrans %}Events dürfen keine Werbung, Affiliate-Links oder ähnliche kommerzielle Absichten und Inhalte enthalten.
+        {% endblocktrans %}</li>
     </ul>
 
-    <h3>2.3 Artikel</h3>
+    <h3>{% trans "2.3 Artikel" %}</h3>
     <ul>
-        <li>Aussagen sollen durch geeignete und nachvollziehbare Quellen belegt werden, welche im Artikel auch genau
+        <li>{% blocktrans %}Aussagen sollen durch geeignete und nachvollziehbare Quellen belegt werden, welche im Artikel auch genau
             angegeben werden müssen (z.B. Internetseite, Europäische Kommission, Folgen des
             Klimawandels, https://climate.ec.europa.eu/climate-change/consequences-climate-change_de, zuletzt aufgerufen: 06.03.2026)
-        </li>
-        <li>Artikel dürfen keine Werbung, Affiliate-Links oder ähnliche kommerzielle Absichten und Inhalte enthalten.
-        </li>
-        <li>Spekulative, irreführende oder beleidigende Inhalte sind untersagt.</li>
+        {% endblocktrans %}</li>
+        <li>{% blocktrans %}Artikel dürfen keine Werbung, Affiliate-Links oder ähnliche kommerzielle Absichten und Inhalte enthalten.
+        {% endblocktrans %}</li>
+        <li>{% trans "Spekulative, irreführende oder beleidigende Inhalte sind untersagt." %}</li>
     </ul>
 
-    <h3>2.4 Forum</h3>
+    <h3>{% trans "2.4 Forum" %}</h3>
     <ul>
-        <li>Fragen müssen <strong>ernst gemeint</strong> sein und einen sachlichen Hintergrund haben.</li>
-        <li>Antworten müssen nach bestem Wissen und Gewissen erfolgen und dürfen nicht vorsätzlich falsch oder
+        <li>{% trans "Fragen müssen ernst gemeint sein und einen sachlichen Hintergrund haben." %}</li>
+        <li>{% blocktrans %}Antworten müssen nach bestem Wissen und Gewissen erfolgen und dürfen nicht vorsätzlich falsch oder
             irreführend sein.
-        </li>
-        <li>Spekulative, irreführende oder beleidigende Inhalte sind untersagt.</li>
-        <li>Forumsbeiträge oder -antworten dürfen keine Werbung, Affiliate-Links oder ähnliche kommerzielle Absichten
+        {% endblocktrans %}</li>
+        <li>{% trans "Spekulative, irreführende oder beleidigende Inhalte sind untersagt." %}</li>
+        <li>{% blocktrans %}Forumsbeiträge oder -antworten dürfen keine Werbung, Affiliate-Links oder ähnliche kommerzielle Absichten
             und Inhalte enthalten.
-        </li>
+        {% endblocktrans %}</li>
     </ul>
 
-    <h3>2.5 Petitionen</h3>
+    <h3>{% trans "2.5 Petitionen" %}</h3>
     <ul>
-        <li>Petitionen müssen einen sachlichen Bezug zum Klimaschutz haben.</li>
-        <li>Die dargestellten Sachverhalte müssen nach bestem Wissen wahrheitsgemäß sein.</li>
-        <li>Unzulässig sind insbesondere falsche Tatsachenbehauptungen, Schmähkritik oder Aufrufe zu rechtswidrigem
+        <li>{% trans "Petitionen müssen einen sachlichen Bezug zum Klimaschutz haben." %}</li>
+        <li>{% trans "Die dargestellten Sachverhalte müssen nach bestem Wissen wahrheitsgemäß sein." %}</li>
+        <li>{% blocktrans %}Unzulässig sind insbesondere falsche Tatsachenbehauptungen, Schmähkritik oder Aufrufe zu rechtswidrigem
             Verhalten.
-        </li>
-        <li>Der Ersteller ist für Inhalt und rechtliche Zulässigkeit der Petition verantwortlich.</li>
+        {% endblocktrans %}</li>
+        <li>{% trans "Der Ersteller ist für Inhalt und rechtliche Zulässigkeit der Petition verantwortlich." %}</li>
     </ul>
 
 
-    <h3>2.6 Kommentare</h3>
+    <h3>{% trans "2.6 Kommentare" %}</h3>
     <ul>
-        <li>Kommentare müssen <strong>konstruktiv</strong> und <strong>respektvoll</strong> formuliert sein.</li>
-        <li>Beleidigende, diskriminierende oder herabwürdigende Inhalte sind strikt untersagt.</li>
-        <li>Kommentare dürfen keine Werbung, Affiliate-Links oder ähnliche kommerzielle Absichten und Inhalte enthalten.
-        </li>
+        <li>{% trans "Kommentare müssen konstruktiv und respektvoll formuliert sein." %}</li>
+        <li>{% trans "Beleidigende, diskriminierende oder herabwürdigende Inhalte sind strikt untersagt." %}</li>
+        <li>{% blocktrans %}Kommentare dürfen keine Werbung, Affiliate-Links oder ähnliche kommerzielle Absichten und Inhalte enthalten.
+        {% endblocktrans %}</li>
     </ul>
 
     <hr>
 
-    <h2>3. Moderation und Sanktionen</h2>
-    <p>Bei Verstößen gegen diese Nutzungsbedingungen behalten wir uns folgende Maßnahmen vor:</p>
+    <h2>{% trans "3. Moderation und Sanktionen" %}</h2>
+    {% blocktrans %}Bei Verstößen gegen diese Nutzungsbedingungen behalten wir uns folgende Maßnahmen vor:{% endblocktrans %}
     <ul>
-        <li>Löschung einzelner Inhalte</li>
-        <li>Verwarnung des Nutzers</li>
-        <li>Sperrung oder vollständige Löschung des Nutzerkontos</li>
+        <li>{% trans "Löschung einzelner Inhalte" %}</li>
+        <li>{% trans "Verwarnung des Nutzers" %}</li>
+        <li>{% trans "Sperrung oder vollständige Löschung des Nutzerkontos" %}</li>
     </ul>
-    <p>Nutzer können bei Verstoß gegen die Nutzungsbedingungen jederzeit von anderen Nutzern auf deren Nutzerseite
+    {% blocktrans %}Nutzer können bei Verstoß gegen die Nutzungsbedingungen jederzeit von anderen Nutzern auf deren Nutzerseite
         gemeldet
         werden. Meldungen werden geprüft. Über Maßnahmen entscheidet der Betreiber nach pflichtgemäßem Ermessen. Ein
         Anspruch auf eine bestimmte Maßnahme besteht nicht. Das unbegründete Melden anderer Nutzer stellt allerdings
         auch
         einen Verstoß gegen die Nutzungsbedingungen
-        dar und kann entsprechend geahndet werden.</p>
-    <p>Maßnahmen erfolgen unter Berücksichtigung der Schwere, Häufigkeit und des Verschuldensgrades des Verstoßes sowie
-        unter Wahrung der Verhältnismäßigkeit.</p>
+        dar und kann entsprechend geahndet werden.{% endblocktrans %}
+    {% blocktrans %}Maßnahmen erfolgen unter Berücksichtigung der Schwere, Häufigkeit und des Verschuldensgrades des Verstoßes sowie
+        unter Wahrung der Verhältnismäßigkeit.{% endblocktrans %}
 
     <hr>
 
-    <h2>Haftung für Nutzerinhalte</h2>
-    <p>Für Inhalte, die von Nutzern erstellt und veröffentlicht werden, ist ausschließlich der jeweilige Nutzer
+    <h2>{% trans "Haftung für Nutzerinhalte" %}</h2>
+    {% blocktrans %}Für Inhalte, die von Nutzern erstellt und veröffentlicht werden, ist ausschließlich der jeweilige Nutzer
         verantwortlich. Der Betreiber macht sich diese Inhalte nicht zu eigen. Der Betreiber ist nicht verpflichtet, von
-        Nutzern eingestellte Inhalte vorab zu prüfen.</p>
-    <p>Bei Kenntnis von Rechtsverstößen werden entsprechende Inhalte unverzüglich geprüft und gegebenenfalls
-        entfernt.</p>
+        Nutzern eingestellte Inhalte vorab zu prüfen.{% endblocktrans %}
+    {% blocktrans %}Bei Kenntnis von Rechtsverstößen werden entsprechende Inhalte unverzüglich geprüft und gegebenenfalls
+        entfernt.{% endblocktrans %}
 
     <hr>
 
-    <h2>Kontaktstelle und Meldungen (DSA)</h2>
-    <p>Nutzer können rechtswidrige Inhalte über die bereitgestellte Meldefunktion anzeigen. Meldungen werden geprüft und
-        angemessen bearbeitet.</p>
-    <p>Betroffene Nutzer werden über Moderationsentscheidungen informiert und erhalten eine Begründung.</p>
-    <p>Als Kontaktstelle gemäß Art. 11 DSA erreichen Sie uns unter: <a href="mailto:kontakt@climate-quest.de">kontakt@climate-quest.de</a>
-    </p>
+    <h2>{% trans "Kontaktstelle und Meldungen (DSA)" %}</h2>
+    {% blocktrans %}Nutzer können rechtswidrige Inhalte über die bereitgestellte Meldefunktion anzeigen. Meldungen werden geprüft und
+        angemessen bearbeitet.{% endblocktrans %}
+    {% blocktrans %}Betroffene Nutzer werden über Moderationsentscheidungen informiert und erhalten eine Begründung.{% endblocktrans %}
+    {% blocktrans %}Als Kontaktstelle gemäß Art. 11 DSA erreichen Sie uns unter: <a href="mailto:kontakt@climate-quest.de">kontakt@climate-quest.de</a>
+    {% endblocktrans %}
 
     <hr>
 
-    <h2>4. Änderungen der Nutzungsbedingungen</h2>
-    <p>Wir behalten uns vor, diese Nutzungsbedingungen mit Wirkung für die Zukunft zu ändern, sofern hierfür ein
+    <h2>{% trans "4. Änderungen der Nutzungsbedingungen" %}</h2>
+    {% blocktrans %}Wir behalten uns vor, diese Nutzungsbedingungen mit Wirkung für die Zukunft zu ändern, sofern hierfür ein
         sachlicher Grund besteht (z.B. Gesetzesänderungen oder Weiterentwicklung der Plattform). Nutzer werden
         rechtzeitig informiert. Widerspricht der Nutzer nicht innerhalb von 4 Wochen, gelten die Änderungen als
         angenommen. In der Änderungsmitteilung wird der Nutzer ausdrücklich auf die Bedeutung seines Schweigens
-        hingewiesen.</p>
+        hingewiesen.{% endblocktrans %}
 {% endblock %}

@@ -1,16 +1,17 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block meta %}
-    <meta name="description" content="Suchen Sie nach bestimmten Usern von ClimateQuest">
+    <meta name="description" content="{% trans 'Suchen Sie nach bestimmten Usern von ClimateQuest' %}">
 {% endblock %}
 
-{% block title %}User {{ user_expanded.user.username }}{% endblock %}
+{% block title %}{% trans "User" %} {{ user_expanded.user.username }}{% endblock %}
 
 {% block content %}
     {% with username=user_expanded.user.username %}
 
-        <h1>User {{ username }} {% if request.user == user_expanded.user %}(Du){% endif %}</h1>
+        <h1>{% trans "User" %} {{ username }} {% if request.user == user_expanded.user %}({% trans "Du" %}){% endif %}</h1>
 
         {% if messages %}
             {% for message in messages %}
@@ -18,38 +19,38 @@
             {% endfor %}
         {% endif %}
 
-        <p><strong>{{ all_klimapunkte|floatformat:-4 }}</strong> Klimapunkte besitzt {{ username }}</p>
-        <p><strong>#{{ worldwide_ranking_rank }}</strong> ist {{ username }} im worldwide ranking</p>
+        <p><strong>{{ all_klimapunkte|floatformat:-4 }}</strong> {% trans "Klimapunkte besitzt" %} {{ username }}</p>
+        <p><strong>#{{ worldwide_ranking_rank }}</strong> {% trans "ist" %} {{ username }} {% trans "im worldwide ranking" %}</p>
 
         <hr>
 
         {% if not user_expanded.user.usererweitert.allows_data_view %}
-            <p>{{ username }}<i> hat die Ansicht der Daten gesperrt.</i></p>
+            <p>{{ username }}<i> {% trans "hat die Ansicht der Daten gesperrt." %}</i></p>
         {% else %}
             <div class="btns">
                 <a href="{% url 'klimapunkte_view' user_expanded.user.id %}">
-                    <button class="btn">Klimapunkte</button>
+                    <button class="btn">{% trans "Klimapunkte" %}</button>
                 </a>
                 <a href="{% url 'level_view' user_expanded.user.id %}">
-                    <button class="btn">Level</button>
+                    <button class="btn">{% trans "Level" %}</button>
                 </a>
                 <a href="{% url 'history' user_expanded.user.id %}">
-                    <button class="btn">Aktions-Historie</button>
+                    <button class="btn">{% trans "Aktions-Historie" %}</button>
                 </a>
             </div>
         {% endif %}
 
         <hr>
 
-        <h2>Statement</h2>
+        <h2>{% trans "Statement" %}</h2>
         <div class="artikel-content"><p>{{ user_expanded.statement|safe }}</p></div>
 
         <hr>
 
         {% if not user_expanded.user.usererweitert.allows_data_view %}
-            <p>{{ username }}<i> hat die Ansicht der Daten gesperrt.</i></p>
+            <p>{{ username }}<i> {% trans "hat die Ansicht der Daten gesperrt." %}</i></p>
         {% else %}
-            <h2>Wöchentliches Ziel</h2>
+            <h2>{% trans "Wöchentliches Ziel" %}</h2>
             <div class="progress-container">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
@@ -59,9 +60,9 @@
                     max-width: 100%;
                 }
             </style>
-            <p>{{ weekly_klimapunkte|floatformat:-4 }} Klimapunkte bis zum wöchentlichen Ziel von {{ weekly_goal }}
+            <p>{% blocktrans with weekly_klimapunkte=weekly_klimapunkte|floatformat:-4 weekly_goal=weekly_goal %}{{ weekly_klimapunkte }} Klimapunkte bis zum wöchentlichen Ziel von {{ weekly_goal }}
                 Klimapunkten
-                geschafft</p>
+                geschafft{% endblocktrans %}</p>
 
             <hr>
 
@@ -151,7 +152,7 @@
                     }
                 }
             </style>
-            <h2>Streak</h2>
+            <h2>{% trans "Streak" %}</h2>
             <div class="streak-card-container">
                 <div class="streak-card">
                     <div class="streak-icon-wrap">
@@ -159,41 +160,37 @@
                     </div>
 
                     <div class="streak-content">
-                        <span class="streak-label">Aktuelle Streak</span>
+                        <span class="streak-label">{% trans "Aktuelle Streak" %}</span>
 
                         <div class="streak-row">
                             <span class="streak-value">{{ streak }}</span>
-                            <span class="streak-unit">Wochen mit erreichtem wöchentlichen Ziel</span>
+                            <span class="streak-unit">{% trans "Wochen mit erreichtem wöchentlichen Ziel" %}</span>
                         </div>
                     </div>
                 </div>
             </div>
         {% endif %}
 
-        {% if request.user.is_authenticated %}
+        {% if request.user.is_authenticated and request.user != user_expanded.user %}
             <hr>
-            <h2>User melden</h2>
+            <h2>{% trans "User melden" %}</h2>
             <form method="post" class="form-confirm"
-                  data-confirm="Bist du sicher, dass du diesen User melden möchtest.">
+                  data-confirm="{% trans 'Bist du sicher, dass du diesen User melden möchtest.' %}">
                 {% csrf_token %}
-                <label for="reason">Begründung</label>
+                <label for="reason">{% trans "Begründung" %}</label>
                 <textarea id="reason" name="reason" class="quill-editor"></textarea>
-                <button id="report_user" name="report_user" type="submit" class="color-red">User melden</button>
-                <p>Dies wird eine Nachricht mit folgenden Daten an ClimateQuest senden:</p>
+                <button id="report_user" name="report_user" type="submit" class="color-red">{% trans "User melden" %}</button>
+                <p>{% trans "Dies wird eine Nachricht mit folgenden Daten an ClimateQuest senden:" %}</p>
                 <ul>
-                    <li>Dein Userprofil</li>
-                    <li>Das Userprofil, welches du meldest</li>
-                    <li>Deine Begründung</li>
+                    <li>{% trans "Dein Userprofil" %}</li>
+                    <li>{% trans "Das Userprofil, welches du meldest" %}</li>
+                    <li>{% trans "Deine Begründung" %}</li>
                 </ul>
-                <p>Wenn du einen User wegen von ihm erstellten Content meldest, füge bitte alle für das Auffinden dieses
-                    Contents relevanten Informationen wie die URL hinzu.</p>
-                <p>Durch das Melden eines Users erhältst du selbst keine Vorteile.</p>
-                <p>User können vor allem wegen Verstößen gegen die Nutzungsbedingungen gemeldet werden.</p>
+                <p>{% trans "Wenn du einen User wegen von ihm erstellten Content meldest, füge bitte alle für das Auffinden dieses Contents relevanten Informationen wie die URL hinzu." %}</p>
+                <p>{% trans "Durch das Melden eines Users erhältst du selbst keine Vorteile." %}</p>
+                <p>{% trans "User können vor allem wegen Verstößen gegen die Nutzungsbedingungen gemeldet werden." %}</p>
 
-                <p class="color-red">Wenn du User willkürlich und ohne konkrete Begründung meldest, ist auch dies ein
-                    Verstoß
-                    gegen die
-                    Nutzungsbedingungen.</p>
+                <p class="color-red">{% trans "Wenn du User willkürlich und ohne konkrete Begründung meldest, ist auch dies ein Verstoß gegen die Nutzungsbedingungen." %}</p>
             </form>
         {% endif %}
 

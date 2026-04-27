@@ -1,5 +1,8 @@
-import os
 import base64
+import os
+import re
+
+from django.utils import translation
 
 
 class AddCORSHeaderMiddleware:
@@ -51,3 +54,46 @@ class GenerateCSPNonceMiddleware:
         response["Content-Security-Policy"] = csp
 
         return response
+
+
+class LanguageFallbackMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if request.user.is_authenticated:
+            lang = request.user.usererweitert.lang
+            if lang != "de" and lang != "en":
+                lang = "en"
+
+            translation.activate(lang)
+            request.LANGUAGE_CODE = lang
+
+            return self.get_response(request)
+
+        else:
+            accept_language = request.META.get('HTTP_ACCEPT_LANGUAGE', '')
+            lang = self._resolve_language(accept_language)
+
+            translation.activate(lang)
+            request.LANGUAGE_CODE = lang
+
+            return self.get_response(request)
+
+    def _resolve_language(self, accept_language):
+        entries = []
+        for part in accept_language.split(','):
+            part = part.strip()
+            match = re.match(r'([a-zA-Z]+)(?:-[a-zA-Z0-9]+)?(?:;q=([\d.]+))?', part)
+            if match:
+                lang_code = match.group(1).lower()
+                q = float(match.group(2)) if match.group(2) else 1.0
+                entries.append((lang_code, q))
+
+        entries.sort(key=lambda x: x[1], reverse=True)
+
+        for lang_code, _ in entries:
+            if lang_code == 'de':
+                return 'de'
+
+        return 'en'

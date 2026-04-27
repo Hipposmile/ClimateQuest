@@ -1,0 +1,490 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-27 13:49+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: users/templates/action_detail.html:8 users/templates/action_detail.html:13
+msgid "Aktion"
+msgstr "Action"
+
+#: users/templates/action_detail.html:9 users/templates/action_detail.html:13
+msgid "von"
+msgstr "by"
+
+#: users/templates/action_detail.html:29 users/templates/history.html:19
+msgid "Aktion hinzufügen"
+msgstr "Add action"
+
+#: users/templates/action_detail.html:34
+msgid "Zur Aktions-Historie"
+msgstr "To the action history"
+
+#: users/templates/action_detail.html:40 users/templates/history.html:26
+msgid "Aktion:"
+msgstr "Action:"
+
+#: users/templates/action_detail.html:44 users/templates/history.html:29
+msgid "Datum:"
+msgstr "Date:"
+
+#: users/templates/action_detail.html:49 users/templates/action_detail.html:104
+#: users/templates/history.html:33
+msgid "Beschreibung:"
+msgstr "Description:"
+
+#: users/templates/action_detail.html:53 users/templates/history.html:37
+#: users/templates/klimapunkte.html:21 users/templates/level.html:61
+msgid "Klimapunkte:"
+msgstr "Climate points:"
+
+#: users/templates/action_detail.html:65
+msgid "Bearbeiten"
+msgstr "Edit"
+
+#: users/templates/action_detail.html:75
+msgid ""
+"Bitte gib bei Aktionen, die länger als einen Tag gedauert haben, das "
+"Enddatum an."
+msgstr ""
+"Please provide an end date for actions that lasted longer than one day."
+
+#: users/templates/action_detail.html:83
+msgid "Ausgewähltes Element:"
+msgstr "Selected item:"
+
+#: users/templates/action_detail.html:94
+msgid "Element auswählen"
+msgstr "Select item"
+
+#: users/templates/action_detail.html:106
+msgid "Optional"
+msgstr "Optional"
+
+#: users/templates/action_detail.html:111
+msgid "Menge:"
+msgstr "Quantity:"
+
+#: users/templates/action_detail.html:112
+msgid "Bitte verwenden Sie keinen 1000-Seperator"
+msgstr "Please do not use a thousands separator"
+
+#: users/templates/action_detail.html:124
+msgid "Ich bestätige, dass alle Angaben der Wahrheit entsprechen und mit den"
+msgstr "I confirm that all information is truthful and complies with the"
+
+#: users/templates/action_detail.html:125
+msgid "Nutzungsbedingungen"
+msgstr "Terms of Use"
+
+#: users/templates/action_detail.html:125
+msgid "übereinstimmen."
+msgstr "."
+
+#: users/templates/action_detail.html:128
+msgid "Speichern"
+msgstr "Save"
+
+#: users/templates/action_detail.html:151
+msgid "Kategorien"
+msgstr "Categories"
+
+#: users/templates/action_detail.html:167
+msgid "Zurück"
+msgstr "Back"
+
+#: users/templates/action_detail.html:539
+msgid "Insgesamt durch diese Aktion gewonnene Klimapunkte:"
+msgstr "Total climate points earned through this action:"
+
+#: users/templates/action_detail.html:548
+msgid "Willst du diese Aktion wirklich löschen?"
+msgstr "Are you sure you want to delete this action?"
+
+#: users/templates/action_detail.html:550
+msgid "Diese Aktion löschen"
+msgstr "Delete this action"
+
+#: users/templates/history.html:6
+msgid "Sieh dir deine Aktions-Historie bei ClimateQuest an."
+msgstr "View your action history on ClimateQuest."
+
+#: users/templates/history.html:8 users/templates/history.html:11
+msgid "Aktions-Historie von"
+msgstr "Action history of"
+
+#: users/templates/history.html:8 users/templates/history.html:11
+#: users/templates/klimapunkte.html:13 users/templates/level.html:52
+msgid "mir"
+msgstr "me"
+
+#: users/templates/history.html:43
+msgid "Details"
+msgstr "Details"
+
+#: users/templates/history.html:48
+msgid "Keine Aktionen gefunden."
+msgstr "No actions found."
+
+#: users/templates/klimapunkte.html:6
+msgid ""
+"Guck dir deine Klimapunkte bei ClimateQuest an und erfahre, wie viel CO2 du "
+"eingespart hast."
+msgstr ""
+"Check your climate points on ClimateQuest and find out how much CO2 you have "
+"saved."
+
+#: users/templates/klimapunkte.html:9
+msgid "Meine Klimapunkte"
+msgstr "My climate points"
+
+#: users/templates/klimapunkte.html:9 users/templates/klimapunkte.html:13
+msgid "Klimapunkte von"
+msgstr "Climate points of"
+
+#: users/templates/klimapunkte.html:29
+msgid "Das entspricht"
+msgstr "This equals"
+
+#: users/templates/klimapunkte.html:29
+msgid "Tonnen eingespartem CO2"
+msgstr "tonnes of CO2 saved"
+
+#: users/templates/klimapunkte.html:36
+#, python-format
+msgid ""
+"Außerdem wurden <b>%(points)s</b> Klimapunkte durch das Schreiben von "
+"Artikeln verdient."
+msgstr ""
+"Additionally, <b>%(points)s</b> climate points were earned by writing "
+"articles."
+
+#: users/templates/klimapunkte.html:37
+#, python-format
+msgid ""
+"Insgesamt wurden also bereits <b>%(total_points)s</b> Klimapunkte gesammelt."
+msgstr ""
+"In total, <b>%(total_points)s</b> climate points have been collected so far."
+
+#: users/templates/klimapunkte.html:38
+#, python-format
+msgid "Zeitraum: %(timespan)s"
+msgstr "Period: %(timespan)s"
+
+#: users/templates/klimapunkte.html:41
+msgid "Zeitraum"
+msgstr "Period"
+
+#: users/templates/klimapunkte.html:43 users/views.py:119
+msgid "Gesamt"
+msgstr "Total"
+
+#: users/templates/klimapunkte.html:44
+msgid "Heute"
+msgstr "Today"
+
+#: users/templates/klimapunkte.html:45
+msgid "7 Tage"
+msgstr "7 days"
+
+#: users/templates/klimapunkte.html:46
+msgid "30 Tage"
+msgstr "30 days"
+
+#: users/templates/klimapunkte.html:47
+msgid "365 Tage"
+msgstr "365 days"
+
+#: users/templates/klimapunkte.html:48
+msgid "Benutzerdefiniert"
+msgstr "Custom"
+
+#: users/templates/klimapunkte.html:52
+msgid "Startdatum:"
+msgstr "Start date:"
+
+#: users/templates/klimapunkte.html:53
+msgid "Startdatum"
+msgstr "Start date"
+
+#: users/templates/klimapunkte.html:54
+msgid "Enddatum:"
+msgstr "End date:"
+
+#: users/templates/klimapunkte.html:55
+msgid "Enddatum"
+msgstr "End date"
+
+#: users/templates/klimapunkte.html:58
+msgid "Anwenden"
+msgstr "Apply"
+
+#: users/templates/level.html:5
+msgid "Sieh dir dein Level bei ClimateQuest an."
+msgstr "View your level on ClimateQuest."
+
+#: users/templates/level.html:7
+msgid "Mein Level"
+msgstr "My level"
+
+#: users/templates/level.html:7 users/templates/level.html:52
+msgid "Level von"
+msgstr "Level of"
+
+#: users/templates/level.html:66
+msgid "Du bist im Level:"
+msgstr "You are at level:"
+
+#: users/templates/level.html:67
+msgid "Nächstes Level:"
+msgstr "Next level:"
+
+#: users/templates/level.html:77
+#, python-format
+msgid "%(progress_percent)s %% zum nächsten Level geschafft"
+msgstr "%(progress_percent)s %% progress towards the next level"
+
+#: users/templates/level.html:79
+msgid "Liste der Level"
+msgstr "List of levels"
+
+#: users/templates/level.html:83
+msgid "Beschreibung"
+msgstr "Description"
+
+#: users/templates/level.html:84
+msgid "ab Klimapunkten"
+msgstr "from climate points"
+
+#: users/templates/user_detail.html:6 users/templates/users_overview.html:5
+msgid "Suchen Sie nach bestimmten Usern von ClimateQuest"
+msgstr "Search for specific users on ClimateQuest"
+
+#: users/templates/user_detail.html:9 users/templates/user_detail.html:14
+msgid "User"
+msgstr "User"
+
+#: users/templates/user_detail.html:14
+msgid "Du"
+msgstr "You"
+
+#: users/templates/user_detail.html:22
+msgid "Klimapunkte besitzt"
+msgstr "climate points"
+
+#: users/templates/user_detail.html:23
+msgid "ist"
+msgstr "is"
+
+#: users/templates/user_detail.html:23
+msgid "im worldwide ranking"
+msgstr "in the worldwide ranking"
+
+#: users/templates/user_detail.html:28 users/templates/user_detail.html:51
+msgid "hat die Ansicht der Daten gesperrt."
+msgstr "has locked the view of their data."
+
+#: users/templates/user_detail.html:32
+msgid "Klimapunkte"
+msgstr "Climate points"
+
+#: users/templates/user_detail.html:35
+msgid "Level"
+msgstr "Level"
+
+#: users/templates/user_detail.html:38
+msgid "Aktions-Historie"
+msgstr "Action history"
+
+#: users/templates/user_detail.html:45
+msgid "Statement"
+msgstr "Statement"
+
+#: users/templates/user_detail.html:53
+msgid "Wöchentliches Ziel"
+msgstr "Weekly goal"
+
+#: users/templates/user_detail.html:63
+#, python-format
+msgid ""
+"%(weekly_klimapunkte)s Klimapunkte bis zum wöchentlichen Ziel von "
+"%(weekly_goal)s\n"
+"                Klimapunkten\n"
+"                geschafft"
+msgstr ""
+"%(weekly_klimapunkte)s climate points out of the weekly goal of "
+"%(weekly_goal)s\n"
+"                climate points\n"
+"                achieved"
+
+#: users/templates/user_detail.html:155
+msgid "Streak"
+msgstr "Streak"
+
+#: users/templates/user_detail.html:163
+msgid "Aktuelle Streak"
+msgstr "Current streak"
+
+#: users/templates/user_detail.html:167
+msgid "Wochen mit erreichtem wöchentlichen Ziel"
+msgstr "Weeks with weekly goal achieved"
+
+#: users/templates/user_detail.html:176 users/templates/user_detail.html:182
+msgid "User melden"
+msgstr "Report user"
+
+#: users/templates/user_detail.html:178
+msgid "Bist du sicher, dass du diesen User melden möchtest."
+msgstr "Are you sure you want to report this user?"
+
+#: users/templates/user_detail.html:180
+msgid "Begründung"
+msgstr "Reason"
+
+#: users/templates/user_detail.html:183
+msgid "Dies wird eine Nachricht mit folgenden Daten an ClimateQuest senden:"
+msgstr "This will send a message with the following data to ClimateQuest:"
+
+#: users/templates/user_detail.html:185
+msgid "Dein Userprofil"
+msgstr "Your user profile"
+
+#: users/templates/user_detail.html:186
+msgid "Das Userprofil, welches du meldest"
+msgstr "The user profile you are reporting"
+
+#: users/templates/user_detail.html:187
+msgid "Deine Begründung"
+msgstr "Your reason"
+
+#: users/templates/user_detail.html:189
+msgid ""
+"Wenn du einen User wegen von ihm erstellten Content meldest, füge bitte alle "
+"für das Auffinden dieses Contents relevanten Informationen wie die URL hinzu."
+msgstr ""
+"If you are reporting a user for content they created, please include all "
+"information relevant to finding that content, such as the URL."
+
+#: users/templates/user_detail.html:190
+msgid "Durch das Melden eines Users erhältst du selbst keine Vorteile."
+msgstr "Reporting a user does not provide any benefits to you."
+
+#: users/templates/user_detail.html:191
+msgid ""
+"User können vor allem wegen Verstößen gegen die Nutzungsbedingungen gemeldet "
+"werden."
+msgstr "Users can be reported primarily for violations of the Terms of Use."
+
+#: users/templates/user_detail.html:193
+msgid ""
+"Wenn du User willkürlich und ohne konkrete Begründung meldest, ist auch dies "
+"ein Verstoß gegen die Nutzungsbedingungen."
+msgstr ""
+"Reporting users arbitrarily and without a specific reason is itself a "
+"violation of the Terms of Use."
+
+#: users/templates/users_overview.html:8 users/templates/users_overview.html:12
+msgid "User-Übersicht"
+msgstr "User overview"
+
+#: users/templates/users_overview.html:22
+#: users/templates/users_overview.html:23
+msgid "Suchwort"
+msgstr "Search term"
+
+#: users/templates/users_overview.html:24
+msgid "Suchen"
+msgstr "Search"
+
+#: users/templates/users_overview.html:28
+#, python-format
+msgid "Suchwort: %(keyword)s"
+msgstr "Search term: %(keyword)s"
+
+#: users/templates/users_overview.html:39
+msgid "Details ansehen"
+msgstr "View details"
+
+#: users/templates/users_overview.html:44
+msgid "Es wurden keine User gefunden"
+msgstr "No users found"
+
+#: users/views.py:126
+msgid "Ungültiger Zeitraum."
+msgstr "Invalid time period."
+
+#: users/views.py:134
+msgid "Bitte Start- und Enddatum angeben."
+msgstr "Please provide both start and end date."
+
+#: users/views.py:141
+msgid "Ungültiges Datumsformat."
+msgstr "Invalid date format."
+
+#: users/views.py:145
+msgid "Das Startdatum muss vor dem Enddatum liegen."
+msgstr "The start date must be before the end date."
+
+#: users/views.py:148
+msgid "Das Enddatum darf nicht in der Zukunft liegen."
+msgstr "The end date cannot be in the future."
+
+#: users/views.py:151
+#, python-format
+msgid "%(start)s bis %(end)s"
+msgstr "%(start)s to %(end)s"
+
+#, python-format
+#~ msgid ""
+#~ "Du hast eine Aktion vom Typen %(action_type)s bearbeitet und bist so ins "
+#~ "Level %(new_level)s aufgestiegen. <span class=\"emoji\">&#x1F973;</span>"
+#~ msgstr ""
+#~ "You edited a action (type: %(action_type)s) and so reached level "
+#~ "%(new_level)s.<span class=\"emoji\">&#x1F973;</span>"
+
+#, python-format
+#~ msgid ""
+#~ "Du hast eine Aktion vom Typen %(action_type)s bearbeitet, dadurch "
+#~ "Klimapunkte verloren und bist so ins Level %(new_level)s abgestiegen. "
+#~ "<span class=\"emoji\">&#x1F622;</span>"
+#~ msgstr ""
+#~ "You edited a action (type: %(action_type)s), lost climate points and so "
+#~ "descended to level %(new_level)s. <span class=\"emoji\">&#x1F622;</span>"
+
+#, python-format
+#~ msgid ""
+#~ "Du hast eine Aktion vom Typen %(action_type)s bearbeitet und so deine "
+#~ "Streak verlängert. <span class=\"emoji\">&#x1F973;</span>"
+#~ msgstr ""
+#~ "You edited a action (type: %(action_type)s) and extended your streak. "
+#~ "<span class=\"emoji\">&#x1F973;</span>"
+
+#, python-format
+#~ msgid ""
+#~ "Du hast eine Aktion vom Typen %(action_type)s bearbeitet und so deine "
+#~ "Streak verkürzt. <span class=\"emoji\">&#x1F622;</span>"
+#~ msgstr ""
+#~ "You edited a action (type: %(action_type)s) and shortened your streak. "
+#~ "<span class=\"emoji\">&#x1F622;</span>"
+
+#, python-format
+#~ msgid ""
+#~ "Du hast eine Aktion vom Typen %(action_type)s gelöscht und so deine "
+#~ "Streak verkürzt. <span class=\"emoji\">&#x1F622;</span>"
+#~ msgstr ""
+#~ "You deleted a action (type: %(action_type)s) and shortened your streak. "
+#~ "<span class=\"emoji\">&#x1F622;</span>"

@@ -7,9 +7,10 @@ from django.urls import reverse
 # Personals
 class Benachrichtigung(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    benachrichtigung = models.CharField(max_length=500)
+    benachrichtigung_de = models.CharField(max_length=500)
+    benachrichtigung_en = models.CharField(max_length=500)
     date = models.DateTimeField(default=timezone.now)
     url = models.URLField(max_length=500)
 
     def __str__(self):
-        return f"{self.benachrichtigung} ({self.user})"
+        return f"{self.benachrichtigung_de} ({self.user})"

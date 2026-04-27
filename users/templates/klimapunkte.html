@@ -1,15 +1,16 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block meta %}
     <meta name="description"
-          content="Guck dir deine Klimapunkte bei ClimateQuest an und erfahre, wie viel CO2 du eingespart hast.">
+          content="{% trans 'Guck dir deine Klimapunkte bei ClimateQuest an und erfahre, wie viel CO2 du eingespart hast.' %}">
 {% endblock %}
 
-{% block title %}{% if user == request.user %}Meine Klimapunkte{% else %}Klimapunkte von {{ user }}
+{% block title %}{% if user == request.user %}{% trans "Meine Klimapunkte" %}{% else %}{% trans "Klimapunkte von" %} {{ user }}
 {% endif %}{% endblock %}
 
 {% block content %}
-    <h1>Klimapunkte von {% if user == request.user %} <a href="{% url 'user_detail' user.id %}">mir</a>{% else %}
+    <h1>{% trans "Klimapunkte von" %} {% if user == request.user %} <a href="{% url 'user_detail' user.id %}">{% trans "mir" %}</a>{% else %}
         <a href="{% url 'user_detail' user.id %}">{{ user }}</a>{% endif %}</h1>
     {% if messages %}
         {% for message in messages %}
@@ -17,44 +18,31 @@
         {% endfor %}
     {% endif %}
     <input type="hidden" id="klimapunkte" value="{{ klimapunkte|floatformat:-4 }}">
-    <p>Klimapunkte: <b>{{ klimapunkte|floatformat:-4 }}</b></p>
-    <p id="co2"></p>
-    <script nonce="{{ request.csp_script_nonce }}">
-        let klimapunkte = formatToFloat(document.getElementById("klimapunkte").value);
-        let co2 = Intl.NumberFormat('de-DE', {
-            minimumFractionDigits: 4,
-            maximumFractionDigits: 4
-        }).format(klimapunkte / 1000);
-        document.getElementById("co2").innerHTML = "Das entspricht <b>" + co2 + "</b> Tonnen eingespartem CO2";
-
-        function formatToFloat(str) {
-            const normalized = str.replace(/\./g, '').replace(',', '.');
-            return parseFloat(normalized);
-        }
-    </script>
-    <p>Außerdem wurden <b>{{ aktionen_klimapunkte|floatformat:-4 }}</b> Klimapunkte durch das Schreiben von Artikeln verdient.</p>
-    <p>Insgesamt wurden also bereits <b>{{ klimapunkte_total|floatformat:-4 }}</b> Klimapunkte gesammelt.</p>
-    <p>Zeitraum: {{ zeitraum }}</p>
+    <p>{% trans "Klimapunkte:" %} <b>{{ klimapunkte|floatformat:-4 }}</b></p>
+    <p id="co2">{% blocktrans with co2=saved_co2|floatformat:-4 %}Das entspricht <b>{{ co2 }}</b> Tonnen eingesparten CO2{% endblocktrans %}</p>
+    <p>{% blocktrans with points=klimapunkte_likes|floatformat:-4 %}Außerdem wurden <b>{{ points }}</b> Klimapunkte durch das Schreiben von Artikeln verdient.{% endblocktrans %}</p>
+    <p>{% blocktrans with total_points=klimapunkte_total|floatformat:-4 %}Insgesamt wurden also bereits <b>{{ total_points }}</b> Klimapunkte gesammelt.{% endblocktrans %}</p>
+    <p>{% blocktrans with timespan=zeitraum %}Zeitraum: {{ timespan }}{% endblocktrans %}</p>
     <form method="post" >
         {% csrf_token %}
-        <label for="zeitraum">Zeitraum</label>
+        <label for="zeitraum">{% trans "Zeitraum" %}</label>
         <select name="zeitraum" id="zeitraum" required>
-            <option value="gesamt">Gesamt</option>
-            <option value="heute">Heute</option>
-            <option value="sieben Tage">7 Tage</option>
-            <option value="dreißig Tage">30 Tage</option>
-            <option value="dreihundertfünfundsechzig Tage">365 Tage</option>
-            <option value="benutzerdefiniert">Benutzerdefiniert</option>
+            <option value="Gesamt">{% trans "Gesamt" %}</option>
+            <option value="Heute">{% trans "Heute" %}</option>
+            <option value="Sieben Tage">{% trans "7 Tage" %}</option>
+            <option value="Dreißig Tage">{% trans "30 Tage" %}</option>
+            <option value="Dreihundertfünfundsechzig Tage">{% trans "365 Tage" %}</option>
+            <option value="Benutzerdefiniert">{% trans "Benutzerdefiniert" %}</option>
         </select>
 
         <div id="hiddenDateDiv" class="display-none">
-            <label for="start_date">Startdatum:</label>
-            <input type="date" name="start_date" id="start_date" placeholder="Startdatum" value="">
-            <label for="end_date">Enddatum:</label>
-            <input type="date" name="end_date" id="end_date" placeholder="Enddatum" value="">
+            <label for="start_date">{% trans "Startdatum:" %}</label>
+            <input type="date" name="start_date" id="start_date" placeholder="{% trans 'Startdatum' %}" value="">
+            <label for="end_date">{% trans "Enddatum:" %}</label>
+            <input type="date" name="end_date" id="end_date" placeholder="{% trans 'Enddatum' %}" value="">
         </div>
 
-        <button type="submit">Anwenden</button>
+        <button type="submit">{% trans "Anwenden" %}</button>
     </form>
 
     <script nonce="{{ request.csp_script_nonce }}">
@@ -71,7 +59,7 @@
         document.getElementById("zeitraum").addEventListener("change", function () {
             const hiddenDateDiv = document.getElementById("hiddenDateDiv");
 
-            if (this.value === "benutzerdefiniert") {
+            if (this.value === "Benutzerdefiniert") {
                 hiddenDateDiv.style.display = "block";
             } else {
                 hiddenDateDiv.style.display = "none";

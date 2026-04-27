@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 
 {% block meta %}
     <meta name="description"
-          content="Erstelle eine neue Aktion bei ClimateQuest, um Klimapunkte zu sammeln und dich mit anderen Nutzern zu vergleichen.">
+          content="{% trans 'Erstelle eine neue Aktion bei ClimateQuest, um Klimapunkte zu sammeln und dich mit anderen Nutzern zu vergleichen.' %}">
 {% endblock %}
 
 {% block title %}
-    ClimateQuest - Aktion hinzufügen
+    {% trans 'ClimateQuest - Aktion hinzufügen' %}
 {% endblock %}
 
 {% block content %}
-    <h1>Aktion hinzufügen</h1>
+    <h1>{% trans 'Aktion hinzufügen' %}</h1>
 
     {% if messages %}
         {% for message in messages %}
@@ -20,7 +20,7 @@
     {% endif %}
 
     <p id="source-label" class="action-label"></p>
-    <p>Bitte gib bei Aktionen, die länger als einen Tag gedauert haben, das Enddatum an.</p>
+    <p>{% trans 'Bitte gib bei Aktionen, die länger als einen Tag gedauert haben, das Enddatum an.' %}</p>
     <button class="info-btn display-none" id="anmerkung-button" type="button">?
     </button>
     <div id="anmerkung-box" class="anmerkung-box display-none"></div>
@@ -40,10 +40,11 @@
 
     <form method="POST">
         {% csrf_token %}
-        <label for="action_type">Ausgewähltes Element:</label>
+        <label for="action_type">{% trans 'Ausgewähltes Element:' %}</label>
         <input type="text" id="action_type" name="action_type" readonly>
+        <input type="hidden" name="action_type_id" id="action_type_id">
 
-        <button type="button" id="openModal">Element auswählen</button>
+        <button type="button" id="openModal">{% trans 'Element auswählen' %}</button>
 
         <br>
 
@@ -55,7 +56,7 @@
         <div class="accordion">
             <div class="accordion-header">
                 <div>
-                    <div class="accordion-title">Erweiterte Einstellungen</div>
+                    <div class="accordion-title">{% trans 'Erweiterte Einstellungen' %}</div>
                 </div>
                 <button class="accordion-toggle" aria-expanded="false"
                         aria-controls="accordionContent" type="button">
@@ -65,29 +66,35 @@
             <div class="accordion-content-wrapper">
                 <div class="accordion-content">
 
-                    <label for="action_description" class="action-label">Beschreibung:</label>
-                    <input type="text" id="action_description" name="action_description" placeholder="Optional"
+                    <label for="action_description" class="action-label">{% trans 'Beschreibung:' %}</label>
+                    <input type="text" id="action_description" name="action_description"
+                           placeholder="{% trans 'Optional' %}"
                            maxlength="200"/>
 
-                    <label for="action_quantity" class="action-label" id="action_quantity_label">Menge:</label>
+                    <label for="action_quantity" class="action-label"
+                           id="action_quantity_label">{% trans 'Menge:' %}</label>
+                    <small>{% trans 'Bitte verwenden Sie keinen 1000-Seperator' %}</small>
                     <input type="text" id="action_quantity" name="action_quantity" value="1" required/>
 
                     <p id="impact_anzeige" class="action-label"></p>
 
-                    <label for="action_date" class="action-label">Datum:</label>
+                    <label for="action_date" class="action-label">{% trans 'Datum:' %}</label>
                     <input type="date" id="action_date" name="action_date" required/>
                 </div>
             </div>
         </div>
 
         <label class="custom-checkbox">
+            {% url 'nutzungsbedingungen' as nutzungsbedingungen_url %}
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
-            <span class="label-text">Ich bestätige, dass alle Angaben der Wahrheit entsprechen und mit den <a
-                    href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmen.</span>
+            <span class="label-text">{% blocktrans with nutzungsbedingungen_url=nutzungsbedingungen_url %}Ich bestätige,
+                dass alle Angaben der Wahrheit entsprechen und mit den
+                <a href="{{ nutzungsbedingungen_url }}">Nutzungsbedingungen</a>
+                übereinstimmen.{% endblocktrans %}</span>
         </label>
 
-        <button type="submit">Hinzufügen</button>
+        <button type="submit">{% trans 'Hinzufügen' %}</button>
     </form>
 
 
@@ -95,12 +102,14 @@
         <div class="modal-content">
 
             <div id="page-categories">
-                <h2>Kategorien</h2>
+                <h2>{% trans 'Kategorien' %}</h2>
                 <ul>
                     {% for category in categories %}
                         <li>
                             <button class="category-btn"
-                                    data-categoryid="{{ category.id }}">{{ category.name }}</button>
+                                    data-categoryid="{{ category.id }}">
+                                {% if request.LANGUAGE_CODE == "de" %}{{ category.name }}{% else %}
+                                    {{ category.name_en }}{% endif %}</button>
                         </li>
                     {% endfor %}
                 </ul>
@@ -109,7 +118,7 @@
             <div id="page-items" class="display-none">
                 <h2 id="items-title"></h2>
                 <ul id="items-list"></ul>
-                <button id="backToCategories">Zurück</button>
+                <button id="backToCategories">{% trans 'Zurück' %}</button>
             </div>
 
             <button class="closeModal" id="closeModal"><span class="emoji">&#x2717;</span></button>
@@ -279,7 +288,7 @@
     </style>
 
     <script nonce="{{ request.csp_script_nonce }}">
-        const data = {
+        {% comment %}const data = {
             {% for category in categories %}
                 "{{ category.id }}": {
                     name: "{{ category.name }}",
@@ -299,6 +308,28 @@
                     ]
                 },
             {% endfor %}
+        };{% endcomment %}
+
+        const data = {
+            {% for category in categories %}
+                "{{ category.id }}": {
+                    name: "{% if request.LANGUAGE_CODE == 'en' %}{{ category.name_en }}{% else %}{{ category.name }}{% endif %}",
+                    actions: [
+                        {% for action in category.actions.all %}
+                            {
+                                id: "{{ action.id }}",
+                                name: `{% if request.LANGUAGE_CODE == 'de' %}{{ action.name }}{% else %}{{ action.name_en }}{% endif %}`,
+                                klimapunkte: `{{ action.klimapunkte|floatformat:-4 }}`,
+                                anmerkung: `{% if request.LANGUAGE_CODE == 'de' %}{{ action.anmerkung|safe }}{% else %}{{ action.anmerkung_en|safe }}{% endif %}`,
+                                mengebeschreibung: `{% if request.LANGUAGE_CODE == 'de' %}{{ action.mengeBeschreibung }}{% else %}{{ action.mengeBeschreibung_en }}{% endif %}`,
+                                mengebeschreibungsingular: `{% if request.LANGUAGE_CODE == 'de' %}{{ action.mengeBeschreibungSingular }}{% else %}{{ action.mengeBeschreibungSingular_en }}{% endif %}`,
+                                source: `{% if request.LANGUAGE_CODE == 'de' %}{{ action.source|safe }}{% else %}{{ action.source_en|safe }}{% endif %}`,
+                                categories: `{% for action_category in action.category.all %}{% if request.LANGUAGE_CODE == 'de' %}{{ action_category.name }}{% else %}{{ action_category.name_en }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}`
+                            },
+                        {% endfor %}
+                    ]
+                },
+            {% endfor %}
         };
 
         const modal = document.getElementById("modal");
@@ -312,6 +343,8 @@
         const backToCategories = document.getElementById("backToCategories");
 
         const selectedItemInput = document.getElementById("action_type");
+
+        const actionTypeId = document.getElementById("action_type_id");
 
         // Modal öffnen
         openModal.onclick = (e) => {
@@ -340,7 +373,7 @@
                 const category = data[categoryId];
 
                 // Titel setzen
-                itemsTitle.textContent = "Wähle eine Aktion aus: " + category.name;
+                itemsTitle.textContent = "{% trans 'Wähle eine Aktion aus:' %} " + category.name;
 
                 // Aktionen anzeigen
                 itemsList.innerHTML = "";
@@ -361,6 +394,7 @@
             if (e.target.classList.contains("item-btn")) {
                 e.preventDefault();
                 selectedItemInput.value = e.target.textContent;
+                actionTypeId.value = e.target.dataset.id;
                 selectedItemInput.dataset.name = e.target.dataset.name;
                 selectedItemInput.dataset.klimapunkte = e.target.dataset.klimapunkte;
                 selectedItemInput.dataset.anmerkung = e.target.dataset.anmerkung;
@@ -391,11 +425,21 @@
         });
 
         function validateNumber(input) {
+            const lang = getLang();
             input = input.toString();
-            if (input === "" || input.includes('.')) {
+            if (input === "") {
                 return false;
             }
-            input = input.replace(',', '.');
+            if (lang === 'de') {
+                if (input.includes('.')) {
+                    return false;
+                }
+                input = input.replace(',', '.');
+            } else {
+                if (input.includes(',')) {
+                    return false;
+                }
+            }
             try {
                 input = parseFloat(input);
             } catch (e) {
@@ -428,11 +472,11 @@
             let source = action_type.dataset.source;
             let categories = action_type.dataset.categories;
 
-            sourceLabel.innerHTML = `Quelle: ${source}`;
-            categoryLabel.textContent = `Kategorien: ${categories}`;
+            sourceLabel.innerHTML = "{% trans 'Quelle:' %} " + source;
+            categoryLabel.textContent = "{% trans 'Kategorien:' %} " + categories;
 
-            action_quantity_label.innerHTML = mengeBeschreibung;
-            klimapunkte_anzeige.textContent = `Klimapunkte pro ${mengeBeschreibungSingular}: ${klimapunkte}`;
+            action_quantity_label.textContent = mengeBeschreibung + ":";
+            klimapunkte_anzeige.textContent = "{% trans 'Klimapunkte pro' %} " + mengeBeschreibungSingular + ": " + klimapunkte;
             calculateImpact();
 
             if (anmerkung !== '-') {
@@ -468,11 +512,13 @@
             if (isNaN(impact)) {
                 impact_anzeige.textContent = '';
             } else {
-                impact = Intl.NumberFormat('de-DE', {
-                    minimumFractionDigits: 4,
-                    maximumFractionDigits: 4
-                }).format(impact);
-                impact_anzeige.textContent = 'Insgesamt durch diese Aktion gewonnene Klimapunkte: ' + impact;
+                const lang = getLang();
+                if (lang === 'de') {
+                    impact = Intl.NumberFormat('de-DE', {
+                        maximumFractionDigits: 4
+                    }).format(impact);
+                }
+                impact_anzeige.textContent = "{% trans 'Insgesamt durch diese Aktion gewonnene Klimapunkte:' %} " + impact;
             }
         }
     </script>

@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block meta %}
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 
-{% block title %}{% if family %}Family {{ family.name }}{% else %}Die Family konnte nicht geladen werden.
-{% endif %} {% endblock %}
+{% block title %}{% if family %}{% blocktrans with name=family.name %}Family {{ name }}{% endblocktrans %}{% else %}
+    {% trans "Die Family konnte nicht geladen werden." %}{% endif %} {% endblock %}
 
 {% block content %}
-    <h1>Family <i>{{ family.name }}</i></h1>
+    <h1>{% blocktrans with name=family.name %}Family <i>{{ name }}</i>{% endblocktrans %}</h1>
 
     {% if messages %}
         {% for message in messages %}
@@ -17,38 +18,39 @@
     {% endif %}
 
     {% if family.name != 'worldwide ranking' %}
-        <p><a href="{% url 'edit_family' family.id %}">Bearbeiten</a></p>
+        <p>{% url 'edit_family' family.id as edit_url %}{% blocktrans with url=edit_url %}
+            <a href="{{ url }}">Bearbeiten</a>{% endblocktrans %}</p>
         {% if family.chat %}
-            <p><a href="{% url 'chat_family' family.id %}">Chatten</a></p>
+            <p>{% url 'chat_family' family.id as chat_url %}{% blocktrans with url=chat_url %}
+                <a href="{{ url }}">Chatten</a>{% endblocktrans %}</p>
         {% else %}
-            <p>Die Chat-Funktion ist für diese Family deaktiviert.</p>
+            <p>{% trans "Die Chat-Funktion ist für diese Family deaktiviert." %}</p>
         {% endif %}
     {% else %}
-        <p>Weder die Chat-Funktion noch die Bearbeiten-Funktion sind für die Family "worldwide ranking"
-            freigeschaltet</p>
+        <p>{% trans "Weder die Chat-Funktion noch die Bearbeiten-Funktion sind für die Family worldwide ranking freigeschaltet" %}</p>
     {% endif %}
 
 
     <form method="post">
         {% csrf_token %}
-        <label for="zeitraum">Zeitraum</label>
+        <label for="zeitraum">{% trans "Zeitraum" %}</label>
         <select name="zeitraum" id="zeitraum" required>
-            <option value="gesamt">Gesamt</option>
-            <option value="heute">Heute</option>
-            <option value="sieben Tage">7 Tage</option>
-            <option value="dreißig Tage">30 Tage</option>
-            <option value="dreihundertfünfundsechzig Tage">365 Tage</option>
-            <option value="benutzerdefiniert">Benutzerdefiniert</option>
+            <option value="Gesamt">{% trans "Gesamt" %}</option>
+            <option value="Heute">{% trans "Heute" %}</option>
+            <option value="Sieben Tage">{% trans "7 Tage" %}</option>
+            <option value="Dreißig Tage">{% trans "30 Tage" %}</option>
+            <option value="Dreihundertfünfundsechzig Tage">{% trans "365 Tage" %}</option>
+            <option value="Benutzerdefiniert">{% trans "Benutzerdefiniert" %}</option>
         </select>
 
         <div id="hiddenDateDiv" class="display-none">
-            <label for="start_date">Startdatum:</label>
-            <input type="date" name="start_date" id="start_date" placeholder="Startdatum" value="">
-            <label for="end_date">Enddatum:</label>
-            <input type="date" name="end_date" id="end_date" placeholder="Enddatum" value="">
+            <label for="start_date">{% trans "Startdatum:" %}</label>
+            <input type="date" name="start_date" id="start_date" placeholder="{% trans "Startdatum" %}" value="">
+            <label for="end_date">{% trans "Enddatum:" %}</label>
+            <input type="date" name="end_date" id="end_date" placeholder="{% trans "Enddatum" %}" value="">
         </div>
 
-        <button type="submit">Anwenden</button>
+        <button type="submit">{% trans "Anwenden" %}</button>
     </form>
 
     <script nonce="{{ request.csp_script_nonce }}">
@@ -65,7 +67,7 @@
         document.getElementById("zeitraum").addEventListener("change", function () {
             const hiddenDateDiv = document.getElementById("hiddenDateDiv");
 
-            if (this.value === "benutzerdefiniert") {
+            if (this.value === "Benutzerdefiniert") {
                 hiddenDateDiv.style.display = "block";
             } else {
                 hiddenDateDiv.style.display = "none";
@@ -74,14 +76,15 @@
     </script>
 
     {% if family.name != 'worldwide ranking' %}
-        <p>Durchschnittliche Klimapunkte: {{ average_klimapunkte|floatformat:-4 }}</p>
-        <p>Gesamte Klimapunkte: {{ total_klimapunkte|floatformat:-4 }}</p>
+        <p>{% blocktrans with avg=average_klimapunkte|floatformat:-4 %}Durchschnittliche Klimapunkte:
+            {{ avg }}{% endblocktrans %}</p>
+        <p>{% blocktrans with total=total_klimapunkte|floatformat:-4 %}Gesamte Klimapunkte:
+            {{ total }}{% endblocktrans %}</p>
     {% endif %}
 
-    <p>Mitglieder: {{ members_count }}</p>
-    {% if not error %}
-        <p>Zeitraum: {{ zeitraum }}</p>
-    {% endif %}
+    <p>{% blocktrans with count=members_count %}Mitglieder: {{ count }}{% endblocktrans %}</p>
+    <p>{% blocktrans with period=zeitraum %}Zeitraum: {{ period }}{% endblocktrans %}</p>
+
     <script nonce="{{ request.csp_script_nonce }}">
         let rank = 1;
         let div_rank;
@@ -91,27 +94,29 @@
         {% for member in members %}
             <li class="{% if member.member == user %}klimapunkte_me{% else %}klimapunkte_other{% endif %}"
                 id="{% if member.member == user %}me{% else %}other{% endif %}">
-                <span><span class="color-888" id="rank_{{ member.member.id }}"></span><a
-                        href="{% url 'user_detail' member.member.id %}">{{ member.member.username }}</a></span>
+                <span><span class="color-888"
+                            id="rank_{{ member.member.id }}"></span>{% url 'user_detail' member.member.id as user_url %}
+                        {% blocktrans with url=user_url username=member.member.username %}
+                            <a href="{{ url }}">{{ username }}</a>{% endblocktrans %}</span>
                 <br>
-                <span class="fontSize-0-95em color-888">({{ member.klimapunkte|floatformat:-4 }} Klimapunkte)</span>
+                <span class="fontSize-0-95em color-888">{% blocktrans with points=member.klimapunkte|floatformat:-4 %}({{ points }} Klimapunkte){% endblocktrans %}</span>
             </li>
             <script nonce="{{ request.csp_script_nonce }}">
                 rank_span = document.getElementById("rank_{{member.member.id}}");
                 rank_span.innerText = rank + ". ";
                 div_rank = rank_span.closest("li");
-                if (rank == 1) {
+                if (rank === 1) {
                     div_rank.style.borderLeft = "4px solid #FFD700";  // Gold
-                } else if (rank == 2) {
+                } else if (rank === 2) {
                     div_rank.style.borderLeft = "4px solid #C0C0C0";  // Silber
-                } else if (rank == 3) {
+                } else if (rank === 3) {
                     div_rank.style.borderLeft = "4px solid #CD7F32";  // Bronze
                 }
                 rank++;
             </script>
         {% endfor %}
     </ul>
-    <a id="to-me" class="me-btn">Zu mir</a>
+    <a id="to-me" class="me-btn">{% trans "Zu mir" %}</a>
     <script nonce="{{ request.csp_script_nonce }}">
         document.getElementById('to-me').addEventListener('click', () => {
             document.getElementById('me').scrollIntoView();

@@ -1,0 +1,231 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-27 12:43+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: forum/templates/add_forum_post.html:6
+msgid ""
+"Erstelle einen neuen Post im Forum von ClimateQuest, um deine Fragen zur "
+"Klimakrise oder zur Organisation und Durchführung von Aktionen zum Klima-"
+"Themen von anderen Usern beantworten zu lassen."
+msgstr ""
+"Create a new post in the ClimateQuest forum to have your questions about the "
+"climate crisis or the organization and implementation of climate-themed "
+"actions answered by other users."
+
+#: forum/templates/add_forum_post.html:9
+msgid "Forum-Beitrag hinzufügen"
+msgstr "Add forum post"
+
+#: forum/templates/add_forum_post.html:13
+#: forum/templates/forum_overview.html:20
+msgid "Beitrag hinzufügen"
+msgstr "Add post"
+
+#: forum/templates/add_forum_post.html:23
+#: forum/templates/add_forum_post.html:24
+#: forum/templates/forum_overview.html:33
+msgid "Titel"
+msgstr "Title"
+
+#: forum/templates/add_forum_post.html:26
+msgid "Inhalt"
+msgstr "Content"
+
+#: forum/templates/add_forum_post.html:30
+msgid "Kategorie"
+msgstr "Category"
+
+#: forum/templates/add_forum_post.html:40
+#, python-format
+msgid ""
+"Ich bestätige, dass dies eine ernst gemeinte Frage ist und dass sie mit den "
+"<a href=\"%(url)s\">Nutzungsbedingungen</a> übereinstimmt."
+msgstr ""
+"I confirm that this is a serious question and that it complies with the <a "
+"href=\"%(url)s\">Terms of Use</a>."
+
+#: forum/templates/add_forum_post.html:43
+msgid "Speichern"
+msgstr "Save"
+
+#: forum/templates/forum_detail.html:6
+msgid ""
+"Sieh dir den Post im Forum von ClimateQuest an und lies die Antworten "
+"anderer User zu diesem Thema. Antworte selbst auf den Post, um dein Wissen "
+"zu teilen."
+msgstr ""
+"View the post in the ClimateQuest forum and read the answers from other "
+"users on this topic. Answer the post yourself to share your knowledge."
+
+#: forum/templates/forum_detail.html:9
+#, python-format
+msgid "Post %(title)s"
+msgstr "Post %(title)s"
+
+#: forum/templates/forum_detail.html:30
+#, python-format
+msgid "<a href=\"%(url)s\">Post</a> <i>%(title)s</i>"
+msgstr "<a href=\"%(url)s\">Post</a> <i>%(title)s</i>"
+
+#: forum/templates/forum_detail.html:42
+#, python-format
+msgid "Erstellt von <a href=\"%(url)s\">%(creator)s</a>"
+msgstr "Created by <a href=\"%(url)s\">%(creator)s</a>"
+
+#: forum/templates/forum_detail.html:43
+#, python-format
+msgid "Erstellt am: %(date)s"
+msgstr "Created on: %(date)s"
+
+#: forum/templates/forum_detail.html:44
+#, python-format
+msgid "Kategorie: %(category)s"
+msgstr "Category: %(category)s"
+
+#: forum/templates/forum_detail.html:49
+#, python-format
+msgid "Antwort von <a href=\"%(url)s\">%(creator)s</a> am %(date)s"
+msgstr "Answer by <a href=\"%(url)s\">%(creator)s</a> on %(date)s"
+
+#: forum/templates/forum_detail.html:54 forum/templates/forum_detail.html:66
+msgid "Antworten"
+msgstr "Answers"
+
+#: forum/templates/forum_detail.html:63
+#, python-format
+msgid ""
+"Ich bestätige, dass dies meines Wissens die Wahrheit und dass es mit den <a "
+"href=\"%(url)s\">Nutzungsbedingungen</a> übereinstimmt."
+msgstr ""
+"I confirm that this is the truth to my knowledge and that it complies with "
+"the <a href=\"%(url)s\">Terms of Use</a>."
+
+#: forum/templates/forum_overview.html:6
+msgid ""
+"Sieh dir die Übersicht aller Posts im Forum von ClimateQuest an. Finde "
+"Antworten zu deinen Fragen zur Klimakrise oder zur Organisation und "
+"Durchführung von Aktionen zum Klima-Themen."
+msgstr ""
+"View the overview of all posts in the ClimateQuest forum. Find answers to "
+"your questions about the climate crisis or the organization and "
+"implementation of climate-themed actions."
+
+#: forum/templates/forum_overview.html:9 forum/templates/forum_overview.html:12
+msgid "Forum-Übersicht"
+msgstr "Forum overview"
+
+#: forum/templates/forum_overview.html:26
+msgid "Suchwort:"
+msgstr "Search term:"
+
+#: forum/templates/forum_overview.html:27
+msgid "Leer lassen, um alle Artikel anzuzeigen"
+msgstr "Leave blank to display all articles"
+
+#: forum/templates/forum_overview.html:28
+msgid "Suchwort"
+msgstr "Search term"
+
+#: forum/templates/forum_overview.html:31
+msgid "Sortieren nach:"
+msgstr "Sort by:"
+
+#: forum/templates/forum_overview.html:34
+msgid "Ersteller"
+msgstr "Creator"
+
+#: forum/templates/forum_overview.html:35
+msgid "Erstellt am"
+msgstr "Created on"
+
+#: forum/templates/forum_overview.html:37
+#: forum/templates/forum_overview.html:52
+msgid "von mir erstellte Posts"
+msgstr "posts created by me"
+
+#: forum/templates/forum_overview.html:38
+#: forum/templates/forum_overview.html:53
+msgid "von mir beantwortete Posts"
+msgstr "posts answered by me"
+
+#: forum/templates/forum_overview.html:42
+msgid "Kategorie:"
+msgstr "Category:"
+
+#: forum/templates/forum_overview.html:44
+msgid "Alle"
+msgstr "All"
+
+#: forum/templates/forum_overview.html:50
+msgid "Anwenden"
+msgstr "Apply"
+
+#: forum/templates/forum_overview.html:67
+#, python-format
+msgid "Sortiert nach: %(ordered)s"
+msgstr "Sorted by: %(ordered)s"
+
+#: forum/templates/forum_overview.html:69
+#, python-format
+msgid "Suchwort: %(keyword)s"
+msgstr "Search term: %(keyword)s"
+
+#: forum/templates/forum_overview.html:71
+#: forum/templates/forum_overview.html:80
+#, python-format
+msgid "Kategorie: %(cat)s"
+msgstr "Category: %(cat)s"
+
+#: forum/templates/forum_overview.html:72
+#, python-format
+msgid "%(count)s Suchergebnisse"
+msgstr "%(count)s search results"
+
+#: forum/templates/forum_overview.html:82
+#: forum/templates/forum_overview.html:97
+msgid "Erstellt am:"
+msgstr "Created on:"
+
+#: forum/templates/forum_overview.html:87
+#: forum/templates/forum_overview.html:102
+msgid "Ersteller:"
+msgstr "Creator:"
+
+#: forum/templates/forum_overview.html:87
+#: forum/templates/forum_overview.html:102
+#, python-format
+msgid "<a href=\"%(url)s\">%(username)s</a>"
+msgstr "<a href=\"%(url)s\">%(username)s</a>"
+
+#: forum/templates/forum_overview.html:88
+#: forum/templates/forum_overview.html:103
+msgid "(Du)"
+msgstr "(You)"
+
+#: forum/templates/forum_overview.html:93
+msgid "mehr"
+msgstr "more"
+
+#: forum/templates/forum_overview.html:108
+msgid "Details ansehen"
+msgstr "View details"
+
+#: forum/templates/forum_overview.html:112
+msgid "Es gibt derzeit keine Posts mit diesem Filter."
+msgstr "There are currently no posts with this filter."

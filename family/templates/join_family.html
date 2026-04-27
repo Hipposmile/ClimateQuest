@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block meta %}
-    <meta name="description" content="Tritt einer Family bei ClimateQuest bei, um dich mit anderen Nutzern zu vergleichen und auszutauschen.">
+    <meta name="description" content="{% trans "Tritt einer Family bei ClimateQuest bei, um dich mit anderen Nutzern zu vergleichen und auszutauschen." %}">
 {% endblock %}
 
-{% block title %}Family beitreten{% endblock %}
+{% block title %}{% trans "Family beitreten" %}{% endblock %}
 {% block content %}
-<h1>Family beitreten</h1>
+<h1>{% trans "Family beitreten" %}</h1>
 {% if messages %}
 {% for message in messages %}
 <p class="{{message.level_tag}}-message">{{ message }}</p>
@@ -15,13 +16,13 @@
 {% endif %}
 <form method="post" >
     {% csrf_token %}
-    <label for="familyname">Familyname:</label>
-    <input type="text" name="familyname" id="familyname" placeholder="Familyname" required>
-    <label for="family_password">Passwort:</label>
-    <input type="password" name="family_password" id="family_password" placeholder="Passwort" required>
-    <button type="submit">Family beitreten</button>
+    <label for="familyname">{% trans "Familyname:" %}</label>
+    <input type="text" name="familyname" id="familyname" placeholder="{% trans "Familyname" %}" required>
+    <label for="family_password">{% trans "Passwort:" %}</label>
+    <input type="password" name="family_password" id="family_password" placeholder="{% trans "Passwort" %}" required>
+    <button type="submit">{% trans "Family beitreten" %}</button>
 </form>
 
-<p>Oder <a  href="{% url 'create_family' %}">eine Family gründen</a>.</p>
+<p>{% url 'create_family' as create_url %}{% blocktrans with url=create_url %}Oder <a href="{{ url }}">eine Family gründen</a>.{% endblocktrans %}</p>
 
 {% endblock %}

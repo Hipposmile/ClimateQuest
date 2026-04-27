@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% block meta %}
-    <meta name="description" content="Sieh dir all deine Credits bei ClimateQuest an!">
+    <meta name="description" content="{% trans 'Sieh dir all deine Credits bei ClimateQuest an!' %}">
 {% endblock %}
 
-{% block title %}Credits - ClimateQuest{% endblock %}
+{% block title %}{% trans "Credits" %} - ClimateQuest{% endblock %}
 
 {% block content %}
-    <h1>Credits</h1>
+    <h1>{% trans "Credits" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
 
-    <p>Du brauchst 1000 Klimapunkte, um einen Credit zu verdienen</p>
+    <p>{% trans "Du brauchst 1000 Klimapunkte, um einen Credit zu verdienen" %}</p>
 
-    <p>Zur Verfügung stehende Credits: {{ available_credits }}</p>
+    <p>{% trans "Zur Verfügung stehende Credits:" %} {{ available_credits }}</p>
 
     <div class="progress-container">
         <div class="progress-bar" id="progress-bar"></div>
@@ -27,15 +27,15 @@
             max-width: 100%;
         }
     </style>
-    <p>{{ percent_done }} % bis zum nächsten Credit geschafft</p>
+    <p>{{ percent_done }} % {% trans "bis zum nächsten Credit geschafft" %}</p>
     <form method="post">
         {% csrf_token %}
-        <button {% if available_credits <= 0 %}disabled{% endif %}>1 Baum pflanzen</button>
-    <small>Das kostet einen Credit</small>
+        <button {% if available_credits <= 0 %}disabled{% endif %}>{% trans "1 Baum pflanzen" %}</button>
+    <small>{% trans "Das kostet einen Credit" %}</small>
     </form>
     <ul>
     {% for tree in request.user.usererweitert.planted_trees.all %}
-        <li>1 gepflanzter Baum (Sponsor: {{ tree.sponsor }}) durch Plant-for-the-Planet: <a href="{{ tree.redeemURL }}">Zertifikat</a></li>
+        <li>{% blocktrans with sponsor=tree.sponsor url=tree.redeemURL %}1 gepflanzter Baum (Sponsor: {{ sponsor }}) durch Plant-for-the-Planet: <a href="{{ url }}">Zertifikat</a>{% endblocktrans %}</li>
     {% endfor %}
     </ul>
 {% endblock %}

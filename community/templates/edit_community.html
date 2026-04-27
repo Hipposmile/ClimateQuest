@@ -1,16 +1,19 @@
 {% extends "base.html" %}
 
+{% load i18n %}
+
 {% block meta %}
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 
-{% block title %} {% if community %}Community {{ community.name }} bearbeiten{% else %}Die Community
-    konnte nicht geladen werden.{% endif %} {% endblock %}
+{% block title %} {% if community %}{% blocktrans with name=community.name %}Community {{ name }} bearbeiten{% endblocktrans %}{% else %}{% trans "Die Community konnte nicht geladen werden." %}{% endif %} {% endblock %}
 
 {% block content %}
 
-    <h1>Community <a  href="{% url 'community_detail' community.id family.id %}">{{ community.name }}</a> bearbeiten</h1>
-    <h3>Eingeloggt mit Family <a  href="{% url 'family_detail' family.id %}">{{ family.name }}</a></h3>
+    {% url 'community_detail' community.id family.id as detail_url %}
+    <h1>{% blocktrans with url=detail_url name=community.name %}Community <a href="{{ url }}">{{ name }}</a> bearbeiten{% endblocktrans %}</h1>
+    {% url 'family_detail' family.id as family_url %}
+    <h3>{% blocktrans with url=family_url name=family.name %}Eingeloggt mit Family <a href="{{ url }}">{{ name }}</a>{% endblocktrans %}</h3>
 
     {% if messages %}
         {% for message in messages %}
@@ -18,15 +21,15 @@
         {% endfor %}
     {% endif %}
 
-    <h3>Communityname ändern</h3>
+    <h3>{% trans "Communityname ändern" %}</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="admin_password_communityname">Admin Passwort:</label>
-        <input type="password" name="admin_password_communityname" id="admin_password_communityname" placeholder="Admin Passwort" required>
-        <label for="new_communityname">Neuer Communityname:</label>
+        <label for="admin_password_communityname">{% trans "Admin Passwort:" %}</label>
+        <input type="password" name="admin_password_communityname" id="admin_password_communityname" placeholder="{% trans 'Admin Passwort' %}" required>
+        <label for="new_communityname">{% trans "Neuer Communityname:" %}</label>
         <small id="communityname-feedback"></small>
-        <input type="text" name="new_communityname" id="new_communityname" placeholder="Neuer Communityname" required>
-        <button type="submit" name="change_communityname">Speichern</button>
+        <input type="text" name="new_communityname" id="new_communityname" placeholder="{% trans 'Neuer Communityname' %}" required>
+        <button type="submit" name="change_communityname">{% trans "Speichern" %}</button>
     </form>
 
     <script nonce="{{ request.csp_script_nonce }}">
@@ -36,16 +39,16 @@
             const registerButton = document.getElementById('register-button');
 
             if (communityname.length > 0) {
-                feedback.textContent = 'Überprüfe, ob Communityname bereits existiert...';
+                feedback.textContent = '{% trans "Überprüfe, ob Communityname bereits existiert..." %}';
                 feedback.style.color = 'grey';
                 fetch(`/community/check-communityname/?communityname=${encodeURIComponent(communityname)}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.exists) {
-                            feedback.textContent = 'Communityname bereits vorhanden';
+                            feedback.textContent = '{% trans "Communityname bereits vorhanden" %}';
                             feedback.style.color = 'red';
                         } else {
-                            feedback.textContent = 'Communityname noch nicht vorhanden';
+                            feedback.textContent = '{% trans "Communityname noch nicht vorhanden" %}';
                             feedback.style.color = 'green';
                         }
                     });
@@ -57,40 +60,38 @@
 
     <hr>
 
-    <h3>Passwort ändern</h3>
+    <h3>{% trans "Passwort ändern" %}</h3>
     <form method="post" >
         {% csrf_token %}
-        <label for="admin_password_password">Admin Passwort:</label>
-        <input type="password" name="admin_password_password" id="admin_password_password" placeholder="Admin Passwort" required>
-        <label for="new_password">Neues Passwort:</label>
-        <input type="password" name="new_password" id="new_password" placeholder="Neues Passwort" required>
-        <button type="submit" name="change_password">Speichern</button>
+        <label for="admin_password_password">{% trans "Admin Passwort:" %}</label>
+        <input type="password" name="admin_password_password" id="admin_password_password" placeholder="{% trans 'Admin Passwort' %}" required>
+        <label for="new_password">{% trans "Neues Passwort:" %}</label>
+        <input type="password" name="new_password" id="new_password" placeholder="{% trans 'Neues Passwort' %}" required>
+        <button type="submit" name="change_password">{% trans "Speichern" %}</button>
     </form>
 
     <hr>
 
-    <h3>Admin Passwort ändern</h3>
+    <h3>{% trans "Admin Passwort ändern" %}</h3>
     <form method="post" >
         {% csrf_token %}
-        <label for="current_admin_password">Aktuelles Admin Passwort:</label>
+        <label for="current_admin_password">{% trans "Aktuelles Admin Passwort:" %}</label>
         <input type="password" name="current_admin_password" id="current_admin_password"
-               placeholder="aktuelles Admin Passwort" required>
-        <label for="new_admin_password">Neues Admin Passwort:</label>
-        <input type="password" name="new_admin_password" id="new_admin_password" placeholder="neues Admin Passwort"
+               placeholder="{% trans 'aktuelles Admin Passwort' %}" required>
+        <label for="new_admin_password">{% trans "Neues Admin Passwort:" %}</label>
+        <input type="password" name="new_admin_password" id="new_admin_password" placeholder="{% trans 'neues Admin Passwort' %}"
                required>
         <div>
-            <h4>Wir empfehlen folgende Admin-Passwort-Anforderungen, um die Community vor unerlaubter Bearbeitung zu
-                schützen:
-            </h4>
+            <h4>{% trans "Wir empfehlen folgende Admin-Passwort-Anforderungen, um die Community vor unerlaubter Bearbeitung zu schützen:" %}</h4>
             <ul class="criteria-list">
-                <li id="length" class="error-message">Mindestens acht Zeichen</li>
-                <li id="uppercase" class="error-message">Mindestens ein Großbuchstabe</li>
-                <li id="lowercase" class="error-message">Mindestens ein Kleinbuchstabe</li>
-                <li id="number" class="error-message">Mindestens eine Zahl</li>
-                <li id="punctuation" class="error-message">Mindestens ein Sonderzeichen</li>
+                <li id="length" class="error-message">{% trans "Mindestens acht Zeichen" %}</li>
+                <li id="uppercase" class="error-message">{% trans "Mindestens ein Großbuchstabe" %}</li>
+                <li id="lowercase" class="error-message">{% trans "Mindestens ein Kleinbuchstabe" %}</li>
+                <li id="number" class="error-message">{% trans "Mindestens eine Zahl" %}</li>
+                <li id="punctuation" class="error-message">{% trans "Mindestens ein Sonderzeichen" %}</li>
             </ul>
         </div>
-        <button type="submit" name="change_admin_password">Speichern</button>
+        <button type="submit" name="change_admin_password">{% trans "Speichern" %}</button>
     </form>
     <script nonce="{{ request.csp_script_nonce }}">
         const passwordInput = document.getElementById('new_admin_password')
@@ -114,41 +115,41 @@
 
     <hr>
 
-    <h3>Mitglieder entfernen</h3>
+    <h3>{% trans "Mitglieder entfernen" %}</h3>
     <form method="post" >
         {% csrf_token %}
-        <label for="admin_password_remove">Admin Passwort:</label>
-        <input type="password" name="admin_password_remove" id="admin_password_remove" placeholder="Admin Passwort" required>
-        <label for="family_name">Familyname:</label>
-        <input type="text" name="family_name" id="family_name" placeholder="Familyname" required>
-        <button type="submit" name="remove_member" class="color-red">Speichern</button>
+        <label for="admin_password_remove">{% trans "Admin Passwort:" %}</label>
+        <input type="password" name="admin_password_remove" id="admin_password_remove" placeholder="{% trans 'Admin Passwort' %}" required>
+        <label for="family_name">{% trans "Familyname:" %}</label>
+        <input type="text" name="family_name" id="family_name" placeholder="{% trans 'Familyname' %}" required>
+        <button type="submit" name="remove_member" class="color-red">{% trans "Speichern" %}</button>
     </form>
 
     <hr>
 
-    <h3>Community verlassen</h3>
-    <form method="post" class="form-confirm" data-confirm="Willst du diese Community wirklich verlassen?">
+    <h3>{% trans "Community verlassen" %}</h3>
+    <form method="post" class="form-confirm" data-confirm="{% trans 'Willst du diese Community wirklich verlassen?' %}">
         {% csrf_token %}
-        <label for="family_admin_password">Family-Admin-Passwort:</label>
+        <label for="family_admin_password">{% trans "Family-Admin-Passwort:" %}</label>
         <input type="password" name="family_admin_password" id="family_admin_password"
-               placeholder="Family-Admin-Passwort" required>
-        <button type="submit" name="leave_community" class="color-red">Diese Community verlassen</button>
+               placeholder="{% trans 'Family-Admin-Passwort' %}" required>
+        <button type="submit" name="leave_community" class="color-red">{% trans "Diese Community verlassen" %}</button>
     </form>
 
     <hr>
 
-    <h3>Chat-Einstellungen</h3>
+    <h3>{% trans "Chat-Einstellungen" %}</h3>
     <form method="post" >
         {% csrf_token %}
-        <label for="admin_password_chat_settings">Admin Passwort:</label>
-        <input type="password" name="admin_password_chat_settings" id="admin_password_chat_settings" placeholder="Admin-Passwort" required>
+        <label for="admin_password_chat_settings">{% trans "Admin Passwort:" %}</label>
+        <input type="password" name="admin_password_chat_settings" id="admin_password_chat_settings" placeholder="{% trans 'Admin-Passwort' %}" required>
         <label class="custom-checkbox">
             <input type="hidden" id="chat_settings" value="{{ community.chat }}">
             <input type="checkbox" name="chat_checkbox" id="chat_checkbox">
             <span class="checkmark"></span>
-            <span class="label-text">Chat-Funktion aktivieren / deaktivieren</span>
+            <span class="label-text">{% trans "Chat-Funktion aktivieren / deaktivieren" %}</span>
         </label>
-        <button type="submit" name="change_chat_settings">Speichern</button>
+        <button type="submit" name="change_chat_settings">{% trans "Speichern" %}</button>
     </form>
 
     <script nonce="{{ request.csp_script_nonce }}">
@@ -164,12 +165,13 @@
 
     <hr>
 
-    <h3>Community löschen</h3>
-    <form method="post" class="form-confirm" data-confirm="Willst du diese Community wirklich löschen?">
+    <h3>{% trans "Community löschen" %}</h3>
+    <form method="post" class="form-confirm" data-confirm="{% trans 'Willst du diese Community wirklich löschen?' %}">
         {% csrf_token %}
-        <label for="admin_password_delete">Admin-Passwort:</label>
-        <input type="password" name="admin_password_delete" id="admin_password_delete" placeholder="Admin-Passwort" required>
-        <button type="submit" name="delete_community" class="color-red">Diese Community löschen</button>
+        <label for="admin_password_delete">{% trans "Admin-Passwort:" %}</label>
+        <input type="password" name="admin_password_delete" id="admin_password_delete" placeholder="{% trans 'Admin-Passwort' %}" required>
+        <button type="submit" name="delete_community" class="color-red">{% trans "Diese Community löschen" %}</button>
     </form>
 
 {% endblock %}
+

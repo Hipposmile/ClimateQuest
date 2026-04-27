@@ -1,14 +1,15 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block meta %}
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 
-{% block title %}Artikel {{ artikel.name }} bearbeiten{% endblock %}
+{% block title %}{% blocktrans with name=artikel.name %}Artikel {{ name }} bearbeiten{% endblocktrans %}{% endblock %}
 
 {% block content %}
 
-    <h2>Artikel <a href="{% url 'artikel_detail' artikel.id %}">{{ artikel.name }}</a> bearbeiten</h2>
+    {% url 'artikel_detail' artikel.id as detail_url %}
+    <h2>{% blocktrans with url=detail_url name=artikel.name %}Artikel <a href="{{ url }}">{{ name }}</a> bearbeiten{% endblocktrans %}</h2>
 
     {% if messages %}
         {% for message in messages %}
@@ -20,36 +21,36 @@
 
     <form method="post" class="fill-editor">
         {% csrf_token %}
-        <label for="name">Name</label>
-        <input type="text" name="name" id="name" placeholder="Name" maxlength="100" value="{{ artikel.name }}">
+        <label for="name">{% trans 'Name' %}</label>
+        <input type="text" name="name" id="name" placeholder="{% trans 'Name' %}" maxlength="100" value="{{ artikel.name }}">
 
-        <label for="content_editor">Beschreibung</label>
+        <label for="content_editor">{% trans 'Beschreibung' %}</label>
         <div id="content_editor" class="quill-editor">{{ artikel.content|safe }}</div>
         <input type="hidden" name="content">
 
-        <label for="category">Kategorie</label>
+        <label for="category">{% trans 'Kategorie' %}</label>
         <select id="category" name="category">
             {% for category in categories %}
-                <option value="{{ category }}" {% if category == artikel.category.title %}selected{% endif %}>{{ category }}</option>
+                <option value="{{ category }}" {% if category == artikel.category.title %}selected{% endif %}>{% blocktrans with cat=category %}{{ cat }}{% endblocktrans %}</option>
             {% endfor %}
         </select>
 
         <label class="custom-checkbox">
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
-            <span class="label-text">Ich bestätige, dass alle Angaben der Wahrheit entsprechen, mit mindestens zwei Quellen, welche im Text vorkommen, übereinstimmen und dass der Artikel mit den <a
-                    href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmt. </span>
+            {% url 'nutzungsbedingungen' as nutzungs_url %}
+            <span class="label-text">{% blocktrans with url=nutzungs_url %}Ich bestätige, dass alle Angaben der Wahrheit entsprechen, mit mindestens zwei Quellen, welche im Text vorkommen, übereinstimmen und dass der Artikel mit den <a href="{{ url }}">Nutzungsbedingungen</a> übereinstimmt.{% endblocktrans %}</span>
         </label>
 
-        <button type="submit" name="edit_artikel">Speichern</button>
+        <button type="submit" name="edit_artikel">{% trans 'Speichern' %}</button>
     </form>
 
     <script nonce="{{ request.csp_script_nonce }}">
         document.addEventListener('DOMContentLoaded', initializeQuill);
     </script>
     <hr>
-    <form method="post" class="form-confirm" data-confirm="Willst du diesen Artikel wirklich löschen?">
+    <form method="post" class="form-confirm" data-confirm="{% trans 'Willst du diesen Artikel wirklich löschen?' %}">
         {% csrf_token %}
-        <button type="submit" name="delete_artikel" class="color-red">Diesen Artikel löschen</button>
+        <button type="submit" name="delete_artikel" class="color-red">{% trans 'Diesen Artikel löschen' %}</button>
     </form>
 {% endblock %}

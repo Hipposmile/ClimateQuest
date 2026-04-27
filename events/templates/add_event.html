@@ -1,12 +1,13 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block meta %}
     <meta name="description"
-          content="Füge ein neues Event bei ClimateQuest hinzu, um mehr Leute für große Events wie Demos zu gewinnen.">
+          content="{% trans "Füge ein neues Event bei ClimateQuest hinzu, um mehr Leute für große Events wie Demos zu gewinnen." %}">
 {% endblock %}
-{% block title %}Event hinzufügen{% endblock %}
+{% block title %}{% trans "Event hinzufügen" %}{% endblock %}
 
 {% block content %}
-    <h1>Event hinzufügen</h1>
+    <h1>{% trans "Event hinzufügen" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
@@ -14,30 +15,30 @@
     {% endif %}
     <form method="post" class="fill-editor">
         {% csrf_token %}
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" placeholder="Name" maxlength="100" required>
+        <label for="name">{% trans "Name" %}</label>
+        <input type="text" id="name" name="name" placeholder="{% trans "Name" %}" maxlength="100" required>
 
-        <label for="content_editor">Beschreibung</label>
+        <label for="content_editor">{% trans "Beschreibung" %}</label>
         <div id="content_editor" class="quill-editor"></div>
         <input type="hidden" name="content">
 
-        <label for="date_time">Datum und Uhrzeit (Beginn)</label>
+        <label for="date_time">{% trans "Datum und Uhrzeit (Beginn)" %}</label>
         <input type="datetime-local" id="date_time" name="date_time" required>
 
-        <label for="duration">geschätze Dauer in Minuten</label>
-        <input type="number" min="0" id="duration" name="duration" placeholder="Dauer" required>
+        <label for="duration">{% trans "geschätze Dauer in Minuten" %}</label>
+        <input type="number" min="0" id="duration" name="duration" placeholder="{% trans "Dauer" %}" required>
 
-        <label for="adress">Adresse</label>
-        <input type="text" id="adress" name="adress" placeholder="Adresse" maxlength="100" required>
+        <label for="adress">{% trans "Adresse" %}</label>
+        <input type="text" id="adress" name="adress" placeholder="{% trans "Adresse" %}" maxlength="100" required>
 
         <label class="custom-checkbox">
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
-            <span class="label-text">Ich bestätige, dass alle Angaben der Wahrheit entsprechen und mit den <a
-                    href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmen. Außerdem verpflichte ich mich, bei dem Event selbst teilzunehmen.</span>
+            {% url 'nutzungsbedingungen' as nutzungsbedingungen_url %}
+            <span class="label-text">{% blocktrans with url=nutzungsbedingungen_url %}Ich bestätige, dass alle Angaben der Wahrheit entsprechen und mit den <a href="{{ url }}">Nutzungsbedingungen</a> übereinstimmen. Außerdem verpflichte ich mich, bei dem Event selbst teilzunehmen.{% endblocktrans %}</span>
         </label>
 
-        <button type="submit">Hinzufügen</button>
+        <button type="submit">{% trans "Hinzufügen" %}</button>
     </form>
 
     <script nonce="{{ request.csp_script_nonce }}">

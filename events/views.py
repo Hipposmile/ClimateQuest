@@ -235,6 +235,7 @@ def edit_event(request, event_id):
             for participant in event.participants.all():
                 create_notification(request,
                                     f'Ein Event, bei dem du Teilnehmer bist und das jetzt {name} heißt, wurde bearbeitet.',
+                                    f'A event you are participating in and that is now called {name} has been edited.',
                                     participant,
                                     url=reverse('event_detail', args=[event_id]))
 
@@ -244,6 +245,7 @@ def edit_event(request, event_id):
         elif 'delete' in request.POST:
             for participant in event.participants.all():
                 create_notification(request, f'Das Event {event.name}, bei dem du Teilnehmer bist, wurde gelöscht',
+                                    f'The event called {event.name} has been deleted.',
                                     participant,
                                     url=reverse('events_overview'))
             event.delete()

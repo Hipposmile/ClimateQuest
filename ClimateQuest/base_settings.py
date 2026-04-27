@@ -24,6 +24,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -48,6 +52,7 @@ INSTALLED_APPS = [
     'django_crontab',
     'webpush',
     'core',
+    'utils',
     'production_conf',
     'home',
     'personals',
@@ -58,16 +63,17 @@ INSTALLED_APPS = [
     'artikel',
     'events',
     'forum',
-    'presents',
     'petitions',
     'pages'
 ]
 
-MIDDLEWARE = [
+"""MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'core.middleware.AddCORSHeaderMiddleware',
     'servestatic.middleware.ServeStaticMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    #'django.middleware.locale.LocaleMiddleware',
+    'core.middleware.LanguageFallbackMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -75,6 +81,20 @@ MIDDLEWARE = [
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_browser_reload.middleware.BrowserReloadMiddleware',
     'core.middleware.GenerateCSPNonceMiddleware'
+]"""
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'core.middleware.AddCORSHeaderMiddleware',
+    'servestatic.middleware.ServeStaticMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'core.middleware.LanguageFallbackMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django_browser_reload.middleware.BrowserReloadMiddleware',
+    'core.middleware.GenerateCSPNonceMiddleware',
 ]
 
 ROOT_URLCONF = 'ClimateQuest.urls'
@@ -121,6 +141,11 @@ WEBPUSH_SETTINGS = {
 
 LANGUAGE_CODE = 'de'
 
+LANGUAGES = [
+    ('en', 'English'),
+    ('de', 'Deutsch'),
+]
+
 USE_THOUSAND_SEPARATOR = False
 
 USE_I18N = True
@@ -152,7 +177,8 @@ STORAGES = {
 
 CRONJOBS = [
     ('0 12 * * 0', 'core.views.create_reminder', '>> /webapps/climatequest/ClimateQuest/logs/cronjobs.log 2>&1'),
-    ('0 08 * * 0', 'aktionen.views.add_weekly_tracking_actions', '>> /webapps/climatequest/ClimateQuest/logs/cronjobs.log 2>&1'),
+    ('0 08 * * 0', 'aktionen.views.add_weekly_tracking_actions',
+     '>> /webapps/climatequest/ClimateQuest/logs/cronjobs.log 2>&1'),
 ]
 
 CRONTAB_PYTHON_EXECUTABLE = "/webapps/climatequest/venv/bin/python"

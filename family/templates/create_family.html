@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block meta %}
-    <meta name="description" content="Erstelle eine neue Family bei ClimateQuest, um dich mit anderen Nutzern zu vergleichen und auszutauschen.">
+    <meta name="description" content="{% trans "Erstelle eine neue Family bei ClimateQuest, um dich mit anderen Nutzern zu vergleichen und auszutauschen." %}">
 {% endblock %}
 
-{% block title %}Family erstellen{% endblock %}
+{% block title %}{% trans "Family erstellen" %}{% endblock %}
 
 {% block content %}
-<h1>Family erstellen</h1>
+<h1>{% trans "Family erstellen" %}</h1>
 {% if messages %}
 {% for message in messages %}
 <p class="{{message.level_tag}}-message">{{ message }}</p>
@@ -16,26 +17,30 @@
 {% endif %}
 <form method="post" >
     {% csrf_token %}
-    <label for="familyname">Familyname:</label>
+    <label for="familyname">{% trans "Familyname:" %}</label>
     <small id="familyname-feedback"></small>
-    <input type="text" id="familyname" name="familyname" placeholder="Familyname" maxlength="100" required>
-    <label for="password">Passwort:</label>
-    <input type="password" id="password" name="family_password" placeholder="Passwort" maxlength="100" required>
-    <label for="family_admin_password">Admin Passwort:</label>
-    <input type="password" id="family_admin_password" name="family_admin_password" placeholder="Admin Passwort" maxlength="100" required>
+    <input type="text" id="familyname" name="familyname" placeholder="{% trans "Familyname" %}" maxlength="100" required>
+    <label for="password">{% trans "Passwort:" %}</label>
+    <input type="password" id="password" name="family_password" placeholder="{% trans "Passwort" %}" maxlength="100" required>
+    <label for="family_admin_password">{% trans "Admin Passwort:" %}</label>
+    <input type="password" id="family_admin_password" name="family_admin_password" placeholder="{% trans "Admin Passwort" %}" maxlength="100" required>
     <div>
-        <h4>Wir empfehlen folgende Admin-Passwort-Anforderungen, um die Family vor unerlaubter Bearbeitung zu schützen:</h4>
+        <h4>{% trans "Wir empfehlen folgende Admin-Passwort-Anforderungen, um die Family vor unerlaubter Bearbeitung zu schützen:" %}</h4>
         <ul class="criteria-list">
-      <li id="length" class="error-message">Mindestens acht Zeichen</li>
-      <li id="uppercase" class="error-message">Mindestens ein Großbuchstabe</li>
-      <li id="lowercase" class="error-message">Mindestens ein Kleinbuchstabe</li>
-      <li id="number" class="error-message">Mindestens eine Zahl</li>
-      <li id="punctuation" class="error-message">Mindestens ein Sonderzeichen</li>
+      <li id="length" class="error-message">{% trans "Mindestens acht Zeichen" %}</li>
+      <li id="uppercase" class="error-message">{% trans "Mindestens ein Großbuchstabe" %}</li>
+      <li id="lowercase" class="error-message">{% trans "Mindestens ein Kleinbuchstabe" %}</li>
+      <li id="number" class="error-message">{% trans "Mindestens eine Zahl" %}</li>
+      <li id="punctuation" class="error-message">{% trans "Mindestens ein Sonderzeichen" %}</li>
     </ul>
   </div>
-    <button type="submit" id="create-button">Family erstellen</button>
+    <button type="submit" id="create-button">{% trans "Family erstellen" %}</button>
 </form>
-<p>Oder <a  href="{% url 'join_family' %}">einer bestehenden Family beitreten</a>.</p>
+<p>{% url 'join_family' as join_url %}{% blocktrans with url=join_url %}Oder <a href="{{ url }}">einer bestehenden Family beitreten</a>.{% endblocktrans %}</p>
+
+{% trans "Überprüfe, ob Familyname bereits existiert..." as checking_msg %}
+{% trans "Familyname bereits vorhanden" as exists_msg %}
+{% trans "Familyname noch nicht vorhanden" as not_exists_msg %}
 
 <script nonce="{{ request.csp_script_nonce }}">
     const passwordInput = document.getElementById('family_admin_password')
@@ -67,16 +72,16 @@
 
 
         if (familyname.length > 0) {
-            feedback.textContent = 'Überprüfe, ob Familyname bereits existiert...';
+            feedback.textContent = '{{ checking_msg }}';
             feedback.style.color = 'grey';
             fetch(`/family/check-familyname/?familyname=${encodeURIComponent(familyname)}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.exists) {
-                        feedback.textContent = 'Familyname bereits vorhanden';
+                        feedback.textContent = '{{ exists_msg }}';
                         feedback.style.color = 'red';
                     } else {
-                        feedback.textContent = 'Familyname noch nicht vorhanden';
+                        feedback.textContent = '{{ not_exists_msg }}';
                         feedback.style.color = 'green';
                     }
                 });

@@ -89,7 +89,6 @@ def action_date_invalid(action_type, end_date, quantity, user, exclude_id=None):
 
 @login_required
 def add(request):
-    aktionen = AktionenListe.objects.all().order_by('name')
     categories = Category.objects.all().order_by('name')
 
     if request.method == 'POST':
@@ -98,19 +97,20 @@ def add(request):
             messages.error(request, all_messages["not_is_truth"])
             return redirect('add')
 
-        action_type = request.POST.get('action_type')
-        if not action_type:
+        action_type_id = request.POST.get('action_type_id')
+        if not action_type_id:
             messages.error(request, all_messages["action_name_missing"])
             return redirect('add')
-
         try:
-            action = AktionenListe.objects.get(name=action_type)
+            action = AktionenListe.objects.get(id=action_type_id)
         except AktionenListe.DoesNotExist:
             messages.error(request, all_messages["action_not_found"])
+            return redirect('add')
 
         action_description = request.POST.get('action_description')
         if len(action_description) > 200:
             messages.error(request, all_messages["too_long_input"])
+            return redirect('add')
 
         action_date_raw = request.POST.get('action_date')
         if not action_date_raw:
@@ -159,11 +159,6 @@ def add(request):
             messages.error(request, all_messages["action_already_set_in_period"])
             return redirect('add')
 
-        aktion_existing = any(aktion.name == action_type for aktion in aktionen)
-        if not aktion_existing:
-            messages.error(request, all_messages["invalid_action_type"])
-            return redirect('add')
-
         old_level = get_level(request.user)
         old_streak = get_streak_from_user(request.user)
 
@@ -180,18 +175,27 @@ def add(request):
 
         if old_level['level_number'] < new_level['level_number']:
             create_notification(request,
-                                f'Du hast eine neue Aktion vom Typen {action_type} erstellt und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>',
+                                f'Du hast eine neue Aktion vom Typen {action.name} erstellt und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>',
+                                f'You created a action (type: {action.name_en}) and so reached the level {new_level["current_level"].description_en}. <span class="emoji">&#x1F973;</span>',
                                 request.user,
                                 reverse('level_me'))
-            messages.success(request,
-                             f'Du hast eine neue Aktion vom Typen {action_type} erstellt und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;</span>')
+            if request.LANGUAGE_CODE == "de":
+                messages.success(request,
+                                 f'Du hast eine neue Aktion vom Typen {action.name} erstellt und bist so ins Level {new_level["current_level"].description} aufgestiegen. <span class="emoji">&#x1F973;')
+            else:
+                messages.success(request,
+                                 f'You created a action (type: {action.name_en}) and so reached the level {new_level["current_level"].description_en}. <span class="emoji">&#x1F973;</span>')
         if old_streak < new_streak:
             create_notification(request,
-                                f'Du hast eine neue Aktion vom Typen {action_type} erstellt und so deine Streak verlängert. <span class="emoji">&#x1F973;</span>',
+                                f'Du hast eine neue Aktion vom Typen {action.name} erstellt und so deine Streak verlängert. <span class="emoji">&#x1F973;</span>',
+                                f'You created a new action (type: {action.name_en}) and so extended your streak. <span class="emoji">&#x1F973;</span>',
                                 request.user,
                                 reverse('dashboard'))
-            messages.success(request,
-                             f'Du hast eine neue Aktion vom Typen {action_type} erstellt und deine Streak verlängert. <span class="emoji">&#x1F973;</span>')
+            if request.LANGUAGE_CODE == "de":
+                messages.success(request,
+                             f'Du hast eine neue Aktion vom Typen {action.name} erstellt und deine Streak verlängert. <span class="emoji">&#x1F973;</span>')
+            else:
+                messages.success(request, f'You created a new action (type: {action.name_en}) and so extended your streak. <span class="emoji">&#x1F973;</span>')
         messages.success(request, all_messages["action_added"])
         return redirect('action_detail', aktion.id, request.user.id)
 
@@ -238,8 +242,8 @@ def track_actions(request):
                 return JsonResponse({'success': False, 'error': all_messages["internal_error"]})
 
             action = Aktion.objects.create(aktion=action, user=request.user, quantity=(distance / 1000),
-                                  date=date.today(),
-                                  description='Diese Aktion wurde vom ClimateQuest Tracking Service automatisch getrackt.')
+                                           date=date.today(),
+                                           description='Diese Aktion wurde vom ClimateQuest Tracking Service automatisch getrackt.' if request.user.usererweitert.lang == "de" else "This action was automatically tracked by the ClimateQuest Tracking Service.")
 
             return JsonResponse({'success': True, 'action_id': action.id, 'user_id': request.user.id})
 
@@ -257,7 +261,7 @@ def add_weekly_tracking_action():
 
         if (today - tracked_action.since).days >= 6 and not action_date_invalid(action, today, 1, user):
             Aktion.objects.create(user=user, aktion=action, quantity=1, date=today,
-                                  description="Eingetragen vom ClimateQuest Tracking Service")
+                                  description="Eingetragen vom ClimateQuest Tracking Service" if user.usererweitert.lang == "de" else "This action was added by the ClimateQuest Tracking Service.")
 
 
 def validate_number(number, input_decimals):

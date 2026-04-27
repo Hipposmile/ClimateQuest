@@ -1,50 +1,53 @@
 {% extends 'base.html' %}
 
+{% load i18n %}
+
 {% block meta %}
-    <meta name="description" content="Guck dir alle Petitionen bei ClimateQuest an">
+    <meta name="description" content="{% trans "Guck dir alle Petitionen bei ClimateQuest an" %}">
 {% endblock %}
 
-{% block title %}Petitionen{% endblock %}
+{% block title %}{% trans "Petitionen" %}{% endblock %}
 
 {% block content %}
-    <h1>Petitionen - Übersicht</h1>
+    <h1>{% trans "Petitionen - Übersicht" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
+        {% if request.LANGUAGE_CODE == "en" %}<p>Petitions are currently only available in German. Thanks for your understanding!</p>{% endif %}
     <a href="{% url 'add_petition' %}" class="redirect-link ">
-        <span>Petition hinzufügen</span>
+        <span>{% trans "Petition hinzufügen" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <br>
     <a href="https://www.change.org/p/mehr-begr%C3%BCnung-in-m%C3%BCnchen" class="redirect-link">
-        <span>Petition für mehr Begrünung in München</span>
+        <span>{% trans "Petition für mehr Begrünung in München" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <form method="post">
         {% csrf_token %}
         <div id="search_keyword_div">
-            <small>Leer lassen, um alle Petitionen anzuzeigen</small>
-            <label for="search_keyword">Suchwort:</label>
-            <input type="search" id="search_keyword" name="search_keyword" placeholder="Suchwort">
+            <small>{% trans "Leer lassen, um alle Petitionen anzuzeigen" %}</small>
+            <label for="search_keyword">{% trans "Suchwort:" %}</label>
+            <input type="search" id="search_keyword" name="search_keyword" placeholder="{% trans "Suchwort" %}">
         </div>
-        <label for="order_by">Sortieren nach:</label>
+        <label for="order_by">{% trans "Sortieren nach:" %}</label>
         <select name="order_by" id="order_by" required>
-            <option value="Titel" selected>Titel</option>
-            <option value="Ersteller">Ersteller</option>
-            <option value="Zuletzt bearbeitet">Zuletzt bearbeitet</option>
-            <option value="Unterschriften">Unterschriften</option>
+            <option value="Titel" selected>{% trans "Titel" %}</option>
+            <option value="Ersteller">{% trans "Ersteller" %}</option>
+            <option value="Zuletzt bearbeitet">{% trans "Zuletzt bearbeitet" %}</option>
+            <option value="Unterschriften">{% trans "Unterschriften" %}</option>
             {% if user.is_authenticated %}
-                <option value="von mir erstellte Petitionen">von mir erstellte Petitionen</option>
-                <option value="von mir unterschriebene Petitionen">von mir unterschriebene Petitionen</option>
+                <option value="von mir erstellte Petitionen">{% trans "von mir erstellte Petitionen" %}</option>
+                <option value="von mir unterschriebene Petitionen">{% trans "von mir unterschriebene Petitionen" %}</option>
             {% endif %}
         </select>
 
 
-        <label for="category">Kategorie:</label>
+        <label for="category">{% trans "Kategorie:" %}</label>
         <select name="category" id="category" required>
-            <option value="Alle" selected>Alle</option>
+            <option value="Alle" selected>{% trans "Alle" %}</option>
             {% for category in all_categories %}
                 <option value="{{ category.title }}">{{ category.title }}</option>
             {% endfor %}
@@ -53,10 +56,10 @@
         <label class="custom-checkbox">
             <input type="checkbox" name="success_visible">
             <span class="checkmark"></span>
-            <span class="label-text">Erfolgreiche einblenden</span>
+            <span class="label-text">{% trans "Erfolgreiche einblenden" %}</span>
         </label>
 
-        <button type="submit">Anwenden</button>
+        <button type="submit">{% trans "Anwenden" %}</button>
     </form>
     <script nonce="{{ request.csp_script_nonce }}">
         let search_keyword = document.querySelector('input[name=search_keyword]');
@@ -71,64 +74,63 @@
             }
         });
     </script>
-    <p>Sortiert nach: {{ ordered_by }}</p>
+    <p>{% trans "Sortiert nach" %}: {{ ordered_by }}</p>
     {% if search_keyword %}
-        <p>Suchwort: {{ search_keyword }}</p>
+        <p>{% trans "Suchwort" %}: {{ search_keyword }}</p>
     {% endif %}
-    <p>Kategorie: {{ category }}</p>
+    <p>{% trans "Kategorie" %}: {{ category }}</p>
     {% if success_visible %}
-        <p>Erfolgreiche Petitionen eingeblendet</p>
+        <p>{% trans "Erfolgreiche Petitionen eingeblendet" %}</p>
     {% endif %}
-    <p>{{ petitions.count }} Suchergebnisse</p>
+    <p>{{ petitions.count }} {% trans "Suchergebnisse" %}</p>
 
     {% if petitions %}
         {% for single_petition in petitions %}
             <section class="event-card{% if request.user == single_petition.creator %} event-card-creator{% endif %}">
                 <div class="event-main">
                     <h2 class="event-title">{{ single_petition.title }}</h2>
-                    <p>Kategorie: {{ single_petition.category.title }}</p>
+                    <p>{% trans "Kategorie" %}: {{ single_petition.category.title }}</p>
                     {% if single_petition.success %}
-                        <p><span class="emoji">&#x1F389;</span><strong class="color-red">Diese Petition hatte
-                            Erfolg</strong><span class="emoji">&#x1F389;</span></p>
+                        <p><span class="emoji">&#x1F389;</span><strong class="color-red">{% trans "Diese Petition hatte Erfolg" %}</strong><span class="emoji">&#x1F389;</span></p>
                     {% endif %}
                     {% if ordered_by == 'Zuletzt bearbeitet' %}
-                        <p><strong>Zuletzt bearbeitet:</strong> <span class="event-date"
-                                                                      data-date="{{ single_petition.updated_at|date:'c' }}">{{ single_petition.updated_at|date:"d.m.Y" }}</span>
+                        <p><strong>{% trans "Zuletzt bearbeitet:" %}</strong> <span class="event-date"
+                                                                      data-date="{{ single_petition.updated_at|date:'c' }}">{{ single_petition.updated_at|date:"SHORT_DATE_FORMAT" }}</span>
                         </p>
 
                     {% elif ordered_by == 'Ersteller' %}
-                        <p><strong>Ersteller:</strong> <a
+                        <p><strong>{% trans "Ersteller:" %}</strong> <a
                                 href="{% url 'user_detail' single_petition.creator.id %}">{{ single_petition.creator.username }}</a>
-                            {% if request.user == single_petition.creator %}(Du){% endif %}</p>
+                            {% if request.user == single_petition.creator %}({% trans "Du" %}){% endif %}</p>
                     {% elif ordered_by == 'Unterschriften' %}
-                        <p><strong>Unterschriften:</strong> {{ single_petition.signs_count }}</p>
+                        <p><strong>{% trans "Unterschriften:" %}</strong> {{ single_petition.signs_count }}</p>
                     {% endif %}
                 </div>
 
                 <details class="event-details">
-                    <summary>mehr</summary>
+                    <summary>{% trans "mehr" %}</summary>
                     <div class="event-extra">
                         {% if ordered_by != 'Zuletzt bearbeitet' %}
-                            <p><strong>Zuletzt bearbeitet:</strong> <span class="event-date"
-                                                                          data-date="{{ single_petition.updated_at|date:'c' }}">{{ single_petition.updated_at|date:"d.m.Y" }}</span>
+                            <p><strong>{% trans "Zuletzt bearbeitet:" %}</strong> <span class="event-date"
+                                                                          data-date="{{ single_petition.updated_at|date:'c' }}">{{ single_petition.updated_at|date:"SHORT_DATE_FORMAT" }}</span>
                             </p>
                         {% endif %}
                         {% if ordered_by != 'Ersteller' %}
-                            <p><strong>Ersteller:</strong> <a
+                            <p><strong>{% trans "Ersteller:" %}</strong> <a
                                     href="{% url 'user_detail' single_petition.creator.id %}">{{ single_petition.creator.username }}</a>
-                                {% if request.user == single_petition.creator %}(Du){% endif %}</p>
+                                {% if request.user == single_petition.creator %}({% trans "Du" %}){% endif %}</p>
                         {% endif %}
                         {% if ordered_by != 'Unterschriften' %}
-                            <p><strong>Unterschriften:</strong> {{ single_petition.signs_count }}</p>
+                            <p><strong>{% trans "Unterschriften:" %}</strong> {{ single_petition.signs_count }}</p>
                         {% endif %}
                     </div>
                 </details>
 
-                <a class="event-link" href="{% url 'petition_detail' single_petition.id %}">Details ansehen</a>
+                <a class="event-link" href="{% url 'petition_detail' single_petition.id %}">{% trans "Details ansehen" %}</a>
             </section>
         {% endfor %}
     {% else %}
-        <p><i>Es gibt derzeit keine Petitionen mit diesem Filter.</i></p>
+        <p><i>{% trans "Es gibt derzeit keine Petitionen mit diesem Filter." %}</i></p>
     {% endif %}
 
 {% endblock %}

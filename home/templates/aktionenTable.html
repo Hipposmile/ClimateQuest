@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block meta %}
-    <meta name="description" content="Übersicht über alle Aktionen und deren Klimapunkte bei ClimateQuest.">
+    <meta name="description" content="{% trans 'Übersicht über alle Aktionen und deren Klimapunkte bei ClimateQuest.' %}">
 {% endblock %}
-{% block title %}Aktionen{% endblock %}
+{% block title %}{% trans "Aktionen" %}{% endblock %}
 
 {% block content %}
     <style nonce="{{ request.csp_style_nonce }}">
@@ -59,7 +60,7 @@
             }
         }
     </style>
-    <h1>Aktionen</h1>
+    <h1>{% trans "Aktionen" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
@@ -69,11 +70,11 @@
         <table class="aktionen-table">
             <thead>
             <tr>
-                <th>Aktion</th>
-                <th>Klimapunkte</th>
-                <th>Anmerkung</th>
-                <th>Quelle</th>
-                <th>Kategorien</th>
+                <th>{% trans "Aktion" %}</th>
+                <th>{% trans "Klimapunkte" %}</th>
+                <th>{% trans "Anmerkung" %}</th>
+                <th>{% trans "Quelle" %}</th>
+                <th>{% trans "Kategorien" %}</th>
             </tr>
             </thead>
             <tbody>
@@ -94,5 +95,5 @@
         </table>
     </div>
     <br>
-    <p>Ein Klimapunkt steht stellvertretend für einen Kilogramm eingespartes CO2.</p>
+    <p>{% trans "Ein Klimapunkt steht stellvertretend für einen Kilogramm eingespartes CO2." %}</p>
 {% endblock %}

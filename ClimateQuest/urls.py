@@ -30,7 +30,6 @@ from community.sitemaps import CommunityOverviewSitemap, AddCommunitySitemap, Jo
 from personals.sitemaps import LoginSitemap, RegisterSitemap, PersonalSettingsSitemap, ResetPasswordSitemap
 from users.sitemaps import KlimapunkteViewSitemap, LevelViewSitemap, HistorySitemap
 from aktionen.sitemaps import AddAktionenSitemap
-from presents.sitemaps import PresentsOverviewSitemap, AddPresentSitemap
 from pages.sitemaps import MobileAppsSitemap, AknachhaltigkeitSitemap
 
 sitemaps = {
@@ -69,9 +68,6 @@ sitemaps = {
     "forum_overview": ForumOverviewSitemap(),
     "add_forum_post": AddForumPostSitemap(),
 
-    "presents_overview": PresentsOverviewSitemap(),
-    "add_present": AddPresentSitemap(),
-
     "mobile_apps": MobileAppsSitemap(),
     "aknachhaltigkeit": AknachhaltigkeitSitemap()
 }
@@ -89,7 +85,6 @@ urlpatterns = [
     path('events/', include('events.urls')),
     path('artikel/', include('artikel.urls')),
     path('forum/', include('forum.urls')),
-    path('presents/', include('presents.urls')),
     path('petitions/', include('petitions.urls')),
     path('pages/', include('pages.urls')),
 

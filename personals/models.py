@@ -20,6 +20,7 @@ class UserErweitert(models.Model):
     weekly_goal = models.PositiveIntegerField(default=20, validators=[MinValueValidator(1)])
     planted_trees = models.ManyToManyField(TreeCodes, blank=True)
     allows_data_view = models.BooleanField(default=False)
+    lang = models.CharField(max_length=2, default='de')
 
     @property
     def given_credits(self):
@@ -42,6 +43,7 @@ class UserErweitert(models.Model):
 class Level(models.Model):
     klimapunkte = models.IntegerField()
     description = models.CharField(max_length=100)
+    description_en = models.CharField(max_length=100)
 
     def __str__(self):
         return f'{self.description}'

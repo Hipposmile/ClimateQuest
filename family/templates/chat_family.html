@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% load static %}
+{% load i18n %}
 
-{% block title %}{% if family %}Chat: Family {{ family.name }}{% else %}Die Family konnte nicht geladen
-    werden.{% endif %} {% endblock %}
+{% block title %}{% if family %}{% blocktrans with name=family.name %}Chat: Family {{ name }}{% endblocktrans %}{% else %}{% trans "Die Family konnte nicht geladen werden." %}{% endif %} {% endblock %}
 
 {% block content %}
 
@@ -112,7 +112,7 @@
         }
     </style>
 
-    <h1>Chat: Family <a  href="{% url 'family_detail' family.id %}">{{ family.name }}</a></h1>
+    <h1>{% url 'family_detail' family.id as family_detail_url %}{% blocktrans with url=family_detail_url name=family.name %}Chat: Family <a href="{{ url }}">{{ name }}</a>{% endblocktrans %}</h1>
 
     {% if messages %}
         {% for message in messages %}
@@ -121,7 +121,7 @@
     {% endif %}
 
     <div class="chat-family-container">
-        <button type="button" class="chat-refresh-btn" id="refresh" title="Chat aktualisieren">
+        <button type="button" class="chat-refresh-btn" id="refresh" title="{% trans "Chat aktualisieren" %}">
             <picture>
                 <source type="image/avif" srcset="
                     {% static 'images/refresh/refresh-320.avif' %} 320w,
@@ -139,43 +139,41 @@
                     " sizes="100vw"
                 >
 
-                <img src="{% static 'images/refresh/refresh-fallback.png' %}" alt="Refresh">
+                <img src="{% static 'images/refresh/refresh-fallback.png' %}" alt="{% trans "Refresh" %}">
             </picture>
         </button>
         <div class="chat-family-messages">
             <div class="chat-family-message system">
                 <div class="chat-family-bubble">
-                    Ich werde morgen um 15:00 am See Müll sammeln gehen. Wer will mitmachen?
-                    <span class="chat-family-meta">Beispiel</span>
+                    {% trans "Ich werde morgen um 15:00 am See Müll sammeln gehen. Wer will mitmachen?" %}
+                    <span class="chat-family-meta">{% trans "Beispiel" %}</span>
                 </div>
             </div>
             <div class="chat-family-message system">
                 <div class="chat-family-bubble">
-                    Wir machen eine Challenge: Wer schafft es von heute bis nächste Woche Sonntag am meisten Klimapunkte
-                    zu sammeln?
-                    <span class="chat-family-meta">Beispiel</span>
+                    {% trans "Wir machen eine Challenge: Wer schafft es von heute bis nächste Woche Sonntag am meisten Klimapunkte zu sammeln?" %}
+                    <span class="chat-family-meta">{% trans "Beispiel" %}</span>
                 </div>
             </div>
             {% for msg in msgs %}
                 <div class="chat-family-message {% if msg.user == user %}me{% else %}other{% endif %}">
                     <div class="chat-family-bubble">
                         {{ msg.message }}
-                        <span class="chat-family-meta"><a  href="{% url 'user_detail' msg.user.id %}"
-                                                          class="chat-family-meta">{{ msg.user.username }}</a></span>
-                        <span class="chat-family-meta">{{ msg.erstellt_am|date:"d.m.Y H:i" }}</span>
+                        <span class="chat-family-meta">{% url 'user_detail' msg.user.id as user_detail_url %}{% blocktrans with url=user_detail_url username=msg.user.username %}<a href="{{ url }}" class="chat-family-meta">{{ username }}</a>{% endblocktrans %}</span>
+                        <span class="chat-family-meta">{% blocktrans with date=msg.erstellt_am|date:"SHORT_DATETIME_FORMAT" %}{{ date }}{% endblocktrans %}</span>
                     </div>
                 </div>
             {% empty %}
-                <div class="chat-family-empty">Noch keine Nachrichten.</div>
+                <div class="chat-family-empty">{% trans "Noch keine Nachrichten." %}</div>
             {% endfor %}
         </div>
         <form method="post" class="chat-family-form" >
             {% csrf_token %}
-            <label for="message">Nachricht eingeben</label>
+            <label for="message">{% trans "Nachricht eingeben" %}</label>
             <br>
-            <input type="text" name="message" id="message" placeholder="Nachricht eingeben..." required>
+            <input type="text" name="message" id="message" placeholder="{% trans "Nachricht eingeben..." %}" required>
             <br>
-            <button type="submit" name="send">Senden</button>
+            <button type="submit" name="send">{% trans "Senden" %}</button>
         </form>
     </div>
     <script nonce="{{ request.csp_script_nonce }}">

@@ -1,254 +1,247 @@
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 
 all_messages = {
     # --------
     # Allgemein
     # --------
 
-    "not_authorized_to_visit": "Du hast nicht die Berechtigung, diese Seite zu besuchen.",
-    "missing_required_inputs": "Es fehlen Pflichfelder",
-    "invalid_admin_password": "Ungültiges Admin-Passwort",
-    "invalid_action": "Ungültige Aktion",
-    "notification_deleted": "Benachrichtigung erfolgreich gelöscht",
-    "delete_notification_error": "interner Fehler: Benachrichtigung bereits gelöscht",
-    "internal_error": "Interner Fehler. Probiere es später erneut",
-    "no_admin_auth": "Du darfst nicht auf die Admin-Funktionen zugreifen",
-    "user_not_exist": "User existiert nicht",
-    "not_is_truth": "Du musst bestätigen, dass alle Angaben der Wahrheit entsprechen",
-    "too_long_input": "Ein oder mehrere Input-Felder sind zu lang",
-    "not_a_number": "Der Input muss eine Zahl sein.",
+    "not_authorized_to_visit": _("Du hast nicht die Berechtigung, diese Seite zu besuchen"),
+    "missing_required_inputs": _("Es fehlen Pflichfelder"),
+    "invalid_admin_password": _("Ungültiges Admin-Passwort"),
+    "invalid_action": _("Ungültige Aktion"),
+    "notification_deleted": _("Benachrichtigung erfolgreich gelöscht"),
+    "delete_notification_error": _("Interner Fehler: Benachrichtigung bereits gelöscht"),
+    "internal_error": _("Interner Fehler Probiere es später erneut"),
+    "no_admin_auth": _("Du darfst nicht auf die Admin-Funktionen zugreifen"),
+    "user_not_exist": _("User existiert nicht"),
+    "not_is_truth": _("Du musst bestätigen, dass alle Angaben der Wahrheit entsprechen"),
+    "too_long_input": _("Ein oder mehrere Input-Felder sind zu lang"),
+    "not_a_number": _("Der Input muss eine Zahl sein"),
 
     # Zeitraum
-    "invalid_date_range": "Startdatum muss vor Enddatum liegen",
-    "date_in_future": "Datum darf nicht in der Zukunft liegen",
-    "date_in_past": "Datum darf nicht in der Vergangenheit liegen",
-    "invalid_date": "Ungültiges Datum",
-    "invalid_time_period": "Ungültiger Zeitraum",
+    "invalid_date_range": _("Startdatum muss vor Enddatum liegen"),
+    "date_in_future": _("Datum darf nicht in der Zukunft liegen"),
+    "date_in_past": _("Datum darf nicht in der Vergangenheit liegen"),
+    "invalid_date": _("Ungültiges Datum"),
+    "invalid_time_period": _("Ungültiger Zeitraum"),
 
     # --------
     # Community
     # --------
 
     # Create
-    "community_exists": "Community mit diesem Namen existiert bereits",
-    "community__invalid_family_credentials": "Family-Anmeldedaten ungültig",
-    "community_created": "Community erfolgreich erstellt",
-    "family_already_in_community": "Family ist bereits Teil der Community",
+    "community_exists": _("Community mit diesem Namen existiert bereits"),
+    "community__invalid_family_credentials": _("Family-Anmeldedaten ungültig"),
+    "community_created": _("Community erfolgreich erstellt"),
+    "family_already_in_community": _("Family ist bereits Teil der Community"),
 
     # Join
-    "community_joined": "Deine Family {family} ist der Community {community} beigetreten",
-    "invalid_community_credentials": "Community-Anmeldedaten ungültig",
+    "community_joined": _("Deine Family {family} ist der Community {community} beigetreten"),
+    "invalid_community_credentials": _("Community-Anmeldedaten ungültig"),
 
     # Login
-    "community_id_missing": "Community ID wurde nicht übergeben",
-    "community_not_found": "Community wurde nicht gefunden",
-    "community__family_id_missing": "Family ID wurde nicht übergeben.",
-    "community__family_not_found": "Family wurde nicht gefunden",
-    "community__not_member_of_family": "Du bist nicht Mitglied der eingeloggten Family.",
+    "community_id_missing": _("Community ID wurde nicht übergeben"),
+    "community_not_found": _("Community wurde nicht gefunden"),
+    "community__family_id_missing": _("Family ID wurde nicht übergeben"),
+    "community__family_not_found": _("Family wurde nicht gefunden"),
+    "community__not_member_of_family": _("Du bist nicht Mitglied der eingeloggten Family"),
 
     # Edit
-    "community_name_changed": "Communityname erfolgreich geändert.",
-    "community_password_changed": "Passwort erfolgreich geändert.",
-    "community_admin_password_changed": "Admin-Passwort erfolgreich geändert.",
-    "community__family_removed": "Family erfolgreich entfernt.",
-    "family_left_community": "Deine Family hat die Community erfolgreich verlassen.",
-    "community_deleted": "Community erfolgreich gelöscht",
-    "community_chat_enabled": "Chat für die Community aktiviert",
-    "community_chat_disabled": "Chat für die Community deaktiviert",
+    "community_name_changed": _("Communityname erfolgreich geändert"),
+    "community_password_changed": _("Passwort erfolgreich geändert"),
+    "community_admin_password_changed": _("Admin-Passwort erfolgreich geändert"),
+    "community__family_removed": _("Family erfolgreich entfernt"),
+    "family_left_community": _("Deine Family hat die Community erfolgreich verlassen"),
+    "community_deleted": _("Community erfolgreich gelöscht"),
+    "community_chat_enabled": _("Chat für die Community aktiviert"),
+    "community_chat_disabled": _("Chat für die Community deaktiviert"),
 
-    "chat_disabled_for_community": "Der Chat für diese Community ist deaktiviert",
+    "chat_disabled_for_community": _("Der Chat für diese Community ist deaktiviert"),
     # --------
     # Family
     # --------
 
     # Create
-    "family_exists": "Family mit diesem Namen existiert bereits",
-    "family_name_forbidden": "Du darfst \"worldwide ranking\" nicht als Family verwenden",
-    "family_created": "Family erfolgreich erstellt",
+    "family_exists": _("Family mit diesem Namen existiert bereits"),
+    "family_name_forbidden": _("Du darfst \"worldwide ranking\" nicht als Family verwenden"),
+    "family_created": _("Family erfolgreich erstellt"),
 
     # Join
-    "invalid_family_credentials": "Ungültige Family-Anmeldedaten.",
-    "family_joined": "Du bist der Family {family.name} beigetreten.",
-    "family_already_joined": "Du bist der Family {family.name} bereits beigetreten.",
+    "invalid_family_credentials": _("Ungültige Family-Anmeldedaten"),
+    "family_joined": _("Du bist der Family {familyname} beigetreten"),
+    "family_already_joined": _("Du bist der Family {familyname} bereits beigetreten"),
 
     # Login
-    "family_id_missing": "Family ID wurde nicht übergeben",
-    "family_not_found": "Family wurde nicht gefunden",
-    "not_part_of_family": "Du bist nicht Teil der Family {family.name}.",
+    "family_id_missing": _("Family ID wurde nicht übergeben"),
+    "family_not_found": _("Family wurde nicht gefunden"),
+    "not_part_of_family": _("Du bist nicht Teil der Family {familyname}"),
 
     # Edit
-    "family_name_changed": "Familyname erfolgreich geändert",
-    "family_password_changed": "Passwort erfolgreich geändert",
-    "family_admin_password_changed": "Admin-Passwort erfolgreich geändert",
-    "family_user_removed": "User erfolgreich entfernt",
-    "family_left": "Family erfolgreich verlassen",
-    "family_chat_enabled": "Chat für die Family aktiviert",
-    "family_chat_disabled": "Chat für die Family deaktiviert",
-    "family_deleted": "Family erfolgreich gelöscht",
-    "family_user_not_found": "Dieser User existiert in dieser Family nicht",
+    "family_name_changed": _("Familyname erfolgreich geändert"),
+    "family_password_changed": _("Passwort erfolgreich geändert"),
+    "family_admin_password_changed": _("Admin-Passwort erfolgreich geändert"),
+    "family_user_removed": _("User erfolgreich entfernt"),
+    "family_left": _("Family erfolgreich verlassen"),
+    "family_chat_enabled": _("Chat für die Family aktiviert"),
+    "family_chat_disabled": _("Chat für die Family deaktiviert"),
+    "family_deleted": _("Family erfolgreich gelöscht"),
+    "family_user_not_found": _("Dieser User existiert in dieser Family nicht"),
 
     # Allgemein
-    "chat_disabled_for_family": "Der Chat für diese Family ist deaktiviert",
-    "chat_not_enabled_for_worldwide_ranking": "Die Chatfunktion bei \"worldwide ranking\" ist nicht freigeschaltet",
+    "chat_disabled_for_family": _("Der Chat für diese Family ist deaktiviert"),
+    "chat_not_enabled_for_worldwide_ranking": _("Die Chatfunktion bei \"worldwide ranking\" ist nicht freigeschaltet"),
 
     # --------
     # Personals
     # --------
 
     # Login
-    "successfully_signed_up": "Erfolgreich registriert",
-    "successfully_signed_up_email_not_verified": "Erfolgreich registriert, aber E-Mail-Adresse noch nicht verifiziert.",
-    "robot": "Es besteht die Gefahr, dass du ein Roboter bist. Bitte versuche es erneut.",
-    "invalid_login_data": "Ungültige Anmeldedaten.",
-    "username_not_available": "Benutzername bereits vergeben",
-    "invalid_email": "E-Mail-Adresse ungültig",
-    "email_not_available": "E-Mail-Adresse bereits vergeben",
-    "nutzungsbedingungen_not_accepted": "Du musst die Nutzungsbedingungen akzeptieren",
-    "datenschutz_not_accepted": "Du musst die Datenschutzerklärung akzeptieren",
-    "invalid_verification_link": "Ungültiger Verifizierungslink",
+    "successfully_signed_up": _("Erfolgreich registriert"),
+    "successfully_signed_up_email_not_verified": _("Erfolgreich registriert, aber E-Mail-Adresse noch nicht verifiziert"),
+    "robot": _("Es besteht die Gefahr, dass du ein Roboter bist Bitte versuche es erneut"),
+    "invalid_login_data": _("Ungültige Anmeldedaten"),
+    "username_not_available": _("Benutzername bereits vergeben"),
+    "invalid_email": _("E-Mail-Adresse ungültig"),
+    "email_not_available": _("E-Mail-Adresse bereits vergeben"),
+    "nutzungsbedingungen_not_accepted": _("Du musst die Nutzungsbedingungen akzeptieren"),
+    "datenschutz_not_accepted": _("Du musst die Datenschutzerklärung akzeptieren"),
+    "invalid_verification_link": _("Ungültiger Verifizierungslink"),
 
     # Edit
-    "invalid_password": "Passwort ist falsch",
-    "username_belongs_to_you": "Benutzername gehört bereits dir",
-    "username_changed": "Benutzername erfolgreich geändert",
-    "password_changed": "Passwort erfolgreich geändert",
-    "email_changed": "E-Mail-Adresse erfolgreich geändert",
-    "mailinglist_enabled": "E-Mail Benachrichtigungen aktiviert",
-    "mailinglist_disabled": "E-Mail Benachrichtigungen deaktiviert",
-    "allows_data_view_enabled": "Persönliche Daten Ansicht aktiviert",
-    "allows_data_view_disabled": "Persönliche Daten Ansicht blockiert",
-    "account_deleted": "Account erfolgreich gelöscht",
-    "email_not_found": "E-Mail-Adresse nicht vorhanden",
-    "password_reset_mail_sent": "Wir haben dir eine Nachricht mit deinem Benutzernamen und einem neuen, zufällig generiertem Passwort geschickt. Melde dich damit an und ändere aus Sicherheitsgründen möglichst bald dein Passwort unter \"Profil bearbeiten\".",
-    "password_reset_error": "Ein Fehler ist beim Zurücksetzen des Passwortes aufgetreten",
-    "successfully_changed_email": "E-Mail-Adresse erfolgreich geändert. Ein Aktivierungslink wurde an diese Adresse gesendet.",
-    "successfully_changed_email_no_email": "E-Mail-Adresse erfolgreich geändert. Du hast jetzt keine E-Mail Adresse mehr hinterlegt und musst daher nichts verifizieren.",
-    "no_email_to_verify": "Du hast keine E-Mail-Adresse angegeben und musst daher nichts verifizieren",
-    "successfully_changed_statement": "Du hast erfolgreich dein Statement geupdated.",
-    "user_is_active_at_verify": "Du bist bereits verifiziert. Logge dich direkt ein.",
-    "email_verified": "E-Mail-Adresse erfolgreich verifiziert",
-    "verification_email_resent": "Verifizierungs-E-Mail erfolgreich erneut gesendet",
-    "successfully_changed_goal": "Wöchentliches Ziel erfolgreich geändert.",
-    "weekly_goal_too_small": "Das wöchentliche Ziel ist zu klein.",
+    "invalid_password": _("Passwort ist falsch"),
+    "username_belongs_to_you": _("Benutzername gehört bereits dir"),
+    "username_changed": _("Benutzername erfolgreich geändert"),
+    "password_changed": _("Passwort erfolgreich geändert"),
+    "email_changed": _("E-Mail-Adresse erfolgreich geändert"),
+    "mailinglist_enabled": _("E-Mail Benachrichtigungen aktiviert"),
+    "mailinglist_disabled": _("E-Mail Benachrichtigungen deaktiviert"),
+    "allows_data_view_enabled": _("Persönliche Daten Ansicht aktiviert"),
+    "allows_data_view_disabled": _("Persönliche Daten Ansicht blockiert"),
+    "account_deleted": _("Account erfolgreich gelöscht"),
+    "email_not_found": _("E-Mail-Adresse nicht vorhanden"),
+    "password_reset_mail_sent": _("Wir haben dir eine Nachricht mit deinem Benutzernamen und einem neuen, zufällig generiertem Passwort geschickt. Melde dich damit an und ändere aus Sicherheitsgründen möglichst bald dein Passwort unter \"Profil bearbeiten\""),
+    "password_reset_error": _("Ein Fehler ist beim Zurücksetzen des Passwortes aufgetreten"),
+    "successfully_changed_email": _("E-Mail-Adresse erfolgreich geändert. Ein Aktivierungslink wurde an diese Adresse gesendet"),
+    "successfully_changed_email_no_email": _("E-Mail-Adresse erfolgreich geändert. Du hast jetzt keine E-Mail Adresse mehr hinterlegt und musst daher nichts verifizieren"),
+    "no_email_to_verify": _("Du hast keine E-Mail-Adresse angegeben und musst daher nichts verifizieren"),
+    "successfully_changed_statement": _("Du hast erfolgreich dein Statement geupdated"),
+    "user_is_active_at_verify": _("Du bist bereits verifiziert. Logge dich direkt ein"),
+    "email_verified": _("E-Mail-Adresse erfolgreich verifiziert"),
+    "verification_email_resent": _("Verifizierungs-E-Mail erfolgreich erneut gesendet"),
+    "successfully_changed_goal": _("Wöchentliches Ziel erfolgreich geändert"),
+    "weekly_goal_too_small": _("Das wöchentliche Ziel ist zu klein"),
 
-    "error_planting_tree": "Beim Pflanzen deines Baumes ist ein Fehler aufgetreten",
+    "error_planting_tree": _("Beim Pflanzen deines Baumes ist ein Fehler aufgetreten"),
 
     # --------
     # Aktion
     # --------
 
-    "select_action_type": "Wähle einen Aktionstyp aus",
-    "enter_quantity": "Gib eine Menge an",
-    "invalid_quantity": "Ungültige Menge",
-    "quantity_positive": "Die Menge muss positiv sein",
-    "invalid_action_type": "Ungültiger Aktionstyp",
-    "action_added": "Aktion erfolgreich hinzugefügt",
-    "action_name_missing": "Name der Aktion wurde nicht übergeben.",
-    "action_id_missing": "ID der Aktion wurde nicht übergeben.",
-    "action_not_found": "Aktion existiert nicht.",
-    "action_edited": "Aktion erfolgreich bearbeitet",
-    "action_deleted": "Aktion erfolgreich gelöscht",
-    "action_invalid_quantity": "Ungültige Menge",
+    "select_action_type": _("Wähle einen Aktionstyp aus"),
+    "enter_quantity": _("Gib eine Menge an"),
+    "invalid_quantity": _("Ungültige Menge"),
+    "quantity_positive": _("Die Menge muss positiv sein"),
+    "invalid_action_type": _("Ungültiger Aktionstyp"),
+    "action_added": _("Aktion erfolgreich hinzugefügt"),
+    "action_name_missing": _("Name der Aktion wurde nicht übergeben"),
+    "action_id_missing": _("ID der Aktion wurde nicht übergeben"),
+    "action_not_found": _("Aktion existiert nicht"),
+    "action_edited": _("Aktion erfolgreich bearbeitet"),
+    "action_deleted": _("Aktion erfolgreich gelöscht"),
+    "action_invalid_quantity": _("Ungültige Menge"),
     "max_action_quantity": mark_safe(
-        "Die angegebene Menge ist zu hoch, um realistisch zu sein. Weitere Informationen findest du in <a href='https://climate-quest.de/artikel/artikel_detail/9'>diesem Artikel</a>."),
-    "action_too_past": mark_safe("Das angegebene Datum liegt zu weit in der Vergangenheit. Weitere Informationen findest du in <a href='https://climate-quest.de/artikel/artikel_detail/18'>diesem Artikel</a>."),
-    "action_already_set_in_period": "Diese Aktion wurde im gleichen Zeitraum schon einmal eingetragen",
+        _("Die angegebene Menge ist zu hoch, um realistisch zu sein. Weitere Informationen findest du in <a href='https://climate-questde/artikel/artikel_detail/9'>diesem Artikel</a>")),
+    "action_too_past": mark_safe(_("Das angegebene Datum liegt zu weit in der Vergangenheit. Weitere Informationen findest du in <a href='https://climate-questde/artikel/artikel_detail/18'>diesem Artikel</a>")),
+    "action_already_set_in_period": _("Diese Aktion wurde im gleichen Zeitraum schon einmal eingetragen"),
 
-    "tracking_action": "Aktion wird jetzt getrackt",
-    "stopped_tracking": "Aktion wird nicht mehr getrackt",
+    "tracking_action": _("Aktion wird jetzt getrackt"),
+    "stopped_tracking": _("Aktion wird nicht mehr getrackt"),
 
     # --------
     # Event
     # --------
 
-    "date_must_be_tomorrow": "Das Datum muss mindestens einen Tag in der Zukunft liegen.",
-    "successfully_created_event": "Event erfolgreich erstellt",
-    "successfully_edited_event": "Event erfolgreich bearbeitet",
-    "successfully_deleted_event": "Event erfolgreich gelöscht",
-    "event_not_existing": "Event existiert nicht",
-    "left_event": "Erfolgreich aus Event ausgetreten",
-    "joined_event": "Dem Event erfolgreich beigetreten",
-    "event__user_is_creator": "Du bist der Creator dieses Events und kannst daher nicht noch Teilnehmer werden.",
-    "event__no_right_to_edit": "Du hast keine Berechtigungen, dieses Event zu bearbeiten",
-    "successfully_asked_question": "Frage erfolgreich gestellt.",
-    "successfully_answered_question": "Frage erfolgreich beantwortet.",
-    "teilnehmeranzahl_search_keyword_not_a_number": "Wenn du nach der Teilnehmeranzahl filterst, muss das Suchwort eine Zahl sein",
+    "date_must_be_tomorrow": _("Das Datum muss mindestens einen Tag in der Zukunft liegen"),
+    "successfully_created_event": _("Event erfolgreich erstellt"),
+    "successfully_edited_event": _("Event erfolgreich bearbeitet"),
+    "successfully_deleted_event": _("Event erfolgreich gelöscht"),
+    "event_not_existing": _("Event existiert nicht"),
+    "left_event": _("Erfolgreich aus Event ausgetreten"),
+    "joined_event": _("Dem Event erfolgreich beigetreten"),
+    "event__user_is_creator": _("Du bist der Creator dieses Events und kannst daher nicht noch Teilnehmer werden"),
+    "event__no_right_to_edit": _("Du hast keine Berechtigungen, dieses Event zu bearbeiten"),
+    "successfully_asked_question": _("Frage erfolgreich gestellt"),
+    "successfully_answered_question": _("Frage erfolgreich beantwortet"),
+    "teilnehmeranzahl_search_keyword_not_a_number": _("Wenn du nach der Teilnehmeranzahl filterst, muss das Suchwort eine Zahl sein"),
 
     # --------
     # Artikel
     # --------
 
-    "successfully_created_artikel": "Artikel erfolgreich erstellt",
-    "successfully_edited_artikel": "Artikel erfolgreich bearbeitet",
-    "successfully_deleted_artikel": "Artikel erfolgreich gelöscht",
-    "artikel_not_existing": "Artikel existiert nicht",
-    "artikel__no_right_to_edit": "Du hast keine Berechtigungen, diesen Artikel zu bearbeiten",
-    "successfully_asked_comment": "Kommentar erfolgreich gestellt.",
-    "successfully_answered_comment": "Kommentar erfolgreich beantwortet.",
-    "successfully_added_like": "Du hast den Artikel erfolgreich geliket.",
-    "successfully_removed_like": "Du hast den Like zum Artikel erfolgreich entfernt.",
-    "likes_search_keyword_not_a_number": "Wenn du nach Likes filterst, muss das Suchwort eine Zahl sein",
-    "successfully_verified_article": "Artikel erfolgreich verifiziert",
-    "successfully_unverified_article": "Verifizierung erfolgreich gelöscht",
-    "successfully_blocked_article": "Erfolgreich Artikel gesperrt",
-    "successfully_unblocked_article": "Sperrung erfolgreich gelöscht",
+    "successfully_created_artikel": _("Artikel erfolgreich erstellt"),
+    "successfully_edited_artikel": _("Artikel erfolgreich bearbeitet"),
+    "successfully_deleted_artikel": _("Artikel erfolgreich gelöscht"),
+    "artikel_not_existing": _("Artikel existiert nicht"),
+    "artikel__no_right_to_edit": _("Du hast keine Berechtigungen, diesen Artikel zu bearbeiten"),
+    "successfully_asked_comment": _("Kommentar erfolgreich gestellt"),
+    "successfully_answered_comment": _("Kommentar erfolgreich beantwortet"),
+    "successfully_added_like": _("Du hast den Artikel erfolgreich geliket"),
+    "successfully_removed_like": _("Du hast den Like zum Artikel erfolgreich entfernt"),
+    "likes_search_keyword_not_a_number": _("Wenn du nach Likes filterst, muss das Suchwort eine Zahl sein"),
+    "successfully_verified_article": _("Artikel erfolgreich verifiziert"),
+    "successfully_unverified_article": _("Verifizierung erfolgreich gelöscht"),
+    "successfully_blocked_article": _("Erfolgreich Artikel gesperrt"),
+    "successfully_unblocked_article": _("Sperrung erfolgreich gelöscht"),
 
     # --------
     # Forum
     # --------
 
-    "post_not_found": "Post nicht gefunden",
+    "post_not_found": _("Post nicht gefunden"),
 
     # --------
     # Users
     # --------
-    "user_not_found": "User nicht gefunden",
-    "msg_created": "Nachricht erfolgreich gesendet",
-    "reported_user": "Der User wurde erfolgreich gemeldet.",
-    "user_blocked_view": "Der User hat die Ansicht seiner Daten geblockt.",
+    "user_not_found": _("User nicht gefunden"),
+    "msg_created": _("Nachricht erfolgreich gesendet"),
+    "reported_user": _("Der User wurde erfolgreich gemeldet"),
+    "user_blocked_view": _("Der User hat die Ansicht seiner Daten geblockt"),
 
     # --------
     # Admin
     # --------
-    "admin__user_not_found": "User wurde nicht gefunden",
-    "admin__family_not_found": "Family wurde nicht gefunden",
-    "admin__community_not_found": "Community wurde nicht gefunden",
-    "admin__event_not_found": "Event wurde nicht gefunden",
-    "admin__invalid_receiver_type": "Ungültiger Empfänger-Typ der Nachricht",
-    "admin__successfully_sent_notification": "Benachrichtigung erfolgreich an alle Empfänger gesendet",
-    "user_deleted": "User erfolgreich gelöscht",
-    "worldwide_ranking_valid_passwords": "Die Passwörter der Family worldwide_ranking sind aktuell.",
-    "worldwide_ranking_invalid_password": "Die Passwörter der Family worldwide-Ranking waren ungültig und entsprechend der gespeicherten Passwörter geändert.",
-    "added_everyone_user_erweitert": "Jedem User wurde ein UserErweitert hinzugefügt, sofern noch nicht vorhanden",
-
-    # --------
-    # Presents
-    # --------
-    "present_created": "Geschenkseite erfolgreich erstellt",
-    "present_not_found": "Geschenkseite nicht gefunden",
-    "congratulation_added": "Glückwunschnachricht erfolgreich hinzugefügt",
-    "present_deleted": "Geschenkseite erfolgreich gelöscht",
+    "admin__user_not_found": _("User wurde nicht gefunden"),
+    "admin__family_not_found": _("Family wurde nicht gefunden"),
+    "admin__community_not_found": _("Community wurde nicht gefunden"),
+    "admin__event_not_found": _("Event wurde nicht gefunden"),
+    "admin__invalid_receiver_type": _("Ungültiger Empfänger-Typ der Nachricht"),
+    "admin__successfully_sent_notification": _("Benachrichtigung erfolgreich an alle Empfänger gesendet"),
+    "user_deleted": _("User erfolgreich gelöscht"),
+    "worldwide_ranking_valid_passwords": _("Die Passwörter der Family worldwide_ranking sind aktuell"),
+    "worldwide_ranking_invalid_password": _("Die Passwörter der Family worldwide-Ranking waren ungültig und entsprechend der gespeicherten Passwörter geändert"),
+    "added_everyone_user_erweitert": _("Jedem User wurde ein UserErweitert hinzugefügt, sofern noch nicht vorhanden"),
 
     # --------
     # Petition
     # --------
-    "petition_added": "Petition hinzugefügt",
-    "petition_not_found": "Petition nicht gefunden",
-    "petition_signed": "Petition erfolgreich unterschrieben",
-    "petition_unsigned": "Unterschrift erfolgreich entfernt",
-    "signs_search_keyword_not_a_number": "Wenn du nach Unterschriften filterst, muss das Suchwort eine Zahl sein",
-    "goal_not_a_number": "Das Ziel muss eine Zahl sein",
-    "goal_too_small": "Das Ziel muss mindestens 10 sein",
-    "successfully_updated_goal": "Ziel erfolgreich aktualisiert",
-    "added_success": "Du hast die Petition zum Erfolg erklärt!",
-    "removed_success": "Du hast den Erfolg der Petition gelöscht",
+    "petition_added": _("Petition hinzugefügt"),
+    "petition_not_found": _("Petition nicht gefunden"),
+    "petition_signed": _("Petition erfolgreich unterschrieben"),
+    "petition_unsigned": _("Unterschrift erfolgreich entfernt"),
+    "signs_search_keyword_not_a_number": _("Wenn du nach Unterschriften filterst, muss das Suchwort eine Zahl sein"),
+    "goal_not_a_number": _("Das Ziel muss eine Zahl sein"),
+    "goal_too_small": _("Das Ziel muss mindestens 10 sein"),
+    "successfully_updated_goal": _("Ziel erfolgreich aktualisiert"),
+    "added_success": _("Du hast die Petition zum Erfolg erklärt!"),
+    "removed_success": _("Du hast den Erfolg der Petition gelöscht"),
     # --------
     # Image Upload
     # --------
-    "size_exceeded_maximum": "Maximal {max_size_mb} MB erlaubt",
-    "invalid_file_extension": "Ungültige Dateiendung",
-    "invalid_img": "Ungültiges Bild",
-    "invalid_file_type": "Ungültiger Dateityp",
-    "invalid_mime_type": "Ungültiger MIME-Typ",
-    "invalid_img_proportions": "Ungültiges Seitenverhältnis"
+    "size_exceeded_maximum": _("Maximal {max_size_mb} MB erlaubt"),
+    "invalid_file_extension": _("Ungültige Dateiendung"),
+    "invalid_img": _("Ungültiges Bild"),
+    "invalid_file_type": _("Ungültiger Dateityp"),
+    "invalid_mime_type": _("Ungültiger MIME-Typ"),
+    "invalid_img_proportions": _("Ungültiges Seitenverhältnis")
 }

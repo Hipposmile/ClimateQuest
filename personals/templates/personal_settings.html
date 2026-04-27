@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 
+{% load i18n %}
+
 {% block meta %}
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 
-{% block title %}Mein Profil{% endblock %}
+{% block title %}{% trans "Mein Profil" %}{% endblock %}
 
 {% block content %}
 
-    <h1>Mein Profil</h1>
+    <h1>{% trans "Mein Profil" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message }}</p>
@@ -20,36 +22,42 @@
                     history.replaceState(null, null, window.location.pathname + window.location.search);
                 }
                 window.scrollTo({top: 0});
-            }, 100);  // 100ms warten
+            }, 100);
         </script>
     {% endif %}
-    <p>Willkommen, {{ user.username }}</p>
+    <p>{% blocktrans with username=user.username %}Willkommen, {{ username }}{% endblocktrans %}</p>
     <hr>
-    <h3>Aktuelle Daten:</h3>
+    <h3>{% trans "Aktuelle Daten:" %}</h3>
     <ul>
-        <li>Benutzername: {{ user.username }}</li>
-        <li>E-Mail-Adresse: {{ user.email }}</li>
-        <li>E-Mail-Adresse verifiziert: {{ user.usererweitert.mail_verified|yesno:"Ja,Nein" }}
+        <li>{% trans "Benutzername:" %} {{ user.username }}</li>
+        <li>{% trans "E-Mail-Adresse:" %} {{ user.email }}</li>
+        <li>{% trans "E-Mail-Adresse verifiziert:" %} {{ user.usererweitert.mail_verified|yesno:_("Ja,Nein") }}
             {% if user.usererweitert.mail_verified == False and user.email != '' %} |
-                <a href="{% url 'resend_verification_email' %}">Bestätigungs-E-Mail erneut
-                    senden</a>{% endif %}
+                {% url 'resend_verification_email' as resend_url %}
+                {% blocktrans with url=resend_url %}<a href="{{ url }}">Bestätigungs-E-Mail erneut senden</a>
+                {% endblocktrans %}{% endif %}
         </li>
-        <li>Account erstellt am: {{ user.date_joined }}</li>
-        <li>Letzter Login: {{ user.last_login }}</li>
-        <li><a href="{% url 'user_detail' request.user.id %}">Zur öffentlichen Accountseite</a>
+        <li>{% trans "Account erstellt am:" %} {{ user.date_joined }}</li>
+        <li>{% trans "Letzter Login:" %} {{ user.last_login }}</li>
+        <li>
+            {% url 'user_detail' request.user.id as user_detail_url %}
+            {% blocktrans with url=user_detail_url %}
+                <a href="{{ url }}">Zur öffentlichen Accountseite</a>{% endblocktrans %}
         </li>
     </ul>
     <hr>
-    <h3 id="username_h3">Benutzernamen ändern</h3>
+    <h3 id="username_h3">{% trans "Benutzernamen ändern" %}</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="password_username">Aktuelles Passwort:</label>
-        <input type="password" name="password_username" id="password_username" placeholder="Passwort" required>
-        <label for="new_username">Neuer Benutzername:</label>
+        <label for="password_username">{% trans "Aktuelles Passwort:" %}</label>
+        <input type="password" name="password_username" id="password_username" placeholder="{% trans 'Passwort' %}"
+               required>
+        <label for="new_username">{% trans "Neuer Benutzername:" %}</label>
         <small id="username-feedback"></small>
-        <input type="text" name="new_username" id="new_username" placeholder="Neuer Benutzername" required>
-        <small>Alle Mitglieder deiner Families und Communities werden darüber benachrichtigt werden.</small>
-        <button type="submit" name="change_username">Speichern</button>
+        <input type="text" name="new_username" id="new_username" placeholder="{% trans 'Neuer Benutzername' %}"
+               required>
+        <small>{% trans "Alle Mitglieder deiner Families und Communities werden darüber benachrichtigt werden." %}</small>
+        <button type="submit" name="change_username">{% trans "Speichern" %}</button>
     </form>
 
     <script nonce="{{ request.csp_script_nonce }}">
@@ -58,16 +66,16 @@
             const feedback = document.getElementById('username-feedback');
 
             if (username.length > 0) {
-                feedback.textContent = 'Überprüfe, ob Benutzername bereits existiert...';
+                feedback.textContent = '{% trans "Überprüfe, ob Benutzername bereits existiert..." %}';
                 feedback.style.color = 'grey';
                 fetch(`/personals/check-username/?username=${encodeURIComponent(username)}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.exists) {
-                            feedback.textContent = 'Benutzername bereits vorhanden';
+                            feedback.textContent = '{% trans "Benutzername bereits vorhanden" %}';
                             feedback.style.color = 'red';
                         } else {
-                            feedback.textContent = 'Name noch nicht vorhanden';
+                            feedback.textContent = '{% trans "Name noch nicht vorhanden" %}';
                             feedback.style.color = 'green';
                         }
                     });
@@ -78,26 +86,27 @@
     </script>
 
     <hr>
-    <h3 id="password_h3">Passwort ändern</h3>
+    <h3 id="password_h3">{% trans "Passwort ändern" %}</h3>
     <form method="post" id="register_form" class="dont-show-loading">
         {% csrf_token %}
-        <label for="current_password">Aktuelles Passwort:</label>
-        <input type="password" name="current_password" id="current_password" placeholder="Aktuelles Passwort" required>
-        <label for="new_password">Neues Passwort:</label>
-        <a id="showPassword" class="show-password dont-show-loading">Passwort anzeigen</a>
-        <input type="password" name="new_password" id="new_password" placeholder="Neues Passwort" required>
+        <label for="current_password">{% trans "Aktuelles Passwort:" %}</label>
+        <input type="password" name="current_password" id="current_password"
+               placeholder="{% trans 'Aktuelles Passwort' %}" required>
+        <label for="new_password">{% trans "Neues Passwort:" %}</label>
+        <a id="showPassword" class="show-password dont-show-loading">{% trans "Passwort anzeigen" %}</a>
+        <input type="password" name="new_password" id="new_password" placeholder="{% trans 'Neues Passwort' %}"
+               required>
         <div>
-            <h4>Unsere Empfehlungen für ein sicheres Passwort, um deinen Account vor Hackingangriffen und
-                Accountübernahmenzu schützen:</h4>
+            <h4>{% trans "Unsere Empfehlungen für ein sicheres Passwort, um deinen Account vor Hackingangriffen und Accountübernahmen zu schützen:" %}</h4>
             <ul class="criteria-list">
-                <li id="length" class="error-message">Mindestens acht Zeichen</li>
-                <li id="uppercase" class="error-message">Mindestens ein Großbuchstabe</li>
-                <li id="lowercase" class="error-message">Mindestens ein Kleinbuchstabe</li>
-                <li id="number" class="error-message">Mindestens eine Zahl</li>
-                <li id="punctuation" class="error-message">Mindestens ein Sonderzeichen</li>
+                <li id="length" class="error-message">{% trans "Mindestens acht Zeichen" %}</li>
+                <li id="uppercase" class="error-message">{% trans "Mindestens ein Großbuchstabe" %}</li>
+                <li id="lowercase" class="error-message">{% trans "Mindestens ein Kleinbuchstabe" %}</li>
+                <li id="number" class="error-message">{% trans "Mindestens eine Zahl" %}</li>
+                <li id="punctuation" class="error-message">{% trans "Mindestens ein Sonderzeichen" %}</li>
             </ul>
         </div>
-        <button type="submit" name="change_password">Ändern</button>
+        <button type="submit" name="change_password">{% trans "Ändern" %}</button>
     </form>
     <script nonce="{{ request.csp_script_nonce }}">
         let passwordRecommendation = false;
@@ -119,7 +128,7 @@
             number.className = /\d/.test(password) ? "success-message" : "error-message"
             punctuation.className = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(password) ? "success-message" : "error-message";
 
-            if (password_lenght.className == "success-message" && uppercase.className == "success-message" && lowercase.className == "success-message" && number.className == "success-message" && punctuation.className == "success-message") {
+            if (password_lenght.className === "success-message" && uppercase.className === "success-message" && lowercase.className === "success-message" && number.className === "success-message" && punctuation.className === "success-message") {
                 passwordRecommendation = true
             }
         });
@@ -129,7 +138,7 @@
         function register(event) {
             event.preventDefault(); // verhindert sofortiges Abschicken
             if (!passwordRecommendation) {
-                if (!confirm('Das Passwort entspricht nicht den Empfehlungen. Trotzdem fortfahren?')) {
+                if (!confirm('{% trans "Das Passwort entspricht nicht den Empfehlungen. Trotzdem fortfahren?" %}')) {
                     return false;
                 }
             }
@@ -170,17 +179,17 @@
     </script>
     <hr>
 
-    <h3 id="email_h3">E-Mail-Adresse ändern</h3>
+    <h3 id="email_h3">{% trans "E-Mail-Adresse ändern" %}</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="password_email">Passwort:</label>
-        <input type="password" name="password_email" id="password_email" placeholder="Passwort" required>
-        <label for="email">Neue E-Mail-Adresse:</label>
-        <small>Leer lassen, um die E-Mail Adresse zu löschen und keine mehr hinterlegt zu haben</small>
+        <label for="password_email">{% trans "Passwort:" %}</label>
+        <input type="password" name="password_email" id="password_email" placeholder="{% trans 'Passwort' %}" required>
+        <label for="email">{% trans "Neue E-Mail-Adresse:" %}</label>
+        <small>{% trans "Leer lassen, um die E-Mail Adresse zu löschen und keine mehr hinterlegt zu haben" %}</small>
         <small id="email-feedback"></small>
-        <input type="email" name="email" id="email" placeholder="neue E-Mail-Adresse">
-        <small>Dein Account wird so lange inaktiv sein, bis die neue E-Mail-Adresse verifiziert wurde.</small>
-        <button type="submit" name="change_email">Ändern</button>
+        <input type="email" name="email" id="email" placeholder="{% trans 'neue E-Mail-Adresse' %}">
+        <small>{% trans "Dein Account wird so lange inaktiv sein, bis die neue E-Mail-Adresse verifiziert wurde." %}</small>
+        <button type="submit" name="change_email">{% trans "Ändern" %}</button>
     </form>
     <script nonce="{{ request.csp_script_nonce }}">
         document.getElementById('email').addEventListener('input', function () {
@@ -192,10 +201,10 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.exists) {
-                            email_feedback.textContent = 'E-Mail-Adresse bereits vorhanden';
+                            email_feedback.textContent = '{% trans "E-Mail-Adresse bereits vorhanden" %}';
                             email_feedback.style.color = 'red';
                         } else {
-                            email_feedback.textContent = 'E-Mail-Adresse noch nicht vorhanden';
+                            email_feedback.textContent = '{% trans "E-Mail-Adresse noch nicht vorhanden" %}';
                             email_feedback.style.color = 'green';
                         }
                     });
@@ -206,18 +215,19 @@
     </script>
     <hr>
 
-    <h3 id="mailsettings_h3">E-Mail Einstellungen</h3>
+    <h3 id="mailsettings_h3">{% trans "E-Mail Einstellungen" %}</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="password_email_settings">Passwort:</label>
-        <input type="password" name="password_email_settings" id="password_email_settings" placeholder="Passwort"
+        <label for="password_email_settings">{% trans "Passwort:" %}</label>
+        <input type="password" name="password_email_settings" id="password_email_settings"
+               placeholder="{% trans 'Passwort' %}"
                required>
         <label class="custom-checkbox">
             <input type="checkbox" name="mailinglist" id="mailinglist_checkbox">
             <span class="checkmark"></span>
-            <span class="label-text">Benachrichtigungen per E-Mail erhalten</span>
+            <span class="label-text">{% trans "Benachrichtigungen per E-Mail erhalten" %}</span>
         </label>
-        <button type="submit" name="change_email_settings">Speichern</button>
+        <button type="submit" name="change_email_settings">{% trans "Speichern" %}</button>
     </form>
 
     <script nonce="{{ request.csp_script_nonce }}">
@@ -234,19 +244,19 @@
     </script>
     <hr>
 
-    <h3 id="block_data_h3">Einsicht persönlicher Daten</h3>
+    <h3 id="block_data_h3">{% trans "Einsicht persönlicher Daten" %}</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="password_block_data_settings">Passwort:</label>
+        <label for="password_block_data_settings">{% trans "Passwort:" %}</label>
         <input type="password" name="password_block_data_settings" id="password_block_data_settings"
-               placeholder="Passwort"
+               placeholder="{% trans 'Passwort' %}"
                required>
         <label class="custom-checkbox">
             <input type="checkbox" name="block_data_settings" id="block_data_checkbox">
             <span class="checkmark"></span>
-            <span class="label-text">Einsicht der persönlichen Daten (Level, Klimapunkte, Aktionen, wöchentliches Ziel, Streak) für andere User erlauben</span>
+            <span class="label-text">{% trans "Einsicht der persönlichen Daten (Level, Klimapunkte, Aktionen, wöchentliches Ziel, Streak) für andere User erlauben" %}</span>
         </label>
-        <button type="submit" name="change_block_data_settings">Speichern</button>
+        <button type="submit" name="change_block_data_settings">{% trans "Speichern" %}</button>
     </form>
 
     <script nonce="{{ request.csp_script_nonce }}">
@@ -259,15 +269,16 @@
     </script>
 
     <hr>
-    <h3 id="statement_h3">Statement ändern</h3>
+    <h3 id="statement_h3">{% trans "Statement ändern" %}</h3>
     <form method="post" class="fill-editor">
         {% csrf_token %}
-        <label for="password_statement">Passwort:</label>
-        <input type="password" name="password_statement" id="password_statement" placeholder="Passwort" required>
-        <label for="content_editor">Statement</label>
+        <label for="password_statement">{% trans "Passwort:" %}</label>
+        <input type="password" name="password_statement" id="password_statement" placeholder="{% trans 'Passwort' %}"
+               required>
+        <label for="content_editor">{% trans "Statement" %}</label>
         <div id="content_editor" class="quill-editor">{{ user.usererweitert.statement|safe }}</div>
         <input type="hidden" name="content">
-        <button type="submit" name="change_statement">Speichern</button>
+        <button type="submit" name="change_statement">{% trans "Speichern" %}</button>
     </form>
 
     <script nonce="{{ request.csp_script_nonce }}">
@@ -276,38 +287,56 @@
 
     <hr>
 
-    <h3 id="change_goal_h3">Wöchentliches Ziel ändern</h3>
+    <h3 id="change_goal_h3">{% trans "Wöchentliches Ziel ändern" %}</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="weekly_goal">Wöchentliches Ziel</label>
+        <label for="weekly_goal">{% trans "Wöchentliches Ziel" %}</label>
         <input id="weekly_goal" name="weekly_goal" type="number" value="{{ request.user.usererweitert.weekly_goal }}"
                min="1" required>
-        <label for="password_weekly_goal">Passwort</label>
-        <input id="password_weekly_goal" type="password" name="password_weekly_goal" placeholder="Passwort" required>
-        <button type="submit" name="change_weekly_goal">Speichern</button>
+        <label for="password_weekly_goal">{% trans "Passwort" %}</label>
+        <input id="password_weekly_goal" type="password" name="password_weekly_goal"
+               placeholder="{% trans 'Passwort' %}" required>
+        <button type="submit" name="change_weekly_goal">{% trans "Speichern" %}</button>
     </form>
 
     <hr>
-    <h3 id="delete_h3">Account löschen</h3>
-    <form method="post" class="form-confirm" data-confirm="Willst du deinen Account wirklich löschen?">
+    <h3 id="change_lang_h3">{% trans "Sprache ändern" %}</h3>
+    <form method="post">
         {% csrf_token %}
-        <label for="password_delete_account">Passwort:</label>
-        <input type="password" name="password_delete_account" id="password_delete_account" placeholder="Passwort"
-               required>
-        <button type="submit" name="delete_account" class="color-red">Diesen Account löschen</button>
-        <p>Dadurch werden alle mit deinem Konto verknüpften Daten wie Aktionen oder Chat-Nachrichten gelöscht. Alle
-            Mitglieder deiner Families und Communities werden darüber benachrichtigt werden.</p>
+        <label for="lang">{% trans "Sprache" %}</label>
+        <select id="lang" name="lang">
+            <option value="de" {% if request.user.usererweitert.lang == "de" %}selected{% endif %}>Deutsch</option>
+            <option value="en" {% if request.user.usererweitert.lang == "en" %}selected{% endif %}>English</option>
+        </select>
+        <label for="password_weekly_goal">{% trans "Passwort" %}</label>
+        <input id="password_weekly_goal" type="password" name="password_weekly_goal"
+               placeholder="{% trans 'Passwort' %}" required>
+        <button type="submit" name="change_lang">{% trans "Speichern" %}</button>
     </form>
 
     <hr>
-    <h3 id="deletesingledata_h3">Löschen einzelner Daten</h3>
-    <p>Wenn du nur einige mit deinem Konto verknüpften Daten löschen möchtest, wende dich bitte an <a
-            href="mailto:climate-quest.de?subject:Anforderung zum Löschen bestimmter Daten">kontakt@climate-quest.de</a>.
-        Nenne hier bitte die konkreten Daten, welche du löschen möchtest. Wenn sich die Daten über die Webseite bereits
-        löschen lassen, werden diese auch tatsächlich gelöscht und als Backup maximal 14 Tage gespeichert. </p>
+    <h3 id="delete_h3">{% trans "Account löschen" %}</h3>
+    <form method="post" class="form-confirm" data-confirm="{% trans 'Willst du deinen Account wirklich löschen?' %}">
+        {% csrf_token %}
+        <label for="password_delete_account">{% trans "Passwort:" %}</label>
+        <input type="password" name="password_delete_account" id="password_delete_account"
+               placeholder="{% trans 'Passwort' %}"
+               required>
+        <button type="submit" name="delete_account" class="color-red">{% trans "Diesen Account löschen" %}</button>
+        <p>{% trans "Dadurch werden alle mit deinem Konto verknüpften Daten wie Aktionen oder Chat-Nachrichten gelöscht. Alle Mitglieder deiner Families und Communities werden darüber benachrichtigt werden." %}</p>
+    </form>
+
     <hr>
-    <a href="{% url 'reset_password' %}">
+    <h3 id="deletesingledata_h3">{% trans "Löschen einzelner Daten" %}</h3>
+    {% url 'resend_verification_email' as contact_url %}
+    <p>{% blocktrans with email="kontakt@climate-quest.de" %}Wenn du nur einige mit deinem Konto verknüpften Daten
+        löschen möchtest, wende dich bitte an <a href="mailto:{{ email }}">{{ email }}</a>. Nenne hier bitte die
+        konkreten Daten, welche du löschen möchtest. Wenn sich die Daten über die Webseite bereits löschen lassen,
+        werden diese auch tatsächlich gelöscht und als Backup maximal 14 Tage gespeichert.{% endblocktrans %}</p>
+    <hr>
+    {% url 'reset_password' as reset_url %}
+    {% blocktrans with url=reset_url %}<a href="{{ url }}">
         <button class="btn">Passwort resetten</button>
-    </a>
+    </a>{% endblocktrans %}
 
 {% endblock %}

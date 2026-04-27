@@ -1,14 +1,15 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block meta %}
-    <meta name="description" content="Logge dich in dein ClimateQuest Konto ein, um auf personalisierte Funktionen zuzugreifen und deine Fortschritte im Kampf gegen den Klimawandel zu verfolgen.">
+    <meta name="description" content="{% trans 'Logge dich in dein ClimateQuest Konto ein, um auf personalisierte Funktionen zuzugreifen und deine Fortschritte im Kampf gegen den Klimawandel zu verfolgen.' %}">
     <link rel="canonical" href="{% url 'login_view' %}" />
 {% endblock %}
 
-{% block title %}Login{% endblock %}
+{% block title %}{% trans "Login" %}{% endblock %}
 
 {% block content %}
-<h1>Login</h1>
+<h1>{% trans "Login" %}</h1>
 {% if messages %}
 {% for message in messages %}
 <p class="{{message.level_tag}}-message">{{ message }}</p>
@@ -22,12 +23,12 @@
 {% endif %}
 <form method="post" >
     {% csrf_token %}
-    <label for="username">Benutzername:</label>
-    <input type="text" name="username" id="username" placeholder="Benutzername" required>
-    <label for="password">Passwort:</label>
-    <input type="password" name="password" id="password" placeholder="Passwort" required>
-    <button type="submit">Login</button>
+    <label for="username">{% trans "Benutzername:" %}</label>
+    <input type="text" name="username" id="username" placeholder="{% trans 'Benutzername' %}" required>
+    <label for="password">{% trans "Passwort:" %}</label>
+    <input type="password" name="password" id="password" placeholder="{% trans 'Passwort' %}" required>
+    <button type="submit">{% trans "Login" %}</button>
 </form>
-<p>Du hast noch kein Konto? <a  href="{% url 'register_view' %}">Jetzt registrieren</a></p>
-<p>Benutzername / Passwort vergessen? <a  href="{% url 'reset_password' %}">Passwort resetten</a></p>
+<p>{% trans "Du hast noch kein Konto?" %} <a  href="{% url 'register_view' %}">{% trans "Jetzt registrieren" %}</a></p>
+<p>{% trans "Benutzername / Passwort vergessen?" %} <a  href="{% url 'reset_password' %}">{% trans "Passwort resetten" %}</a></p>
 {% endblock %}

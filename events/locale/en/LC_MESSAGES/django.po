@@ -1,0 +1,355 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-26 09:13+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: events/templates/add_event.html:5
+msgid ""
+"Füge ein neues Event bei ClimateQuest hinzu, um mehr Leute für große Events "
+"wie Demos zu gewinnen."
+msgstr ""
+"Add a new event on ClimateQuest to attract more people to large events like "
+"demos."
+
+#: events/templates/add_event.html:7 events/templates/add_event.html:10
+#: events/templates/events_overview.html:30
+msgid "Event hinzufügen"
+msgstr "Add Event"
+
+#: events/templates/add_event.html:18 events/templates/add_event.html:19
+#: events/templates/edit_event.html:25 events/templates/edit_event.html:26
+#: events/templates/events_overview.html:43
+msgid "Name"
+msgstr "Name"
+
+#: events/templates/add_event.html:21 events/templates/edit_event.html:28
+msgid "Beschreibung"
+msgstr "Description"
+
+#: events/templates/add_event.html:25 events/templates/edit_event.html:32
+msgid "Datum und Uhrzeit (Beginn)"
+msgstr "Date and Time (Start)"
+
+#: events/templates/add_event.html:28 events/templates/edit_event.html:36
+msgid "geschätze Dauer in Minuten"
+msgstr "estimated duration in minutes"
+
+#: events/templates/add_event.html:29 events/templates/edit_event.html:37
+#: events/templates/events_overview.html:45
+msgid "Dauer"
+msgstr "Duration"
+
+#: events/templates/add_event.html:31 events/templates/add_event.html:32
+#: events/templates/edit_event.html:40 events/templates/edit_event.html:41
+#: events/templates/events_overview.html:46
+msgid "Adresse"
+msgstr "Address"
+
+#: events/templates/add_event.html:38 events/templates/edit_event.html:48
+#, python-format
+msgid ""
+"Ich bestätige, dass alle Angaben der Wahrheit entsprechen und mit den <a "
+"href=\"%(url)s\">Nutzungsbedingungen</a> übereinstimmen. Außerdem "
+"verpflichte ich mich, bei dem Event selbst teilzunehmen."
+msgstr ""
+"I confirm that all information is true and complies with the <a "
+"href=\"%(url)s\">Terms of Use</a>. Furthermore, I commit to participating in "
+"the event myself."
+
+#: events/templates/add_event.html:41
+msgid "Hinzufügen"
+msgstr "Add"
+
+#: events/templates/edit_event.html:6
+#, python-format
+msgid "Event %(name)s bearbeiten"
+msgstr "Edit Event %(name)s"
+
+#: events/templates/edit_event.html:9
+#, python-format
+msgid "Event <i>%(name)s</i> bearbeiten"
+msgstr "Edit Event <i>%(name)s</i>"
+
+#: events/templates/edit_event.html:18 events/templates/event_detail.html:44
+#: events/templates/events_overview.html:130
+msgid "Beschreibung:"
+msgstr "Description:"
+
+#: events/templates/edit_event.html:19 events/templates/event_detail.html:46
+#: events/templates/events_overview.html:97
+#: events/templates/events_overview.html:134
+msgid "Datum und Uhrzeit (Beginn):"
+msgstr "Date and Time (Start):"
+
+#: events/templates/edit_event.html:20 events/templates/event_detail.html:47
+msgid "geschätzte Dauer in Minuten:"
+msgstr "estimated duration in minutes:"
+
+#: events/templates/edit_event.html:21 events/templates/event_detail.html:48
+#: events/templates/events_overview.html:105
+#: events/templates/events_overview.html:142
+msgid "Adresse:"
+msgstr "Address:"
+
+#: events/templates/edit_event.html:51
+msgid "Speichern"
+msgstr "Save"
+
+#: events/templates/edit_event.html:53
+msgid "Möchtest du dieses Event wirklich löschen?"
+msgstr "Do you really want to delete this event?"
+
+#: events/templates/edit_event.html:55
+msgid "Event löschen"
+msgstr "Delete Event"
+
+#: events/templates/event_detail.html:5
+#, python-format
+msgid ""
+"Details und Teilnahmeoptionen für das Event %(name)s bei ClimateQuest "
+"ansehen. Stelle Fragen und werde Teil des Events."
+msgstr ""
+"View details and participation options for the event %(name)s on "
+"ClimateQuest. Ask questions and join the event."
+
+#: events/templates/event_detail.html:7
+#, python-format
+msgid "Event %(name)s"
+msgstr "Event %(name)s"
+
+#: events/templates/event_detail.html:26
+#, python-format
+msgid "<a href=\"%(url)s\">Event</a> <i>%(name)s</i>"
+msgstr "<a href=\"%(url)s\">Event</a> <i>%(name)s</i>"
+
+#: events/templates/event_detail.html:31
+msgid "Du bist Teilnehmer dieses Events"
+msgstr "You are a participant in this event"
+
+#: events/templates/event_detail.html:33
+msgid "Du bist nicht Teilnehmer dieses Events"
+msgstr "You are not a participant in this event"
+
+#: events/templates/event_detail.html:52
+#, python-format
+msgid "<strong>Ersteller:</strong> <a href=\"%(url)s\">%(username)s</a>"
+msgstr "<strong>Creator:</strong> <a href=\"%(url)s\">%(username)s</a>"
+
+#: events/templates/event_detail.html:53
+#: events/templates/events_overview.html:111
+#: events/templates/events_overview.html:148
+msgid "(Du)"
+msgstr "(You)"
+
+#: events/templates/event_detail.html:58
+#: events/templates/events_overview.html:116
+#: events/templates/events_overview.html:153
+msgid "Teilnehmeranzahl:"
+msgstr "Number of participants:"
+
+#: events/templates/event_detail.html:72
+msgid "aus Event aussteigen"
+msgstr "leave event"
+
+#: events/templates/event_detail.html:74
+msgid "Teilnehmer werden"
+msgstr "Become a participant"
+
+#: events/templates/event_detail.html:79
+msgid "Bearbeiten"
+msgstr "Edit"
+
+#: events/templates/event_detail.html:83
+msgid "Fragen"
+msgstr "Questions"
+
+#: events/templates/event_detail.html:104
+msgid "Noch keine Antworten."
+msgstr "No answers yet."
+
+#: events/templates/event_detail.html:107
+msgid "Mehr anzeigen"
+msgstr "Show more"
+
+#: events/templates/event_detail.html:109
+msgid "selbst antworten"
+msgstr "answer yourself"
+
+#: events/templates/event_detail.html:114
+msgid "Antwort:"
+msgstr "Answer:"
+
+#: events/templates/event_detail.html:115
+msgid "Antwort"
+msgstr "Answer"
+
+#: events/templates/event_detail.html:116
+msgid "Antworten"
+msgstr "Answer"
+
+#: events/templates/event_detail.html:120
+#, python-format
+msgid "<a href=\"%(url)s\">Logge dich ein</a>, um den Kommentar zu beantworten"
+msgstr "<a href=\"%(url)s\">Log in</a> to answer the comment"
+
+#: events/templates/event_detail.html:127
+msgid "Noch keine Fragen vorhanden"
+msgstr "No questions yet"
+
+#: events/templates/event_detail.html:168
+msgid "Frage stellen:"
+msgstr "Ask a question:"
+
+#: events/templates/event_detail.html:169
+#: events/templates/event_detail.html:170
+msgid "Frage stellen"
+msgstr "Ask a question"
+
+#: events/templates/event_detail.html:174
+#, python-format
+msgid "<a href=\"%(url)s\">Logge dich ein</a>, um einen Kommentar zu verfassen"
+msgstr "<a href=\"%(url)s\">Log in</a> to write a comment"
+
+#: events/templates/events_overview.html:5
+msgid ""
+"Übersicht aller Events bei ClimateQuest. Finde Events wie Demos und nimm "
+"daran teil, um deinen Beitrag zum Klimaschutz zu leisten."
+msgstr ""
+"Overview of all events on ClimateQuest. Find events like demos and "
+"participate to contribute to climate protection."
+
+#: events/templates/events_overview.html:7
+#: events/templates/events_overview.html:22
+msgid "Events - Übersicht"
+msgstr "Events - Overview"
+
+#: events/templates/events_overview.html:36
+#: events/templates/events_overview.html:80
+msgid "Suchwort:"
+msgstr "Search term:"
+
+#: events/templates/events_overview.html:37
+msgid "Leer lassen, um alle Events anzuzeigen"
+msgstr "Leave blank to display all events"
+
+#: events/templates/events_overview.html:38
+msgid "Suchwort"
+msgstr "Search term"
+
+#: events/templates/events_overview.html:41
+msgid "Sortieren nach:"
+msgstr "Sort by:"
+
+#: events/templates/events_overview.html:44
+msgid "Datum"
+msgstr "Date"
+
+#: events/templates/events_overview.html:47
+msgid "Ersteller"
+msgstr "Creator"
+
+#: events/templates/events_overview.html:48
+msgid "Teilnehmeranzahl"
+msgstr "Number of participants"
+
+#: events/templates/events_overview.html:50
+msgid "von mir erstellte Events"
+msgstr "events created by me"
+
+#: events/templates/events_overview.html:51
+msgid "Events, bei denen ich Teilnehmer bin"
+msgstr "events I am participating in"
+
+#: events/templates/events_overview.html:58
+msgid "bereits Vergange einblenden"
+msgstr "include already past ones"
+
+#: events/templates/events_overview.html:61
+msgid "Anwenden"
+msgstr "Apply"
+
+#: events/templates/events_overview.html:78
+msgid "Sortiert nach:"
+msgstr "Sorted by:"
+
+#: events/templates/events_overview.html:83
+msgid "Vergange Events eingeblendet"
+msgstr "Past events included"
+
+#: events/templates/events_overview.html:85
+msgid "Vergange Events nicht eingeblendet"
+msgstr "Past events not included"
+
+#: events/templates/events_overview.html:87
+#, python-format
+msgid "%(count)s Suchergebnisse"
+msgstr "%(count)s search results"
+
+#: events/templates/events_overview.html:102
+#: events/templates/events_overview.html:139
+msgid "Dauer in Minuten:"
+msgstr "Duration in minutes:"
+
+#: events/templates/events_overview.html:109
+#: events/templates/events_overview.html:146
+msgid "Ersteller:"
+msgstr "Creator:"
+
+#: events/templates/events_overview.html:128
+msgid "mehr"
+msgstr "more"
+
+#: events/templates/events_overview.html:166
+msgid "Details ansehen"
+msgstr "View details"
+
+#: events/templates/events_overview.html:170
+msgid "Es gibt derzeit keine Events mit diesem Filter."
+msgstr "There are currently no events with this filter."
+
+#: events/templates/events_overview.html:184
+msgid "vergangen"
+msgstr "past"
+
+#: events/templates/events_overview.html:185
+msgid "heute"
+msgstr "today"
+
+#: events/templates/events_overview.html:186
+msgid "morgen"
+msgstr "tomorrow"
+
+#: events/templates/events_overview.html:187
+msgid "übermorgen"
+msgstr "the day after tomorrow"
+
+#: events/templates/events_overview.html:188
+msgid "innerhalb der nächsten Woche"
+msgstr "in the next week"
+
+#: events/templates/events_overview.html:189
+msgid "innerhalb der nächsten 30 Tage"
+msgstr "in the next 30 days"
+
+#: events/templates/events_overview.html:190
+msgid "innerhalb des nächsten Jahres"
+msgstr "in the next year"
+
+#: events/templates/events_overview.html:191
+msgid "noch über ein Jahr entfernt"
+msgstr "more than a year away"

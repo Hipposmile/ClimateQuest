@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 {% block meta %}
     <meta name="description"
-          content="Sieh dir deine Aktions-Historie bei ClimateQuest an.">
+          content="{% trans 'Sieh dir deine Aktions-Historie bei ClimateQuest an.' %}">
 {% endblock %}
-{% block title %}Aktions-Historie von {% if user == request.user %}mir{% else %}{% endif %}
+{% block title %}{% trans "Aktions-Historie von" %} {% if user == request.user %}{% trans "mir" %}{% else %}{% endif %}
     {{ user }}{% endblock %}
 {% block content %}
-    <h1>Aktions-Historie von {% if user == request.user %} <a href="{% url 'user_detail' user.id %}">mir</a>{% else %}
+    <h1>{% trans "Aktions-Historie von" %} {% if user == request.user %} <a href="{% url 'user_detail' user.id %}">{% trans "mir" %}</a>{% else %}
         <a href="{% url 'user_detail' user.id %}">{{ user }}</a>{% endif %}</h1>
     {% if messages %}
         {% for message in messages %}
@@ -15,35 +16,35 @@
         {% endfor %}
     {% endif %}
     <a href="{% url 'add' %}" class="redirect-link">
-        <span>Aktion hinzufügen</span>
+        <span>{% trans "Aktion hinzufügen" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
     {% if actions %}
         <ul class="action-list">
             {% for action in actions %}
                 <li class="action-list-container">
-                    <p class="action-list-description">Aktion:</p>
-                    <p class="action-list-value">{{ action.aktion.name }}</p>
+                    <p class="action-list-description">{% trans "Aktion:" %}</p>
+                    <p class="action-list-value">{% if request.LANGUAGE_CODE == "de" %}{{ action.aktion.name }}{% else %}{{ action.aktion.name_en }}{% endif %}</p>
 
-                    <p class="action-list-description">Datum:</p>
-                    <p class="action-list-value">{{ action.date|date:"d.m.Y" }}</p>
+                    <p class="action-list-description">{% trans "Datum:" %}</p>
+                    <p class="action-list-value">{{ action.date|date:"SHORT_DATE_FORMAT" }}</p>
 
                     {% if action.description %}
-                        <p class="action-list-description">Beschreibung:</p>
+                        <p class="action-list-description">{% trans "Beschreibung:" %}</p>
                         <p class="action-list-value">{{ action.description }}</p>
                     {% endif %}
 
-                    <p class="action-list-description">Klimapunkte:</p>
+                    <p class="action-list-description">{% trans "Klimapunkte:" %}</p>
                     <p class="action-list-value">{{ action.impact|floatformat:4 }}</p>
 
-                    <p class="action-list-description">{{ action.aktion.mengeBeschreibung }}</p>
+                    <p class="action-list-description">{% if request.LANGUAGE_CODE == "de" %}{{ action.aktion.mengeBeschreibung }}{% else %}{{ action.aktion.mengeBeschreibung_en }}{% endif %}:</p>
                     <p class="action-list-value">{{ action.quantity }} {{ action.einheit }}</p>
 
-                    <a href="{% url 'action_detail' action.id user.id %}">Details</a>
+                    <a href="{% url 'action_detail' action.id user.id %}">{% trans "Details" %}</a>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <p>Keine Aktionen gefunden.</p>
+        <p>{% trans "Keine Aktionen gefunden." %}</p>
     {% endif %}
 {% endblock %}

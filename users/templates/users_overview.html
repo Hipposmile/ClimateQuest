@@ -1,14 +1,15 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block meta %}
-    <meta name="description" content="Suchen Sie nach bestimmten Usern von ClimateQuest">
+    <meta name="description" content="{% trans 'Suchen Sie nach bestimmten Usern von ClimateQuest' %}">
 {% endblock %}
 
-{% block title %}User-Übersicht{% endblock %}
+{% block title %}{% trans "User-Übersicht" %}{% endblock %}
 
 {% block content %}
 
-    <h1>User-Übersicht</h1>
+    <h1>{% trans "User-Übersicht" %}</h1>
 
     {% if messages %}
         {% for message in messages %}
@@ -18,13 +19,13 @@
 
     <form method="post">
         {% csrf_token %}
-        <label for="search_keyword">Suchwort</label>
-        <input type="search" id="search_keyword" name="search_keyword" placeholder="Suchwort" required>
-        <button type="submit">Suchen</button>
+        <label for="search_keyword">{% trans "Suchwort" %}</label>
+        <input type="search" id="search_keyword" name="search_keyword" placeholder="{% trans 'Suchwort' %}" required>
+        <button type="submit">{% trans "Suchen" %}</button>
     </form>
 
     {% if search_keyword %}
-        <p>Suchwort: {{ search_keyword }}</p>
+        <p>{% blocktrans with keyword=search_keyword %}Suchwort: {{ keyword }}{% endblocktrans %}</p>
     {% endif %}
 
     {% if users %}
@@ -35,12 +36,12 @@
                     <h2 class="event-title">{{ user.username }}</h2>
                 </div>
 
-                <a class="event-link" href="{% url 'user_detail' user.id %}">Details ansehen</a>
+                <a class="event-link" href="{% url 'user_detail' user.id %}">{% trans "Details ansehen" %}</a>
             </section>
         {% endfor %}
     {% else %}
         {% if search_keyword %}
-            <p>Es wurden keine User gefunden</p>
+            <p>{% trans "Es wurden keine User gefunden" %}</p>
         {% endif %}
     {% endif %}
 

@@ -1,0 +1,281 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-26 11:23+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: templates/base.html:22 templates/base.html:30 templates/base.html:34
+msgid ""
+"Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, "
+"indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile "
+"dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum "
+"Klimaschutz."
+msgstr "Welcome to ClimateQuest. Motivate yourself for more climate protection by collecting climate points and comparing yourself with other users. Share your knowledge in articles or in the forum and contribute to climate protection."
+
+#: templates/base.html:561
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: templates/base.html:566 templates/base.html:591 templates/base.html:624
+#: templates/base.html:757
+msgid "User"
+msgstr "User"
+
+#: templates/base.html:570 templates/base.html:587 templates/base.html:603
+#: templates/base.html:774
+msgid "Bildung"
+msgstr "Education"
+
+#: templates/base.html:574 templates/base.html:632
+msgid "Schnellzugriff"
+msgstr "Fast Access"
+
+#: templates/base.html:578
+msgid "Mehr"
+msgstr "More"
+
+#: templates/base.html:583
+msgid "Home"
+msgstr "Home"
+
+#: templates/base.html:595 templates/base.html:773
+msgid "Login"
+msgstr "Login"
+
+#: templates/base.html:605 templates/base.html:776
+msgid "Artikel"
+msgstr "Articles"
+
+#: templates/base.html:606 templates/base.html:775
+msgid "Events"
+msgstr "Events"
+
+#: templates/base.html:607 templates/base.html:777
+msgid "Forum"
+msgstr "Forum"
+
+#: templates/base.html:608 templates/base.html:778
+msgid "Petitionen"
+msgstr "Petitions"
+
+#: templates/base.html:617 templates/base.html:765
+msgid "Family"
+msgstr "Family"
+
+#: templates/base.html:620
+msgid "Families"
+msgstr "Families"
+
+#: templates/base.html:622
+msgid "Communities"
+msgstr "Communities"
+
+#: templates/base.html:634
+msgid "Aktion eintragen"
+msgstr "Add Action"
+
+#: templates/base.html:635 templates/base.html:763
+msgid "Aktions-Historie"
+msgstr "Action History"
+
+#: templates/base.html:636 templates/base.html:753
+msgid "Level"
+msgstr "Level"
+
+#: templates/base.html:637 templates/base.html:754
+msgid "Klimapunkte"
+msgstr "Climate Points"
+
+#: templates/base.html:638 templates/base.html:755
+msgid "Credits / Bäume"
+msgstr "Credits / Trees"
+
+#: templates/base.html:649
+msgid "Seite"
+msgstr "Page"
+
+#: templates/base.html:650 templates/base.html:751
+msgid "Teilen"
+msgstr "Share"
+
+#: templates/base.html:653
+msgid "Benachrichtigungen"
+msgstr "Notifications"
+
+#: templates/base.html:656 templates/base.html:752
+msgid "Konto"
+msgstr "Account"
+
+#: templates/base.html:658
+msgid "Einstellungen"
+msgstr "Settings"
+
+#: templates/base.html:660 templates/base.html:758
+msgid "Logout"
+msgstr "Logout"
+
+#: templates/base.html:663
+msgid "Sonstiges"
+msgstr "Other"
+
+#: templates/base.html:665 templates/base.html:764
+msgid "Tracken"
+msgstr "Track"
+
+#: templates/base.html:669
+msgid "Admin"
+msgstr "Admin"
+
+#: templates/base.html:670
+msgid "Admin (I)"
+msgstr "Admin (I)"
+
+#: templates/base.html:671
+msgid "Admin (II)"
+msgstr "Admin (II)"
+
+#: templates/base.html:685
+msgid "Alle Aktionen"
+msgstr "All Actions"
+
+#: templates/base.html:686
+msgid "Nutzungsbedingungen"
+msgstr "Terms of Use"
+
+#: templates/base.html:687
+msgid "Impressum"
+msgstr "Legal Notice"
+
+#: templates/base.html:688
+msgid "Datenschutz"
+msgstr "Privacy Policy"
+
+#: templates/base.html:693
+msgid "Nach oben"
+msgstr "Up"
+
+#: templates/base.html:756
+msgid "Profil bearbeiten"
+msgstr "Edit Profile"
+
+#: templates/base.html:759
+msgid "Admin-Bereich (I)"
+msgstr "Admin Area (I)"
+
+#: templates/base.html:760
+msgid "Admin-Bereich (II)"
+msgstr "Admin Area (II)"
+
+#: templates/base.html:761
+msgid "Aktionen"
+msgstr "Actions"
+
+#: templates/base.html:762
+msgid "Aktion hinzufügen"
+msgstr "Add Actions"
+
+#: templates/base.html:766
+msgid "Family erstellen"
+msgstr "Create family"
+
+#: templates/base.html:767
+msgid "Family beitreten"
+msgstr "Edit family"
+
+#: templates/base.html:768
+msgid "Meine Families"
+msgstr "My families"
+
+#: templates/base.html:769
+msgid "Community"
+msgstr "Community"
+
+#: templates/base.html:770
+msgid "Community erstellen"
+msgstr "Create community"
+
+#: templates/base.html:771
+msgid "Community beitreten"
+msgstr "Join community"
+
+#: templates/base.html:772
+msgid "Meine Communities"
+msgstr "My communities"
+
+#: templates/base.html:1131
+msgid "Seite teilen"
+msgstr "Share page"
+
+#: templates/base.html:1142
+msgid "Folgende URL teilen:"
+msgstr "Share the following URL:"
+
+#: templates/base.html:1146
+msgid "Teilen über Gerät"
+msgstr "Share via device"
+
+#: templates/base.html:1148
+msgid "ODER"
+msgstr "OR"
+
+#: templates/base.html:1152
+msgid "Facebook"
+msgstr "Facebook"
+
+#: templates/base.html:1155
+msgid "X (Twitter)"
+msgstr "X (Twitter)"
+
+#: templates/base.html:1158
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: templates/base.html:1161
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+#: templates/base.html:1164
+msgid "E-Mail"
+msgstr "E-Mail"
+
+#: templates/base.html:1167 templates/base.html:1185
+msgid "Link kopieren"
+msgstr "Copy link"
+
+#: templates/base.html:1168
+msgid "QR-Code erstellen"
+msgstr "Create QR-code"
+
+#: templates/base.html:1183
+msgid "Link kopiert"
+msgstr "Copied link"
+
+#: templates/base.html:1184
+msgid "Kopieren fehlgeschlagen"
+msgstr "Copying failed"
+
+#: templates/base.html:1186
+msgid "Teilen wird auf diesem Gerät nicht unterstützt."
+msgstr "Sharing is not supported on this device."
+
+#: templates/base.html:1271
+msgid "Download"
+msgstr "Download"
+
+#: templates/base.html:1327
+msgid "Bist du sicher?"
+msgstr "Are you sure?"

@@ -1,51 +1,52 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block meta %}
     <meta name="description"
-          content="Übersicht aller Artikel bei ClimateQuest. Finde Artikel, die anderen Usern erstellt wurden, und informiere dich über verschiedene Themen zu Klimaschutz.">
+          content="{% trans 'Übersicht aller Artikel bei ClimateQuest. Finde Artikel, die anderen Usern erstellt wurden, und informiere dich über verschiedene Themen zu Klimaschutz.' %}">
 {% endblock %}
 
-{% block title %}Artikel - Übersicht{% endblock %}
+{% block title %}{% trans 'Artikel - Übersicht' %}{% endblock %}
 
 {% block content %}
-    <h1>Artikel - Übersicht</h1>
+    <h1>{% trans 'Artikel - Übersicht' %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
+    {% if request.LANGUAGE_CODE == "en" %}<p>Articles are currently only available in German. Thanks for your understanding!</p>{% endif %}
     <a href="{% url 'add_artikel' %}" class="redirect-link">
-        <span>Artikel hinzufügen</span>
+        <span>{% trans 'Artikel hinzufügen' %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <form method="post">
         {% csrf_token %}
         <div id="search_keyword_div">
-            <small>Leer lassen, um alle Artikel anzuzeigen</small>
-            <label for="search_keyword">Suchwort:</label>
-            <input type="search" id="search_keyword" name="search_keyword" placeholder="Suchwort">
+            <small>{% trans 'Leer lassen, um alle Artikel anzuzeigen' %}</small>
+            <label for="search_keyword">{% trans 'Suchwort:' %}</label>
+            <input type="search" id="search_keyword" name="search_keyword" placeholder="{% trans 'Suchwort' %}">
         </div>
-        <label for="order_by">Sortieren nach:</label>
+        <label for="order_by">{% trans 'Sortieren nach:' %}</label>
         <select name="order_by" id="order_by" required>
-            <option value="Name" selected>Name</option>
-            <option value="Ersteller">Ersteller</option>
-            <option value="Zuletzt bearbeitet">Zuletzt bearbeitet</option>
-            <option value="Likes">Likes</option>
+            <option value="Name" selected>{% trans 'Name' %}</option>
+            <option value="Ersteller">{% trans 'Ersteller' %}</option>
+            <option value="Zuletzt bearbeitet">{% trans 'Zuletzt bearbeitet' %}</option>
+            <option value="Likes">{% trans 'Likes' %}</option>
             {% if user.is_authenticated %}
-                <option value="von mir erstellte Artikel">von mir erstellte Artikel</option>
-                <option value="von mir gelikte Artikel">von mir gelikte Artikel</option>
+                <option value="von mir erstellte Artikel">{% trans 'von mir erstellte Artikel' %}</option>
+                <option value="von mir gelikte Artikel">{% trans 'von mir gelikte Artikel' %}</option>
             {% endif %}
         </select>
 
-        <label for="category">Kategorie:</label>
+        <label for="category">{% trans 'Kategorie:' %}</label>
         <select name="category" id="category" required>
-            <option value="Alle" selected>Alle</option>
+            <option value="Alle" selected>{% trans 'Alle' %}</option>
             {% for category in all_categories %}
-                <option value="{{ category.title }}">{{ category.title }}</option>
+                <option value="{{ category.title }}">{% blocktrans with cat=category.title %}{{ cat }}{% endblocktrans %}</option>
             {% endfor %}
         </select>
 
-        <button type="submit">Anwenden</button>
+        <button type="submit">{% trans 'Anwenden' %}</button>
     </form>
     <script nonce="{{ request.csp_script_nonce }}">
         let search_keyword = document.querySelector('input[name=search_keyword]');
@@ -60,12 +61,12 @@
             }
         });
     </script>
-    <p>Sortiert nach: {{ ordered_by }}</p>
+    {% blocktrans with ordered=ordered_by %}Sortiert nach: {{ ordered }}{% endblocktrans %}
     {% if search_keyword %}
-        <p>Suchwort: {{ search_keyword }}</p>
+        {% blocktrans with keyword=search_keyword %}Suchwort: {{ keyword }}{% endblocktrans %}
     {% endif %}
-    <p>Kategorie: {{ category }}</p>
-    <p>{{ artikel.count }} Suchergebnisse</p>
+    {% blocktrans with cat=category %}Kategorie: {{ cat }}{% endblocktrans %}
+    {% blocktrans with count=artikel.count %}{{ count }} Suchergebnisse{% endblocktrans %}
 
     {% if artikel %}
         {% for single_artikel in artikel %}
@@ -73,49 +74,52 @@
                     class="event-card{% if request.user == single_artikel.creator %} event-card-creator{% endif %}">
                 <div class="event-main">
                     <h2 class="event-title">{{ single_artikel.name }}</h2>
-                    <p>Kategorie: {{ single_artikel.category.title }}</p>
+                    {% blocktrans with cat=single_artikel.category.title %}Kategorie: {{ cat }}{% endblocktrans %}
                     {% if single_artikel.blocked %}<p>
                         <p><span class="emoji">&#x274C;</span> {{ single_artikel.msg_if_wrong }}</p>
                     {% elif single_artikel.verified %}
-                        <p><span class="emoji">&#x2714;</span> Geprüfte und verifizierte Informationen</p>
+                        <p><span class="emoji">&#x2714;</span> {% trans 'Geprüfte und verifizierte Informationen' %}</p>
                     {% endif %}
                     {% if ordered_by == 'Zuletzt bearbeitet' %}
-                        <p><strong>Zuletzt bearbeitet:</strong> <span class="event-date"
-                                                                      data-date="{{ single_artikel.date_time|date:'c' }}">{{ single_artikel.date_time|date:"d.m.Y" }}</span>
+                        <p><strong>{% trans 'Zuletzt bearbeitet:' %}</strong> <span class="event-date"
+                                                                      data-date="{{ single_artikel.date_time|date:'c' }}">{{ single_artikel.date_time|date:"SHORT_DATE_FORMAT" }}</span>
                         </p>
 
                     {% elif ordered_by == 'Ersteller' %}
-                        <p><strong>Ersteller:</strong> <a
-                                href="{% url 'user_detail' single_artikel.creator.id %}">{{ single_artikel.creator.username }}</a>
-                            {% if request.user == single_artikel.creator %}(Du){% endif %}</p>
+                        {% url 'user_detail' single_artikel.creator.id as user_url %}
+                        <p><strong>{% trans 'Ersteller:' %}</strong> <a
+                                href="{{ user_url }}">{{ single_artikel.creator.username }}</a>
+                            {% if request.user == single_artikel.creator %}({% trans '(Du)' %}){% endif %}</p>
                     {% elif ordered_by == 'Likes' %}
-                        <p><strong>Likes:</strong> {{ single_artikel.like_count }}</p>
+                        <p><strong>{% trans 'Likes:' %}</strong> {{ single_artikel.like_count }}</p>
                     {% endif %}
                 </div>
 
                 <details class="event-details">
-                    <summary>mehr</summary>
+                    <summary>{% trans 'mehr' %}</summary>
                     <div class="event-extra">
                         {% if ordered_by != 'Zuletzt bearbeitet' %}
-                            <p><strong>Zuletzt bearbeitet:</strong> <span class="event-date"
-                                                                          data-date="{{ single_artikel.date_time|date:'c' }}">{{ single_artikel.date_time|date:"d.m.Y" }}</span>
+                            <p><strong>{% trans 'Zuletzt bearbeitet:' %}</strong> <span class="event-date"
+                                                                          data-date="{{ single_artikel.date_time|date:'c' }}">{{ single_artikel.date_time|date:"SHORT_DATE_FORMAT" }}</span>
                             </p>
                         {% endif %}
                         {% if ordered_by != 'Ersteller' %}
-                            <p><strong>Ersteller:</strong> <a
-                                    href="{% url 'user_detail' single_artikel.creator.id %}">{{ single_artikel.creator.username }}</a>
-                                {% if request.user == single_artikel.creator %}(Du){% endif %}</p>
+                            {% url 'user_detail' single_artikel.creator.id as user_url %}
+                            <p><strong>{% trans 'Ersteller:' %}</strong> <a
+                                    href="{{ user_url }}">{{ single_artikel.creator.username }}</a>
+                                {% if request.user == single_artikel.creator %}({% trans '(Du)' %}){% endif %}</p>
                         {% endif %}
                         {% if ordered_by != 'Likes' %}
-                            <p><strong>Likes:</strong> {{ single_artikel.like_count }}</p>
+                            <p><strong>{% trans 'Likes:' %}</strong> {{ single_artikel.like_count }}</p>
                         {% endif %}
                     </div>
                 </details>
 
-                <a class="event-link" href="{% url 'artikel_detail' single_artikel.id %}">Details ansehen</a>
+                {% url 'artikel_detail' single_artikel.id as detail_url %}
+                <a class="event-link" href="{{ detail_url }}">{% trans 'Details ansehen' %}</a>
             </section>
         {% endfor %}
     {% else %}
-        <p><i>Es gibt derzeit keine Artikel mit diesem Filter.</i></p>
+        <p><i>{% trans 'Es gibt derzeit keine Artikel mit diesem Filter.' %}</i></p>
     {% endif %}
 {% endblock %}

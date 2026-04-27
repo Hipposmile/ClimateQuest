@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block meta %}
     <meta name="description"
-          content="Übersicht aller Events bei ClimateQuest. Finde Events wie Demos und nimm daran teil, um deinen Beitrag zum Klimaschutz zu leisten.">
+          content="{% trans "Übersicht aller Events bei ClimateQuest. Finde Events wie Demos und nimm daran teil, um deinen Beitrag zum Klimaschutz zu leisten." %}">
 {% endblock %}
-{% block title %}Events - Übersicht{% endblock %}
+{% block title %}{% trans "Events - Übersicht" %}{% endblock %}
 
 {% block content %}
     <style nonce="{{ request.csp_style_nonce }}">
@@ -18,45 +19,46 @@
             margin-right: 4px;
         }
     </style>
-    <h1>Events - Übersicht</h1>
+    <h1>{% trans "Events - Übersicht" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
-    <a href="{% url 'add_event' %}" class="redirect-link ">
-        <span>Event hinzufügen</span>
+    {% if request.LANGUAGE_CODE == "en" %}<p>Events are currently only available in German. Thanks for your understanding!</p>{% endif %}
+    <a href="{% url 'add_event' %}" class="redirect-link">
+        <span>{% trans "Event hinzufügen" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <form method="post">
         {% csrf_token %}
         <div id="search_keyword_div">
-            <label for="search_keyword">Suchwort:</label>
-            <small>Leer lassen, um alle Events anzuzeigen</small>
-            <input type="search" name="search_keyword" id="search_keyword" placeholder="Suchwort">
+            <label for="search_keyword">{% trans "Suchwort:" %}</label>
+            <small>{% trans "Leer lassen, um alle Events anzuzeigen" %}</small>
+            <input type="search" name="search_keyword" id="search_keyword" placeholder="{% trans "Suchwort" %}">
         </div>
 
-        <label for="order_by">Sortieren nach:</label>
+        <label for="order_by">{% trans "Sortieren nach:" %}</label>
         <select name="order_by" id="order_by" required>
-            <option value="Name" selected>Name</option>
-            <option value="Datum">Datum</option>
-            <option value="Dauer">Dauer</option>
-            <option value="Adresse">Adresse</option>
-            <option value="Ersteller">Ersteller</option>
-            <option value="Teilnehmeranzahl">Teilnehmeranzahl</option>
+            <option value="Name" selected>{% trans "Name" %}</option>
+            <option value="Datum">{% trans "Datum" %}</option>
+            <option value="Dauer">{% trans "Dauer" %}</option>
+            <option value="Adresse">{% trans "Adresse" %}</option>
+            <option value="Ersteller">{% trans "Ersteller" %}</option>
+            <option value="Teilnehmeranzahl">{% trans "Teilnehmeranzahl" %}</option>
             {% if user.is_authenticated %}
-                <option value="von mir erstellte Events">von mir erstellte Events</option>
-                <option value="Events, bei denen ich Teilnehmer bin">Events, bei denen ich Teilnehmer bin</option>
+                <option value="von mir erstellte Events">{% trans "von mir erstellte Events" %}</option>
+                <option value="Events, bei denen ich Teilnehmer bin">{% trans "Events, bei denen ich Teilnehmer bin" %}</option>
             {% endif %}
         </select>
 
         <label class="custom-checkbox">
             <input type="checkbox" name="past_events_visible">
             <span class="checkmark"></span>
-            <span class="label-text">bereits Vergange einblenden</span>
+            <span class="label-text">{% trans "bereits Vergange einblenden" %}</span>
         </label>
 
-        <button type="submit">Anwenden</button>
+        <button type="submit">{% trans "Anwenden" %}</button>
     </form>
 
     <script nonce="{{ request.csp_script_nonce }}">
@@ -73,16 +75,16 @@
         });
     </script>
 
-    <p>Sortiert nach: {{ ordered_by }}</p>
+    <p>{% trans "Sortiert nach:" %} {{ ordered_by }}</p>
     {% if search_keyword %}
-        <p>Suchwort: {{ search_keyword }}</p>
+        <p>{% trans "Suchwort:" %} {{ search_keyword }}</p>
     {% endif %}
     {% if past_events_visible %}
-        <p>Vergange Events eingeblendet</p>
+        <p>{% trans "Vergange Events eingeblendet" %}</p>
     {% else %}
-        <p>Vergange Events nicht eingeblendet</p>
+        <p>{% trans "Vergange Events nicht eingeblendet" %}</p>
     {% endif %}
-    <p>{{ events.count }} Suchergebnisse</p>
+    <p>{% blocktrans with count=events.count %}{{ count }} Suchergebnisse{% endblocktrans %}</p>
 
     {% if events %}
         {% for event in events %}
@@ -92,25 +94,26 @@
                     <h2 class="event-title">{{ event.name }}</h2>
                     <span class="event-date-relative"></span>
                     {% if ordered_by == 'Datum' %}
-                        <p><strong>Datum und Uhrzeit (Beginn):</strong> <span class="event-date"
-                                                                              data-date="{{ event.date_time|date:'c' }}">{{ event.date_time|date:"d.m.Y, H:i" }}</span>
+                        <p><strong>{% trans "Datum und Uhrzeit (Beginn):" %}</strong> <span class="event-date"
+                                                                              data-date="{{ event.date_time|date:'c' }}">{{ event.date_time|date:"SHORT_DATETIME_FORMAT" }}</span>
                         </p>
 
                     {% elif ordered_by == 'Dauer' %}
-                        <p><strong>Dauer in Minuten:</strong> {{ event.duration }}</p>
+                        <p><strong>{% trans "Dauer in Minuten:" %}</strong> {{ event.duration }}</p>
 
                     {% elif ordered_by == 'Adresse' %}
-                        <p><strong>Adresse:</strong> {{ event.adress }}</p>
+                        <p><strong>{% trans "Adresse:" %}</strong> {{ event.adress }}</p>
 
                     {% elif ordered_by == 'Ersteller' %}
-                        <p><strong>Ersteller:</strong> <a
-                                href="{% url 'user_detail' event.creator.id %}">{{ event.creator.username }}</a>
-                            {% if request.user == event.creator %}(Du){% endif %}</p>
+                        {% url 'user_detail' event.creator.id as creator_url %}
+                        <p><strong>{% trans "Ersteller:" %}</strong> <a
+                                href="{{ creator_url }}">{{ event.creator.username }}</a>
+                            {% if request.user == event.creator %}{% trans "(Du)" %}{% endif %}</p>
 
                     {% elif ordered_by == 'Teilnehmeranzahl' %}
                         <details class="event-details">
                             <summary>
-                                <p><strong>Teilnehmeranzahl:</strong> {{ event.participants_count }}</p>
+                                <p><strong>{% trans "Teilnehmeranzahl:" %}</strong> {{ event.participants_count }}</p>
                             </summary>
                             <ul class="participant-list">
                                 {% for participant in event.participants.all %}
@@ -122,31 +125,32 @@
                 </div>
 
                 <details class="event-details">
-                    <summary>mehr</summary>
+                    <summary>{% trans "mehr" %}</summary>
                     <div class="event-extra">
-                        <p class="description"><strong>Beschreibung:</strong></p>
+                        <p class="description"><strong>{% trans "Beschreibung:" %}</strong></p>
                         <div class="event-description">{{ event.description|safe }}</div>
                         </p>
                         {% if ordered_by != 'Datum' %}
-                            <p><strong>Datum und Uhrzeit (Beginn):</strong> <span class="event-date"
-                                                                                  data-date="{{ event.date_time|date:'c' }}">{{ event.date_time|date:"d.m.Y, H:i" }}</span>
+                            <p><strong>{% trans "Datum und Uhrzeit (Beginn):" %}</strong> <span class="event-date"
+                                                                                  data-date="{{ event.date_time|date:'c' }}">{{ event.date_time|date:"SHORT_DATETIME_FORMAT" }}</span>
                             </p>
                         {% endif %}
                         {% if ordered_by != 'Dauer' %}
-                            <p><strong>Dauer in Minuten:</strong> {{ event.duration }}</p>
+                            <p><strong>{% trans "Dauer in Minuten:" %}</strong> {{ event.duration }}</p>
                         {% endif %}
                         {% if ordered_by != 'Adresse' %}
-                            <p><strong>Adresse:</strong> {{ event.adress }}</p>
+                            <p><strong>{% trans "Adresse:" %}</strong> {{ event.adress }}</p>
                         {% endif %}
                         {% if ordered_by != 'Ersteller' %}
-                            <p><strong>Ersteller:</strong> <a
-                                    href="{% url 'user_detail' event.creator.id %}">{{ event.creator.username }}</a>
-                                {% if request.user == event.creator %}(Du){% endif %}</p>
+                            {% url 'user_detail' event.creator.id as creator_url2 %}
+                            <p><strong>{% trans "Ersteller:" %}</strong> <a
+                                    href="{{ creator_url2 }}">{{ event.creator.username }}</a>
+                                {% if request.user == event.creator %}{% trans "(Du)" %}{% endif %}</p>
                         {% endif %}
                         {% if ordered_by != 'Teilnehmeranzahl' %}
                             <details class="event-details">
                                 <summary>
-                                    <p><strong>Teilnehmeranzahl:</strong> {{ event.participants_count }}</p>
+                                    <p><strong>{% trans "Teilnehmeranzahl:" %}</strong> {{ event.participants_count }}</p>
                                 </summary>
                                 <ul class="participant-list">
                                     {% for participant in event.participants.all %}
@@ -158,11 +162,12 @@
                     </div>
                 </details>
 
-                <a class="event-link" href="{% url 'event_detail' event.id %}">Details ansehen</a>
+                {% url 'event_detail' event.id as event_detail_url %}
+                <a class="event-link" href="{{ event_detail_url }}">{% trans "Details ansehen" %}</a>
             </section>
         {% endfor %}
     {% else %}
-        <p><i>Es gibt derzeit keine Events mit diesem Filter.</i></p>
+        <p><i>{% trans "Es gibt derzeit keine Events mit diesem Filter." %}</i></p>
     {% endif %}
 
     <script nonce="{{ request.csp_script_nonce }}">
@@ -176,14 +181,14 @@
 
             const diffDays = Math.round((targetDay - today) / (1000 * 60 * 60 * 24));
 
-            if (diffDays < 0) return "vergangen";
-            if (diffDays === 0) return "heute";
-            if (diffDays === 1) return "morgen";
-            if (diffDays === 2) return "übermorgen";
-            if (diffDays <= 7) return "innerhalb der nächsten Woche";
-            if (diffDays <= 30) return "innerhalb der nächsten 30 Tage";
-            if (diffDays <= 365) return "innerhalb des nächsten Jahres";
-            return "noch über ein Jahr entfernt";
+            if (diffDays < 0) return "{% trans 'vergangen' %}";
+            if (diffDays === 0) return "{% trans 'heute' %}";
+            if (diffDays === 1) return "{% trans 'morgen' %}";
+            if (diffDays === 2) return "{% trans 'übermorgen' %}";
+            if (diffDays <= 7) return "{% trans 'innerhalb der nächsten Woche' %}";
+            if (diffDays <= 30) return "{% trans 'innerhalb der nächsten 30 Tage' %}";
+            if (diffDays <= 365) return "{% trans 'innerhalb des nächsten Jahres' %}";
+            return "{% trans 'noch über ein Jahr entfernt' %}";
         }
 
         document.querySelectorAll('.event-card').forEach(div => {

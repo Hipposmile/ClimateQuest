@@ -1,71 +1,75 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block meta %}
     <meta name="description"
-          content="Sieh dir die Übersicht aller Posts im Forum von ClimateQuest an. Finde Antworten zu deinen Fragen zur Klimakrise oder zur Organisation und Durchführung von Aktionen zum Klima-Themen.">
+          content="{% trans "Sieh dir die Übersicht aller Posts im Forum von ClimateQuest an. Finde Antworten zu deinen Fragen zur Klimakrise oder zur Organisation und Durchführung von Aktionen zum Klima-Themen." %}">
 {% endblock %}
 
-{% block title %}Forum-Übersicht{% endblock %}
+{% block title %}{% trans "Forum-Übersicht" %}{% endblock %}
 
 {% block content %}
-    <h1>Forum-Übersicht</h1>
+    <h1>{% trans "Forum-Übersicht" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
+    {% if request.LANGUAGE_CODE == "en" %}<p>The forum is currently only available in German. Thanks for your understanding!</p>{% endif %}
     <a href="{% url 'add_forum_post' %}" class="redirect-link">
-        <span>Beitrag hinzufügen</span>
+        <span>{% trans "Beitrag hinzufügen" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <form method="post">
         {% csrf_token %}
         <div id="search_keyword_div">
-            <label for="search_keyword">Suchwort:</label>
-            <small>Leer lassen, um alle Artikel anzuzeigen</small>
-            <input type="search" name="search_keyword" id="search_keyword" placeholder="Suchwort">
+            <label for="search_keyword">{% trans "Suchwort:" %}</label>
+            <small>{% trans "Leer lassen, um alle Artikel anzuzeigen" %}</small>
+            <input type="search" name="search_keyword" id="search_keyword" placeholder="{% trans "Suchwort" %}">
         </div>
 
-        <label for="order_by">Sortieren nach:</label>
+        <label for="order_by">{% trans "Sortieren nach:" %}</label>
         <select name="order_by" id="order_by" required>
-            <option value="Titel" selected>Titel</option>
-            <option value="Ersteller">Ersteller</option>
-            <option value="Erstellt am">Erstellt am</option>
+            <option value="Titel" selected>{% trans "Titel" %}</option>
+            <option value="Ersteller">{% trans "Ersteller" %}</option>
+            <option value="Erstellt am">{% trans "Erstellt am" %}</option>
             {% if user.is_authenticated %}
-                <option value="von mir erstellte Posts">von mir erstellte Posts</option>
-                <option value="von mir beantwortete Posts">von mir beantwortete Posts</option>
+                <option value="von mir erstellte Posts">{% trans "von mir erstellte Posts" %}</option>
+                <option value="von mir beantwortete Posts">{% trans "von mir beantwortete Posts" %}</option>
             {% endif %}
         </select>
 
-        <label for="category">Kategorie:</label>
+        <label for="category">{% trans "Kategorie:" %}</label>
         <select name="category" id="category" required>
-            <option value="Alle" selected>Alle</option>
+            <option value="Alle" selected>{% trans "Alle" %}</option>
             {% for category in all_categories %}
                 <option value="{{ category.title }}">{{ category.title }}</option>
             {% endfor %}
         </select>
 
-        <button type="submit">Anwenden</button>
+        <button type="submit">{% trans "Anwenden" %}</button>
     </form>
+    {% trans "von mir erstellte Posts" as my_posts %}
+    {% trans "von mir beantwortete Posts" as my_answered_posts %}
     <script nonce="{{ request.csp_script_nonce }}">
         search_keyword = document.querySelector('input[name=search_keyword]');
         order_by = document.querySelector('select[name=order_by]');
         search_keyword_div = document.getElementById('search_keyword_div');
 
         order_by.addEventListener('change', function () {
-            if (order_by.value === "von mir erstellte Posts" || order_by.value === "von mir beantwortete Posts") {
+            if (order_by.value === "{{ my_posts }}" || order_by.value === "{{ my_answered_posts }}") {
                 search_keyword_div.style.display = "none";
             } else {
                 search_keyword_div.style.display = "block";
             }
         });
     </script>
-    <p>Sortiert nach: {{ ordered_by }}</p>
+    <p>{% blocktrans with ordered=ordered_by %}Sortiert nach: {{ ordered }}{% endblocktrans %}</p>
     {% if search_keyword %}
-        <p>Suchwort: {{ search_keyword }}</p>
+        <p>{% blocktrans with keyword=search_keyword %}Suchwort: {{ keyword }}{% endblocktrans %}</p>
     {% endif %}
-    <p>Kategorie: {{ category }}</p>
-    <p>{{ forum_posts.count }} Suchergebnisse</p>
+    <p>{% blocktrans with cat=category %}Kategorie: {{ cat }}{% endblocktrans %}</p>
+    <p>{% blocktrans with count=forum_posts.count %}{{ count }} Suchergebnisse{% endblocktrans %}</p>
 
     {% if forum_posts %}
         {% for post in forum_posts %}
@@ -73,40 +77,38 @@
                     class="event-card{% if request.user == post.creator %} event-card-creator{% endif %}">
                 <div class="event-main">
                     <h2 class="event-title">{{ post.title }}</h2>
-                    <p>Kategorie: {{ post.category.title }}</p>
+                    <p>{% blocktrans with cat=post.category.title %}Kategorie: {{ cat }}{% endblocktrans %}</p>
                     {% if ordered_by == 'Erstellt am' %}
-                        <p><strong>Erstellt am:</strong> <span class="event-date"
-                                                               data-date="{{ post.date_time|date:'c' }}">{{ post.date_time|date:"d.m.Y, H:i" }}</span>
+                        <p><strong>{% trans "Erstellt am:" %}</strong> <span class="event-date"
+                                                               data-date="{{ post.date_time|date:'c' }}">{{ post.date_time|date:"SHORT_DATETIME_FORMAT" }}</span>
                         </p>
 
                     {% elif ordered_by == 'Ersteller' %}
-                        <p><strong>Ersteller:</strong> <a
-                                href="{% url 'user_detail' post.creator.id %}">{{ post.creator.username }}</a>
-                            {% if request.user == post.creator %}(Du){% endif %}</p>
+                        <p><strong>{% trans "Ersteller:" %}</strong> {% url 'user_detail' post.creator.id as creator_url %}{% blocktrans with url=creator_url username=post.creator.username %}<a href="{{ url }}">{{ username }}</a>{% endblocktrans %}
+                            {% if request.user == post.creator %}{% trans "(Du)" %}{% endif %}</p>
                     {% endif %}
                 </div>
 
                 <details class="event-details">
-                    <summary>mehr</summary>
+                    <summary>{% trans "mehr" %}</summary>
                     <div class="event-extra">
                         </p>
                         {% if ordered_by != 'Erstellt am' %}
-                            <p><strong>Erstellt am:</strong> <span class="event-date"
-                                                                   data-date="{{ post.date_time|date:'c' }}">{{ post.date_time|date:"d.m.Y, H:i" }}</span>
+                            <p><strong>{% trans "Erstellt am:" %}</strong> <span class="event-date"
+                                                                   data-date="{{ post.date_time|date:'c' }}">{{ post.date_time|date:"SHORT_DATETIME_FORMAT" }}</span>
                             </p>
                         {% endif %}
                         {% if ordered_by != 'Ersteller' %}
-                            <p><strong>Ersteller:</strong> <a
-                                    href="{% url 'user_detail' post.creator.id %}">{{ post.creator.username }}</a>
-                                {% if request.user == post.creator %}(Du){% endif %}</p>
+                            <p><strong>{% trans "Ersteller:" %}</strong> {% url 'user_detail' post.creator.id as creator_url %}{% blocktrans with url=creator_url username=post.creator.username %}<a href="{{ url }}">{{ username }}</a>{% endblocktrans %}
+                                {% if request.user == post.creator %}{% trans "(Du)" %}{% endif %}</p>
                         {% endif %}
                     </div>
                 </details>
 
-                <a class="event-link" href="{% url 'post_detail' post.id %}">Details ansehen</a>
+                <a class="event-link" href="{% url 'post_detail' post.id %}">{% trans "Details ansehen" %}</a>
             </section>
         {% endfor %}
     {% else %}
-        <p><i>Es gibt derzeit keine Posts mit diesem Filter.</i></p>
+        <p><i>{% trans "Es gibt derzeit keine Posts mit diesem Filter." %}</i></p>
     {% endif %}
 {% endblock %}

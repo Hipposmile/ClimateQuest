@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 {% block meta %}
-    <meta name="description" content="Sieh dir dein Level bei ClimateQuest an.">
+    <meta name="description" content="{% trans 'Sieh dir dein Level bei ClimateQuest an.' %}">
 {% endblock %}
-{% block title %}{% if user == request.user %}Mein Level{% else %}Level von {{ user }}
+{% block title %}{% if user == request.user %}{% trans "Mein Level" %}{% else %}{% trans "Level von" %} {{ user }}
 {% endif %}{% endblock %}
 {% block content %}
 
@@ -48,7 +49,7 @@
         }
     </style>
 
-    <h1>Level von {% if user == request.user %} <a href="{% url 'user_detail' user.id %}">mir</a>{% else %}
+    <h1>{% trans "Level von" %} {% if user == request.user %} <a href="{% url 'user_detail' user.id %}">{% trans "mir" %}</a>{% else %}
         <a href="{% url 'user_detail' user.id %}">{{ user }}</a>{% endif %}</h1>
 
     {% if messages %}
@@ -57,13 +58,13 @@
         {% endfor %}
     {% endif %}
 
-    <p>Klimapunkte: {{ level_data.klimapunkte|floatformat:-4 }}</p>
+    <p>{% trans "Klimapunkte:" %} {{ level_data.klimapunkte|floatformat:-4 }}</p>
 
     {% if level_data.info %}
         <p id="info">{{ level_data.info|safe }}</p>
     {% else %}
-        <p>Du bist im Level: {{ level_data.current_level }}</p>
-        <p>Nächstes Level: {{ level_data.next_level }}</p>
+        <p>{% trans "Du bist im Level:" %} {% if request.LANGUAGE_CODE == "de" %}{{ level_data.current_level.description }}{% else %}{{ level_data.current_level.description_en }}{% endif %}</p>
+        <p>{% trans "Nächstes Level:" %} {% if request.LANGUAGE_CODE == "de" %}{{ level_data.next_level.description }}{% else %}{{ level_data.next_level.description_en }}{% endif %}</p>
         <div class="progress-container">
             <div class="progress-bar" id="progress-bar"></div>
         </div>
@@ -73,20 +74,20 @@
                 max-width: 100%;
             }
         </style>
-        <p>{{ level_data.progress_percent }} % zum nächsten Level geschafft</p>
+        <p>{% blocktrans with progress_percent=level_data.progress_percent %}{{ progress_percent }} % zum nächsten Level geschafft{% endblocktrans %}</p>
     {% endif %}
-    <h3>Liste der Level</h3>
+    <h3>{% trans "Liste der Level" %}</h3>
     <table class="level-table">
         <thead>
         <tr>
-            <th>Beschreibung</th>
-            <th>ab Klimapunkten</th>
+            <th>{% trans "Beschreibung" %}</th>
+            <th>{% trans "ab Klimapunkten" %}</th>
         </tr>
         </thead>
         <tbody>
         {% for level in level_data.levels %}
             <tr>
-                <td>{{ level.description }}</td>
+                <td>{% if request.LANGUAGE_CODE == "de" %}{{ level.description }}{% else %}{{ level.description_en }}{% endif %}</td>
                 <td>{{ level.klimapunkte }}</td>
             </tr>
         {% endfor %}

@@ -1,21 +1,22 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block meta %}
-    <meta name="description" content="Hast du Fragen oder benötigst du Unterstützung bei der Nutzung von ClimateQuest? Hier findest du alle Möglichkeiten, um mit uns in Kontakt zu treten!">
+    <meta name="description" content="{% trans 'Hast du Fragen oder benötigst du Unterstützung bei der Nutzung von ClimateQuest? Hier findest du alle Möglichkeiten, um mit uns in Kontakt zu treten!' %}">
 {% endblock %}
 
-{% block title %}Support - ClimateQuest{% endblock %}
+{% block title %}{% trans "Support - ClimateQuest" %}{% endblock %}
 
 {% block content %}
-    <h1>Support</h1>
+    <h1>{% trans "Support" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
     <a href="{% url 'feedback' %}" class="redirect-link">
-        <span>Feedback geben</span>
+        <span>{% trans "Feedback geben" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
-    <p>Hast du Fragen oder benötigst du Unterstützung? Schreib einfach eine Mail an <a href="mailto:kontakt@climate-quest.de">kontakt@climate-quest.de</a>!</p>
+    <p>{% blocktrans %}Hast du Fragen oder benötigst du Unterstützung? Schreib einfach eine Mail an <a href="mailto:kontakt@climate-quest.de">kontakt@climate-quest.de</a>!{% endblocktrans %}</p>
 {% endblock %}

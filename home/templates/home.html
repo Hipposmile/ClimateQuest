@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 {% load development %}
+{% load production %}
+{% load i18n %}
 {% block meta %}
     <meta name="description"
           content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
 {% endblock %}
-{% block title %}Startseite{% endblock %}
+{% block title %}{% trans "Startseite" %}{% endblock %}
 
 {% block content %}
     <style nonce="{{ request.csp_style_nonce }}">
@@ -175,11 +177,11 @@
     {% endif %}
     {% if user.is_authenticated %}
         <a href="{% url 'dashboard' %}" class="redirect-link ">
-            <span>Zum Dashboard</span>
+            <span>{% trans "Zum Dashboard" %}</span>
             <span class="redirect-link-icon">→</span>
         </a>
     {% endif %}
-    <h1 class="slider-heading">ClimateQuest - Motivation für mehr Klimaschutz</h1>
+    <h1 class="slider-heading">{% trans "ClimateQuest - Motivation für mehr Klimaschutz" %}</h1>
     <div id="slider">
         <button id="prev" class="nav-button emoji">&lt;</button>
         <button id="next" class="nav-button emoji">&gt;</button>
@@ -245,50 +247,43 @@
     <hr>
     {% if not user.is_authenticated %}
         <div class="btns"><a href="{% url 'register_view' %}">
-            <button class="btn">Jetzt registrieren!</button>
+            <button class="btn">{% trans "Jetzt registrieren!" %}</button>
         </a></div>
         <hr>
     {% endif %}
-    <h2>Übersicht</h2>
+    <h2>{% trans "Übersicht" %}</h2>
 
     <input type="hidden" id="user_count" value="{{ user_count }}">
-    <input type="hidden" id="klimapunkte" value="{{ klimapunkte|floatformat:-4 }}">
+    <input type="hidden" id="klimapunkte" value="{{ klimapunkte|floatformat:0 }}">
     <input type="hidden" id="tree_count" value="{{ tree_count }}">
 
     <div id="counters">
         <div id="user_zaehler_div">
             <p class="h3_size" id="user_zaehler">{{ user_count }}</p>
-            <p> registrierte Nutzer hat diese Plattform bereits.</p>
+            <p>{% trans "registrierte Nutzer hat diese Plattform bereits." %}</p>
         </div>
 
         <div id="klimapunkte_zaehler_div">
-            <p class="h3_size" id="klimapunkte_zaehler">{{ klimapunkte|floatformat:-4 }}</p>
-            <p> Klimapunkte wurden von all diesen Nutzern zusammen bereits gesammelt.</p>
+            <p class="h3_size" id="klimapunkte_zaehler">{{ klimapunkte }}</p>
+            <p>{% trans "Klimapunkte wurden von all diesen Nutzern zusammen bereits gesammelt." %}</p>
         </div>
 
         <div id="co2_zaehler_div">
-            <p>Weil jeder Klimapunkt ungefähr für
-                <b id="co2_per_klimapunkt">1 kg</b> eingespartes CO₂ steht, wurden dadurch insgesamt
-            </p>
+            <p>{% blocktrans %}Weil jeder Klimapunkt ungefähr für <b id="co2_per_klimapunkt">1 kg</b> eingespartes CO₂ steht, wurden dadurch insgesamt{% endblocktrans %}</p>
             <p class="h3_size" id="co2_zaehler"></p>
-            <p> Tonnen CO2e eingespart</p>
+            <p>{% trans "Tonnen CO2e eingespart." %}</p>
         </div>
 
         <div id="tree_zaehler_div">
-            <p>Außerdem wurden insgesamt</p>
+            <p>{% trans "Außerdem wurden insgesamt" %}</p>
             <p class="h3_size" id="tree_zaehler">{{ tree_count }}</p>
-            <p> Bäume gepflanzt</p>
+            <p>{% trans "Bäume gepflanzt." %}</p>
         </div>
     </div>
 
     <div id="mobile-app-div">
         <hr>
-        <p>Keine Lust, ClimateQuest als Webseite zu verwenden?
-            <a href="{% url 'mobile_apps' %}" class="redirect-link">
-                <span>ClimateQuest als App downloaden</span>
-                <span class="redirect-link-icon">→</span>
-            </a>
-        </p>
+        <p>{% trans "Keine Lust, ClimateQuest als Webseite zu verwenden?" %} <a href="{% url 'mobile_apps' %}" class="redirect-link"> <span>{% trans "ClimateQuest als App downloaden" %}</span> <span class="redirect-link-icon">→</span> </a></p>
     </div>
     <script nonce="{{ request.csp_script_nonce }}">
         if (!isStandalone) {
@@ -299,31 +294,31 @@
     <hr>
     <a href="https://de.trustpilot.com/review/climate-quest.de" target="_blank"
        class="redirect-link dont-show-loading">
-        <span>Bewerten Sie uns auf Trustpilot</span>
+        <span>{% trans "Bewerten Sie uns auf Trustpilot" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <hr>
 
     <a href="{% url 'companies_and_schools' %}" class="redirect-link dont-show-loading">
-        <span>ClimateQuest für Schulen und Unternehmen</span>
+        <span>{% trans "ClimateQuest für Schulen und Unternehmen" %}</span>
         <span class="redirect-link-icon">→</span>
     </a>
     <hr>
 
     <div class="btns">
         <a href="{% url 'artikel_detail' 5 %}">
-            <button class="btn">Wie ClimateQuest funktioniert</button>
+            <button class="btn">{% trans "Wie ClimateQuest funktioniert" %}</button>
         </a>
         {% if user.is_authenticated %}
             <a href="{% url 'add' %}">
-                <button class="btn">Aktion hinzufügen</button>
+                <button class="btn">{% trans "Aktion hinzufügen" %}</button>
             </a>
             {% if not request.user.families.count > 1 %}
                 <a href="{% url 'create_family' %}">
-                    <button class="btn">Family gründen</button>
+                    <button class="btn">{% trans "Family gründen" %}</button>
                 </a>
                 <a href="{% url 'join_family' %}">
-                    <button class="btn">Family beitreten</button>
+                    <button class="btn">{% trans "Family beitreten" %}</button>
                 </a>
             {% endif %}
         {% endif %}
@@ -337,26 +332,16 @@
             const co2_zaehler = document.getElementById('co2_zaehler');
             const tree_zaehler = document.getElementById('tree_zaehler');
 
-            let user_count = document.getElementById('user_count').value;
-            let klimapunkte = document.getElementById('klimapunkte').value;
-            let tree_count = document.getElementById('tree_count').value;
+            //let user_count = document.getElementById('user_count').value;
+            //let klimapunkte = document.getElementById('klimapunkte').value;
+            //let tree_count = document.getElementById('tree_count').value;
 
-            user_count = formatToFloat(user_count);
-            klimapunkte = formatToFloat(klimapunkte);
-            tree_count = formatToFloat(tree_count);
 
-            let co2 = Math.floor(klimapunkte / 1000);
-
-            animateCount(user_zaehler, user_count);
-            animateCount(klimapunkte_zaehler, klimapunkte);
-            animateCount(co2_zaehler, co2);
-            animateCount(tree_zaehler, tree_count);
+            animateCount(user_zaehler, {{ user_count }});
+            animateCount(klimapunkte_zaehler, {{ klimapunkte }});
+            animateCount(co2_zaehler, {{ co2 }});
+            animateCount(tree_zaehler, {{ tree_count }});
         });
-
-        function formatToFloat(str) {
-            const normalized = str.replace(/\./g, '').replace(',', '.');
-            return parseFloat(normalized);
-        }
 
         function animateCount(element, endValue, maxDuration = 1500) {
             let startValue = 0;
@@ -377,7 +362,7 @@
                     current = endValue;
                     clearInterval(timer);
                 }
-                element.textContent = Math.floor(current).toLocaleString();
+                element.textContent = Math.floor(current);
             }, stepTime);
         }
     </script>

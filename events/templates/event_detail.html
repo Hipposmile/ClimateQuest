@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block meta %}
     <meta name="description"
-          content="Details und Teilnahmeoptionen für das Event {{ event.name }} bei ClimateQuest ansehen. Stelle Fragen und werde Teil des Events.">
+          content="{% blocktrans with name=event.name %}Details und Teilnahmeoptionen für das Event {{ name }} bei ClimateQuest ansehen. Stelle Fragen und werde Teil des Events.{% endblocktrans %}">
 {% endblock %}
-{% block title %}Event {{ event.name }}{% endblock %}
+{% block title %}{% blocktrans with name=event.name %}Event {{ name }}{% endblocktrans %}{% endblock %}
 
 {% block content %}
 
@@ -21,14 +22,15 @@
         }
     </style>
 
-    <h1><a href="{% url 'events_overview' %}">Event</a> <i>{{ event.name }}</i></h1>
+    {% url 'events_overview' as events_overview_url %}
+    <h1>{% blocktrans with url=events_overview_url name=event.name %}<a href="{{ url }}">Event</a> <i>{{ name }}</i>{% endblocktrans %}</h1>
 
     {% if request.user != event.creator %}
         <p class="participant-status">
             {% if request.user in event.participants.all %}
-                Du bist Teilnehmer dieses Events
+                {% trans "Du bist Teilnehmer dieses Events" %}
             {% else %}
-                Du bist nicht Teilnehmer dieses Events
+                {% trans "Du bist nicht Teilnehmer dieses Events" %}
             {% endif %}
         </p>
     {% endif %}
@@ -39,20 +41,21 @@
         {% endfor %}
     {% endif %}
 
-    <p><strong>Beschreibung:</strong></p>
+    <p><strong>{% trans "Beschreibung:" %}</strong></p>
     <div class="event-description">{{ event.description|safe }}</div>
-    <p><strong>Datum und Uhrzeit (Beginn):</strong> {{ event.date_time|date:"d.m.Y, H:i" }}</p>
-    <p><strong>geschätzte Dauer in Minuten:</strong> {{ event.duration }}</p>
-    <p><strong>Adresse:</strong> {{ event.adress }}</p>
+    <p><strong>{% trans "Datum und Uhrzeit (Beginn):" %}</strong> {{ event.date_time|date:"SHORT_DATETIME_FORMAT" }}</p>
+    <p><strong>{% trans "geschätzte Dauer in Minuten:" %}</strong> {{ event.duration }}</p>
+    <p><strong>{% trans "Adresse:" %}</strong> {{ event.adress }}</p>
 
     <p class="{% if request.user == event.creator %}event-creator{% else %}event-user{% endif %}">
-        <strong>Ersteller:</strong> <a  href="{% url 'user_detail' event.creator.id %}">{{ event.creator.username }}</a>
-        {% if request.user == event.creator %}(Du){% endif %}
+        {% url 'user_detail' event.creator.id as user_detail_url %}
+        {% blocktrans with url=user_detail_url username=event.creator.username %}<strong>Ersteller:</strong> <a href="{{ url }}">{{ username }}</a>{% endblocktrans %}
+        {% if request.user == event.creator %}{% trans "(Du)" %}{% endif %}
     </p>
 
     <details class="event-details">
         <summary>
-            <strong>Teilnehmeranzahl:</strong> {{ event.participants_count }}
+            <strong>{% trans "Teilnehmeranzahl:" %}</strong> {{ event.participants_count }}
         </summary>
         <ul class="participant-list">
             {% for participant in event.participants.all %}
@@ -66,61 +69,62 @@
             <form method="post" class="event-form">
                 {% csrf_token %}
                 {% if request.user in event.participants.all %}
-                    <button name="become_member" type="submit" class="leave-button">aus Event aussteigen</button>
+                    <button name="become_member" type="submit" class="leave-button">{% trans "aus Event aussteigen" %}</button>
                 {% else %}
-                    <button name="become_member" type="submit" class="join-button">Teilnehmer werden</button>
+                    <button name="become_member" type="submit" class="join-button">{% trans "Teilnehmer werden" %}</button>
                 {% endif %}
             </form>
         {% else %}
-            <a  href="{% url 'edit_event' event.id %}" class="edit-link">Bearbeiten</a>
+            {% url 'edit_event' event.id as edit_event_url %}
+            <a href="{{ edit_event_url }}" class="edit-link">{% trans "Bearbeiten" %}</a>
         {% endif %}
     {% endif %}
 
-    <h3 class="section-title">Fragen</h3>
+    <h3 class="section-title">{% trans "Fragen" %}</h3>
     <div class="comment-section">
         {% if event.questions.all %}
             {% for question in event.questions.all %}
                 <div class="comment">
                     <div class="text-wrapper">
                         <div class="question-header">
-                            <span class="question-user"><a
-                                    href="{% url 'user_detail' question.user.id %}">{{ question.user }}</a></span>
-                            <span class="question-date">{{ question.date_time|date:"d.m.Y H:i" }}</span>
+                            {% url 'user_detail' question.user.id as question_user_url %}
+                            <span class="question-user"><a href="{{ question_user_url }}">{{ question.user }}</a></span>
+                            <span class="question-date">{{ question.date_time|date:"SHORT_DATETIME_FORMAT" }}</span>
                         </div>
                         <div class="question expandable-text blur-enabled">{{ question.question }}</div>
                         <div class="answers">
                             {% for answer in question.answers.all %}
                                 <div class="answer-header">
-                                    <span class="answer-user"><a
-                                            href="{% url 'user_detail' answer.user.id %}">{{ answer.user }}</a></span>
-                                    <span class="answer-date">{{ answer.date_time|date:"d.m.Y H:i" }}</span>
+                                    {% url 'user_detail' answer.user.id as answer_user_url %}
+                                    <span class="answer-user"><a href="{{ answer_user_url }}">{{ answer.user }}</a></span>
+                                    <span class="answer-date">{{ answer.date_time|date:"SHORT_DATETIME_FORMAT" }}</span>
                                 </div>
                                 <div class="answer expandable-text blur-enabled">{{ answer.answer }}</div>
                             {% empty %}
-                                <div class="no-answer">Noch keine Antworten.</div>
+                                <div class="no-answer">{% trans "Noch keine Antworten." %}</div>
                             {% endfor %}
                         </div>
-                        <button class="toggle-button">Mehr anzeigen</button>
+                        <button class="toggle-button">{% trans "Mehr anzeigen" %}</button>
                         <details>
-                            <summary>selbst antworten</summary>
+                            <summary>{% trans "selbst antworten" %}</summary>
                             {% if user.is_authenticated %}
                                 <form method="post" >
                                     {% csrf_token %}
                                     <input type="hidden" name="question_id" value="{{ question.id }}">
-                                    <label for="answer">Antwort:</label>
-                                    <input type="text" name="answer" id="answer" placeholder="Antwort">
-                                    <button name="answer_question">Antworten</button>
+                                    <label for="answer">{% trans "Antwort:" %}</label>
+                                    <input type="text" name="answer" id="answer" placeholder="{% trans "Antwort" %}">
+                                    <button name="answer_question">{% trans "Antworten" %}</button>
                                 </form>
                             {% else %}
-                                <p><a  href="{% url 'login_view' %}">Logge dich ein</a>, um den Kommentar zu beantworten
-                                </p>
+                                {% url 'login_view' as login_url %}
+                                <p>{% blocktrans with url=login_url %}<a href="{{ url }}">Logge dich ein</a>, um den Kommentar zu beantworten{% endblocktrans %}</p>
                             {% endif %}
                         </details>
                     </div>
                 </div>
             {% endfor %}
         {% else %}
-            <p class="no-questions"><i>Noch keine Fragen vorhanden</i></p>
+            <p class="no-questions"><i>{% trans "Noch keine Fragen vorhanden" %}</i></p>
         {% endif %}
     </div>
 
@@ -161,12 +165,12 @@
     {% if user.is_authenticated %}
         <form method="post" >
             {% csrf_token %}
-            <label for="question">Frage stellen:</label>
-            <input type="text" name="question" id="question" placeholder="Frage stellen">
-            <button type="submit" name="ask_question">Frage stellen</button>
+            <label for="question">{% trans "Frage stellen:" %}</label>
+            <input type="text" name="question" id="question" placeholder="{% trans "Frage stellen" %}">
+            <button type="submit" name="ask_question">{% trans "Frage stellen" %}</button>
         </form>
     {% else %}
-        <p><a  href="{% url 'login_view' %}">Logge dich ein</a>, um einen Kommentar zu verfassen
-        </p>
+        {% url 'login_view' as login_url %}
+        <p>{% blocktrans with url=login_url %}<a href="{{ url }}">Logge dich ein</a>, um einen Kommentar zu verfassen{% endblocktrans %}</p>
     {% endif %}
 {% endblock %}

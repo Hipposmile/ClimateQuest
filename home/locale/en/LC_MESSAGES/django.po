@@ -1,0 +1,1788 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-27 12:43+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: home/templates/admin.html:8 home/templates/admin.html:11
+msgid "Benachrichtigungen erstellen - Admin"
+msgstr "Create Notifications - Admin"
+
+#: home/templates/admin.html:17
+msgid "Benachrichtigung erstellen"
+msgstr "Create Notification"
+
+#: home/templates/admin.html:19
+msgid "Möchtest du diese Benachrichtigung wirklich erstellen?"
+msgstr "Are you sure you want to create this notification?"
+
+#: home/templates/admin.html:21
+msgid "Empfänger-Typ:"
+msgstr "Receiver-Type:"
+
+#: home/templates/admin.html:23
+msgid "User"
+msgstr "User"
+
+#: home/templates/admin.html:24
+msgid "Family-Members"
+msgstr "Family Members"
+
+#: home/templates/admin.html:25
+msgid "Community-Members"
+msgstr "Community Members"
+
+#: home/templates/admin.html:26
+msgid "Event-Teilnehmer"
+msgstr "Event Participants"
+
+#: home/templates/admin.html:28
+msgid "Name:"
+msgstr "Name:"
+
+#: home/templates/admin.html:29 home/templates/admin.html:47
+msgid "Username"
+msgstr "Username"
+
+#: home/templates/admin.html:31
+#, fuzzy
+#| msgid "Nachricht:"
+msgid "Nachricht (Deutsch):"
+msgstr "Message:"
+
+#: home/templates/admin.html:32 home/templates/admin.html:35
+msgid "Nachricht"
+msgstr "Message"
+
+#: home/templates/admin.html:34
+#, fuzzy
+#| msgid "Nachricht:"
+msgid "Nachricht (Englisch):"
+msgstr "Message:"
+
+#: home/templates/admin.html:37
+msgid "URL:"
+msgstr "URL:"
+
+#: home/templates/admin.html:38
+msgid "URL"
+msgstr "URL"
+
+#: home/templates/admin.html:39
+msgid "Erstellen"
+msgstr "Create"
+
+#: home/templates/admin.html:40
+msgid ""
+"Wenn alle User erreicht werden sollen, bitte Family 'worldwide ranking' "
+"angeben"
+msgstr "To reach all users, please specify the Family 'worldwide ranking'"
+
+#: home/templates/admin.html:49
+msgid "Family-Name"
+msgstr "Family Name"
+
+#: home/templates/admin.html:51
+msgid "Community-Name"
+msgstr "Community Name"
+
+#: home/templates/admin.html:53
+msgid "Event-Id"
+msgstr "Event ID"
+
+#: home/templates/aktionenTable.html:4
+msgid "Übersicht über alle Aktionen und deren Klimapunkte bei ClimateQuest."
+msgstr "Overview of all actions and their climate points on ClimateQuest."
+
+#: home/templates/aktionenTable.html:6 home/templates/aktionenTable.html:63
+msgid "Aktionen"
+msgstr "Actions"
+
+#: home/templates/aktionenTable.html:73
+msgid "Aktion"
+msgstr "Action"
+
+#: home/templates/aktionenTable.html:74 home/templates/dashboard.html:402
+msgid "Klimapunkte"
+msgstr "Climate Points"
+
+#: home/templates/aktionenTable.html:75
+msgid "Anmerkung"
+msgstr "Note"
+
+#: home/templates/aktionenTable.html:76
+msgid "Quelle"
+msgstr "Source"
+
+#: home/templates/aktionenTable.html:77
+msgid "Kategorien"
+msgstr "Categories"
+
+#: home/templates/aktionenTable.html:98
+msgid ""
+"Ein Klimapunkt steht stellvertretend für einen Kilogramm eingespartes CO2."
+msgstr "One climate point represents one kilogram of CO2 saved."
+
+#: home/templates/benachrichtigungen.html:8
+msgid "Benachrichtigungen"
+msgstr "Notifications"
+
+#: home/templates/benachrichtigungen.html:116
+msgid "Mehr"
+msgstr "More"
+
+#: home/templates/benachrichtigungen.html:132
+msgid "Du hast keine Benachrichtigungen"
+msgstr "You have no notifications"
+
+#: home/templates/companies_and_schools.html:6
+msgid ""
+"Nutzen Sie ClimateQuest in Ihrer Schule oder Ihrem Unternehmen, um den CO2-"
+"Fußabdruck zu reduzieren und nachhaltige Praktiken zu fördern."
+msgstr ""
+"Use ClimateQuest in your school or company to reduce your carbon footprint "
+"and promote sustainable practices."
+
+#: home/templates/companies_and_schools.html:9
+msgid "Schulen / Unternehmen - ClimateQuest"
+msgstr "Schools / Companies - ClimateQuest"
+
+#: home/templates/companies_and_schools.html:12 home/templates/home.html:303
+msgid "ClimateQuest für Schulen und Unternehmen"
+msgstr "ClimateQuest for Schools and Companies"
+
+#: home/templates/companies_and_schools.html:20
+#, python-format
+msgid ""
+"ClimateQuest als Unternehmen oder Schule zu verwenden, bietet zahlreiche "
+"Vorteile. In <a href=\"%(pdf_url)s\">diesem PDF</a> werden diese für Schulen "
+"exemplarisch dargelegt, die meisten Punkte lassen sich allerdings auch auf "
+"Unternehmen übertragen. Melden Sie sich bei Interesse unter <a "
+"href=\"mailto:kontakt@climate-quest.de?subject=Anfrage für Nutzung von "
+"ClimateQuest als Schule oder Unternehmen\">kontakt@climate-quest.de</a>. Das "
+"ganze ist kostenlos und unkompliziert!"
+msgstr ""
+"Using ClimateQuest as a company or school offers numerous benefits. <a "
+"href=\"%(pdf_url)s\">This PDF</a> outlines these benefits for schools as an "
+"example, though most points apply to companies as well. If you're "
+"interested, please get in touch at <a href=\"mailto:kontakt@climate-quest.de?"
+"subject=Anfrage für Nutzung von ClimateQuest als Schule oder "
+"Unternehmen\">kontakt@climate-quest.de</a>. It's free and straightforward!"
+
+#: home/templates/dashboard.html:7
+msgid "Eine Übersicht über all deine Aktivitäten und Erfolge bei ClimateQuest."
+msgstr "An overview of all your activities and achievements on ClimateQuest."
+
+#: home/templates/dashboard.html:10 home/templates/dashboard.html:17
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: home/templates/dashboard.html:14
+msgid "Zur Homepage"
+msgstr "To the Homepage"
+
+#: home/templates/dashboard.html:30
+#, python-format
+msgid "Willkommen, %(username)s!"
+msgstr "Welcome, %(username)s!"
+
+#: home/templates/dashboard.html:33
+msgid ""
+"Bitte bestätige deine E-Mail-Adresse, um alle Funktionen nutzen zu können. "
+"Falls du keine\n"
+"            Verifizierungsmail erhalten hast,"
+msgstr ""
+"Please confirm your email address to access all features. If you haven't "
+"received a verification email,"
+
+#: home/templates/dashboard.html:35
+msgid "lasse dir eine neue senden."
+msgstr "request a new one."
+
+#: home/templates/dashboard.html:41
+msgid "Aktion eintragen"
+msgstr "Log Action"
+
+#: home/templates/dashboard.html:50
+msgid "Benachrichtigungen anfordern"
+msgstr "Request Notifications"
+
+#: home/templates/dashboard.html:51
+msgid ""
+"Über Push-Benachrichtigungen können wir dir Mitteilungen direkt an dieses "
+"Gerät senden."
+msgstr ""
+"Via push notifications, we can send you messages directly to this device."
+
+#: home/templates/dashboard.html:65
+msgid ""
+"Tipp: Wenn andere Nutzer Artikel liken, die du selbst geschrieben hast, "
+"erhältst du Klimapunkte!\n"
+"        Schreibe also selbst einen guten Artikel, um mehr Klimapunkte zu "
+"erhalten!"
+msgstr ""
+"Tip: When other users like articles you've written, you earn climate points! "
+"So write a great article yourself to earn more climate points!"
+
+#: home/templates/dashboard.html:70
+msgid "Zur öffentlichen Profilseite"
+msgstr "To the Public Profile Page"
+
+#: home/templates/dashboard.html:227
+msgid "Perfekte Woche"
+msgstr "Perfect Week"
+
+#: home/templates/dashboard.html:233 home/templates/dashboard.html:253
+msgid "Wöchentliches Ziel"
+msgstr "Weekly Goal"
+
+#: home/templates/dashboard.html:244
+msgid "Du hast eine perfekte Woche!"
+msgstr "You had a perfect week!"
+
+#: home/templates/dashboard.html:263
+#, python-format
+msgid ""
+"%(weekly_klimapunkte)s Klimapunkte bis zum wöchentlichen Ziel von\n"
+"        %(weekly_goal)s Klimapunkten geschafft"
+msgstr ""
+"%(weekly_klimapunkte)s climate points towards the weekly goal of "
+"%(weekly_goal)s climate points achieved"
+
+#: home/templates/dashboard.html:266
+msgid "Ziel ändern"
+msgstr "Change Goal"
+
+#: home/templates/dashboard.html:377
+msgid "Streak"
+msgstr "Streak"
+
+#: home/templates/dashboard.html:385
+msgid "Aktuelle Streak"
+msgstr "Current Streak"
+
+#: home/templates/dashboard.html:389
+msgid "Wochen mit erreichtem wöchentlichen Ziel"
+msgstr "Weeks with weekly goal achieved"
+
+#: home/templates/dashboard.html:394
+msgid "Du hast dein wöchentliches Ziel diese Woche bereits erreicht"
+msgstr "You have already reached your weekly goal this week"
+
+#: home/templates/dashboard.html:395
+msgid "Du hast dein wöchentliches Ziel diese Woche noch nicht erreicht"
+msgstr "You haven't reached your weekly goal this week yet"
+
+#: home/templates/dashboard.html:403
+#, python-format
+msgid "Du hast bereits %(klimapunkte)s Klimapunkte gesammelt."
+msgstr "You have already collected %(klimapunkte)s climate points."
+
+#: home/templates/dashboard.html:405
+msgid "Zu den Klimapunkten"
+msgstr "To Climate Points"
+
+#: home/templates/dashboard.html:410
+msgid "Level"
+msgstr "Level"
+
+#: home/templates/dashboard.html:411
+msgid "Du bist im Level"
+msgstr "You are at level"
+
+#: home/templates/dashboard.html:413
+msgid "Zu den Levels"
+msgstr "To Levels"
+
+#: home/templates/datenschutz.html:4
+msgid "Die Datenschutzerklärung von ClimateQuest."
+msgstr "The legal notice of ClimateQuest."
+
+#: home/templates/datenschutz.html:6 home/templates/datenschutz.html:9
+msgid "Datenschutzerklärung"
+msgstr "Privacy Policy"
+
+#: home/templates/datenschutz.html:16
+msgid "1. Verantwortliche"
+msgstr "1. Responsible Parties"
+
+#: home/templates/datenschutz.html:17
+msgid ""
+"Verantwortlich für die Verarbeitung personenbezogener Daten im Sinne der "
+"Datenschutz-Grundverordnung (DSGVO)\n"
+"        ist:"
+msgstr ""
+"Responsible for the processing of personal data within the meaning of the "
+"General Data Protection Regulation (GDPR)\n"
+"        is:"
+
+#: home/templates/datenschutz.html:19
+msgid "Fraqment Film GbR"
+msgstr "Fraqment Film GbR"
+
+#: home/templates/datenschutz.html:20
+msgid "Kuckucksblumenstr. 23"
+msgstr "Kuckucksblumenstr. 23"
+
+#: home/templates/datenschutz.html:21
+msgid "80469 München"
+msgstr "80469 Munich"
+
+#: home/templates/datenschutz.html:23
+msgid "Telefon: +49 89 99954892"
+msgstr "Phone: +49 89 99954892"
+
+#: home/templates/datenschutz.html:25
+msgid "E-Mail: <a href=\"mailto:info@fraqment.com\">info@fraqment.com</a>"
+msgstr "Email: <a href=\"mailto:info@fraqment.com\">info@fraqment.com</a>"
+
+#: home/templates/datenschutz.html:27 home/templates/impressum.html:34
+msgid "Vertreten durch"
+msgstr "Represented by"
+
+#: home/templates/datenschutz.html:28
+msgid "Götz Hudelmaier"
+msgstr "Götz Hudelmaier"
+
+#: home/templates/datenschutz.html:29
+msgid "David Purviance"
+msgstr "David Purviance"
+
+#: home/templates/datenschutz.html:31 home/templates/impressum.html:38
+msgid "Kontakt"
+msgstr "Contact"
+
+#: home/templates/datenschutz.html:32
+msgid ""
+"E-Mail: <a href=\"mailto:kontakt@climate-quest.de\">kontakt@climate-"
+"quest.de</a>"
+msgstr ""
+"Do you have questions or need support? Just send an email to <a "
+"href=\"mailto:kontakt@climate-quest.de\">kontakt@climate-quest.de</a>!"
+
+#: home/templates/datenschutz.html:33
+msgid ""
+"Die datenschutzrechtliche Verantwortung liegt ausschließlich bei den oben "
+"genannten volljährigen\n"
+"        Verantwortlichen."
+msgstr ""
+"The data protection responsibility lies exclusively with the above-mentioned "
+"adult\n"
+"        responsible parties."
+
+#: home/templates/datenschutz.html:35
+msgid ""
+"Diese Datenschutzerklärung bezieht sich sowohl auf die Webseite als auch auf "
+"die mobile App."
+msgstr "This privacy policy applies to both the website and the mobile app."
+
+#: home/templates/datenschutz.html:37
+msgid "2. Allgemeine Hinweise zur Datenverarbeitung"
+msgstr "2. General Notes on Data Processing"
+
+#: home/templates/datenschutz.html:38
+msgid ""
+"Wir verarbeiten personenbezogene Daten der Nutzer nur, soweit dies zur "
+"Bereitstellung einer funktionsfähigen App\n"
+"        sowie unserer Inhalte und Leistungen erforderlich ist. Die "
+"Verarbeitung erfolgt auf Grundlage der\n"
+"        Datenschutz-Grundverordnung (DSGVO) und des Telekommunikation-"
+"Digitaldienste-Datenschutz-Gesetzes (TDDDG)."
+msgstr ""
+"We process users' personal data only to the extent necessary for providing a "
+"functional app\n"
+"        as well as our content and services. Processing is based on the\n"
+"        General Data Protection Regulation (GDPR) and the Telecommunications-"
+"Telemedia Data Protection Act (TDDDG)."
+
+#: home/templates/datenschutz.html:42
+msgid "3. Rechtsgrundlagen der Datenverarbeitung"
+msgstr "3. Legal Bases for Data Processing"
+
+#: home/templates/datenschutz.html:43
+msgid ""
+"Die Verarbeitung personenbezogener Daten erfolgt ausschließlich im Einklang "
+"mit der DSGVO auf folgenden\n"
+"        Rechtsgrundlagen:"
+msgstr ""
+"The processing of personal data is carried out exclusively in accordance "
+"with the GDPR on the following\n"
+"        legal bases:"
+
+#: home/templates/datenschutz.html:46
+msgid ""
+"<strong>Art. 6 Abs. 1 lit. a DSGVO (Einwilligung):</strong> für alle "
+"einwilligungspflichtigen Dienste,\n"
+"            insbesondere externe Inhalte wie YouTube, Google reCAPTCHA sowie "
+"vergleichbare Drittanbieterdienste.\n"
+"        "
+msgstr ""
+"<strong>Art. 6 para. 1 lit. a GDPR (Consent):</strong> for all services "
+"requiring consent,\n"
+"            in particular external content such as YouTube, Google reCAPTCHA "
+"and comparable third-party services.\n"
+"        "
+
+#: home/templates/datenschutz.html:49
+msgid ""
+"<strong>Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung):</strong> für die "
+"Registrierung, Bereitstellung von\n"
+"            Nutzerkonten und\n"
+"            Durchführung des Nutzungsvertrags.\n"
+"        "
+msgstr ""
+"<strong>Art. 6 para. 1 lit. b GDPR (Contract Performance):</strong> for "
+"registration, provision of\n"
+"            user accounts and\n"
+"            execution of the user agreement.\n"
+"        "
+
+#: home/templates/datenschutz.html:53
+msgid ""
+"<strong>Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse):</strong> für "
+"technisch notwendige Maßnahmen zur\n"
+"            Sicherstellung des Betriebs, zur IT-Sicherheit sowie zur "
+"Missbrauchs- und Fehlerprävention.\n"
+"        "
+msgstr ""
+"<strong>Art. 6 para. 1 lit. f GDPR (Legitimate Interest):</strong> for "
+"technically necessary measures to\n"
+"            ensure operation, IT security as well as abuse and error "
+"prevention.\n"
+"        "
+
+#: home/templates/datenschutz.html:57
+msgid ""
+"Eine Verarbeitung auf Grundlage berechtigter Interessen erfolgt nur, sofern "
+"keine überwiegenden Interessen oder\n"
+"        Grundrechte der betroffenen Personen entgegenstehen."
+msgstr ""
+"Processing based on legitimate interests is only carried out if no "
+"overriding interests or\n"
+"        fundamental rights of the affected persons oppose it."
+
+#: home/templates/datenschutz.html:61
+msgid "4. Eingesetzte Dienste und Drittanbieter"
+msgstr "4. Services and Third Parties Used"
+
+#: home/templates/datenschutz.html:63
+msgid "4.1 Google reCAPTCHA (Google LLC)"
+msgstr "4.1 Google reCAPTCHA (Google LLC)"
+
+#: home/templates/datenschutz.html:64
+msgid ""
+"Zur Absicherung gegen automatisierte Zugriffe verwenden wir Google "
+"reCAPTCHA. Dabei werden Nutzerdaten wie\n"
+"        IP-Adresse, Mausbewegungen und ggf. weitere technische Merkmale an "
+"Google übermittelt."
+msgstr ""
+"To protect against automated access, we use Google reCAPTCHA. User data such "
+"as\n"
+"        IP address, mouse movements and possibly other technical features "
+"are transmitted to Google."
+
+#: home/templates/datenschutz.html:66
+msgid "Die Einbindung erfolgt erst nach aktiver Zustimmung des Nutzers."
+msgstr "Integration only takes place after active user consent."
+
+#: home/templates/datenschutz.html:68
+msgid "4.2 Quill (Instructure Inc.)"
+msgstr "4.2 Quill (Instructure Inc.)"
+
+#: home/templates/datenschutz.html:69
+msgid ""
+"Wir verwenden Quill als Rich-Text-Editor zur Eingabe von Inhalten. Quill "
+"selbst verarbeitet keine\n"
+"        personenbezogenen Daten, jedoch können durch die Nutzung "
+"personenbezogene Inhalte eingegeben und gespeichert\n"
+"        werden."
+msgstr ""
+"We use Quill as a rich text editor for content input. Quill itself does not "
+"process any\n"
+"        personal data, however, personal content may be entered and stored "
+"through its use\n"
+"        ."
+
+#: home/templates/datenschutz.html:72
+msgid "Die Einbindung erfolgt lokal (siehe 4.4)."
+msgstr "Integration is done locally (see 4.4)."
+
+#: home/templates/datenschutz.html:73
+msgid ""
+"Datenschutzerklärung von Quill: <a href=\"https://quilljs.com/\" "
+"target=\"_blank\">https://quilljs.com/</a>"
+msgstr ""
+"Quill Privacy Policy: <a href=\"https://quilljs.com/\" "
+"target=\"_blank\">https://quilljs.com/</a>"
+
+#: home/templates/datenschutz.html:75
+msgid "4.3 Verwendung von localStorage"
+msgstr "4.3 Use of localStorage"
+
+#: home/templates/datenschutz.html:76
+msgid ""
+"Unsere App verwendet den sogenannten localStorage Ihres Browsers zur "
+"Speicherung bestimmter Einstellungen, um die\n"
+"        Benutzerfreundlichkeit zu verbessern und Ihre Einwilligungen zu "
+"dokumentieren."
+msgstr ""
+"Our app uses the so-called localStorage of your browser to store certain "
+"settings to improve\n"
+"        user-friendliness and document your consents."
+
+#: home/templates/datenschutz.html:78
+msgid "Zweck der Speicherung"
+msgstr "Purpose of Storage"
+
+#: home/templates/datenschutz.html:80
+msgid ""
+"Cookie-Einstellungen: Ihre Auswahl bezüglich der Verwendung von Cookies und "
+"Drittanbieterdiensten wird lokal\n"
+"            gespeichert, damit Sie bei erneutem Besuch der App nicht erneut "
+"gefragt werden.\n"
+"        "
+msgstr ""
+"Cookie settings: Your selection regarding the use of cookies and third-party "
+"services is stored locally\n"
+"            so that you are not asked again on subsequent visits to the "
+"app.\n"
+"        "
+
+#: home/templates/datenschutz.html:84
+msgid "Speicherdauer"
+msgstr "Storage Duration"
+
+#: home/templates/datenschutz.html:85
+msgid ""
+"Die im localStorage gespeicherten Daten bleiben gespeichert, bis Sie die "
+"Cookie-Einstellungen verändern oder den\n"
+"        localStorage bzw. den Browser Cache manuell löschen."
+msgstr ""
+"The data stored in localStorage remains stored until you change the cookie "
+"settings or manually delete the\n"
+"        localStorage or browser cache."
+
+#: home/templates/datenschutz.html:87
+msgid "Hinweis"
+msgstr "Note"
+
+#: home/templates/datenschutz.html:88
+msgid ""
+"localStorage speichert Daten ausschließlich auf Ihrem Endgerät. Es erfolgt "
+"keine automatische Übertragung dieser\n"
+"        Informationen an unsere Server oder Dritte."
+msgstr ""
+"localStorage stores data exclusively on your end device. There is no "
+"automatic transmission of this\n"
+"        information to our servers or third parties."
+
+#: home/templates/datenschutz.html:90
+msgid ""
+"Die Nutzung von localStorage erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f "
+"DSGVO, da sie für den technisch\n"
+"        fehlerfreien Betrieb der App erforderlich ist. Sofern Einwilligungen "
+"gespeichert werden, erfolgt dies auf\n"
+"        Grundlage von Art. 6 Abs. 1 lit. a DSGVO."
+msgstr ""
+"The use of localStorage is based on Art. 6 para. 1 lit. f GDPR, as it is "
+"necessary for the technically\n"
+"        error-free operation of the app. If consents are stored, this is "
+"done on\n"
+"        the basis of Art. 6 para. 1 lit. a GDPR."
+
+#: home/templates/datenschutz.html:94
+msgid "Übermittlung von Daten in Drittländer"
+msgstr "Transmission of Data to Third Countries"
+
+#: home/templates/datenschutz.html:95
+msgid ""
+"Bei der Nutzung bestimmter Dienste (z. B. YouTube oder Google reCAPTCHA) "
+"kann es zu einer Übermittlung\n"
+"        personenbezogener Daten an Server der Google LLC mit Sitz in den USA "
+"kommen."
+msgstr ""
+"When using certain services (e.g. YouTube or Google reCAPTCHA), personal "
+"data may be transmitted\n"
+"        to servers of Google LLC located in the USA."
+
+#: home/templates/datenschutz.html:97
+msgid ""
+"Google ist nach dem EU-U.S. Data Privacy Framework zertifiziert. Dennoch "
+"besteht bei Datenübermittlungen in die\n"
+"        USA ein Restrisiko, dass US-Behörden auf personenbezogene Daten "
+"zugreifen können, ohne dass Betroffenen\n"
+"        hiergegen effektive Rechtsbehelfe zur Verfügung stehen."
+msgstr ""
+"Google is certified under the EU-U.S. Data Privacy Framework. Nevertheless, "
+"there is a residual risk in data transmissions to the\n"
+"        USA that US authorities may access personal data without affected "
+"persons having\n"
+"        effective legal remedies available against this."
+
+#: home/templates/datenschutz.html:100
+msgid ""
+"Die Nutzung dieser Dienste erfolgt ausschließlich nach ausdrücklicher "
+"Einwilligung gemäß Art. 6 Abs. 1 lit. a\n"
+"        DSGVO."
+msgstr ""
+"The use of these services is only carried out after express consent in "
+"accordance with Art. 6 para. 1 lit. a\n"
+"        GDPR."
+
+#: home/templates/datenschutz.html:104
+msgid "5. Speicherdauer"
+msgstr "5. Storage Duration"
+
+#: home/templates/datenschutz.html:105
+msgid ""
+"Personenbezogene Daten werden nur so lange gespeichert, wie dies für die "
+"jeweiligen Zwecke erforderlich ist."
+msgstr ""
+"Personal data is only stored for as long as necessary for the respective "
+"purposes."
+
+#: home/templates/datenschutz.html:108
+msgid "Accountdaten: bis zur Löschung des Nutzerkontos."
+msgstr "Account data: until deletion of the user account."
+
+#: home/templates/datenschutz.html:109
+msgid ""
+"Inhalte (Artikel, Kommentare etc.): bis zur Löschung durch den Nutzer oder "
+"Beendigung des\n"
+"            Nutzungsverhältnisses,\n"
+"            sofern keine gesetzlichen Aufbewahrungspflichten bestehen.\n"
+"        "
+msgstr ""
+"Content (articles, comments etc.): until deletion by the user or termination "
+"of the\n"
+"            usage relationship,\n"
+"            unless legal retention obligations exist.\n"
+"        "
+
+#: home/templates/datenschutz.html:113
+msgid ""
+"Server-Logfiles: Server-Logfiles werden zunächst mit IP-Adresse erhoben und "
+"unmittelbar anonymisiert. Die\n"
+"            anonymisierten Protokolldaten werden für maximal 14 Tage "
+"gespeichert.\n"
+"        "
+msgstr ""
+"Server log files: Server log files are initially collected with IP address "
+"and immediately anonymized. The\n"
+"            anonymized log data is stored for a maximum of 14 days.\n"
+"        "
+
+#: home/templates/datenschutz.html:116
+msgid ""
+"Fehlerprotokolle: maximal 14 Tage, sofern keine sicherheitsrelevanten "
+"Vorfälle eine längere\n"
+"            Speicherung\n"
+"            erforderlich machen.\n"
+"        "
+msgstr ""
+"Error logs: maximum 14 days, unless security-related incidents require "
+"longer\n"
+"            storage\n"
+"            .\n"
+"        "
+
+#: home/templates/datenschutz.html:120
+msgid ""
+"Sicherungskopien (Backups): werden regelmäßig überschrieben und spätestens "
+"nach 30 Tagen gelöscht."
+msgstr ""
+"Backups: are regularly overwritten and deleted at the latest after 30 days."
+
+#: home/templates/datenschutz.html:122
+msgid "Gesetzliche Aufbewahrungspflichten bleiben unberührt."
+msgstr "Legal retention obligations remain unaffected."
+
+#: home/templates/datenschutz.html:124
+msgid "6. Betroffenenrechte"
+msgstr "6. Data Subject Rights"
+
+#: home/templates/datenschutz.html:125
+msgid "Nutzer haben das Recht auf:"
+msgstr "Users have the right to:"
+
+#: home/templates/datenschutz.html:127
+msgid "Auskunft über die gespeicherten Daten (Art. 15 DSGVO)"
+msgstr "Information about stored data (Art. 15 GDPR)"
+
+#: home/templates/datenschutz.html:128
+msgid "Berichtigung unrichtiger Daten (Art. 16 DSGVO)"
+msgstr "Correction of incorrect data (Art. 16 GDPR)"
+
+#: home/templates/datenschutz.html:129
+msgid "Löschung der Daten (Art. 17 DSGVO)"
+msgstr "Deletion of data (Art. 17 GDPR)"
+
+#: home/templates/datenschutz.html:130
+msgid "Einschränkung der Verarbeitung (Art. 18 DSGVO)"
+msgstr "Restriction of processing (Art. 18 GDPR)"
+
+#: home/templates/datenschutz.html:131
+msgid "Datenübertragbarkeit (Art. 20 DSGVO)"
+msgstr "Data portability (Art. 20 GDPR)"
+
+#: home/templates/datenschutz.html:132
+msgid "Widerruf erteilter Einwilligungen (Art. 7 Abs. 3 DSGVO)"
+msgstr "Revocation of granted consents (Art. 7 para. 3 GDPR)"
+
+#: home/templates/datenschutz.html:133
+msgid "Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)"
+msgstr "Objection to processing (Art. 21 GDPR)"
+
+#: home/templates/datenschutz.html:136
+msgid "7. Datenspeicherung"
+msgstr "7. Data Storage"
+
+#: home/templates/datenschutz.html:137
+msgid ""
+"Wir speichern personenbezogene Daten auf einem eigenen, passwortgeschützten "
+"Server in Nürnberg, Deutschland. Die\n"
+"        Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO "
+"zur Durchführung des Nutzungsvertrags sowie\n"
+"        Art. 6 Abs. 1 lit. f DSGVO zur Sicherstellung der IT-Sicherheit. Um\n"
+"        Datenverluste zu\n"
+"        vermeiden, werden Sicherungskopien der Daten in verschlüsselter Form "
+"bei Google Drive gespeichert. Mit Google\n"
+"        besteht ein Vertrag zur Auftragsverarbeitung gemäß Art. 28 DSGVO. "
+"Eine Übermittlung in die USA kann nicht\n"
+"        ausgeschlossen werden. Google ist nach dem EU-U.S. Data Privacy "
+"Framework zertifiziert."
+msgstr ""
+"We store personal data on our own password-protected server in Nuremberg, "
+"Germany. The\n"
+"        processing is based on Art. 6 para. 1 lit. b GDPR for the execution "
+"of the user agreement as well as\n"
+"        Art. 6 para. 1 lit. f GDPR to ensure IT security. To\n"
+"        avoid data loss, backups of the data are stored in encrypted form "
+"with Google Drive. With Google\n"
+"        there is a data processing agreement pursuant to Art. 28 GDPR. "
+"Transmission to the USA cannot be\n"
+"        excluded. Google is certified under the EU-U.S. Data Privacy "
+"Framework."
+
+#: home/templates/datenschutz.html:144
+msgid ""
+"Der Zugriff auf diese Daten ist auf berechtigte Personen beschränkt. Die "
+"Daten werden gelöscht, sobald der Zweck\n"
+"        der Speicherung entfällt und keine gesetzlichen "
+"Aufbewahrungspflichten bestehen."
+msgstr ""
+"Access to this data is restricted to authorized persons. The data is deleted "
+"as soon as the purpose\n"
+"        of storage ceases and no legal retention obligations exist."
+
+#: home/templates/datenschutz.html:147
+msgid "8. Hinweise zur Nutzung des Standorts"
+msgstr "8. Notes on Location Usage"
+
+#: home/templates/datenschutz.html:149
+#, python-format
+msgid ""
+"Zur Bereitstellung der <a href=\"%(track_actions)s\">Tracking-Funktion</a> "
+"ist der Zugriff auf\n"
+"        Standortdaten Ihres Endgeräts erforderlich. Die\n"
+"        Verarbeitung der Standortdaten erfolgt ausschließlich lokal auf "
+"Ihrem Endgerät (Frontend) und dient\n"
+"        ausschließlich der Berechnung der zurückgelegten Distanz."
+msgstr ""
+"To provide the <a href=\"%(track_actions)s\">tracking function</a>, access "
+"to\n"
+"        location data of your end device is required. The\n"
+"        processing of location data takes place exclusively locally on your "
+"end device (frontend) and serves\n"
+"        exclusively the calculation of the distance traveled."
+
+#: home/templates/datenschutz.html:154
+msgid ""
+"Eine Übermittlung konkreter Standortdaten an unsere Server oder an Dritte "
+"findet nicht statt. Die Standortdaten\n"
+"        werden ausschließlich temporär im Arbeitsspeicher Ihres Endgeräts "
+"verarbeitet und nicht dauerhaft\n"
+"        gespeichert."
+msgstr ""
+"No transmission of specific location data to our servers or third parties "
+"takes place. The location data\n"
+"        is processed exclusively temporarily in the memory of your end "
+"device and not permanently\n"
+"        stored."
+
+#: home/templates/datenschutz.html:158
+msgid ""
+"Die im Rahmen der lokalen Verarbeitung berechnete zurückgelegte Distanz wird "
+"an unsere Server übermittelt und\n"
+"        dort personenbezogen gespeichert, um Ihnen die Nutzung der Tracking-"
+"Funktion sowie die Anzeige Ihrer\n"
+"        zurückgelegten Distanz zu ermöglichen. Eine Speicherung konkreter "
+"Standortdaten erfolgt zu keinem Zeitpunkt."
+msgstr ""
+"The distance traveled calculated as part of the local processing is "
+"transmitted to our servers and\n"
+"        stored there in a personalized manner to enable you to use the "
+"tracking function as well as the display of your\n"
+"        distance traveled. Storage of specific location data does not take "
+"place at any time."
+
+#: home/templates/datenschutz.html:162
+msgid ""
+"Die Speicherung der personenbezogenen Distanzdaten erfolgt bis zur manuellen "
+"Löschung durch Sie oder bis zur\n"
+"        Löschung Ihres Nutzerkontos."
+msgstr ""
+"The storage of the personalized distance data takes place until manual "
+"deletion by you or until the\n"
+"        deletion of your user account."
+
+#: home/templates/datenschutz.html:165
+msgid ""
+"Rechtsgrundlage für die Verarbeitung der Standortdaten ist Ihre Einwilligung "
+"gemäß Art. 6 Abs. 1 lit. a DSGVO.\n"
+"        Die Speicherung der Distanzdaten erfolgt auf Grundlage von Art. 6 "
+"Abs. 1 lit. b DSGVO, soweit dies zur\n"
+"        Bereitstellung der Tracking-Funktion erforderlich ist."
+msgstr ""
+"The legal basis for the processing of location data is your consent in "
+"accordance with Art. 6 para. 1 lit. a GDPR.\n"
+"        The storage of distance data is based on Art. 6 para. 1 lit. b GDPR, "
+"to the extent that this is necessary for\n"
+"        providing the tracking function."
+
+#: home/templates/datenschutz.html:169
+msgid ""
+"Sie können Ihre Einwilligung jederzeit über die Einstellungen Ihres "
+"Endgeräts oder Browsers widerrufen."
+msgstr ""
+"You can revoke your consent at any time via the settings of your end device "
+"or browser."
+
+#: home/templates/datenschutz.html:172
+msgid "9. Datenverarbeitung bei Nutzung der App"
+msgstr "9. Data Processing When Using the App"
+
+#: home/templates/datenschutz.html:173
+msgid ""
+"Beim Aufruf der App werden technisch notwendige Zugriffsdaten verarbeitet. "
+"Dazu gehören Datum und Uhrzeit des\n"
+"        Zugriffs, aufgerufene Seiten, Browsertyp, Betriebssystem sowie "
+"anonymisierte IP-Adressen."
+msgstr ""
+"When calling up the app, technically necessary access data is processed. "
+"This includes date and time of\n"
+"        access, pages called up, browser type, operating system as well as "
+"anonymized IP addresses."
+
+#: home/templates/datenschutz.html:175
+msgid ""
+"Die IP-Adresse wird unmittelbar nach Erhebung anonymisiert, sodass ein "
+"Personenbezug nicht mehr hergestellt\n"
+"        werden kann."
+msgstr ""
+"The IP address is anonymized immediately after collection, so that a "
+"personal reference can no longer be established\n"
+"        ."
+
+#: home/templates/datenschutz.html:177
+msgid ""
+"Zur Fehleranalyse und Sicherstellung der Funktionsfähigkeit der App werden "
+"zusätzlich technische Protokolldaten\n"
+"        (z. B. Zeitpunkt, ausgeführte Aktion, Fehlermeldungen) gespeichert. "
+"Diese Fehlerprotokolle enthalten keine\n"
+"        IP-Adressen und keine unmittelbar identifizierenden "
+"personenbezogenen Daten."
+msgstr ""
+"For error analysis and ensuring the functionality of the app, additional "
+"technical log data\n"
+"        (e.g. time, executed action, error messages) is stored. These error "
+"logs do not contain any\n"
+"        IP addresses and no directly identifying personal data."
+
+#: home/templates/datenschutz.html:180
+msgid ""
+"Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO "
+"(berechtigtes Interesse an IT-Sicherheit\n"
+"        und Stabilität der Plattform)."
+msgstr ""
+"The processing is based on Art. 6 para. 1 lit. f GDPR (legitimate interest "
+"in IT security\n"
+"        and stability of the platform)."
+
+#: home/templates/datenschutz.html:184
+msgid "10. Beschwerderecht bei der Aufsichtsbehörde"
+msgstr "10. Right to Complain to the Supervisory Authority"
+
+#: home/templates/datenschutz.html:185
+msgid ""
+"Betroffene Personen haben das Recht, sich bei einer "
+"Datenschutzaufsichtsbehörde zu beschweren, wenn sie der\n"
+"        Ansicht sind, dass die Verarbeitung ihrer personenbezogenen Daten "
+"gegen die DSGVO verstößt."
+msgstr ""
+"Affected persons have the right to complain to a data protection supervisory "
+"authority if they\n"
+"        believe that the processing of their personal data violates the GDPR."
+
+#: home/templates/datenschutz.html:187
+msgid ""
+"Zuständig ist in der Regel die Datenschutzaufsichtsbehörde des Bundeslandes "
+"Ihres Wohnsitzes."
+msgstr ""
+"The competent authority is usually the data protection supervisory authority "
+"of the federal state of your place of residence."
+
+#: home/templates/datenschutz.html:189
+msgid "Besondere Hinweise zum Schutz von Kindern und Jugendlichen"
+msgstr "Special Notes on the Protection of Children and Young People"
+
+#: home/templates/datenschutz.html:190
+msgid ""
+"Diese App richtet sich auch an junge Nutzerinnen und Nutzer. Der Schutz "
+"personenbezogener Daten von Kindern und\n"
+"        Jugendlichen hat\n"
+"        für uns besondere Bedeutung."
+msgstr ""
+"This app is also aimed at young users. The protection of personal data of "
+"children and\n"
+"        young people has\n"
+"        special importance for us."
+
+#: home/templates/datenschutz.html:193
+msgid ""
+"Sofern für bestimmte Funktionen oder Dienste eine Einwilligung erforderlich "
+"ist, darf diese nur durch eine\n"
+"        volljährige oder erziehungsberechtigte Person erteilt werden. Nutzer "
+"bestätigen im Rahmen der Einwilligung,\n"
+"        hierzu berechtigt zu sein."
+msgstr ""
+"If consent is required for certain functions or services, it may only be "
+"given by an\n"
+"        adult or person with parental authority. Users confirm in the course "
+"of consent,\n"
+"        to be authorized to do so."
+
+#: home/templates/datenschutz.html:196
+msgid ""
+"Die datenschutzrechtliche Verantwortung für die App liegt bei einer "
+"volljährigen Person. Minderjährige handeln\n"
+"        nicht als Verantwortliche im Sinne der DSGVO."
+msgstr ""
+"The data protection responsibility for the app lies with an adult person. "
+"Minors do not act\n"
+"        as responsible parties within the meaning of the GDPR."
+
+#: home/templates/datenschutz.html:199
+msgid "Kontakt für Datenschutzfragen"
+msgstr "Contact for Data Protection Questions"
+
+#: home/templates/datenschutz.html:201
+#, python-format
+msgid ""
+"Für Datenschutzanliegen wenden Sie sich bitte an den oben angegebenen "
+"Kontakt (siehe auch <a\n"
+"            href=\"%(impressum)s\">Impressum</a>)"
+msgstr ""
+"For data protection concerns, please contact the contact details given above "
+"(see also <a\n"
+"            href=\"%(impressum)s\">Imprint</a>)"
+
+#: home/templates/datenschutz.html:204
+msgid "Änderungen dieser Datenschutzerklärung"
+msgstr "Changes to this Legal Notice"
+
+#: home/templates/datenschutz.html:206
+#, python-format
+msgid ""
+"Wir behalten uns vor, diese Datenschutzerklärung anzupassen, um sie an "
+"geänderte rechtliche Rahmenbedingungen\n"
+"        oder bei Änderungen der Dienstleistung anzupassen. Die aktuelle "
+"Version ist stets unter <a\n"
+"                href=\"%(datenschutz)s\">dieser URL</a> zu finden."
+msgstr ""
+"We reserve the right to update this legal notice to reflect changes in legal "
+"requirements or modifications to our services. The current version can "
+"always be found at <a href=\"%(datenschutz)s\">this URL</a>."
+
+#: home/templates/feedback.html:7
+msgid ""
+"Gib uns Feedback zu ClimateQuest! Hier kannst du uns deine Meinung, "
+"Verbesserungsvorschläge oder Fehlerberichte mitteilen, damit wir "
+"ClimateQuest weiter verbessern können."
+msgstr ""
+"Give us feedback on ClimateQuest! Here you can share your opinion, "
+"suggestions for improvement or bug reports so that we can continue to "
+"improve ClimateQuest."
+
+#: home/templates/feedback.html:10
+msgid "Feedback - ClimateQuest"
+msgstr "Feedback - ClimateQuest"
+
+#: home/templates/feedback.html:13 home/templates/impressum.html:21
+msgid "Feedback"
+msgstr "Feedback"
+
+#: home/templates/feedback.html:19
+msgid ""
+"Feedback kannst du uns jederzeit mitteilen. Hierfür gibt es folgende "
+"Möglichkeiten:"
+msgstr ""
+"You can share feedback with us at any time. Here are the available options:"
+
+#: home/templates/feedback.html:21
+msgid "Per Mail:"
+msgstr "By email:"
+
+#: home/templates/feedback.html:22
+msgid "Per Feedback-Formular:"
+msgstr "Via feedback form:"
+
+#: home/templates/feedback.html:22
+msgid "Feedback-Formular"
+msgstr "Feedback Form"
+
+#: home/templates/feedback.html:26
+#, python-format
+msgid ""
+"Wenn du die App testen möchtest, hilfst du uns damit sehr, denn so können "
+"wir von Fehlern erfahren! Am besten verwendest du dafür folgendes Feedback-"
+"Formular und sendest es uns ausgefüllt zurück: <a href=\"%(testbogen_url)s\" "
+"download>Download</a>"
+msgstr ""
+"If you'd like to test the app, you'd be helping us tremendously — it's how "
+"we find out about bugs! The best way to do this is to use the following "
+"feedback form and send it back to us completed: <a "
+"href=\"%(testbogen_url)s\" download>Download</a>"
+
+#: home/templates/home.html:10
+msgid "Startseite"
+msgstr "Home"
+
+#: home/templates/home.html:180
+msgid "Zum Dashboard"
+msgstr "To the dashboard"
+
+#: home/templates/home.html:184
+msgid "ClimateQuest - Motivation für mehr Klimaschutz"
+msgstr "ClimateQuest - Motivation for a Better Climate"
+
+#: home/templates/home.html:250
+msgid "Jetzt registrieren!"
+msgstr "Sign up now!"
+
+#: home/templates/home.html:254
+msgid "Übersicht"
+msgstr "Overview"
+
+#: home/templates/home.html:263
+msgid "registrierte Nutzer hat diese Plattform bereits."
+msgstr "users have already registered on this platform."
+
+#: home/templates/home.html:268
+msgid "Klimapunkte wurden von all diesen Nutzern zusammen bereits gesammelt."
+msgstr ""
+"climate points have already been collected by all these users combined."
+
+#: home/templates/home.html:272
+msgid ""
+"Weil jeder Klimapunkt ungefähr für <b id=\"co2_per_klimapunkt\">1 kg</b> "
+"eingespartes CO₂ steht, wurden dadurch insgesamt"
+msgstr ""
+"Since each climate point represents approximately <b "
+"id=\"co2_per_klimapunkt\">1 kg</b> of CO₂ saved, a total of"
+
+#: home/templates/home.html:274
+msgid "Tonnen CO2e eingespart."
+msgstr "tonnes of CO2e have been saved."
+
+#: home/templates/home.html:278
+msgid "Außerdem wurden insgesamt"
+msgstr "In addition, a total of"
+
+#: home/templates/home.html:280
+msgid "Bäume gepflanzt."
+msgstr "trees have been planted."
+
+#: home/templates/home.html:286
+msgid "Keine Lust, ClimateQuest als Webseite zu verwenden?"
+msgstr "Not keen on using ClimateQuest as a website?"
+
+#: home/templates/home.html:286
+msgid "ClimateQuest als App downloaden"
+msgstr "Download ClimateQuest as an app"
+
+#: home/templates/home.html:297
+msgid "Bewerten Sie uns auf Trustpilot"
+msgstr "Rate us on Trustpilot"
+
+#: home/templates/home.html:310
+msgid "Wie ClimateQuest funktioniert"
+msgstr "How ClimateQuest works"
+
+#: home/templates/home.html:314
+msgid "Aktion hinzufügen"
+msgstr "Add Action"
+
+#: home/templates/home.html:318
+msgid "Family gründen"
+msgstr "Create a Family"
+
+#: home/templates/home.html:321
+msgid "Family beitreten"
+msgstr "Join a Family"
+
+#: home/templates/impressum.html:4
+msgid "Das Impressum von ClimateQuest."
+msgstr "The legal notice of ClimateQuest."
+
+#: home/templates/impressum.html:6 home/templates/impressum.html:9
+msgid "Impressum"
+msgstr "Legal Notice"
+
+#: home/templates/impressum.html:16 home/templates/support.html:11
+msgid "Support"
+msgstr "Support"
+
+#: home/templates/impressum.html:30
+msgid "Telefon:"
+msgstr "Phone:"
+
+#: home/templates/impressum.html:32 home/templates/impressum.html:39
+msgid "E-Mail:"
+msgstr "Email:"
+
+#: home/templates/impressum.html:41
+msgid "Haftungsausschluss"
+msgstr "Disclaimer"
+
+#: home/templates/impressum.html:42
+msgid ""
+"Der Webseitenbetreiber übernimmt keinerlei Haftung für den Wahrheitsgehalt "
+"der hochgeladenen Artikel, Events und Forumsbeiträge, da sie von Nutzern "
+"erstellt wurden. Sollten diese nicht mit Nutzungsbedingungen übereinstimmen "
+"oder falsch sein, können Sie dies jederzeit unter Angabe der URL sowie einer "
+"Begründung unter kontakt@climate-quest.de melden, woraufhin der Inhalt "
+"geprüft und ggf. gelöscht wird. Dies kann allerdings einige Zeit dauern."
+msgstr ""
+"The website operator assumes no liability for the accuracy of uploaded "
+"articles, events, and forum posts, as they are created by users. If any "
+"content does not comply with the terms of use or is incorrect, you may "
+"report it at any time by providing the URL and a reason to kontakt@climate-"
+"quest.de, after which the content will be reviewed and removed if necessary. "
+"Please note that this may take some time."
+
+#: home/templates/impressum.html:44
+msgid "Quellen"
+msgstr "Sources"
+
+#: home/templates/impressum.html:46
+msgid "Emojis:"
+msgstr "Emojis:"
+
+#: home/templates/impressum.html:46
+msgid "lizenziert unter"
+msgstr "licensed under"
+
+#: home/templates/impressum.html:46
+msgid "Es wurden keine Änderungen vorgenommen"
+msgstr "No changes were made"
+
+#: home/templates/impressum.html:47
+msgid "Bilder:"
+msgstr "Images:"
+
+#: home/templates/impressum.html:47
+msgid "und selbst geschossen"
+msgstr "and taken ourselves"
+
+#: home/templates/impressum.html:50
+msgid "Änderungen dieses Impressums"
+msgstr "Changes to this Legal Notice"
+
+#: home/templates/impressum.html:51
+msgid ""
+"Wir behalten uns vor, dieses Impressum anzupassen, um es an geänderte "
+"rechtliche Rahmenbedingungen oder bei Änderungen der Dienstleistung "
+"anzupassen. Die aktuelle Version ist stets unter"
+msgstr ""
+"We reserve the right to update this legal notice to reflect changes in legal "
+"requirements or modifications to our services. The current version can "
+"always be found at"
+
+#: home/templates/impressum.html:51
+msgid "dieser URL"
+msgstr "this URL"
+
+#: home/templates/impressum.html:51
+msgid "zu finden."
+msgstr "."
+
+#: home/templates/nutzungsbedingungen.html:5
+msgid ""
+"Die Nutzungsbedingungen von ClimateQuest sollen sicherstellen, dass die "
+"Plattform nicht missbraucht wird, sondern nur dem Ziel folgt, dem Klima "
+"tatsächlich zu helfen."
+msgstr ""
+"The terms of use of ClimateQuest are intended to ensure that the platform is "
+"not misused, but only follows the goal of actually helping the climate."
+
+#: home/templates/nutzungsbedingungen.html:7
+#: home/templates/nutzungsbedingungen.html:10
+msgid "Nutzungsbedingungen"
+msgstr "Terms of Use"
+
+#: home/templates/nutzungsbedingungen.html:17
+msgid "1. Allgemeines"
+msgstr "1. General"
+
+#: home/templates/nutzungsbedingungen.html:18
+msgid ""
+"Diese App bietet registrierten Nutzern die Möglichkeit, eigene Artikel, "
+"Fragen, Antworten, Kommentare\n"
+"        und Events zu veröffentlichen sowie Aktionen hinzuzufügen und dafür "
+"Punkte zu erhalten. Die Nutzung der App\n"
+"        setzt die Einhaltung dieser Nutzungsbedingungen voraus. Bei\n"
+"        Verstößen behalten wir uns das Recht vor, Nutzerkonten zu sperren "
+"oder zu löschen."
+msgstr ""
+"This app offers registered users the opportunity to publish their own "
+"articles, questions, answers, comments\n"
+"        and events as well as add actions and receive points for them. Use "
+"of the app\n"
+"        requires compliance with these terms of use. In case of\n"
+"        violations, we reserve the right to block or delete user accounts."
+
+#: home/templates/nutzungsbedingungen.html:22
+msgid ""
+"Mit der Registrierung kommt ein unentgeltlicher Nutzungsvertrag zwischen dem "
+"Nutzer und dem Betreiber zustande.\n"
+"        Ein Anspruch auf Registrierung oder dauerhafte Nutzung der Plattform "
+"besteht nicht."
+msgstr ""
+"By registering, a free user agreement is concluded between the user and the "
+"operator.\n"
+"        There is no entitlement to registration or permanent use of the "
+"platform."
+
+#: home/templates/nutzungsbedingungen.html:24
+msgid ""
+"Der Nutzer kann seinen Account jederzeit ohne Angabe von Gründen löschen.\n"
+"        Der Betreiber kann den Nutzungsvertrag ordentlich mit einer Frist "
+"von 2 Wochen ab Zugang der Kündigungserklärung\n"
+"        in Textform (z. B. per E-Mail) kündigen.\n"
+"        Das Recht zur\n"
+"        außerordentlichen Kündigung aus wichtigem Grund (§ 314 BGB) bleibt "
+"unberührt."
+msgstr ""
+"The user can delete their account at any time without giving reasons.\n"
+"        The operator can terminate the user agreement with a notice period "
+"of 2 weeks from receipt of the termination declaration\n"
+"        in text form (e.g. by e-mail).\n"
+"        The right to\n"
+"        extraordinary termination for good cause (§ 314 BGB) remains "
+"unaffected."
+
+#: home/templates/nutzungsbedingungen.html:29
+msgid "<strong>Alle Inhalte müssen mit Klimaschutz zu tun haben.</strong>"
+msgstr "<strong>All content must be related to climate protection.</strong>"
+
+#: home/templates/nutzungsbedingungen.html:30
+msgid ""
+"Beim Hochladen von Inhalten sind die Urheberrechte Dritter zu beachten. Es "
+"dürfen keine Inhalte hochgeladen\n"
+"        werden, für die nicht die entsprechenden Nutzungsrechte vorliegen.\n"
+"        Mit dem Hochladen von Inhalten räumt der Nutzer dem Betreiber ein "
+"zeitlich, räumlich und inhaltlich\n"
+"        unbeschränktes, unentgeltliches, einfaches Nutzungsrecht an den "
+"Inhalten ein. Dieses umfasst insbesondere das\n"
+"        Recht zur\n"
+"        Speicherung, Vervielfältigung, Veröffentlichung, öffentlichen "
+"Zugänglichmachung, Bearbeitung, Verwendung im\n"
+"        Rahmen der App und verbundener Angebote sowie zur technischen "
+"Anpassung im Rahmen der Plattform. Eine\n"
+"        Übertragung an Dritte erfolgt nur, soweit dies zur\n"
+"        Bereitstellung der Plattform erforderlich ist. Das Urheberrecht "
+"verbleibt beim jeweiligen Nutzer."
+msgstr ""
+"When uploading content, the copyrights of third parties must be observed. No "
+"content may be uploaded\n"
+"        for which the corresponding usage rights are not available.\n"
+"        By uploading content, the user grants the operator a temporally, "
+"spatially and content-wise\n"
+"        unlimited, free, simple right of use to the content. This includes "
+"in particular the\n"
+"        right to\n"
+"        storage, reproduction, publication, public accessibility, editing, "
+"use within the\n"
+"        framework of the app and related offers as well as technical "
+"adaptation within the framework of the platform. A\n"
+"        transfer to third parties only takes place to the extent that this "
+"is necessary for\n"
+"        providing the platform. Copyright remains with the respective user."
+
+#: home/templates/nutzungsbedingungen.html:39
+msgid ""
+"Sofern Nutzer noch nicht volljährig sind, dürfen sie die App nur nutzen, "
+"wenn eine erziehungsberechtigte\n"
+"        Person der Geltung dieser Nutzungsbedingungen zugestimmt hat. Mit "
+"der Nutzung bestätigen Nutzer, hierzu\n"
+"        berechtigt zu sein."
+msgstr ""
+"If users are not yet of legal age, they may only use the app if a person "
+"with parental authority\n"
+"        has consented to the validity of these terms of use. By using the "
+"app, users confirm that they are\n"
+"        authorized to do so."
+
+#: home/templates/nutzungsbedingungen.html:42
+msgid ""
+"Inhalte und Bilder dürfen nicht gegen geltendes Recht der Bundesrepublik "
+"Deutschland verstoßen. Unzulässig sind\n"
+"        insbesondere\n"
+"        strafbare Inhalte, rassistische, antisemitische, diskriminierende, "
+"pornografische oder gewaltverherrlichende\n"
+"        Inhalte sowie Inhalte, die Rechte Dritter verletzen."
+msgstr ""
+"Content and images must not violate applicable law in the Federal Republic "
+"of Germany. Prohibited are\n"
+"        in particular\n"
+"        criminal content, racist, anti-Semitic, discriminatory, pornographic "
+"or glorifying violence\n"
+"        content as well as content that violates the rights of third parties."
+
+#: home/templates/nutzungsbedingungen.html:46
+msgid ""
+"Es gilt das Recht der Bundesrepublik Deutschland. Für Kaufleute sowie für "
+"Nutzer ohne allgemeinen Gerichtsstand\n"
+"        in Deutschland ist ausschließlicher Gerichtsstand der Sitz des "
+"Betreibers."
+msgstr ""
+"The law of the Federal Republic of Germany applies. For merchants as well as "
+"for users without general jurisdiction\n"
+"        in Germany, the exclusive place of jurisdiction is the registered "
+"office of the operator."
+
+#: home/templates/nutzungsbedingungen.html:48
+msgid ""
+"Aus Gründen der besseren Lesbarkeit wird die männliche Form verwendet; sie "
+"gilt gleichermaßen für alle\n"
+"        Geschlechter."
+msgstr ""
+"For better readability, the masculine form is used; it applies equally to "
+"all\n"
+"        genders."
+
+#: home/templates/nutzungsbedingungen.html:51
+msgid "2. Nutzerpflichten"
+msgstr "2. User Obligations"
+
+#: home/templates/nutzungsbedingungen.html:53
+msgid "2.1 Aktionen"
+msgstr "2.1 Actions"
+
+#: home/templates/nutzungsbedingungen.html:55
+msgid "Die Angaben müssen nach bestem Wissen und Gewissen gemacht werden."
+msgstr ""
+"The information must be provided to the best of one's knowledge and belief."
+
+#: home/templates/nutzungsbedingungen.html:58
+msgid "2.2 Events"
+msgstr "2.2 Events"
+
+#: home/templates/nutzungsbedingungen.html:60
+msgid "Das Event muss ernsthaft geplant sein."
+msgstr "The event must be seriously planned."
+
+#: home/templates/nutzungsbedingungen.html:61
+msgid "Fiktive oder erfundene Events sind nicht erlaubt."
+msgstr "Fictional or invented events are not allowed."
+
+#: home/templates/nutzungsbedingungen.html:62
+msgid ""
+"Die Erstellerin oder der Ersteller muss beabsichtigen, selbst an dem Event "
+"teilzunehmen."
+msgstr "The creator must intend to participate in the event themselves."
+
+#: home/templates/nutzungsbedingungen.html:63
+msgid ""
+"Events dürfen keine Werbung, Affiliate-Links oder ähnliche kommerzielle "
+"Absichten und Inhalte enthalten.\n"
+"        "
+msgstr ""
+"Events must not contain advertising, affiliate links or similar commercial "
+"intentions and content.\n"
+"        "
+
+#: home/templates/nutzungsbedingungen.html:67
+msgid "2.3 Artikel"
+msgstr "2.3 Articles"
+
+#: home/templates/nutzungsbedingungen.html:69
+msgid ""
+"Aussagen sollen durch geeignete und nachvollziehbare Quellen belegt werden, "
+"welche im Artikel auch genau\n"
+"            angegeben werden müssen (z.B. Internetseite, Europäische "
+"Kommission, Folgen des\n"
+"            Klimawandels, https://climate.ec.europa.eu/climate-change/"
+"consequences-climate-change_de, zuletzt aufgerufen: 06.03.2026)\n"
+"        "
+msgstr ""
+"Statements should be supported by suitable and traceable sources, which must "
+"also be specified exactly in the article\n"
+"            (e.g. website, European Commission, Consequences of\n"
+"            climate change, https://climate.ec.europa.eu/climate-change/"
+"consequences-climate-change_de, last accessed: 06.03.2026)\n"
+"        "
+
+#: home/templates/nutzungsbedingungen.html:73
+msgid ""
+"Artikel dürfen keine Werbung, Affiliate-Links oder ähnliche kommerzielle "
+"Absichten und Inhalte enthalten.\n"
+"        "
+msgstr ""
+"Articles must not contain advertising, affiliate links or similar commercial "
+"intentions and content.\n"
+"        "
+
+#: home/templates/nutzungsbedingungen.html:75
+#: home/templates/nutzungsbedingungen.html:84
+msgid "Spekulative, irreführende oder beleidigende Inhalte sind untersagt."
+msgstr "Speculative, misleading or offensive content is prohibited."
+
+#: home/templates/nutzungsbedingungen.html:78
+msgid "2.4 Forum"
+msgstr "2.4 Forum"
+
+#: home/templates/nutzungsbedingungen.html:80
+msgid ""
+"Fragen müssen ernst gemeint sein und einen sachlichen Hintergrund haben."
+msgstr "Questions must be serious and have a factual background."
+
+#: home/templates/nutzungsbedingungen.html:81
+msgid ""
+"Antworten müssen nach bestem Wissen und Gewissen erfolgen und dürfen nicht "
+"vorsätzlich falsch oder\n"
+"            irreführend sein.\n"
+"        "
+msgstr ""
+"Answers must be given to the best of one's knowledge and belief and must not "
+"be deliberately false or\n"
+"            misleading.\n"
+"        "
+
+#: home/templates/nutzungsbedingungen.html:85
+msgid ""
+"Forumsbeiträge oder -antworten dürfen keine Werbung, Affiliate-Links oder "
+"ähnliche kommerzielle Absichten\n"
+"            und Inhalte enthalten.\n"
+"        "
+msgstr ""
+"Forum posts or answers must not contain advertising, affiliate links or "
+"similar commercial intentions\n"
+"            and content.\n"
+"        "
+
+#: home/templates/nutzungsbedingungen.html:90
+msgid "2.5 Petitionen"
+msgstr "2.5 Petitions"
+
+#: home/templates/nutzungsbedingungen.html:92
+msgid "Petitionen müssen einen sachlichen Bezug zum Klimaschutz haben."
+msgstr "Petitions must have a factual relation to climate protection."
+
+#: home/templates/nutzungsbedingungen.html:93
+msgid ""
+"Die dargestellten Sachverhalte müssen nach bestem Wissen wahrheitsgemäß sein."
+msgstr "The facts presented must be truthful to the best of one's knowledge."
+
+#: home/templates/nutzungsbedingungen.html:94
+msgid ""
+"Unzulässig sind insbesondere falsche Tatsachenbehauptungen, Schmähkritik "
+"oder Aufrufe zu rechtswidrigem\n"
+"            Verhalten.\n"
+"        "
+msgstr ""
+"Prohibited in particular are false factual claims, defamation or calls to "
+"illegal\n"
+"            behavior.\n"
+"        "
+
+#: home/templates/nutzungsbedingungen.html:97
+msgid ""
+"Der Ersteller ist für Inhalt und rechtliche Zulässigkeit der Petition "
+"verantwortlich."
+msgstr ""
+"The creator is responsible for the content and legal admissibility of the "
+"petition."
+
+#: home/templates/nutzungsbedingungen.html:101
+msgid "2.6 Kommentare"
+msgstr "2.6 Comments"
+
+#: home/templates/nutzungsbedingungen.html:103
+msgid "Kommentare müssen konstruktiv und respektvoll formuliert sein."
+msgstr "Comments must be formulated constructively and respectfully."
+
+#: home/templates/nutzungsbedingungen.html:104
+msgid ""
+"Beleidigende, diskriminierende oder herabwürdigende Inhalte sind strikt "
+"untersagt."
+msgstr ""
+"Offensive, discriminatory or derogatory content is strictly prohibited."
+
+#: home/templates/nutzungsbedingungen.html:105
+msgid ""
+"Kommentare dürfen keine Werbung, Affiliate-Links oder ähnliche kommerzielle "
+"Absichten und Inhalte enthalten.\n"
+"        "
+msgstr ""
+"Comments must not contain advertising, affiliate links or similar commercial "
+"intentions and content.\n"
+"        "
+
+#: home/templates/nutzungsbedingungen.html:111
+msgid "3. Moderation und Sanktionen"
+msgstr "3. Moderation and Sanctions"
+
+#: home/templates/nutzungsbedingungen.html:112
+msgid ""
+"Bei Verstößen gegen diese Nutzungsbedingungen behalten wir uns folgende "
+"Maßnahmen vor:"
+msgstr ""
+"In case of violations of these terms of use, we reserve the following "
+"measures:"
+
+#: home/templates/nutzungsbedingungen.html:114
+msgid "Löschung einzelner Inhalte"
+msgstr "Deletion of individual content"
+
+#: home/templates/nutzungsbedingungen.html:115
+msgid "Verwarnung des Nutzers"
+msgstr "Warning of the user"
+
+#: home/templates/nutzungsbedingungen.html:116
+msgid "Sperrung oder vollständige Löschung des Nutzerkontos"
+msgstr "Blocking or complete deletion of the user account"
+
+#: home/templates/nutzungsbedingungen.html:118
+msgid ""
+"Nutzer können bei Verstoß gegen die Nutzungsbedingungen jederzeit von "
+"anderen Nutzern auf deren Nutzerseite\n"
+"        gemeldet\n"
+"        werden. Meldungen werden geprüft. Über Maßnahmen entscheidet der "
+"Betreiber nach pflichtgemäßem Ermessen. Ein\n"
+"        Anspruch auf eine bestimmte Maßnahme besteht nicht. Das unbegründete "
+"Melden anderer Nutzer stellt allerdings\n"
+"        auch\n"
+"        einen Verstoß gegen die Nutzungsbedingungen\n"
+"        dar und kann entsprechend geahndet werden."
+msgstr ""
+"Users can be reported by other users on their user page at any time in case "
+"of violation of the terms of use\n"
+"        .\n"
+"        Reports are checked. The operator decides on measures at its "
+"discretion. There is no\n"
+"        entitlement to a specific measure. However, unfounded reporting of "
+"other users also constitutes\n"
+"        a\n"
+"        violation of the terms of use\n"
+"        and can be sanctioned accordingly."
+
+#: home/templates/nutzungsbedingungen.html:125
+msgid ""
+"Maßnahmen erfolgen unter Berücksichtigung der Schwere, Häufigkeit und des "
+"Verschuldensgrades des Verstoßes sowie\n"
+"        unter Wahrung der Verhältnismäßigkeit."
+msgstr ""
+"Measures are taken taking into account the severity, frequency and degree of "
+"culpability of the violation as well as\n"
+"        observing proportionality."
+
+#: home/templates/nutzungsbedingungen.html:130
+msgid "Haftung für Nutzerinhalte"
+msgstr "Liability for User Content"
+
+#: home/templates/nutzungsbedingungen.html:131
+msgid ""
+"Für Inhalte, die von Nutzern erstellt und veröffentlicht werden, ist "
+"ausschließlich der jeweilige Nutzer\n"
+"        verantwortlich. Der Betreiber macht sich diese Inhalte nicht zu "
+"eigen. Der Betreiber ist nicht verpflichtet, von\n"
+"        Nutzern eingestellte Inhalte vorab zu prüfen."
+msgstr ""
+"For content created and published by users, the respective user is solely\n"
+"        responsible. The operator does not adopt these contents. The "
+"operator is not obliged to\n"
+"        check content posted by users in advance."
+
+#: home/templates/nutzungsbedingungen.html:134
+msgid ""
+"Bei Kenntnis von Rechtsverstößen werden entsprechende Inhalte unverzüglich "
+"geprüft und gegebenenfalls\n"
+"        entfernt."
+msgstr ""
+"Upon knowledge of legal violations, the corresponding content is checked "
+"immediately and, if necessary,\n"
+"        removed."
+
+#: home/templates/nutzungsbedingungen.html:139
+msgid "Kontaktstelle und Meldungen (DSA)"
+msgstr "Contact Point and Reports (DSA)"
+
+#: home/templates/nutzungsbedingungen.html:140
+msgid ""
+"Nutzer können rechtswidrige Inhalte über die bereitgestellte Meldefunktion "
+"anzeigen. Meldungen werden geprüft und\n"
+"        angemessen bearbeitet."
+msgstr ""
+"Users can report illegal content via the provided reporting function. "
+"Reports are checked and\n"
+"        processed appropriately."
+
+#: home/templates/nutzungsbedingungen.html:142
+msgid ""
+"Betroffene Nutzer werden über Moderationsentscheidungen informiert und "
+"erhalten eine Begründung."
+msgstr ""
+"Affected users are informed about moderation decisions and receive a reason."
+
+#: home/templates/nutzungsbedingungen.html:143
+msgid ""
+"Als Kontaktstelle gemäß Art. 11 DSA erreichen Sie uns unter: <a "
+"href=\"mailto:kontakt@climate-quest.de\">kontakt@climate-quest.de</a>\n"
+"    "
+msgstr ""
+"Do you have questions or need support? Just send an email to <a "
+"href=\"mailto:kontakt@climate-quest.de\">kontakt@climate-quest.de</a>!"
+
+#: home/templates/nutzungsbedingungen.html:148
+msgid "4. Änderungen der Nutzungsbedingungen"
+msgstr "4. Changes to the Terms of Use"
+
+#: home/templates/nutzungsbedingungen.html:149
+msgid ""
+"Wir behalten uns vor, diese Nutzungsbedingungen mit Wirkung für die Zukunft "
+"zu ändern, sofern hierfür ein\n"
+"        sachlicher Grund besteht (z.B. Gesetzesänderungen oder "
+"Weiterentwicklung der Plattform). Nutzer werden\n"
+"        rechtzeitig informiert. Widerspricht der Nutzer nicht innerhalb von "
+"4 Wochen, gelten die Änderungen als\n"
+"        angenommen. In der Änderungsmitteilung wird der Nutzer ausdrücklich "
+"auf die Bedeutung seines Schweigens\n"
+"        hingewiesen."
+msgstr ""
+"We reserve the right to change these terms of use with effect for the "
+"future, provided that there is a\n"
+"        factual reason for this (e.g. changes in legislation or further "
+"development of the platform). Users will be\n"
+"        informed in good time. If the user does not object within 4 weeks, "
+"the changes are deemed to be\n"
+"        accepted. In the change notification, the user is expressly informed "
+"of the significance of their silence\n"
+"        ."
+
+#: home/templates/support.html:5
+msgid ""
+"Hast du Fragen oder benötigst du Unterstützung bei der Nutzung von "
+"ClimateQuest? Hier findest du alle Möglichkeiten, um mit uns in Kontakt zu "
+"treten!"
+msgstr ""
+"Do you have questions or need help using ClimateQuest? Here you'll find all "
+"the ways to get in touch with us!"
+
+#: home/templates/support.html:8
+msgid "Support - ClimateQuest"
+msgstr "Support - ClimateQuest"
+
+#: home/templates/support.html:18
+msgid "Feedback geben"
+msgstr "Give Feedback"
+
+#: home/templates/support.html:21
+msgid ""
+"Hast du Fragen oder benötigst du Unterstützung? Schreib einfach eine Mail an "
+"<a href=\"mailto:kontakt@climate-quest.de\">kontakt@climate-quest.de</a>!"
+msgstr ""
+"Do you have questions or need support? Just send an email to <a "
+"href=\"mailto:kontakt@climate-quest.de\">kontakt@climate-quest.de</a>!"
+
+#~ msgid "Es werden jeweils nur die ersten zwei Einträge angezeigt."
+#~ msgstr "Only the first two entries are shown at a time."
+
+#~ msgid "Aktion:"
+#~ msgstr "Action:"
+
+#~ msgid "Datum:"
+#~ msgstr "Date:"
+
+#~ msgid "Beschreibung:"
+#~ msgstr "Description:"
+
+#~ msgid "Klimapunkte:"
+#~ msgstr "Climate Points:"
+
+#~ msgid "Details"
+#~ msgstr "Details"
+
+#~ msgid "Keine Aktionen gefunden."
+#~ msgstr "No actions found."
+
+#~ msgid "Zur Aktions-Historie"
+#~ msgstr "To Action History"
+
+#~ msgid "Families"
+#~ msgstr "Families"
+
+#, python-format
+#~ msgid "Mitglieder: %(members_count)s"
+#~ msgstr "Members: %(members_count)s"
+
+#~ msgid "Details ansehen"
+#~ msgstr "View Details"
+
+#~ msgid "Du bist keiner Family beigetreten."
+#~ msgstr "You haven't joined a family yet."
+
+#~ msgid "Zu den Families"
+#~ msgstr "To Families"
+
+#~ msgid "Communities"
+#~ msgstr "Communities"
+
+#~ msgid "Family zum Login auswählen:"
+#~ msgstr "Select family to log in with:"
+
+#~ msgid "Family zum Login auswählen ▾"
+#~ msgstr "Select family to log in with ▾"
+
+#~ msgid "Du bist keiner Community beigetreten."
+#~ msgstr "You haven't joined a community yet."
+
+#~ msgid "Zu den Communities"
+#~ msgstr "To Communities"
+
+#, fuzzy
+#~| msgid "Benachrichtigung erstellen"
+#~ msgid "ClimateQuest - Benachrichtigungen"
+#~ msgstr "Create Notification"
+
+#, python-format
+#~ msgid "Mitglieder: %(item.community.members.count)s"
+#~ msgstr "Members: %(item.community.members.count)s"
+
+#~ msgid "Dies ist eine Testnachricht für den Produktionsmodus"
+#~ msgstr "This is a test message for production mode"

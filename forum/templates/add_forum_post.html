@@ -1,16 +1,16 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 
 {% block meta %}
     <meta name="description"
-          content="Erstelle einen neuen Post im Forum von ClimateQuest, um deine Fragen zur Klimakrise oder zur Organisation und Durchführung von Aktionen zum Klima-Themen von anderen Usern beantworten zu lassen.">
+          content="{% trans "Erstelle einen neuen Post im Forum von ClimateQuest, um deine Fragen zur Klimakrise oder zur Organisation und Durchführung von Aktionen zum Klima-Themen von anderen Usern beantworten zu lassen." %}">
 {% endblock %}
 
-{% block title %}Forum-Beitrag hinzufügen{% endblock %}
+{% block title %}{% trans "Forum-Beitrag hinzufügen" %}{% endblock %}
 
 {% block content %}
 
-    <h1>Beitrag hinzufügen</h1>
+    <h1>{% trans "Beitrag hinzufügen" %}</h1>
 
     {% if messages %}
         {% for message in messages %}
@@ -20,14 +20,14 @@
 
     <form method="post" class="fill-editor">
         {% csrf_token %}
-        <label for="title">Titel</label>
-        <input type="text" name="title" id="title" placeholder="Titel" maxlength="100" required>
+        <label for="title">{% trans "Titel" %}</label>
+        <input type="text" name="title" id="title" placeholder="{% trans "Titel" %}" maxlength="100" required>
 
-        <label for="content_editor">Inhalt</label>
+        <label for="content_editor">{% trans "Inhalt" %}</label>
         <div id="content_editor" class="quill-editor"></div>
         <input type="hidden" name="content">
 
-        <label for="category">Kategorie</label>
+        <label for="category">{% trans "Kategorie" %}</label>
         <select id="category" name="category">
             {% for category in categories %}
                 <option value="{{ category }}">{{ category }}</option>
@@ -37,11 +37,10 @@
         <label class="custom-checkbox">
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
-            <span class="label-text">Ich bestätige, dass dies eine ernst gemeinte Frage ist und dass sie mit den <a
-                    href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmt.</span>
+            <span class="label-text">{% url 'nutzungsbedingungen' as terms_url %}{% blocktrans with url=terms_url %}Ich bestätige, dass dies eine ernst gemeinte Frage ist und dass sie mit den <a href="{{ url }}">Nutzungsbedingungen</a> übereinstimmt.{% endblocktrans %}</span>
         </label>
 
-        <button type="submit">Speichern</button>
+        <button type="submit">{% trans "Speichern" %}</button>
     </form>
 
     <script nonce="{{ request.csp_script_nonce }}">

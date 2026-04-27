@@ -14,6 +14,7 @@ from django.db.models import Sum, F
 from django.db.models.functions import TruncWeek
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import gettext as _
 from webpush import send_user_notification
 
 from ClimateQuest import settingsprod
@@ -254,7 +255,9 @@ def get_level(user):
             else:
                 level_number = i + 1
                 return {
-                    'info': f'Du hast das höchste Level bereits erreicht: {current_level.description} <span class="emoji">&#x1F973;</span>',
+                    'info': _(
+                        'Du hast das höchste Level bereits erreicht: %(level)s <span class="emoji">&#x1F973;</span>') % {
+                                'level': current_level.description},
                     'current_level': current_level, 'levels': levels, 'klimapunkte': klimapunkte,
                     'level_number': level_number}
 
@@ -330,21 +333,22 @@ def create_internal_error(request, beschreibung, fehlermeldung="interner Fehler"
         file.write(f'{error_message}\n\n')
 
 
-def create_notification(request, notification, user=None, url=None):
+def create_notification(request, notification_de, notification_en, user=None, url=None):
     if user is None:
         user = request.user
     if url is None:
         url = reverse('dashboard')
-    Benachrichtigung.objects.create(benachrichtigung=notification, user=user, url=url)
+    Benachrichtigung.objects.create(benachrichtigung_de=notification_de, benachrichtigung_en=notification_en, user=user,
+                                    url=url)
     send_mail_function(
         request=request,
         fehlermeldung='Beim Erstellen einer Benachrichtigung ist beim Versenden der E-Mail ein Fehler aufgetreten. Die Benachrichtigung kann nur in dem Benachrichtigungsteil hier auf der Webseite gefunden werden!',
         subject='ClimateQuest - neue Benachrichtigung',
-        message=notification,
+        message=notification_de,
         recipient_list=user.email,
         user=user
     )
-    res = send_push(benachrichtigung=notification, user=user, url=url)
+    res = send_push(benachrichtigung=notification_de, user=user, url=url)
     if res == 500:
         create_internal_error(request, "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.",
                               "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.")
@@ -556,3 +560,30 @@ def get_family_rank_from_user(user, family):
 
     rank = next(i for i, d in enumerate(members_with_klimapunkte_sortiert) if d['member'] == user)
     return rank + 1
+
+
+# The following is to calculate time period climate points (help functions)
+
+def get_date_range(zeitraum: str, heute: date) -> tuple[date | None, date | None]:
+    offsets = {
+        'Heute': timedelta(days=0),
+        'Sieben Tage': timedelta(days=7),
+        'Dreißig Tage': timedelta(days=30),
+        'Dreihundertfünfundsechzig Tage': timedelta(days=365),
+    }
+    if zeitraum in offsets:
+        return heute - offsets[zeitraum], heute
+    return None, None
+
+
+def get_klimapunkte_fuer_member(member, start: date | None, end: date | None) -> int:
+    if start is not None and end is not None:
+        aktionen = Aktion.objects.filter(user=member, date__range=(start, end))
+    elif start is not None:
+        aktionen = Aktion.objects.filter(user=member, date__gte=start)
+    else:
+        aktionen = Aktion.objects.filter(user=member)
+
+    punkte = get_klimapunkte(aktionen) or 0
+    punkte += get_klimapunkte_from_likes(member)
+    return punkte

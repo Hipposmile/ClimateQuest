@@ -1,38 +1,40 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block meta %}
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 
-{% block title %}Update zur Petition {{ petition }} hinzufügen{% endblock %}
+{% block title %}{% blocktrans with petition_name=petition %}Update zur Petition {{ petition_name }} hinzufügen{% endblocktrans %}{% endblock %}
 
 {% block content %}
-    <h1>Petition <a href="{% url 'petition_detail' petition.id %}">{{ petition }}</a> bearbeiten</h1>
+    <h1>{% trans "Petition" %} <a href="{% url 'petition_detail' petition.id %}">{{ petition }}</a> {% trans "bearbeiten" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
 
-    <h2>Update hinzufügen</h2>
+    <h2>{% trans "Update hinzufügen" %}</h2>
 
     <form method="post" class="fill-editor">
         {% csrf_token %}
-        <label for="title">Name</label>
-        <input type="text" name="title" id="title" placeholder="Titel" maxlength="100">
+        <label for="title">{% trans "Name" %}</label>
+        <input type="text" name="title" id="title" placeholder="{% trans "Titel" %}" maxlength="100">
 
-        <label for="content_editor">Inhalt</label>
+        <label for="content_editor">{% trans "Inhalt" %}</label>
         <div id="content_editor" class="quill-editor"></div>
         <input type="hidden" name="content">
 
         <label class="custom-checkbox">
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
-            <span class="label-text">Ich bestätige, dass alle Angaben mit den <a
-                    href="{% url 'nutzungsbedingungen' %}">Nutzungsbedingungen</a> übereinstimmen.</span>
+            {% url 'nutzungsbedingungen' as nutzungsbedingungen_url %}
+            {% blocktrans with url=nutzungsbedingungen_url %}<span class="label-text">Ich bestätige, dass alle Angaben mit den <a
+                    href="{{ url }}">Nutzungsbedingungen</a> übereinstimmen.</span>{% endblocktrans %}
         </label>
 
-        <button type="submit" name="update">Speichern</button>
+        <button type="submit" name="update">{% trans "Speichern" %}</button>
     </form>
 
     <script nonce="{{ request.csp_script_nonce }}">
@@ -41,18 +43,18 @@
 
     <hr>
 
-    <h2 id="change_goal">Ziel ändern</h2>
+    <h2 id="change_goal">{% trans "Ziel ändern" %}</h2>
     <form method="post">
         {% csrf_token %}
-        <label for="goal">Ziel</label>
+        <label for="goal">{% trans "Ziel" %}</label>
         <input type="number" name="goal" id="goal" min="10" step="1" value="{{ petition.goal }}">
-        <button name="change_goal">Speichern</button>
+        <button name="change_goal">{% trans "Speichern" %}</button>
     </form>
     <hr>
-    <h2>Erfolg</h2>
+    <h2>{% trans "Erfolg" %}</h2>
     <form method="post">
         {% csrf_token %}
-        <button name="success" class="color-red">{% if petition.success %}Erfolg der Petition löschen{% else %}
-            Petition zum Erfolg erklären{% endif %}</button>
+        <button name="success" class="color-red">{% if petition.success %}{% trans "Erfolg der Petition löschen" %}{% else %}
+            {% trans "Petition zum Erfolg erklären" %}{% endif %}</button>
     </form>
 {% endblock %}

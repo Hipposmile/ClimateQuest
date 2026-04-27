@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block meta %}
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 
-{% block title %}{% if community %}Chat: Community {{ community.name }}{% else %}Die Community konnte
-    nicht geladen werden.{% endif %} {% endblock %}
+{% block title %}{% if community %}{% blocktrans with name=community.name %}Chat: Community {{ name }}{% endblocktrans %}{% else %}{% trans "Die Community konnte nicht geladen werden." %}{% endif %} {% endblock %}
 
 {% block content %}
     <style nonce="{{ request.csp_style_nonce }}">
@@ -103,10 +103,10 @@
         }
     </style>
 
-    <h1>Chat: Community <a
-                           href="{% url 'community_detail' community.id family.id %}">{{ community.name }}</a></h1>
-    <h3>Eingeloggt mit Family <a  href="{% url 'family_detail' family.id %}">{{ family.name }}</a>
-    </h3>
+    {% url 'community_detail' community.id family.id as detail_url %}
+    <h1>{% blocktrans with url=detail_url name=community.name %}Chat: Community <a href="{{ url }}">{{ name }}</a>{% endblocktrans %}</h1>
+    {% url 'family_detail' family.id as family_url %}
+    <h3>{% blocktrans with url=family_url name=family.name %}Eingeloggt mit Family <a href="{{ url }}">{{ name }}</a>{% endblocktrans %}</h3>
 
     {% if messages %}
         {% for message in messages %}
@@ -115,7 +115,7 @@
     {% endif %}
 
     <div class="chat-community-container">
-        <button type="button" class="chat-refresh-btn" id="refresh" title="Chat aktualisieren">
+        <button type="button" class="chat-refresh-btn" id="refresh" title="{% trans 'Chat aktualisieren' %}">
             <picture>
                 <source type="image/avif" srcset="
                     {% static 'images/refresh/refresh-320.avif' %} 320w,
@@ -133,41 +133,39 @@
                     " sizes="100vw"
                 >
 
-                <img src="{% static 'images/refresh/refresh-fallback.png' %}" alt="Refresh">
+                <img src="{% static 'images/refresh/refresh-fallback.png' %}" alt="{% trans 'Refresh' %}">
             </picture>
         </button>
         <div class="chat-community-messages">
             <div class="chat-community-message system">
                 <div class="chat-community-bubble">
-                    Ich werde morgen um 15:00 am See Müll sammeln gehen. Wer will mitmachen?
-                    <span class="chat-community-meta">Beispiel</span>
+                    {% trans "Ich werde morgen um 15:00 am See Müll sammeln gehen. Wer will mitmachen?" %}
+                    <span class="chat-community-meta">{% trans "Beispiel" %}</span>
                 </div>
             </div>
             <div class="chat-community-message system">
                 <div class="chat-community-bubble">
-                    Wir machen eine Challenge: Wer schafft es von heute bis nächste Woche Sonntag am meisten Klimapunkte
-                    zu sammeln?
-                    <span class="chat-community-meta">Beispiel</span>
+                    {% trans "Wir machen eine Challenge: Wer schafft es von heute bis nächste Woche Sonntag am meisten Klimapunkte zu sammeln?" %}
+                    <span class="chat-community-meta">{% trans "Beispiel" %}</span>
                 </div>
             </div>
             {% for msg in msgs %}
                 <div class="chat-community-message {% if msg.user == user %}me{% else %}other{% endif %}">
                     <div class="chat-community-bubble">
                         {{ msg.message }}
-                        <span class="chat-community-meta"><a
-                                                             href="{% url 'user_detail' msg.user.id %}"
-                                                             class="chat-community-meta">{{ msg.user.username }}</a> aus Family {{ msg.family.name }}</span>
-                        <span class="chat-community-meta">{{ msg.erstellt_am|date:"d.m.Y H:i" }}</span>
+                        {% url 'user_detail' msg.user.id as user_url %}
+                        <span class="chat-community-meta">{% blocktrans with username=msg.user.username family_name=msg.family.name url=user_url %}<a href="{{ url }}" class="chat-community-meta">{{ username }}</a> aus Family {{ family_name }}{% endblocktrans %}</span>
+                        <span class="chat-community-meta">{% blocktrans with date=msg.erstellt_am|date:"SHORT_DATETIME_FORMAT" %}{{ date }}{% endblocktrans %}</span>
                     </div>
                 </div>
             {% empty %}
-                <div class="chat-community-empty">Noch keine Nachrichten.</div>
+                <div class="chat-community-empty">{% trans "Noch keine Nachrichten." %}</div>
             {% endfor %}
             <form method="post" class="chat-community-form" >
                 {% csrf_token %}
-                <label for="message">Nachricht</label>
-                <input type="text" id="message" name="message" placeholder="Nachricht eingeben..." required>
-                <button type="submit" name="send">Senden</button>
+                <label for="message">{% trans "Nachricht" %}</label>
+                <input type="text" id="message" name="message" placeholder="{% trans 'Nachricht eingeben...' %}" required>
+                <button type="submit" name="send">{% trans "Senden" %}</button>
             </form>
         </div>
     </div>

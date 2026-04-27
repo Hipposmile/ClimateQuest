@@ -49,6 +49,7 @@ def create_community(request):
         for user_to_message in family.members.all().exclude(id=request.user.id):
             create_notification(request,
                                 f'Die Family {family.name}, in der auch du Mitglied bist, ist der Community {community.name} beigetreten',
+                                f'The family {family.name}, of which you are also a member, has joined the community {community.name}',
                                 user_to_message,
                                 url=reverse('community_detail',
                                             kwargs={'community_id': community.id, 'family_id': family.id}))
@@ -88,6 +89,7 @@ def join_community(request):
                 for user_to_message in family.members.all().exclude(id=request.user.id):
                     create_notification(request,
                                         f'Die Family {family.name}, in der auch du Mitglied bist, ist der Community {community.name} beigetreten',
+                                        f'The family {family.name}, of which you are also a member, has joined the community {community.name}',
                                         user_to_message,
                                         url=reverse('community_detail',
                                                     kwargs={'community_id': community.id, 'family_id': family.id}))
@@ -106,10 +108,8 @@ def join_community(request):
 
 @login_required
 def communities_view(request):
-    # Hole die IDs der Families des aktuellen Nutzers
     user_families = get_families_of_user(request.user)
 
-    # Verwende diese IDs zum Filtern der Communities
     communities = Community.objects.filter(members__id__in=user_families).distinct().order_by('name')
 
     communities_with_user_families = []
@@ -174,6 +174,7 @@ def edit_community(request, community_id, family_id):
                                                                       members=user_to_message).first().id
                     create_notification(request,
                                         f'Der Communityname der Community {old_communityname} wurde von {request.user} zu {communityname} geändert',
+                                        f'The communitynma of the community {old_communityname} has been updated by {request.user} to {communityname}',
                                         user_to_message,
                                         url=reverse('community_detail', kwargs={'community_id': community.id,
                                                                                 'family_id': user_to_message_family_id}) if user_to_message_family_id else None
@@ -199,6 +200,7 @@ def edit_community(request, community_id, family_id):
                                                                       members=user_to_message).first().id
                     create_notification(request,
                                         f'Das Passwort der Community {community.name} wurde von {request.user} geändert.',
+                                        f'The password of the community {community.name} has been updated by {request.user}.',
                                         user_to_message,
                                         url=reverse('community_detail', kwargs={'community_id': community.id,
                                                                                 'family_id': user_to_message_family_id}) if user_to_message_family_id else None
@@ -225,6 +227,7 @@ def edit_community(request, community_id, family_id):
                                                                       members=user_to_message).first().id
                     create_notification(request,
                                         f'Das Admin-Passwort der Community {community.name} wurde von {request.user} geändert',
+                                        f'The admin-password of the community {community.name} has been updated by {request.user}.',
                                         user_to_message,
                                         url=reverse('community_detail', kwargs={'community_id': community.id,
                                                                                 'family_id': user_to_message_family_id}) if user_to_message_family_id else None
@@ -246,6 +249,7 @@ def edit_community(request, community_id, family_id):
                                                                       members=user_to_message).first().id
                     create_notification(request,
                                         f'Die Family {family.name} wurde von {request.user} aus der Community {community.name} entfernt',
+                                        f'The family {family.name} has been removed from the community {community.name} by {request.user}.',
                                         user_to_message,
                                         url=reverse('community_detail', kwargs={'community_id': community.id,
                                                                                 'family_id': user_to_message_family_id}) if user_to_message_family_id else None
@@ -265,6 +269,7 @@ def edit_community(request, community_id, family_id):
                                                                       members=user_to_message).first().id
                     create_notification(request,
                                         f'Die Family {family.name} wurde von {request.user} aus der Community {community.name} entfernt',
+                                        f'The family {family.name} has been removed from the community {community.name} by {request.user}.',
                                         user_to_message,
                                         url=reverse('community_detail', kwargs={'community_id': community.id,
                                                                                 'family_id': user_to_message_family_id}) if user_to_message_family_id else None
@@ -284,6 +289,7 @@ def edit_community(request, community_id, family_id):
                                                                       members=user_to_message).first().id
                     create_notification(request,
                                         f'Die Family {family.name} wurde von {request.user} aus der Community {community.name} entfernt',
+                                        f'The family {family.name} has been removed from the community {community.name} by {request.user}.',
                                         user_to_message,
                                         url=reverse('community_detail', kwargs={'community_id': community.id,
                                                                                 'family_id': user_to_message_family_id}) if user_to_message_family_id else None
@@ -316,6 +322,7 @@ def edit_community(request, community_id, family_id):
                     user_to_message_family_id = Family.objects.filter(community__id=community.id,
                                                                       members=user_to_message).first().id
                     create_notification(request, f'Die Community {community.name} wurde von {request.user} gelöscht',
+                                        f'The community {community.name} has been deleted by {request.user}.',
                                         user_to_message,
                                         url=reverse('community_detail', kwargs={'community_id': community.id,
                                                                                 'family_id': user_to_message_family_id}) if user_to_message_family_id else None
@@ -363,6 +370,7 @@ def chat_community(request, community_id, family_id):
                                                               members=user_to_message).first().id
             create_notification(request,
                                 f'Neue Nachricht in Community {community.name} von Family {family.name} / User {request.user}: {msg}',
+                                f'New message in community {community.name} / User {request.user}: {msg}',
                                 user_to_message,
                                 url=reverse('community_detail', kwargs={'community_id': community.id,
                                                                         'family_id': user_to_message_family_id}) if user_to_message_family_id else None
