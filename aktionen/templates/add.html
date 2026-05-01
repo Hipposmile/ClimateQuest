@@ -288,32 +288,10 @@
     </style>
 
     <script nonce="{{ request.csp_script_nonce }}">
-        {% comment %}const data = {
-            {% for category in categories %}
-                "{{ category.id }}": {
-                    name: "{{ category.name }}",
-                    actions: [
-                        {% for action in category.actions.all %}
-                            {
-                                id: "{{ action.id }}",
-                                name: `{{ action.name }}`,
-                                klimapunkte: `{{ action.klimapunkte|floatformat:-4 }}`,
-                                anmerkung: `{{ action.anmerkung|safe }}`,
-                                mengebeschreibung: `{{ action.mengeBeschreibung }}`,
-                                mengebeschreibungsingular: `{{ action.mengeBeschreibungSingular }}`,
-                                source: `{{ action.source|safe }}`,
-                                categories: `{% for action_category in action.category.all %}{{ action_category }}{% if not forloop.last %}, {% endif %}{% endfor %}`
-                            },
-                        {% endfor %}
-                    ]
-                },
-            {% endfor %}
-        };{% endcomment %}
-
         const data = {
             {% for category in categories %}
                 "{{ category.id }}": {
-                    name: "{% if request.LANGUAGE_CODE == 'en' %}{{ category.name_en }}{% else %}{{ category.name }}{% endif %}",
+                    name: "{% if request.LANGUAGE_CODE == 'de' %}{{ category.name|escapejs }}{% else %}{{ category.name_en|escapejs }}{% endif %}",
                     actions: [
                         {% for action in category.actions.all %}
                             {
@@ -372,10 +350,8 @@
                 const categoryId = btn.dataset.categoryid;
                 const category = data[categoryId];
 
-                // Titel setzen
                 itemsTitle.textContent = "{% trans 'Wähle eine Aktion aus:' %} " + category.name;
 
-                // Aktionen anzeigen
                 itemsList.innerHTML = "";
                 category.actions.forEach(action => {
                     const li = document.createElement("li");
@@ -404,13 +380,12 @@
                 selectedItemInput.dataset.categories = e.target.dataset.categories;
                 changeActionType();
                 modal.classList.remove("active");
-                // Seiten zurücksetzen für nächste Öffnung
+
                 pageItems.style.display = "none";
                 pageCategories.style.display = "block";
             }
         });
 
-        // Zurück zu Kategorien
         backToCategories.onclick = (e) => {
             e.preventDefault();
             pageItems.style.display = "none";

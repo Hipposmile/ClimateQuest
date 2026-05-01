@@ -337,7 +337,7 @@
             const data = {
                 {% for category in categories %}
                     "{{ category.id }}": {
-                        name: "{% if request.LANGUAGE_CODE == 'en' %}{{ category.name_en }}{% else %}{{ category.name }}{% endif %}",
+                        name: "{% if request.LANGUAGE_CODE == 'de' %}{{ category.name|escapejs }}{% else %}{{ category.name_en|escapejs }}{% endif %}",
                         actions: [
                             {% for action in category.actions.all %}
                                 {
