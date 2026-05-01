@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-25 19:20+0200\n"
+"POT-Creation-Date: 2026-05-01 16:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,9 +81,12 @@ msgstr ""
 msgid "Artikel %(name)s"
 msgstr "Article %(name)s"
 
-#: artikel/templates/artikel_detail.html:59
-#, python-format
-msgid "<a href=\"%(url)s\">Artikel</a> <i>%(name)s</i>"
+#: artikel/templates/artikel_detail.html:58
+#, fuzzy, python-format
+#| msgid "<a href=\"%(url)s\">Artikel</a> <i>%(name)s</i>"
+msgid ""
+"<a href=\"%(url)s\">Artikel</a>\n"
+"        <i>%(name)s</i>"
 msgstr "<a href=\"%(url)s\">Article</a> <i>%(name)s</i>"
 
 #: artikel/templates/artikel_detail.html:146
@@ -91,109 +94,123 @@ msgid "Gesperrt"
 msgstr "Blocked"
 
 #: artikel/templates/artikel_detail.html:155
-#, python-format
-msgid "Erstellt von <a href=\"%(url)s\">%(creator)s</a>"
+#, fuzzy, python-format
+#| msgid "Erstellt von <a href=\"%(url)s\">%(creator)s</a>"
+msgid ""
+"Erstellt von\n"
+"        <a href=\"%(url)s\">%(creator)s</a>"
 msgstr "Created by <a href=\"%(url)s\">%(creator)s</a>"
 
-#: artikel/templates/artikel_detail.html:158
+#: artikel/templates/artikel_detail.html:159
 msgid "Ein offizieller Artikel von ClimateQuest"
 msgstr "An official article from ClimateQuest"
 
-#: artikel/templates/artikel_detail.html:163
+#: artikel/templates/artikel_detail.html:164
 #: artikel/templates/artikel_overview.html:81
 msgid "Geprüfte und verifizierte Informationen"
 msgstr "Checked and verified information"
 
-#: artikel/templates/artikel_detail.html:166
-#, python-format
-msgid "Zuletzt bearbeitet: %(date)s"
+#: artikel/templates/artikel_detail.html:167
+#, fuzzy, python-format
+#| msgid "Zuletzt bearbeitet: %(date)s"
+msgid ""
+"Zuletzt bearbeitet:\n"
+"        %(date)s"
 msgstr "Last edited: %(date)s"
 
-#: artikel/templates/artikel_detail.html:168
+#: artikel/templates/artikel_detail.html:170
 #: artikel/templates/artikel_overview.html:68
 #: artikel/templates/artikel_overview.html:77
 #, python-format
 msgid "Kategorie: %(cat)s"
 msgstr "Category: %(cat)s"
 
-#: artikel/templates/artikel_detail.html:184
+#: artikel/templates/artikel_detail.html:186
 #, python-format
 msgid "<a href=\"%(url)s\">Artikel bearbeiten</a>"
 msgstr "<a href=\"%(url)s\">Edit Article</a>"
 
-#: artikel/templates/artikel_detail.html:188
+#: artikel/templates/artikel_detail.html:190
 msgid "Kommentare"
 msgstr "Comments"
 
-#: artikel/templates/artikel_detail.html:209
+#: artikel/templates/artikel_detail.html:211
 msgid "Noch keine Antworten."
 msgstr "No replies yet."
 
-#: artikel/templates/artikel_detail.html:212
-#: artikel/templates/artikel_detail.html:261
+#: artikel/templates/artikel_detail.html:214
+#: artikel/templates/artikel_detail.html:264
 msgid "Mehr anzeigen"
 msgstr "Show more"
 
-#: artikel/templates/artikel_detail.html:214
+#: artikel/templates/artikel_detail.html:216
 msgid "selbst antworten"
 msgstr "reply yourself"
 
-#: artikel/templates/artikel_detail.html:219
+#: artikel/templates/artikel_detail.html:221
 msgid "Antwort:"
 msgstr "Reply:"
 
-#: artikel/templates/artikel_detail.html:220
+#: artikel/templates/artikel_detail.html:222
 msgid "Antwort"
 msgstr "Reply"
 
-#: artikel/templates/artikel_detail.html:221
+#: artikel/templates/artikel_detail.html:223
 msgid "Antworten"
 msgstr "Reply"
 
-#: artikel/templates/artikel_detail.html:225
-#, python-format
-msgid "<a href=\"%(url)s\">Logge dich ein</a>, um den Kommentar zu beantworten"
+#: artikel/templates/artikel_detail.html:227
+#, fuzzy, python-format
+#| msgid ""
+#| "<a href=\"%(url)s\">Logge dich ein</a>, um den Kommentar zu beantworten"
+msgid ""
+"<a href=\"%(url)s\">Logge dich ein</a>, um den\n"
+"                                    Kommentar zu beantworten"
 msgstr "<a href=\"%(url)s\">Log in</a> to reply to the comment"
 
-#: artikel/templates/artikel_detail.html:232
+#: artikel/templates/artikel_detail.html:235
 msgid "Noch keine Kommentare vorhanden"
 msgstr "No comments yet"
 
-#: artikel/templates/artikel_detail.html:261
+#: artikel/templates/artikel_detail.html:264
 msgid "Weniger anzeigen"
 msgstr "Show less"
 
-#: artikel/templates/artikel_detail.html:272
+#: artikel/templates/artikel_detail.html:275
 msgid "Neuen Kommentar hinzufügen:"
 msgstr "Add new comment:"
 
-#: artikel/templates/artikel_detail.html:273
-#: artikel/templates/artikel_detail.html:274
+#: artikel/templates/artikel_detail.html:276
+#: artikel/templates/artikel_detail.html:277
 msgid "Kommentar hinzufügen"
 msgstr "Add comment"
 
-#: artikel/templates/artikel_detail.html:278
-#, python-format
-msgid "<a href=\"%(url)s\">Logge dich ein</a>, um einen Kommentar zu verfassen"
+#: artikel/templates/artikel_detail.html:281
+#, fuzzy, python-format
+#| msgid ""
+#| "<a href=\"%(url)s\">Logge dich ein</a>, um einen Kommentar zu verfassen"
+msgid ""
+"<a href=\"%(url)s\">Logge dich ein</a>, um einen Kommentar zu\n"
+"            verfassen"
 msgstr "<a href=\"%(url)s\">Log in</a> to write a comment"
 
-#: artikel/templates/artikel_detail.html:286
+#: artikel/templates/artikel_detail.html:290
 msgid "Verifizierung löschen"
 msgstr "Delete verification"
 
-#: artikel/templates/artikel_detail.html:286
+#: artikel/templates/artikel_detail.html:291
 msgid "Verifizieren"
 msgstr "Verify"
 
-#: artikel/templates/artikel_detail.html:292
+#: artikel/templates/artikel_detail.html:297
 msgid "Nachricht"
 msgstr "Message"
 
-#: artikel/templates/artikel_detail.html:294
+#: artikel/templates/artikel_detail.html:299
 msgid "Sperren"
 msgstr "Block"
 
-#: artikel/templates/artikel_detail.html:296
+#: artikel/templates/artikel_detail.html:301
 msgid "Sperrung aufheben"
 msgstr "Unblock"
 

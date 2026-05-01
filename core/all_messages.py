@@ -186,7 +186,7 @@ all_messages = {
     "artikel__no_right_to_edit": _("Du hast keine Berechtigungen, diesen Artikel zu bearbeiten"),
     "successfully_asked_comment": _("Kommentar erfolgreich gestellt"),
     "successfully_answered_comment": _("Kommentar erfolgreich beantwortet"),
-    "successfully_added_like": _("Du hast den Artikel erfolgreich geliket"),
+    "successfully_added_like": _("Du hast den Artikel erfolgreich gelikt"),
     "successfully_removed_like": _("Du hast den Like zum Artikel erfolgreich entfernt"),
     "likes_search_keyword_not_a_number": _("Wenn du nach Likes filterst, muss das Suchwort eine Zahl sein"),
     "successfully_verified_article": _("Artikel erfolgreich verifiziert"),

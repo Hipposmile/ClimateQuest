@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-26 19:35+0200\n"
+"POT-Creation-Date: 2026-05-01 16:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -536,7 +536,8 @@ msgid "Kommentar erfolgreich beantwortet"
 msgstr "Comment successfully answered"
 
 #: core/all_messages.py:189
-msgid "Du hast den Artikel erfolgreich geliket"
+#| msgid "Du hast den Artikel erfolgreich geliket"
+msgid "Du hast den Artikel erfolgreich gelikt"
 msgstr "You have successfully liked the article"
 
 #: core/all_messages.py:190
