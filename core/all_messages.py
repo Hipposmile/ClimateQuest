@@ -193,6 +193,7 @@ all_messages = {
     "successfully_unverified_article": _("Verifizierung erfolgreich gelöscht"),
     "successfully_blocked_article": _("Erfolgreich Artikel gesperrt"),
     "successfully_unblocked_article": _("Sperrung erfolgreich gelöscht"),
+    "not_allowed_to_like_own_article": _("Du darfst deinen eigenen Artikel nicht liken"),
 
     # --------
     # Forum

@@ -365,7 +365,7 @@ msgstr ""
 "Please enter valid numbers for the CO2 emissions and the kilometers driven."
 
 #: pages/templates/aknachhaltigkeit.html:487
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "Du hast %(gespart)s Gramm CO2 im Vergleich zu einer Autofahrt gespart!\n"
 #| "\n"
@@ -547,7 +547,6 @@ msgstr ""
 "works with most other browsers."
 
 #: pages/templates/mobile_apps.html:87
-#, fuzzy
 #| msgid ""
 #| "Klicke auf die drei Punkte und dann auf Zum Home-Bildschirm hinzufügen "
 #| "(Bei Safari findest du diese Option erst, wenn du auf Teilen gehst)"

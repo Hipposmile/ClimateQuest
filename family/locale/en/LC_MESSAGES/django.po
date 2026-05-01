@@ -449,7 +449,7 @@ msgstr "Or <a href=\"%(url)s\">create a family</a>."
 
 #: family/views.py:405
 msgid "Familien-ID fehlt."
-msgstr ""
+msgstr "Family-ID is missing."
 
 #: family/views.py:411
 msgid "Familie nicht gefunden."

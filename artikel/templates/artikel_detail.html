@@ -169,23 +169,24 @@
 
     <p>{% blocktrans with cat=artikel.category.title %}Kategorie: {{ cat }}{% endblocktrans %}</p>
 
-    <div class="like-button {% if has_liked %}liked{% endif %}">
-        <form action="{% url 'add_like_artikel' artikel.id %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="like-action">
-                <span class="like-icon emoji">&#x1F44D;</span>
-                <span class="like-count">{{ artikel.like_count }}</span>
-            </button>
-        </form>
-    </div>
+    {% if request.user != artikel.creator %}
+        <div class="like-button {% if has_liked %}liked{% endif %}">
+            <form action="{% url 'add_like_artikel' artikel.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="like-action">
+                    <span class="like-icon emoji">&#x1F44D;</span>
+                    <span class="like-count">{{ artikel.like_count }}</span>
+                </button>
+            </form>
+        </div>
+    {% else %}
+        <hr>
+        {% url 'edit_artikel' artikel.id as edit_url %}
+        <p>{% blocktrans with url=edit_url %}<a href="{{ url }}">Artikel bearbeiten</a>{% endblocktrans %}</p>
+    {% endif %}
 
     <hr>
 
-    {% if artikel.creator == request.user %}
-        {% url 'edit_artikel' artikel.id as edit_url %}
-        <p>{% blocktrans with url=edit_url %}<a href="{{ url }}">Artikel bearbeiten</a>{% endblocktrans %}</p>
-        <hr>
-    {% endif %}
 
     <h2 class="section-title">{% trans 'Kommentare' %}</h2>
     <div class="comment-section">

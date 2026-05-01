@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-30 18:42+0200\n"
+"POT-Creation-Date: 2026-05-01 21:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,23 +97,23 @@ msgstr "Categories"
 msgid "Zurück"
 msgstr "Back"
 
-#: aktionen/templates/add.html:377
+#: aktionen/templates/add.html:353
 msgid "Wähle eine Aktion aus:"
 msgstr "Choose an action:"
 
-#: aktionen/templates/add.html:476
+#: aktionen/templates/add.html:450
 msgid "Quelle:"
 msgstr "Source:"
 
-#: aktionen/templates/add.html:477
+#: aktionen/templates/add.html:451
 msgid "Kategorien:"
 msgstr "Categories:"
 
-#: aktionen/templates/add.html:480
+#: aktionen/templates/add.html:454
 msgid "Klimapunkte pro"
 msgstr "Climate points per"
 
-#: aktionen/templates/add.html:522
+#: aktionen/templates/add.html:496
 msgid "Insgesamt durch diese Aktion gewonnene Klimapunkte:"
 msgstr "Total climate points earned through this action:"
 

@@ -159,7 +159,7 @@ msgstr "Climate points of"
 #: users/templates/klimapunkte.html:22
 #, python-format
 msgid "Das entspricht <b>%(co2)s</b> Tonnen eingesparten CO2"
-msgstr ""
+msgstr "That equals <b>%(co2)s</b> tonnes of CO2 saved"
 
 #: users/templates/klimapunkte.html:23
 #, python-format

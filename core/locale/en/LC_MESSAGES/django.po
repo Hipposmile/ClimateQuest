@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-01 16:20+0200\n"
+"POT-Creation-Date: 2026-05-01 21:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -114,7 +114,7 @@ msgstr "Community login credentials invalid"
 msgid "Community ID wurde nicht übergeben"
 msgstr "Community ID was not provided"
 
-#: core/all_messages.py:45 core/all_messages.py:216
+#: core/all_messages.py:45 core/all_messages.py:217
 msgid "Community wurde nicht gefunden"
 msgstr "Community was not found"
 
@@ -122,7 +122,7 @@ msgstr "Community was not found"
 msgid "Family ID wurde nicht übergeben"
 msgstr "Family ID was not provided"
 
-#: core/all_messages.py:47 core/all_messages.py:77 core/all_messages.py:215
+#: core/all_messages.py:47 core/all_messages.py:77 core/all_messages.py:216
 msgid "Family wurde nicht gefunden"
 msgstr "Family was not found"
 
@@ -536,7 +536,6 @@ msgid "Kommentar erfolgreich beantwortet"
 msgstr "Comment successfully answered"
 
 #: core/all_messages.py:189
-#| msgid "Du hast den Artikel erfolgreich geliket"
 msgid "Du hast den Artikel erfolgreich gelikt"
 msgstr "You have successfully liked the article"
 
@@ -564,51 +563,56 @@ msgstr "Article successfully blocked"
 msgid "Sperrung erfolgreich gelöscht"
 msgstr "Block successfully deleted"
 
-#: core/all_messages.py:201
+#: core/all_messages.py:196
+#| msgid "Du hast den Artikel erfolgreich gelikt"
+msgid "Du darfst deinen eigenen Artikel nicht liken"
+msgstr "You aren´t allowed to like your own article"
+
+#: core/all_messages.py:202
 msgid "Post nicht gefunden"
 msgstr "Post not found"
 
-#: core/all_messages.py:206
+#: core/all_messages.py:207
 msgid "User nicht gefunden"
 msgstr "User not found"
 
-#: core/all_messages.py:207
+#: core/all_messages.py:208
 msgid "Nachricht erfolgreich gesendet"
 msgstr "Message successfully sent"
 
-#: core/all_messages.py:208
+#: core/all_messages.py:209
 msgid "Der User wurde erfolgreich gemeldet"
 msgstr "The user was successfully reported"
 
-#: core/all_messages.py:209
+#: core/all_messages.py:210
 msgid "Der User hat die Ansicht seiner Daten geblockt"
 msgstr "The user has blocked the view of their data"
 
-#: core/all_messages.py:214
+#: core/all_messages.py:215
 msgid "User wurde nicht gefunden"
 msgstr "User was not found"
 
-#: core/all_messages.py:217
+#: core/all_messages.py:218
 msgid "Event wurde nicht gefunden"
 msgstr "Event was not found"
 
-#: core/all_messages.py:218
+#: core/all_messages.py:219
 msgid "Ungültiger Empfänger-Typ der Nachricht"
 msgstr "Invalid recipient type of the message"
 
-#: core/all_messages.py:219
+#: core/all_messages.py:220
 msgid "Benachrichtigung erfolgreich an alle Empfänger gesendet"
 msgstr "Notification successfully sent to all recipients"
 
-#: core/all_messages.py:220
+#: core/all_messages.py:221
 msgid "User erfolgreich gelöscht"
 msgstr "User successfully deleted"
 
-#: core/all_messages.py:221
+#: core/all_messages.py:222
 msgid "Die Passwörter der Family worldwide_ranking sind aktuell"
 msgstr "The passwords of the family worldwide_ranking are current"
 
-#: core/all_messages.py:222
+#: core/all_messages.py:223
 msgid ""
 "Die Passwörter der Family worldwide-Ranking waren ungültig und entsprechend "
 "der gespeicherten Passwörter geändert"
@@ -616,73 +620,73 @@ msgstr ""
 "The passwords of the family worldwide-Ranking were invalid and changed "
 "according to the stored passwords"
 
-#: core/all_messages.py:223
+#: core/all_messages.py:224
 msgid ""
 "Jedem User wurde ein UserErweitert hinzugefügt, sofern noch nicht vorhanden"
 msgstr "A UserErweitert was added to each user, if not already present"
 
-#: core/all_messages.py:228
+#: core/all_messages.py:229
 msgid "Petition hinzugefügt"
 msgstr "Petition added"
 
-#: core/all_messages.py:229
+#: core/all_messages.py:230
 msgid "Petition nicht gefunden"
 msgstr "Petition not found"
 
-#: core/all_messages.py:230
+#: core/all_messages.py:231
 msgid "Petition erfolgreich unterschrieben"
 msgstr "Petition successfully signed"
 
-#: core/all_messages.py:231
+#: core/all_messages.py:232
 msgid "Unterschrift erfolgreich entfernt"
 msgstr "Signature successfully removed"
 
-#: core/all_messages.py:232
+#: core/all_messages.py:233
 msgid "Wenn du nach Unterschriften filterst, muss das Suchwort eine Zahl sein"
 msgstr "If you filter by signatures, the search term must be a number"
 
-#: core/all_messages.py:233
+#: core/all_messages.py:234
 msgid "Das Ziel muss eine Zahl sein"
 msgstr "The goal must be a number"
 
-#: core/all_messages.py:234
+#: core/all_messages.py:235
 msgid "Das Ziel muss mindestens 10 sein"
 msgstr "The goal must be at least 10"
 
-#: core/all_messages.py:235
+#: core/all_messages.py:236
 msgid "Ziel erfolgreich aktualisiert"
 msgstr "Goal successfully updated"
 
-#: core/all_messages.py:236
+#: core/all_messages.py:237
 msgid "Du hast die Petition zum Erfolg erklärt!"
 msgstr "You have declared the petition a success!"
 
-#: core/all_messages.py:237
+#: core/all_messages.py:238
 msgid "Du hast den Erfolg der Petition gelöscht"
 msgstr "You have deleted the success of the petition"
 
-#: core/all_messages.py:241
+#: core/all_messages.py:242
 #, python-brace-format
 msgid "Maximal {max_size_mb} MB erlaubt"
 msgstr "Maximum {max_size_mb} MB allowed"
 
-#: core/all_messages.py:242
+#: core/all_messages.py:243
 msgid "Ungültige Dateiendung"
 msgstr "Invalid file extension"
 
-#: core/all_messages.py:243
+#: core/all_messages.py:244
 msgid "Ungültiges Bild"
 msgstr "Invalid image"
 
-#: core/all_messages.py:244
+#: core/all_messages.py:245
 msgid "Ungültiger Dateityp"
 msgstr "Invalid file type"
 
-#: core/all_messages.py:245
+#: core/all_messages.py:246
 msgid "Ungültiger MIME-Typ"
 msgstr "Invalid MIME type"
 
-#: core/all_messages.py:246
+#: core/all_messages.py:247
 msgid "Ungültiges Seitenverhältnis"
 msgstr "Invalid aspect ratio"
 

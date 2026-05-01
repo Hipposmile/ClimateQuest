@@ -243,6 +243,11 @@ def artikel_detail(request, artikel_id):
 def add_like(request, artikel_id):
     try:
         artikel = Artikel.objects.get(id=artikel_id)
+    except Artikel.DoesNotExist:
+        messages.error(request, all_messages["artikel_not_existing"])
+        return redirect('artikel_overview')
+
+    if request.user != artikel.creator:
         if request.user in artikel.like.all():
             artikel.like.remove(request.user)
             messages.success(request, all_messages["successfully_removed_like"])
@@ -251,6 +256,6 @@ def add_like(request, artikel_id):
             messages.success(request, all_messages["successfully_added_like"])
         artikel.save()
         return redirect('artikel_detail', artikel_id)
-    except Artikel.DoesNotExist:
-        messages.error(request, all_messages["artikel_not_existing"])
-        return redirect('artikel_overview')
+    else:
+        messages.error(request, all_messages["not_allowed_to_like_own_article"])
+        return redirect('artikel_detail', artikel_id)
