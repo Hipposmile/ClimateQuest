@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-27 13:49+0200\n"
+"POT-Creation-Date: 2026-04-30 18:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -156,15 +156,12 @@ msgstr "My climate points"
 msgid "Klimapunkte von"
 msgstr "Climate points of"
 
-#: users/templates/klimapunkte.html:29
-msgid "Das entspricht"
-msgstr "This equals"
+#: users/templates/klimapunkte.html:22
+#, python-format
+msgid "Das entspricht <b>%(co2)s</b> Tonnen eingesparten CO2"
+msgstr ""
 
-#: users/templates/klimapunkte.html:29
-msgid "Tonnen eingespartem CO2"
-msgstr "tonnes of CO2 saved"
-
-#: users/templates/klimapunkte.html:36
+#: users/templates/klimapunkte.html:23
 #, python-format
 msgid ""
 "Außerdem wurden <b>%(points)s</b> Klimapunkte durch das Schreiben von "
@@ -173,63 +170,63 @@ msgstr ""
 "Additionally, <b>%(points)s</b> climate points were earned by writing "
 "articles."
 
-#: users/templates/klimapunkte.html:37
+#: users/templates/klimapunkte.html:24
 #, python-format
 msgid ""
 "Insgesamt wurden also bereits <b>%(total_points)s</b> Klimapunkte gesammelt."
 msgstr ""
 "In total, <b>%(total_points)s</b> climate points have been collected so far."
 
-#: users/templates/klimapunkte.html:38
+#: users/templates/klimapunkte.html:25
 #, python-format
 msgid "Zeitraum: %(timespan)s"
 msgstr "Period: %(timespan)s"
 
-#: users/templates/klimapunkte.html:41
+#: users/templates/klimapunkte.html:28
 msgid "Zeitraum"
 msgstr "Period"
 
-#: users/templates/klimapunkte.html:43 users/views.py:119
+#: users/templates/klimapunkte.html:30 users/views.py:118
 msgid "Gesamt"
 msgstr "Total"
 
-#: users/templates/klimapunkte.html:44
+#: users/templates/klimapunkte.html:31
 msgid "Heute"
 msgstr "Today"
 
-#: users/templates/klimapunkte.html:45
+#: users/templates/klimapunkte.html:32
 msgid "7 Tage"
 msgstr "7 days"
 
-#: users/templates/klimapunkte.html:46
+#: users/templates/klimapunkte.html:33
 msgid "30 Tage"
 msgstr "30 days"
 
-#: users/templates/klimapunkte.html:47
+#: users/templates/klimapunkte.html:34
 msgid "365 Tage"
 msgstr "365 days"
 
-#: users/templates/klimapunkte.html:48
+#: users/templates/klimapunkte.html:35
 msgid "Benutzerdefiniert"
 msgstr "Custom"
 
-#: users/templates/klimapunkte.html:52
+#: users/templates/klimapunkte.html:39
 msgid "Startdatum:"
 msgstr "Start date:"
 
-#: users/templates/klimapunkte.html:53
+#: users/templates/klimapunkte.html:40
 msgid "Startdatum"
 msgstr "Start date"
 
-#: users/templates/klimapunkte.html:54
+#: users/templates/klimapunkte.html:41
 msgid "Enddatum:"
 msgstr "End date:"
 
-#: users/templates/klimapunkte.html:55
+#: users/templates/klimapunkte.html:42
 msgid "Enddatum"
 msgstr "End date"
 
-#: users/templates/klimapunkte.html:58
+#: users/templates/klimapunkte.html:45
 msgid "Anwenden"
 msgstr "Apply"
 
@@ -423,30 +420,36 @@ msgstr "View details"
 msgid "Es wurden keine User gefunden"
 msgstr "No users found"
 
-#: users/views.py:126
+#: users/views.py:125
 msgid "Ungültiger Zeitraum."
 msgstr "Invalid time period."
 
-#: users/views.py:134
+#: users/views.py:133
 msgid "Bitte Start- und Enddatum angeben."
 msgstr "Please provide both start and end date."
 
-#: users/views.py:141
+#: users/views.py:140
 msgid "Ungültiges Datumsformat."
 msgstr "Invalid date format."
 
-#: users/views.py:145
+#: users/views.py:144
 msgid "Das Startdatum muss vor dem Enddatum liegen."
 msgstr "The start date must be before the end date."
 
-#: users/views.py:148
+#: users/views.py:147
 msgid "Das Enddatum darf nicht in der Zukunft liegen."
 msgstr "The end date cannot be in the future."
 
-#: users/views.py:151
+#: users/views.py:150
 #, python-format
 msgid "%(start)s bis %(end)s"
 msgstr "%(start)s to %(end)s"
+
+#~ msgid "Das entspricht"
+#~ msgstr "This equals"
+
+#~ msgid "Tonnen eingespartem CO2"
+#~ msgstr "tonnes of CO2 saved"
 
 #, python-format
 #~ msgid ""

@@ -46,6 +46,29 @@
 
     <link rel="manifest" href="{% static 'pwa/manifest.json' %}">
 
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "ClimateQuest",
+          "applicationCategory": "LifestyleApplication",
+          "operatingSystem": "iOS, macOS, Web",
+          "url": "https://climate-quest.de",
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "5.0",
+            "ratingCount": "3"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR"
+          },
+          "applicationSubCategory": "EnvironmentApplication",
+          "browserRequirements": "Requires JavaScript",
+        }
+    </script>
+
     <style nonce="{{ request.csp_style_nonce }}">
         #up-btn {
             position: fixed;
@@ -605,7 +628,8 @@
                 <a href="{% url 'artikel_overview' %}"><span class="emoji">&#x1F4F0;</span> {% trans "Artikel" %}</a>
                 <a href="{% url 'events_overview' %}"><span class="emoji">&#x1F389;</span> {% trans "Events" %}</a>
                 <a href="{% url 'forum_overview' %}"><span class="emoji">&#x1F4AC;</span> {% trans "Forum" %}</a>
-                <a href="{% url 'petitions_overview' %}"><span class="emoji">&#x270D;</span> {% trans "Petitionen" %}</a>
+                <a href="{% url 'petitions_overview' %}"><span class="emoji">&#x270D;</span> {% trans "Petitionen" %}
+                </a>
             </nav>
         </div>
     </div>
@@ -614,7 +638,9 @@
         <div class="mobile-menu-overlay" data-menu="people">
             <div class="mobile-menu-modal">
                 <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
-                <h2><span class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span> {% trans "Family" %}</h2>
+                <h2><span
+                        class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span> {% trans "Family" %}
+                </h2>
                 <nav class="mobile-menu-nav">
                     <a href="{% url 'families_view' %}"><span class="emoji">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span>
                         {% trans "Families" %}</a>
@@ -632,10 +658,13 @@
                 <h2><span class="emoji">&#x1F393;</span> {% trans "Schnellzugriff" %}</h2>
                 <nav class="mobile-menu-nav">
                     <a href="{% url 'add' %}"><span class="emoji">&#x2795;</span> {% trans "Aktion eintragen" %}</a>
-                    <a href="{% url 'history_me' %}"><span class="emoji">&#x1F4DC;</span> {% trans "Aktions-Historie" %}</a>
+                    <a href="{% url 'history_me' %}"><span class="emoji">&#x1F4DC;</span> {% trans "Aktions-Historie" %}
+                    </a>
                     <a href="{% url 'level_me' %}"><span class="emoji">&#x1F4C8;</span> {% trans "Level" %}</a>
-                    <a href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span> {% trans "Klimapunkte" %}</a>
-                    <a href="{% url 'credit_view' %}"><span class="emoji">&#x1F333;</span> {% trans "Credits / Bäume" %}</a>
+                    <a href="{% url 'klimapunkte_me' %}"><span class="emoji">&#x1F4B0;</span> {% trans "Klimapunkte" %}
+                    </a>
+                    <a href="{% url 'credit_view' %}"><span class="emoji">&#x1F333;</span> {% trans "Credits / Bäume" %}
+                    </a>
                 </nav>
             </div>
         </div>
@@ -646,29 +675,35 @@
                 <h2><span class="emoji">&#x1F464;</span> {{ request.user.username }}</h2>
                 <nav class="mobile-menu-nav">
                     <div class="mobile-menu-section">
-                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F4C4;</span> {% trans "Seite" %}</div>
+                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F4C4;</span> {% trans "Seite" %}
+                        </div>
                         <a class="openShareOverlay"><span class="emoji">&#xE253;</span> {% trans "Teilen" %}</a>
                         <a href="{% url 'benachrichtigungen_view' %}"><span
                                 class="emoji">&#x1F514;</span>
                             {% trans "Benachrichtigungen" %}</a>
                     </div>
                     <div class="mobile-menu-section">
-                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F464;</span> {% trans "Konto" %}</div>
+                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F464;</span> {% trans "Konto" %}
+                        </div>
                         <a href="{% url 'settings_view' %}"><span class="emoji">&#x2699;</span>
                             {% trans "Einstellungen" %}</a>
                         <a href="{% url 'logout_view' %}"><span class="emoji">&#x1F44B;</span>
                             {% trans "Logout" %}</a>
                     </div>
                     <div class="mobile-menu-section">
-                        <div class="mobile-menu-section-title"><span class="emoji">&#x1F5C2;</span> {% trans "Sonstiges" %}</div>
+                        <div class="mobile-menu-section-title"><span
+                                class="emoji">&#x1F5C2;</span> {% trans "Sonstiges" %}</div>
                         <a href="{% url 'track_actions' %}"><span class="emoji">&#x23F1;</span>
                             {% trans "Tracken" %}</a>
                     </div>
                     {% if request.user.is_staff %}
                         <div class="mobile-menu-section">
-                            <div class="mobile-menu-section-title"><span class="emoji">&#x1F451;</span> {% trans "Admin" %}</div>
-                            <a href="{% url 'admin:index' %}" target="_blank"><span class="emoji">&#x1F3DB;</span> {% trans "Admin (I)" %}</a>
-                            <a href="{% url 'admin' %}"><span class="emoji">&#x1F3F0;</span> {% trans "Admin (II)" %}</a>
+                            <div class="mobile-menu-section-title"><span
+                                    class="emoji">&#x1F451;</span> {% trans "Admin" %}</div>
+                            <a href="{% url 'admin:index' %}" target="_blank"><span
+                                    class="emoji">&#x1F3DB;</span> {% trans "Admin (I)" %}</a>
+                            <a href="{% url 'admin' %}"><span class="emoji">&#x1F3F0;</span> {% trans "Admin (II)" %}
+                            </a>
                         </div>
                     {% endif %}
                 </nav>

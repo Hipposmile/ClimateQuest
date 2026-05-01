@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-26 11:23+0200\n"
+"POT-Creation-Date: 2026-04-30 18:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,11 @@ msgid ""
 "indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile "
 "dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum "
 "Klimaschutz."
-msgstr "Welcome to ClimateQuest. Motivate yourself for more climate protection by collecting climate points and comparing yourself with other users. Share your knowledge in articles or in the forum and contribute to climate protection."
+msgstr ""
+"Welcome to ClimateQuest. Motivate yourself for more climate protection by "
+"collecting climate points and comparing yourself with other users. Share "
+"your knowledge in articles or in the forum and contribute to climate "
+"protection."
 
 #: templates/base.html:561
 msgid "Dashboard"
@@ -160,7 +164,7 @@ msgstr "Terms of Use"
 msgid "Impressum"
 msgstr "Legal Notice"
 
-#: templates/base.html:688
+#: templates/base.html:688 try/test.html:112
 msgid "Datenschutz"
 msgstr "Privacy Policy"
 
@@ -279,3 +283,166 @@ msgstr "Download"
 #: templates/base.html:1327
 msgid "Bist du sicher?"
 msgstr "Are you sure?"
+
+#: try/test.html:6
+msgid "ClimateQuest – Schulkooperation"
+msgstr ""
+
+#: try/test.html:67
+msgid "Kooperation von Schulen mit ClimateQuest"
+msgstr ""
+
+#: try/test.html:68
+msgid ""
+"Ein modernes Konzept für Klimaschutz, Bildung und nachhaltige "
+"Schulentwicklung"
+msgstr ""
+
+#: try/test.html:72
+msgid "Zielsetzung"
+msgstr ""
+
+#: try/test.html:73
+msgid ""
+"Angesichts der Klimakrise gehört es zu den zentralen Aufgaben von Schulen, "
+"einen aktiven Beitrag zum Klimaschutz zu leisten. Schulen erreichen täglich "
+"eine große Zahl junger Menschen und verfügen damit über einen wirkungsvollen "
+"Hebel, nachhaltiges Denken und Handeln zu fördern."
+msgstr ""
+
+#: try/test.html:76
+msgid "Reduzierung des ökologischen Fußabdrucks der Schule"
+msgstr ""
+
+#: try/test.html:77
+msgid "Bildung von Schülerinnen und Schülern zu Umweltthemen"
+msgstr ""
+
+#: try/test.html:78
+msgid "Motivierung zu klimafreundlichem Verhalten im Alltag"
+msgstr ""
+
+#: try/test.html:81
+msgid ""
+"Junge Menschen prägen die Zukunft. Ohne Wissen über Klima- und Umweltschutz "
+"und ohne einfachen Zugang zu Handlungsmöglichkeiten kann langfristig kein "
+"wirksamer Klimaschutz gelingen."
+msgstr ""
+
+#: try/test.html:85
+msgid "Funktionen von ClimateQuest"
+msgstr ""
+
+#: try/test.html:86
+msgid ""
+"In der App ClimateQuest können Nutzer nachhaltige Aktionen eintragen und "
+"dafür Klimapunkte sammeln. Diese bilden die Grundlage für Level, "
+"Wochenziele, Streaks und Vergleiche in sogenannten Families und Communities."
+msgstr ""
+
+#: try/test.html:89
+msgid "Vergleich zwischen Klassen, AGs oder Gruppen"
+msgstr ""
+
+#: try/test.html:90
+msgid "Wöchentliche Ziele und Streaks zur Motivation"
+msgstr ""
+
+#: try/test.html:91
+msgid "Baumpflanzungen ab 1.000 Punkten (Plant-for-the-Planet)"
+msgstr ""
+
+#: try/test.html:92
+msgid "Bildungsfunktionen wie Artikel, Forum, Petitionen und Events"
+msgstr ""
+
+#: try/test.html:95
+msgid ""
+"Die App motiviert durch Gamification zu realem Klimaschutz und bietet "
+"gleichzeitig Bildungsinhalte und Möglichkeiten zur aktiven Mitgestaltung."
+msgstr ""
+
+#: try/test.html:99
+msgid "Umsetzung im Schulalltag"
+msgstr ""
+
+#: try/test.html:100
+msgid "Eine Kooperation kann so aussehen:"
+msgstr ""
+
+#: try/test.html:103
+msgid "Alle SuS erhalten einen eigenen Account"
+msgstr ""
+
+#: try/test.html:104
+msgid "Klassen und AGs bilden Families"
+msgstr ""
+
+#: try/test.html:105
+msgid "Alle Families bilden eine schulweite Community"
+msgstr ""
+
+#: try/test.html:108
+msgid ""
+"Durch Rankings innerhalb der Klassen und der gesamten Schule entsteht ein "
+"motivierender Wettbewerb, der zu mehr nachhaltigem Verhalten führt."
+msgstr ""
+
+#: try/test.html:113
+msgid ""
+"Die App wurde nach DSGVO-Grundsätzen entwickelt. Eine schulische "
+"Datenschutzprüfung ist dennoch notwendig. Daten werden verschlüsselt "
+"gespeichert, Backups ebenfalls verschlüsselt abgelegt."
+msgstr ""
+
+#: try/test.html:115
+msgid ""
+"Da Nutzernamen sichtbar sind, ist eine Einwilligung der "
+"Erziehungsberechtigten (und ab 14 Jahren auch der SuS selbst) erforderlich. "
+"Ohne Einwilligung darf keine Registrierung erfolgen."
+msgstr ""
+
+#: try/test.html:119
+msgid "Herausforderungen und offene Punkte"
+msgstr ""
+
+#: try/test.html:121
+msgid "Datenschutzprüfung durch die Schule"
+msgstr ""
+
+#: try/test.html:122
+msgid "Bereitstellung der Basisdaten für die Account-Erstellung"
+msgstr ""
+
+#: try/test.html:127
+msgid "Vorteile für die Schule"
+msgstr ""
+
+#: try/test.html:130
+msgid ""
+"Nachhaltige Verhaltensänderung durch Wettbewerb, Sichtbarkeit und Zielsetzung"
+msgstr ""
+
+#: try/test.html:131
+msgid "Verknüpfung von Bildung und Praxis durch reale Klimaschutzaktionen"
+msgstr ""
+
+#: try/test.html:132
+msgid "Stärkung des Schulprofils und Unterstützung bei Umwelt-Auszeichnungen"
+msgstr ""
+
+#: try/test.html:133
+msgid ""
+"Aktiver Beitrag zum Klimaschutz durch Verhaltensänderungen und "
+"Baumpflanzungen"
+msgstr ""
+
+#: try/test.html:136
+msgid ""
+"Gerne stelle ich das Konzept in einem persönlichen Gespräch vor, um eine "
+"mögliche Pilotphase zu besprechen."
+msgstr ""
+
+#: try/test.html:140
+msgid "Rückfragen gerne an kontakt@climate-quest.de"
+msgstr ""

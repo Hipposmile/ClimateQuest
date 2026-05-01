@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-27 12:43+0200\n"
+"POT-Creation-Date: 2026-04-30 18:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -59,20 +59,16 @@ msgid "Username"
 msgstr "Username"
 
 #: home/templates/admin.html:31
-#, fuzzy
-#| msgid "Nachricht:"
 msgid "Nachricht (Deutsch):"
-msgstr "Message:"
+msgstr "Message (Deutsch):"
 
 #: home/templates/admin.html:32 home/templates/admin.html:35
 msgid "Nachricht"
 msgstr "Message"
 
 #: home/templates/admin.html:34
-#, fuzzy
-#| msgid "Nachricht:"
 msgid "Nachricht (Englisch):"
-msgstr "Message:"
+msgstr "Message (English):"
 
 #: home/templates/admin.html:37
 msgid "URL:"
@@ -149,7 +145,7 @@ msgstr "More"
 msgid "Du hast keine Benachrichtigungen"
 msgstr "You have no notifications"
 
-#: home/templates/companies_and_schools.html:6
+#: home/templates/companies_and_schools.html:7
 msgid ""
 "Nutzen Sie ClimateQuest in Ihrer Schule oder Ihrem Unternehmen, um den CO2-"
 "Fußabdruck zu reduzieren und nachhaltige Praktiken zu fördern."
@@ -157,24 +153,34 @@ msgstr ""
 "Use ClimateQuest in your school or company to reduce your carbon footprint "
 "and promote sustainable practices."
 
-#: home/templates/companies_and_schools.html:9
+#: home/templates/companies_and_schools.html:10
 msgid "Schulen / Unternehmen - ClimateQuest"
 msgstr "Schools / Companies - ClimateQuest"
 
-#: home/templates/companies_and_schools.html:12 home/templates/home.html:303
+#: home/templates/companies_and_schools.html:13 home/templates/home.html:303
 msgid "ClimateQuest für Schulen und Unternehmen"
 msgstr "ClimateQuest for Schools and Companies"
 
-#: home/templates/companies_and_schools.html:20
+#: home/templates/companies_and_schools.html:21
 #, python-format
+#| msgid ""
+#| "ClimateQuest als Unternehmen oder Schule zu verwenden, bietet zahlreiche "
+#| "Vorteile. In <a href=\"%(pdf_url)s\">diesem PDF</a> werden diese für "
+#| "Schulen exemplarisch dargelegt, die meisten Punkte lassen sich allerdings "
+#| "auch auf Unternehmen übertragen. Melden Sie sich bei Interesse unter <a "
+#| "href=\"mailto:kontakt@climate-quest.de?subject=Anfrage für Nutzung von "
+#| "ClimateQuest als Schule oder Unternehmen\">kontakt@climate-quest.de</a>. "
+#| "Das ganze ist kostenlos und unkompliziert!"
 msgid ""
-"ClimateQuest als Unternehmen oder Schule zu verwenden, bietet zahlreiche "
-"Vorteile. In <a href=\"%(pdf_url)s\">diesem PDF</a> werden diese für Schulen "
-"exemplarisch dargelegt, die meisten Punkte lassen sich allerdings auch auf "
-"Unternehmen übertragen. Melden Sie sich bei Interesse unter <a "
-"href=\"mailto:kontakt@climate-quest.de?subject=Anfrage für Nutzung von "
-"ClimateQuest als Schule oder Unternehmen\">kontakt@climate-quest.de</a>. Das "
-"ganze ist kostenlos und unkompliziert!"
+"ClimateQuest als Unternehmen oder Schule zu verwenden, bietet zahlreiche\n"
+"        Vorteile. In <a href=\"%(pdf_url)s\">diesem PDF</a> werden diese für "
+"Schulen exemplarisch dargelegt, die meisten\n"
+"        Punkte lassen sich allerdings auch auf Unternehmen übertragen. "
+"Melden Sie sich bei Interesse unter\n"
+"        <a href=\"mailto:kontakt@climate-quest.de?subject=Anfrage für "
+"Nutzung von ClimateQuest als Schule oder Unternehmen\">kontakt@climate-"
+"quest.de</a>\n"
+"        . Das ganze ist kostenlos und unkompliziert!"
 msgstr ""
 "Using ClimateQuest as a company or school offers numerous benefits. <a "
 "href=\"%(pdf_url)s\">This PDF</a> outlines these benefits for schools as an "

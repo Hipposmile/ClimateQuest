@@ -3,7 +3,8 @@
 {% load i18n %}
 
 {% block meta %}
-    <meta name="description" content="{% trans 'Nutzen Sie ClimateQuest in Ihrer Schule oder Ihrem Unternehmen, um den CO2-Fußabdruck zu reduzieren und nachhaltige Praktiken zu fördern.' %}">
+    <meta name="description"
+          content="{% trans 'Nutzen Sie ClimateQuest in Ihrer Schule oder Ihrem Unternehmen, um den CO2-Fußabdruck zu reduzieren und nachhaltige Praktiken zu fördern.' %}">
 {% endblock %}
 
 {% block title %}{% trans "Schulen / Unternehmen - ClimateQuest" %}{% endblock %}
@@ -17,5 +18,9 @@
     {% endif %}
 
     {% static 'documents/Schule_Expose.pdf' as expose_pdf %}
-    <p>{% blocktrans with pdf_url=expose_pdf %}ClimateQuest als Unternehmen oder Schule zu verwenden, bietet zahlreiche Vorteile. In <a href="{{ pdf_url }}">diesem PDF</a> werden diese für Schulen exemplarisch dargelegt, die meisten Punkte lassen sich allerdings auch auf Unternehmen übertragen. Melden Sie sich bei Interesse unter <a href="mailto:kontakt@climate-quest.de?subject=Anfrage für Nutzung von ClimateQuest als Schule oder Unternehmen">kontakt@climate-quest.de</a>. Das ganze ist kostenlos und unkompliziert!{% endblocktrans %}</p>
+    <p>{% blocktrans with pdf_url=expose_pdf %}ClimateQuest als Unternehmen oder Schule zu verwenden, bietet zahlreiche
+        Vorteile. In <a href="{{ pdf_url }}">diesem PDF</a> werden diese für Schulen exemplarisch dargelegt, die meisten
+        Punkte lassen sich allerdings auch auf Unternehmen übertragen. Melden Sie sich bei Interesse unter
+        <a href="mailto:kontakt@climate-quest.de?subject=Anfrage für Nutzung von ClimateQuest als Schule oder Unternehmen">kontakt@climate-quest.de</a>
+        . Das ganze ist kostenlos und unkompliziert!{% endblocktrans %}</p>
 {% endblock %}
