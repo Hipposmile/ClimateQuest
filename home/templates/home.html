@@ -242,7 +242,7 @@
 
         changeCaption(0);
     </script>
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         @media (max-width: 1200px) {
             .splide__pagination__page {
                 min-height: unset !important;
