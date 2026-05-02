@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-25 19:36+0200\n"
+"POT-Creation-Date: 2026-05-02 11:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -334,13 +334,10 @@ msgstr "At least one special character"
 
 #: community/templates/create_community.html:46
 #, python-format
-#| msgid "Oder einer bestehenden Community beitreten."
 msgid ""
 "Oder <a href=\"%(join_community_link)s\">einer bestehenden Community "
 "beitreten</a>."
-msgstr ""
-"Or <a href=\"%(join_community_link)s\">join an existing "
-"community</a>."
+msgstr "Or <a href=\"%(join_community_link)s\">join an existing community</a>."
 
 #: community/templates/create_community.html:78
 #: community/templates/edit_community.html:42
@@ -485,7 +482,9 @@ msgstr ""
 msgid ""
 "Oder\n"
 "        <a href=\"%(create_community_link)s\">eine Community gründen</a>."
-msgstr "Or\n <a href=\"%(create_community_link)s\">found a community</a>."
+msgstr ""
+"Or\n"
+" <a href=\"%(create_community_link)s\">found a community</a>."
 
 #~ msgid "Oder eine Community gründen."
 #~ msgstr "Or found a community."

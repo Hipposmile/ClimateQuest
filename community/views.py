@@ -11,7 +11,7 @@ from .models import Community, CommunityChatMessage
 from family.models import Family
 from aktionen.models import Aktion
 
-from utils.functions import create_notification, get_families_of_user, get_klimapunkte, get_klimapunkte_from_likes
+from utils.functions import create_notification, get_families_of_user, get_klimapunkte, get_additional_klimapunkte
 
 
 @login_required
@@ -456,7 +456,7 @@ def community_detail(request, community_id, family_id):
                 for single_member in family_members:
                     aktionen = Aktion.objects.filter(user=single_member, date=heute)
                     klimapunkte = get_klimapunkte(aktionen)
-                    klimapunkte += get_klimapunkte_from_likes(single_member)
+                    klimapunkte += get_additional_klimapunkte(single_member)
                     klimapunkte_gesamt += klimapunkte
 
                 klimapunkte = klimapunkte_gesamt / community_member.member_count() if community_member.member_count() else 0
@@ -466,7 +466,7 @@ def community_detail(request, community_id, family_id):
                 for single_member in family_members:
                     aktionen = Aktion.objects.filter(user=single_member, date__gte=seven_days)
                     klimapunkte = get_klimapunkte(aktionen)
-                    klimapunkte += get_klimapunkte_from_likes(single_member)
+                    klimapunkte += get_additional_klimapunkte(single_member)
                     klimapunkte_gesamt += klimapunkte
 
                 klimapunkte = klimapunkte_gesamt / community_member.member_count() if community_member.member_count() else 0
@@ -476,7 +476,7 @@ def community_detail(request, community_id, family_id):
                 for single_member in family_members:
                     aktionen = Aktion.objects.filter(user=single_member, date__gte=thirty_days)
                     klimapunkte = get_klimapunkte(aktionen)
-                    klimapunkte += get_klimapunkte_from_likes(single_member)
+                    klimapunkte += get_additional_klimapunkte(single_member)
                     klimapunkte_gesamt += klimapunkte
 
                 klimapunkte = klimapunkte_gesamt / community_member.member_count() if community_member.member_count() else 0
@@ -486,7 +486,7 @@ def community_detail(request, community_id, family_id):
                 for single_member in family_members:
                     aktionen = Aktion.objects.filter(user=single_member, date__gte=threehundertsixtyfive_days)
                     klimapunkte = get_klimapunkte(aktionen)
-                    klimapunkte += get_klimapunkte_from_likes(single_member)
+                    klimapunkte += get_additional_klimapunkte(single_member)
                     klimapunkte_gesamt += klimapunkte
 
                 klimapunkte = klimapunkte_gesamt / community_member.member_count() if community_member.member_count() else 0
@@ -497,7 +497,7 @@ def community_detail(request, community_id, family_id):
                 for single_member in family_members:
                     aktionen = Aktion.objects.filter(user=single_member)
                     klimapunkte = get_klimapunkte(aktionen)
-                    klimapunkte += get_klimapunkte_from_likes(single_member)
+                    klimapunkte += get_additional_klimapunkte(single_member)
                     klimapunkte_gesamt += klimapunkte
 
                 klimapunkte = klimapunkte_gesamt / community_member.member_count() if community_member.member_count() else 0
@@ -507,7 +507,7 @@ def community_detail(request, community_id, family_id):
                 for single_member in family_members:
                     aktionen = Aktion.objects.filter(user=single_member, date__gte=thirty_days)
                     klimapunkte = get_klimapunkte(aktionen)
-                    klimapunkte += get_klimapunkte_from_likes(single_member)
+                    klimapunkte += get_additional_klimapunkte(single_member)
                     klimapunkte_gesamt += klimapunkte
 
                 klimapunkte = klimapunkte_gesamt / community_member.member_count() if community_member.member_count() else 0
@@ -526,7 +526,7 @@ def community_detail(request, community_id, family_id):
             for single_member in family_members:
                 aktionen = Aktion.objects.filter(user=single_member)
                 klimapunkte = get_klimapunkte(aktionen)
-                klimapunkte += get_klimapunkte_from_likes(single_member)
+                klimapunkte += get_additional_klimapunkte(single_member)
                 klimapunkte_gesamt += klimapunkte
 
             community_members_count = community_member.member_count()

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-01 21:39+0200\n"
+"POT-Creation-Date: 2026-05-02 11:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,7 +83,6 @@ msgstr "Article %(name)s"
 
 #: artikel/templates/artikel_detail.html:58
 #, python-format
-#| msgid "<a href=\"%(url)s\">Artikel</a> <i>%(name)s</i>"
 msgid ""
 "<a href=\"%(url)s\">Artikel</a>\n"
 "        <i>%(name)s</i>"
@@ -97,7 +96,6 @@ msgstr "Blocked"
 
 #: artikel/templates/artikel_detail.html:155
 #, python-format
-#| msgid "Erstellt von <a href=\"%(url)s\">%(creator)s</a>"
 msgid ""
 "Erstellt von\n"
 "        <a href=\"%(url)s\">%(creator)s</a>"
@@ -116,7 +114,6 @@ msgstr "Checked and verified information"
 
 #: artikel/templates/artikel_detail.html:167
 #, python-format
-#| msgid "Zuletzt bearbeitet: %(date)s"
 msgid ""
 "Zuletzt bearbeitet:\n"
 "        %(date)s"
@@ -167,8 +164,6 @@ msgstr "Reply"
 
 #: artikel/templates/artikel_detail.html:228
 #, python-format
-#| msgid ""
-#| "<a href=\"%(url)s\">Logge dich ein</a>, um den Kommentar zu beantworten"
 msgid ""
 "<a href=\"%(url)s\">Logge dich ein</a>, um den\n"
 "                                    Kommentar zu beantworten"
@@ -195,8 +190,6 @@ msgstr "Add comment"
 
 #: artikel/templates/artikel_detail.html:282
 #, python-format
-#| msgid ""
-#| "<a href=\"%(url)s\">Logge dich ein</a>, um einen Kommentar zu verfassen"
 msgid ""
 "<a href=\"%(url)s\">Logge dich ein</a>, um einen Kommentar zu\n"
 "            verfassen"

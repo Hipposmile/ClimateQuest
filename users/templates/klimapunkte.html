@@ -20,7 +20,7 @@
     <input type="hidden" id="klimapunkte" value="{{ klimapunkte|floatformat:-4 }}">
     <p>{% trans "Klimapunkte:" %} <b>{{ klimapunkte|floatformat:-4 }}</b></p>
     <p id="co2">{% blocktrans with co2=saved_co2|floatformat:-4 %}Das entspricht <b>{{ co2 }}</b> Tonnen eingesparten CO2{% endblocktrans %}</p>
-    <p>{% blocktrans with points=klimapunkte_likes|floatformat:-4 %}Außerdem wurden <b>{{ points }}</b> Klimapunkte durch das Schreiben von Artikeln verdient.{% endblocktrans %}</p>
+    <p>{% blocktrans with points=additional_klimapunkte|floatformat:-4 %}Außerdem wurden <b>{{ points }}</b> Klimapunkte, z.B. durch das Schreiben von Artikeln, verdient.{% endblocktrans %}</p>
     <p>{% blocktrans with total_points=klimapunkte_total|floatformat:-4 %}Insgesamt wurden also bereits <b>{{ total_points }}</b> Klimapunkte gesammelt.{% endblocktrans %}</p>
     <p>{% blocktrans with timespan=zeitraum %}Zeitraum: {{ timespan }}{% endblocktrans %}</p>
     <form method="post" >

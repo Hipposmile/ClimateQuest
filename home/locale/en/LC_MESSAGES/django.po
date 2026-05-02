@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-01 16:20+0200\n"
+"POT-Creation-Date: 2026-05-02 18:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,7 +157,7 @@ msgstr ""
 msgid "Schulen / Unternehmen - ClimateQuest"
 msgstr "Schools / Companies - ClimateQuest"
 
-#: home/templates/companies_and_schools.html:13 home/templates/home.html:303
+#: home/templates/companies_and_schools.html:13 home/templates/home.html:339
 msgid "ClimateQuest für Schulen und Unternehmen"
 msgstr "ClimateQuest for Schools and Companies"
 
@@ -1066,80 +1066,122 @@ msgstr ""
 "feedback form and send it back to us completed: <a "
 "href=\"%(testbogen_url)s\" download>Download</a>"
 
-#: home/templates/home.html:10
+#: home/templates/home.html:11
 msgid "Startseite"
 msgstr "Home"
 
-#: home/templates/home.html:180
+#: home/templates/home.html:117
 msgid "Zum Dashboard"
 msgstr "To the dashboard"
 
-#: home/templates/home.html:184
+#: home/templates/home.html:122
 msgid "ClimateQuest - Motivation für mehr Klimaschutz"
 msgstr "ClimateQuest - Motivation for a Better Climate"
 
-#: home/templates/home.html:250
+#: home/templates/home.html:145
+msgid "Bild, auf dem ein Baum gepflanzt wird"
+msgstr "Picture of a tree being planted"
+
+#: home/templates/home.html:167
+msgid "Bild eines Zugs"
+msgstr "Picture of a train"
+
+#: home/templates/home.html:189
+msgid "Bild eines veganes Gerichts"
+msgstr "Picture of a vegan dish"
+
+#: home/templates/home.html:211
+msgid "Bild eines Mailprogramms"
+msgstr "Picture of an email program"
+
+#: home/templates/home.html:229
+msgid ""
+"User BrunnerL3 wurde durch ClimateQuest dazu motiviert, einen Baum zu "
+"pflanzen"
+msgstr "User BrunnerL3 was motivated by ClimateQuest to plant a tree"
+
+#: home/templates/home.html:230
+msgid ""
+"User Maradona wurde durch ClimateQuest dazu motiviert, mit dem Zug statt mit "
+"dem Flugzeug zu reisen"
+msgstr ""
+"User Maradona was motivated by ClimateQuest to travel by train instead of by "
+"plane"
+
+#: home/templates/home.html:231
+msgid ""
+"User Jessi wurde durch ClimateQuest dazu motiviert, weniger Käse zu essen"
+msgstr "User Jessi was motivated by ClimateQuest to eat less cheese"
+
+#: home/templates/home.html:232
+msgid ""
+"User Jessi wurde durch ClimateQuest dazu motiviert, E-Mails regelmäßig zu "
+"löschen"
+msgstr "User Jessi was motivated by ClimateQuest to regularly delete emails"
+
+#: home/templates/home.html:282
 msgid "Jetzt registrieren!"
 msgstr "Sign up now!"
 
-#: home/templates/home.html:254
+#: home/templates/home.html:286
 msgid "Übersicht"
 msgstr "Overview"
 
-#: home/templates/home.html:263
+#: home/templates/home.html:295
 msgid "registrierte Nutzer hat diese Plattform bereits."
 msgstr "users have already registered on this platform."
 
-#: home/templates/home.html:268
+#: home/templates/home.html:300
 msgid "Klimapunkte wurden von all diesen Nutzern zusammen bereits gesammelt."
 msgstr ""
 "climate points have already been collected by all these users combined."
 
-#: home/templates/home.html:272
+#: home/templates/home.html:304
 msgid ""
 "Weil jeder Klimapunkt ungefähr für <b id=\"co2_per_klimapunkt\">1 kg</b> "
-"eingespartes CO₂ steht, wurden dadurch insgesamt"
+"eingespartes CO₂\n"
+"                steht, wurden dadurch insgesamt"
 msgstr ""
 "Since each climate point represents approximately <b "
 "id=\"co2_per_klimapunkt\">1 kg</b> of CO₂ saved, a total of"
 
-#: home/templates/home.html:274
+#: home/templates/home.html:307
 msgid "Tonnen CO2e eingespart."
 msgstr "tonnes of CO2e have been saved."
 
-#: home/templates/home.html:278
+#: home/templates/home.html:311
 msgid "Außerdem wurden insgesamt"
 msgstr "In addition, a total of"
 
-#: home/templates/home.html:280
+#: home/templates/home.html:313
 msgid "Bäume gepflanzt."
 msgstr "trees have been planted."
 
-#: home/templates/home.html:286
+#: home/templates/home.html:319
 msgid "Keine Lust, ClimateQuest als Webseite zu verwenden?"
 msgstr "Not keen on using ClimateQuest as a website?"
 
-#: home/templates/home.html:286
+#: home/templates/home.html:321
 msgid "ClimateQuest als App downloaden"
 msgstr "Download ClimateQuest as an app"
 
-#: home/templates/home.html:297
+#: home/templates/home.html:333
 msgid "Bewerten Sie uns auf Trustpilot"
 msgstr "Rate us on Trustpilot"
 
-#: home/templates/home.html:310
+#: home/templates/home.html:346
 msgid "Wie ClimateQuest funktioniert"
 msgstr "How ClimateQuest works"
 
-#: home/templates/home.html:314
+#: home/templates/home.html:350
 msgid "Aktion hinzufügen"
 msgstr "Add Action"
 
-#: home/templates/home.html:318
+#: home/templates/home.html:354
 msgid "Family gründen"
 msgstr "Create a Family"
 
-#: home/templates/home.html:321
+#: home/templates/home.html:357
 msgid "Family beitreten"
 msgstr "Join a Family"
 

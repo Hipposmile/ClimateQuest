@@ -95,6 +95,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django_browser_reload.middleware.BrowserReloadMiddleware',
     'core.middleware.GenerateCSPNonceMiddleware',
+    'core.middleware.AddGloablVariablesMiddleware'
 ]
 
 ROOT_URLCONF = 'ClimateQuest.urls'

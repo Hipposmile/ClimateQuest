@@ -231,7 +231,7 @@ def get_level(user):
     aktionen = Aktion.objects.filter(user=user)
     # Klimapunkte abrufen
     klimapunkte = get_klimapunkte(aktionen)
-    klimapunkte += get_klimapunkte_from_likes(user)
+    klimapunkte += get_additional_klimapunkte(user)
 
     # Alle Level sortiert abrufen
     levels = Level.objects.order_by('klimapunkte')
@@ -280,7 +280,7 @@ def get_weekly_goal_from_user(user):
 def get_all_klimapunkte_from_user(user):
     aktionen = Aktion.objects.filter(user=user)
     klimapunkte = get_klimapunkte(aktionen)
-    klimapunkte += get_klimapunkte_from_likes(user)
+    klimapunkte += get_additional_klimapunkte(user)
     return klimapunkte
 
 
@@ -424,29 +424,10 @@ def get_klimapunkte_from_likes(user):
     return klimapunkte
 
 
-"""def get_streak_from_user(user):
-    action_days = (
-        Aktion.objects
-        .filter(user=user)
-        .values_list('date', flat=True)
-        .distinct()
-        .order_by('-date')
-    )
-
-    today = date.today()
-
-    has_today = date.today() in action_days
-
-    streak = 0
-    expected_day = today if has_today else today - timedelta(days=1)
-
-    for action_day in action_days:
-        if action_day == expected_day:
-            streak += 1
-            expected_day -= timedelta(days=1)
-        else:
-            break
-    return streak"""
+def get_additional_klimapunkte(user):
+    klimapunkte_from_likes = get_klimapunkte_from_likes(user)
+    additional_klimapunkte = user.usererweitert.additional_klimapunkte
+    return klimapunkte_from_likes + additional_klimapunkte
 
 
 def get_streak_from_user(user):
@@ -585,5 +566,5 @@ def get_klimapunkte_fuer_member(member, start: date | None, end: date | None) ->
         aktionen = Aktion.objects.filter(user=member)
 
     punkte = get_klimapunkte(aktionen) or 0
-    punkte += get_klimapunkte_from_likes(member)
+    punkte += get_additional_klimapunkte(member)
     return punkte

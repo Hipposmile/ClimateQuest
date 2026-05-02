@@ -6,6 +6,7 @@
 {% block meta %}
     <meta name="description"
           content="Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum Klimaschutz.">
+    <link rel="stylesheet" href="{% static 'libraries/splide/splide.min.css' %}">
 {% endblock %}
 {% block title %}{% trans "Startseite" %}{% endblock %}
 
@@ -57,65 +58,6 @@
             color: var(--color-counters);
         }
 
-        #slider {
-            position: relative;
-            width: 100%;
-            height: auto;
-            max-height: 70vh;
-            margin-top: 20px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #000;
-        }
-
-        #slider picture {
-            display: none;
-        }
-
-        #slider picture.active {
-            display: block;
-        }
-
-        #slider img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .nav-button {
-            position: absolute;
-            top: 50%;
-            font-size: 3rem;
-            background: rgba(0, 0, 0, 0.4);
-            color: white;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            z-index: 10;
-            transition: background 0.3s;
-        }
-
-        .nav-button:hover {
-            background: rgba(0, 0, 0, 0.7);
-        }
-
-        #prev {
-            left: 20px;
-        }
-
-        #next {
-            right: 20px;
-        }
-
-        @media (max-width: 1200px) {
-            .nav-button {
-                font-size: 2rem;
-                padding: 0.3rem 0.6rem;
-            }
-        }
-
         .slider-heading {
             position: absolute;
             color: white;
@@ -165,86 +107,176 @@
             }
         }
 
+
         #mobile-app-div {
             display: none;
         }
     </style>
-    {% if messages %}
-        {% for message in messages %}
-            <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
-        {% endfor %}
-        <hr>
-    {% endif %}
     {% if user.is_authenticated %}
         <a href="{% url 'dashboard' %}" class="redirect-link ">
             <span>{% trans "Zum Dashboard" %}</span>
             <span class="redirect-link-icon">→</span>
         </a>
     {% endif %}
+
     <h1 class="slider-heading">{% trans "ClimateQuest - Motivation für mehr Klimaschutz" %}</h1>
-    <div id="slider">
-        <button id="prev" class="nav-button emoji">&lt;</button>
-        <button id="next" class="nav-button emoji">&gt;</button>
-        <picture class="active">
-            <source type="image/avif" srcset="
-                    {% static 'images/nature/forest/forest-320.avif' %} 320w,
-                    {% static 'images/nature/forest/forest-640.avif' %} 640w,
-                    {% static 'images/nature/forest/forest-1280.avif' %} 1280w,
-                    {% static 'images/nature/forest/forest-1920.avif' %} 1920w
+    <section class="splide" aria-label="Splide Basic HTML Example">
+        <div class="splide__track">
+            <ul class="splide__list">
+                <li class="splide__slide">
+                    <picture class="active">
+                        <source type="image/avif" srcset="
+                    {% static 'images/plant-tree/plant-tree-320.avif' %} 320w,
+                    {% static 'images/plant-tree/plant-tree-640.avif' %} 640w,
+                    {% static 'images/plant-tree/plant-tree-1280.avif' %} 1280w,
+                    {% static 'images/plant-tree/plant-tree-1920.avif' %} 1920w
                     " sizes="100vw"
-            >
+                        >
 
-            <source type="image/webp" srcset="
-                    {% static 'images/nature/forest/forest-320.webp' %} 320w,
-                    {% static 'images/nature/forest/forest-640.webp' %} 640w,
-                    {% static 'images/nature/forest/forest-1280.webp' %} 1280w,
-                    {% static 'images/nature/forest/forest-1920.webp' %} 1920w
+                        <source type="image/webp" srcset="
+                    {% static 'images/plant-tree/plant-tree-320.webp' %} 320w,
+                    {% static 'images/plant-tree/plant-tree-640.webp' %} 640w,
+                    {% static 'images/plant-tree/plant-tree-1280.webp' %} 1280w,
+                    {% static 'images/plant-tree/plant-tree-1920.webp' %} 1920w
                     " sizes="100vw"
-            >
+                        >
 
-            <img src="{% static 'images/nature/forest/forest-fallback.jpg' %}" alt="Wald">
-        </picture>
-        <picture>
-            <source type="image/avif" srcset="
-                    {% static 'images/nature/lake/lake-320.avif' %} 320w,
-                    {% static 'images/nature/lake/lake-640.avif' %} 640w,
-                    {% static 'images/nature/lake/lake-1280.avif' %} 1280w,
-                    {% static 'images/nature/lake/lake-1920.avif' %} 1920w
+                        <img src="{% static 'images/plant-tree/plant-tree-fallback.png' %}"
+                             alt="{% trans 'Bild, auf dem ein Baum gepflanzt wird' %}">
+                    </picture>
+                </li>
+                <li class="splide__slide">
+                    <picture class="active">
+                        <source type="image/avif" srcset="
+                    {% static 'images/ice-train/ice-train-320.avif' %} 320w,
+                    {% static 'images/ice-train/ice-train-640.avif' %} 640w,
+                    {% static 'images/ice-train/ice-train-1280.avif' %} 1280w,
+                    {% static 'images/ice-train/ice-train-1920.avif' %} 1920w
                     " sizes="100vw"
-            >
+                        >
 
-            <source type="image/webp" srcset="
-                    {% static 'images/nature/lake/lake-320.webp' %} 320w,
-                    {% static 'images/nature/lake/lake-640.webp' %} 640w,
-                    {% static 'images/nature/lake/lake-1280.webp' %} 1280w,
-                    {% static 'images/nature/lake/lake-1920.webp' %} 1920w
+                        <source type="image/webp" srcset="
+                    {% static 'images/ice-train/ice-train-320.webp' %} 320w,
+                    {% static 'images/ice-train/ice-train-640.webp' %} 640w,
+                    {% static 'images/ice-train/ice-train-1280.webp' %} 1280w,
+                    {% static 'images/ice-train/ice-train-1920.webp' %} 1920w
                     " sizes="100vw"
-            >
+                        >
 
-            <img src="{% static 'images/nature/lake/lake-fallback.jpg' %}" alt="See">
-        </picture>
-    </div>
-    <script nonce="{{ request.csp_script_nonce }}">
-        const images = document.querySelectorAll('#slider picture');
-        let current = 0;
+                        <img src="{% static 'images/ice-train/ice-train-fallback.png' %}"
+                             alt="{% trans 'Bild eines Zugs' %}">
+                    </picture>
+                </li>
+                <li class="splide__slide">
+                    <picture>
+                        <source type="image/avif" srcset="
+                    {% static 'images/vegan/vegan-320.avif' %} 320w,
+                    {% static 'images/vegan/vegan-640.avif' %} 640w,
+                    {% static 'images/vegan/vegan-1280.avif' %} 1280w,
+                    {% static 'images/vegan/vegan-1920.avif' %} 1920w
+                    " sizes="100vw"
+                        >
 
-        function showImage(index) {
-            images.forEach((img, i) => {
-                img.classList.toggle('active', i === index);
-            });
+                        <source type="image/webp" srcset="
+                    {% static 'images/vegan/vegan-320.webp' %} 320w,
+                    {% static 'images/vegan/vegan-640.webp' %} 640w,
+                    {% static 'images/vegan/vegan-1280.webp' %} 1280w,
+                    {% static 'images/vegan/vegan-1920.webp' %} 1920w
+                    " sizes="100vw"
+                        >
+
+                        <img src="{% static 'images/vegan/vegan-fallback.png' %}"
+                             alt="{% trans 'Bild eines veganes Gerichts' %}">
+                    </picture>
+                </li>
+                <li class="splide__slide">
+                    <picture>
+                        <source type="image/avif" srcset="
+                    {% static 'images/mail/mail-320.avif' %} 320w,
+                    {% static 'images/mail/mail-640.avif' %} 640w,
+                    {% static 'images/mail/mail-1280.avif' %} 1280w,
+                    {% static 'images/mail/mail-1920.avif' %} 1920w
+                    " sizes="100vw"
+                        >
+
+                        <source type="image/webp" srcset="
+                    {% static 'images/mail/mail-320.webp' %} 320w,
+                    {% static 'images/mail/mail-640.webp' %} 640w,
+                    {% static 'images/mail/mail-1280.webp' %} 1280w,
+                    {% static 'images/mail/mail-1920.webp' %} 1920w
+                    " sizes="100vw"
+                        >
+
+                        <img src="{% static 'images/mail/mail-fallback.png' %}"
+                             alt="{% trans 'Bild eines Mailprogramms' %}">
+                    </picture>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <p class="splide__caption" id="splide__caption"></p>
+
+    <script src="{% static 'libraries/splide/splide.min.js' %}"></script>
+    <script>
+        const splide = new Splide('.splide', {
+            type: 'loop',
+            rewind: true,
+            rewindByDrag: true,
+        }).mount();
+
+        const caption = document.querySelector('.splide__caption');
+        const caption_list = {
+            0: '{% trans "User BrunnerL3 wurde durch ClimateQuest dazu motiviert, einen Baum zu pflanzen" %}',
+            1: '{% trans "User Maradona wurde durch ClimateQuest dazu motiviert, mit dem Zug statt mit dem Flugzeug zu reisen" %}',
+            2: '{% trans "User Jessi wurde durch ClimateQuest dazu motiviert, weniger Käse zu essen" %}',
+            3: '{% trans "User Jessi wurde durch ClimateQuest dazu motiviert, E-Mails regelmäßig zu löschen" %}',
         }
 
-        document.getElementById('prev').addEventListener('click', () => {
-            current = (current - 1 + images.length) % images.length;
-            showImage(current);
+        splide.on('move', function (newIndex) {
+            changeCaption(newIndex);
         });
 
-        document.getElementById('next').addEventListener('click', () => {
-            current = (current + 1) % images.length;
-            showImage(current);
-        });
+        function changeCaption(index) {
+            caption.textContent = caption_list[index];
+        }
+
+        changeCaption(0);
     </script>
+    <style>
+        @media (max-width: 1200px) {
+            .splide__pagination__page {
+                min-height: unset !important;
+                min-width: unset !important;
+                display: block !important;
+            }
+        }
+
+        .splide__arrow {
+            transform: unset !important;
+        }
+
+        .splide__caption {
+            color: #8f8f8f;
+        }
+
+        .splide__slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    </style>
+
+
     <hr>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
+        {% endfor %}
+        <hr>
+    {% endif %}
+
+
     {% if not user.is_authenticated %}
         <div class="btns"><a href="{% url 'register_view' %}">
             <button class="btn">{% trans "Jetzt registrieren!" %}</button>
@@ -269,7 +301,8 @@
         </div>
 
         <div id="co2_zaehler_div">
-            <p>{% blocktrans %}Weil jeder Klimapunkt ungefähr für <b id="co2_per_klimapunkt">1 kg</b> eingespartes CO₂ steht, wurden dadurch insgesamt{% endblocktrans %}</p>
+            <p>{% blocktrans %}Weil jeder Klimapunkt ungefähr für <b id="co2_per_klimapunkt">1 kg</b> eingespartes CO₂
+                steht, wurden dadurch insgesamt{% endblocktrans %}</p>
             <p class="h3_size" id="co2_zaehler"></p>
             <p>{% trans "Tonnen CO2e eingespart." %}</p>
         </div>
@@ -283,7 +316,10 @@
 
     <div id="mobile-app-div">
         <hr>
-        <p>{% trans "Keine Lust, ClimateQuest als Webseite zu verwenden?" %} <a href="{% url 'mobile_apps' %}" class="redirect-link"> <span>{% trans "ClimateQuest als App downloaden" %}</span> <span class="redirect-link-icon">→</span> </a></p>
+        <p>{% trans "Keine Lust, ClimateQuest als Webseite zu verwenden?" %} <a href="{% url 'mobile_apps' %}"
+                                                                                class="redirect-link">
+            <span>{% trans "ClimateQuest als App downloaden" %}</span> <span class="redirect-link-icon">→</span> </a>
+        </p>
     </div>
     <script nonce="{{ request.csp_script_nonce }}">
         if (!isStandalone) {

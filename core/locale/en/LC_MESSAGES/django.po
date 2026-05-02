@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-01 21:39+0200\n"
+"POT-Creation-Date: 2026-05-02 11:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -564,7 +564,6 @@ msgid "Sperrung erfolgreich gelöscht"
 msgstr "Block successfully deleted"
 
 #: core/all_messages.py:196
-#| msgid "Du hast den Artikel erfolgreich gelikt"
 msgid "Du darfst deinen eigenen Artikel nicht liken"
 msgstr "You aren´t allowed to like your own article"
 

@@ -14,7 +14,7 @@
         {% endfor %}
     {% endif %}
 
-    <p>{% trans "Du brauchst 1000 Klimapunkte, um einen Credit zu verdienen" %}</p>
+    <p>{% blocktrans with klimapunkte=request.GLOBAL_VARIABLES.klimapunkte_for_credit %}Du brauchst {{ klimapunkte }} Klimapunkte, um einen Credit zu verdienen{% endblocktrans %}</p>
 
     <p>{% trans "Zur Verfügung stehende Credits:" %} {{ available_credits }}</p>
 

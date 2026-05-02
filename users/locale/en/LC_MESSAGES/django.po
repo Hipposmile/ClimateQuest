@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-30 18:42+0200\n"
+"POT-Creation-Date: 2026-05-02 18:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -164,11 +164,11 @@ msgstr "That equals <b>%(co2)s</b> tonnes of CO2 saved"
 #: users/templates/klimapunkte.html:23
 #, python-format
 msgid ""
-"Außerdem wurden <b>%(points)s</b> Klimapunkte durch das Schreiben von "
-"Artikeln verdient."
+"Außerdem wurden <b>%(points)s</b> Klimapunkte, z.B. durch das Schreiben von "
+"Artikeln, verdient."
 msgstr ""
-"Additionally, <b>%(points)s</b> climate points were earned by writing "
-"articles."
+"Additionally, <b>%(points)s</b> climate points were earned, for example by "
+"writing articles."
 
 #: users/templates/klimapunkte.html:24
 #, python-format

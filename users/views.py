@@ -14,7 +14,7 @@ from aktionen.views import validate_number, get_period_start, action_date_invali
 from core.all_messages import all_messages
 from family.models import Family
 from personals.models import UserErweitert
-from utils.functions import dezimalstellen, get_klimapunkte_from_likes, get_weekly_goal_from_user, \
+from utils.functions import dezimalstellen, get_additional_klimapunkte, get_weekly_goal_from_user, \
     get_streak_from_user, send_mail_function, get_level, create_notification, get_all_klimapunkte_from_user, \
     get_family_rank_from_user, get_date_range, get_klimapunkte_fuer_member
 
@@ -169,15 +169,15 @@ def klimapunkte_view(request, user_id):
                 }
                 zeitraum_text = zeitraum_text_translations.get(zeitraum)
 
-    klimapunkte_likes = get_klimapunkte_from_likes(user)
-    klimapunkte = get_klimapunkte_fuer_member(user, start_datum, end_datum) - klimapunkte_likes
-    klimapunkte_total = klimapunkte + klimapunkte_likes
+    additional_klimapunkte = get_additional_klimapunkte(user)
+    klimapunkte = get_klimapunkte_fuer_member(user, start_datum, end_datum) - additional_klimapunkte
+    klimapunkte_total = klimapunkte + additional_klimapunkte
 
     saved_co2 = klimapunkte / 1000
 
     return render(request, './klimapunkte.html', {
         'klimapunkte': klimapunkte,
-        'klimapunkte_likes': klimapunkte_likes,
+        'additional_klimapunkte': additional_klimapunkte,
         'klimapunkte_total': klimapunkte_total,
         'saved_co2': saved_co2,
         'zeitraum': zeitraum_text,

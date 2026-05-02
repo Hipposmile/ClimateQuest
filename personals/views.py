@@ -470,7 +470,7 @@ def get_block_data_settings(request):
 
 @login_required
 def credit_view(request):
-    klimapunkte_for_credit = 1000
+    klimapunkte_for_credit = request.GLOBAL_VARIABLES["klimapunkte_for_credit"]
     klimapunkte = get_all_klimapunkte_from_user(request.user)
 
     total_credits = klimapunkte / klimapunkte_for_credit

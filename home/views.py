@@ -15,7 +15,7 @@ from events.models import Event
 from family.models import Family
 from home.models import Benachrichtigung
 from personals.models import TreeCodes
-from utils.functions import get_streak_from_user, get_klimapunkte_from_likes, get_klimapunkte, \
+from utils.functions import get_streak_from_user, get_additional_klimapunkte, get_klimapunkte, \
     get_weekly_goal_from_user, get_all_klimapunkte_from_user, get_level, get_families_of_user, create_notification, \
     get_perfect_week_progress
 
@@ -28,7 +28,7 @@ def home(request):
     for user in User.objects.prefetch_related():
         aktionen = Aktion.objects.filter(user=user)
         klimapunkte = get_klimapunkte(aktionen)
-        klimapunkte += get_klimapunkte_from_likes(user)
+        klimapunkte += get_additional_klimapunkte(user)
         klimapunkte_gesamt += klimapunkte
         user_count += 1
     klimapunkte_gesamt = int(klimapunkte_gesamt)
