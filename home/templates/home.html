@@ -217,7 +217,7 @@
     <p class="splide__caption" id="splide__caption"></p>
 
     <script src="{% static 'libraries/splide/splide.min.js' %}"></script>
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         const splide = new Splide('.splide', {
             type: 'loop',
             rewind: true,
