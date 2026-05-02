@@ -21,7 +21,7 @@ class UserErweitert(models.Model):
     planted_trees = models.ManyToManyField(TreeCodes, blank=True)
     allows_data_view = models.BooleanField(default=False)
     lang = models.CharField(max_length=2, default='de')
-    additional_klimapunkte = models.FloatField(default=0)
+    # additional_klimapunkte = models.FloatField(default=0)
 
     @property
     def given_credits(self):
