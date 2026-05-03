@@ -64,7 +64,7 @@ def join_family(request):
                                         f'User {request.user} has joined the family {family}',
                                         user_to_message, url=reverse('family_detail', args=[family.id]))
                 family.members.add(request.user)
-                messages.success(request, all_messages["family_joined"].format(family=family))
+                messages.success(request, all_messages["family_joined"].format(familyname=family))
                 return redirect('families_view')
             else:
                 messages.error(request, all_messages["invalid_family_credentials"])
