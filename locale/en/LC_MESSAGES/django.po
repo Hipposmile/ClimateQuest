@@ -198,7 +198,7 @@ msgstr "Create family"
 
 #: templates/base.html:802
 msgid "Family beitreten"
-msgstr "Edit family"
+msgstr "Join family"
 
 #: templates/base.html:803
 msgid "Meine Families"
