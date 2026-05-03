@@ -15,6 +15,7 @@ from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode
 from django.utils.http import urlsafe_base64_encode
+from django.utils.translation import gettext as _
 from dotenv import load_dotenv
 
 from core.all_messages import all_messages
@@ -134,11 +135,13 @@ def register_view(request):
         send_mail_function(
             request=request,
             subject='ClimateQuest - dein Aktivierungslink ist da!',
-            message=f'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: {activation_link}',
+            message=_(
+                'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: %(activation_link)s' % {
+                    'activation_link': activation_link}),
             recipient_list=email,
             mailinglist_needless=True,
             user=user,
-            fehlermeldung='Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge deine E-Mail-Adresse später in den Einstellungen hinzu.'
+            fehlermeldung=_('Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge deine E-Mail-Adresse später in den Einstellungen hinzu.')
         )
 
         return redirect('dashboard')
@@ -178,11 +181,11 @@ def resend_verification_email(request):
     send_mail_function(
         request=request,
         subject='ClimateQuest - dein Aktivierungslink ist da!',
-        message=f'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: {activation_link}',
+        message=_('Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: %(activation_link)s') % {'activation_link': activation_link},
         recipient_list=request.user.email,
         mailinglist_needless=True,
         user=request.user,
-        fehlermeldung='Fehler beim E-Mail-Versand. Probiere es später erneut.'
+        fehlermeldung=_('Fehler beim E-Mail-Versand. Probiere es später erneut.')
     )
 
     messages.success(request, all_messages["verification_email_resent"])
@@ -251,7 +254,7 @@ def settings_view(request):
                 mail_output = send_mail_function(
                     request=request,
                     subject='ClimateQuest - dein Aktivierungslink ist da!',
-                    message=f'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: {activation_link}',
+                    message=_('Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: %(activation_link)s') % {'activation_link': activation_link},
                     recipient_list=email,
                     mailinglist_needless=True,
                     user=request.user,
@@ -410,7 +413,7 @@ def reset_password(request):
         output = send_mail_function(
             request=request,
             subject='ClimateQuest - Passwort Reset',
-            message=f'Wir haben dir ein neues, zufällig generiertes Passwort erstellt: <b>{new_password}</b> \nMelde dich damit und mit deinem Benutzernamen <b>{user.username}</b> <a href="https://climate-quest.de/personals/login/">hier</a> an und ändere aus Sicherheitsgründen möglichst bald unter "Profil bearbeiten" dein Passwort.',
+            message=_('Wir haben dir ein neues, zufällig generiertes Passwort erstellt: <b>%(new_password)s</b> \nMelde dich damit und mit deinem Usernamen <b>%(username)s</b> <a href="https://climate-quest.de/personals/login/">hier</a> an und ändere aus Sicherheitsgründen möglichst bald unter "Profil bearbeiten" dein Passwort.') % {'new_password': new_password, 'username': user.username},
             recipient_list=user.email,
             user=user,
         )

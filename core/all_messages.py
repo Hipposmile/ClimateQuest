@@ -101,7 +101,7 @@ all_messages = {
     "successfully_signed_up_email_not_verified": _("Erfolgreich registriert, aber E-Mail-Adresse noch nicht verifiziert"),
     "robot": _("Es besteht die Gefahr, dass du ein Roboter bist Bitte versuche es erneut"),
     "invalid_login_data": _("Ungültige Anmeldedaten"),
-    "username_not_available": _("Benutzername bereits vergeben"),
+    "username_not_available": _("Username bereits vergeben"),
     "invalid_email": _("E-Mail-Adresse ungültig"),
     "email_not_available": _("E-Mail-Adresse bereits vergeben"),
     "nutzungsbedingungen_not_accepted": _("Du musst die Nutzungsbedingungen akzeptieren"),
@@ -110,8 +110,8 @@ all_messages = {
 
     # Edit
     "invalid_password": _("Passwort ist falsch"),
-    "username_belongs_to_you": _("Benutzername gehört bereits dir"),
-    "username_changed": _("Benutzername erfolgreich geändert"),
+    "username_belongs_to_you": _("Username gehört bereits dir"),
+    "username_changed": _("Username erfolgreich geändert"),
     "password_changed": _("Passwort erfolgreich geändert"),
     "email_changed": _("E-Mail-Adresse erfolgreich geändert"),
     "mailinglist_enabled": _("E-Mail Benachrichtigungen aktiviert"),
@@ -120,7 +120,7 @@ all_messages = {
     "allows_data_view_disabled": _("Persönliche Daten Ansicht blockiert"),
     "account_deleted": _("Account erfolgreich gelöscht"),
     "email_not_found": _("E-Mail-Adresse nicht vorhanden"),
-    "password_reset_mail_sent": _("Wir haben dir eine Nachricht mit deinem Benutzernamen und einem neuen, zufällig generiertem Passwort geschickt. Melde dich damit an und ändere aus Sicherheitsgründen möglichst bald dein Passwort unter \"Profil bearbeiten\""),
+    "password_reset_mail_sent": _("Wir haben dir eine Nachricht mit deinem Usernamen und einem neuen, zufällig generiertem Passwort geschickt. Melde dich damit an und ändere aus Sicherheitsgründen möglichst bald dein Passwort unter \"Profil bearbeiten\""),
     "password_reset_error": _("Ein Fehler ist beim Zurücksetzen des Passwortes aufgetreten"),
     "successfully_changed_email": _("E-Mail-Adresse erfolgreich geändert. Ein Aktivierungslink wurde an diese Adresse gesendet"),
     "successfully_changed_email_no_email": _("E-Mail-Adresse erfolgreich geändert. Du hast jetzt keine E-Mail Adresse mehr hinterlegt und musst daher nichts verifizieren"),

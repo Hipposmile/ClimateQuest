@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-02 11:08+0200\n"
+"POT-Creation-Date: 2026-05-03 16:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -251,7 +251,7 @@ msgid "Ungültige Anmeldedaten"
 msgstr "Invalid login credentials"
 
 #: core/all_messages.py:104
-msgid "Benutzername bereits vergeben"
+msgid "Username bereits vergeben"
 msgstr "Username already taken"
 
 #: core/all_messages.py:105
@@ -279,11 +279,13 @@ msgid "Passwort ist falsch"
 msgstr "Password is incorrect"
 
 #: core/all_messages.py:113
-msgid "Benutzername gehört bereits dir"
+#| msgid "Benutzername gehört bereits dir"
+msgid "Username gehört bereits dir"
 msgstr "Username already belongs to you"
 
 #: core/all_messages.py:114
-msgid "Benutzername erfolgreich geändert"
+#| msgid "Benutzername erfolgreich geändert"
+msgid "Username erfolgreich geändert"
 msgstr "Username successfully changed"
 
 #: core/all_messages.py:116
@@ -316,8 +318,8 @@ msgstr "Email address does not exist"
 
 #: core/all_messages.py:123
 msgid ""
-"Wir haben dir eine Nachricht mit deinem Benutzernamen und einem neuen, "
-"zufällig generiertem Passwort geschickt. Melde dich damit an und ändere aus "
+"Wir haben dir eine Nachricht mit deinem Usernamen und einem neuen, zufällig "
+"generiertem Passwort geschickt. Melde dich damit an und ändere aus "
 "Sicherheitsgründen möglichst bald dein Passwort unter \"Profil bearbeiten\""
 msgstr ""
 "We have sent you a message with your username and a new randomly generated "

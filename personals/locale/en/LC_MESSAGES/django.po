@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-26 19:35+0200\n"
+"POT-Creation-Date: 2026-05-03 16:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,8 +28,9 @@ msgid "Credits"
 msgstr "Credits"
 
 #: personals/templates/credit_view.html:17
-msgid "Du brauchst 1000 Klimapunkte, um einen Credit zu verdienen"
-msgstr "You need 1000 climate points to earn a credit"
+#, python-format
+msgid "Du brauchst %(klimapunkte)s Klimapunkte, um einen Credit zu verdienen"
+msgstr "You need %(klimapunkte)s climate points to earn a credit"
 
 #: personals/templates/credit_view.html:19
 msgid "Zur Verfügung stehende Credits:"
@@ -513,3 +514,32 @@ msgstr "Send"
 #: personals/templates/reset_password.html:23
 msgid "Wir werden dir eine E-Mail mit deinen neuen Anmeldedaten schicken."
 msgstr "We will send you an email with your new login details."
+
+#: personals/views.py:139 personals/views.py:184 personals/views.py:257
+#, python-format
+msgid ""
+"Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: "
+"%(activation_link)s"
+msgstr ""
+"Please click the following link to verify your email address: %(activation_link)s"
+
+#: personals/views.py:144
+msgid ""
+"Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge "
+"deine E-Mail-Adresse später in den Einstellungen hinzu."
+msgstr "Error sending email. Try registering without email and add your email address later in the settings."
+
+#: personals/views.py:188
+msgid "Fehler beim E-Mail-Versand. Probiere es später erneut."
+msgstr "Error sending email. Please try again later."
+
+#: personals/views.py:416
+#, python-format
+msgid ""
+"Wir haben dir ein neues, zufällig generiertes Passwort erstellt: "
+"<b>%(new_password)s</b> \n"
+"Melde dich damit und mit deinem Usernamen <b>%(username)s</b> <a "
+"href=\"https://climate-quest.de/personals/login/\">hier</a> an und ändere "
+"aus Sicherheitsgründen möglichst bald unter \"Profil bearbeiten\" dein "
+"Passwort."
+msgstr "We´ve created a new, randomly generated password for you: <b>%(new_password)s</b> \n Log in with it and your username <b>%(username)s</b> <a href=\"https://climate-quest.de/personals/login/\">here</a> and change your password as soon as possible under \"edit profile\" for security reasons."
