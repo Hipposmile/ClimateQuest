@@ -250,7 +250,7 @@ msgstr "Weekly Goal"
 
 #: home/templates/dashboard.html:244
 msgid "Du hast eine perfekte Woche!"
-msgstr "You had a perfect week!"
+msgstr "You have a perfect week!"
 
 #: home/templates/dashboard.html:263
 #, python-format

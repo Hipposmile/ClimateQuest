@@ -516,13 +516,15 @@ def get_perfect_week_progress(user, date_given):
     week_start = date_given - timedelta(days=date_given.weekday())
     week_end = week_start + timedelta(days=6)
 
-    output = {}
+    output_de = {}
+    output_en = {}
     for category in Category.objects.all():
         has_action = Aktion.objects.filter(user=user, aktion__category=category,
                                            date__range=(week_start, week_end)).exists()
-        output[category.name] = has_action
+        output_de[category.name] = has_action
+        output_en[category.name_en] = has_action
 
-    return output
+    return output_de, output_en
 
 
 def get_family_rank_from_user(user, family):

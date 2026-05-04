@@ -232,12 +232,21 @@
                     <span class="pw-dot"></span>
                     <span class="pw-label">{% trans "Wöchentliches Ziel" %}</span>
                 </div>
-                {% for name, done in perfect_week_progress.items %}
-                    <div class="pw-step {% if done %}is-done{% endif %}">
-                        <span class="pw-dot"></span>
-                        <span class="pw-label">{{ name }}</span>
-                    </div>
-                {% endfor %}
+                {% if request.LANGUAGE_CODE == "de" %}
+                    {% for name, done in perfect_week_progress_de.items %}
+                        <div class="pw-step {% if done %}is-done{% endif %}">
+                            <span class="pw-dot"></span>
+                            <span class="pw-label">{{ name }}</span>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% for name, done in perfect_week_progress_en.items %}
+                        <div class="pw-step {% if done %}is-done{% endif %}">
+                            <span class="pw-dot"></span>
+                            <span class="pw-label">{{ name }}</span>
+                        </div>
+                    {% endfor %}
+                {% endif %}
                 {% if perfect_week %}
                     <div class="pw-step is-party">
                         <span class="pw-dot"></span>
@@ -260,7 +269,8 @@
             max-width: 100%;
         }
     </style>
-    <p>{% blocktrans with weekly_klimapunkte=weekly_klimapunkte|floatformat:-4 weekly_goal=weekly_goal %}{{ weekly_klimapunkte }} Klimapunkte bis zum wöchentlichen Ziel von
+    <p>{% blocktrans with weekly_klimapunkte=weekly_klimapunkte|floatformat:-4 weekly_goal=weekly_goal %}
+        {{ weekly_klimapunkte }} Klimapunkte bis zum wöchentlichen Ziel von
         {{ weekly_goal }} Klimapunkten geschafft{% endblocktrans %}</p>
     <a href="{% url 'settings_view' %}#change_goal_h3" class="redirect-link ">
         <span>{% trans "Ziel ändern" %}</span>
@@ -400,7 +410,8 @@
     <hr>
 
     <h2>{% trans "Klimapunkte" %}</h2>
-    <p>{% blocktrans with klimapunkte=klimapunkte|floatformat:-4 %}Du hast bereits {{ klimapunkte }} Klimapunkte gesammelt.{% endblocktrans %}</p>
+    <p>{% blocktrans with klimapunkte=klimapunkte|floatformat:-4 %}Du hast bereits {{ klimapunkte }} Klimapunkte
+        gesammelt.{% endblocktrans %}</p>
     <a href="{% url 'klimapunkte_me' %}" class="redirect-link ">
         <span>{% trans "Zu den Klimapunkten" %}</span>
         <span class="redirect-link-icon">→</span>
@@ -408,7 +419,8 @@
     <hr>
 
     <h2>{% trans "Level" %}</h2>
-    <p>{% trans "Du bist im Level" %} {% if request.LANGUAGE_CODE == "de" %}{{ level.description }}{% else %}{{ level.description_en }}{% endif %}.</p>
+    <p>{% trans "Du bist im Level" %} {% if request.LANGUAGE_CODE == "de" %}{{ level.description }}{% else %}
+        {{ level.description_en }}{% endif %}.</p>
     <a href="{% url 'level_me' %}" class="redirect-link ">
         <span>{% trans "Zu den Levels" %}</span>
         <span class="redirect-link-icon">→</span>
