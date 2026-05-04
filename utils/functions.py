@@ -2,7 +2,7 @@ import logging
 import random
 import string
 import traceback
-from datetime import timedelta, date
+from datetime import timedelta, date, datetime
 
 import bleach
 from PIL import Image
@@ -433,7 +433,6 @@ def get_additional_klimapunkte(user):
 def get_streak_from_user(user):
     weekly_goal = user.usererweitert.weekly_goal
 
-    # Alle Wochen + Klimapunkte
     weekly_data = (
         Aktion.objects
         .filter(user=user)
@@ -451,21 +450,21 @@ def get_streak_from_user(user):
     successful_weeks = 0
     expected_week = current_week_start
 
+    # Falls diese Woche gar kein Eintrag existiert, expected_week direkt auf Vorwoche setzen
+    if not weekly_data or weekly_data[0]["week"] != current_week_start:
+        expected_week = current_week_start - timedelta(days=7)
+
     for entry in weekly_data:
         week_start = entry["week"]
 
-        # 1) Wenn wir gerade die aktuelle Woche prüfen
         if week_start == current_week_start:
             if entry["total_impact"] >= weekly_goal:
-                # Diese Woche zählt zur Streak
                 successful_weeks += 1
                 expected_week -= timedelta(days=7)
             else:
-                # Diese Woche ignorieren, Streak beginnt ab letzter Woche
                 expected_week = current_week_start - timedelta(days=7)
             continue
 
-        # 2) Ab hier prüfen wir abgeschlossene Wochen
         if week_start != expected_week:
             break
 
