@@ -254,7 +254,6 @@ def add_like(request, artikel_id):
         else:
             artikel.like.add(request.user)
             messages.success(request, all_messages["successfully_added_like"])
-        artikel.save()
         return redirect('artikel_detail', artikel_id)
     else:
         messages.error(request, all_messages["not_allowed_to_like_own_article"])
