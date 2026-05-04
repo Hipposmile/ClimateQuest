@@ -35,10 +35,10 @@ def artikel_overview(request):
             already_ordered = True
         if ordered_by == "Zuletzt bearbeitet":
             if search_keyword:
-                artikel = all_artikel.filter(**{f"date_time__icontains": search_keyword})
+                artikel = all_artikel.filter(**{f"updated_at__icontains": search_keyword})
             else:
                 artikel = all_artikel
-            artikel = artikel.order_by("-date_time")
+            artikel = artikel.order_by("-updated_at")
             already_ordered = True
         if ordered_by == "Likes":
             if search_keyword:
