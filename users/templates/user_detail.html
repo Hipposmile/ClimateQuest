@@ -19,7 +19,7 @@
             {% endfor %}
         {% endif %}
 
-        <p><strong>{{ all_klimapunkte|floatformat:-4 }}</strong> {% trans "Klimapunkte besitzt" %} {{ username }}</p>
+        <p>{% blocktrans with all_klimapunkte=all_klimapunkte|floatformat:-4 username=username %}<strong>{{ all_klimapunkte }}</strong> Klimapunkte besitzt {{ username }}{% endblocktrans %}</p>
         <p><strong>#{{ worldwide_ranking_rank }}</strong> {% trans "ist" %} {{ username }} {% trans "im worldwide ranking" %}</p>
 
         <hr>

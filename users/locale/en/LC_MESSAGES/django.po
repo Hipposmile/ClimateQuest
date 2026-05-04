@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-02 18:21+0200\n"
+"POT-Creation-Date: 2026-05-04 12:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -280,8 +280,9 @@ msgid "Du"
 msgstr "You"
 
 #: users/templates/user_detail.html:22
-msgid "Klimapunkte besitzt"
-msgstr "climate points"
+#, python-format
+msgid "<strong>%(all_klimapunkte)s</strong> Klimapunkte besitzt %(username)s"
+msgstr "<strong>%(all_klimapunkte)s</strong> climate points %(username)s already collected"
 
 #: users/templates/user_detail.html:23
 msgid "ist"
@@ -444,6 +445,9 @@ msgstr "The end date cannot be in the future."
 #, python-format
 msgid "%(start)s bis %(end)s"
 msgstr "%(start)s to %(end)s"
+
+#~ msgid "Klimapunkte besitzt"
+#~ msgstr "climate points"
 
 #~ msgid "Das entspricht"
 #~ msgstr "This equals"
