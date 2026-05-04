@@ -1076,7 +1076,7 @@ msgstr "To the dashboard"
 
 #: home/templates/home.html:122
 msgid "ClimateQuest - Motivation für mehr Klimaschutz"
-msgstr "ClimateQuest - Motivation for a Better Climate"
+msgstr "ClimateQuest - motivation for a better climate"
 
 #: home/templates/home.html:145
 msgid "Bild, auf dem ein Baum gepflanzt wird"
