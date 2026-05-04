@@ -11,7 +11,7 @@ class ArtikelDetailSitemap(Sitemap):
         return Artikel.objects.all()
 
     def lastmod(self, obj):
-        return obj.date_time
+        return obj.updated_at
     
     def location(self, obj):
         return reverse('artikel_detail', args=[obj.id])

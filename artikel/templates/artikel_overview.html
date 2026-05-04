@@ -82,7 +82,7 @@
                     {% endif %}
                     {% if ordered_by == 'Zuletzt bearbeitet' %}
                         <p><strong>{% trans 'Zuletzt bearbeitet:' %}</strong> <span class="event-date"
-                                                                      data-date="{{ single_artikel.date_time|date:'c' }}">{{ single_artikel.date_time|date:"SHORT_DATE_FORMAT" }}</span>
+                                                                      data-date="{{ single_artikel.updated_at|date:'c' }}">{{ single_artikel.updated_at|date:"SHORT_DATE_FORMAT" }}</span>
                         </p>
 
                     {% elif ordered_by == 'Ersteller' %}
@@ -100,7 +100,7 @@
                     <div class="event-extra">
                         {% if ordered_by != 'Zuletzt bearbeitet' %}
                             <p><strong>{% trans 'Zuletzt bearbeitet:' %}</strong> <span class="event-date"
-                                                                          data-date="{{ single_artikel.date_time|date:'c' }}">{{ single_artikel.date_time|date:"SHORT_DATE_FORMAT" }}</span>
+                                                                          data-date="{{ single_artikel.updated_at|date:'c' }}">{{ single_artikel.updated_at|date:"SHORT_DATE_FORMAT" }}</span>
                             </p>
                         {% endif %}
                         {% if ordered_by != 'Ersteller' %}

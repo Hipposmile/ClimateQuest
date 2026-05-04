@@ -164,7 +164,7 @@
         <p><span class="emoji">&#x2714;</span> {% trans 'Geprüfte und verifizierte Informationen' %}</p>
     {% endif %}
 
-    <p>{% blocktrans with date=artikel.date_time|date:"SHORT_DATE_FORMAT" %}Zuletzt bearbeitet:
+    <p>{% blocktrans with date=artikel.updated_at|date:"SHORT_DATE_FORMAT" %}Zuletzt bearbeitet:
         {{ date }}{% endblocktrans %}</p>
 
     <p>{% blocktrans with cat=artikel.category.title %}Kategorie: {{ cat }}{% endblocktrans %}</p>

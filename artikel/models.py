@@ -37,7 +37,7 @@ class Artikel(models.Model):
     comments = models.ManyToManyField(Comment, related_name='artikel', blank=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     like = models.ManyToManyField(User, blank=True, related_name='artikel_like')
-    date_time = models.DateField(auto_now=True)
+    updated_at = models.DateField(auto_now=True)
     verified = models.BooleanField(default=False)
     blocked = models.BooleanField(default=False)
     msg_if_wrong = models.CharField(max_length=100, blank=True, null=True, default=None)
