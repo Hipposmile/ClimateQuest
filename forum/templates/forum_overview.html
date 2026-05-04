@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load request_user_has_answered_post %}
 
 {% block meta %}
     <meta name="description"
@@ -15,7 +16,8 @@
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
-    {% if request.LANGUAGE_CODE == "en" %}<p>The forum is currently only available in German. Thanks for your understanding!</p>{% endif %}
+    {% if request.LANGUAGE_CODE == "en" %}
+        <p>The forum is currently only available in German. Thanks for your understanding!</p>{% endif %}
     <a href="{% url 'add_forum_post' %}" class="redirect-link">
         <span>{% trans "Beitrag hinzufügen" %}</span>
         <span class="redirect-link-icon">→</span>
@@ -70,21 +72,31 @@
     {% endif %}
     <p>{% blocktrans with cat=category %}Kategorie: {{ cat }}{% endblocktrans %}</p>
     <p>{% blocktrans with count=forum_posts.count %}{{ count }} Suchergebnisse{% endblocktrans %}</p>
+    <details>
+        <summary>{% trans "Farbcode" %}</summary>
+        <p class="event-card">{% trans "Ein ganz normaler Forums-Beitrag" %}</p>
+        <p class="event-card event-card-creator">{% trans "Du hast diesen Beitrag erstellt" %}</p>
+        <p class="event-card event-card-participant">{% trans "Du hast diesen Beitrag beantwortet" %}</p>
+    </details>
+    <hr>
 
     {% if forum_posts %}
         {% for post in forum_posts %}
             <section
-                    class="event-card{% if request.user == post.creator %} event-card-creator{% endif %}">
+                    class="event-card{% if request.user == post.creator %} event-card-creator{% elif post|request_user_has_answered_post:request.user %} event-card-participant{% endif %}">
                 <div class="event-main">
                     <h2 class="event-title">{{ post.title }}</h2>
                     <p>{% blocktrans with cat=post.category.title %}Kategorie: {{ cat }}{% endblocktrans %}</p>
                     {% if ordered_by == 'Erstellt am' %}
                         <p><strong>{% trans "Erstellt am:" %}</strong> <span class="event-date"
-                                                               data-date="{{ post.date_time|date:'c' }}">{{ post.date_time|date:"SHORT_DATETIME_FORMAT" }}</span>
+                                                                             data-date="{{ post.date_time|date:'c' }}">{{ post.date_time|date:"SHORT_DATETIME_FORMAT" }}</span>
                         </p>
 
                     {% elif ordered_by == 'Ersteller' %}
-                        <p><strong>{% trans "Ersteller:" %}</strong> {% url 'user_detail' post.creator.id as creator_url %}{% blocktrans with url=creator_url username=post.creator.username %}<a href="{{ url }}">{{ username }}</a>{% endblocktrans %}
+                        <p><strong>{% trans "Ersteller:" %}</strong>
+                            {% url 'user_detail' post.creator.id as creator_url %}
+                                    {% blocktrans with url=creator_url username=post.creator.username %}
+                                        <a href="{{ url }}">{{ username }}</a>{% endblocktrans %}
                             {% if request.user == post.creator %}{% trans "(Du)" %}{% endif %}</p>
                     {% endif %}
                 </div>
@@ -95,11 +107,14 @@
                         </p>
                         {% if ordered_by != 'Erstellt am' %}
                             <p><strong>{% trans "Erstellt am:" %}</strong> <span class="event-date"
-                                                                   data-date="{{ post.date_time|date:'c' }}">{{ post.date_time|date:"SHORT_DATETIME_FORMAT" }}</span>
+                                                                                 data-date="{{ post.date_time|date:'c' }}">{{ post.date_time|date:"SHORT_DATETIME_FORMAT" }}</span>
                             </p>
                         {% endif %}
                         {% if ordered_by != 'Ersteller' %}
-                            <p><strong>{% trans "Ersteller:" %}</strong> {% url 'user_detail' post.creator.id as creator_url %}{% blocktrans with url=creator_url username=post.creator.username %}<a href="{{ url }}">{{ username }}</a>{% endblocktrans %}
+                            <p><strong>{% trans "Ersteller:" %}</strong>
+                                {% url 'user_detail' post.creator.id as creator_url %}
+                                        {% blocktrans with url=creator_url username=post.creator.username %}
+                                            <a href="{{ url }}">{{ username }}</a>{% endblocktrans %}
                                 {% if request.user == post.creator %}{% trans "(Du)" %}{% endif %}</p>
                         {% endif %}
                     </div>

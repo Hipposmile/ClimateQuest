@@ -235,12 +235,12 @@ def petitions_overview(request):
         if ordered_by == "von mir unterschriebene Petitionen":
             petitions = request.user.petition_sign.all()
             already_ordered = True
-        if ordered_by == "Zuletzt bearbeitet":
+        if ordered_by == "Erstellt am":
             if search_keyword:
-                petitions = all_petitions.filter(**{f"updated_at__icontains": search_keyword})
+                petitions = all_petitions.filter(**{f"created_at__icontains": search_keyword})
             else:
                 petitions = all_petitions
-            petitions = petitions.order_by("-updated_at")
+            petitions = petitions.order_by("-created_at")
             already_ordered = True
         if ordered_by == "Unterschriften":
             if search_keyword:

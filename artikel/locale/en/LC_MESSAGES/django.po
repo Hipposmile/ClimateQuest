@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-02 11:08+0200\n"
+"POT-Creation-Date: 2026-05-04 14:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,12 +26,12 @@ msgstr ""
 "protection or give tips."
 
 #: artikel/templates/add_artikel.html:7 artikel/templates/add_artikel.html:11
-#: artikel/templates/artikel_overview.html:19
+#: artikel/templates/artikel_overview.html:20
 msgid "Artikel hinzufügen"
 msgstr "Add Article"
 
 #: artikel/templates/add_artikel.html:21 artikel/templates/add_artikel.html:22
-#: artikel/templates/artikel_overview.html:31
+#: artikel/templates/artikel_overview.html:32
 #: artikel/templates/edit_artikel.html:24
 #: artikel/templates/edit_artikel.html:25
 msgid "Name"
@@ -46,7 +46,7 @@ msgid "Kategorie"
 msgstr "Category"
 
 #: artikel/templates/add_artikel.html:31
-#: artikel/templates/artikel_overview.html:45
+#: artikel/templates/artikel_overview.html:47
 #: artikel/templates/edit_artikel.html:34
 #, python-format
 msgid "%(cat)s"
@@ -90,11 +90,11 @@ msgstr ""
 "<a href=\"%(url)s\">Article</a>\n"
 "        <i>%(name)s</i>"
 
-#: artikel/templates/artikel_detail.html:146
+#: artikel/templates/artikel_detail.html:145
 msgid "Gesperrt"
 msgstr "Blocked"
 
-#: artikel/templates/artikel_detail.html:155
+#: artikel/templates/artikel_detail.html:154
 #, python-format
 msgid ""
 "Erstellt von\n"
@@ -103,16 +103,16 @@ msgstr ""
 "Created by\n"
 "        <a href=\"%(url)s\">%(creator)s</a>"
 
-#: artikel/templates/artikel_detail.html:159
+#: artikel/templates/artikel_detail.html:158
 msgid "Ein offizieller Artikel von ClimateQuest"
 msgstr "An official article from ClimateQuest"
 
-#: artikel/templates/artikel_detail.html:164
-#: artikel/templates/artikel_overview.html:81
+#: artikel/templates/artikel_detail.html:163
+#: artikel/templates/artikel_overview.html:91
 msgid "Geprüfte und verifizierte Informationen"
 msgstr "Checked and verified information"
 
-#: artikel/templates/artikel_detail.html:167
+#: artikel/templates/artikel_detail.html:166
 #, python-format
 msgid ""
 "Zuletzt bearbeitet:\n"
@@ -121,48 +121,48 @@ msgstr ""
 "Last edited:\n"
 "        %(date)s"
 
-#: artikel/templates/artikel_detail.html:170
-#: artikel/templates/artikel_overview.html:68
-#: artikel/templates/artikel_overview.html:77
+#: artikel/templates/artikel_detail.html:169
+#: artikel/templates/artikel_overview.html:70
+#: artikel/templates/artikel_overview.html:87
 #, python-format
 msgid "Kategorie: %(cat)s"
 msgstr "Category: %(cat)s"
 
-#: artikel/templates/artikel_detail.html:185
+#: artikel/templates/artikel_detail.html:184
 #, python-format
 msgid "<a href=\"%(url)s\">Artikel bearbeiten</a>"
 msgstr "<a href=\"%(url)s\">Edit Article</a>"
 
-#: artikel/templates/artikel_detail.html:191
+#: artikel/templates/artikel_detail.html:190
 msgid "Kommentare"
 msgstr "Comments"
 
-#: artikel/templates/artikel_detail.html:212
+#: artikel/templates/artikel_detail.html:211
 msgid "Noch keine Antworten."
 msgstr "No replies yet."
 
-#: artikel/templates/artikel_detail.html:215
-#: artikel/templates/artikel_detail.html:265
+#: artikel/templates/artikel_detail.html:214
+#: artikel/templates/artikel_detail.html:264
 msgid "Mehr anzeigen"
 msgstr "Show more"
 
-#: artikel/templates/artikel_detail.html:217
+#: artikel/templates/artikel_detail.html:216
 msgid "selbst antworten"
 msgstr "reply yourself"
 
-#: artikel/templates/artikel_detail.html:222
+#: artikel/templates/artikel_detail.html:221
 msgid "Antwort:"
 msgstr "Reply:"
 
-#: artikel/templates/artikel_detail.html:223
+#: artikel/templates/artikel_detail.html:222
 msgid "Antwort"
 msgstr "Reply"
 
-#: artikel/templates/artikel_detail.html:224
+#: artikel/templates/artikel_detail.html:223
 msgid "Antworten"
 msgstr "Reply"
 
-#: artikel/templates/artikel_detail.html:228
+#: artikel/templates/artikel_detail.html:227
 #, python-format
 msgid ""
 "<a href=\"%(url)s\">Logge dich ein</a>, um den\n"
@@ -171,24 +171,24 @@ msgstr ""
 "<a href=\"%(url)s\">Log in</a> to\n"
 "                                    answer the comment"
 
-#: artikel/templates/artikel_detail.html:236
+#: artikel/templates/artikel_detail.html:235
 msgid "Noch keine Kommentare vorhanden"
 msgstr "No comments yet"
 
-#: artikel/templates/artikel_detail.html:265
+#: artikel/templates/artikel_detail.html:264
 msgid "Weniger anzeigen"
 msgstr "Show less"
 
-#: artikel/templates/artikel_detail.html:276
+#: artikel/templates/artikel_detail.html:275
 msgid "Neuen Kommentar hinzufügen:"
 msgstr "Add new comment:"
 
+#: artikel/templates/artikel_detail.html:276
 #: artikel/templates/artikel_detail.html:277
-#: artikel/templates/artikel_detail.html:278
 msgid "Kommentar hinzufügen"
 msgstr "Add comment"
 
-#: artikel/templates/artikel_detail.html:282
+#: artikel/templates/artikel_detail.html:281
 #, python-format
 msgid ""
 "<a href=\"%(url)s\">Logge dich ein</a>, um einen Kommentar zu\n"
@@ -197,23 +197,23 @@ msgstr ""
 "<a href=\"%(url)s\">Log in</a> \n"
 "            to write a comment"
 
-#: artikel/templates/artikel_detail.html:291
+#: artikel/templates/artikel_detail.html:290
 msgid "Verifizierung löschen"
 msgstr "Delete verification"
 
-#: artikel/templates/artikel_detail.html:292
+#: artikel/templates/artikel_detail.html:291
 msgid "Verifizieren"
 msgstr "Verify"
 
-#: artikel/templates/artikel_detail.html:298
+#: artikel/templates/artikel_detail.html:297
 msgid "Nachricht"
 msgstr "Message"
 
-#: artikel/templates/artikel_detail.html:300
+#: artikel/templates/artikel_detail.html:299
 msgid "Sperren"
 msgstr "Block"
 
-#: artikel/templates/artikel_detail.html:302
+#: artikel/templates/artikel_detail.html:301
 msgid "Sperrung aufheben"
 msgstr "Unblock"
 
@@ -230,98 +230,116 @@ msgstr ""
 msgid "Artikel - Übersicht"
 msgstr "Articles - Overview"
 
-#: artikel/templates/artikel_overview.html:25
+#: artikel/templates/artikel_overview.html:26
 msgid "Leer lassen, um alle Artikel anzuzeigen"
 msgstr "Leave empty to show all articles"
 
-#: artikel/templates/artikel_overview.html:26
+#: artikel/templates/artikel_overview.html:27
 msgid "Suchwort:"
 msgstr "Search term:"
 
-#: artikel/templates/artikel_overview.html:27
+#: artikel/templates/artikel_overview.html:28
 msgid "Suchwort"
 msgstr "Search term"
 
-#: artikel/templates/artikel_overview.html:29
+#: artikel/templates/artikel_overview.html:30
 msgid "Sortieren nach:"
 msgstr "Sort by:"
 
-#: artikel/templates/artikel_overview.html:32
+#: artikel/templates/artikel_overview.html:33
 msgid "Ersteller"
 msgstr "Creator"
 
-#: artikel/templates/artikel_overview.html:33
+#: artikel/templates/artikel_overview.html:34
 msgid "Zuletzt bearbeitet"
 msgstr "Last edited"
 
-#: artikel/templates/artikel_overview.html:34
+#: artikel/templates/artikel_overview.html:35
 msgid "Likes"
 msgstr "Likes"
 
-#: artikel/templates/artikel_overview.html:36
+#: artikel/templates/artikel_overview.html:37
 msgid "von mir erstellte Artikel"
 msgstr "articles created by me"
 
-#: artikel/templates/artikel_overview.html:37
+#: artikel/templates/artikel_overview.html:38
 msgid "von mir gelikte Artikel"
 msgstr "articles liked by me"
 
-#: artikel/templates/artikel_overview.html:41
+#: artikel/templates/artikel_overview.html:42
 msgid "Kategorie:"
 msgstr "Category:"
 
-#: artikel/templates/artikel_overview.html:43
+#: artikel/templates/artikel_overview.html:44
 msgid "Alle"
 msgstr "All"
 
-#: artikel/templates/artikel_overview.html:49
+#: artikel/templates/artikel_overview.html:51
 msgid "Anwenden"
 msgstr "Apply"
 
-#: artikel/templates/artikel_overview.html:64
+#: artikel/templates/artikel_overview.html:66
 #, python-format
 msgid "Sortiert nach: %(ordered)s"
 msgstr "Sorted by: %(ordered)s"
 
-#: artikel/templates/artikel_overview.html:66
+#: artikel/templates/artikel_overview.html:68
 #, python-format
 msgid "Suchwort: %(keyword)s"
 msgstr "Search term: %(keyword)s"
 
-#: artikel/templates/artikel_overview.html:69
+#: artikel/templates/artikel_overview.html:71
 #, python-format
 msgid "%(count)s Suchergebnisse"
 msgstr "%(count)s search results"
 
-#: artikel/templates/artikel_overview.html:84
-#: artikel/templates/artikel_overview.html:102
+#: artikel/templates/artikel_overview.html:74
+msgid "Farbcode"
+msgstr "color code"
+
+#: artikel/templates/artikel_overview.html:75
+msgid "Ein ganz normaler Artikel"
+msgstr "A regular article"
+
+#: artikel/templates/artikel_overview.html:76
+#| msgid "Diesen Artikel löschen"
+msgid "Du hast diesen Artikel erstellt"
+msgstr "You created this article"
+
+#: artikel/templates/artikel_overview.html:77
+#| msgid "Diesen Artikel löschen"
+msgid "Du hast diesen Artikel geliket"
+msgstr "You liked this article"
+
+#: artikel/templates/artikel_overview.html:94
+#: artikel/templates/artikel_overview.html:112
 msgid "Zuletzt bearbeitet:"
 msgstr "Last edited:"
 
-#: artikel/templates/artikel_overview.html:90
-#: artikel/templates/artikel_overview.html:108
+#: artikel/templates/artikel_overview.html:100
+#: artikel/templates/artikel_overview.html:118
 msgid "Ersteller:"
 msgstr "Creator:"
 
-#: artikel/templates/artikel_overview.html:92
-#: artikel/templates/artikel_overview.html:110
+#: artikel/templates/artikel_overview.html:102
+#: artikel/templates/artikel_overview.html:120
 msgid "(Du)"
 msgstr "(You)"
 
-#: artikel/templates/artikel_overview.html:94
-#: artikel/templates/artikel_overview.html:113
+#: artikel/templates/artikel_overview.html:104
+#: artikel/templates/artikel_overview.html:123
 msgid "Likes:"
 msgstr "Likes:"
 
-#: artikel/templates/artikel_overview.html:99
+#: artikel/templates/artikel_overview.html:109
 msgid "mehr"
 msgstr "more"
 
-#: artikel/templates/artikel_overview.html:119
+#: artikel/templates/artikel_overview.html:129
 msgid "Details ansehen"
 msgstr "View details"
 
-#: artikel/templates/artikel_overview.html:123
+#: artikel/templates/artikel_overview.html:133
 msgid "Es gibt derzeit keine Artikel mit diesem Filter."
 msgstr "There are currently no articles with this filter."
 

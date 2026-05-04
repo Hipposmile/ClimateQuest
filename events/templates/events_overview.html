@@ -25,7 +25,8 @@
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
-    {% if request.LANGUAGE_CODE == "en" %}<p>Events are currently only available in German. Thanks for your understanding!</p>{% endif %}
+    {% if request.LANGUAGE_CODE == "en" %}
+        <p>Events are currently only available in German. Thanks for your understanding!</p>{% endif %}
     <a href="{% url 'add_event' %}" class="redirect-link">
         <span>{% trans "Event hinzufügen" %}</span>
         <span class="redirect-link-icon">→</span>
@@ -85,6 +86,13 @@
         <p>{% trans "Vergange Events nicht eingeblendet" %}</p>
     {% endif %}
     <p>{% blocktrans with count=events.count %}{{ count }} Suchergebnisse{% endblocktrans %}</p>
+    <details>
+        <summary>{% trans "Farbcode" %}</summary>
+        <p class="event-card">{% trans "Ein ganz normales Event" %}</p>
+        <p class="event-card event-card-creator">{% trans "Du hast dieses Event erstellt" %}</p>
+        <p class="event-card event-card-participant">{% trans "Du nimmst an diesem Event teil" %}</p>
+    </details>
+    <hr>
 
     {% if events %}
         {% for event in events %}
@@ -95,7 +103,7 @@
                     <span class="event-date-relative"></span>
                     {% if ordered_by == 'Datum' %}
                         <p><strong>{% trans "Datum und Uhrzeit (Beginn):" %}</strong> <span class="event-date"
-                                                                              data-date="{{ event.date_time|date:'c' }}">{{ event.date_time|date:"SHORT_DATETIME_FORMAT" }}</span>
+                                                                                            data-date="{{ event.date_time|date:'c' }}">{{ event.date_time|date:"SHORT_DATETIME_FORMAT" }}</span>
                         </p>
 
                     {% elif ordered_by == 'Dauer' %}
@@ -132,7 +140,7 @@
                         </p>
                         {% if ordered_by != 'Datum' %}
                             <p><strong>{% trans "Datum und Uhrzeit (Beginn):" %}</strong> <span class="event-date"
-                                                                                  data-date="{{ event.date_time|date:'c' }}">{{ event.date_time|date:"SHORT_DATETIME_FORMAT" }}</span>
+                                                                                                data-date="{{ event.date_time|date:'c' }}">{{ event.date_time|date:"SHORT_DATETIME_FORMAT" }}</span>
                             </p>
                         {% endif %}
                         {% if ordered_by != 'Dauer' %}
@@ -150,7 +158,8 @@
                         {% if ordered_by != 'Teilnehmeranzahl' %}
                             <details class="event-details">
                                 <summary>
-                                    <p><strong>{% trans "Teilnehmeranzahl:" %}</strong> {{ event.participants_count }}</p>
+                                    <p><strong>{% trans "Teilnehmeranzahl:" %}</strong> {{ event.participants_count }}
+                                    </p>
                                 </summary>
                                 <ul class="participant-list">
                                     {% for participant in event.participants.all %}
