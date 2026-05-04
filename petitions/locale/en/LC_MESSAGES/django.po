@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-04 14:59+0200\n"
+"POT-Creation-Date: 2026-05-04 20:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -346,12 +346,10 @@ msgid "Eine ganz normale Petition"
 msgstr "A regular petition"
 
 #: petitions/templates/petitions_overview.html:90
-#| msgid "Diese Petition hatte Erfolg"
 msgid "Du hast diese Petition erstellt"
 msgstr "You created this petition"
 
 #: petitions/templates/petitions_overview.html:91
-#| msgid "Du hast bereits unterschrieben"
 msgid "Du hast diese Petition unterschrieben"
 msgstr "You signed this petition"
 
@@ -361,7 +359,6 @@ msgstr "This petition was successful"
 
 #: petitions/templates/petitions_overview.html:107
 #: petitions/templates/petitions_overview.html:124
-#| msgid "Erstellt am"
 msgid "Erstellt am:"
 msgstr "Created at:"
 

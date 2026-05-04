@@ -4,23 +4,344 @@
 
 {% block meta %}
     <meta name="description"
-          content="{% trans 'Nutzen Sie ClimateQuest in Ihrer Schule oder Ihrem Unternehmen, um den CO2-Fußabdruck zu reduzieren und nachhaltige Praktiken zu fördern.' %}">
+          content="{% trans 'Nutzen Sie ClimateQuest in Ihrer Schule, um den CO2-Fußabdruck zu reduzieren und nachhaltige Praktiken zu fördern.' %}">
 {% endblock %}
 
-{% block title %}{% trans "Schulen / Unternehmen - ClimateQuest" %}{% endblock %}
+{% block title %}{% trans "Schulen - ClimateQuest" %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "ClimateQuest für Schulen und Unternehmen" %}</h1>
+    <h1>{% trans "ClimateQuest für Schulen" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
 
-    {% static 'documents/Schule_Expose.pdf' as expose_pdf %}
-    <p>{% blocktrans with pdf_url=expose_pdf %}ClimateQuest als Unternehmen oder Schule zu verwenden, bietet zahlreiche
-        Vorteile. In <a href="{{ pdf_url }}">diesem PDF</a> werden diese für Schulen exemplarisch dargelegt, die meisten
-        Punkte lassen sich allerdings auch auf Unternehmen übertragen. Melden Sie sich bei Interesse unter
-        <a href="mailto:kontakt@climate-quest.de?subject=Anfrage für Nutzung von ClimateQuest als Schule oder Unternehmen">kontakt@climate-quest.de</a>
-        . Das ganze ist kostenlos und unkompliziert!{% endblocktrans %}</p>
+    {% if request.LANGUAGE_CODE == "en" %}<p>ClimateQuest cooperations are currently only available in German. Thank you
+        for your forgiveness</p>{% endif %}
+
+
+    <style nonce="{{ request.csp_style_nonce }}">
+        .timeline-block {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            align-items: center;
+            padding: 1.5rem;
+            background-color: #f1faf1;
+            border-radius: 16px;
+        }
+
+        .timeline-anim {
+            width: 300px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 1000px) {
+            .timeline-anim {
+                width: 100px;
+            }
+        }
+
+        .timeline-content h3 {
+            margin: 0 0 0.5rem 0;
+            color: #2e7d32;
+        }
+
+        .timeline-content p {
+            color: #3e4e3e;
+        }
+
+        .show-all {
+            color: var(--color-primary);
+            font-weight: bold;
+        }
+    </style>
+
+    <div class="accordion">
+        <div class="accordion-header">
+            <div>
+                <div class="accordion-title">Schulen</div>
+            </div>
+            <button class="accordion-toggle" aria-expanded="false"
+                    aria-controls="accordionContent">
+                <span></span>
+            </button>
+        </div>
+        <div class="accordion-content-wrapper">
+            <div class="accordion-content">
+                <div class="timeline-block">
+                    <div class="timeline-anim">
+                        <div class="lottie-anim"
+                             data-src="{% static 'libraries/lottie/animations/plant.json' %}"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Zielsetzung</h3>
+                        <details>
+                            <summary class="show-all">Alles anzeigen</summary>
+                            <p>Angesichts der Klimakrise gehört es zu den zentralen Aufgaben von Schulen, einen
+                                aktiven
+                                Beitrag zum Klimaschutz zu leisten. Schulen erreichen täglich eine große Zahl junger
+                                Menschen und verfügen damit über einen wirkungsvollen Hebel, nachhaltiges Denken und
+                                Handeln zu fördern. Gerade künftige Generationen werden besonders stark von den Folgen
+                                der Klimakrise betroffen sein und müssen daher eine Schlüsselrolle im Klimaschutz
+                                einnehmen.</p>
+                            <p>Daher sollte sich jede Schule folgende Punkte zum Ziel setzen:</p>
+                            <ul>
+                                <li>Reduzierung des ökologischen Fußabdrucks der Schule</li>
+                                <li>Bildung von SuS zu Umweltthemen</li>
+                                <li>Motivierung von SuS zu Klimaschutz im Alltag</li>
+                            </ul>
+                            <p>Gerade die letzten beiden Punkte sind entscheidend: Junge Menschen prägen die Zukunft und
+                                damit auch die Chance auf eine gerechte und nachhaltige Gesellschaft. Wenn sie nicht
+                                über Klima- und Umweltschutz informiert sind oder keinen einfachen, direkten Zugang zu
+                                Handlungsmöglichkeiten erhalten, kann langfristig kein wirksamer Klimaschutz
+                                gelingen.</p>
+                        </details>
+                    </div>
+                </div>
+
+                <div class="timeline-block">
+                    <div class="timeline-anim">
+                        <div class="lottie-anim"
+                             data-src="{% static 'libraries/lottie/animations/bike.json' %}"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Kurze Einführung in die Funktionen von ClimateQuest</h3>
+                        <details>
+                            <summary class="show-all">Alles anzeigen</summary>
+                            <p>In der App ClimateQuest können User nachhaltige Aktionen eintragen, welche sie
+                                durchgeführt haben, und dafür sogenannte Klimapunkte erhalten. Diese wiederum bilden den
+                                Grundstein für die meisten anderen Funktionen. So gibt es beispielsweise ein Level,
+                                welches von der Anzahl der gesammelten Klimapunkte abhängt, ein wöchentliches Ziel, das
+                                die User selbst festlegen können, oder auch, was gerade für Schulen wichtig ist, die
+                                Möglichkeit, sich mit anderen Usern in sogenannten Families zu vergleichen. Mehrere
+                                Families können sich zu Communities zusammenschließen, wobei nun die durchschnittlichen
+                                Klimapunkte jeder Family ausschlaggebend für das Ranking sind. Durch diesen Vergleich
+                                mit anderen Usern bzw. Families sowie die weiteren implementierten Funktionen wie das
+                                wöchentliche Ziel, die Streak oder die perfekte Woche werden User motiviert, mehr
+                                Klimapunkte zu sammeln und dementsprechend auch mehr für das Klima zu tun. Zudem gibt es
+                                eine Funktion, mit der Bäume gepflanzt werden können: Sobald ein User 1.000 Klimapunkte
+                                gesammelt hat, erhält er einen Credit, der wiederrum ausgegeben werden kann, um einen
+                                Baum zu pflanzen. Dieser wird von unserem Kooperationspartner Plant-for-the-Planet in
+                                Kenia gepflanzt. Eine solche Baumpflanzung ist nicht nur ein wichtiger Beitrag zum
+                                Klimaschutz, indem CO2 gebunden wird, sondern hilft auch, Armut sowie Wüstenausbreitung
+                                zu bekämpfen.</p>
+                            <p>Zudem gibt es Funktionen zur Bildung – zum Beispiel ein Forum oder die Veröffentlichung
+                                bzw. das Lesen von Artikel – und Hilfestellungen, um selbst aktiv zu werden, wie
+                                beispielsweise die Möglichkeit, Petitionen oder Events zu erstellen.</p>
+                        </details>
+                    </div>
+                </div>
+
+                <div class="timeline-block">
+                    <div class="timeline-anim">
+                        <div class="lottie-anim"
+                             data-src="{% static 'libraries/lottie/animations/route.json' %}"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Weg zur Erreichung des Ziels</h3>
+                        <details>
+                            <summary class="show-all">Alles anzeigen</summary>
+                            <p>Eine Möglichkeit, in allen drei oben genannten Handlungsfeldern gleichzeitig aktiv zu
+                                werden, ist die Integration der App ClimateQuest in den Alltag der Schülerinnen und
+                                Schüler. </p>
+                            <p>Ein mögliches Konzept für eine Kooperation zwischen einer und ClimateQuest könnte so
+                                aussehen:</p>
+                            <ul>
+                                <li>Alle SuS besitzen einen eigenen Account</li>
+                                <li>Alle SuS, die gemeinsam in eine Klasse oder AG gehen, schließen sich zu einer
+                                    Family
+                                    zusammen. Ein Account kann auch in mehreren Families sein, d.h. man kann sowohl
+                                    Mitglied
+                                    in der Family einer Klasse als auch der einer AG sein. Auch Fachschaften, die
+                                    Schulleitung oder das Sekretariat könnten sich zu Families zusammenschließen.
+                                </li>
+                                <li>Alle Families schließen sich zu einer Community zusammen, welche die ganze Schule
+                                    abbildet.
+                                </li>
+                            </ul>
+                            <p>Indem SuS nun probieren, 1) im Ranking ihrer Family, also Klasse oder AG, aufzusteigen,
+                                und 2) dafür zu sorgen, dass die eigene Family höher im Ranking der Community, also der
+                                ganzen Schule, steht, werden sie nun versuchen, mehr Klimapunkte zu sammeln, indem sie
+                                beispielsweise Fahrrad statt Auto fahren, sich vegetarisch ernähren oder auf sonstige
+                                Weise CO2 einsparen. Durch Belohnungen von Seiten der Schule für die beste Family (wie
+                                beispielsweise ein zusätzlicher Wandertag) könnte dieser Effekt noch weiter verstärkt
+                                werden. </p>
+                            <p>Auch die Umweltbildung könnte durch ClimateQuest erleichtert werden. Da es in der App die
+                                Möglichkeit gibt, Artikel im Bereich Klimaschutz zu lesen oder selbst zu schreiben sowie
+                                im Forum Fragen zu dieser Thematik zu stellen, kann nicht nur die private Weiterbildung
+                                erleichtert werden; auch im Unterricht könnte auf in der App bereitgestelltes Material
+                                verwiesen werden. Eine Kooperation würde sicherstellen, dass dieses Angebot der Bildung
+                                von allen SuS gesehen und genutzt werden kann.</p>
+                            <p>Genauso wird die Reduzierung des ökologischen Fußabdruckes der Schule durch ClimateQuest
+                                unterstützt, indem sowohl SuS als auch Lehrkräfte und Mitarbeitende zu
+                                klimafreundlicherem Handeln motiviert und für dieses Thema sensibilisiert bzw. darüber
+                                informiert werden. So werden zum Beispiel die CO2-Emissionen der Schulwege reduziert
+                                oder es werden vermutlich nachhaltigere Exkursionen, Fortbewegungsmittel oder Projekte
+                                präferiert werden. </p>
+                        </details>
+                    </div>
+                </div>
+
+                <div class="timeline-block">
+                    <div class="timeline-anim">
+                        <div class="lottie-anim"
+                             data-src="{% static 'libraries/lottie/animations/privacy.json' %}"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Datenschutzrechtliche Aspekte</h3>
+                        <details>
+                            <summary class="show-all">Alles anzeigen</summary>
+                            <p>Die Anwendung wurde nach den Grundsätzen der DSGVO entwickelt. Eine datenschutzrechtliche
+                                Prüfung durch den / der schulischen Datenschutzbeauftragten müsste dennoch durchgeführt
+                                werden, um etwaige Missverständnisse vorzubeugen. Alle Daten werden auf einem
+                                dedizierten Server gespeichert, der unter anderem durch eine Firewall geschützt ist.
+                                Backups werden zeitweise auf Google Drive gespeichert, allerdings nur in verschlüsselter
+                                Form. Die einzigen von einer fremden Domain geladenen Files sind für reCAPTCHA, ein Tool
+                                von Google, welches erkennt, ob es sich beim Nutzenden um Bots handelt. Dieses wird
+                                allerdings nur bei der Registrierung verwendet. Wenn die Registrierung also durch mich
+                                erfolgt, wird reCAPTCHA nicht eingebunden.</p>
+                            <p>Damit ein tatsächlicher Wettbewerbseffekt entstehen kann, müsste der Name der jeweiligen
+                                Nutzenden erkennbar sein, d.h. dem echten Namen entsprechen, sodass beispielsweise
+                                Klassenkameradinnen und Klassenkameraden die jeweilige Person zuordnen können. Da der
+                                Benutzername öffentlich einsehbar ist, wäre hierfür eine ausdrückliche Einwilligung der
+                                Erziehungsberechtigten erforderlich.</p>
+                            <p>Konkret müssten sämtliche Erziehungsberechtigten sowie – sofern die Schülerinnen und
+                                Schüler das 14. Lebensjahr vollendet haben – auch die Schülerinnen und Schüler selbst
+                                eine Einwilligung zur Registrierung bei ClimateQuest abgeben. Verweigert eine Person die
+                                Einwilligung, darf hieraus kein Nachteil entstehen; insbesondere darf keine
+                                Registrierung erfolgen. In diesem Fall könnte die Klasse eine Family ohne diese Person
+                                bilden.</p>
+                        </details>
+                    </div>
+                </div>
+
+                <div class="timeline-block">
+                    <div class="timeline-anim">
+                        <div class="lottie-anim"
+                             data-src="{% static 'libraries/lottie/animations/school.json' %}"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Vorteile für die Schule</h3>
+                        <details>
+                            <summary class="show-all">Alles anzeigen</summary>
+                            <p>Die Kooperation bietet der Schule viele Vorteile:</p>
+                            <ul>
+                                <li><strong>Nachhaltige Verhaltensänderung:</strong> Durch die Kombination aus
+                                    Wettbewerb, Sichtbarkeit und individueller Zielsetzung werden SuS zu konkretem,
+                                    messbarem Klimaschutz im Alltag motiviert (z. B. klimafreundlicher Schulweg,
+                                    bewusster Konsum, Energieeinsparung). Schulwege sind meist einer größten Initiatoren
+                                    von Treibhausgasen an Schulen. Dies ist allerdings ein Thema, welches die Schule nur
+                                    indirekt beeinflussen kann – zum Beispiel über die Verwendung von ClimateQuest.
+                                </li>
+                                <li><strong>Verknüpfung von Bildung und Praxis:</strong> Klimaschutz wird nicht nur
+                                    theoretisch
+                                    behandelt, die App regt unmittelbar zum Handeln an und fördert Selbständigkeit und
+                                    Eigenverantwortlichkeit der SuS, insbesondere durch die Möglichkeit, eigenen,
+                                    klimaschützenden Content wie Petitionen oder Events zu erstellen. Sie kann auch im
+                                    Rahmen von Projekten oder Exkursen im Unterricht oder in AGs verwendet werden und
+                                    könnte so die schulinterne Thematisierung von Klimaschutz verbessern.
+                                </li>
+                                <li><strong>Stärkung des Schulprofils:</strong> Langfristig kann das Projekt zur
+                                    Weiterentwicklung des
+                                    Umweltprofils der Schule beitragen und bei Bewerbungen um Auszeichnungen (z.B.
+                                    Umweltschule) unterstützend wirken. Zudem ist davon auszugehen, dass Messungen des
+                                    ökologischen Fußabdrucks der Schule positiver ausfallen werden, wenn ClimateQuest
+                                    genutzt wird, zum Beispiel, weil SuS und Lehrkräfte motiviert werden, ihren Schulweg
+                                    nachhaltiger zu gestalten.
+                                </li>
+                                <li><strong>Aktiver Beitrag zum Klimaschutz:</strong> Um die Lebensgrundlagen für
+                                    zukünftige
+                                    Generationen zu bewahren, ist konsequenter Klimaschutz essentiell. Dieser wird durch
+                                    das Projekt nicht nur im Sinne der nachhaltigen Verhaltensänderungen erreicht,
+                                    sondern auch durch die in der App integrierten Möglichkeit, Bäume zu pflanzen.
+                                </li>
+                            </ul>
+                            <p>Gerne würde ich Ihnen das Konzept in einem persönlichen Gespräch vorstellen, um gemeinsam
+                                prüfen zu können, in welcher Form eine Pilotphase sinnvoll realisierbar wäre.</p>
+                        </details>
+                    </div>
+                </div>
+
+                <div class="timeline-block">
+                    <div class="timeline-anim">
+                        <div class="lottie-anim"
+                             data-src="{% static 'libraries/lottie/animations/support.json' %}"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Unser Service</h3>
+                        <details>
+                            <summary class="show-all">Alles anzeigen</summary>
+                            <p>Damit eine Kooperation mit ClimateQuest für Sie unkompliziert funktioniert, bieten wir
+                                folgenden Service:</p>
+                            <ul>
+                                <li><strong>Maßgeschneidertes Konzept:</strong> Gerne können wir gemeinsam ein Konzept
+                                    entwerfen, das perfekt für Ihre Schule geeignet ist!
+                                </li>
+                                <li><strong>Materialien:</strong> Gerne stellen wir Ihnen Materialien, die Sie verwenden
+                                    können, um ClimateQuest in den Schulalltag zu integrieren - von Elternbriefen über
+                                    Informationsvideos oder "Werbekampagnen".
+                                </li>
+                                <li><strong>Registrierung:</strong> Wir können alle Mitglieder der Schulfamilie für Sie
+                                    registrieren: Alles, was dafür benötigt wird, ist eine Liste der späteren User sowie
+                                    ihre Klassen- und AG-Zugehörigkeit, damit sie den passenden Families zugeordnet
+                                    werden können.
+                                </li>
+                            </ul>
+                            <p>Falls Sie noch weitere Dinge benötigen, kontaktieren Sie uns gerne!</p></details>
+                    </div>
+                </div>
+
+                <div class="timeline-block">
+                    <div class="timeline-anim">
+                        <div class="lottie-anim"
+                             data-src="{% static 'libraries/lottie/animations/letter.json' %}"
+                             data-startview="true"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Und jetzt?</h3>
+                        <p>Kontaktieren Sie uns unter <a
+                                href="mailto:kontakt@climate-quest.de">kontakt@climate-quest.de</a>!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'libraries/lottie/lottie.min.js' %}"></script>
+    <script nonce="{{ request.csp_script_nonce }}">
+        document.addEventListener("DOMContentLoaded", () => {
+            const elements = document.querySelectorAll(".lottie-anim");
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.dataset.started) {
+
+                        entry.target.dataset.started = "true";
+
+                        const anim = lottie.loadAnimation({
+                            container: entry.target,
+                            renderer: "svg",
+                            loop: false,
+                            autoplay: true,
+                            path: entry.target.dataset.src,
+                        });
+
+
+                        // Wenn startview=true → nach Ende wieder auf Anfangsbild springen
+                        if (entry.target.dataset.startview === "true") {
+                            anim.addEventListener("complete", () => {
+                                anim.goToAndStop(0, true);
+                            });
+                        }
+                    }
+                });
+            }, {threshold: 0.4});
+
+            elements.forEach(el => observer.observe(el));
+        });
+    </script>
+
 {% endblock %}

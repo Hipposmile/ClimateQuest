@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-04 14:59+0200\n"
+"POT-Creation-Date: 2026-05-04 20:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -302,12 +302,10 @@ msgid "Ein ganz normaler Artikel"
 msgstr "A regular article"
 
 #: artikel/templates/artikel_overview.html:76
-#| msgid "Diesen Artikel löschen"
 msgid "Du hast diesen Artikel erstellt"
 msgstr "You created this article"
 
 #: artikel/templates/artikel_overview.html:77
-#| msgid "Diesen Artikel löschen"
 msgid "Du hast diesen Artikel geliket"
 msgstr "You liked this article"
 
