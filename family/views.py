@@ -466,6 +466,8 @@ def family_detail(request, family_id):
                     'Dreihundertfünfundsechzig Tage': 'Threehundredsixtyfive days',
                 }
                 zeitraum_text = zeitraum_text_translations.get(zeitraum)
+            else:
+                zeitraum_text = zeitraum
 
     members = family.members.all()
 

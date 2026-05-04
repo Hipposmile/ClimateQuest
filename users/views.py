@@ -168,6 +168,8 @@ def klimapunkte_view(request, user_id):
                     'Dreihundertfünfundsechzig Tage': 'Threehundredsixtyfive days',
                 }
                 zeitraum_text = zeitraum_text_translations.get(zeitraum)
+            else:
+                zeitraum_text = zeitraum
 
     additional_klimapunkte = get_additional_klimapunkte(user)
     klimapunkte = get_klimapunkte_fuer_member(user, start_datum, end_datum) - additional_klimapunkte
