@@ -86,12 +86,15 @@
         <p>{% trans "Vergange Events nicht eingeblendet" %}</p>
     {% endif %}
     <p>{% blocktrans with count=events.count %}{{ count }} Suchergebnisse{% endblocktrans %}</p>
-    <details>
-        <summary>{% trans "Farbcode" %}</summary>
-        <p class="event-card">{% trans "Ein ganz normales Event" %}</p>
-        <p class="event-card event-card-creator">{% trans "Du hast dieses Event erstellt" %}</p>
-        <p class="event-card event-card-participant">{% trans "Du nimmst an diesem Event teil" %}</p>
-    </details>
+
+    {% if request.user.is_authenticated %}
+        <details>
+            <summary>{% trans "Farbcode" %}</summary>
+            <p class="event-card">{% trans "Ein ganz normales Event" %}</p>
+            <p class="event-card event-card-creator">{% trans "Du hast dieses Event erstellt" %}</p>
+            <p class="event-card event-card-participant">{% trans "Du nimmst an diesem Event teil" %}</p>
+        </details>
+    {% endif %}
     <hr>
 
     {% if events %}

@@ -84,17 +84,21 @@
         <p>{% trans "Erfolgreiche Petitionen eingeblendet" %}</p>
     {% endif %}
     <p>{{ petitions.count }} {% trans "Suchergebnisse" %}</p>
-    <details>
-        <summary>{% trans "Farbcode" %}</summary>
-        <p class="event-card">{% trans "Eine ganz normale Petition" %}</p>
-        <p class="event-card event-card-creator">{% trans "Du hast diese Petition erstellt" %}</p>
-        <p class="event-card event-card-participant">{% trans "Du hast diese Petition unterschrieben" %}</p>
-    </details>
+
+    {% if request.user.is_authenticated %}
+        <details>
+            <summary>{% trans "Farbcode" %}</summary>
+            <p class="event-card">{% trans "Eine ganz normale Petition" %}</p>
+            <p class="event-card event-card-creator">{% trans "Du hast diese Petition erstellt" %}</p>
+            <p class="event-card event-card-participant">{% trans "Du hast diese Petition unterschrieben" %}</p>
+        </details>
+    {% endif %}
     <hr>
 
     {% if petitions %}
         {% for single_petition in petitions %}
-            <section class="event-card{% if request.user == single_petition.creator %} event-card-creator{% elif request.user in single_petition.signs.all %} event-card-participant{% endif %}">
+            <section
+                    class="event-card{% if request.user == single_petition.creator %} event-card-creator{% elif request.user in single_petition.signs.all %} event-card-participant{% endif %}">
                 <div class="event-main">
                     <h2 class="event-title">{{ single_petition.title }}</h2>
                     <p>{% trans "Kategorie" %}: {{ single_petition.category.title }}</p>
@@ -105,7 +109,7 @@
                     {% endif %}
                     {% if ordered_by == 'Erstellt am' %}
                         <p><strong>{% trans "Erstellt am:" %}</strong> <span class="event-date"
-                                                                                    data-date="{{ single_petition.created_at|date:'c' }}">{{ single_petition.created_at|date:"SHORT_DATE_FORMAT" }}</span>
+                                                                             data-date="{{ single_petition.created_at|date:'c' }}">{{ single_petition.created_at|date:"SHORT_DATE_FORMAT" }}</span>
                         </p>
 
                     {% elif ordered_by == 'Ersteller' %}
@@ -122,7 +126,7 @@
                     <div class="event-extra">
                         {% if ordered_by != 'Erstellt am' %}
                             <p><strong>{% trans "Erstellt am:" %}</strong> <span class="event-date"
-                                                                                        data-date="{{ single_petition.created_at|date:'c' }}">{{ single_petition.created_at|date:"SHORT_DATE_FORMAT" }}</span>
+                                                                                 data-date="{{ single_petition.created_at|date:'c' }}">{{ single_petition.created_at|date:"SHORT_DATE_FORMAT" }}</span>
                             </p>
                         {% endif %}
                         {% if ordered_by != 'Ersteller' %}
