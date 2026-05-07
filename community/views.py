@@ -383,7 +383,7 @@ def chat_community(request, community_id, family_id):
 
 
 @login_required
-def community_detail(request, community_id, family_id):
+def community_detail(request, community_id, family_id): # ToDo: Bugs fixen: sowohl Internationalisierung als auch Funktionen (teilweise wird falsch berechnet, wenn datums filter an ist (vlt. auch bei Families, prüfen!!!)
     if not community_id:
         messages.error(request, all_messages["community_id_missing"])
         return redirect('communities_view')
@@ -404,7 +404,7 @@ def community_detail(request, community_id, family_id):
 
     if request.user not in family.members.all():
         messages.error(request, all_messages["community__not_member_of_family"])
-        return redirect('dashboard')
+        return redirect('communities_view')
 
     members_with_klimapunkte = []
     community_members = community.members.all()

@@ -80,16 +80,16 @@ def join_family(request):
 def chat_family(request, family_id):
     if not family_id:
         messages.error(request, all_messages["family_id_missing"])
-        return redirect('dashboard')
+        return redirect('families_view')
     try:
         family = Family.objects.get(id=family_id)
     except Family.DoesNotExist:
         messages.error(request, all_messages["family_not_found"])
-        return redirect('dashboard')
+        return redirect('families_view')
 
     if family.name == 'worldwide ranking':
         messages.error(request, all_messages["chat_not_enabled_for_worldwide"])
-        return redirect('dashboard')
+        return redirect('families_view')
 
     if not family.chat:
         messages.error(request, all_messages["chat_disabled_for_family"])
@@ -97,7 +97,7 @@ def chat_family(request, family_id):
 
     if request.user not in family.members.all():
         messages.error(request, all_messages["not_part_of_family"].format(family=family))
-        return redirect('dashboard')
+        return redirect('families_view')
 
     if request.method == 'POST':
         msg = request.POST.get('message')
@@ -124,20 +124,20 @@ def families_view(request):
 def edit_family(request, family_id):
     if not family_id:
         messages.error(request, all_messages["family_id_missing"])
-        return redirect('dashboard')
+        return redirect('families_view')
     try:
         family = Family.objects.get(id=family_id)
     except Family.DoesNotExist:
         messages.error(request, all_messages["family_not_found"])
-        return redirect('dashboard')
+        return redirect('families_view')
 
     if family.name == 'worldwide ranking':
         messages.error(request, all_messages["family_name_forbidden"])
-        return redirect('dashboard')
+        return redirect('families_view')
 
     if request.user not in family.members.all():
         messages.error(request, all_messages["not_part_of_family"].format(family=family))
-        return redirect('dashboard')
+        return redirect('families_view')
 
     if request.method == 'POST':
         if 'change_familyname' in request.POST:
@@ -222,7 +222,7 @@ def edit_family(request, family_id):
             elif username == request.user.username:
                 family.members.remove(request.user)
                 messages.success(request, all_messages["family_left"])
-                return redirect('dashboard')
+                return redirect('families_view')
             else:
                 try:
                     user = User.objects.get(username=username)
@@ -246,7 +246,7 @@ def edit_family(request, family_id):
         if 'leave_family' in request.POST:
             family.members.remove(request.user)
             messages.success(request, all_messages["family_left"])
-            return redirect('dashboard')
+            return redirect('families_view')
 
         if 'change_chat_settings' in request.POST:
             admin_password = request.POST.get('admin_password_chat_settings')
@@ -274,7 +274,7 @@ def edit_family(request, family_id):
                                         user_to_message, url=reverse('families_view'))
                 family.delete()
                 messages.success(request, all_messages["family_deleted"])
-                return redirect('dashboard')
+                return redirect('families_view')
 
     return render(request, 'edit_family.html', {'family': family})
 
@@ -402,17 +402,19 @@ VALID_ZEITRAEUME = {'Heute', 'Sieben Tage', 'Dreißig Tage', 'Dreihundertfünfun
 @login_required
 def family_detail(request, family_id):
     if not family_id:
-        messages.error(request, _("Familien-ID fehlt."))
-        return redirect('dashboard')
+        messages.error(request, all_messages["family_id_missing"])
+        return redirect('families_view')
 
     try:
         family = Family.objects.get(id=family_id)
     except Family.DoesNotExist:
-        messages.error(request, _("Familie nicht gefunden."))
-        return redirect('dashboard')
+        messages.error(request, all_messages["family_not_found"])
+        return redirect('families_view')
+    if request.user not in family.members.all():
+        messages.error(request, all_messages["not_part_of_family"].format(familyname=family.name))
+        return redirect('families_view')
 
     heute = date.today()
-    zeitraum = 'Gesamt'
     zeitraum_text = _("Gesamt")
     start_datum = end_datum = None
 
@@ -420,7 +422,7 @@ def family_detail(request, family_id):
         zeitraum = request.POST.get('zeitraum', 'Gesamt')
 
         if zeitraum not in VALID_ZEITRAEUME:
-            messages.error(request, _("Ungültiger Zeitraum."))
+            messages.error(request, all_messages["invalid_time_period"])
             return redirect('family_detail', family_id)
 
         if zeitraum == 'Benutzerdefiniert':
@@ -428,21 +430,21 @@ def family_detail(request, family_id):
             raw_end = request.POST.get('end_date')
 
             if not raw_start or not raw_end:
-                messages.error(request, _("Bitte Start- und Enddatum angeben."))
+                messages.error(request, all_messages["missing_required_inputs"])
                 return redirect('family_detail', family_id)
 
             try:
                 start_datum = datetime.strptime(raw_start, '%Y-%m-%d').date()
                 end_datum = datetime.strptime(raw_end, '%Y-%m-%d').date()
             except ValueError:
-                messages.error(request, _("Ungültiges Datumsformat."))
+                messages.error(request, all_messages["invalid_date"])
                 return redirect('family_detail', family_id)
 
             if start_datum > end_datum:
-                messages.error(request, _("Das Startdatum muss vor dem Enddatum liegen."))
+                messages.error(request, all_messages["invalid_date_range"])
                 return redirect('family_detail', family_id)
             if end_datum > heute:
-                messages.error(request, _("Das Enddatum darf nicht in der Zukunft liegen."))
+                messages.error(request, all_messages["date_in_future"])
                 return redirect('family_detail', family_id)
 
             zeitraum_text = _("%(start)s bis %(end)s") % {

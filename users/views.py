@@ -122,7 +122,7 @@ def klimapunkte_view(request, user_id):
         zeitraum = request.POST.get('zeitraum', 'Gesamt')
 
         if zeitraum not in VALID_ZEITRAEUME_KLIMAPUNKTE:
-            messages.error(request, _("Ungültiger Zeitraum."))
+            messages.error(request, all_messages["invalid_time_period"])
             return redirect('klimapunkte_view', user_id)
 
         if zeitraum == 'Benutzerdefiniert':
@@ -130,21 +130,21 @@ def klimapunkte_view(request, user_id):
             raw_end = request.POST.get('end_date')
 
             if not raw_start or not raw_end:
-                messages.error(request, _("Bitte Start- und Enddatum angeben."))
+                messages.error(request, all_messages["missing_required_inputs"])
                 return redirect('klimapunkte_view', user_id)
 
             try:
                 start_datum = datetime.strptime(raw_start, '%Y-%m-%d').date()
                 end_datum = datetime.strptime(raw_end, '%Y-%m-%d').date()
             except ValueError:
-                messages.error(request, _("Ungültiges Datumsformat."))
+                messages.error(request, all_messages["invalid_date"])
                 return redirect('klimapunkte_view', user_id)
 
             if start_datum > end_datum:
-                messages.error(request, _("Das Startdatum muss vor dem Enddatum liegen."))
+                messages.error(request, all_messages["invalid_date_range"])
                 return redirect('klimapunkte_view', user_id)
             if end_datum > heute:
-                messages.error(request, _("Das Enddatum darf nicht in der Zukunft liegen."))
+                messages.error(request, all_messages["date_in_future"])
                 return redirect('klimapunkte_view', user_id)
 
             zeitraum_text = _("%(start)s bis %(end)s") % {
