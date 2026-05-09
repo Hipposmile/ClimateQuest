@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────
-// i18n
-// ─────────────────────────────────────────────
-
 const translations = {
     de: {
         cookieTitle: "Wir verwenden Cookies,",
@@ -71,10 +67,6 @@ function tCategory(categoryKey, field) {
         ?? categoryKey;
 }
 
-// ─────────────────────────────────────────────
-// Cookie categories
-// ─────────────────────────────────────────────
-
 const cookieCategories = {
     essential: {
         get label() {
@@ -95,10 +87,6 @@ const cookieCategories = {
         required: false
     }
 };
-
-// ─────────────────────────────────────────────
-// Banner
-// ─────────────────────────────────────────────
 
 function addCookieBanner() {
     const banner = document.createElement('div');
@@ -169,10 +157,6 @@ function addCookieBanner() {
     });
 }
 
-// ─────────────────────────────────────────────
-// Consent handling
-// ─────────────────────────────────────────────
-
 function setConsent(consent) {
     localStorage.setItem('cookieConsent', JSON.stringify(consent));
     ['cookie-banner', 'cookie-overlay'].forEach(id => document.getElementById(id)?.remove());
@@ -180,7 +164,6 @@ function setConsent(consent) {
     handleCookieBlocks(consent);
 }
 
-// 🚫 Blockierte Inhalte je nach Consent anzeigen
 function handleCookieBlocks(consentState) {
     document.querySelectorAll('.cookie-blocked').forEach(el => {
         const type = el.dataset.requires;
@@ -188,7 +171,6 @@ function handleCookieBlocks(consentState) {
 
         if (consentState[type]) {
             if (content.startsWith("<script")) {
-                // Prüfen, ob es ein externes Skript ist
                 const srcMatch = content.match(/<script\s+src=["']([^"']+)["']><\/script>/i);
                 if (srcMatch) {
                     const script = document.createElement("script");
@@ -198,7 +180,6 @@ function handleCookieBlocks(consentState) {
                     return;
                 }
 
-                // Prüfen, ob es ein Inline-Skript ist
                 const inlineMatch = content.match(/<script nonce="{{ request.csp_script_nonce }}">([\s\S]*?)<\/script>/i);
                 if (inlineMatch) {
                     const script = document.createElement("script");
@@ -228,10 +209,6 @@ function handleCookieBlocks(consentState) {
         }
     });
 }
-
-// ─────────────────────────────────────────────
-// Init
-// ─────────────────────────────────────────────
 
 window.addEventListener('load', () => {
     const consent = localStorage.getItem('cookieConsent');
