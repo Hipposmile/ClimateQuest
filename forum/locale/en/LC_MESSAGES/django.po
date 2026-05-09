@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-08 18:31+0200\n"
+"POT-Creation-Date: 2026-05-09 15:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -226,10 +226,6 @@ msgstr "Creator:"
 
 #: forum/templates/forum_overview.html:101
 #, python-format
-#| msgid ""
-#| "\n"
-#| "                                        <a href=\"%(url)s\">%(username)s</"
-#| "a>"
 msgid ""
 "\n"
 "                                <a href=\"%(url)s\">%(username)s</a>"
@@ -248,10 +244,6 @@ msgstr "more"
 
 #: forum/templates/forum_overview.html:119
 #, python-format
-#| msgid ""
-#| "\n"
-#| "                                        <a href=\"%(url)s\">%(username)s</"
-#| "a>"
 msgid ""
 "\n"
 "                                    <a href=\"%(url)s\">%(username)s</a>"

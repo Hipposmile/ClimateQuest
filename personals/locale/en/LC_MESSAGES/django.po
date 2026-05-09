@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-03 16:22+0200\n"
+"POT-Creation-Date: 2026-05-09 15:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,29 +29,44 @@ msgstr "Credits"
 
 #: personals/templates/credit_view.html:17
 #, python-format
-msgid "Du brauchst %(klimapunkte)s Klimapunkte, um einen Credit zu verdienen"
+msgid ""
+"Du brauchst %(klimapunkte)s\n"
+"        Klimapunkte, um einen Credit zu verdienen"
 msgstr "You need %(klimapunkte)s climate points to earn a credit"
 
-#: personals/templates/credit_view.html:19
+#: personals/templates/credit_view.html:20
 msgid "Zur Verfügung stehende Credits:"
 msgstr "Available credits:"
 
-#: personals/templates/credit_view.html:30
+#: personals/templates/credit_view.html:31
 msgid "bis zum nächsten Credit geschafft"
 msgstr "to the next credit achieved"
 
-#: personals/templates/credit_view.html:33
+#: personals/templates/credit_view.html:34
 msgid "1 Baum pflanzen"
 msgstr "Plant 1 tree"
 
-#: personals/templates/credit_view.html:34
+#: personals/templates/credit_view.html:35
 msgid "Das kostet einen Credit"
 msgstr "This costs one credit"
 
 #: personals/templates/credit_view.html:38
 #, python-format
+#| msgid ""
+#| "Du hast\n"
+#| "            bereits %(tree_count)s Bäume gepflanzt."
 msgid ""
-"1 gepflanzter Baum (Sponsor: %(sponsor)s) durch Plant-for-the-Planet: <a "
+"Du hast\n"
+"            bereits %(tree_count)s Bäume gepflanzt:"
+msgstr ""
+"You have\n"
+"            already planted %(tree_count)s trees:"
+
+#: personals/templates/credit_view.html:42
+#, python-format
+msgid ""
+"1 gepflanzter Baum (Sponsor:\n"
+"                    %(sponsor)s) durch Plant-for-the-Planet: <a "
 "href=\"%(url)s\">Zertifikat</a>"
 msgstr ""
 "1 planted tree (sponsor: %(sponsor)s) by Plant-for-the-Planet: <a "
@@ -521,13 +536,16 @@ msgid ""
 "Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: "
 "%(activation_link)s"
 msgstr ""
-"Please click the following link to verify your email address: %(activation_link)s"
+"Please click the following link to verify your email address: "
+"%(activation_link)s"
 
 #: personals/views.py:144
 msgid ""
 "Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge "
 "deine E-Mail-Adresse später in den Einstellungen hinzu."
-msgstr "Error sending email. Try registering without email and add your email address later in the settings."
+msgstr ""
+"Error sending email. Try registering without email and add your email "
+"address later in the settings."
 
 #: personals/views.py:188
 msgid "Fehler beim E-Mail-Versand. Probiere es später erneut."
@@ -542,4 +560,9 @@ msgid ""
 "href=\"https://climate-quest.de/personals/login/\">hier</a> an und ändere "
 "aus Sicherheitsgründen möglichst bald unter \"Profil bearbeiten\" dein "
 "Passwort."
-msgstr "We´ve created a new, randomly generated password for you: <b>%(new_password)s</b> \n Log in with it and your username <b>%(username)s</b> <a href=\"https://climate-quest.de/personals/login/\">here</a> and change your password as soon as possible under \"edit profile\" for security reasons."
+msgstr ""
+"We´ve created a new, randomly generated password for you: "
+"<b>%(new_password)s</b> \n"
+" Log in with it and your username <b>%(username)s</b> <a href=\"https://"
+"climate-quest.de/personals/login/\">here</a> and change your password as "
+"soon as possible under \"edit profile\" for security reasons."
