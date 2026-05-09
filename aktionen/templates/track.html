@@ -100,6 +100,8 @@
         }
 
         function startTracking(id) {
+            const actionName = document.getElementById(id).textContent;
+
             document.getElementById('distance-tracking').style.display = 'none';
 
             const btn = document.getElementById('distance-tracking-button');
@@ -112,7 +114,7 @@
             document.getElementById('distance-tracking-alert').textContent = '{% trans 'Bitte Seite nicht aktualisieren oder verlassen, während die Distanz getrackt wird!!!' %}';
 
             let info = document.getElementById('distance-tracking-info');
-            info.textContent = '{% trans 'Insgesamt getrackte Distanz:' %} 0 {% trans 'Meter' %}';
+            info.textContent = '{% trans 'Insgesamt getrackte Distanz (Aktion: ' %} ' + actionName + '): ' + '0 {% trans 'Meter' %}';
 
             let distance = 0;
             let oldPosition;
@@ -126,7 +128,7 @@
 
                     if (delta > 2) {
                         distance += delta;
-                        info.textContent = '{% trans 'Insgesamt getrackte Distanz:' %} ' + distance.toFixed(0) + ' {% trans 'Meter' %}';
+                        info.textContent = '{% trans 'Insgesamt getrackte Distanz (Aktion: ' %} ' + actionName + '): ' + distance.toFixed(0) + ' {% trans 'Meter' %}';
                     }
                 }
 
@@ -164,7 +166,7 @@
                 }).then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            document.getElementById('js-tracking-msg').innerHTML = '{% trans 'Distanz erfolgreich getrackt!' %} <a href="/users/action_detail/${data.action_id}/${data.user_id}" class="redirect-link more-link"><span>Mehr</span><span class="redirect-link-icon">→</span></a>';
+                            document.getElementById('js-tracking-msg').innerHTML = `{% trans 'Distanz erfolgreich getrackt!' %} <a href="/users/action_detail/${data.action_id}/${data.user_id}" class="redirect-link more-link"><span>Mehr</span><span class="redirect-link-icon">→</span></a>`;
                             document.getElementById('js-tracking-msg').classList.add('success-message');
                         } else {
                             document.getElementById('js-tracking-msg').textContent = '{% trans 'Fehler beim Eintragen der Aktion:' %} ' + data.error;

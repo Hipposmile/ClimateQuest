@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-04 20:12+0200\n"
+"POT-Creation-Date: 2026-05-08 18:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -108,7 +108,7 @@ msgid "Ein offizieller Artikel von ClimateQuest"
 msgstr "An official article from ClimateQuest"
 
 #: artikel/templates/artikel_detail.html:163
-#: artikel/templates/artikel_overview.html:91
+#: artikel/templates/artikel_overview.html:93
 msgid "Geprüfte und verifizierte Informationen"
 msgstr "Checked and verified information"
 
@@ -123,7 +123,7 @@ msgstr ""
 
 #: artikel/templates/artikel_detail.html:169
 #: artikel/templates/artikel_overview.html:70
-#: artikel/templates/artikel_overview.html:87
+#: artikel/templates/artikel_overview.html:89
 #, python-format
 msgid "Kategorie: %(cat)s"
 msgstr "Category: %(cat)s"
@@ -293,51 +293,51 @@ msgstr "Search term: %(keyword)s"
 msgid "%(count)s Suchergebnisse"
 msgstr "%(count)s search results"
 
-#: artikel/templates/artikel_overview.html:74
+#: artikel/templates/artikel_overview.html:75
 msgid "Farbcode"
 msgstr "color code"
 
-#: artikel/templates/artikel_overview.html:75
+#: artikel/templates/artikel_overview.html:76
 msgid "Ein ganz normaler Artikel"
 msgstr "A regular article"
 
-#: artikel/templates/artikel_overview.html:76
+#: artikel/templates/artikel_overview.html:77
 msgid "Du hast diesen Artikel erstellt"
 msgstr "You created this article"
 
-#: artikel/templates/artikel_overview.html:77
+#: artikel/templates/artikel_overview.html:78
 msgid "Du hast diesen Artikel geliket"
 msgstr "You liked this article"
 
-#: artikel/templates/artikel_overview.html:94
-#: artikel/templates/artikel_overview.html:112
+#: artikel/templates/artikel_overview.html:96
+#: artikel/templates/artikel_overview.html:114
 msgid "Zuletzt bearbeitet:"
 msgstr "Last edited:"
 
-#: artikel/templates/artikel_overview.html:100
-#: artikel/templates/artikel_overview.html:118
+#: artikel/templates/artikel_overview.html:102
+#: artikel/templates/artikel_overview.html:120
 msgid "Ersteller:"
 msgstr "Creator:"
 
-#: artikel/templates/artikel_overview.html:102
-#: artikel/templates/artikel_overview.html:120
+#: artikel/templates/artikel_overview.html:104
+#: artikel/templates/artikel_overview.html:122
 msgid "(Du)"
 msgstr "(You)"
 
-#: artikel/templates/artikel_overview.html:104
-#: artikel/templates/artikel_overview.html:123
+#: artikel/templates/artikel_overview.html:106
+#: artikel/templates/artikel_overview.html:125
 msgid "Likes:"
 msgstr "Likes:"
 
-#: artikel/templates/artikel_overview.html:109
+#: artikel/templates/artikel_overview.html:111
 msgid "mehr"
 msgstr "more"
 
-#: artikel/templates/artikel_overview.html:129
+#: artikel/templates/artikel_overview.html:131
 msgid "Details ansehen"
 msgstr "View details"
 
-#: artikel/templates/artikel_overview.html:133
+#: artikel/templates/artikel_overview.html:135
 msgid "Es gibt derzeit keine Artikel mit diesem Filter."
 msgstr "There are currently no articles with this filter."
 

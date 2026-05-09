@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-04 20:12+0200\n"
+"POT-Creation-Date: 2026-05-08 18:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -188,7 +188,7 @@ msgid "Suchwort: %(keyword)s"
 msgstr "Search term: %(keyword)s"
 
 #: forum/templates/forum_overview.html:73
-#: forum/templates/forum_overview.html:89
+#: forum/templates/forum_overview.html:92
 #, python-format
 msgid "Kategorie: %(cat)s"
 msgstr "Category: %(cat)s"
@@ -198,65 +198,81 @@ msgstr "Category: %(cat)s"
 msgid "%(count)s Suchergebnisse"
 msgstr "%(count)s search results"
 
-#: forum/templates/forum_overview.html:76
+#: forum/templates/forum_overview.html:78
 msgid "Farbcode"
 msgstr "Color code"
 
-#: forum/templates/forum_overview.html:77
+#: forum/templates/forum_overview.html:79
 msgid "Ein ganz normaler Forums-Beitrag"
 msgstr "A regular forum post"
 
-#: forum/templates/forum_overview.html:78
+#: forum/templates/forum_overview.html:80
 msgid "Du hast diesen Beitrag erstellt"
 msgstr "You created this post"
 
-#: forum/templates/forum_overview.html:79
+#: forum/templates/forum_overview.html:81
 msgid "Du hast diesen Beitrag beantwortet"
 msgstr "You answered this post"
 
-#: forum/templates/forum_overview.html:91
-#: forum/templates/forum_overview.html:109
+#: forum/templates/forum_overview.html:94
+#: forum/templates/forum_overview.html:112
 msgid "Erstellt am:"
 msgstr "Created on:"
 
-#: forum/templates/forum_overview.html:96
-#: forum/templates/forum_overview.html:114
+#: forum/templates/forum_overview.html:99
+#: forum/templates/forum_overview.html:117
 msgid "Ersteller:"
 msgstr "Creator:"
 
-#: forum/templates/forum_overview.html:98
+#: forum/templates/forum_overview.html:101
 #, python-format
+#| msgid ""
+#| "\n"
+#| "                                        <a href=\"%(url)s\">%(username)s</"
+#| "a>"
 msgid ""
 "\n"
-"                                        <a href=\"%(url)s\">%(username)s</a>"
+"                                <a href=\"%(url)s\">%(username)s</a>"
 msgstr ""
 "\n"
 "                                        <a href=\"%(url)s\">%(username)s</a>"
 
-#: forum/templates/forum_overview.html:100
-#: forum/templates/forum_overview.html:118
+#: forum/templates/forum_overview.html:103
+#: forum/templates/forum_overview.html:121
 msgid "(Du)"
 msgstr "(You)"
 
-#: forum/templates/forum_overview.html:105
+#: forum/templates/forum_overview.html:108
 msgid "mehr"
 msgstr "more"
 
-#: forum/templates/forum_overview.html:116
+#: forum/templates/forum_overview.html:119
 #, python-format
+#| msgid ""
+#| "\n"
+#| "                                        <a href=\"%(url)s\">%(username)s</"
+#| "a>"
 msgid ""
 "\n"
-"                                            <a "
-"href=\"%(url)s\">%(username)s</a>"
+"                                    <a href=\"%(url)s\">%(username)s</a>"
 msgstr ""
 "\n"
-"                                            <a "
-"href=\"%(url)s\">%(username)s</a>"
+"                                        <a href=\"%(url)s\">%(username)s</a>"
 
-#: forum/templates/forum_overview.html:123
+#: forum/templates/forum_overview.html:126
 msgid "Details ansehen"
 msgstr "View details"
 
-#: forum/templates/forum_overview.html:127
+#: forum/templates/forum_overview.html:130
 msgid "Es gibt derzeit keine Posts mit diesem Filter."
 msgstr "There are currently no posts with this filter."
+
+#, python-format
+#~ msgid ""
+#~ "\n"
+#~ "                                            <a "
+#~ "href=\"%(url)s\">%(username)s</a>"
+#~ msgstr ""
+#~ "\n"
+#~ "                                            <a "
+#~ "href=\"%(url)s\">%(username)s</a>"

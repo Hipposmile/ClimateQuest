@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-27 13:49+0200\n"
+"POT-Creation-Date: 2026-05-08 18:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -354,7 +354,7 @@ msgstr ""
 msgid "Zeitraum"
 msgstr "Time period"
 
-#: family/templates/family_detail.html:38 family/views.py:416
+#: family/templates/family_detail.html:38 family/views.py:418
 msgid "Gesamt"
 msgstr "Total"
 
@@ -447,35 +447,28 @@ msgstr ""
 msgid "Oder <a href=\"%(url)s\">eine Family gründen</a>."
 msgstr "Or <a href=\"%(url)s\">create a family</a>."
 
-#: family/views.py:405
-msgid "Familien-ID fehlt."
-msgstr "Family-ID is missing."
-
-#: family/views.py:411
-msgid "Familie nicht gefunden."
-msgstr "The family could not be found."
-
-#: family/views.py:423
-msgid "Ungültiger Zeitraum."
-msgstr "Invalid time period."
-
-#: family/views.py:431
-msgid "Bitte Start- und Enddatum angeben."
-msgstr "Please enter start and end date."
-
-#: family/views.py:438
-msgid "Ungültiges Datumsformat."
-msgstr "Invalid date format."
-
-#: family/views.py:442
-msgid "Das Startdatum muss vor dem Enddatum liegen."
-msgstr "The start date must be before the end date."
-
-#: family/views.py:445
-msgid "Das Enddatum darf nicht in der Zukunft liegen."
-msgstr "The end date cannot be in the future."
-
-#: family/views.py:448
+#: family/views.py:450
 #, python-format
 msgid "%(start)s bis %(end)s"
 msgstr "%(start)s to %(end)s"
+
+#~ msgid "Familien-ID fehlt."
+#~ msgstr "Family-ID is missing."
+
+#~ msgid "Familie nicht gefunden."
+#~ msgstr "The family could not be found."
+
+#~ msgid "Ungültiger Zeitraum."
+#~ msgstr "Invalid time period."
+
+#~ msgid "Bitte Start- und Enddatum angeben."
+#~ msgstr "Please enter start and end date."
+
+#~ msgid "Ungültiges Datumsformat."
+#~ msgstr "Invalid date format."
+
+#~ msgid "Das Startdatum muss vor dem Enddatum liegen."
+#~ msgstr "The start date must be before the end date."
+
+#~ msgid "Das Enddatum darf nicht in der Zukunft liegen."
+#~ msgstr "The end date cannot be in the future."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-01 21:39+0200\n"
+"POT-Creation-Date: 2026-05-08 18:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -129,7 +129,7 @@ msgstr "Tracking - ClimateQuest"
 msgid "Tracken"
 msgstr "Tracking"
 
-#: aktionen/templates/track.html:63 aktionen/templates/track.html:231
+#: aktionen/templates/track.html:63 aktionen/templates/track.html:233
 msgid "Stoppen"
 msgstr "Stop"
 
@@ -145,7 +145,7 @@ msgstr "If you want to track your bicycle, public transport, or train routes"
 msgid "Wir speichern keine Standortdaten auf unserem Server!"
 msgstr "We do not store location data on our server!"
 
-#: aktionen/templates/track.html:112
+#: aktionen/templates/track.html:114
 msgid ""
 "Bitte Seite nicht aktualisieren oder verlassen, während die Distanz getrackt "
 "wird!!!"
@@ -153,42 +153,43 @@ msgstr ""
 "Please do not refresh or leave the page while the distance is being "
 "tracked!!!"
 
-#: aktionen/templates/track.html:115 aktionen/templates/track.html:129
-msgid "Insgesamt getrackte Distanz:"
-msgstr "Total tracked distance:"
+#: aktionen/templates/track.html:117 aktionen/templates/track.html:131
+#| msgid "Insgesamt getrackte Distanz:"
+msgid "Insgesamt getrackte Distanz (Aktion: "
+msgstr "Total tracked distance (action: "
 
-#: aktionen/templates/track.html:115 aktionen/templates/track.html:129
+#: aktionen/templates/track.html:117 aktionen/templates/track.html:131
 msgid "Meter"
 msgstr "Meters"
 
-#: aktionen/templates/track.html:152
+#: aktionen/templates/track.html:154
 msgid "Da du dich nicht bewegt hast, wurde nichts eingetragen."
 msgstr "Since you did not move, nothing was entered."
 
-#: aktionen/templates/track.html:167
+#: aktionen/templates/track.html:169
 msgid "Distanz erfolgreich getrackt!"
 msgstr "Distance successfully tracked!"
 
-#: aktionen/templates/track.html:170
+#: aktionen/templates/track.html:172
 msgid "Fehler beim Eintragen der Aktion:"
 msgstr "Error entering the action:"
 
-#: aktionen/templates/track.html:176
+#: aktionen/templates/track.html:178
 msgid "Fehler beim Eintragen der Aktion."
 msgstr "Error entering the action."
 
-#: aktionen/templates/track.html:213
+#: aktionen/templates/track.html:215
 msgid "Wöchentliche Aktionen"
 msgstr "Weekly Actions"
 
-#: aktionen/templates/track.html:214
+#: aktionen/templates/track.html:216
 msgid ""
 "Wenn du wöchentliche Aktionen immer durchführst und sie nicht jede Woche "
 "eintragen willst"
 msgstr ""
 "If you always perform weekly actions and do not want to enter them every week"
 
-#: aktionen/templates/track.html:229
+#: aktionen/templates/track.html:231
 msgid "wird getrackt seit"
 msgstr "has been tracked since"
 

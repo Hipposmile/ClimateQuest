@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-04 20:12+0200\n"
+"POT-Creation-Date: 2026-05-08 18:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,7 +51,7 @@ msgstr "The goal can be updated afterwards"
 #: petitions/templates/add_petition.html:72
 #: petitions/templates/petition_detail.html:73
 #: petitions/templates/petitions_overview.html:82
-#: petitions/templates/petitions_overview.html:100
+#: petitions/templates/petitions_overview.html:104
 msgid "Kategorie"
 msgstr "Category"
 
@@ -337,55 +337,55 @@ msgstr "Successful petitions included"
 msgid "Suchergebnisse"
 msgstr "Search results"
 
-#: petitions/templates/petitions_overview.html:88
+#: petitions/templates/petitions_overview.html:90
 msgid "Farbcode"
 msgstr "Color code"
 
-#: petitions/templates/petitions_overview.html:89
+#: petitions/templates/petitions_overview.html:91
 msgid "Eine ganz normale Petition"
 msgstr "A regular petition"
 
-#: petitions/templates/petitions_overview.html:90
+#: petitions/templates/petitions_overview.html:92
 msgid "Du hast diese Petition erstellt"
 msgstr "You created this petition"
 
-#: petitions/templates/petitions_overview.html:91
+#: petitions/templates/petitions_overview.html:93
 msgid "Du hast diese Petition unterschrieben"
 msgstr "You signed this petition"
 
-#: petitions/templates/petitions_overview.html:103
+#: petitions/templates/petitions_overview.html:107
 msgid "Diese Petition hatte Erfolg"
 msgstr "This petition was successful"
 
-#: petitions/templates/petitions_overview.html:107
-#: petitions/templates/petitions_overview.html:124
+#: petitions/templates/petitions_overview.html:111
+#: petitions/templates/petitions_overview.html:128
 msgid "Erstellt am:"
 msgstr "Created at:"
 
-#: petitions/templates/petitions_overview.html:112
-#: petitions/templates/petitions_overview.html:129
+#: petitions/templates/petitions_overview.html:116
+#: petitions/templates/petitions_overview.html:133
 msgid "Ersteller:"
 msgstr "Creator:"
 
-#: petitions/templates/petitions_overview.html:114
-#: petitions/templates/petitions_overview.html:131
+#: petitions/templates/petitions_overview.html:118
+#: petitions/templates/petitions_overview.html:135
 msgid "Du"
 msgstr "You"
 
-#: petitions/templates/petitions_overview.html:116
-#: petitions/templates/petitions_overview.html:134
+#: petitions/templates/petitions_overview.html:120
+#: petitions/templates/petitions_overview.html:138
 msgid "Unterschriften:"
 msgstr "Signatures:"
 
-#: petitions/templates/petitions_overview.html:121
+#: petitions/templates/petitions_overview.html:125
 msgid "mehr"
 msgstr "more"
 
-#: petitions/templates/petitions_overview.html:140
+#: petitions/templates/petitions_overview.html:144
 msgid "Details ansehen"
 msgstr "View details"
 
-#: petitions/templates/petitions_overview.html:144
+#: petitions/templates/petitions_overview.html:148
 msgid "Es gibt derzeit keine Petitionen mit diesem Filter."
 msgstr "There are currently no petitions with this filter."
 
