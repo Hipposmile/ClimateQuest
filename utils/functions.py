@@ -44,6 +44,7 @@ def send_mail_function(**kwargs):
     message = kwargs.get('message')
     fail_silently = kwargs.get('fail_silently', False)
     mailinglist_needless = kwargs.get('mailinglist_needless', False)
+    url = kwargs.get('url', None)
 
     if request is None or subject is None or message is None or fail_silently is None:
         create_internal_error(request, 'Beim E-Mail Versand wurden nicht alle notwendigen Elemente übergeben',
@@ -120,7 +121,7 @@ def send_mail_function(**kwargs):
         <h1>{subject}</h1>
       </div>
       <div class="content">
-        {message}
+        {message} <a href="{url}">Mehr</a>
       </div>
       <div class="footer">
         <p>Du erhältst diese E-Mail, weil du <i>Benachrichtigungen auch per E-Mail erhalten</i> aktiviert hast <a href="https://climate-quest.de/personals/settings/#mailinglist_checkbox">Hier abmelden</a>.</p>
@@ -196,7 +197,7 @@ def send_mail_function(**kwargs):
                     <h1>{subject}</h1>
                   </div>
                   <div class="content">
-                    {message}
+                    {message} <a href="{url}">Mehr</a>
                   </div>
                   <div class="footer">
                     <p><a href="https://climate-quest.de/impressum/">Impressum</a> • <a href="https://climate-quest.de/datenschutz/">Datenschutz</a></p>
@@ -346,7 +347,8 @@ def create_notification(request, notification_de, notification_en, user=None, ur
         subject='ClimateQuest - neue Benachrichtigung',
         message=notification_de,
         recipient_list=user.email,
-        user=user
+        user=user,
+        url=url
     )
     res = send_push(benachrichtigung=notification_de, user=user, url=url)
     if res == 500:
