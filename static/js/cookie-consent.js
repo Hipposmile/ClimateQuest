@@ -4,8 +4,8 @@
 
 const translations = {
     de: {
-        cookieTitle: "Wir verwenden Cookies",
-        cookieBody: "für Funktion, Analyse und Marketing.",
+        cookieTitle: "Wir verwenden Cookies,",
+        cookieBody: "um die Funktionalität unserer Webseite zu gewährleisten und sie vor Spam und Missbrauch zu schützen.",
         learnMore: "Mehr erfahren",
         ageConfirm: "Durch das Akzeptieren der Cookies bestätigst du, dass du volljährig bist oder dass eine erziehungsberechtigte Person diese Einwilligung erteilt hat.",
         acceptAll: "Alle akzeptieren",
@@ -30,7 +30,7 @@ const translations = {
     },
     en: {
         cookieTitle: "We use cookies",
-        cookieBody: "for functionality, analysis and marketing.",
+        cookieBody: "to ensure the websites functionality and to protect it from spam and abuse.",
         learnMore: "Learn more",
         ageConfirm: "By accepting cookies you confirm that you are of legal age, or that a parent or guardian has given their consent.",
         acceptAll: "Accept all",
