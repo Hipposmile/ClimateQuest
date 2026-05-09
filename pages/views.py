@@ -6,3 +6,6 @@ def mobile_apps(request):
 
 def aknachhaltigkeit(request):
     return render(request, './aknachhaltigkeit.html')
+
+def pastel_done(request):
+    return render(request, './pastel_done.html')
