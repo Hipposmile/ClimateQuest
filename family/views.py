@@ -96,7 +96,7 @@ def chat_family(request, family_id):
         return redirect('family_detail', family_id=family.id)
 
     if request.user not in family.members.all():
-        messages.error(request, all_messages["not_part_of_family"].format(family=family))
+        messages.error(request, all_messages["not_part_of_family"].format(familyname=family))
         return redirect('families_view')
 
     if request.method == 'POST':
@@ -136,7 +136,7 @@ def edit_family(request, family_id):
         return redirect('families_view')
 
     if request.user not in family.members.all():
-        messages.error(request, all_messages["not_part_of_family"].format(family=family))
+        messages.error(request, all_messages["not_part_of_family"].format(familyname=family))
         return redirect('families_view')
 
     if request.method == 'POST':
