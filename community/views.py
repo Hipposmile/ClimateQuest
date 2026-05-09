@@ -1,4 +1,4 @@
-from datetime import datetime, date, timedelta
+from datetime import datetime, date
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
@@ -6,12 +6,13 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib import messages
+from django.utils.translation import gettext as _
 from core.all_messages import all_messages
 from .models import Community, CommunityChatMessage
 from family.models import Family
 from aktionen.models import Aktion
 
-from utils.functions import create_notification, get_families_of_user, get_klimapunkte, get_additional_klimapunkte
+from utils.functions import create_notification, get_families_of_user, get_klimapunkte, get_additional_klimapunkte, get_date_range
 
 
 @login_required
@@ -382,8 +383,12 @@ def chat_community(request, community_id, family_id):
     return render(request, 'chat_community.html', {'community': community, 'msgs': msgs, 'family': family})
 
 
+VALID_ZEITRAEUME = {'Heute', 'Sieben Tage', 'Dreißig Tage', 'Dreihundertfünfundsechzig Tage', 'Gesamt',
+                    'Benutzerdefiniert'}
+
+
 @login_required
-def community_detail(request, community_id, family_id): # ToDo: Bugs fixen: sowohl Internationalisierung als auch Funktionen (teilweise wird falsch berechnet, wenn datums filter an ist (vlt. auch bei Families, prüfen!!!)
+def community_detail(request, community_id, family_id):
     if not community_id:
         messages.error(request, all_messages["community_id_missing"])
         return redirect('communities_view')
@@ -406,133 +411,85 @@ def community_detail(request, community_id, family_id): # ToDo: Bugs fixen: sowo
         messages.error(request, all_messages["community__not_member_of_family"])
         return redirect('communities_view')
 
-    members_with_klimapunkte = []
-    community_members = community.members.all()
-
-    zeitraum = 'gesamt'
+    heute = date.today()
+    zeitraum_text = _("Gesamt")
+    start_datum = end_datum = None
 
     if request.method == 'POST':
-        zeitraum = request.POST.get('zeitraum')
+        zeitraum = request.POST.get('zeitraum', 'Gesamt')
 
-        heute = date.today()
-        seven_days = heute - timedelta(days=7)
-        thirty_days = heute - timedelta(days=30)
-        threehundertsixtyfive_days = heute - timedelta(days=365)
+        if zeitraum not in VALID_ZEITRAEUME:
+            messages.error(request, all_messages["invalid_time_period"])
+            return redirect('community_detail', community_id, family_id)
 
-        if zeitraum == 'benutzerdefiniert':
-            start_datum = request.POST.get('start_date')
-            end_datum = request.POST.get('end_date')
+        if zeitraum == 'Benutzerdefiniert':
+            raw_start = request.POST.get('start_date')
+            raw_end = request.POST.get('end_date')
 
-            if not start_datum or not end_datum:
+            if not raw_start or not raw_end:
                 messages.error(request, all_messages["missing_required_inputs"])
-                return redirect('community_detail', family_id, community_id)
+                return redirect('community_detail', community_id, family_id)
 
             try:
-                start_datum = datetime.strptime(start_datum, '%Y-%m-%d').date()
-                end_datum = datetime.strptime(end_datum, '%Y-%m-%d').date()
-
-                if start_datum > end_datum:
-                    messages.error(request, all_messages["invalid_date_range"])
-                    return redirect('community_detail', family_id, community_id)
-                if end_datum > heute:
-                    messages.error(request, all_messages["date_in_future"])
-                    return redirect('community_detail', family_id, community_id)
-
+                start_datum = datetime.strptime(raw_start, '%Y-%m-%d').date()
+                end_datum = datetime.strptime(raw_end, '%Y-%m-%d').date()
             except ValueError:
                 messages.error(request, all_messages["invalid_date"])
-                return redirect('community_detail', family_id, community_id)
+                return redirect('community_detail', community_id, family_id)
 
-            zeitraum_text = f"von {start_datum.strftime('%d.%m.%Y')} bis {end_datum.strftime('%d.%m.%Y')}"
+            if start_datum > end_datum:
+                messages.error(request, all_messages["invalid_date_range"])
+                return redirect('community_detail', community_id, family_id)
+            if end_datum > heute:
+                messages.error(request, all_messages["date_in_future"])
+                return redirect('community_detail', community_id, family_id)
 
-        elif zeitraum not in ['heute', 'sieben Tage', 'dreißig Tage', 'dreihundertfünfundsechzig Tage', 'gesamt']:
-            messages.error(request, all_messages["invalid_time_period"])
-            return redirect('community_detail', family_id, community_id)
+            zeitraum_text = _("%(start)s bis %(end)s") % {
+                'start': start_datum.strftime('%d.%m.%Y') if request.LANGUAGE_CODE == 'de' else start_datum.strftime(
+                    '%m/%d/%Y'),
+                'end': end_datum.strftime('%d.%m.%Y') if request.LANGUAGE_CODE == 'de' else end_datum.strftime(
+                    '%m/%d/%Y'),
+            }
+        else:
+            start_datum, end_datum = get_date_range(zeitraum, heute)
 
-        for community_member in community_members:
-            family_members = community_member.members.all()
+            if zeitraum == 'Heute':
+                start_datum = end_datum = heute
 
-            if zeitraum == 'heute':
-                klimapunkte_gesamt = 0
-                for single_member in family_members:
-                    aktionen = Aktion.objects.filter(user=single_member, date=heute)
-                    klimapunkte = get_klimapunkte(aktionen)
-                    klimapunkte += get_additional_klimapunkte(single_member)
-                    klimapunkte_gesamt += klimapunkte
+            if request.LANGUAGE_CODE == 'en':
+                zeitraum_text_translations = {
+                    'Gesamt': 'Total',
+                    'Heute': 'Today',
+                    'Sieben Tage': 'Seven days',
+                    'Dreißig Tage': 'Thirty days',
+                    'Dreihundertfünfundsechzig Tage': 'Threehundredsixtyfive days',
+                }
+                zeitraum_text = zeitraum_text_translations.get(zeitraum)
+            else:
+                zeitraum_text = zeitraum
 
-                klimapunkte = klimapunkte_gesamt / community_member.member_count() if community_member.member_count() else 0
+    community_members = community.members.all()
+    members_with_klimapunkte = []
 
-            elif zeitraum == 'sieben Tage':
-                klimapunkte_gesamt = 0
-                for single_member in family_members:
-                    aktionen = Aktion.objects.filter(user=single_member, date__gte=seven_days)
-                    klimapunkte = get_klimapunkte(aktionen)
-                    klimapunkte += get_additional_klimapunkte(single_member)
-                    klimapunkte_gesamt += klimapunkte
+    for community_member in community_members:
+        family_members = community_member.members.all()
+        klimapunkte_gesamt = 0
+        for single_member in family_members:
+            aktionen = Aktion.objects.filter(user=single_member)
+            if start_datum and end_datum:
+                aktionen = aktionen.filter(date__range=(start_datum, end_datum))
+            klimapunkte = get_klimapunkte(aktionen)
+            klimapunkte += get_additional_klimapunkte(single_member)
+            klimapunkte_gesamt += klimapunkte
 
-                klimapunkte = klimapunkte_gesamt / community_member.member_count() if community_member.member_count() else 0
+        community_members_count = community_member.member_count()
+        klimapunkte = klimapunkte_gesamt / community_members_count if community_members_count else 0
 
-            elif zeitraum == 'dreißig Tage':
-                klimapunkte_gesamt = 0
-                for single_member in family_members:
-                    aktionen = Aktion.objects.filter(user=single_member, date__gte=thirty_days)
-                    klimapunkte = get_klimapunkte(aktionen)
-                    klimapunkte += get_additional_klimapunkte(single_member)
-                    klimapunkte_gesamt += klimapunkte
+        if klimapunkte is None:
+            klimapunkte = 0
 
-                klimapunkte = klimapunkte_gesamt / community_member.member_count() if community_member.member_count() else 0
-
-            elif zeitraum == 'dreihundertfünfundsechzig Tage':
-                klimapunkte_gesamt = 0
-                for single_member in family_members:
-                    aktionen = Aktion.objects.filter(user=single_member, date__gte=threehundertsixtyfive_days)
-                    klimapunkte = get_klimapunkte(aktionen)
-                    klimapunkte += get_additional_klimapunkte(single_member)
-                    klimapunkte_gesamt += klimapunkte
-
-                klimapunkte = klimapunkte_gesamt / community_member.member_count() if community_member.member_count() else 0
-
-
-            elif zeitraum == 'gesamt':
-                klimapunkte_gesamt = 0
-                for single_member in family_members:
-                    aktionen = Aktion.objects.filter(user=single_member)
-                    klimapunkte = get_klimapunkte(aktionen)
-                    klimapunkte += get_additional_klimapunkte(single_member)
-                    klimapunkte_gesamt += klimapunkte
-
-                klimapunkte = klimapunkte_gesamt / community_member.member_count() if community_member.member_count() else 0
-
-            elif zeitraum == 'benutzerdefiniert':
-                klimapunkte_gesamt = 0
-                for single_member in family_members:
-                    aktionen = Aktion.objects.filter(user=single_member, date__gte=thirty_days)
-                    klimapunkte = get_klimapunkte(aktionen)
-                    klimapunkte += get_additional_klimapunkte(single_member)
-                    klimapunkte_gesamt += klimapunkte
-
-                klimapunkte = klimapunkte_gesamt / community_member.member_count() if community_member.member_count() else 0
-                zeitraum = zeitraum_text
-
-            if klimapunkte is None:
-                klimapunkte = 0
-
-            members_with_klimapunkte.append(
-                {'member': community_member, 'klimapunkte': klimapunkte})
-
-    else:
-        for community_member in community_members:
-            family_members = community_member.members.all()
-            klimapunkte_gesamt = 0
-            for single_member in family_members:
-                aktionen = Aktion.objects.filter(user=single_member)
-                klimapunkte = get_klimapunkte(aktionen)
-                klimapunkte += get_additional_klimapunkte(single_member)
-                klimapunkte_gesamt += klimapunkte
-
-            community_members_count = community_member.member_count()
-            klimapunkte = klimapunkte_gesamt / community_members_count if community_members_count else 0
-            members_with_klimapunkte.append(
-                {'member': community_member, 'klimapunkte': klimapunkte})
+        members_with_klimapunkte.append(
+            {'member': community_member, 'klimapunkte': klimapunkte})
 
     # Sortierung anwenden
     try:
@@ -542,12 +499,12 @@ def community_detail(request, community_id, family_id): # ToDo: Bugs fixen: sowo
             reverse=True
         )
     except KeyError:
-        messages.error(request, "Fehler beim Sortieren der Mitglieder.")
-        return redirect('family_detail', family_id)
+        messages.error(request, _("Fehler beim Sortieren der Mitglieder."))
+        return redirect('community_detail', community_id, family_id)
 
     return render(request, './community_detail.html', {'community': community, 'family': family,
                                                        'members_with_klimapunkte': members_with_klimapunkte_sortiert,
-                                                       'zeitraum': zeitraum, 'filter': filter})
+                                                       'zeitraum': zeitraum_text})
 
 
 @login_required

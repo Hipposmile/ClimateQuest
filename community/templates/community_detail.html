@@ -33,12 +33,12 @@
         {% csrf_token %}
         <label for="zeitraum">{% trans "Zeitraum auswählen" %}</label>
         <select name="zeitraum" id="zeitraum" required>
-            <option value="gesamt" selected>{% trans "Gesamt" %}</option>
-            <option value="heute">{% trans "Heute" %}</option>
-            <option value="sieben Tage">{% trans "7 Tage" %}</option>
-            <option value="dreißig Tage">{% trans "30 Tage" %}</option>
-            <option value="dreihundertfünfundsechzig Tage">{% trans "365 Tage" %}</option>
-            <option value="benutzerdefiniert">{% trans "Benutzerdefiniert" %}</option>
+            <option value="Gesamt" selected>{% trans "Gesamt" %}</option>
+            <option value="Heute">{% trans "Heute" %}</option>
+            <option value="Sieben Tage">{% trans "7 Tage" %}</option>
+            <option value="Dreißig Tage">{% trans "30 Tage" %}</option>
+            <option value="Dreihundertfünfundsechzig Tage">{% trans "365 Tage" %}</option>
+            <option value="Benutzerdefiniert">{% trans "Benutzerdefiniert" %}</option>
         </select>
 
         <div id="hiddenDateDiv" class="display-none">
@@ -69,7 +69,7 @@
         document.getElementById("zeitraum").addEventListener("change", function () {
             const hiddenDateDiv = document.getElementById("hiddenDateDiv");
 
-            if (this.value === "benutzerdefiniert") {
+            if (this.value === "Benutzerdefiniert") {
                 hiddenDateDiv.style.display = "block";
             } else {
                 hiddenDateDiv.style.display = "none";

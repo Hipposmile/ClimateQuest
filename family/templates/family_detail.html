@@ -18,13 +18,15 @@
     {% endif %}
 
     {% if family.name != 'worldwide ranking' %}
-        <p>{% url 'edit_family' family.id as edit_url %}{% blocktrans with url=edit_url %}
-            <a href="{{ url }}">Bearbeiten</a>{% endblocktrans %}</p>
-        {% if family.chat %}
-            <p>{% url 'chat_family' family.id as chat_url %}{% blocktrans with url=chat_url %}
-                <a href="{{ url }}">Chatten</a>{% endblocktrans %}</p>
-        {% else %}
-            <p>{% trans "Die Chat-Funktion ist für diese Family deaktiviert." %}</p>
+        {% if request.user in family.members.all %}
+            <p>{% url 'edit_family' family.id as edit_url %}{% blocktrans with url=edit_url %}
+                <a href="{{ url }}">Bearbeiten</a>{% endblocktrans %}</p>
+            {% if family.chat %}
+                <p>{% url 'chat_family' family.id as chat_url %}{% blocktrans with url=chat_url %}
+                    <a href="{{ url }}">Chatten</a>{% endblocktrans %}</p>
+            {% else %}
+                <p>{% trans "Die Chat-Funktion ist für diese Family deaktiviert." %}</p>
+            {% endif %}
         {% endif %}
     {% else %}
         <p>{% trans "Weder die Chat-Funktion noch die Bearbeiten-Funktion sind für die Family worldwide ranking freigeschaltet" %}</p>
@@ -96,10 +98,11 @@
                 id="{% if member.member == user %}me{% else %}other{% endif %}">
                 <span><span class="color-888"
                             id="rank_{{ member.member.id }}"></span>{% url 'user_detail' member.member.id as user_url %}
-                        {% blocktrans with url=user_url username=member.member.username %}
-                            <a href="{{ url }}">{{ username }}</a>{% endblocktrans %}</span>
+                    {% blocktrans with url=user_url username=member.member.username %}
+                        <a href="{{ url }}">{{ username }}</a>{% endblocktrans %}</span>
                 <br>
-                <span class="fontSize-0-95em color-888">{% blocktrans with points=member.klimapunkte|floatformat:-4 %}({{ points }} Klimapunkte){% endblocktrans %}</span>
+                <span class="fontSize-0-95em color-888">{% blocktrans with points=member.klimapunkte|floatformat:-4 %}(
+                    {{ points }} Klimapunkte){% endblocktrans %}</span>
             </li>
             <script nonce="{{ request.csp_script_nonce }}">
                 rank_span = document.getElementById("rank_{{member.member.id}}");

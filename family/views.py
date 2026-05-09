@@ -10,7 +10,7 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 
 from core.all_messages import all_messages
-from utils.functions import create_notification, get_families_of_user, get_date_range, get_klimapunkte_fuer_member
+from utils.functions import create_notification, get_families_of_user, get_date_range, get_klimapunkte_fuer_member, get_communities_of_family, get_communities_of_user
 from .models import Family, FamilyChatMessage
 
 
@@ -411,8 +411,11 @@ def family_detail(request, family_id):
         messages.error(request, all_messages["family_not_found"])
         return redirect('families_view')
     if request.user not in family.members.all():
-        messages.error(request, all_messages["not_part_of_family"].format(familyname=family.name))
-        return redirect('families_view')
+        family_communities = get_communities_of_family(family)
+        user_communities = get_communities_of_user(request.user)
+        if not family_communities.filter(id__in=user_communities).exists():
+            messages.error(request, all_messages["not_part_of_family"].format(familyname=family.name))
+            return redirect('families_view')
 
     heute = date.today()
     zeitraum_text = _("Gesamt")

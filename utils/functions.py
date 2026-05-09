@@ -396,6 +396,10 @@ def get_communities_of_user(user):
 
     return communities
 
+def get_communities_of_family(family):
+    family_communities = Community.objects.filter(members=family).distinct().order_by('name')
+    return family_communities
+
 
 ALLOWED_TAGS = [
     'p', 'strong', 'em', 'u', 'ol', 'ul', 'li', 'a', 'br', 'h1', 'h2'
