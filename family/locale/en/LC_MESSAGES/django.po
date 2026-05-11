@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-08 18:31+0200\n"
+"POT-Creation-Date: 2026-05-11 18:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -297,7 +297,7 @@ msgstr "Add family"
 msgid "Family beitreten"
 msgstr "Join family"
 
-#: family/templates/families.html:74 family/templates/family_detail.html:85
+#: family/templates/families.html:74 family/templates/family_detail.html:87
 #, python-format
 msgid "Mitglieder: %(count)s"
 msgstr "Members: %(count)s"
@@ -320,29 +320,35 @@ msgstr "Family %(name)s"
 msgid "Family <i>%(name)s</i>"
 msgstr "Family <i>%(name)s</i>"
 
-#: family/templates/family_detail.html:21
+#: family/templates/family_detail.html:22
 #, python-format
+#| msgid ""
+#| "\n"
+#| "            <a href=\"%(url)s\">Bearbeiten</a>"
 msgid ""
 "\n"
-"            <a href=\"%(url)s\">Bearbeiten</a>"
+"                <a href=\"%(url)s\">Bearbeiten</a>"
 msgstr ""
 "\n"
 "            <a href=\"%(url)s\">Edit</a>"
 
-#: family/templates/family_detail.html:24
+#: family/templates/family_detail.html:25
 #, python-format
+#| msgid ""
+#| "\n"
+#| "                <a href=\"%(url)s\">Chatten</a>"
 msgid ""
 "\n"
-"                <a href=\"%(url)s\">Chatten</a>"
+"                    <a href=\"%(url)s\">Chatten</a>"
 msgstr ""
 "\n"
 "                <a href=\"%(url)s\">Chat</a>"
 
-#: family/templates/family_detail.html:27
+#: family/templates/family_detail.html:28
 msgid "Die Chat-Funktion ist für diese Family deaktiviert."
 msgstr "The chat function is disabled for this family."
 
-#: family/templates/family_detail.html:30
+#: family/templates/family_detail.html:32
 msgid ""
 "Weder die Chat-Funktion noch die Bearbeiten-Funktion sind für die Family "
 "worldwide ranking freigeschaltet"
@@ -350,88 +356,94 @@ msgstr ""
 "Neither the chat function nor the edit function are available for the family "
 "worldwide ranking"
 
-#: family/templates/family_detail.html:36
+#: family/templates/family_detail.html:38
 msgid "Zeitraum"
 msgstr "Time period"
 
-#: family/templates/family_detail.html:38 family/views.py:418
+#: family/templates/family_detail.html:40 family/views.py:421
 msgid "Gesamt"
 msgstr "Total"
 
-#: family/templates/family_detail.html:39
+#: family/templates/family_detail.html:41
 msgid "Heute"
 msgstr "Today"
 
-#: family/templates/family_detail.html:40
+#: family/templates/family_detail.html:42
 msgid "7 Tage"
 msgstr "7 days"
 
-#: family/templates/family_detail.html:41
+#: family/templates/family_detail.html:43
 msgid "30 Tage"
 msgstr "30 days"
 
-#: family/templates/family_detail.html:42
+#: family/templates/family_detail.html:44
 msgid "365 Tage"
 msgstr "365 days"
 
-#: family/templates/family_detail.html:43
+#: family/templates/family_detail.html:45
 msgid "Benutzerdefiniert"
 msgstr "Custom"
 
-#: family/templates/family_detail.html:47
+#: family/templates/family_detail.html:49
 msgid "Startdatum:"
 msgstr "Start date:"
 
-#: family/templates/family_detail.html:48
+#: family/templates/family_detail.html:50
 msgid "Startdatum"
 msgstr "Start date"
 
-#: family/templates/family_detail.html:49
+#: family/templates/family_detail.html:51
 msgid "Enddatum:"
 msgstr "End date:"
 
-#: family/templates/family_detail.html:50
+#: family/templates/family_detail.html:52
 msgid "Enddatum"
 msgstr "End date"
 
-#: family/templates/family_detail.html:53
+#: family/templates/family_detail.html:55
 msgid "Anwenden"
 msgstr "Apply"
 
-#: family/templates/family_detail.html:79
+#: family/templates/family_detail.html:81
 #, python-format
 msgid ""
 "Durchschnittliche Klimapunkte:\n"
 "            %(avg)s"
 msgstr "Average climate points: %(avg)s"
 
-#: family/templates/family_detail.html:81
+#: family/templates/family_detail.html:83
 #, python-format
 msgid ""
 "Gesamte Klimapunkte:\n"
 "            %(total)s"
 msgstr "Total climate points: %(total)s"
 
-#: family/templates/family_detail.html:86
+#: family/templates/family_detail.html:88
 #, python-format
 msgid "Zeitraum: %(period)s"
 msgstr "Time period: %(period)s"
 
-#: family/templates/family_detail.html:99
+#: family/templates/family_detail.html:101
 #, python-format
+#| msgid ""
+#| "\n"
+#| "                            <a href=\"%(url)s\">%(username)s</a>"
 msgid ""
 "\n"
-"                            <a href=\"%(url)s\">%(username)s</a>"
+"                        <a href=\"%(url)s\">%(username)s</a>"
 msgstr ""
 "\n"
 "                            <a href=\"%(url)s\">%(username)s</a>"
 
-#: family/templates/family_detail.html:102
+#: family/templates/family_detail.html:104
 #, python-format
-msgid "(%(points)s Klimapunkte)"
+#| msgid "(%(points)s Klimapunkte)"
+msgid ""
+"(\n"
+"                    %(points)s Klimapunkte)"
 msgstr "(%(points)s Klimapunkte)"
 
-#: family/templates/family_detail.html:119
+#: family/templates/family_detail.html:122
 msgid "Zu mir"
 msgstr "To me"
 
@@ -447,7 +459,7 @@ msgstr ""
 msgid "Oder <a href=\"%(url)s\">eine Family gründen</a>."
 msgstr "Or <a href=\"%(url)s\">create a family</a>."
 
-#: family/views.py:450
+#: family/views.py:453
 #, python-format
 msgid "%(start)s bis %(end)s"
 msgstr "%(start)s to %(end)s"

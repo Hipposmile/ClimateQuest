@@ -40,31 +40,35 @@ def aktion_exists_in_period(action_type, end_date, quantity, user, exclude_id=No
     if start is None:
         return False
 
+    forbidden_actions = action_type.forbidden_in_same_period.all()
+
     if exclude_id:
         return Aktion.objects.filter(
             user=user,
-            aktion=action_type,
+            aktion__in=[action_type, *forbidden_actions],
             date__range=(start + relativedelta(days=1), end_date)
         ).exclude(id=exclude_id).exists()
     else:
         return Aktion.objects.filter(
             user=user,
-            aktion=action_type,
+            aktion__in=[action_type, *forbidden_actions],
             date__range=(start + relativedelta(days=1), end_date)
         ).exists()
 
 
 def aktion_is_in_different_action_period(action_type, end_date, user, exclude_id=None):
+    forbidden_actions = action_type.forbidden_in_same_period.all()
+
     if exclude_id:
         actions = Aktion.objects.filter(
             user=user,
-            aktion=action_type,
+            aktion__in=[action_type, *forbidden_actions],
             date__gte=end_date,
         ).exclude(id=exclude_id).values('date', 'quantity', unit=Lower('aktion__mengeBeschreibungSingular'))
     else:
         actions = Aktion.objects.filter(
             user=user,
-            aktion=action_type,
+            aktion__in=[action_type, *forbidden_actions],
             date__gte=end_date,
         ).values('date', 'quantity', unit=Lower('aktion__mengeBeschreibungSingular'))
 
@@ -193,9 +197,10 @@ def add(request):
                                 reverse('dashboard'))
             if request.LANGUAGE_CODE == "de":
                 messages.success(request,
-                             f'Du hast eine neue Aktion vom Typen {action.name} erstellt und deine Streak verlängert. <span class="emoji">&#x1F973;</span>')
+                                 f'Du hast eine neue Aktion vom Typen {action.name} erstellt und deine Streak verlängert. <span class="emoji">&#x1F973;</span>')
             else:
-                messages.success(request, f'You created a new action (type: {action.name_en}) and so extended your streak. <span class="emoji">&#x1F973;</span>')
+                messages.success(request,
+                                 f'You created a new action (type: {action.name_en}) and so extended your streak. <span class="emoji">&#x1F973;</span>')
         messages.success(request, all_messages["action_added"])
         return redirect('action_detail', aktion.id, request.user.id)
 

@@ -153,7 +153,7 @@ all_messages = {
     "max_action_quantity": mark_safe(
         _("Die angegebene Menge ist zu hoch, um realistisch zu sein. Weitere Informationen findest du in <a href='https://climate-questde/artikel/artikel_detail/9'>diesem Artikel</a>")),
     "action_too_past": mark_safe(_("Das angegebene Datum liegt zu weit in der Vergangenheit. Weitere Informationen findest du in <a href='https://climate-questde/artikel/artikel_detail/18'>diesem Artikel</a>")),
-    "action_already_set_in_period": _("Diese Aktion wurde im gleichen Zeitraum schon einmal eingetragen"),
+    "action_already_set_in_period": _("Diese oder eine verwandte Aktion wurde im gleichen Zeitraum schon einmal eingetragen"),
 
     "tracking_action": _("Aktion wird jetzt getrackt"),
     "stopped_tracking": _("Aktion wird nicht mehr getrackt"),

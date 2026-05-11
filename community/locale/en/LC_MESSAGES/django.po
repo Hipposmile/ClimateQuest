@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-02 11:08+0200\n"
+"POT-Creation-Date: 2026-05-11 18:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -169,7 +169,7 @@ msgstr "The chat function is disabled for this community."
 msgid "Zeitraum auswählen"
 msgstr "Select time period"
 
-#: community/templates/community_detail.html:36
+#: community/templates/community_detail.html:36 community/views.py:415
 msgid "Gesamt"
 msgstr "Total"
 
@@ -485,6 +485,15 @@ msgid ""
 msgstr ""
 "Or\n"
 " <a href=\"%(create_community_link)s\">found a community</a>."
+
+#: community/views.py:447
+#, python-format
+msgid "%(start)s bis %(end)s"
+msgstr ""
+
+#: community/views.py:502
+msgid "Fehler beim Sortieren der Mitglieder."
+msgstr ""
 
 #~ msgid "Oder eine Community gründen."
 #~ msgstr "Or found a community."

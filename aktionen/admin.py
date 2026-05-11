@@ -10,6 +10,7 @@ class AktionenListeAdmin(admin.ModelAdmin):
     search_fields = ("name", "mengeBeschreibung", "anmerkung")
     list_filter = ("klimapunkte",)
     ordering = ("name",)
+    filter_horizontal = ("forbidden_in_same_period",)
 
 
 @admin.register(Category)
