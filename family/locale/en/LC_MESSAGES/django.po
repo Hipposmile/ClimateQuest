@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-11 18:37+0200\n"
+"POT-Creation-Date: 2026-05-11 19:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -322,9 +322,6 @@ msgstr "Family <i>%(name)s</i>"
 
 #: family/templates/family_detail.html:22
 #, python-format
-#| msgid ""
-#| "\n"
-#| "            <a href=\"%(url)s\">Bearbeiten</a>"
 msgid ""
 "\n"
 "                <a href=\"%(url)s\">Bearbeiten</a>"
@@ -334,9 +331,6 @@ msgstr ""
 
 #: family/templates/family_detail.html:25
 #, python-format
-#| msgid ""
-#| "\n"
-#| "                <a href=\"%(url)s\">Chatten</a>"
 msgid ""
 "\n"
 "                    <a href=\"%(url)s\">Chatten</a>"
@@ -425,9 +419,6 @@ msgstr "Time period: %(period)s"
 
 #: family/templates/family_detail.html:101
 #, python-format
-#| msgid ""
-#| "\n"
-#| "                            <a href=\"%(url)s\">%(username)s</a>"
 msgid ""
 "\n"
 "                        <a href=\"%(url)s\">%(username)s</a>"
@@ -437,13 +428,13 @@ msgstr ""
 
 #: family/templates/family_detail.html:104
 #, python-format
-#| msgid "(%(points)s Klimapunkte)"
-msgid ""
-"(\n"
-"                    %(points)s Klimapunkte)"
+#| msgid ""
+#| "(\n"
+#| "                    %(points)s Klimapunkte)"
+msgid "(%(points)s Klimapunkte)"
 msgstr "(%(points)s Klimapunkte)"
 
-#: family/templates/family_detail.html:122
+#: family/templates/family_detail.html:121
 msgid "Zu mir"
 msgstr "To me"
 

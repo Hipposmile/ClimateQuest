@@ -101,8 +101,7 @@
                     {% blocktrans with url=user_url username=member.member.username %}
                         <a href="{{ url }}">{{ username }}</a>{% endblocktrans %}</span>
                 <br>
-                <span class="fontSize-0-95em color-888">{% blocktrans with points=member.klimapunkte|floatformat:-4 %}(
-                    {{ points }} Klimapunkte){% endblocktrans %}</span>
+                <span class="fontSize-0-95em color-888">{% blocktrans with points=member.klimapunkte|floatformat:-4 %}({{ points }} Klimapunkte){% endblocktrans %}</span>
             </li>
             <script nonce="{{ request.csp_script_nonce }}">
                 rank_span = document.getElementById("rank_{{member.member.id}}");
