@@ -27,6 +27,8 @@ class AktionenListe(models.Model):
 
     track_kilometerly = models.BooleanField(default=False)
 
+    forbidden_in_same_period = models.ManyToManyField('self', blank=True)
+
     def __str__(self):
         return self.name
 
