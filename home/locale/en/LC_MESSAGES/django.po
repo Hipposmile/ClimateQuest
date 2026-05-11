@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-08 18:31+0200\n"
+"POT-Creation-Date: 2026-05-11 20:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -154,8 +154,8 @@ msgstr ""
 "sustainable practices."
 
 #: home/templates/companies_and_schools.html:10
-msgid "Schulen - ClimateQuest"
-msgstr "Schools - ClimateQuest"
+msgid "Schulen"
+msgstr "Schools"
 
 #: home/templates/companies_and_schools.html:13 home/templates/home.html:339
 msgid "ClimateQuest für Schulen"
@@ -1743,6 +1743,9 @@ msgid ""
 msgstr ""
 "Do you have questions or need support? Just send an email to <a "
 "href=\"mailto:kontakt@climate-quest.de\">kontakt@climate-quest.de</a>!"
+
+#~ msgid "Schulen - ClimateQuest"
+#~ msgstr "Schools - ClimateQuest"
 
 #~ msgid "Schulen / Unternehmen - ClimateQuest"
 #~ msgstr "Schools / Companies - ClimateQuest"

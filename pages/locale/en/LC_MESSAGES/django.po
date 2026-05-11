@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-02 11:08+0200\n"
+"POT-Creation-Date: 2026-05-11 20:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -467,11 +467,7 @@ msgstr "Teachers and staff"
 msgid "Lade dir die mobilen App von ClimateQuest herunter"
 msgstr "Download the ClimateQuest mobile app"
 
-#: pages/templates/mobile_apps.html:10
-msgid "Mobile Apps - ClimateQuest"
-msgstr "Mobile Apps - ClimateQuest"
-
-#: pages/templates/mobile_apps.html:13
+#: pages/templates/mobile_apps.html:10 pages/templates/mobile_apps.html:13
 msgid "Mobile Apps"
 msgstr "Mobile Apps"
 
@@ -565,6 +561,30 @@ msgid ""
 msgstr ""
 "The app now appears on the home screen. When you open it, you will no longer "
 "see browser elements and can even receive push notifications if you allow it!"
+
+#: pages/templates/pastel_done.html:7
+msgid "PastelDone"
+msgstr "PastelDone"
+
+#: pages/templates/pastel_done.html:16
+msgid ""
+"Alle in der App <i>PastelDone</i> gespeicherten Daten werden ausschließlich "
+"auf dem Gerät\n"
+"        gespeichert und können nicht von uns eingesehen werden. Für Fragen "
+"oder Support wenden Sie sich an\n"
+"        <a href=\"mailto:kontakt@climate-quest.de\">kontakt@climate-"
+"quest.de</a>!"
+msgstr ""
+"All in the app <i>PastelDone</i> saved data is only saved "
+"on the device\n"
+"        and can´t be seen by us. For questions "
+"or support, please contact\n"
+"        <a href=\"mailto:kontakt@climate-quest.de\">kontakt@climate-"
+"quest.de</a>!"
+
+
+#~ msgid "Mobile Apps - ClimateQuest"
+#~ msgstr "Mobile Apps - ClimateQuest"
 
 #~ msgid "Schüler:innen wurde der Besuch von"
 #~ msgstr "Students were enabled to visit"

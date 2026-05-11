@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% block meta %}
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 
-{% block title %}PastelDone - ClimateQuest{% endblock %}
+{% block title %}{% trans "PastelDone" %}{% endblock %}
 
 {% block content %}
     <h1>PastelDone</h1>
@@ -13,5 +13,7 @@
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
-    <p>Alle in der App <i>PastelDone</i> gespeicherten Daten werden ausschließlich auf dem Gerät gespeichert und können nicht von uns eingesehen werden. Für Fragen oder Support wenden Sie sich an <a href="mailto:kontakt@climate-quest.de">kontakt@climate-quest.de</a>!</p>
+    <p>{% blocktrans %}Alle in der App <i>PastelDone</i> gespeicherten Daten werden ausschließlich auf dem Gerät
+        gespeichert und können nicht von uns eingesehen werden. Für Fragen oder Support wenden Sie sich an
+        <a href="mailto:kontakt@climate-quest.de">kontakt@climate-quest.de</a>!{% endblocktrans %}</p>
 {% endblock %}
