@@ -19,4 +19,8 @@ class ReportedUser(models.Model):
     reported_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reported_user")
     reporting_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="reporting_user")
     reason = models.TextField()
+    reviewed = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.reported_user.username

@@ -17,6 +17,7 @@ from personals.models import UserErweitert
 from utils.functions import dezimalstellen, get_additional_klimapunkte, get_weekly_goal_from_user, \
     get_streak_from_user, send_mail_function, get_level, create_notification, get_all_klimapunkte_from_user, \
     get_family_rank_from_user, get_date_range, get_klimapunkte_fuer_member
+from home.models import ReportedUser
 
 
 def get_user(request, user_id, allow_needed=True):
@@ -452,3 +453,4 @@ def report_user(request, reported_user, reporting_user, reason):
         """,
         user=admin,
     )
+    ReportedUser.objects.create(reported_user=reported_user, reporting_user=reporting_user, reason=reason)

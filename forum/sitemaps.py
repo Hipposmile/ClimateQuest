@@ -11,7 +11,7 @@ class ForumPostDetailSitemap(Sitemap):
         return ForumPost.objects.all()
 
     def lastmod(self, obj):
-        return obj.updated_at
+        return obj.date_time
     
     def location(self, obj):
         return reverse('post_detail', args=[obj.id])

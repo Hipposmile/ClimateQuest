@@ -67,4 +67,22 @@ class AktionenTableSitemap(Sitemap):
     def location(self, item):
         return reverse(item)
 
-# ToDo: Sitemaps mit Support und Feedback ausstatten
+class SupportSitemap(Sitemap):
+    changefreq = "yearly"
+    priority = 0.5
+
+    def items(self):
+        return ['support']
+
+    def location(self, item):
+        return reverse(item)
+
+class FeedbackSitemap(Sitemap):
+    changefreq = "yearly"
+    priority = 0.5
+
+    def items(self):
+        return ['feedback']
+
+    def location(self, item):
+        return reverse(item)
