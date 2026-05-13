@@ -93,4 +93,5 @@ CRONJOBS = [
 ]
 
 CRONTAB_PYTHON_EXECUTABLE = "/webapps/climatequest/venv/bin/python"
-CRONTAB_COMMAND_PREFIX = 'source /webapps/climatequest/venv/bin/activate && DJANGO_SETTINGS_MODULE=ClimateQuest.settingsprod'
+#CRONTAB_COMMAND_PREFIX = 'source /webapps/climatequest/venv/bin/activate && DJANGO_SETTINGS_MODULE=ClimateQuest.settingsprod'
+CRONTAB_COMMAND_PREFIX = 'DJANGO_SETTINGS_MODULE=ClimateQuest.settingsprod'
