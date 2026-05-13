@@ -13,7 +13,11 @@ def hall_of_fame_detail(request):
         'hall_of_fame_entry').distinct().annotate(entry_count=Count('hall_of_fame_entry')).order_by('-entry_count')
     for user in users:
         user_entries[user] = user.hall_of_fame_entry.all()
-    return render(request, './hall_of_fame_detail.html', {'user_entries': user_entries})
+    if request.user.is_authenticated:
+        in_hall_of_fame = HallOfFameEntry.objects.filter(user=request.user).exists()
+    else:
+        in_hall_of_fame = False
+    return render(request, './hall_of_fame_detail.html', {'user_entries': user_entries, 'in_hall_of_fame': in_hall_of_fame})
 
 
 def add_to_hall_of_fame():

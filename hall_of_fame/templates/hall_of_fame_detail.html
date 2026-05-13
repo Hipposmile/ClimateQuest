@@ -78,6 +78,17 @@
             user-select: none;
         }
 
+        .hof-summary-me {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            cursor: pointer;
+            list-style: none;
+            user-select: none;
+            background-color: var(--color-bg-dark);
+        }
+
         .hof-rank {
             width: 28px;
             height: 28px;
@@ -170,8 +181,6 @@
         }
     </style>
 
-    <!--ToDo: Zu mir und eigenen User markieren-->
-
     <div class="hof-wrap">
         <div class="hof-header">
             <span class="hof-crown"><span class="emoji">&#x1F3C6;</span></span>
@@ -185,13 +194,15 @@
             {% endfor %}
         {% endif %}
 
-        <p>{% blocktrans %}Die Hall of Fame enthält die besten User von ClimateQuest. Regelmäßig werden von uns Quests veröffentlicht,
+        <p>{% blocktrans %}Die Hall of Fame enthält die besten User von ClimateQuest. Regelmäßig werden von uns Quests
+            veröffentlicht,
             zum
             Beispiel <i>Sammle diese Woche mindestens 150 Klimapunkte</i> oder <i>Gehöre diesen Monat zu den Top 5
                 Klimapunkt-Sammlern</i>. Jeder User, der das schafft, erhält einen Eintrag in der Hall of Fame. User,
             die es
             sogar mehrfach in die Hall of Fame schaffen, werden höher gelistet.{% endblocktrans %}</p>
-        <p>{% blocktrans %}Um in die Hall of Fame zu kommen, musst du diese Woche bis Sonntag mindestens 150 Klimapunkte sammeln.{% endblocktrans %}</p>
+        <p>{% blocktrans %}Um in die Hall of Fame zu kommen, musst du diese Woche bis Sonntag mindestens 150 Klimapunkte
+            sammeln.{% endblocktrans %}</p>
 
         <div class="hof-divider">
             <span class="hof-divider-star">★</span>
@@ -200,8 +211,8 @@
         </div>
 
         {% for user, entries in user_entries.items %}
-            <details class="hof-entry">
-                <summary class="hof-summary">
+            <details class="hof-entry" {% if request.user == user %}id="me"{% endif %}>
+                <summary class="hof-summary {% if request.user == user %} hof-summary-me{% endif %}">
       <span class="hof-rank {% if forloop.counter == 1 %}hof-rank-1{% elif forloop.counter == 2 %}hof-rank-2{% elif forloop.counter == 3 %}hof-rank-3{% else %}hof-rank-n{% endif %}">
         {% if forloop.counter == 1 %}<span class="emoji">&#x1F947;</span>{% elif forloop.counter == 2 %}
             <span class="emoji">&#x1F948;</span>{% elif forloop.counter == 3 %}
@@ -209,8 +220,7 @@
             {{ forloop.counter }}{% endif %}
       </span>
                     <span class="hof-name">{{ user.username }}</span>
-                    <span class="hof-count">{{ entries|length }} Eintr{% if entries|length == 1 %}ag{% else %}
-                        äge{% endif %}</span>
+                    <span class="hof-count">{{ entries|length }} Eintr{% if entries|length == 1 %}ag{% else %}äge{% endif %}</span>
                 </summary>
                 <div class="hof-body">
                     <ul class="hof-items">
@@ -228,4 +238,13 @@
             </details>
         {% endfor %}
     </div>
+
+    {% if in_hall_of_fame %}
+        <a id="to-me" class="me-btn">{% trans "Zu mir" %}</a>
+        <script nonce="{{ request.csp_script_nonce }}">
+            document.getElementById('to-me').addEventListener('click', () => {
+                document.getElementById('me').scrollIntoView();
+            });
+        </script>
+    {% endif %}
 {% endblock %}
