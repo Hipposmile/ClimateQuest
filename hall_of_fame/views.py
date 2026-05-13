@@ -33,7 +33,7 @@ def add_to_hall_of_fame():
                 filter=Q(aktion__date__gte=week_start)
             )
         )
-        .filter(weekly_klimapunkte__gte=150)
+        .filter(weekly_klimapunkte__gte=50)
     )
 
     entries = [
