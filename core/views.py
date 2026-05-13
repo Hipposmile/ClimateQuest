@@ -57,7 +57,3 @@ def create_reminder():
 
 def get_default_user():
     return User.objects.filter(is_superuser=True).first().id
-
-def test_crontab():
-    user = User.objects.filter(is_superuser=True).first()
-    create_notification(fake_request, notification_de="CRONTAB TEST", notification_en="CRONTAB TEST", user=user)

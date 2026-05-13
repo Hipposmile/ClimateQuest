@@ -88,10 +88,7 @@ CRONJOBS = [
     ('0 12 * * 0', 'core.views.create_reminder', '>> /webapps/climatequest/ClimateQuest/logs/cronjobs.log 2>&1'),
     ('0 08 * * 0', 'aktionen.views.add_weekly_tracking_actions',
      '>> /webapps/climatequest/ClimateQuest/logs/cronjobs.log 2>&1'),
-    ('* * * * *', 'core.views.test_crontab',
-     '>> /webapps/climatequest/ClimateQuest/logs/cronjobs.log 2>&1'),
 ]
 
 CRONTAB_PYTHON_EXECUTABLE = "/webapps/climatequest/venv/bin/python"
-#CRONTAB_COMMAND_PREFIX = 'source /webapps/climatequest/venv/bin/activate && DJANGO_SETTINGS_MODULE=ClimateQuest.settingsprod'
 CRONTAB_COMMAND_PREFIX = 'DJANGO_SETTINGS_MODULE=ClimateQuest.settingsprod'
