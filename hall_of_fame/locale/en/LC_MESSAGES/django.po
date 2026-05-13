@@ -1,0 +1,50 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-13 21:42+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: hall_of_fame/templates/hall_of_fame_detail.html:4
+msgid "Sie dir die besten User von ClimateQuest an!"
+msgstr "Look at the best users of ClimateQuest!"
+
+#: hall_of_fame/templates/hall_of_fame_detail.html:194
+msgid "Legenden & All-time-GOATS"
+msgstr "Legend & all-time-GOATS"
+
+#: hall_of_fame/templates/hall_of_fame_detail.html:203
+msgid ""
+"Die Hall of Fame enthält die besten User von ClimateQuest. Regelmäßig werden "
+"von uns Quests veröffentlicht,\n"
+"            zum\n"
+"            Beispiel <i>Sammle diese Woche mindestens 150 Klimapunkte</i> "
+"oder <i>Gehöre diesen Monat zu den Top 5\n"
+"                Klimapunkt-Sammlern</i>. Jeder User, der das schafft, erhält "
+"einen Eintrag in der Hall of Fame. User,\n"
+"            die es\n"
+"            sogar mehrfach in die Hall of Fame schaffen, werden höher "
+"gelistet."
+msgstr "The Hall of Fame contains the best users of ClimateQuest. We regularly publish quests, for example <i>Collect at least 150 climate points this week</i> or <i>Be among the top 5 climate point collectors this month</i>. Every user who achieves that gets an entry in the Hall of Fame. Users who even make it into the Hall of Fame multiple times are listed higher."
+
+#: hall_of_fame/templates/hall_of_fame_detail.html:209
+msgid ""
+"Um in die Hall of Fame zu kommen, musst du diese Woche bis Sonntag "
+"mindestens 150 Klimapunkte sammeln."
+msgstr "To get into the Hall of Fame, you have to collect at least 150 climate points this week until Sunday."
+
+#: hall_of_fame/templates/hall_of_fame_detail.html:239
+msgid "Noch keine Einträge vorhanden."
+msgstr "No entries yet."

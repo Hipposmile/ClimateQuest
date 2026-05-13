@@ -7,11 +7,6 @@ from django.shortcuts import render
 from hall_of_fame.models import HallOfFameEntry
 
 
-# Create your views here.
-def intro(request):
-    return render(request, './intro.html')
-
-
 def hall_of_fame_detail(request):
     user_entries = {}
     users = User.objects.filter(hall_of_fame_entry__isnull=False).prefetch_related(

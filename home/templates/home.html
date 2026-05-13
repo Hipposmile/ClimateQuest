@@ -314,6 +314,12 @@
         </div>
     </div>
 
+    <hr>
+    <a href="{% url 'hall_of_fame_detail' %}" class="redirect-link">
+        <span>{% trans "Zur Hall of Fame" %}</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
+
     <div id="mobile-app-div">
         <hr>
         <p>{% trans "Keine Lust, ClimateQuest als Webseite zu verwenden?" %} <a href="{% url 'mobile_apps' %}"
@@ -326,7 +332,6 @@
             document.getElementById("mobile-app-div").style.display = "block";
         }
     </script>
-
     <hr>
     <a href="https://de.trustpilot.com/review/climate-quest.de" target="_blank"
        class="redirect-link dont-show-loading">

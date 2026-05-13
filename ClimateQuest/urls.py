@@ -31,6 +31,7 @@ from personals.sitemaps import LoginSitemap, RegisterSitemap, PersonalSettingsSi
 from users.sitemaps import KlimapunkteViewSitemap, LevelViewSitemap, HistorySitemap
 from aktionen.sitemaps import AddAktionenSitemap
 from pages.sitemaps import MobileAppsSitemap, AknachhaltigkeitSitemap
+from hall_of_fame.sitemaps import HallOfFameDetailSitemap
 
 sitemaps = {
     "home": HomeSitemap(),
@@ -71,7 +72,9 @@ sitemaps = {
     "add_forum_post": AddForumPostSitemap(),
 
     "mobile_apps": MobileAppsSitemap(),
-    "aknachhaltigkeit": AknachhaltigkeitSitemap()
+    "aknachhaltigkeit": AknachhaltigkeitSitemap(),
+
+    "hall_of_fame_detail": HallOfFameDetailSitemap(),
 }
 
 urlpatterns = [

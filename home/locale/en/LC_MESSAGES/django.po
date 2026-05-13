@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-13 19:14+0200\n"
+"POT-Creation-Date: 2026-05-13 21:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,7 +112,7 @@ msgstr "Actions"
 msgid "Aktion"
 msgstr "Action"
 
-#: home/templates/aktionenTable.html:74 home/templates/dashboard.html:412
+#: home/templates/aktionenTable.html:74 home/templates/dashboard.html:417
 msgid "Klimapunkte"
 msgstr "Climate Points"
 
@@ -157,7 +157,7 @@ msgstr ""
 msgid "Schulen"
 msgstr "Schools"
 
-#: home/templates/companies_and_schools.html:13 home/templates/home.html:339
+#: home/templates/companies_and_schools.html:13 home/templates/home.html:344
 msgid "ClimateQuest für Schulen"
 msgstr "ClimateQuest for Schools"
 
@@ -220,19 +220,23 @@ msgstr ""
 msgid "Zur öffentlichen Profilseite"
 msgstr "To the Public Profile Page"
 
-#: home/templates/dashboard.html:227
+#: home/templates/dashboard.html:75 home/templates/home.html:319
+msgid "Zur Hall of Fame"
+msgstr "To the hall of fame"
+
+#: home/templates/dashboard.html:232
 msgid "Perfekte Woche"
 msgstr "Perfect Week"
 
-#: home/templates/dashboard.html:233 home/templates/dashboard.html:262
+#: home/templates/dashboard.html:238 home/templates/dashboard.html:267
 msgid "Wöchentliches Ziel"
 msgstr "Weekly Goal"
 
-#: home/templates/dashboard.html:253
+#: home/templates/dashboard.html:258
 msgid "Du hast eine perfekte Woche!"
 msgstr "You have a perfect week!"
 
-#: home/templates/dashboard.html:272
+#: home/templates/dashboard.html:277
 #, python-format
 msgid ""
 "\n"
@@ -243,50 +247,50 @@ msgstr ""
 "        %(weekly_klimapunkte)s climate points towards the weekly goal of\n"
 "        %(weekly_goal)s climate points achieved"
 
-#: home/templates/dashboard.html:276
+#: home/templates/dashboard.html:281
 msgid "Ziel ändern"
 msgstr "Change Goal"
 
-#: home/templates/dashboard.html:387
+#: home/templates/dashboard.html:392
 msgid "Streak"
 msgstr "Streak"
 
-#: home/templates/dashboard.html:395
+#: home/templates/dashboard.html:400
 msgid "Aktuelle Streak"
 msgstr "Current Streak"
 
-#: home/templates/dashboard.html:399
+#: home/templates/dashboard.html:404
 msgid "Wochen mit erreichtem wöchentlichen Ziel"
 msgstr "Weeks with weekly goal achieved"
 
-#: home/templates/dashboard.html:404
+#: home/templates/dashboard.html:409
 msgid "Du hast dein wöchentliches Ziel diese Woche bereits erreicht"
 msgstr "You have already reached your weekly goal this week"
 
-#: home/templates/dashboard.html:405
+#: home/templates/dashboard.html:410
 msgid "Du hast dein wöchentliches Ziel diese Woche noch nicht erreicht"
 msgstr "You haven't reached your weekly goal this week yet"
 
-#: home/templates/dashboard.html:413
+#: home/templates/dashboard.html:418
 #, python-format
 msgid ""
 "Du hast bereits %(klimapunkte)s Klimapunkte\n"
 "        gesammelt."
 msgstr "You have already collected %(klimapunkte)s climate points."
 
-#: home/templates/dashboard.html:416
+#: home/templates/dashboard.html:421
 msgid "Zu den Klimapunkten"
 msgstr "To Climate Points"
 
-#: home/templates/dashboard.html:421
+#: home/templates/dashboard.html:426
 msgid "Level"
 msgstr "Level"
 
-#: home/templates/dashboard.html:422
+#: home/templates/dashboard.html:427
 msgid "Du bist im Level"
 msgstr "You are at level"
 
-#: home/templates/dashboard.html:425
+#: home/templates/dashboard.html:430
 msgid "Zu den Levels"
 msgstr "To Levels"
 
@@ -1051,11 +1055,6 @@ msgstr ""
 "href=\"%(testbogen_url)s\" download>Download</a>"
 
 #: home/templates/home.html:8
-#| msgid ""
-#| "Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, "
-#| "indem du Klimapunkte sammelst und dich mit anderen Usern vergleichst. "
-#| "Teile dein Wissen in Artikeln oder im Forum und leiste deinen Beitrag zum "
-#| "Klimaschutz."
 msgid ""
 "Willkommen bei ClimateQuest. Motiviere dich selbst für mehr Klimaschutz, "
 "indem du Klimapunkte sammelst, dich mit anderen Usern vergleichst, dein "
@@ -1064,8 +1063,10 @@ msgid ""
 "Events."
 msgstr ""
 "Welcome to ClimateQuest. Motivate yourself for more climate protection by "
-"collecting climate points, comparing yourself with other users, increasing your level, extending your streak and planting trees in the apps. Share "
-"your knowledge in articles or in the forum and become active in petitions or events."
+"collecting climate points, comparing yourself with other users, increasing "
+"your level, extending your streak and planting trees in the apps. Share your "
+"knowledge in articles or in the forum and become active in petitions or "
+"events."
 
 #: home/templates/home.html:11
 msgid "Startseite"
@@ -1158,31 +1159,31 @@ msgstr "In addition, a total of"
 msgid "Bäume gepflanzt."
 msgstr "trees have been planted."
 
-#: home/templates/home.html:319
+#: home/templates/home.html:325
 msgid "Keine Lust, ClimateQuest als Webseite zu verwenden?"
 msgstr "Not keen on using ClimateQuest as a website?"
 
-#: home/templates/home.html:321
+#: home/templates/home.html:327
 msgid "ClimateQuest als App downloaden"
 msgstr "Download ClimateQuest as an app"
 
-#: home/templates/home.html:333
+#: home/templates/home.html:338
 msgid "Bewerten Sie uns auf Trustpilot"
 msgstr "Rate us on Trustpilot"
 
-#: home/templates/home.html:346
+#: home/templates/home.html:351
 msgid "Wie ClimateQuest funktioniert"
 msgstr "How ClimateQuest works"
 
-#: home/templates/home.html:350
+#: home/templates/home.html:355
 msgid "Aktion hinzufügen"
 msgstr "Add Action"
 
-#: home/templates/home.html:354
+#: home/templates/home.html:359
 msgid "Family gründen"
 msgstr "Create a Family"
 
-#: home/templates/home.html:357
+#: home/templates/home.html:362
 msgid "Family beitreten"
 msgstr "Join a Family"
 
