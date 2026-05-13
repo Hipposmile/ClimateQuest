@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block meta %}
+    <meta name="description" content="{% trans 'Sie dir die besten User von ClimateQuest an!' %}">
+{% endblock %}
+
+{% block title %}Hall of Fame - ClimateQuest{% endblock %}
+
+{% block content %}
+    <style>
+        .hof-wrap {
+            padding: 2rem 0;
+            font-family: sans-serif;
+        }
+
+        .hof-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .hof-crown {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .hof-title {
+            margin: 0 0 0.25rem;
+        }
+
+        .hof-subtitle {
+            font-size: 13px;
+            color: #888;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hof-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0 0 2rem;
+        }
+
+        .hof-divider::before, .hof-divider::after {
+            content: '';
+            flex: 1;
+            height: 0.5px;
+            background: #e0e0e0;
+        }
+
+        .hof-divider-star {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .hof-entry {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .hof-entry:hover {
+            border-color: #bbb;
+        }
+
+        .hof-summary {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            cursor: pointer;
+            list-style: none;
+            user-select: none;
+        }
+
+        .hof-summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .hof-rank {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .hof-rank-1 {
+            background: #FAEEDA;
+            color: #633806;
+        }
+
+        .hof-rank-2 {
+            background: #F1EFE8;
+            color: #444441;
+        }
+
+        .hof-rank-3 {
+            background: #FAECE7;
+            color: #712B13;
+        }
+
+        .hof-rank-n {
+            background: #f4f4f4;
+            color: #888;
+        }
+
+        .hof-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: #1a1a1a;
+            flex: 1;
+        }
+
+        .hof-count {
+            font-size: 12px;
+            color: #888;
+            background: #f4f4f4;
+            padding: 3px 10px;
+            border-radius: 99px;
+            white-space: nowrap;
+        }
+
+        .hof-chevron {
+            color: #aaa;
+            font-size: 16px;
+            transition: transform 0.25s;
+            flex-shrink: 0;
+        }
+
+        details[open] .hof-chevron {
+            transform: rotate(180deg);
+        }
+
+        .hof-body {
+            border-top: 1px solid #e8e8e8;
+            padding: 14px 18px;
+        }
+
+        .hof-items {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .hof-item {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+
+        .hof-item-text {
+            flex: 1;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .hof-item-meta {
+            font-size: 10px;
+            color: #bfbbbb;
+            line-height: 1.5;
+        }
+
+        .hof-empty {
+            font-size: 13px;
+            color: #aaa;
+            font-style: italic;
+        }
+    </style>
+
+    <div class="hof-wrap">
+        <div class="hof-header">
+            <span class="hof-crown"><span class="emoji">&#x1F3C6;</span></span>
+            <h1 class="hof-title">Hall of Fame</h1>
+            <p class="hof-subtitle">Legends & Achievements</p>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <div class="hof-divider">
+            <span class="hof-divider-star">★</span>
+            <span class="hof-divider-star">★</span>
+            <span class="hof-divider-star">★</span>
+        </div>
+
+        {% for user, entries in user_entries.items %}
+            <details class="hof-entry">
+                <summary class="hof-summary">
+      <span class="hof-rank {% if forloop.counter == 1 %}hof-rank-1{% elif forloop.counter == 2 %}hof-rank-2{% elif forloop.counter == 3 %}hof-rank-3{% else %}hof-rank-n{% endif %}">
+        {% if forloop.counter == 1 %}<span class="emoji">&#x1F947;</span>{% elif forloop.counter == 2 %}<span class="emoji">&#x1F948;</span>{% elif forloop.counter == 3 %}<span class="emoji">&#x1F949;</span>{% else %}#
+            {{ forloop.counter }}{% endif %}
+      </span>
+                    <span class="hof-name">{{ user.username }}</span>
+                    <span class="hof-count">{{ entries|length }} Eintr{% if entries|length == 1 %}ag{% else %}äge{% endif %}</span>
+                </summary>
+                <div class="hof-body">
+                    <ul class="hof-items">
+                        {% for entry in entries %}
+                            <li class="hof-item">
+                                <span class="hof-item-text">{% if request.LANGUAGE_CODE == "de" %}{{ entry.description_de }}{% else %}{{ entry.description_en }}{% endif %}</span>
+                                <span class="hof-item-meta">{{ entry.created_at }}</span>
+                            </li>
+                        {% empty %}
+                            <li><span class="hof-empty">Noch keine Einträge vorhanden.</span></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </details>
+        {% endfor %}
+    </div>
+{% endblock %}
