@@ -88,6 +88,7 @@ urlpatterns = [
     path('artikel/', include('artikel.urls')),
     path('forum/', include('forum.urls')),
     path('petitions/', include('petitions.urls')),
+    path('hall_of_fame/', include('hall_of_fame.urls')),
     path('pages/', include('pages.urls')),
 
     # Notifications

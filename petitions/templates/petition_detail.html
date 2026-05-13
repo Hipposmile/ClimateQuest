@@ -5,7 +5,7 @@
 {% load i18n %}
 
 {% block meta %}
-    {% blocktrans with petition_title=petition.title %}<meta name="description" content="Siehe dir die Petition {{ petition_title }} an">{% endblocktrans %}
+    <meta name="description" content="{% blocktrans with title=petition_title %}Siehe dir die Petition {{ title }} an{% endblocktrans %}">
 {% endblock %}
 
 {% block title %}{% blocktrans with petition_title=petition.title %}Petition {{ petition_title }}{% endblocktrans %}{% endblock %}

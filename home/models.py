@@ -15,6 +15,7 @@ class Benachrichtigung(models.Model):
     def __str__(self):
         return f"{self.benachrichtigung_de} ({self.user})"
 
+
 class ReportedUser(models.Model):
     reported_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reported_user")
     reporting_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="reporting_user")

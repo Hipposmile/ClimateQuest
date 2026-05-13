@@ -489,11 +489,11 @@ msgstr ""
 #: community/views.py:447
 #, python-format
 msgid "%(start)s bis %(end)s"
-msgstr ""
+msgstr "%(start)s to %(end)s"
 
 #: community/views.py:502
 msgid "Fehler beim Sortieren der Mitglieder."
-msgstr ""
+msgstr "Error sorting members."
 
 #~ msgid "Oder eine Community gründen."
 #~ msgstr "Or found a community."

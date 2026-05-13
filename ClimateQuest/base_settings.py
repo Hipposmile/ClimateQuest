@@ -64,7 +64,8 @@ INSTALLED_APPS = [
     'events',
     'forum',
     'petitions',
-    'pages'
+    'pages',
+    'hall_of_fame'
 ]
 
 """MIDDLEWARE = [
