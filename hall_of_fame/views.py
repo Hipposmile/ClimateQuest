@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.db.models import Count, F, Sum, Q
 from django.shortcuts import render
 
-from aktionen.models import Aktion
 from hall_of_fame.models import HallOfFameEntry
 
 
@@ -24,15 +23,15 @@ def hall_of_fame_detail(request):
 
 def add_to_hall_of_fame():
     week_start = date.today() - timedelta(days=date.today().weekday())
-    description_de = f"Hat im Zeitraum vom {week_start.strftime('%d.%m.%Y')} bis {date.today().strftime('%d.%m.%Y')} 150 oder mehr Klimapunkte gesammelt."
-    description_en = f"Has collected at 150 or more climate points between {week_start.strftime('%m.%d.%Y')} and {date.today().strftime('%m.%d.%Y')}."
+    description_de = f"Hat zwischen {week_start.strftime('%d.%m.%Y')} und {date.today().strftime('%d.%m.%Y')} 150 oder mehr Klimapunkte gesammelt."
+    description_en = f"Has collected 150 or more climate points between {week_start.strftime('%m/%d/%Y')} and {date.today().strftime('%m/%d/%Y')}."
 
     qualifying_users = (
         User.objects
         .annotate(
             weekly_klimapunkte=Sum(
-                F("aktionen__aktion__klimapunkte") * F("aktionen__quantity"),
-                filter=Q(aktionen__date__gte=week_start)
+                F("aktion__aktion__klimapunkte") * F("aktion__quantity"),
+                filter=Q(aktion__date__gte=week_start)
             )
         )
         .filter(weekly_klimapunkte__gte=150)
