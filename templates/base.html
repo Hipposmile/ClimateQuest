@@ -609,13 +609,13 @@
                 <span class="tab-icon"><span class="emoji">&#x1F393;</span></span>
                 <span class="tab-label">{% trans "Bildung" %}</span>
             </a>
-            <a href="{% url 'users_overview' %}" class="tab-item">
-                <span class="tab-icon"><span class="emoji">&#x1F64B;</span></span>
-                <span class="tab-label">{% trans "User" %}</span>
-            </a>
             <a href="{% url 'login_view' %}" class="tab-item">
                 <span class="tab-icon"><span class="emoji">&#x1F510;</span></span>
                 <span class="tab-label">{% trans "Login" %}</span>
+            </a>
+            <a href="javascript:void(0)" class="tab-item mobile-menu-trigger" data-menu="more-not-authenticated">
+                <span class="tab-icon"><span class="emoji">&#xE250;</span></span>
+                <span class="tab-label">{% trans "Mehr" %}</span>
             </a>
         {% endif %}
     </nav>
@@ -706,6 +706,17 @@
                             </a>
                         </div>
                     {% endif %}
+                </nav>
+            </div>
+        </div>
+    {% else %}
+        <div class="mobile-menu-overlay" data-menu="more-not-authenticated">
+            <div class="mobile-menu-modal">
+                <button class="mobile-menu-close"><span class="emoji">&#x2717;</span></button>
+                <h2><span class="emoji">&#x1F393;</span> {% trans "Bildung" %}</h2>
+                <nav class="mobile-menu-nav">
+                    <a href="{% url 'users_overview' %}"><span class="emoji">&#x1F64B;</span> {% trans "User" %}</a>
+                    <a class="openShareOverlay"><span class="emoji">&#xE253;</span> {% trans "Teilen" %}</a>
                 </nav>
             </div>
         </div>
