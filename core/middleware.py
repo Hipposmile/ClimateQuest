@@ -6,10 +6,7 @@ from django.utils import translation
 
 
 class AddCORSHeaderMiddleware:
-    ALLOWED_ORIGINS = {
-        "https://climate-quest.de",
-        "https://www.climate-quest.de",
-    }
+    ALLOWED_ORIGINS = {"https://climate-quest.de"}
 
     def __init__(self, get_response):
         self.get_response = get_response

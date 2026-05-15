@@ -18,10 +18,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "")
 
 DEBUG = False
 
-ALLOWED_HOSTS = [
-    'climate-quest.de',
-    'www.climate-quest.de',
-]
+ALLOWED_HOSTS = ['climate-quest.de']
 
 DATABASES = {
     'default': {
@@ -34,14 +31,12 @@ DATABASES = {
     }
 }
 
-INTERNAL_IPS = [
-    'https://climate-quest.de', 'https://www.climate-quest.de'
-]
+INTERNAL_IPS = ['https://climate-quest.de']
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 CSRF_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = ['https://climate-quest.de', 'https://www.climate-quest.de']
+CSRF_TRUSTED_ORIGINS = ['https://climate-quest.de']
 
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
