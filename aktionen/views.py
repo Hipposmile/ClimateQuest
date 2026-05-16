@@ -235,6 +235,10 @@ def track_actions(request):
                 messages.success(request, all_messages["stopped_tracking"])
                 return redirect('track_actions')
             else:
+                forbidden_in_same_period = action.forbidden_in_same_period.all()
+                if TrackedActions.objects.filter(action__in=forbidden_in_same_period, user=request.user).exists():
+                    messages.error(request, all_messages["forbidden_tracking_action"])
+                    return redirect('track_actions')
                 TrackedActions.objects.create(action=action, user=request.user)
                 messages.success(request, all_messages["tracking_action"])
                 return redirect('track_actions')

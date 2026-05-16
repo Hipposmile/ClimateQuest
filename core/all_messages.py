@@ -156,6 +156,7 @@ all_messages = {
     "action_already_set_in_period": _("Diese oder eine verwandte Aktion wurde im gleichen Zeitraum schon einmal eingetragen"),
 
     "tracking_action": _("Aktion wird jetzt getrackt"),
+    "forbidden_tracking_action": _("Aktion kann nicht getrackt werden, da eine verwandte Aktion bereits getrackt wird."),
     "stopped_tracking": _("Aktion wird nicht mehr getrackt"),
 
     # --------
