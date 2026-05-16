@@ -222,9 +222,7 @@
         </div>
         <div class="accordion-content-wrapper">
             <div class="accordion-content">
-            {{ trackable_actions_weekly }}
                 {% for key, action in trackable_actions_weekly.items %}
-                    Test: {{ action.action.id }}
                     {% if action.done %}
                         <form method="post" class="form-confirm"
                               data-confirm="
