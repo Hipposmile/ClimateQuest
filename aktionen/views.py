@@ -210,6 +210,15 @@ def add(request):
 @login_required
 def track_actions(request):
     trackable_actions_weekly = AktionenListe.objects.filter(track_weekly=True).order_by('name')
+    trackable_actions_weekly_with_done = {}
+    for action in trackable_actions_weekly:
+        tracked_action = TrackedActions.objects.filter(action=action, user=request.user).first()
+        trackable_actions_weekly_with_done[action.name] = {
+            'action': action,
+            'done': tracked_action is not None,
+            'since': tracked_action.since if tracked_action else None,
+        }
+
     trackable_actions_kilometerly = AktionenListe.objects.filter(track_kilometerly=True).order_by('name')
 
     if request.method == 'POST':
@@ -252,7 +261,7 @@ def track_actions(request):
 
             return JsonResponse({'success': True, 'action_id': action.id, 'user_id': request.user.id})
 
-    return render(request, './track.html', {'trackable_actions_weekly': trackable_actions_weekly,
+    return render(request, './track.html', {'trackable_actions_weekly': trackable_actions_weekly_with_done,
                                             'trackable_actions_kilometerly': trackable_actions_kilometerly})
 
 

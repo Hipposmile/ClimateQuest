@@ -4,7 +4,9 @@ from django.contrib.auth.models import User
 from django.db.models import Count, F, Sum, Q
 from django.shortcuts import render
 
+from core.views import fake_request
 from hall_of_fame.models import HallOfFameEntry
+from utils.functions import create_notification
 
 
 def hall_of_fame_detail(request):
@@ -40,4 +42,9 @@ def add_to_hall_of_fame():
         HallOfFameEntry(user=user, description_de=description_de, description_en=description_en)
         for user in qualifying_users
     ]
+
     HallOfFameEntry.objects.bulk_create(entries)
+
+    for user in qualifying_users:
+        create_notification(fake_request, notification_de="Du wurdest in die Hall of Fame aufgenommen", notification_en="You have been inducted into the hall of fame", user=user)
+
