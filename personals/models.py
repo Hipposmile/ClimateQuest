@@ -22,6 +22,7 @@ class UserErweitert(models.Model):
     allows_data_view = models.BooleanField(default=False)
     lang = models.CharField(max_length=2, default='de')
     additional_klimapunkte = models.FloatField(default=0)
+    show_tour_banner = models.BooleanField(default=True)
 
     @property
     def given_credits(self):

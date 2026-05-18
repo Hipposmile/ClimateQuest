@@ -131,6 +131,8 @@ all_messages = {
     "verification_email_resent": _("Verifizierungs-E-Mail erfolgreich erneut gesendet"),
     "successfully_changed_goal": _("Wöchentliches Ziel erfolgreich geändert"),
     "weekly_goal_too_small": _("Das wöchentliche Ziel ist zu klein"),
+    "activated_tour_banner": _("Die Tour-Banner werden jetzt angezeigt"),
+    "deactivated_tour_banner": _("Die Tour-Banner werden nicht mehr angezeigt"),
 
     "error_planting_tree": _("Beim Pflanzen deines Baumes ist ein Fehler aufgetreten"),
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-09 15:35+0200\n"
+"POT-Creation-Date: 2026-05-18 17:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,57 +26,75 @@ msgstr ""
 "Create a new action on ClimateQuest to collect climate points and compare "
 "yourself with other users."
 
-#: aktionen/templates/add.html:10
+#: aktionen/templates/add.html:12
 msgid "ClimateQuest - Aktion hinzufügen"
 msgstr "ClimateQuest - Add Action"
 
-#: aktionen/templates/add.html:14
+#: aktionen/templates/add.html:19
 msgid "Aktion hinzufügen"
 msgstr "Add Action"
 
-#: aktionen/templates/add.html:23
+#: aktionen/templates/add.html:29
+msgid "Tour starten"
+msgstr "Start tour"
+
+#: aktionen/templates/add.html:35
 msgid ""
 "Bitte gib bei Aktionen, die länger als einen Tag gedauert haben, das "
 "Enddatum an."
 msgstr ""
 "Please provide the end date for actions that lasted longer than one day."
 
-#: aktionen/templates/add.html:43
+#: aktionen/templates/add.html:55
 msgid "Ausgewähltes Element:"
 msgstr "Selected Item:"
 
-#: aktionen/templates/add.html:47
+#: aktionen/templates/add.html:60
 msgid "Element auswählen"
 msgstr "Select Item"
 
-#: aktionen/templates/add.html:59
+#: aktionen/templates/add.html:71
+msgid ""
+"Öffne die Einstellungen, um anzugeben, wie oft (z.B. kannst du bei der "
+"Aktion <i>1 Kilometer Fahrrad statt Auto fahren</i> 5 Kilometer angeben, "
+"wenn du 5 Kilometer gefahren bist) und wann du diese Aktion durchgeführt "
+"hast (z.B. gestern). Außerdem kannst du eine Beschreibung hinzufügen (z.B. "
+"Schulweg)."
+msgstr ""
+"Open the settings to specify how often (e.g., for the action <i>Cycle 1 "
+"kilometer instead of driving</i>, you can enter 5 kilometers if you cycled 5 "
+"kilometers) and when you performed this action (e.g., yesterday). You can "
+"also add a description (e.g., commute to school)."
+
+#: aktionen/templates/add.html:73
 msgid "Erweiterte Einstellungen"
 msgstr "Advanced Settings"
 
-#: aktionen/templates/add.html:69
+#: aktionen/templates/add.html:84
 msgid "Beschreibung:"
 msgstr "Description:"
 
-#: aktionen/templates/add.html:71
+#: aktionen/templates/add.html:86
 msgid "Optional"
 msgstr "Optional"
 
-#: aktionen/templates/add.html:75
+#: aktionen/templates/add.html:90
 msgid "Menge:"
 msgstr "Quantity:"
 
-#: aktionen/templates/add.html:76
+#: aktionen/templates/add.html:91
 msgid "Bitte verwenden Sie keinen 1000-Seperator"
 msgstr "Please do not use a 1000 separator"
 
-#: aktionen/templates/add.html:81
+#: aktionen/templates/add.html:96
 msgid "Datum:"
 msgstr "Date:"
 
-#: aktionen/templates/add.html:91
+#: aktionen/templates/add.html:106
 #, python-format
 msgid ""
-"Ich bestätige,\n"
+"Ich\n"
+"                bestätige,\n"
 "                dass alle Angaben der Wahrheit entsprechen und mit den\n"
 "                <a href=\"%(nutzungsbedingungen_url)s\">Nutzungsbedingungen</"
 "a>\n"
@@ -85,35 +103,35 @@ msgstr ""
 "I confirm that all information is true and complies with the <a "
 "href=\"%(nutzungsbedingungen_url)s\">Terms of Use</a>."
 
-#: aktionen/templates/add.html:97
+#: aktionen/templates/add.html:113
 msgid "Hinzufügen"
 msgstr "Add"
 
-#: aktionen/templates/add.html:105
+#: aktionen/templates/add.html:121
 msgid "Kategorien"
 msgstr "Categories"
 
-#: aktionen/templates/add.html:121
+#: aktionen/templates/add.html:137
 msgid "Zurück"
 msgstr "Back"
 
-#: aktionen/templates/add.html:353
+#: aktionen/templates/add.html:369
 msgid "Wähle eine Aktion aus:"
 msgstr "Choose an action:"
 
-#: aktionen/templates/add.html:450
+#: aktionen/templates/add.html:466
 msgid "Quelle:"
 msgstr "Source:"
 
-#: aktionen/templates/add.html:451
+#: aktionen/templates/add.html:467
 msgid "Kategorien:"
 msgstr "Categories:"
 
-#: aktionen/templates/add.html:454
+#: aktionen/templates/add.html:470
 msgid "Klimapunkte pro"
 msgstr "Climate points per"
 
-#: aktionen/templates/add.html:496
+#: aktionen/templates/add.html:512
 msgid "Insgesamt durch diese Aktion gewonnene Klimapunkte:"
 msgstr "Total climate points earned through this action:"
 

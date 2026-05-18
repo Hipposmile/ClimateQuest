@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 {% load i18n %}
-
+{% load static %}
 {% block meta %}
     <meta name="description"
           content="{% trans 'Erstelle eine neue Aktion bei ClimateQuest, um Klimapunkte zu sammeln und dich mit anderen Nutzern zu vergleichen.' %}">
+
+    <link rel="stylesheet" href="{% static 'libraries/tourguidejs/tour.min.css' %}">
 {% endblock %}
 
 {% block title %}
@@ -11,12 +13,22 @@
 {% endblock %}
 
 {% block content %}
+    <script src="{% static 'libraries/tourguidejs/tour.js' %}" crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+
     <h1>{% trans 'Aktion hinzufügen' %}</h1>
 
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
+    {% endif %}
+
+    {% if request.user.usererweitert.show_tour_banner %}
+        <a id="start-tour" class="redirect-link">
+            <span>{% trans 'Tour starten' %}</span>
+            <span class="redirect-link-icon">→</span>
+        </a>
     {% endif %}
 
     <p id="source-label" class="action-label"></p>
@@ -44,7 +56,8 @@
         <input type="text" id="action_type" name="action_type" readonly>
         <input type="hidden" name="action_type_id" id="action_type_id">
 
-        <button type="button" id="openModal">{% trans 'Element auswählen' %}</button>
+        <button type="button" id="openModal" data-tg-order="0"
+                data-tg-tour="Klicke hier, um eine Aktion aus den verschiedenen Kategorien auszuwählen.">{% trans 'Element auswählen' %}</button>
 
         <br>
 
@@ -54,11 +67,13 @@
         <br>
 
         <div class="accordion">
-            <div class="accordion-header">
+            <div class="accordion-header" data-tg-order="0"
+                 data-tg-tour="{% trans 'Öffne die Einstellungen, um anzugeben, wie oft (z.B. kannst du bei der Aktion <i>1 Kilometer Fahrrad statt Auto fahren</i> 5 Kilometer angeben, wenn du 5 Kilometer gefahren bist) und wann du diese Aktion durchgeführt hast (z.B. gestern). Außerdem kannst du eine Beschreibung hinzufügen (z.B. Schulweg).' %}">
                 <div>
                     <div class="accordion-title">{% trans 'Erweiterte Einstellungen' %}</div>
                 </div>
-                <button class="accordion-toggle" aria-expanded="false"
+                <button class=" accordion-toggle
+                    " aria-expanded="false"
                         aria-controls="accordionContent" type="button">
                     <span></span>
                 </button>
@@ -88,7 +103,8 @@
             {% url 'nutzungsbedingungen' as nutzungsbedingungen_url %}
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
-            <span class="label-text">{% blocktrans with nutzungsbedingungen_url=nutzungsbedingungen_url %}Ich bestätige,
+            <span class="label-text">{% blocktrans with nutzungsbedingungen_url=nutzungsbedingungen_url %}Ich
+                bestätige,
                 dass alle Angaben der Wahrheit entsprechen und mit den
                 <a href="{{ nutzungsbedingungen_url }}">Nutzungsbedingungen</a>
                 übereinstimmen.{% endblocktrans %}</span>

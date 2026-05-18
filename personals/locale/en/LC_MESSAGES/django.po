@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-13 19:11+0200\n"
+"POT-Creation-Date: 2026-05-18 18:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -84,7 +84,7 @@ msgid "Login"
 msgstr "Login"
 
 #: personals/templates/login.html:26
-#: personals/templates/personal_settings.html:32
+#: personals/templates/personal_settings.html:31
 #: personals/templates/register.html:30
 msgid "Benutzername:"
 msgstr "Username:"
@@ -94,26 +94,28 @@ msgid "Benutzername"
 msgstr "Username"
 
 #: personals/templates/login.html:28
-#: personals/templates/personal_settings.html:185
-#: personals/templates/personal_settings.html:221
-#: personals/templates/personal_settings.html:250
-#: personals/templates/personal_settings.html:275
-#: personals/templates/personal_settings.html:321
+#: personals/templates/personal_settings.html:184
+#: personals/templates/personal_settings.html:220
+#: personals/templates/personal_settings.html:249
+#: personals/templates/personal_settings.html:274
+#: personals/templates/personal_settings.html:320
+#: personals/templates/personal_settings.html:336
 #: personals/templates/register.html:34
 msgid "Passwort:"
 msgstr "Password:"
 
 #: personals/templates/login.html:29
-#: personals/templates/personal_settings.html:53
-#: personals/templates/personal_settings.html:186
-#: personals/templates/personal_settings.html:223
-#: personals/templates/personal_settings.html:252
-#: personals/templates/personal_settings.html:276
-#: personals/templates/personal_settings.html:296
-#: personals/templates/personal_settings.html:298
-#: personals/templates/personal_settings.html:311
-#: personals/templates/personal_settings.html:313
-#: personals/templates/personal_settings.html:323
+#: personals/templates/personal_settings.html:52
+#: personals/templates/personal_settings.html:185
+#: personals/templates/personal_settings.html:222
+#: personals/templates/personal_settings.html:251
+#: personals/templates/personal_settings.html:275
+#: personals/templates/personal_settings.html:295
+#: personals/templates/personal_settings.html:297
+#: personals/templates/personal_settings.html:310
+#: personals/templates/personal_settings.html:312
+#: personals/templates/personal_settings.html:322
+#: personals/templates/personal_settings.html:338
 #: personals/templates/register.html:36
 msgid "Passwort"
 msgstr "Password"
@@ -139,45 +141,45 @@ msgstr "Reset password"
 msgid "Mein Profil"
 msgstr "My profile"
 
-#: personals/templates/personal_settings.html:28
+#: personals/templates/personal_settings.html:27
 #, python-format
 msgid "Willkommen, %(username)s"
 msgstr "Welcome, %(username)s"
 
-#: personals/templates/personal_settings.html:30
+#: personals/templates/personal_settings.html:29
 msgid "Aktuelle Daten:"
 msgstr "Actual data:"
 
-#: personals/templates/personal_settings.html:33
+#: personals/templates/personal_settings.html:32
 #: personals/templates/register.html:38
 #: personals/templates/reset_password.html:19
 msgid "E-Mail-Adresse:"
 msgstr "E-Mail address:"
 
-#: personals/templates/personal_settings.html:34
+#: personals/templates/personal_settings.html:33
 msgid "E-Mail-Adresse verifiziert:"
 msgstr "E-Mail address verified:"
 
-#: personals/templates/personal_settings.html:34
+#: personals/templates/personal_settings.html:33
 msgid "Ja,Nein"
 msgstr "Yes,No"
 
-#: personals/templates/personal_settings.html:37
+#: personals/templates/personal_settings.html:36
 #, python-format
 msgid ""
 "<a href=\"%(url)s\">Bestätigungs-E-Mail erneut senden</a>\n"
 "                "
 msgstr "<a href=\"%(url)s\">Resend confirmation email</a>"
 
-#: personals/templates/personal_settings.html:40
+#: personals/templates/personal_settings.html:39
 msgid "Account erstellt am:"
 msgstr "Account created at:"
 
-#: personals/templates/personal_settings.html:41
+#: personals/templates/personal_settings.html:40
 msgid "Letzter Login:"
 msgstr "Last login"
 
-#: personals/templates/personal_settings.html:44
+#: personals/templates/personal_settings.html:43
 #, python-format
 msgid ""
 "\n"
@@ -186,76 +188,77 @@ msgstr ""
 "\n"
 "                <a href=\"%(url)s\">Go to public account page</a>"
 
-#: personals/templates/personal_settings.html:49
+#: personals/templates/personal_settings.html:48
 msgid "Benutzernamen ändern"
 msgstr "Username"
 
-#: personals/templates/personal_settings.html:52
-#: personals/templates/personal_settings.html:92
+#: personals/templates/personal_settings.html:51
+#: personals/templates/personal_settings.html:91
 msgid "Aktuelles Passwort:"
 msgstr "Password:"
 
-#: personals/templates/personal_settings.html:55
+#: personals/templates/personal_settings.html:54
 msgid "Neuer Benutzername:"
 msgstr "Username:"
 
-#: personals/templates/personal_settings.html:57
+#: personals/templates/personal_settings.html:56
 msgid "Neuer Benutzername"
 msgstr "Username"
 
-#: personals/templates/personal_settings.html:59
+#: personals/templates/personal_settings.html:58
 msgid ""
 "Alle Mitglieder deiner Families und Communities werden darüber "
 "benachrichtigt werden."
 msgstr ""
 "All members of your families and communities will be notified about this."
 
-#: personals/templates/personal_settings.html:60
-#: personals/templates/personal_settings.html:230
-#: personals/templates/personal_settings.html:259
-#: personals/templates/personal_settings.html:281
-#: personals/templates/personal_settings.html:299
-#: personals/templates/personal_settings.html:314
+#: personals/templates/personal_settings.html:59
+#: personals/templates/personal_settings.html:229
+#: personals/templates/personal_settings.html:258
+#: personals/templates/personal_settings.html:280
+#: personals/templates/personal_settings.html:298
+#: personals/templates/personal_settings.html:313
+#: personals/templates/personal_settings.html:329
 msgid "Speichern"
 msgstr "Save"
 
-#: personals/templates/personal_settings.html:69
+#: personals/templates/personal_settings.html:68
 #: personals/templates/register.html:151
 msgid "Überprüfe, ob Benutzername bereits existiert..."
 msgstr "Checking if username already exists..."
 
-#: personals/templates/personal_settings.html:75
+#: personals/templates/personal_settings.html:74
 #: personals/templates/register.html:157
 msgid "Benutzername bereits vorhanden"
 msgstr "Username already taken"
 
-#: personals/templates/personal_settings.html:78
+#: personals/templates/personal_settings.html:77
 #: personals/templates/register.html:160
 msgid "Name noch nicht vorhanden"
 msgstr "Name not found yet"
 
-#: personals/templates/personal_settings.html:89
+#: personals/templates/personal_settings.html:88
 msgid "Passwort ändern"
 msgstr "Reset password"
 
-#: personals/templates/personal_settings.html:94
+#: personals/templates/personal_settings.html:93
 msgid "Aktuelles Passwort"
 msgstr "Current password"
 
-#: personals/templates/personal_settings.html:95
+#: personals/templates/personal_settings.html:94
 msgid "Neues Passwort:"
 msgstr "New password:"
 
-#: personals/templates/personal_settings.html:96
+#: personals/templates/personal_settings.html:95
 #: personals/templates/register.html:35
 msgid "Passwort anzeigen"
 msgstr "Show password"
 
-#: personals/templates/personal_settings.html:97
+#: personals/templates/personal_settings.html:96
 msgid "Neues Passwort"
 msgstr "New password"
 
-#: personals/templates/personal_settings.html:100
+#: personals/templates/personal_settings.html:99
 #: personals/templates/register.html:44
 msgid ""
 "Unsere Empfehlungen für ein sicheres Passwort, um deinen Account vor "
@@ -264,90 +267,90 @@ msgstr ""
 "Our recommendations for a secure password to protect your account from "
 "hacking attacks and account takeovers:"
 
-#: personals/templates/personal_settings.html:102
+#: personals/templates/personal_settings.html:101
 #: personals/templates/register.html:46
 msgid "Mindestens acht Zeichen"
 msgstr "At least eight characters"
 
-#: personals/templates/personal_settings.html:103
+#: personals/templates/personal_settings.html:102
 #: personals/templates/register.html:47
 msgid "Mindestens ein Großbuchstabe"
 msgstr "At least one uppercase letter"
 
-#: personals/templates/personal_settings.html:104
+#: personals/templates/personal_settings.html:103
 #: personals/templates/register.html:48
 msgid "Mindestens ein Kleinbuchstabe"
 msgstr "At least one lowercase letter"
 
-#: personals/templates/personal_settings.html:105
+#: personals/templates/personal_settings.html:104
 #: personals/templates/register.html:49
 msgid "Mindestens eine Zahl"
 msgstr "At least one number"
 
-#: personals/templates/personal_settings.html:106
+#: personals/templates/personal_settings.html:105
 #: personals/templates/register.html:50
 msgid "Mindestens ein Sonderzeichen"
 msgstr "At least one special character"
 
-#: personals/templates/personal_settings.html:109
-#: personals/templates/personal_settings.html:192
+#: personals/templates/personal_settings.html:108
+#: personals/templates/personal_settings.html:191
 msgid "Ändern"
 msgstr "Change"
 
-#: personals/templates/personal_settings.html:141
+#: personals/templates/personal_settings.html:140
 #: personals/templates/register.html:90
 msgid "Das Passwort entspricht nicht den Empfehlungen. Trotzdem fortfahren?"
 msgstr ""
 "The password does not meet the recommendations. Do you still want to proceed?"
 
-#: personals/templates/personal_settings.html:182
+#: personals/templates/personal_settings.html:181
 msgid "E-Mail-Adresse ändern"
 msgstr "Change email address"
 
-#: personals/templates/personal_settings.html:187
+#: personals/templates/personal_settings.html:186
 msgid "Neue E-Mail-Adresse:"
 msgstr "New email address:"
 
-#: personals/templates/personal_settings.html:188
+#: personals/templates/personal_settings.html:187
 msgid ""
 "Leer lassen, um die E-Mail Adresse zu löschen und keine mehr hinterlegt zu "
 "haben"
 msgstr "Leave blank to delete the email address and have none stored"
 
-#: personals/templates/personal_settings.html:190
+#: personals/templates/personal_settings.html:189
 msgid "neue E-Mail-Adresse"
 msgstr "new email address"
 
-#: personals/templates/personal_settings.html:191
+#: personals/templates/personal_settings.html:190
 msgid ""
 "Dein Account wird so lange inaktiv sein, bis die neue E-Mail-Adresse "
 "verifiziert wurde."
 msgstr ""
 "Your account will be inactive until the new email address has been verified."
 
-#: personals/templates/personal_settings.html:204
+#: personals/templates/personal_settings.html:203
 #: personals/templates/register.html:184
 msgid "E-Mail-Adresse bereits vorhanden"
 msgstr "E-Mail address already exists"
 
-#: personals/templates/personal_settings.html:207
+#: personals/templates/personal_settings.html:206
 #: personals/templates/register.html:187
 msgid "E-Mail-Adresse noch nicht vorhanden"
 msgstr "E-Mail address not found yet"
 
-#: personals/templates/personal_settings.html:218
+#: personals/templates/personal_settings.html:217
 msgid "E-Mail Einstellungen"
 msgstr "E-Mail settings"
 
-#: personals/templates/personal_settings.html:228
+#: personals/templates/personal_settings.html:227
 msgid "Benachrichtigungen per E-Mail erhalten"
 msgstr "Receive notifications by email"
 
-#: personals/templates/personal_settings.html:247
+#: personals/templates/personal_settings.html:246
 msgid "Einsicht persönlicher Daten"
 msgstr "Personal data visibility"
 
-#: personals/templates/personal_settings.html:257
+#: personals/templates/personal_settings.html:256
 msgid ""
 "Einsicht der persönlichen Daten (Level, Klimapunkte, Aktionen, wöchentliches "
 "Ziel, Streak) für andere User erlauben"
@@ -355,43 +358,51 @@ msgstr ""
 "Permit other users to see personal data (level, climate points, actions, "
 "weekly goal, streak)"
 
-#: personals/templates/personal_settings.html:272
+#: personals/templates/personal_settings.html:271
 msgid "Statement ändern"
 msgstr "Change statement"
 
-#: personals/templates/personal_settings.html:278
+#: personals/templates/personal_settings.html:277
 msgid "Statement"
 msgstr "Statement"
 
-#: personals/templates/personal_settings.html:290
+#: personals/templates/personal_settings.html:289
 msgid "Wöchentliches Ziel ändern"
 msgstr "Change weekly goal"
 
-#: personals/templates/personal_settings.html:293
+#: personals/templates/personal_settings.html:292
 msgid "Wöchentliches Ziel"
 msgstr "Weekly goal"
 
-#: personals/templates/personal_settings.html:303
+#: personals/templates/personal_settings.html:302
 msgid "Sprache ändern"
 msgstr "Change language"
 
-#: personals/templates/personal_settings.html:306
+#: personals/templates/personal_settings.html:305
 msgid "Sprache"
 msgstr "Language"
 
-#: personals/templates/personal_settings.html:318
+#: personals/templates/personal_settings.html:317
+msgid "Tour-Banner anzeigen / ausblenden"
+msgstr "Show / Hide tour-banner"
+
+#: personals/templates/personal_settings.html:327
+msgid "Tour-Banner anzeigen"
+msgstr "Show tour-banner"
+
+#: personals/templates/personal_settings.html:333
 msgid "Account löschen"
 msgstr "Delete account"
 
-#: personals/templates/personal_settings.html:319
+#: personals/templates/personal_settings.html:334
 msgid "Willst du deinen Account wirklich löschen?"
 msgstr "Do you really want to delete your account?"
 
-#: personals/templates/personal_settings.html:325
+#: personals/templates/personal_settings.html:340
 msgid "Diesen Account löschen"
 msgstr "Delete this account"
 
-#: personals/templates/personal_settings.html:326
+#: personals/templates/personal_settings.html:341
 msgid ""
 "Dadurch werden alle mit deinem Konto verknüpften Daten wie Aktionen oder "
 "Chat-Nachrichten gelöscht. Alle Mitglieder deiner Families und Communities "
@@ -401,11 +412,11 @@ msgstr ""
 "deleted. All members of your families and communities will be notified about "
 "this."
 
-#: personals/templates/personal_settings.html:330
+#: personals/templates/personal_settings.html:345
 msgid "Löschen einzelner Daten"
 msgstr "Delete individual data"
 
-#: personals/templates/personal_settings.html:332
+#: personals/templates/personal_settings.html:347
 #, python-format
 msgid ""
 "Wenn du nur einige mit deinem Konto verknüpften Daten\n"
@@ -421,7 +432,7 @@ msgstr ""
 "you want to delete. If the data can already be deleted via the website, it "
 "will actually be deleted and stored as a backup for a maximum of 14 days."
 
-#: personals/templates/personal_settings.html:338
+#: personals/templates/personal_settings.html:353
 #, python-format
 msgid ""
 "<a href=\"%(url)s\">\n"
@@ -531,7 +542,7 @@ msgstr "Send"
 msgid "Wir werden dir eine E-Mail mit deinen neuen Anmeldedaten schicken."
 msgstr "We will send you an email with your new login details."
 
-#: personals/views.py:139 personals/views.py:184 personals/views.py:257
+#: personals/views.py:139 personals/views.py:186 personals/views.py:261
 #, python-format
 msgid ""
 "Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: "
@@ -540,7 +551,7 @@ msgstr ""
 "Please click the following link to verify your email address: "
 "%(activation_link)s"
 
-#: personals/views.py:144
+#: personals/views.py:145
 msgid ""
 "Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge "
 "deine E-Mail-Adresse später in den Einstellungen hinzu."
@@ -548,11 +559,11 @@ msgstr ""
 "Error sending email. Try registering without email and add your email "
 "address later in the settings."
 
-#: personals/views.py:188
+#: personals/views.py:191
 msgid "Fehler beim E-Mail-Versand. Probiere es später erneut."
 msgstr "Error sending email. Please try again later."
 
-#: personals/views.py:416
+#: personals/views.py:437
 #, python-format
 msgid ""
 "Wir haben dir ein neues, zufällig generiertes Passwort erstellt: "

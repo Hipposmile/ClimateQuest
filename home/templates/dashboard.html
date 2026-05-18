@@ -37,8 +37,13 @@
     <div id="request_permission_notification"></div>
 
     <div class="btns">
+        {% if request.user.usererweitert.show_tour_banner %}
+            <button class="btn" id="start-tour">{% trans 'Tour starten' %}</button>
+        {% endif %}
         <a href="{% url 'add' %}">
-            <button class="btn">{% trans "Aktion eintragen" %}</button>
+            <button class="btn"
+                    data-tg-order="0"
+                    data-tg-tour="{% trans 'Klicke hier, um eine klimafreundliche Aktion einzutragen, die du zuvor durchgeführt hast, einzutragen und dafür Klimapunkte zu erhalten.' %}">{% trans "Aktion eintragen" %}</button>
         </a>
     </div>
 
@@ -71,10 +76,13 @@
         <span class="redirect-link-icon">→</span>
     </a>
     <br>
-    <a href="{% url 'hall_of_fame_detail' %}" class="redirect-link">
-        <span>{% trans "Zur Hall of Fame" %}</span>
-        <span class="redirect-link-icon">→</span>
-    </a>
+    <div>
+        <a href="{% url 'hall_of_fame_detail' %}" class="redirect-link">
+            <span data-tg-order="0"
+                  data-tg-tour="{% trans 'Klicke hier, um zur <b>Hall of Fame</b> zu gelangen. Regelmäßig werden von uns Quests wie <i>Sammle diese Woche mindestens 50 Klimapunkte</i> veröffentlicht. Schaffst du das, wirst du in die Hall of Fame aufgenommen.' %}">{% trans "Zur Hall of Fame" %}</span>
+            <span class="redirect-link-icon">→</span>
+        </a>
+    </div>
     <hr>
 
 
@@ -230,7 +238,9 @@
     </style>
 
     <h2>{% trans "Perfekte Woche" %}</h2>
-    <div class="pw-wrapper">
+    <div class="pw-wrapper"
+         data-tg-order="0"
+         data-tg-tour="{% trans 'Die <b>perfekte Woche</b> kannst du erreichen, wenn du Aktionen aus jeder Kategorie eingetragen und dein wöchentliches Ziel erreicht hast.' %}">
         <div class="pw-card">
             <div class="pw-track">
                 <div class="pw-step {% if weekly_goal_progress_percent >= 100 %}is-done{% endif %}">
@@ -265,7 +275,9 @@
     <hr>
 
     <h2>{% trans "Wöchentliches Ziel" %}</h2>
-    <div class="progress-container">
+    <div class="progress-container"
+         data-tg-order="0"
+         data-tg-tour="{% trans 'Das <b>wöchentliche Ziel</b> gibt an, wie viele Klimapunkte du jede Woche erreichen willst. Du kannst es selbstständig verändern.' %}">
         <div class="progress-bar" id="progress-bar"></div>
     </div>
     <style nonce="{{ request.csp_style_nonce }}">
@@ -390,7 +402,9 @@
     </style>
 
     <h2>{% trans "Streak" %}</h2>
-    <div class="streak-card-container">
+    <div class="streak-card-container"
+         data-tg-order="0"
+         data-tg-tour="{% trans 'Die <b>Streak</b> gibt an, wie oft das wöchentliche Ziel hintereinander erreicht wurde.' %}">
         <div class="streak-card">
             <div class="streak-icon-wrap">
                 <span class="streak-icon emoji">&#x1F525;</span>
@@ -415,8 +429,11 @@
     <hr>
 
     <h2>{% trans "Klimapunkte" %}</h2>
-    <p>{% blocktrans with klimapunkte=klimapunkte|floatformat:-4 %}Du hast bereits {{ klimapunkte }} Klimapunkte
-        gesammelt.{% endblocktrans %}</p>
+    <p data-tg-order="0"
+       data-tg-tour="{% trans 'Die <b>Klimapunkte</b> geben an, wie viele Klimapunkte du insgesamt bereits gesammelt hast.' %}">
+        {% blocktrans with klimapunkte=klimapunkte|floatformat:-4 %}Du hast bereits
+            {{ klimapunkte }} Klimapunkte
+            gesammelt.{% endblocktrans %}</p>
     <a href="{% url 'klimapunkte_me' %}" class="redirect-link ">
         <span>{% trans "Zu den Klimapunkten" %}</span>
         <span class="redirect-link-icon">→</span>
@@ -424,8 +441,10 @@
     <hr>
 
     <h2>{% trans "Level" %}</h2>
-    <p>{% trans "Du bist im Level" %} {% if request.LANGUAGE_CODE == "de" %}{{ level.description }}{% else %}
-        {{ level.description_en }}{% endif %}.</p>
+    <p data-tg-order="0"
+       data-tg-tour="{% trans 'Je nachdem, wie viele Klimapunkte du bereits insgesamt gesammelt hast, besitzt du ein anderes <b>Level</b>.' %}">{% trans "Du bist im Level" %}
+        {% if request.LANGUAGE_CODE == "de" %}{{ level.description }}{% else %}
+            {{ level.description_en }}{% endif %}.</p>
     <a href="{% url 'level_me' %}" class="redirect-link ">
         <span>{% trans "Zu den Levels" %}</span>
         <span class="redirect-link-icon">→</span>

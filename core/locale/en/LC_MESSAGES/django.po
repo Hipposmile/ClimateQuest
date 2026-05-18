@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-11 19:03+0200\n"
+"POT-Creation-Date: 2026-05-18 18:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -114,7 +114,7 @@ msgstr "Community login credentials invalid"
 msgid "Community ID wurde nicht übergeben"
 msgstr "Community ID was not provided"
 
-#: core/all_messages.py:45 core/all_messages.py:217
+#: core/all_messages.py:45 core/all_messages.py:220
 msgid "Community wurde nicht gefunden"
 msgstr "Community was not found"
 
@@ -122,7 +122,7 @@ msgstr "Community was not found"
 msgid "Family ID wurde nicht übergeben"
 msgstr "Family ID was not provided"
 
-#: core/all_messages.py:47 core/all_messages.py:77 core/all_messages.py:216
+#: core/all_messages.py:47 core/all_messages.py:77 core/all_messages.py:219
 msgid "Family wurde nicht gefunden"
 msgstr "Family was not found"
 
@@ -375,55 +375,63 @@ msgstr "Weekly goal successfully changed"
 msgid "Das wöchentliche Ziel ist zu klein"
 msgstr "The weekly goal is too small"
 
+#: core/all_messages.py:134
+msgid "Die Tour-Banner werden jetzt angezeigt"
+msgstr "The tour-banners will be shown now"
+
 #: core/all_messages.py:135
+msgid "Die Tour-Banner werden nicht mehr angezeigt"
+msgstr "The tour-banners won´t be shown now"
+
+#: core/all_messages.py:137
 msgid "Beim Pflanzen deines Baumes ist ein Fehler aufgetreten"
 msgstr "An error occurred while planting your tree"
 
-#: core/all_messages.py:141
+#: core/all_messages.py:143
 msgid "Wähle einen Aktionstyp aus"
 msgstr "Select an action type"
 
-#: core/all_messages.py:142
+#: core/all_messages.py:144
 msgid "Gib eine Menge an"
 msgstr "Enter a quantity"
 
-#: core/all_messages.py:143 core/all_messages.py:152
+#: core/all_messages.py:145 core/all_messages.py:154
 msgid "Ungültige Menge"
 msgstr "Invalid quantity"
 
-#: core/all_messages.py:144
+#: core/all_messages.py:146
 msgid "Die Menge muss positiv sein"
 msgstr "The quantity must be positive"
 
-#: core/all_messages.py:145
+#: core/all_messages.py:147
 msgid "Ungültiger Aktionstyp"
 msgstr "Invalid action type"
 
-#: core/all_messages.py:146
+#: core/all_messages.py:148
 msgid "Aktion erfolgreich hinzugefügt"
 msgstr "Action successfully added"
 
-#: core/all_messages.py:147
+#: core/all_messages.py:149
 msgid "Name der Aktion wurde nicht übergeben"
 msgstr "Action name was not provided"
 
-#: core/all_messages.py:148
+#: core/all_messages.py:150
 msgid "ID der Aktion wurde nicht übergeben"
 msgstr "Action ID was not provided"
 
-#: core/all_messages.py:149
+#: core/all_messages.py:151
 msgid "Aktion existiert nicht"
 msgstr "Action does not exist"
 
-#: core/all_messages.py:150
+#: core/all_messages.py:152
 msgid "Aktion erfolgreich bearbeitet"
 msgstr "Action successfully edited"
 
-#: core/all_messages.py:151
+#: core/all_messages.py:153
 msgid "Aktion erfolgreich gelöscht"
 msgstr "Action successfully deleted"
 
-#: core/all_messages.py:154
+#: core/all_messages.py:156
 msgid ""
 "Die angegebene Menge ist zu hoch, um realistisch zu sein. Weitere "
 "Informationen findest du in <a href='https://climate-questde/artikel/"
@@ -433,7 +441,7 @@ msgstr ""
 "see <a href='https://climate-quest.de/artikel/artikel_detail/9'>this "
 "article</a>"
 
-#: core/all_messages.py:155
+#: core/all_messages.py:157
 msgid ""
 "Das angegebene Datum liegt zu weit in der Vergangenheit. Weitere "
 "Informationen findest du in <a href='https://climate-questde/artikel/"
@@ -442,178 +450,184 @@ msgstr ""
 "The specified date is too far in the past. For more information, see <a "
 "href='https://climate-quest.de/artikel/artikel_detail/18'>this article</a>"
 
-#: core/all_messages.py:156
+#: core/all_messages.py:158
 msgid ""
 "Diese oder eine verwandte Aktion wurde im gleichen Zeitraum schon einmal "
 "eingetragen"
 msgstr "This or a related action has already been entered in the same period"
 
-#: core/all_messages.py:158
+#: core/all_messages.py:160
 msgid "Aktion wird jetzt getrackt"
 msgstr "Action is now being tracked"
 
-#: core/all_messages.py:159
+#: core/all_messages.py:161
+msgid ""
+"Aktion kann nicht getrackt werden, da eine verwandte Aktion bereits getrackt "
+"wird."
+msgstr "Action can´t be tracked because a related action is already tracked."
+
+#: core/all_messages.py:162
 msgid "Aktion wird nicht mehr getrackt"
 msgstr "Action is no longer being tracked"
 
-#: core/all_messages.py:165
+#: core/all_messages.py:168
 msgid "Das Datum muss mindestens einen Tag in der Zukunft liegen"
 msgstr "The date must be at least one day in the future"
 
-#: core/all_messages.py:166
+#: core/all_messages.py:169
 msgid "Event erfolgreich erstellt"
 msgstr "Event successfully created"
 
-#: core/all_messages.py:167
+#: core/all_messages.py:170
 msgid "Event erfolgreich bearbeitet"
 msgstr "Event successfully edited"
 
-#: core/all_messages.py:168
+#: core/all_messages.py:171
 msgid "Event erfolgreich gelöscht"
 msgstr "Event successfully deleted"
 
-#: core/all_messages.py:169
+#: core/all_messages.py:172
 msgid "Event existiert nicht"
 msgstr "Event does not exist"
 
-#: core/all_messages.py:170
+#: core/all_messages.py:173
 msgid "Erfolgreich aus Event ausgetreten"
 msgstr "Successfully left the event"
 
-#: core/all_messages.py:171
+#: core/all_messages.py:174
 msgid "Dem Event erfolgreich beigetreten"
 msgstr "Successfully joined the event"
 
-#: core/all_messages.py:172
+#: core/all_messages.py:175
 msgid ""
 "Du bist der Creator dieses Events und kannst daher nicht noch Teilnehmer "
 "werden"
 msgstr ""
 "You are the creator of this event and therefore cannot become a participant"
 
-#: core/all_messages.py:173
+#: core/all_messages.py:176
 msgid "Du hast keine Berechtigungen, dieses Event zu bearbeiten"
 msgstr "You do not have permissions to edit this event"
 
-#: core/all_messages.py:174
+#: core/all_messages.py:177
 msgid "Frage erfolgreich gestellt"
 msgstr "Question successfully asked"
 
-#: core/all_messages.py:175
+#: core/all_messages.py:178
 msgid "Frage erfolgreich beantwortet"
 msgstr "Question successfully answered"
 
-#: core/all_messages.py:176
+#: core/all_messages.py:179
 msgid ""
 "Wenn du nach der Teilnehmeranzahl filterst, muss das Suchwort eine Zahl sein"
 msgstr ""
 "If you filter by number of participants, the search term must be a number"
 
-#: core/all_messages.py:182
+#: core/all_messages.py:185
 msgid "Artikel erfolgreich erstellt"
 msgstr "Article successfully created"
 
-#: core/all_messages.py:183
+#: core/all_messages.py:186
 msgid "Artikel erfolgreich bearbeitet"
 msgstr "Article successfully edited"
 
-#: core/all_messages.py:184
+#: core/all_messages.py:187
 msgid "Artikel erfolgreich gelöscht"
 msgstr "Article successfully deleted"
 
-#: core/all_messages.py:185
+#: core/all_messages.py:188
 msgid "Artikel existiert nicht"
 msgstr "Article does not exist"
 
-#: core/all_messages.py:186
+#: core/all_messages.py:189
 msgid "Du hast keine Berechtigungen, diesen Artikel zu bearbeiten"
 msgstr "You do not have permissions to edit this article"
 
-#: core/all_messages.py:187
+#: core/all_messages.py:190
 msgid "Kommentar erfolgreich gestellt"
 msgstr "Comment successfully posted"
 
-#: core/all_messages.py:188
+#: core/all_messages.py:191
 msgid "Kommentar erfolgreich beantwortet"
 msgstr "Comment successfully answered"
 
-#: core/all_messages.py:189
+#: core/all_messages.py:192
 msgid "Du hast den Artikel erfolgreich gelikt"
 msgstr "You have successfully liked the article"
 
-#: core/all_messages.py:190
+#: core/all_messages.py:193
 msgid "Du hast den Like zum Artikel erfolgreich entfernt"
 msgstr "You have successfully removed the like from the article"
 
-#: core/all_messages.py:191
+#: core/all_messages.py:194
 msgid "Wenn du nach Likes filterst, muss das Suchwort eine Zahl sein"
 msgstr "If you filter by likes, the search term must be a number"
 
-#: core/all_messages.py:192
+#: core/all_messages.py:195
 msgid "Artikel erfolgreich verifiziert"
 msgstr "Article successfully verified"
 
-#: core/all_messages.py:193
+#: core/all_messages.py:196
 msgid "Verifizierung erfolgreich gelöscht"
 msgstr "Verification successfully deleted"
 
-#: core/all_messages.py:194
+#: core/all_messages.py:197
 msgid "Erfolgreich Artikel gesperrt"
 msgstr "Article successfully blocked"
 
-#: core/all_messages.py:195
+#: core/all_messages.py:198
 msgid "Sperrung erfolgreich gelöscht"
 msgstr "Block successfully deleted"
 
-#: core/all_messages.py:196
+#: core/all_messages.py:199
 msgid "Du darfst deinen eigenen Artikel nicht liken"
 msgstr "You aren´t allowed to like your own article"
 
-#: core/all_messages.py:202
+#: core/all_messages.py:205
 msgid "Post nicht gefunden"
 msgstr "Post not found"
 
-#: core/all_messages.py:207
+#: core/all_messages.py:210
 msgid "User nicht gefunden"
 msgstr "User not found"
 
-#: core/all_messages.py:208
+#: core/all_messages.py:211
 msgid "Nachricht erfolgreich gesendet"
 msgstr "Message successfully sent"
 
-#: core/all_messages.py:209
+#: core/all_messages.py:212
 msgid "Der User wurde erfolgreich gemeldet"
 msgstr "The user was successfully reported"
 
-#: core/all_messages.py:210
+#: core/all_messages.py:213
 msgid "Der User hat die Ansicht seiner Daten geblockt"
 msgstr "The user has blocked the view of their data"
 
-#: core/all_messages.py:215
+#: core/all_messages.py:218
 msgid "User wurde nicht gefunden"
 msgstr "User was not found"
 
-#: core/all_messages.py:218
+#: core/all_messages.py:221
 msgid "Event wurde nicht gefunden"
 msgstr "Event was not found"
 
-#: core/all_messages.py:219
+#: core/all_messages.py:222
 msgid "Ungültiger Empfänger-Typ der Nachricht"
 msgstr "Invalid recipient type of the message"
 
-#: core/all_messages.py:220
+#: core/all_messages.py:223
 msgid "Benachrichtigung erfolgreich an alle Empfänger gesendet"
 msgstr "Notification successfully sent to all recipients"
 
-#: core/all_messages.py:221
+#: core/all_messages.py:224
 msgid "User erfolgreich gelöscht"
 msgstr "User successfully deleted"
 
-#: core/all_messages.py:222
+#: core/all_messages.py:225
 msgid "Die Passwörter der Family worldwide_ranking sind aktuell"
 msgstr "The passwords of the family worldwide_ranking are current"
 
-#: core/all_messages.py:223
+#: core/all_messages.py:226
 msgid ""
 "Die Passwörter der Family worldwide-Ranking waren ungültig und entsprechend "
 "der gespeicherten Passwörter geändert"
@@ -621,73 +635,73 @@ msgstr ""
 "The passwords of the family worldwide-Ranking were invalid and changed "
 "according to the stored passwords"
 
-#: core/all_messages.py:224
+#: core/all_messages.py:227
 msgid ""
 "Jedem User wurde ein UserErweitert hinzugefügt, sofern noch nicht vorhanden"
 msgstr "A UserErweitert was added to each user, if not already present"
 
-#: core/all_messages.py:229
+#: core/all_messages.py:232
 msgid "Petition hinzugefügt"
 msgstr "Petition added"
 
-#: core/all_messages.py:230
+#: core/all_messages.py:233
 msgid "Petition nicht gefunden"
 msgstr "Petition not found"
 
-#: core/all_messages.py:231
+#: core/all_messages.py:234
 msgid "Petition erfolgreich unterschrieben"
 msgstr "Petition successfully signed"
 
-#: core/all_messages.py:232
+#: core/all_messages.py:235
 msgid "Unterschrift erfolgreich entfernt"
 msgstr "Signature successfully removed"
 
-#: core/all_messages.py:233
+#: core/all_messages.py:236
 msgid "Wenn du nach Unterschriften filterst, muss das Suchwort eine Zahl sein"
 msgstr "If you filter by signatures, the search term must be a number"
 
-#: core/all_messages.py:234
+#: core/all_messages.py:237
 msgid "Das Ziel muss eine Zahl sein"
 msgstr "The goal must be a number"
 
-#: core/all_messages.py:235
+#: core/all_messages.py:238
 msgid "Das Ziel muss mindestens 10 sein"
 msgstr "The goal must be at least 10"
 
-#: core/all_messages.py:236
+#: core/all_messages.py:239
 msgid "Ziel erfolgreich aktualisiert"
 msgstr "Goal successfully updated"
 
-#: core/all_messages.py:237
+#: core/all_messages.py:240
 msgid "Du hast die Petition zum Erfolg erklärt!"
 msgstr "You have declared the petition a success!"
 
-#: core/all_messages.py:238
+#: core/all_messages.py:241
 msgid "Du hast den Erfolg der Petition gelöscht"
 msgstr "You have deleted the success of the petition"
 
-#: core/all_messages.py:242
+#: core/all_messages.py:245
 #, python-brace-format
 msgid "Maximal {max_size_mb} MB erlaubt"
 msgstr "Maximum {max_size_mb} MB allowed"
 
-#: core/all_messages.py:243
+#: core/all_messages.py:246
 msgid "Ungültige Dateiendung"
 msgstr "Invalid file extension"
 
-#: core/all_messages.py:244
+#: core/all_messages.py:247
 msgid "Ungültiges Bild"
 msgstr "Invalid image"
 
-#: core/all_messages.py:245
+#: core/all_messages.py:248
 msgid "Ungültiger Dateityp"
 msgstr "Invalid file type"
 
-#: core/all_messages.py:246
+#: core/all_messages.py:249
 msgid "Ungültiger MIME-Typ"
 msgstr "Invalid MIME type"
 
-#: core/all_messages.py:247
+#: core/all_messages.py:250
 msgid "Ungültiges Seitenverhältnis"
 msgstr "Invalid aspect ratio"
 

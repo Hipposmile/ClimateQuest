@@ -16,7 +16,6 @@
             <p class="{{ message.level_tag }}-message">{{ message }}</p>
         {% endfor %}
         <script nonce="{{ request.csp_script_nonce }}">
-            // Verzögere das Scrolling, um sicherzustellen, dass es nach dem automatischen Browser-Scrolling passiert
             setTimeout(() => {
                 if (window.location.hash) {
                     history.replaceState(null, null, window.location.pathname + window.location.search);
@@ -312,6 +311,22 @@
         <input id="password_weekly_goal" type="password" name="password_weekly_goal"
                placeholder="{% trans 'Passwort' %}" required>
         <button type="submit" name="change_lang">{% trans "Speichern" %}</button>
+    </form>
+
+    <hr>
+    <h3 id="tour_banner_h3">{% trans "Tour-Banner anzeigen / ausblenden" %}</h3>
+    <form method="post">
+        {% csrf_token %}
+        <label for="password_tour_banner">{% trans "Passwort:" %}</label>
+        <input type="password" name="password_tour_banner" id="password_tour_banner"
+               placeholder="{% trans 'Passwort' %}"
+               required>
+        <label class="custom-checkbox">
+            <input type="checkbox" name="show_tour_banner" id="tour_banner_checkbox" {% if request.user.usererweitert.show_tour_banner %}checked{% endif %}>
+            <span class="checkmark"></span>
+            <span class="label-text">{% trans "Tour-Banner anzeigen" %}</span>
+        </label>
+        <button type="submit" name="change_tour_banner">{% trans "Speichern" %}</button>
     </form>
 
     <hr>

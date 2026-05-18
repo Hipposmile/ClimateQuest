@@ -141,7 +141,8 @@ def register_view(request):
             recipient_list=email,
             mailinglist_needless=True,
             user=user,
-            fehlermeldung=_('Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge deine E-Mail-Adresse später in den Einstellungen hinzu.')
+            fehlermeldung=_(
+                'Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge deine E-Mail-Adresse später in den Einstellungen hinzu.')
         )
 
         return redirect('dashboard')
@@ -181,7 +182,9 @@ def resend_verification_email(request):
     send_mail_function(
         request=request,
         subject='ClimateQuest - dein Aktivierungslink ist da!',
-        message=_('Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: %(activation_link)s') % {'activation_link': activation_link},
+        message=_(
+            'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: %(activation_link)s') % {
+                    'activation_link': activation_link},
         recipient_list=request.user.email,
         mailinglist_needless=True,
         user=request.user,
@@ -254,7 +257,9 @@ def settings_view(request):
                 mail_output = send_mail_function(
                     request=request,
                     subject='ClimateQuest - dein Aktivierungslink ist da!',
-                    message=_('Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: %(activation_link)s') % {'activation_link': activation_link},
+                    message=_(
+                        'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: %(activation_link)s') % {
+                                'activation_link': activation_link},
                     recipient_list=email,
                     mailinglist_needless=True,
                     user=request.user,
@@ -364,6 +369,21 @@ def settings_view(request):
                     messages.success(request, "Language successfully changed")
                 return redirect('settings_view')
 
+        elif 'change_tour_banner' in request.POST:
+            user_extended = request.user.usererweitert
+            password = request.POST.get('password_tour_banner')
+            if not request.user.check_password(password):
+                messages.error(request, all_messages["invalid_password"])
+                return redirect('settings_view')
+
+            show_tour_banner = request.POST.get('show_tour_banner') == 'on'
+            user_extended.show_tour_banner = show_tour_banner
+            user_extended.save()
+            messages.success(request, all_messages["activated_tour_banner"] if show_tour_banner else all_messages[
+                "deactivated_tour_banner"])
+            return redirect('settings_view')
+
+
         elif 'delete_account' in request.POST:
             password = request.POST.get('password_delete_account')
             if not request.user.check_password(password):
@@ -413,7 +433,9 @@ def reset_password(request):
         output = send_mail_function(
             request=request,
             subject='ClimateQuest - Passwort Reset',
-            message=_('Wir haben dir ein neues, zufällig generiertes Passwort erstellt: <b>%(new_password)s</b> \nMelde dich damit und mit deinem Usernamen <b>%(username)s</b> <a href="https://climate-quest.de/personals/login/">hier</a> an und ändere aus Sicherheitsgründen möglichst bald unter "Profil bearbeiten" dein Passwort.') % {'new_password': new_password, 'username': user.username},
+            message=_(
+                'Wir haben dir ein neues, zufällig generiertes Passwort erstellt: <b>%(new_password)s</b> \nMelde dich damit und mit deinem Usernamen <b>%(username)s</b> <a href="https://climate-quest.de/personals/login/">hier</a> an und ändere aus Sicherheitsgründen möglichst bald unter "Profil bearbeiten" dein Passwort.') % {
+                        'new_password': new_password, 'username': user.username},
             recipient_list=user.email,
             user=user,
         )

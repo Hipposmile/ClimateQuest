@@ -44,6 +44,12 @@
     <link rel="icon" href="{% static 'icons/favicon.ico' %}" type="image/x-icon">
     <script src="{% static 'js/cookie-consent.js' %}" defer></script>
 
+    {% if request.user.usererweitert.show_tour_banner %}
+        <link rel="stylesheet" href="{% static 'libraries/tourguidejs/tour.min.css' %}">
+        <script src="{% static 'libraries/tourguidejs/tour.js' %}" crossorigin="anonymous"
+                referrerpolicy="no-referrer"></script>
+    {% endif %}
+
     <link rel="manifest" href="{% static 'pwa/manifest.json' %}">
 
     <script type="application/ld+json">
@@ -1471,5 +1477,33 @@
         });
     });
 </script>
+
+{% if request.user.usererweitert.show_tour_banner %}
+    <script>
+        const tg = new tourguide.TourGuideClient({
+            nextLabel: "{% trans 'Nächste' %}",
+            prevLabel: "{% trans 'Zurück' %}",
+            finishLabel: "{% trans 'Beenden' %}"
+        });
+
+
+        tg.addSteps([
+            {
+                title: "{% trans 'Tour abgeschlossen' %}",
+                content: `
+                        <div>
+                            <p>{% trans 'Gehe auf eine einzelne Seite, zum Beispiel <i>Aktion hinzufügen</i>, um noch eine extra Tour zu diesem Schritt zu erhalten' %}</p>
+                            <small>Wenn du nicht willst, dass weiterhin <i>Tour starten</i> auf vielen Seiten zu finden ist, gehe in den Einstellungen und deaktiviere <i>Tour-Banner anzeigen</i>.</small>
+                        </div>
+                    `,
+                order: 5
+            }
+        ]);
+
+        document.getElementById('start-tour').addEventListener('click', () => {
+            tg.start()
+        });
+    </script>
+{% endif %}
 </body>
 </html>
