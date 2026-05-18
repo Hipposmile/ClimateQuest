@@ -24,8 +24,8 @@ def hall_of_fame_detail(request):
 
 def add_to_hall_of_fame():
     week_start = date.today() - timedelta(days=date.today().weekday())
-    description_de = f"Hat zwischen {week_start.strftime('%d.%m.%Y')} und {date.today().strftime('%d.%m.%Y')} 150 oder mehr Klimapunkte gesammelt."
-    description_en = f"Has collected 150 or more climate points between {week_start.strftime('%m/%d/%Y')} and {date.today().strftime('%m/%d/%Y')}."
+    description_de = f"Hat zwischen {week_start.strftime('%d.%m.%Y')} und {date.today().strftime('%d.%m.%Y')} 50 oder mehr Klimapunkte gesammelt."
+    description_en = f"Has collected 50 or more climate points between {week_start.strftime('%m/%d/%Y')} and {date.today().strftime('%m/%d/%Y')}."
 
     qualifying_users = (
         User.objects
