@@ -65,7 +65,14 @@ INSTALLED_APPS = [
     'forum',
     'petitions',
     'pages',
-    'hall_of_fame'
+    'hall_of_fame',
+
+    # AllAuth
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 """MIDDLEWARE = [
@@ -96,7 +103,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django_browser_reload.middleware.BrowserReloadMiddleware',
     'core.middleware.GenerateCSPNonceMiddleware',
-    'core.middleware.AddGloablVariablesMiddleware'
+    'core.middleware.AddGloablVariablesMiddleware',
+
+    # AllAuth
+    'allauth.account.middleware.AccountMiddleware'
 ]
 
 ROOT_URLCONF = 'ClimateQuest.urls'
@@ -174,5 +184,27 @@ STORAGES = {
     },
     'staticfiles': {
         'BACKEND': 'servestatic.storage.CompressedManifestStaticFilesStorage'
+    }
+}
+
+# AllAuth
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
+
+SOCIALACCOUNT_ADAPTER = 'personals.adapters.MySocialAccountAdapter'
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
+SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = False
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+        'FETCH_USERINFO': True,
     }
 }
