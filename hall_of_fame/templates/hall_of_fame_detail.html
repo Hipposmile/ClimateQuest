@@ -226,7 +226,7 @@
                             <li class="hof-item">
                                 <span class="hof-item-text">{% if request.LANGUAGE_CODE == "de" %}
                                     {{ entry.description_de }}{% else %}{{ entry.description_en }}{% endif %}</span>
-                                <span class="hof-item-meta">{{ entry.created_at }}</span>
+                                <span class="hof-item-meta">{{ entry.created_at|date:"SHORT_DATE_FORMAT" }}</span>
                             </li>
                         {% empty %}
                             <li><span class="hof-empty">{% trans "Noch keine Einträge vorhanden." %}</span></li>
