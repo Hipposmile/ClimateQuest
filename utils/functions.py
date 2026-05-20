@@ -350,7 +350,8 @@ def create_notification(request, notification_de, notification_en, user=None, ur
         user=user,
         url=url
     )
-    res = send_push(benachrichtigung=notification_de, user=user, url=url)
+    res = send_push(benachrichtigung=notification_de if request.user.usererweitert.lang == "de" else notification_en,
+                    user=user, url=url)
     if res == 500:
         create_internal_error(request, "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.",
                               "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.")
@@ -395,6 +396,7 @@ def get_communities_of_user(user):
     communities = Community.objects.filter(members__id__in=user_families).distinct().order_by('name')
 
     return communities
+
 
 def get_communities_of_family(family):
     family_communities = Community.objects.filter(members=family).distinct().order_by('name')
