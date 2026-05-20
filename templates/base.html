@@ -1479,7 +1479,7 @@
 </script>
 
 {% if request.user.usererweitert.show_tour_banner %}
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         const tg = new tourguide.TourGuideClient({
             nextLabel: "{% trans 'Nächste' %}",
             prevLabel: "{% trans 'Zurück' %}",
@@ -1504,6 +1504,83 @@
             tg.start()
         });
     </script>
+{% endif %}
+
+{% if messages %}
+    {% for message in messages %}
+        {% if message.level_tag == "info" %}
+            <style nonce="{{ request.csp_style_nonce }}">
+                #rating-modal {
+                    display: none;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.2);
+                    backdrop-filter: blur(3px);
+                    z-index: 9999;
+                    padding: 1.5rem;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                #rating-modal.visible {
+                    display: flex;
+                }
+
+                #rating-modal-content {
+                    background: var(--color-white);
+                    width: 100%;
+                    max-width: 500px;
+                    padding: 2rem;
+                    border-radius: 16px;
+                    position: relative;
+                    max-height: 85vh;
+                    overflow-y: auto;
+                    z-index: 10000;
+                    box-shadow: var(--shadow-md);
+                    animation: slideUp 0.3s ease;
+                    border: 1px solid rgba(0, 0, 0, 0.04);
+                }
+            </style>
+            <div id="rating-modal">
+                <div id="rating-modal-content">
+                    <h2>Gefällt dir ClimateQuest?</h2>
+                    <a href="https://www.trustpilot.com/review/climate-quest.de" class="redirect-link">
+                        <span>{% trans 'Bewerte uns auf Trustpilot' %}</span>
+                        <span class="redirect-link-icon">→</span>
+                    </a>
+                    <br><br>
+                    <p>Wir freuen uns sehr über alle Bewertungen!!!</p></div>
+            </div>
+            <script nonce="{{ request.csp_script_nonce }}">
+                if (isStandalone) {
+                    requestAppReview();
+                } else {
+                    let modal = document.getElementById('rating-modal');
+                    modal.classList.add('visible');
+                    modal.onclick = (e) => {
+                        if (e.target === modal) {
+                            modal.classList.remove("visible");
+                        }
+                    };
+                }
+
+                function requestAppReview() {
+                    if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers["request-review"]) {
+                        try {
+                            window.webkit.messageHandlers["request-review"].postMessage({reason: "ride_tracked_success"});
+                        } catch (e) {
+                            console.warn("request-review postMessage failed:", e);
+                        }
+                    } else {
+                        console.log("iOS message handler 'request-review' nicht verfügbar.");
+                    }
+                }
+            </script>
+        {% endif %}
+    {% endfor %}
 {% endif %}
 </body>
 </html>

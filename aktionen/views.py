@@ -189,6 +189,7 @@ def add(request):
             else:
                 messages.success(request,
                                  f'You created a action (type: {action.name_en}) and so reached the level {new_level["current_level"].description_en}. <span class="emoji">&#x1F973;</span>')
+            messages.info(request, "Request Review")
         if old_streak < new_streak:
             create_notification(request,
                                 f'Du hast eine neue Aktion vom Typen {action.name} erstellt und so deine Streak verlängert. <span class="emoji">&#x1F973;</span>',

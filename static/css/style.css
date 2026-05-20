@@ -219,6 +219,10 @@ main {
     margin-bottom: 1rem;
 }
 
+.info-message {
+    display: none;
+}
+
 .me-btn {
     position: fixed;
     bottom: max(65px, calc(65px + var(--safe-area-inset-bottom)));
