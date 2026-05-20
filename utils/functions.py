@@ -44,7 +44,7 @@ def send_mail_function(**kwargs):
     message = kwargs.get('message')
     fail_silently = kwargs.get('fail_silently', False)
     mailinglist_needless = kwargs.get('mailinglist_needless', False)
-    url = kwargs.get('url', None)
+    url = kwargs.get('url', '/dashboard/')
 
     if request is None or subject is None or message is None or fail_silently is None:
         create_internal_error(request, 'Beim E-Mail Versand wurden nicht alle notwendigen Elemente übergeben',

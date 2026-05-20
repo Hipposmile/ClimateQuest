@@ -437,6 +437,9 @@ def history_me(request):
 
 @login_required
 def report_user(request, reported_user, reporting_user, reason):
+    reported_user_model = ReportedUser.objects.create(reported_user=reported_user, reporting_user=reporting_user,
+                                                      reason=reason)
+
     admin = User.objects.get(is_superuser=True, is_staff=True, username='admin')
     send_mail_function(
         request=request,
@@ -452,5 +455,5 @@ def report_user(request, reported_user, reporting_user, reason):
             <p>{reason}</p>
         """,
         user=admin,
+        url=f'/ClimateQuestAdmin/home/reporteduser/{reported_user_model.id}/change/',
     )
-    ReportedUser.objects.create(reported_user=reported_user, reporting_user=reporting_user, reason=reason)
