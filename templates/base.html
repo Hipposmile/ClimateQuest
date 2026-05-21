@@ -1500,9 +1500,12 @@
             }
         ]);
 
-        document.getElementById('start-tour').addEventListener('click', () => {
-            tg.start()
-        });
+        const startTour = document.getElementById('start-tour');
+        if (startTour != null) {
+            startTour.addEventListener('click', () => {
+                tg.start()
+            });
+        }
     </script>
 {% endif %}
 
