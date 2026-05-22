@@ -104,6 +104,7 @@ def register_view(request):
             UserErweitert.objects.filter(user=user).update(mail_verified=True)
             user = authenticate(username=username, password=password)
             if user:
+                user.backend = "django.contrib.auth.backends.ModelBackend"
                 login(request, user)
                 messages.success(request, all_messages['successfully_signed_up'])
                 return redirect('dashboard')
@@ -124,6 +125,7 @@ def register_view(request):
         UserErweitert.objects.filter(user=user).update(mail_verified=False)
         user_authenticated = authenticate(username=username, password=password)
         if user_authenticated:
+            user.backend = "django.contrib.auth.backends.ModelBackend"
             login(request, user)
             messages.success(request, all_messages['successfully_signed_up_email_not_verified'])
         else:
