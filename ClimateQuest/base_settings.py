@@ -209,12 +209,11 @@ SOCIALACCOUNT_PROVIDERS = {
         'FETCH_USERINFO': True,
     },
     'apple': {
-        'SCOPE': ['name', 'email'],
         'APP': {
-            'client_id': 'de.climate-quest.login.service',  # Service ID
-            'secret': os.environ.get('APPLE_SECRET', ''),  # Berechneter Secret
-            'key_id': os.environ.get('APPLE_KEY_ID', ''),  # Key ID
-            'team_id': os.environ.get('APPLE_TEAM_ID', ''),  # Team ID
+            'client_id': 'de.climate-quest.login.service',
+            'certificate_key': os.environ.get('APPLE_CERTIFICATE_KEY', ''),
+            'key': os.environ.get('APPLE_CERTIFICATE_KEY_ID', ''),
+            'team_id': os.environ.get('APPLE_TEAM_ID', ''),
         }
     }
 }
