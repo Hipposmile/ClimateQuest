@@ -29,11 +29,13 @@
              src="{% static 'icons/sign-in-with-google.png' %}"
              alt="Sign in with Google">
     </a>
+    {% comment %}
     <a href="{% provider_login_url 'apple' %}">
         <img class="sign-in-with-google"
              src="{% static 'icons/sign-in-with-apple.png' %}"
              alt="Sign in with Apple">
     </a>
+    {% endcomment %}
     <form method="post">
         {% csrf_token %}
         <label for="username">{% trans "Benutzername:" %}</label>
