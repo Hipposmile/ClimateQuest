@@ -79,6 +79,7 @@ LOGGING = {
         "allauth": {
             "handlers": ["file", "mail_admins"],
             "level": "DEBUG",
+            "propagate": False,
         },
     },
 }
