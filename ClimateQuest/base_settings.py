@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.apple',
 ]
 
 """MIDDLEWARE = [
@@ -206,5 +207,20 @@ SOCIALACCOUNT_PROVIDERS = {
         'SCOPE': ['profile', 'email'],
         'AUTH_PARAMS': {'access_type': 'online'},
         'FETCH_USERINFO': True,
+    },
+    'apple': {
+        'APP': {
+            'client_id': 'de.climate-quest.login.service',
+            'secret': '''-----BEGIN PRIVATE KEY-----
+MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgRLO7cSxiWSy4vb1i
+KcQL3B1iJPqgMaOhJ/j6rkbbcBCgCgYIKoZIzj0DAQehRANCAASM8XqublHMwI5x
+IwEzxli3RFs4WqDU80ihdjLIhDTM7S3sgmh37gfU42o0xI/r5FzhQnCs5o0tROQS
+qkyokYD2
+-----END PRIVATE KEY-----''',
+            'key': 'F72B5KZL53',
+            'settings': {
+                'team_id': 'B7BTC4NDP8',
+            }
+        }
     }
 }

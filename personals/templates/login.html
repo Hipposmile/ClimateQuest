@@ -43,6 +43,7 @@
              src="{% static 'icons/sign-in-with-google.png' %}"
              alt="Sign in with Google">
     </a>
+    <a href="{% url 'apple_login' %}">Mit Apple anmelden</a>
     <p>{% trans "Du hast noch kein Konto?" %} <a href="{% url 'register_view' %}">{% trans "Jetzt registrieren" %}</a>
     </p>
     <p>{% trans "Benutzername / Passwort vergessen?" %} <a
