@@ -11,3 +11,8 @@ class HallOfFameEntry(models.Model):
 
     def __str__(self):
         return f"{self.user.username} --> {self.description_de}"
+
+class HallOfFameData(models.Model):
+    weeks_count = models.PositiveIntegerField(default=0)
+    to_do_de = models.CharField(max_length=500)
+    to_do_en = models.CharField(max_length=500)
