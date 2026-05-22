@@ -211,15 +211,10 @@ SOCIALACCOUNT_PROVIDERS = {
     'apple': {
         'APP': {
             'client_id': 'de.climate-quest.login.service',
-            'secret': '''-----BEGIN PRIVATE KEY-----
-MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgRLO7cSxiWSy4vb1i
-KcQL3B1iJPqgMaOhJ/j6rkbbcBCgCgYIKoZIzj0DAQehRANCAASM8XqublHMwI5x
-IwEzxli3RFs4WqDU80ihdjLIhDTM7S3sgmh37gfU42o0xI/r5FzhQnCs5o0tROQS
-qkyokYD2
------END PRIVATE KEY-----''',
-            'key': 'F72B5KZL53',
+            'secret': os.environ.get('APPLE_CERTIFICATE_KEY', ''),
+            'key': os.environ.get('APPLE_CERTIFICATE_KEY_ID', ''),
             'settings': {
-                'team_id': 'B7BTC4NDP8',
+                'team_id': os.environ.get('APPLE_TEAM_ID', ''),
             }
         }
     }
