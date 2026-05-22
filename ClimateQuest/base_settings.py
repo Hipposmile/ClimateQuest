@@ -211,11 +211,9 @@ SOCIALACCOUNT_PROVIDERS = {
     'apple': {
         'APP': {
             'client_id': 'de.climate-quest.login.service',
-            'secret': os.environ.get('APPLE_CERTIFICATE_KEY', ''),
-            'key': os.environ.get('APPLE_CERTIFICATE_KEY_ID', ''),
-            'settings': {
-                'team_id': os.environ.get('APPLE_TEAM_ID', ''),
-            }
+            'certificate_key': os.environ.get('APPLE_CERTIFICATE_KEY', ''),
+            'key_id': os.environ.get('APPLE_CERTIFICATE_KEY_ID', ''),
+            'team_id': os.environ.get('APPLE_TEAM_ID', ''),
         }
     }
 }
