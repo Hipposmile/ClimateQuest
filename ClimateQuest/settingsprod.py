@@ -43,8 +43,8 @@ SESSION_COOKIE_SECURE = True
 
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = "None"
-CSRF_COOKIE_SAMESITE = "None"
+SESSION_COOKIE_SAMESITE = "Strict"
+CSRF_COOKIE_SAMESITE = "Strict"
 
 ADMINS = [("Paul", "paul@fraqment.de")]
 
@@ -56,10 +56,6 @@ LOGGING = {
             'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
             'datefmt': '%Y-%m-%d %H:%M:%S',
         },
-        'verbose': {
-            'format': '[%(asctime)s] %(levelname)s [%(name)s:%(lineno)d] %(message)s',
-            'datefmt': '%Y-%m-%d %H:%M:%S',
-        },
     },
     'handlers': {
         'file': {
@@ -67,12 +63,6 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': os.path.join(BASE_DIR, 'logs', 'django_errors.log'),
             'formatter': 'timestamped',
-        },
-        'allauth_file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs', 'allauth.log'),
-            'formatter': 'verbose',
         },
         'mail_admins': {
             'level': 'ERROR',
@@ -85,17 +75,7 @@ LOGGING = {
             'handlers': ['file', 'mail_admins'],
             'level': 'ERROR',
             'propagate': True,
-        },
-        'allauth': {
-            'handlers': ['allauth_file'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-        'django.request': {
-            'handlers': ['file'],
-            'level': 'ERROR',
-            'propagate': False,
-        },
+        }
     },
 }
 
