@@ -24,20 +24,6 @@
             <p class="{{ message.level_tag }}-message">{{ message }}</p>
         {% endfor %}
     {% endif %}
-    {% if delete_success %}
-        <div class="success-message">{{ delete_success }}</div>
-    {% endif %}
-    {% if error %}
-        <div class="error-message">{{ error }}</div>
-    {% endif %}
-    <form method="post">
-        {% csrf_token %}
-        <label for="username">{% trans "Benutzername:" %}</label>
-        <input type="text" name="username" id="username" placeholder="{% trans 'Benutzername' %}" required>
-        <label for="password">{% trans "Passwort:" %}</label>
-        <input type="password" name="password" id="password" placeholder="{% trans 'Passwort' %}" required>
-        <button type="submit">{% trans "Login" %}</button>
-    </form>
     <a href="{% provider_login_url 'google' %}">
         <img class="sign-in-with-google"
              src="{% static 'icons/sign-in-with-google.png' %}"
@@ -48,6 +34,14 @@
              src="{% static 'icons/sign-in-with-apple.png' %}"
              alt="Sign in with Apple">
     </a>
+    <form method="post">
+        {% csrf_token %}
+        <label for="username">{% trans "Benutzername:" %}</label>
+        <input type="text" name="username" id="username" placeholder="{% trans 'Benutzername' %}" required>
+        <label for="password">{% trans "Passwort:" %}</label>
+        <input type="password" name="password" id="password" placeholder="{% trans 'Passwort' %}" required>
+        <button type="submit">{% trans "Login" %}</button>
+    </form>
     <p>{% trans "Du hast noch kein Konto?" %} <a href="{% url 'register_view' %}">{% trans "Jetzt registrieren" %}</a>
     </p>
     <p>{% trans "Benutzername / Passwort vergessen?" %} <a

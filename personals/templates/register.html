@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% load socialaccount %}
+{% load static %}
 
 {% block meta %}
     <meta name="description"
@@ -14,6 +16,11 @@
         .grecaptcha-badge {
             visibility: hidden;
         }
+
+        .sign-in-with-google {
+            margin: 20px;
+            max-width: 200px;
+        }
     </style>
     <h1>{% trans "Registrierung" %}</h1>
     {% if messages %}
@@ -21,11 +28,22 @@
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
+    <a href="{% provider_login_url 'google' %}">
+        <img class="sign-in-with-google"
+             src="{% static 'icons/sign-in-with-google.png' %}"
+             alt="Sign in with Google">
+    </a>
+    <a href="{% provider_login_url 'apple' %}">
+        <img class="sign-in-with-google"
+             src="{% static 'icons/sign-in-with-apple.png' %}"
+             alt="Sign in with Apple">
+    </a>
     <form method="post" id="register_form" class="dont-show-loading">
         {% csrf_token %}
         <div class="cookie-blocked" data-requires="recaptcha"
              data-content='<script src="https://www.google.com/recaptcha/api.js?render=6Ld_S6orAAAAANqPdHX27TNVkzL0WmlG_XQhTD2l"></script>'
-             data-text="{% trans 'Zur Registrierung musst du die reCAPTCHA-Cookies erlauben' %}" data-important="true"></div>
+             data-text="{% trans 'Zur Registrierung musst du die reCAPTCHA-Cookies erlauben' %}"
+             data-important="true"></div>
 
         <label for="username">{% trans "Benutzername:" %}</label>
         <small id="username-feedback"></small>
@@ -55,14 +73,20 @@
             <input type="checkbox" name="nutzungsbedingungen_accepted">
             <span class="checkmark"></span>
             {% url 'nutzungsbedingungen' as nutzungsbedingungen_url %}
-            <span class="label-text">{% blocktrans with url=nutzungsbedingungen_url %}Ich habe die <a href="{{ url }}">Nutzungsbedingungen</a> gelesen und akzeptiere diese. Sofern ich noch nicht volljährig bin, bestätige ich, dass die Zustimmung durch eine erziehungsberechtigte Person erfolgt ist.{% endblocktrans %}</span>
+            <span class="label-text">{% blocktrans with url=nutzungsbedingungen_url %}Ich habe die
+                <a href="{{ url }}">Nutzungsbedingungen</a> gelesen und akzeptiere diese. Sofern ich noch nicht
+                volljährig bin, bestätige ich, dass die Zustimmung durch eine erziehungsberechtigte Person erfolgt
+                ist.{% endblocktrans %}</span>
         </label>
 
         <label class="custom-checkbox">
             <input type="checkbox" name="datenschutz_accepted">
             <span class="checkmark"></span>
             {% url 'datenschutz' as datenschutz_url %}
-            <span class="label-text">{% blocktrans with url=datenschutz_url %}Ich habe die <a href="{{ url }}">Datenschutzerklärung</a> gelesen und bin mit der beschriebenen Verarbeitung meiner personenbezogenen Daten einverstanden. Sofern ich noch nicht volljährig bin, bestätige ich, dass diese Einwilligung durch eine erziehungsberechtigte Person erfolgt ist.{% endblocktrans %}</span>
+            <span class="label-text">{% blocktrans with url=datenschutz_url %}Ich habe die
+                <a href="{{ url }}">Datenschutzerklärung</a> gelesen und bin mit der beschriebenen Verarbeitung meiner
+                personenbezogenen Daten einverstanden. Sofern ich noch nicht volljährig bin, bestätige ich, dass diese
+                Einwilligung durch eine erziehungsberechtigte Person erfolgt ist.{% endblocktrans %}</span>
         </label>
 
         <input type="hidden" name="recaptchaToken" id="recaptchaToken">
