@@ -1,38 +1,55 @@
+import uuid
+
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
-from allauth.core.exceptions import ImmediateHttpResponse
-from django.contrib import messages
-from django.shortcuts import redirect
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+
 
 class MySocialAccountAdapter(DefaultSocialAccountAdapter):
+    def _extract_email(self, sociallogin):
+        email = sociallogin.account.extra_data.get("email")
+        return email.lower() if email else None
+
+    def _extract_name(self, sociallogin):
+        data = sociallogin.account.extra_data
+
+        # Apple: "name" kommt nur beim ersten Login
+        if "name" in data and isinstance(data["name"], dict):
+            full_name = f"{data['name'].get('firstName', '')} {data['name'].get('lastName', '')}".strip()
+            if full_name:
+                return full_name.lower()
+
+        # Google
+        given = data.get("given_name")
+        family = data.get("family_name")
+        if given or family:
+            return f"{given or ''} {family or ''}".strip().lower()
+
+        # GitHub & andere
+        if data.get("name"):
+            return data["name"].lower()
+
+        return None
+
+    def _generate_uuid_username(self):
+        return f"user-{uuid.uuid4().hex[:12]}"
+
+    def _build_username(self, sociallogin):
+        name = self._extract_name(sociallogin)
+        if name and not User.objects.filter(username=name).exists():
+            return name
+
+        email = self._extract_email(sociallogin)
+        if email and not User.objects.filter(email=email).exists():
+            return email
+
+        return self._generate_uuid_username()
 
     def pre_social_login(self, request, sociallogin):
-        # Bereits existierender Google-Account → normaler Login
-        if sociallogin.is_existing:
-            return
-
-        email = sociallogin.account.extra_data.get('email', '').lower()
-        User = get_user_model()
-
-        if User.objects.filter(username=email).exists():
-            messages.error(
-                request,
-                "Die E-Mail, die mit deinem Google-Account verknüpft ist, wurde bereits "
-                "als Username verwendet. Probiere eine andere Sign Up Methode."
-            )
-            raise ImmediateHttpResponse(redirect('account_login'))
+        return
 
     def populate_user(self, request, sociallogin, data):
         user = super().populate_user(request, sociallogin, data)
-        user.username = data.get('email', '').lower()
+        user.username = self._build_username(sociallogin)
+        email = self._extract_email(sociallogin)
+        user.email = email if not User.objects.filter(email=email).exists() else None
         return user
-
-    def sync_google_data(self, request, sociallogin):
-        user = sociallogin.user
-        extra = sociallogin.account.extra_data
-
-        user.email = extra.get('email', user.email)
-        user.username = extra.get('email', user.username).lower()
-        user.first_name = extra.get('given_name', user.first_name)
-        user.last_name = extra.get('family_name', user.last_name)
-        user.save()
