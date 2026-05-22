@@ -13,5 +13,9 @@
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
-    <p>{% trans ' Beim Versuch, sich über Ihr Drittanbieterkonto anzumelden, ist ein Fehler aufgetreten. ' %}</p>
+    <p>{% trans 'Beim Versuch, sich über Ihr Drittanbieterkonto anzumelden, ist ein Fehler aufgetreten.' %}</p>
+    <a href="{% url 'login_view' %}" class="redirect-link">
+        <span>{% trans 'Zurück zum Login' %}</span>
+        <span class="redirect-link-icon">→</span>
+    </a>
 {% endblock %}
