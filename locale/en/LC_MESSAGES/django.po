@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-18 17:07+0200\n"
+"POT-Creation-Date: 2026-05-22 16:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -307,3 +307,35 @@ msgid ""
 msgstr ""
 "Go to a specific page, for example <i>Aktion hinzufügen</i>, to make an "
 "extra tour for this step"
+
+#: templates/base.html:1554
+msgid "Bewerte uns auf Trustpilot"
+msgstr "Rate us on trustpilot"
+
+#: templates/socialaccount/authentication_error.html:4
+#: templates/socialaccount/authentication_error.html:7
+#: templates/socialaccount/authentication_error.html:10
+msgid "Fehler beim Anmelden über Drittanbieter"
+msgstr "Error logging in via third-party-provider"
+
+#: templates/socialaccount/authentication_error.html:16
+msgid ""
+" Beim Versuch, sich über Ihr Drittanbieterkonto anzumelden, ist ein Fehler "
+"aufgetreten. "
+msgstr "An error occurred while trying to log in using your third-party account."
+
+#: templates/socialaccount/login.html:6
+msgid "Logge dich über deinen Google Account ein."
+msgstr "Log in via your Google account"
+
+#: templates/socialaccount/login.html:9
+msgid "Login über Google"
+msgstr "Login via Google"
+
+#: templates/socialaccount/signup.html:6
+msgid "Registriere dich über deinen Google Account."
+msgstr "Register via your Google Account"
+
+#: templates/socialaccount/signup.html:9
+msgid "Registrieren über Google"
+msgstr "Register via Google"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-18 18:11+0200\n"
+"POT-Creation-Date: 2026-05-22 16:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,7 +69,7 @@ msgstr ""
 "1 planted tree (sponsor: %(sponsor)s) by Plant-for-the-Planet: <a "
 "href=\"%(url)s\">Certificate</a>"
 
-#: personals/templates/login.html:5
+#: personals/templates/login.html:8
 msgid ""
 "Logge dich in dein ClimateQuest Konto ein, um auf personalisierte Funktionen "
 "zuzugreifen und deine Fortschritte im Kampf gegen den Klimawandel zu "
@@ -78,33 +78,33 @@ msgstr ""
 "Log in to your ClimateQuest account to access personalized features and "
 "track your progress in the fight against climate change."
 
-#: personals/templates/login.html:9 personals/templates/login.html:12
-#: personals/templates/login.html:30
+#: personals/templates/login.html:12 personals/templates/login.html:21
+#: personals/templates/login.html:43
 msgid "Login"
 msgstr "Login"
 
-#: personals/templates/login.html:26
+#: personals/templates/login.html:39
 #: personals/templates/personal_settings.html:31
-#: personals/templates/register.html:30
+#: personals/templates/register.html:48
 msgid "Benutzername:"
 msgstr "Username:"
 
-#: personals/templates/login.html:27 personals/templates/register.html:32
+#: personals/templates/login.html:40 personals/templates/register.html:50
 msgid "Benutzername"
 msgstr "Username"
 
-#: personals/templates/login.html:28
+#: personals/templates/login.html:41
 #: personals/templates/personal_settings.html:184
 #: personals/templates/personal_settings.html:220
 #: personals/templates/personal_settings.html:249
 #: personals/templates/personal_settings.html:274
 #: personals/templates/personal_settings.html:320
 #: personals/templates/personal_settings.html:336
-#: personals/templates/register.html:34
+#: personals/templates/register.html:52
 msgid "Passwort:"
 msgstr "Password:"
 
-#: personals/templates/login.html:29
+#: personals/templates/login.html:42
 #: personals/templates/personal_settings.html:52
 #: personals/templates/personal_settings.html:185
 #: personals/templates/personal_settings.html:222
@@ -116,23 +116,23 @@ msgstr "Password:"
 #: personals/templates/personal_settings.html:312
 #: personals/templates/personal_settings.html:322
 #: personals/templates/personal_settings.html:338
-#: personals/templates/register.html:36
+#: personals/templates/register.html:54
 msgid "Passwort"
 msgstr "Password"
 
-#: personals/templates/login.html:32
+#: personals/templates/login.html:45
 msgid "Du hast noch kein Konto?"
 msgstr "You don´t have an account yet?"
 
-#: personals/templates/login.html:32
+#: personals/templates/login.html:45
 msgid "Jetzt registrieren"
 msgstr "Register now"
 
-#: personals/templates/login.html:33
+#: personals/templates/login.html:47
 msgid "Benutzername / Passwort vergessen?"
 msgstr "Forgot username / password?"
 
-#: personals/templates/login.html:33
+#: personals/templates/login.html:48
 msgid "Passwort resetten"
 msgstr "Reset password"
 
@@ -151,7 +151,7 @@ msgid "Aktuelle Daten:"
 msgstr "Actual data:"
 
 #: personals/templates/personal_settings.html:32
-#: personals/templates/register.html:38
+#: personals/templates/register.html:56
 #: personals/templates/reset_password.html:19
 msgid "E-Mail-Adresse:"
 msgstr "E-Mail address:"
@@ -223,17 +223,17 @@ msgid "Speichern"
 msgstr "Save"
 
 #: personals/templates/personal_settings.html:68
-#: personals/templates/register.html:151
+#: personals/templates/register.html:175
 msgid "Überprüfe, ob Benutzername bereits existiert..."
 msgstr "Checking if username already exists..."
 
 #: personals/templates/personal_settings.html:74
-#: personals/templates/register.html:157
+#: personals/templates/register.html:181
 msgid "Benutzername bereits vorhanden"
 msgstr "Username already taken"
 
 #: personals/templates/personal_settings.html:77
-#: personals/templates/register.html:160
+#: personals/templates/register.html:184
 msgid "Name noch nicht vorhanden"
 msgstr "Name not found yet"
 
@@ -250,7 +250,7 @@ msgid "Neues Passwort:"
 msgstr "New password:"
 
 #: personals/templates/personal_settings.html:95
-#: personals/templates/register.html:35
+#: personals/templates/register.html:53
 msgid "Passwort anzeigen"
 msgstr "Show password"
 
@@ -259,7 +259,7 @@ msgid "Neues Passwort"
 msgstr "New password"
 
 #: personals/templates/personal_settings.html:99
-#: personals/templates/register.html:44
+#: personals/templates/register.html:62
 msgid ""
 "Unsere Empfehlungen für ein sicheres Passwort, um deinen Account vor "
 "Hackingangriffen und Accountübernahmen zu schützen:"
@@ -268,27 +268,27 @@ msgstr ""
 "hacking attacks and account takeovers:"
 
 #: personals/templates/personal_settings.html:101
-#: personals/templates/register.html:46
+#: personals/templates/register.html:64
 msgid "Mindestens acht Zeichen"
 msgstr "At least eight characters"
 
 #: personals/templates/personal_settings.html:102
-#: personals/templates/register.html:47
+#: personals/templates/register.html:65
 msgid "Mindestens ein Großbuchstabe"
 msgstr "At least one uppercase letter"
 
 #: personals/templates/personal_settings.html:103
-#: personals/templates/register.html:48
+#: personals/templates/register.html:66
 msgid "Mindestens ein Kleinbuchstabe"
 msgstr "At least one lowercase letter"
 
 #: personals/templates/personal_settings.html:104
-#: personals/templates/register.html:49
+#: personals/templates/register.html:67
 msgid "Mindestens eine Zahl"
 msgstr "At least one number"
 
 #: personals/templates/personal_settings.html:105
-#: personals/templates/register.html:50
+#: personals/templates/register.html:68
 msgid "Mindestens ein Sonderzeichen"
 msgstr "At least one special character"
 
@@ -298,7 +298,7 @@ msgid "Ändern"
 msgstr "Change"
 
 #: personals/templates/personal_settings.html:140
-#: personals/templates/register.html:90
+#: personals/templates/register.html:114
 msgid "Das Passwort entspricht nicht den Empfehlungen. Trotzdem fortfahren?"
 msgstr ""
 "The password does not meet the recommendations. Do you still want to proceed?"
@@ -329,12 +329,12 @@ msgstr ""
 "Your account will be inactive until the new email address has been verified."
 
 #: personals/templates/personal_settings.html:203
-#: personals/templates/register.html:184
+#: personals/templates/register.html:208
 msgid "E-Mail-Adresse bereits vorhanden"
 msgstr "E-Mail address already exists"
 
 #: personals/templates/personal_settings.html:206
-#: personals/templates/register.html:187
+#: personals/templates/register.html:211
 msgid "E-Mail-Adresse noch nicht vorhanden"
 msgstr "E-Mail address not found yet"
 
@@ -440,7 +440,7 @@ msgid ""
 "    </a>"
 msgstr "<a href=\"%(url)s\"><button class=\"btn\">Reset password</button></a>"
 
-#: personals/templates/register.html:7
+#: personals/templates/register.html:9
 msgid ""
 "Registriere dich für ein ClimateQuest Konto, um personalisierte Funktionen "
 "zu nutzen und deinen Beitrag im Kampf gegen den Klimawandel zu verfolgen."
@@ -448,23 +448,23 @@ msgstr ""
 "Sign in to your ClimateQuest account to access personalized features and "
 "track your progress in the fight against climate change."
 
-#: personals/templates/register.html:10 personals/templates/register.html:69
+#: personals/templates/register.html:12 personals/templates/register.html:93
 msgid "Registrieren"
 msgstr "Register"
 
-#: personals/templates/register.html:18
+#: personals/templates/register.html:25
 msgid "Registrierung"
 msgstr "Register"
 
-#: personals/templates/register.html:28
+#: personals/templates/register.html:45
 msgid "Zur Registrierung musst du die reCAPTCHA-Cookies erlauben"
 msgstr "To register, you need to allow reCAPTCHA cookies"
 
-#: personals/templates/register.html:40
+#: personals/templates/register.html:58
 msgid "E-Mail (Optional)"
 msgstr "E-Mail (optional)"
 
-#: personals/templates/register.html:41
+#: personals/templates/register.html:59
 msgid ""
 "Du kannst eine E-Mail-Adresse angeben, um Benachrichtigungen zu erhalten "
 "und, falls du deinen Benutzernamen oder dein Passwort vergessen hast, diese "
@@ -474,49 +474,55 @@ msgstr ""
 "your username or password, to reset them. However, this is optional, so you "
 "don't have to do it."
 
-#: personals/templates/register.html:58
+#: personals/templates/register.html:76
 #, python-format
 msgid ""
-"Ich habe die <a href=\"%(url)s\">Nutzungsbedingungen</a> gelesen und "
-"akzeptiere diese. Sofern ich noch nicht volljährig bin, bestätige ich, dass "
-"die Zustimmung durch eine erziehungsberechtigte Person erfolgt ist."
+"Ich habe die\n"
+"                <a href=\"%(url)s\">Nutzungsbedingungen</a> gelesen und "
+"akzeptiere diese. Sofern ich noch nicht\n"
+"                volljährig bin, bestätige ich, dass die Zustimmung durch "
+"eine erziehungsberechtigte Person erfolgt\n"
+"                ist."
 msgstr ""
 "I have read and accept the <a href=\"%(url)s\">terms of use</a>. If I am not "
 "yet of legal age, I confirm that the consent was given by a parent or "
 "guardian."
 
-#: personals/templates/register.html:65
+#: personals/templates/register.html:86
 #, python-format
 msgid ""
-"Ich habe die <a href=\"%(url)s\">Datenschutzerklärung</a> gelesen und bin "
-"mit der beschriebenen Verarbeitung meiner personenbezogenen Daten "
-"einverstanden. Sofern ich noch nicht volljährig bin, bestätige ich, dass "
-"diese Einwilligung durch eine erziehungsberechtigte Person erfolgt ist."
+"Ich habe die\n"
+"                <a href=\"%(url)s\">Datenschutzerklärung</a> gelesen und bin "
+"mit der beschriebenen Verarbeitung meiner\n"
+"                personenbezogenen Daten einverstanden. Sofern ich noch nicht "
+"volljährig bin, bestätige ich, dass diese\n"
+"                Einwilligung durch eine erziehungsberechtigte Person erfolgt "
+"ist."
 msgstr ""
 "I have read the <a href=\"%(url)s\">privacy policy</a> and agree to the "
 "processing of my personal data as described. If I am not yet of legal age, I "
 "confirm that this consent was given by a parent or guardian."
 
-#: personals/templates/register.html:70
+#: personals/templates/register.html:94
 msgid "Diese Seite wird geschützt von reCAPTCHA"
 msgstr "This site is protected by reCAPTCHA"
 
-#: personals/templates/register.html:74
+#: personals/templates/register.html:98
 #, python-format
 msgid "Bereits registriert? <a href=\"%(url)s\">Zum Login</a>"
 msgstr "Already registered? <a href=\"%(url)s\">Go to login</a>"
 
-#: personals/templates/register.html:83
+#: personals/templates/register.html:107
 msgid ""
 "Um sich zu registrieren, wird reCAPTCHA benötigt. Bitte akzeptiere diese, um "
 "sich zu registrieren."
 msgstr "To register, reCAPTCHA is required. Please accept it to register."
 
-#: personals/templates/register.html:165
+#: personals/templates/register.html:189
 msgid "Fehler beim Überprüfen des Benutzernamens:"
 msgstr "Error checking username:"
 
-#: personals/templates/register.html:178
+#: personals/templates/register.html:202
 msgid "Überprüfe, ob E-Mail-Adresse bereits existiert..."
 msgstr "Checking if email address already exists..."
 
