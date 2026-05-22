@@ -9,14 +9,17 @@
 {% block title %}{% trans 'Login über Google' %} - ClimateQuest{% endblock %}
 
 {% block content %}
-    <h1>Login über Google</h1>
+    <h1>Login über {% if provider.id == "apple" %}Apple{% elif provider.id == "google" %}Google{% endif %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
-    <form method="post" action="{% provider_login_url 'google' %}">
+    <form method="post" {% if provider.id == "apple" %}action="{% provider_login_url 'apple' %}"
+          {% elif provider.id == "google" %}action="{% provider_login_url 'google' %}"{% endif %}>
         {% csrf_token %}
-        <button type="submit">Mit Google fortfahren</button>
+        <button type="submit">Mit {% if provider.id == "apple" %}Apple{% elif provider.id == "google" %}
+            Google{% endif %} fortfahren
+        </button>
     </form>
 {% endblock %}
