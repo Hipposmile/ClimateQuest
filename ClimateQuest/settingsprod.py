@@ -81,6 +81,11 @@ LOGGING = {
             "level": "DEBUG",
             "propagate": False,
         },
+        "allauth.socialaccount.providers.apple": {
+            "handlers": ["file", "mail_admins"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
     },
 }
 
