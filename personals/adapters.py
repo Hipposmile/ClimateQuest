@@ -16,17 +16,17 @@ class MySocialAccountAdapter(DefaultSocialAccountAdapter):
         if "name" in data and isinstance(data["name"], dict):
             full_name = f"{data['name'].get('firstName', '')} {data['name'].get('lastName', '')}".strip()
             if full_name:
-                return full_name.lower()
+                return full_name
 
         # Google
         given = data.get("given_name")
         family = data.get("family_name")
         if given or family:
-            return f"{given or ''} {family or ''}".strip().lower()
+            return f"{given or ''} {family or ''}".strip()
 
         # GitHub & andere
         if data.get("name"):
-            return data["name"].lower()
+            return data["name"]
 
         return None
 

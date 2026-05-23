@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+
+from allauth.socialaccount.providers.mediawiki.provider import settings
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -209,11 +211,13 @@ SOCIALACCOUNT_PROVIDERS = {
         'FETCH_USERINFO': True,
     },
     'apple': {
-        'APP': {
+        'APPS': [{
             'client_id': 'de.climate-quest.login.service',
-            'certificate_key': os.environ.get('APPLE_CERTIFICATE_KEY', ''),
-            'key': os.environ.get('APPLE_CERTIFICATE_KEY_ID', ''),
-            'team_id': os.environ.get('APPLE_TEAM_ID', ''),
-        }
+            'secret': os.environ.get('APPLE_CERTIFICATE_KEY_ID', ''),
+            'key': os.environ.get('APPLE_TEAM_ID', ''),
+            'settings': {
+                'certificate_key': os.environ.get('APPLE_CERTIFICATE_KEY', ''),
+            }
+        }]
     }
 }
