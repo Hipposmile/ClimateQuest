@@ -10,10 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
 
-from allauth.socialaccount.providers.mediawiki.provider import settings
 from dotenv import load_dotenv
 
 load_dotenv()
