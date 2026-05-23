@@ -51,5 +51,5 @@ class MySocialAccountAdapter(DefaultSocialAccountAdapter):
         user = super().populate_user(request, sociallogin, data)
         user.username = self._build_username(sociallogin)
         email = self._extract_email(sociallogin)
-        user.email = email if not User.objects.filter(email=email).exists() else None
+        user.email = email if not User.objects.filter(email=email).exists() else ""
         return user
