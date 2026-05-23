@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class MySocialAccountAdapter(DefaultSocialAccountAdapter):
     def _extract_email(self, sociallogin):
         email = sociallogin.account.extra_data.get("email")
-        return email.lower() if email else ""
+        return email if email else ""
 
     def _extract_name(self, sociallogin):
         data = sociallogin.account.extra_data
