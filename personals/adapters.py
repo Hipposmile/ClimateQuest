@@ -1,7 +1,12 @@
 import uuid
 
+from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from django.contrib import messages
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+
+from core.all_messages import all_messages
 
 
 class MySocialAccountAdapter(DefaultSocialAccountAdapter):
@@ -45,7 +50,12 @@ class MySocialAccountAdapter(DefaultSocialAccountAdapter):
         return self._generate_uuid_username()
 
     def pre_social_login(self, request, sociallogin):
-        return
+        username = self._build_username(sociallogin)
+        if User.objects.filter(username=username).exists():
+            messages.error(request, all_messages["username_not_available"])
+            raise ImmediateHttpResponse(
+                HttpResponseRedirect("/personals/login/")
+            )
 
     def populate_user(self, request, sociallogin, data):
         user = super().populate_user(request, sociallogin, data)

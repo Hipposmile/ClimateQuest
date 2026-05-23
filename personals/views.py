@@ -1,13 +1,14 @@
 import math
 import os
+from datetime import date, timedelta
 
 import requests
+from allauth.socialaccount.models import SocialAccount
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -199,96 +200,80 @@ def resend_verification_email(request):
 
 @login_required
 def settings_view(request):
+    if request.user.last_login.date() < (date.today() - timedelta(days=2)):
+        messages.success(request, all_messages["relogin_to_edit"])
+        return redirect('login_view')
     if request.method == 'POST':
         if 'change_username' in request.POST:
-            password = request.POST.get('password_username')
             new_username = request.POST.get('new_username')
-            if not check_password(password, request.user.password):
-                messages.error(request, all_messages["invalid_password"])
+            if User.objects.filter(username=new_username).exists():
+                messages.error(request, all_messages["username_not_available"])
+            elif new_username == request.user.username:
+                messages.error(request, all_messages["username_belongs_to_you"])
             else:
-                if User.objects.filter(username=new_username).exists():
-                    messages.error(request, all_messages["username_not_available"])
-                elif new_username == request.user.username:
-                    messages.error(request, all_messages["username_belongs_to_you"])
-                else:
-                    request.user.username = new_username
-                    request.user.save()
-                    messages.success(request, all_messages["username_changed"])
+                request.user.username = new_username
+                request.user.save()
+                messages.success(request, all_messages["username_changed"])
             return redirect('settings_view')
 
         elif 'change_password' in request.POST:
-            current_pw = request.POST.get('current_password')
             new_pw = request.POST.get('new_password')
-            if not request.user.check_password(current_pw):
-                messages.error(request, all_messages["invalid_password"])
-            else:
-                request.user.set_password(new_pw)
-                request.user.save()
-                update_session_auth_hash(request, request.user)
-                messages.success(request, all_messages["password_changed"])
+            request.user.set_password(new_pw)
+            request.user.save()
+            update_session_auth_hash(request, request.user)
+            messages.success(request, all_messages["password_changed"])
             return redirect('settings_view')
 
         elif 'change_email' in request.POST:
             email = request.POST.get('email')
-            password = request.POST.get('password_email')
-            if not request.user.check_password(password):
-                messages.error(request, all_messages["invalid_password"])
-            else:
-                if email == "":
-                    request.user.email = email
-                    request.user.save()
-                    messages.success(request, all_messages["successfully_changed_email_no_email"])
-                    return redirect('settings_view')
-
-                if not ist_email_gueltig(email):
-                    messages.error(request, all_messages["invalid_email"])
-                    return redirect('settings_view')
-
-                if User.objects.filter(email=email).exists():
-                    messages.error(request, all_messages["email_not_available"])
-                    return redirect('settings_view')
-
-                old_email = request.user.email
-
+            if email == "":
                 request.user.email = email
                 request.user.save()
-                UserErweitert.objects.filter(user=request.user).update(mail_verified=False)
-
-                activation_link = generate_verification_link(request)
-
-                mail_output = send_mail_function(
-                    request=request,
-                    subject='ClimateQuest - dein Aktivierungslink ist da!',
-                    message=_(
-                        'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: %(activation_link)s') % {
-                                'activation_link': activation_link},
-                    recipient_list=email,
-                    mailinglist_needless=True,
-                    user=request.user,
-                )
-
-                if not mail_output:
-                    request.user.email = old_email
-                    request.user.save()
-                    UserErweitert.objects.filter(user=request.user).update(mail_verified=True)
-                    return redirect('settings_view')
-                else:
-                    messages.success(request, all_messages["email_changed"])
+                messages.success(request, all_messages["successfully_changed_email_no_email"])
                 return redirect('settings_view')
+
+            if not ist_email_gueltig(email):
+                messages.error(request, all_messages["invalid_email"])
+                return redirect('settings_view')
+
+            if User.objects.filter(email=email).exists():
+                messages.error(request, all_messages["email_not_available"])
+                return redirect('settings_view')
+
+            old_email = request.user.email
+
+            request.user.email = email
+            request.user.save()
+            UserErweitert.objects.filter(user=request.user).update(mail_verified=False)
+
+            activation_link = generate_verification_link(request)
+
+            mail_output = send_mail_function(
+                request=request,
+                subject='ClimateQuest - dein Aktivierungslink ist da!',
+                message=_(
+                    'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: %(activation_link)s') % {
+                            'activation_link': activation_link},
+                recipient_list=email,
+                mailinglist_needless=True,
+                user=request.user,
+            )
+
+            if not mail_output:
+                request.user.email = old_email
+                request.user.save()
+                UserErweitert.objects.filter(user=request.user).update(mail_verified=True)
+                return redirect('settings_view')
+            else:
+                messages.success(request, all_messages["email_changed"])
+            return redirect('settings_view')
 
         elif 'change_email_settings' in request.POST:
             mailinglist = request.POST.get('mailinglist') == 'on'
-            password = request.POST.get('password_email_settings')
-            if not request.user.check_password(password):
-                messages.error(request, all_messages["invalid_password"])
-                return redirect('settings_view')
-            try:
-                user_erweitert = UserErweitert.objects.get(user=request.user)
-            except UserErweitert.DoesNotExist:
-                create_internal_error(request, f'UserErweitert zu User {request.user} existiert nicht')
-            user_erweitert.mailinglist = mailinglist
-            user_erweitert.save()
-            if user_erweitert.mailinglist:
+            user_extended = request.user.usererweitert
+            user_extended.mailinglist = mailinglist
+            user_extended.save()
+            if user_extended.mailinglist:
                 messages.success(request, all_messages["mailinglist_enabled"])
             else:
                 messages.success(request, all_messages["mailinglist_disabled"])
@@ -296,17 +281,10 @@ def settings_view(request):
 
         elif 'change_block_data_settings' in request.POST:
             block_data_settings = request.POST.get('block_data_settings') == 'on'
-            password = request.POST.get('password_block_data_settings')
-            if not request.user.check_password(password):
-                messages.error(request, all_messages["invalid_password"])
-                return redirect('settings_view')
-            try:
-                user_erweitert = UserErweitert.objects.get(user=request.user)
-            except UserErweitert.DoesNotExist:
-                create_internal_error(request, f'UserErweitert zu User {request.user} existiert nicht')
-            user_erweitert.allows_data_view = block_data_settings
-            user_erweitert.save()
-            if user_erweitert.allows_data_view:
+            user_extended = request.user.usererweitert
+            user_extended.allows_data_view = block_data_settings
+            user_extended.save()
+            if user_extended.allows_data_view:
                 messages.success(request, all_messages["allows_data_view_enabled"])
             else:
                 messages.success(request, all_messages["allows_data_view_disabled"])
@@ -314,25 +292,14 @@ def settings_view(request):
 
         elif 'change_statement' in request.POST:
             statement = request.POST.get('content')
-            password = request.POST.get('password_statement')
-            if not request.user.check_password(password):
-                messages.error(request, all_messages["invalid_password"])
-                return redirect('settings_view')
-            try:
-                user_erweitert = UserErweitert.objects.get(user=request.user)
-            except UserErweitert.DoesNotExist:
-                create_internal_error(request, f'UserErweitert zu User {request.user} existiert nicht')
-            user_erweitert.statement = statement
-            user_erweitert.save()
+            user_extended = request.user.usererweitert
+            user_extended.statement = statement
+            user_extended.save()
             messages.success(request, all_messages["successfully_changed_statement"])
             return redirect('settings_view')
 
         elif 'change_weekly_goal' in request.POST:
             weekly_goal = request.POST.get('weekly_goal')
-            password = request.POST.get('password_weekly_goal')
-            if not request.user.check_password(password):
-                messages.error(request, all_messages["invalid_password"])
-                return redirect('settings_view')
             try:
                 weekly_goal = int(weekly_goal)
             except ValueError:
@@ -353,11 +320,6 @@ def settings_view(request):
 
         elif 'change_lang' in request.POST:
             lang = request.POST.get('lang')
-            password = request.POST.get('password_weekly_goal')
-            if not request.user.check_password(password):
-                messages.error(request, all_messages["invalid_password"])
-                return redirect('settings_view')
-
             if lang != 'de' and lang != 'en':
                 messages.error(request, all_messages["internal_error"])
                 return redirect('settings_view')
@@ -373,11 +335,6 @@ def settings_view(request):
 
         elif 'change_tour_banner' in request.POST:
             user_extended = request.user.usererweitert
-            password = request.POST.get('password_tour_banner')
-            if not request.user.check_password(password):
-                messages.error(request, all_messages["invalid_password"])
-                return redirect('settings_view')
-
             show_tour_banner = request.POST.get('show_tour_banner') == 'on'
             user_extended.show_tour_banner = show_tour_banner
             user_extended.save()
@@ -387,37 +344,33 @@ def settings_view(request):
 
 
         elif 'delete_account' in request.POST:
-            password = request.POST.get('password_delete_account')
-            if not request.user.check_password(password):
-                messages.error(request, all_messages["invalid_password"])
-            else:
-                contacted_user_ids = set()
-                families = get_families_of_user(request.user) or []
-                communities = get_communities_of_user(request.user) or []
-                for family in families:
-                    if family.name != 'worldwide ranking':
-                        for user in family.members.all():
-                            if user.id not in contacted_user_ids:
-                                contacted_user_ids.add(user.id)
-                                create_notification(request,
-                                                    f'User {request.user.username}, mit dem / der du zusammen in einer Family warst, hat den eigenen Account gelöscht. Von {request.user.username} gesendete Nachrichten werden auch gelöscht.',
-                                                    f'User {request.user.username}, with who you were in a family, deleted his / her account. His / her messages will also be deleted.',
-                                                    user)
-                for community in communities:
-                    for family in community.members.all():
-                        for user in family.members.all():
-                            if user.id not in contacted_user_ids:
-                                contacted_user_ids.add(user.id)
-                                create_notification(request,
-                                                    f'User {request.user.username}, mit dem du zusammen in einer Community warst, hat seinen Account gelöscht. Von {request.user.username} gesendete Nachrichten werden auch gelöscht.',
-                                                    f'User {request.user.username}, with who you were in a community, deleted his / her account. His / her messages will also be deleted.',
-                                                    user)
-                request.user.delete()
-                logout(request)
-                messages.error(request, all_messages["account_deleted"])
-                return redirect('login_view')
+            contacted_user_ids = set()
+            families = get_families_of_user(request.user) or []
+            communities = get_communities_of_user(request.user) or []
+            for family in families:
+                if family.name != 'worldwide ranking':
+                    for user in family.members.all():
+                        if user.id not in contacted_user_ids:
+                            contacted_user_ids.add(user.id)
+                            create_notification(request,
+                                                f'User {request.user.username}, mit dem / der du zusammen in einer Family warst, hat den eigenen Account gelöscht. Von {request.user.username} gesendete Nachrichten werden auch gelöscht.',
+                                                f'User {request.user.username}, with who you were in a family, deleted his / her account. His / her messages will also be deleted.',
+                                                user)
+            for community in communities:
+                for family in community.members.all():
+                    for user in family.members.all():
+                        if user.id not in contacted_user_ids:
+                            contacted_user_ids.add(user.id)
+                            create_notification(request,
+                                                f'User {request.user.username}, mit dem du zusammen in einer Community warst, hat seinen Account gelöscht. Von {request.user.username} gesendete Nachrichten werden auch gelöscht.',
+                                                f'User {request.user.username}, with who you were in a community, deleted his / her account. His / her messages will also be deleted.',
+                                                user)
+            request.user.delete()
+            logout(request)
+            messages.error(request, all_messages["account_deleted"])
+            return redirect('login_view')
 
-    return render(request, './personal_settings.html')
+    return render(request, './personal_settings.html', {'is_social_account': SocialAccount.objects.filter(user=request.user).exists()})
 
 
 def reset_password(request):
@@ -428,6 +381,9 @@ def reset_password(request):
             user = User.objects.get(email=email)
         except User.DoesNotExist:
             messages.error(request, all_messages["email_not_found"])
+            return redirect('reset_password')
+        if SocialAccount.objects.filter(user=user).exists():
+            messages.error(request, all_messages["socialaccount_no_password_reset"])
             return redirect('reset_password')
 
         new_password = generate_random_password()

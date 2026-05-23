@@ -56,7 +56,7 @@ all_messages = {
     "community_deleted": _("Community erfolgreich gelöscht"),
     "community_chat_enabled": _("Chat für die Community aktiviert"),
     "community_chat_disabled": _("Chat für die Community deaktiviert"),
-
+    "relogin_to_edit": _("Du musst dich erneut einloggen, um die Einstellungen zu ändern"),
     "chat_disabled_for_community": _("Der Chat für diese Community ist deaktiviert"),
     # --------
     # Family
@@ -98,7 +98,8 @@ all_messages = {
 
     # Login
     "successfully_signed_up": _("Erfolgreich registriert"),
-    "successfully_signed_up_email_not_verified": _("Erfolgreich registriert, aber E-Mail-Adresse noch nicht verifiziert"),
+    "successfully_signed_up_email_not_verified": _(
+        "Erfolgreich registriert, aber E-Mail-Adresse noch nicht verifiziert"),
     "robot": _("Es besteht die Gefahr, dass du ein Roboter bist Bitte versuche es erneut"),
     "invalid_login_data": _("Ungültige Anmeldedaten"),
     "username_not_available": _("Username bereits vergeben"),
@@ -120,10 +121,13 @@ all_messages = {
     "allows_data_view_disabled": _("Persönliche Daten Ansicht blockiert"),
     "account_deleted": _("Account erfolgreich gelöscht"),
     "email_not_found": _("E-Mail-Adresse nicht vorhanden"),
-    "password_reset_mail_sent": _("Wir haben dir eine Nachricht mit deinem Usernamen und einem neuen, zufällig generiertem Passwort geschickt. Melde dich damit an und ändere aus Sicherheitsgründen möglichst bald dein Passwort unter \"Profil bearbeiten\""),
+    "password_reset_mail_sent": _(
+        "Wir haben dir eine Nachricht mit deinem Usernamen und einem neuen, zufällig generiertem Passwort geschickt. Melde dich damit an und ändere aus Sicherheitsgründen möglichst bald dein Passwort unter \"Profil bearbeiten\""),
     "password_reset_error": _("Ein Fehler ist beim Zurücksetzen des Passwortes aufgetreten"),
-    "successfully_changed_email": _("E-Mail-Adresse erfolgreich geändert. Ein Aktivierungslink wurde an diese Adresse gesendet"),
-    "successfully_changed_email_no_email": _("E-Mail-Adresse erfolgreich geändert. Du hast jetzt keine E-Mail Adresse mehr hinterlegt und musst daher nichts verifizieren"),
+    "successfully_changed_email": _(
+        "E-Mail-Adresse erfolgreich geändert. Ein Aktivierungslink wurde an diese Adresse gesendet"),
+    "successfully_changed_email_no_email": _(
+        "E-Mail-Adresse erfolgreich geändert. Du hast jetzt keine E-Mail Adresse mehr hinterlegt und musst daher nichts verifizieren"),
     "no_email_to_verify": _("Du hast keine E-Mail-Adresse angegeben und musst daher nichts verifizieren"),
     "successfully_changed_statement": _("Du hast erfolgreich dein Statement geupdated"),
     "user_is_active_at_verify": _("Du bist bereits verifiziert. Logge dich direkt ein"),
@@ -133,6 +137,8 @@ all_messages = {
     "weekly_goal_too_small": _("Das wöchentliche Ziel ist zu klein"),
     "activated_tour_banner": _("Die Tour-Banner werden jetzt angezeigt"),
     "deactivated_tour_banner": _("Die Tour-Banner werden nicht mehr angezeigt"),
+    "socialaccount_no_password_reset": _(
+        "Du hast dich über einen Drittanbieter registriert und hast daher gar kein ClimateQuest Passwort"),
 
     "error_planting_tree": _("Beim Pflanzen deines Baumes ist ein Fehler aufgetreten"),
 
@@ -154,11 +160,14 @@ all_messages = {
     "action_invalid_quantity": _("Ungültige Menge"),
     "max_action_quantity": mark_safe(
         _("Die angegebene Menge ist zu hoch, um realistisch zu sein. Weitere Informationen findest du in <a href='https://climate-questde/artikel/artikel_detail/9'>diesem Artikel</a>")),
-    "action_too_past": mark_safe(_("Das angegebene Datum liegt zu weit in der Vergangenheit. Weitere Informationen findest du in <a href='https://climate-questde/artikel/artikel_detail/18'>diesem Artikel</a>")),
-    "action_already_set_in_period": _("Diese oder eine verwandte Aktion wurde im gleichen Zeitraum schon einmal eingetragen"),
+    "action_too_past": mark_safe(
+        _("Das angegebene Datum liegt zu weit in der Vergangenheit. Weitere Informationen findest du in <a href='https://climate-questde/artikel/artikel_detail/18'>diesem Artikel</a>")),
+    "action_already_set_in_period": _(
+        "Diese oder eine verwandte Aktion wurde im gleichen Zeitraum schon einmal eingetragen"),
 
     "tracking_action": _("Aktion wird jetzt getrackt"),
-    "forbidden_tracking_action": _("Aktion kann nicht getrackt werden, da eine verwandte Aktion bereits getrackt wird."),
+    "forbidden_tracking_action": _(
+        "Aktion kann nicht getrackt werden, da eine verwandte Aktion bereits getrackt wird."),
     "stopped_tracking": _("Aktion wird nicht mehr getrackt"),
 
     # --------
@@ -176,7 +185,8 @@ all_messages = {
     "event__no_right_to_edit": _("Du hast keine Berechtigungen, dieses Event zu bearbeiten"),
     "successfully_asked_question": _("Frage erfolgreich gestellt"),
     "successfully_answered_question": _("Frage erfolgreich beantwortet"),
-    "teilnehmeranzahl_search_keyword_not_a_number": _("Wenn du nach der Teilnehmeranzahl filterst, muss das Suchwort eine Zahl sein"),
+    "teilnehmeranzahl_search_keyword_not_a_number": _(
+        "Wenn du nach der Teilnehmeranzahl filterst, muss das Suchwort eine Zahl sein"),
 
     # --------
     # Artikel
@@ -223,7 +233,8 @@ all_messages = {
     "admin__successfully_sent_notification": _("Benachrichtigung erfolgreich an alle Empfänger gesendet"),
     "user_deleted": _("User erfolgreich gelöscht"),
     "worldwide_ranking_valid_passwords": _("Die Passwörter der Family worldwide_ranking sind aktuell"),
-    "worldwide_ranking_invalid_password": _("Die Passwörter der Family worldwide-Ranking waren ungültig und entsprechend der gespeicherten Passwörter geändert"),
+    "worldwide_ranking_invalid_password": _(
+        "Die Passwörter der Family worldwide-Ranking waren ungültig und entsprechend der gespeicherten Passwörter geändert"),
     "added_everyone_user_erweitert": _("Jedem User wurde ein UserErweitert hinzugefügt, sofern noch nicht vorhanden"),
 
     # --------

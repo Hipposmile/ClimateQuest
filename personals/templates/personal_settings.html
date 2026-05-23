@@ -48,9 +48,6 @@
     <h3 id="username_h3">{% trans "Benutzernamen ändern" %}</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="password_username">{% trans "Aktuelles Passwort:" %}</label>
-        <input type="password" name="password_username" id="password_username" placeholder="{% trans 'Passwort' %}"
-               required>
         <label for="new_username">{% trans "Neuer Benutzername:" %}</label>
         <small id="username-feedback"></small>
         <input type="text" name="new_username" id="new_username" placeholder="{% trans 'Neuer Benutzername' %}"
@@ -83,106 +80,103 @@
             }
         });
     </script>
+    {% if not is_social_account %}
+        <hr>
+        <h3 id="password_h3">{% trans "Passwort ändern" %}</h3>
+        <form method="post" id="register_form" class="dont-show-loading">
+            {% csrf_token %}
+            <label for="new_password">{% trans "Neues Passwort:" %}</label>
+            <a id="showPassword" class="show-password dont-show-loading">{% trans "Passwort anzeigen" %}</a>
+            <input type="password" name="new_password" id="new_password" placeholder="{% trans 'Neues Passwort' %}"
+                   required>
+            <div>
+                <h4>{% trans "Unsere Empfehlungen für ein sicheres Passwort, um deinen Account vor Hackingangriffen und Accountübernahmen zu schützen:" %}</h4>
+                <ul class="criteria-list">
+                    <li id="length" class="error-message">{% trans "Mindestens acht Zeichen" %}</li>
+                    <li id="uppercase" class="error-message">{% trans "Mindestens ein Großbuchstabe" %}</li>
+                    <li id="lowercase" class="error-message">{% trans "Mindestens ein Kleinbuchstabe" %}</li>
+                    <li id="number" class="error-message">{% trans "Mindestens eine Zahl" %}</li>
+                    <li id="punctuation" class="error-message">{% trans "Mindestens ein Sonderzeichen" %}</li>
+                </ul>
+            </div>
+            <button type="submit" name="change_password">{% trans "Ändern" %}</button>
+        </form>
+        <script nonce="{{ request.csp_script_nonce }}">
+            let passwordRecommendation = false;
+        </script>
+        <script nonce="{{ request.csp_script_nonce }}">
+            const passwordInput = document.getElementById('new_password')
+            const password_lenght = document.getElementById('length')
+            const uppercase = document.getElementById('uppercase')
+            const lowercase = document.getElementById('lowercase')
+            const number = document.getElementById('number')
+            const punctuation = document.getElementById('punctuation')
 
-    <hr>
-    <h3 id="password_h3">{% trans "Passwort ändern" %}</h3>
-    <form method="post" id="register_form" class="dont-show-loading">
-        {% csrf_token %}
-        <label for="current_password">{% trans "Aktuelles Passwort:" %}</label>
-        <input type="password" name="current_password" id="current_password"
-               placeholder="{% trans 'Aktuelles Passwort' %}" required>
-        <label for="new_password">{% trans "Neues Passwort:" %}</label>
-        <a id="showPassword" class="show-password dont-show-loading">{% trans "Passwort anzeigen" %}</a>
-        <input type="password" name="new_password" id="new_password" placeholder="{% trans 'Neues Passwort' %}"
-               required>
-        <div>
-            <h4>{% trans "Unsere Empfehlungen für ein sicheres Passwort, um deinen Account vor Hackingangriffen und Accountübernahmen zu schützen:" %}</h4>
-            <ul class="criteria-list">
-                <li id="length" class="error-message">{% trans "Mindestens acht Zeichen" %}</li>
-                <li id="uppercase" class="error-message">{% trans "Mindestens ein Großbuchstabe" %}</li>
-                <li id="lowercase" class="error-message">{% trans "Mindestens ein Kleinbuchstabe" %}</li>
-                <li id="number" class="error-message">{% trans "Mindestens eine Zahl" %}</li>
-                <li id="punctuation" class="error-message">{% trans "Mindestens ein Sonderzeichen" %}</li>
-            </ul>
-        </div>
-        <button type="submit" name="change_password">{% trans "Ändern" %}</button>
-    </form>
-    <script nonce="{{ request.csp_script_nonce }}">
-        let passwordRecommendation = false;
-    </script>
-    <script nonce="{{ request.csp_script_nonce }}">
-        const passwordInput = document.getElementById('new_password')
-        const password_lenght = document.getElementById('length')
-        const uppercase = document.getElementById('uppercase')
-        const lowercase = document.getElementById('lowercase')
-        const number = document.getElementById('number')
-        const punctuation = document.getElementById('punctuation')
+            passwordInput.addEventListener('input', function () {
+                let password = this.value;
 
-        passwordInput.addEventListener('input', function () {
-            let password = this.value;
+                password_lenght.className = password.length >= 8 ? "success-message" : "error-message"
+                uppercase.className = /[A-Z]/.test(password) ? "success-message" : "error-message"
+                lowercase.className = /[a-z]/.test(password) ? "success-message" : "error-message"
+                number.className = /\d/.test(password) ? "success-message" : "error-message"
+                punctuation.className = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(password) ? "success-message" : "error-message";
 
-            password_lenght.className = password.length >= 8 ? "success-message" : "error-message"
-            uppercase.className = /[A-Z]/.test(password) ? "success-message" : "error-message"
-            lowercase.className = /[a-z]/.test(password) ? "success-message" : "error-message"
-            number.className = /\d/.test(password) ? "success-message" : "error-message"
-            punctuation.className = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(password) ? "success-message" : "error-message";
-
-            if (password_lenght.className === "success-message" && uppercase.className === "success-message" && lowercase.className === "success-message" && number.className === "success-message" && punctuation.className === "success-message") {
-                passwordRecommendation = true
-            }
-        });
-
-    </script>
-    <script nonce="{{ request.csp_script_nonce }}">
-        function register(event) {
-            event.preventDefault(); // verhindert sofortiges Abschicken
-            if (!passwordRecommendation) {
-                if (!confirm('{% trans "Das Passwort entspricht nicht den Empfehlungen. Trotzdem fortfahren?" %}')) {
-                    return false;
+                if (password_lenght.className === "success-message" && uppercase.className === "success-message" && lowercase.className === "success-message" && number.className === "success-message" && punctuation.className === "success-message") {
+                    passwordRecommendation = true
                 }
+            });
+
+        </script>
+        <script nonce="{{ request.csp_script_nonce }}">
+            function register(event) {
+                event.preventDefault(); // verhindert sofortiges Abschicken
+                if (!passwordRecommendation) {
+                    if (!confirm('{% trans "Das Passwort entspricht nicht den Empfehlungen. Trotzdem fortfahren?" %}')) {
+                        return false;
+                    }
+                }
+
+                const form = event.target;
+                const btn = form.querySelector('button[name=change_password]');
+                if (btn) {
+                    const hidden = document.createElement('input');
+                    hidden.type = 'hidden';
+                    hidden.name = btn.name;
+                    hidden.value = btn.value || btn.textContent;
+                    form.appendChild(hidden);
+                }
+                showLoading();
+                form.submit()
             }
 
-            const form = event.target;
-            const btn = form.querySelector('button[name=change_password]');
-            if (btn) {
-                const hidden = document.createElement('input');
-                hidden.type = 'hidden';
-                hidden.name = btn.name;
-                hidden.value = btn.value || btn.textContent;
-                form.appendChild(hidden);
-            }
-            showLoading();
-            form.submit()
-        }
+            document.getElementById('register_form').addEventListener('submit', () => {
+                register(event);
+            });
+        </script>
+        <script nonce="{{ request.csp_script_nonce }}">
+            const showPassword = document.getElementById('showPassword');
+            let password = document.getElementById('new_password');
+            showPassword.addEventListener('mousedown', function () {
+                password.type = 'text';
+            });
+            showPassword.addEventListener('mouseup', function () {
+                password.type = 'password';
+            });
 
-        document.getElementById('register_form').addEventListener('submit', () => {
-            register(event);
-        });
-    </script>
-    <script nonce="{{ request.csp_script_nonce }}">
-        const showPassword = document.getElementById('showPassword');
-        let password = document.getElementById('new_password');
-        showPassword.addEventListener('mousedown', function () {
-            password.type = 'text';
-        });
-        showPassword.addEventListener('mouseup', function () {
-            password.type = 'password';
-        });
+            showPassword.addEventListener('touchstart', function () {
+                password.type = 'text';
+            });
+            showPassword.addEventListener('touchend', function () {
+                password.type = 'password';
+            });
+        </script>
+    {% endif %}
 
-        showPassword.addEventListener('touchstart', function () {
-            password.type = 'text';
-        });
-        showPassword.addEventListener('touchend', function () {
-            password.type = 'password';
-        });
-    </script>
     <hr>
 
     <h3 id="email_h3">{% trans "E-Mail-Adresse ändern" %}</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="password_email">{% trans "Passwort:" %}</label>
-        <input type="password" name="password_email" id="password_email" placeholder="{% trans 'Passwort' %}" required>
         <label for="email">{% trans "Neue E-Mail-Adresse:" %}</label>
         <small>{% trans "Leer lassen, um die E-Mail Adresse zu löschen und keine mehr hinterlegt zu haben" %}</small>
         <small id="email-feedback"></small>
@@ -217,10 +211,6 @@
     <h3 id="mailsettings_h3">{% trans "E-Mail Einstellungen" %}</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="password_email_settings">{% trans "Passwort:" %}</label>
-        <input type="password" name="password_email_settings" id="password_email_settings"
-               placeholder="{% trans 'Passwort' %}"
-               required>
         <label class="custom-checkbox">
             <input type="checkbox" name="mailinglist" id="mailinglist_checkbox">
             <span class="checkmark"></span>
@@ -246,10 +236,6 @@
     <h3 id="block_data_h3">{% trans "Einsicht persönlicher Daten" %}</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="password_block_data_settings">{% trans "Passwort:" %}</label>
-        <input type="password" name="password_block_data_settings" id="password_block_data_settings"
-               placeholder="{% trans 'Passwort' %}"
-               required>
         <label class="custom-checkbox">
             <input type="checkbox" name="block_data_settings" id="block_data_checkbox">
             <span class="checkmark"></span>
@@ -271,9 +257,6 @@
     <h3 id="statement_h3">{% trans "Statement ändern" %}</h3>
     <form method="post" class="fill-editor">
         {% csrf_token %}
-        <label for="password_statement">{% trans "Passwort:" %}</label>
-        <input type="password" name="password_statement" id="password_statement" placeholder="{% trans 'Passwort' %}"
-               required>
         <label for="content_editor">{% trans "Statement" %}</label>
         <div id="content_editor" class="quill-editor">{{ user.usererweitert.statement|safe }}</div>
         <input type="hidden" name="content">
@@ -292,9 +275,6 @@
         <label for="weekly_goal">{% trans "Wöchentliches Ziel" %}</label>
         <input id="weekly_goal" name="weekly_goal" type="number" value="{{ request.user.usererweitert.weekly_goal }}"
                min="1" required>
-        <label for="password_weekly_goal">{% trans "Passwort" %}</label>
-        <input id="password_weekly_goal" type="password" name="password_weekly_goal"
-               placeholder="{% trans 'Passwort' %}" required>
         <button type="submit" name="change_weekly_goal">{% trans "Speichern" %}</button>
     </form>
 
@@ -307,9 +287,6 @@
             <option value="de" {% if request.user.usererweitert.lang == "de" %}selected{% endif %}>Deutsch</option>
             <option value="en" {% if request.user.usererweitert.lang == "en" %}selected{% endif %}>English</option>
         </select>
-        <label for="password_weekly_goal">{% trans "Passwort" %}</label>
-        <input id="password_weekly_goal" type="password" name="password_weekly_goal"
-               placeholder="{% trans 'Passwort' %}" required>
         <button type="submit" name="change_lang">{% trans "Speichern" %}</button>
     </form>
 
@@ -317,12 +294,9 @@
     <h3 id="tour_banner_h3">{% trans "Tour-Banner anzeigen / ausblenden" %}</h3>
     <form method="post">
         {% csrf_token %}
-        <label for="password_tour_banner">{% trans "Passwort:" %}</label>
-        <input type="password" name="password_tour_banner" id="password_tour_banner"
-               placeholder="{% trans 'Passwort' %}"
-               required>
         <label class="custom-checkbox">
-            <input type="checkbox" name="show_tour_banner" id="tour_banner_checkbox" {% if request.user.usererweitert.show_tour_banner %}checked{% endif %}>
+            <input type="checkbox" name="show_tour_banner" id="tour_banner_checkbox"
+                   {% if request.user.usererweitert.show_tour_banner %}checked{% endif %}>
             <span class="checkmark"></span>
             <span class="label-text">{% trans "Tour-Banner anzeigen" %}</span>
         </label>
@@ -333,10 +307,6 @@
     <h3 id="delete_h3">{% trans "Account löschen" %}</h3>
     <form method="post" class="form-confirm" data-confirm="{% trans 'Willst du deinen Account wirklich löschen?' %}">
         {% csrf_token %}
-        <label for="password_delete_account">{% trans "Passwort:" %}</label>
-        <input type="password" name="password_delete_account" id="password_delete_account"
-               placeholder="{% trans 'Passwort' %}"
-               required>
         <button type="submit" name="delete_account" class="color-red">{% trans "Diesen Account löschen" %}</button>
         <p>{% trans "Dadurch werden alle mit deinem Konto verknüpften Daten wie Aktionen oder Chat-Nachrichten gelöscht. Alle Mitglieder deiner Families und Communities werden darüber benachrichtigt werden." %}</p>
     </form>
@@ -348,10 +318,12 @@
         löschen möchtest, wende dich bitte an <a href="mailto:{{ email }}">{{ email }}</a>. Nenne hier bitte die
         konkreten Daten, welche du löschen möchtest. Wenn sich die Daten über die Webseite bereits löschen lassen,
         werden diese auch tatsächlich gelöscht und als Backup maximal 14 Tage gespeichert.{% endblocktrans %}</p>
-    <hr>
-    {% url 'reset_password' as reset_url %}
-    {% blocktrans with url=reset_url %}<a href="{{ url }}">
-        <button class="btn">Passwort resetten</button>
-    </a>{% endblocktrans %}
 
+    {% if not is_social_account %}
+        <hr>
+        {% url 'reset_password' as reset_url %}
+        {% blocktrans with url=reset_url %}<a href="{{ url }}">
+            <button class="btn">Passwort resetten</button>
+        </a>{% endblocktrans %}
+    {% endif %}
 {% endblock %}
