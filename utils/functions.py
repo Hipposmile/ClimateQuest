@@ -230,23 +230,19 @@ def send_mail_function(**kwargs):
 
 def get_level(user):
     aktionen = Aktion.objects.filter(user=user)
-    # Klimapunkte abrufen
     klimapunkte = get_klimapunkte(aktionen)
     klimapunkte += get_additional_klimapunkte(user)
 
-    # Alle Level sortiert abrufen
     levels = Level.objects.order_by('klimapunkte')
 
-    # Variablen einführen
     current_level = None
     next_level = None
     level_number = 1
-    progress_percent = 100  # Default für höchstes Level
+    progress_percent = 100
 
     for i, level in enumerate(levels):
         if klimapunkte >= level.klimapunkte:
             current_level = level
-            # Wenn es noch ein Level danach gibt:
             if i + 1 < len(levels):
                 next_level = levels[i + 1]
                 differenz = next_level.klimapunkte - current_level.klimapunkte
@@ -262,8 +258,10 @@ def get_level(user):
                     'current_level': current_level, 'levels': levels, 'klimapunkte': klimapunkte,
                     'level_number': level_number}
 
+    klimapunkte_missing = next_level.klimapunkte - klimapunkte
+
     return {'current_level': current_level, 'next_level': next_level, 'progress_percent': progress_percent,
-            'levels': levels, 'klimapunkte': klimapunkte, 'level_number': level_number}
+            'levels': levels, 'klimapunkte_missing': klimapunkte_missing, 'level_number': level_number}
 
 
 def get_weekly_goal_from_user(user):

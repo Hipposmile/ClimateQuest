@@ -472,5 +472,7 @@ def credit_view(request):
                                       all_messages["error_planting_tree"])
             return redirect('credit_view')
 
+    klimapunkte_missing = klimapunkte_for_credit - rest
+
     return render(request, './credit_view.html',
-                  {'available_credits': available_credits, "percent_done": percent_done})
+                  {'available_credits': available_credits, 'percent_done': percent_done, 'klimapunkte_missing': klimapunkte_missing})

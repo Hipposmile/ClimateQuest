@@ -49,7 +49,8 @@
         }
     </style>
 
-    <h1>{% trans "Level von" %} {% if user == request.user %} <a href="{% url 'user_detail' user.id %}">{% trans "mir" %}</a>{% else %}
+    <h1>{% trans "Level von" %} {% if user == request.user %}
+        <a href="{% url 'user_detail' user.id %}">{% trans "mir" %}</a>{% else %}
         <a href="{% url 'user_detail' user.id %}">{{ user }}</a>{% endif %}</h1>
 
     {% if messages %}
@@ -63,8 +64,12 @@
     {% if level_data.info %}
         <p id="info">{{ level_data.info|safe }}</p>
     {% else %}
-        <p>{% trans "Du bist im Level:" %} {% if request.LANGUAGE_CODE == "de" %}{{ level_data.current_level.description }}{% else %}{{ level_data.current_level.description_en }}{% endif %}</p>
-        <p>{% trans "Nächstes Level:" %} {% if request.LANGUAGE_CODE == "de" %}{{ level_data.next_level.description }}{% else %}{{ level_data.next_level.description_en }}{% endif %}</p>
+        <p>{% trans "Du bist im Level:" %}
+            {% if request.LANGUAGE_CODE == "de" %}{{ level_data.current_level.description }}{% else %}
+                {{ level_data.current_level.description_en }}{% endif %}</p>
+        <p>{% trans "Nächstes Level:" %}
+            {% if request.LANGUAGE_CODE == "de" %}{{ level_data.next_level.description }}{% else %}
+                {{ level_data.next_level.description_en }}{% endif %}</p>
         <div class="progress-container">
             <div class="progress-bar" id="progress-bar"></div>
         </div>
@@ -74,7 +79,10 @@
                 max-width: 100%;
             }
         </style>
-        <p>{% blocktrans with progress_percent=level_data.progress_percent %}{{ progress_percent }} % zum nächsten Level geschafft{% endblocktrans %}</p>
+        <p>
+            {% blocktrans with progress_percent=level_data.progress_percent klimapunkte_missing=level_data.klimapunkte_missing|floatformat:-4 %}
+                {{ progress_percent }} % bis zum nächsten Level geschafft. Dir fehlen also noch
+                {{ klimapunkte_missing }} Klimapunkte.{% endblocktrans %}</p>
     {% endif %}
     <h3>{% trans "Liste der Level" %}</h3>
     <table class="level-table">
@@ -87,7 +95,8 @@
         <tbody>
         {% for level in level_data.levels %}
             <tr>
-                <td>{% if request.LANGUAGE_CODE == "de" %}{{ level.description }}{% else %}{{ level.description_en }}{% endif %}</td>
+                <td>{% if request.LANGUAGE_CODE == "de" %}{{ level.description }}{% else %}
+                    {{ level.description_en }}{% endif %}</td>
                 <td>{{ level.klimapunkte }}</td>
             </tr>
         {% endfor %}

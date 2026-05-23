@@ -17,6 +17,13 @@ def multiply(value, arg):
         return 0
 
 @register.filter
+def subtract(value, arg):
+    try:
+        return float(value) - float(arg)
+    except (ValueError, TypeError):
+        return 0
+
+@register.filter
 def percent(value, arg):
     try:
         return float(value) / float(arg) * 100
