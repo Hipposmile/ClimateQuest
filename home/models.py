@@ -9,7 +9,7 @@ class Benachrichtigung(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     benachrichtigung_de = models.CharField(max_length=500)
     benachrichtigung_en = models.CharField(max_length=500)
-    date = models.DateTimeField(default=timezone.now)
+    date = models.DateField(default=timezone.now)
     url = models.URLField(max_length=500)
 
     def __str__(self):
