@@ -268,8 +268,8 @@ def add_to_hall_of_fame_cron() -> None:
             custom_fake_request.user = user
             create_notification(
                 request=custom_fake_request,
-                notification_de=to_do_de,
-                notification_en=to_do_en,
+                notification_de=f"Es ist eine neue Challenge verfügbar, um nächste Woche in die Hall of Fame zu kommen: {to_do_de}",
+                notification_en=f"A new challenge is available to become a member of the hall of fame: {to_do_en}",
                 user=user,
                 url=reverse('hall_of_fame_detail'),
             )
