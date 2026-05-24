@@ -17,6 +17,12 @@ from utils.functions import create_notification
 
 
 def hall_of_fame_detail(request):
+    data, _ = HallOfFameData.objects.get_or_create(id=1)
+    to_to_next_week = {
+        "de": data.to_do_de,
+        "en": data.to_do_en
+    }
+
     user_entries = {}
     users = User.objects.filter(hall_of_fame_entry__isnull=False).prefetch_related(
         'hall_of_fame_entry').distinct().annotate(entry_count=Count('hall_of_fame_entry')).order_by('-entry_count')
@@ -27,7 +33,7 @@ def hall_of_fame_detail(request):
     else:
         in_hall_of_fame = False
     return render(request, './hall_of_fame_detail.html',
-                  {'user_entries': user_entries, 'in_hall_of_fame': in_hall_of_fame})
+                  {'user_entries': user_entries, 'in_hall_of_fame': in_hall_of_fame, 'to_to_next_week': to_to_next_week})
 
 
 factory = RequestFactory()

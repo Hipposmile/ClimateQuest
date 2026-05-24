@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-11 20:01+0200\n"
+"POT-Creation-Date: 2026-05-24 10:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,7 +48,7 @@ msgid "Beschreibung:"
 msgstr "Description:"
 
 #: users/templates/action_detail.html:53 users/templates/history.html:37
-#: users/templates/klimapunkte.html:21 users/templates/level.html:61
+#: users/templates/klimapunkte.html:21 users/templates/level.html:62
 msgid "Klimapunkte:"
 msgstr "Climate points:"
 
@@ -128,7 +128,7 @@ msgid "Aktions-Historie von"
 msgstr "Action history of"
 
 #: users/templates/history.html:8 users/templates/history.html:11
-#: users/templates/klimapunkte.html:13 users/templates/level.html:52
+#: users/templates/klimapunkte.html:13 users/templates/level.html:53
 msgid "mir"
 msgstr "me"
 
@@ -242,28 +242,36 @@ msgstr "My level"
 msgid "Level von"
 msgstr "Level of"
 
-#: users/templates/level.html:66
+#: users/templates/level.html:67
 msgid "Du bist im Level:"
 msgstr "You are at level:"
 
-#: users/templates/level.html:67
+#: users/templates/level.html:70
 msgid "Nächstes Level:"
 msgstr "Next level:"
 
-#: users/templates/level.html:77
+#: users/templates/level.html:83
 #, python-format
-msgid "%(progress_percent)s %% zum nächsten Level geschafft"
-msgstr "%(progress_percent)s %% progress towards the next level"
+msgid ""
+"\n"
+"                %(progress_percent)s %% bis zum nächsten Level geschafft. "
+"Dir fehlen also noch\n"
+"                %(klimapunkte_missing)s Klimapunkte."
+msgstr ""
+"\n"
+"                %(progress_percent)s %% completed towards the next level. "
+"So you still need \n"
+"                %(klimapunkte_missing)s climate points."
 
-#: users/templates/level.html:79
+#: users/templates/level.html:87
 msgid "Liste der Level"
 msgstr "List of levels"
 
-#: users/templates/level.html:83
+#: users/templates/level.html:91
 msgid "Beschreibung"
 msgstr "Description"
 
-#: users/templates/level.html:84
+#: users/templates/level.html:92
 msgid "ab Klimapunkten"
 msgstr "from climate points"
 
@@ -427,6 +435,10 @@ msgstr "No users found"
 #, python-format
 msgid "%(start)s bis %(end)s"
 msgstr "%(start)s to %(end)s"
+
+#, python-format
+#~ msgid "%(progress_percent)s %% zum nächsten Level geschafft"
+#~ msgstr "%(progress_percent)s %% progress towards the next level"
 
 #~ msgid "Ungültiger Zeitraum."
 #~ msgstr "Invalid time period."

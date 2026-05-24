@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-23 12:22+0200\n"
+"POT-Creation-Date: 2026-05-24 10:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,8 +39,11 @@ msgid "Zur Verfügung stehende Credits:"
 msgstr "Available credits:"
 
 #: personals/templates/credit_view.html:31
-msgid "bis zum nächsten Credit geschafft"
-msgstr "to the next credit achieved"
+#, python-format
+msgid ""
+"%(percent_done)s %% bis zum nächsten Credit geschafft. Dir fehlen also noch "
+"%(klimapunkte_missing)s Klimapunkte."
+msgstr "%(percent_done)s %% completed toward the next credit. So you still need %(klimapunkte_missing)s climate points."
 
 #: personals/templates/credit_view.html:34
 msgid "1 Baum pflanzen"
@@ -556,6 +559,9 @@ msgstr ""
 " Log in with it and your username <b>%(username)s</b> <a href=\"https://"
 "climate-quest.de/personals/login/\">here</a> and change your password as "
 "soon as possible under \"edit profile\" for security reasons."
+
+#~ msgid "bis zum nächsten Credit geschafft"
+#~ msgstr "to the next credit achieved"
 
 #~ msgid "Aktuelles Passwort:"
 #~ msgstr "Password:"

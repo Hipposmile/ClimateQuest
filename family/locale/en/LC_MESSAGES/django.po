@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-11 20:01+0200\n"
+"POT-Creation-Date: 2026-05-24 10:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -297,16 +297,23 @@ msgstr "Add family"
 msgid "Family beitreten"
 msgstr "Join family"
 
-#: family/templates/families.html:74 family/templates/family_detail.html:87
+#: family/templates/families.html:74
 #, python-format
-msgid "Mitglieder: %(count)s"
+#| msgid "Mitglieder: %(count)s"
+msgid ""
+"Mitglieder:\n"
+"                            %(count)s"
 msgstr "Members: %(count)s"
 
-#: family/templates/families.html:75
+#: family/templates/families.html:76
+msgid "Du bist auf Platz "
+msgstr "You are on rank "
+
+#: family/templates/families.html:77
 msgid "Details ansehen"
 msgstr "View details"
 
-#: family/templates/families.html:82
+#: family/templates/families.html:84
 msgid "Du bist keiner Family beigetreten."
 msgstr "You have not joined any family."
 
@@ -411,6 +418,11 @@ msgid ""
 "Gesamte Klimapunkte:\n"
 "            %(total)s"
 msgstr "Total climate points: %(total)s"
+
+#: family/templates/family_detail.html:87
+#, python-format
+msgid "Mitglieder: %(count)s"
+msgstr "Members: %(count)s"
 
 #: family/templates/family_detail.html:88
 #, python-format

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-18 17:02+0200\n"
+"POT-Creation-Date: 2026-05-24 10:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgstr "Look at the best users of ClimateQuest!"
 
 #: hall_of_fame/templates/hall_of_fame_detail.html:188
 msgid "Legenden & All-time-GOATS"
-msgstr "Legend & all-time-GOATS"
+msgstr "Legends & all-time-GOATS"
 
 #: hall_of_fame/templates/hall_of_fame_detail.html:197
 msgid ""
@@ -46,21 +46,20 @@ msgstr ""
 "Every user who achieves that gets an entry in the Hall of Fame. Users who "
 "even make it into the Hall of Fame multiple times are listed higher."
 
-#: hall_of_fame/templates/hall_of_fame_detail.html:232
+#: hall_of_fame/templates/hall_of_fame_detail.html:204
+#| msgid ""
+#| "Um in die Hall of Fame zu kommen, musst du diese Woche bis Sonntag "
+#| "mindestens 50 Klimapunkte\n"
+#| "            sammeln."
+msgid ""
+"Um in die Hall of Fame zu kommen, musst du nächste Woche folgendes machen: "
+msgstr ""
+"To get into the Hall of Fame, you have to do the following next week: "
+
+#: hall_of_fame/templates/hall_of_fame_detail.html:236
 msgid "Noch keine Einträge vorhanden."
 msgstr "No entries yet."
 
-#: hall_of_fame/templates/hall_of_fame_detail.html:241
+#: hall_of_fame/templates/hall_of_fame_detail.html:245
 msgid "Zu mir"
 msgstr "To me"
-
-#~| msgid ""
-#~| "Um in die Hall of Fame zu kommen, musst du diese Woche bis Sonntag "
-#~| "mindestens 150 Klimapunkte sammeln."
-#~ msgid ""
-#~ "Um in die Hall of Fame zu kommen, musst du diese Woche bis Sonntag "
-#~ "mindestens 50 Klimapunkte\n"
-#~ "            sammeln."
-#~ msgstr ""
-#~ "To get into the Hall of Fame, you have to collect at least 150 climate "
-#~ "points this week until Sunday."

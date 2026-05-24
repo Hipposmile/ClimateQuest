@@ -201,6 +201,9 @@
                 Klimapunkt-Sammlern</i>. Jeder User, der das schafft, erhält einen Eintrag in der Hall of Fame. User,
             die es
             sogar mehrfach in die Hall of Fame schaffen, werden höher gelistet.{% endblocktrans %}</p>
+        <p>{% trans 'Um in die Hall of Fame zu kommen, musst du nächste Woche folgendes machen: ' %}
+                {% if request.LANGUAGE_CODE == "de" %}{{ to_to_next_week.de }}{% else %}
+                    {{ to_to_next_week.en }}{% endif %}</p>
 
         <div class="hof-divider">
             <span class="hof-divider-star">★</span>
@@ -218,7 +221,8 @@
             {{ forloop.counter }}{% endif %}
       </span>
                     <span class="hof-name">{{ user.username }}</span>
-                    <span class="hof-count">{{ entries|length }} Eintr{% if entries|length == 1 %}ag{% else %}äge{% endif %}</span>
+                    <span class="hof-count">{{ entries|length }} Eintr{% if entries|length == 1 %}ag{% else %}
+                        äge{% endif %}</span>
                 </summary>
                 <div class="hof-body">
                     <ul class="hof-items">
