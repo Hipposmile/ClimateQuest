@@ -1561,13 +1561,22 @@
                 if (isStandalone) {
                     requestAppReview();
                 } else {
-                    let modal = document.getElementById('rating-modal');
-                    modal.classList.add('visible');
-                    modal.onclick = (e) => {
-                        if (e.target === modal) {
-                            modal.classList.remove("visible");
+                    let count = Number(localStorage.getItem("rating-count"));
+                    if (!isNaN(count)) {
+                        count += 1;
+                        localStorage.setItem("rating-count", count);
+                        if ([2, 5, 8, 15].includes(count)) {
+                            let modal = document.getElementById('rating-modal');
+                            modal.classList.add('visible');
+                            modal.onclick = (e) => {
+                                if (e.target === modal) {
+                                    modal.classList.remove("visible");
+                                }
+                            };
                         }
-                    };
+                    } else {
+                        localStorage.setItem("rating-count", 1);
+                    }
                 }
 
                 function requestAppReview() {
