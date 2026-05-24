@@ -1598,15 +1598,15 @@
                         if (isStandalone) {
                             if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers["logged-in"]) {
                                 try {
-                                    window.webkit.messageHandlers["request-review"].postMessage({
+                                    window.webkit.messageHandlers["logged-in"].postMessage({
                                         reason: "logged_in",
                                         user_id: "{{ request.user.id }}"
                                     });
                                 } catch (e) {
-                                    console.warn("request-review postMessage failed:", e);
+                                    console.warn("logged-in postMessage failed:", e);
                                 }
                             } else {
-                                console.log("iOS message handler 'request-review' nicht verfügbar.");
+                                console.log("iOS message handler 'logged in' nicht verfügbar.");
                             }
                         }
                     </script>
