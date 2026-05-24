@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
-
 # Families
 class Family(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -16,7 +15,6 @@ class Family(models.Model):
         return self.name
     
     def save(self, *args, **kwargs):
-        # Nur hashen, wenn das Passwort nicht schon gehashed ist
         if not self.password.startswith('pbkdf2_'):
             self.password = make_password(self.password)
 

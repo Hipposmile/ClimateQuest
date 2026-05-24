@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
-
+{% load get_family_rank %}
 {% block meta %}
     <meta name="description" content="{% trans "Eine Übersicht über all deine Families bei ClimateQuest." %}">
 {% endblock %}
@@ -71,7 +71,9 @@
                 {% for family in families %}
                     <div class="family-card">
                         <h3>{{ family.name }}</h3>
-                        <p>{% blocktrans with count=family.members.count %}Mitglieder: {{ count }}{% endblocktrans %}</p>
+                        <p>{% blocktrans with count=family.members.count %}Mitglieder:
+                            {{ count }}{% endblocktrans %}</p>
+                        <p>{% trans 'Du bist auf Platz ' %}{{ request.user|get_family_rank:family }}</p>
                         <a href="{% url 'family_detail' family.id %}" class="card-btn">{% trans "Details ansehen" %}</a>
                     </div>
                 {% endfor %}

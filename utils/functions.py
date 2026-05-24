@@ -7,6 +7,8 @@ from datetime import timedelta, date, datetime
 import bleach
 from PIL import Image
 from django.contrib import messages
+from django.db.models import Window
+from django.db.models.functions import Rank
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMultiAlternatives
 from django.core.validators import validate_email
@@ -550,7 +552,24 @@ def get_family_rank_from_user(user, family):
     return rank + 1
 
 
-# The following is to calculate time period climate points (help functions)
+"""def get_family_rank_from_user(user, family):
+    result = (
+        family.members
+        .annotate(
+            total_klimapunkte=Sum(
+                F("aktion__aktion__klimapunkte") * F("aktion__quantity")
+            ),
+            rank=Window(
+                expression=Rank(),
+                order_by=F("total_klimapunkte").desc(),
+            ),
+        )
+        .filter(pk=user.pk)
+        .values("rank")
+        .first()
+    )
+    return result["rank"] if result else None"""
+
 
 def get_date_range(zeitraum: str, heute: date) -> tuple[date | None, date | None]:
     offsets = {

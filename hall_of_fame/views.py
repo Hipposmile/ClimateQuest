@@ -1,13 +1,17 @@
 from collections.abc import Callable
 from datetime import date, timedelta
+from typing import List
 
 from django.contrib.auth.models import User
-from django.db.models import Count, F, Sum, Q
+from django.db.models import Count, F, Sum, Q, QuerySet
+from django.db.models import Window
+from django.db.models.functions import Rank
 from django.shortcuts import render
 from django.test import RequestFactory
 from django.urls import reverse
 
 from core.views import fake_request
+from family.models import Family
 from hall_of_fame.models import HallOfFameEntry, HallOfFameData
 from utils.functions import create_notification
 
@@ -157,32 +161,12 @@ custom_fake_request = factory.get('/')
         data.weeks_count = 0"""
 
 
-def add_to_hall_of_fame() -> None:
+def add_to_hall_of_fame_cron() -> None:
     week_start: date = date.today() - timedelta(days=date.today().weekday())
     today: date = date.today()
 
-    def at_least_50_climate_points() -> None:
-        description_de = (
-            f"Hat zwischen {week_start.strftime('%d.%m.%Y')} und {today.strftime('%d.%m.%Y')} "
-            f"50 oder mehr Klimapunkte gesammelt."
-        )
-        description_en = (
-            f"Has collected 50 or more climate points between "
-            f"{week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
-        )
-
-        qualifying_users = (
-            User.objects
-            .annotate(
-                weekly_klimapunkte=Sum(
-                    F("aktion__aktion__klimapunkte") * F("aktion__quantity"),
-                    filter=Q(aktion__date__gte=week_start)
-                )
-            )
-            .filter(weekly_klimapunkte__gte=50)
-        )
-
-        entries = [
+    def add_to_hall_of_fame(qualifying_users: QuerySet[User], description_de: str, description_en: str) -> None:
+        entries: List[HallOfFameEntry] = [
             HallOfFameEntry(user=user, description_de=description_de, description_en=description_en)
             for user in qualifying_users
         ]
@@ -196,14 +180,66 @@ def add_to_hall_of_fame() -> None:
                 user=user,
             )
 
+    def at_least_50_climate_points() -> None:
+        description_de: str = f"Hat zwischen {week_start.strftime('%d.%m.%Y')} und {today.strftime('%d.%m.%Y')} 50 oder mehr Klimapunkte gesammelt."
+        description_en: str = f"Has collected 50 or more climate points between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
+
+        qualifying_users: QuerySet[User] = (
+            User.objects
+            .annotate(
+                weekly_klimapunkte=Sum(
+                    F("aktion__aktion__klimapunkte") * F("aktion__quantity"),
+                    filter=Q(aktion__date__gte=week_start)
+                )
+            )
+            .filter(weekly_klimapunkte__gte=50)
+        )
+
+        add_to_hall_of_fame(qualifying_users, description_de, description_en)
+
     def top_5_climate_point_collector() -> None:
-        pass
+        description_de: str = f"War zwischen {week_start.strftime('%d.%m.%Y')} und {today.strftime('%d.%m.%Y')} einer der Top-5 Klimapunkt-Sammler."
+        description_en: str = f"Was one of the top-5 climate point collector between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
+
+        family: Family = Family.objects.get(name="worldwide ranking")
+
+        qualifying_users: QuerySet[User] = (
+            family.members
+            .annotate(
+                total_klimapunkte=Sum(
+                    F("aktion__aktion__klimapunkte") * F("aktion__quantity")
+                ),
+                rank=Window(
+                    expression=Rank(),
+                    order_by=F("total_klimapunkte").desc(),
+                ),
+            )
+            .filter(rank__lte=5)
+        )
+
+        add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
     def at_least_50_bike_kilometers() -> None:
-        pass
+        description_de: str = f"Ist zwischen {week_start.strftime('%d.%m.%Y')} und {today.strftime('%d.%m.%Y')} mindestens 50 Kilometer Fahrrad gefahren."
+        description_en: str = f"Drove at least 50 kilometers by bike between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
+
+        qualifying_users: QuerySet[User] = (
+            User.objects.annotate(
+                weekly_klimapunkte_by_bike=Sum(
+                    F("aktion__aktion__klimapunkte") * F("aktion__quantity"),
+                    filter=Q(aktion__date__gte=week_start) & Q(aktion__aktion__id=19),
+                )
+            )
+            .filter(weekly_klimapunkte_by_bike__gte=50)
+        )
+
+        add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
     def vegetarian() -> None:
-        pass
+        description_de: str = f"Hat sich zwischen {week_start.strftime('%d.%m.%Y')} und {today.strftime('%d.%m.%Y')} vegetarisch ernährt."
+        description_en: str = f"Lived as a vegetarian between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
+
+        # ...
 
     def vegan() -> None:
         pass
@@ -227,6 +263,7 @@ def add_to_hall_of_fame() -> None:
         data.weeks_count = next_weeks_count
         data.to_do_de = to_do_de
         data.to_do_en = to_do_en
+        data.save()
         for user in User.objects.all():
             custom_fake_request.user = user
             create_notification(
