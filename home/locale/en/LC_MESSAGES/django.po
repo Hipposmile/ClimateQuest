@@ -307,7 +307,7 @@ msgstr "Current Streak"
 
 #: home/templates/dashboard.html:418
 msgid "Wochen mit erreichtem wöchentlichen Ziel"
-msgstr "Weeks with weekly goal achieved"
+msgstr "weeks with weekly goal achieved"
 
 #: home/templates/dashboard.html:423
 msgid "Du hast dein wöchentliches Ziel diese Woche bereits erreicht"

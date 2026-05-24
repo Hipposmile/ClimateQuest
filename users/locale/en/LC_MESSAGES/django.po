@@ -341,7 +341,7 @@ msgstr "Current streak"
 
 #: users/templates/user_detail.html:167
 msgid "Wochen mit erreichtem wöchentlichen Ziel"
-msgstr "Weeks with weekly goal achieved"
+msgstr "weeks with weekly goal achieved"
 
 #: users/templates/user_detail.html:176 users/templates/user_detail.html:182
 msgid "User melden"
