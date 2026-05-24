@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import login_view, register_view, logout_view, settings_view, reset_password, credit_view, check_username, \
-    check_email, get_email_settings, get_block_data_settings, activate, resend_verification_email
+    check_email, get_email_settings, get_block_data_settings, activate, resend_verification_email, register_ios_device
 
 urlpatterns = [
     # Personals
@@ -17,4 +17,6 @@ urlpatterns = [
     path('get_block_data_settings/', get_block_data_settings, name='get_block_data_settings'),
     path('activate/<uidb64>/<token>/', activate, name='activate'),
     path('resend_verification_email/', resend_verification_email, name='resend_verification_email'),
+
+    path('api/devices/ios/register/', register_ios_device, name='register_ios_device'),
 ]

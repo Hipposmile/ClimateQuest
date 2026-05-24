@@ -1,3 +1,4 @@
+import json
 import math
 import os
 from datetime import date, timedelta
@@ -17,6 +18,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode
 from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import gettext as _
+from django.views.decorators.csrf import csrf_exempt
 from dotenv import load_dotenv
 
 from core.all_messages import all_messages
@@ -24,6 +26,7 @@ from family.models import Family
 from personals.models import UserErweitert
 from utils.functions import create_notification, create_internal_error, ist_email_gueltig, send_mail_function, \
     get_families_of_user, get_communities_of_user, generate_random_password, get_all_klimapunkte_from_user
+from .models import IOSDevice
 from .tokens import email_verification_token
 
 load_dotenv()
@@ -370,7 +373,8 @@ def settings_view(request):
             messages.error(request, all_messages["account_deleted"])
             return redirect('login_view')
 
-    return render(request, './personal_settings.html', {'is_social_account': SocialAccount.objects.filter(user=request.user).exists()})
+    return render(request, './personal_settings.html',
+                  {'is_social_account': SocialAccount.objects.filter(user=request.user).exists()})
 
 
 def reset_password(request):
@@ -475,4 +479,34 @@ def credit_view(request):
     klimapunkte_missing = klimapunkte_for_credit - rest
 
     return render(request, './credit_view.html',
-                  {'available_credits': available_credits, 'percent_done': percent_done, 'klimapunkte_missing': klimapunkte_missing})
+                  {'available_credits': available_credits, 'percent_done': percent_done,
+                   'klimapunkte_missing': klimapunkte_missing})
+
+
+@csrf_exempt
+def register_ios_device(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "POST required"}, status=405)
+    try:
+        data = json.loads(request.body.decode("utf-8"))
+    except Exception:
+        return JsonResponse({"error": "invalid json"}, status=400)
+
+    user_id = data.get("user_id")
+    apns_token = data.get("apns_token")
+    bundle_id = data.get("bundle_id", "")
+    app_version = data.get("app_version", "")
+
+    if not user_id or not apns_token:
+        return JsonResponse({"error": "user_id and apns_token required"}, status=400)
+
+    try:
+        user = User.objects.get(pk=user_id)
+    except User.DoesNotExist:
+        return JsonResponse({"error": "user not found"}, status=404)
+
+    device, _ = IOSDevice.objects.update_or_create(
+        apns_token=apns_token,
+        defaults={"user": user, "bundle_id": bundle_id, "app_version": app_version}
+    )
+    return JsonResponse({"status": "ok", "device_id": device.id})

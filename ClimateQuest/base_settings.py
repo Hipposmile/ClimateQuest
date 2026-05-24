@@ -223,3 +223,5 @@ SOCIALACCOUNT_PROVIDERS = {
         }]
     }
 }
+
+APNS_AUTH_KEY_PATH = BASE_DIR / 'secret' / 'APN-Key' / 'AuthKey_3B22TSH7YQ.p8'

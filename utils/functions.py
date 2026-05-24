@@ -2,13 +2,12 @@ import logging
 import random
 import string
 import traceback
-from datetime import timedelta, date, datetime
+from datetime import timedelta, date
 
 import bleach
 from PIL import Image
+from allauth.socialaccount.providers.apple.apple_session import APPLE_SESSION_COOKIE_NAME
 from django.contrib import messages
-from django.db.models import Window
-from django.db.models.functions import Rank
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMultiAlternatives
 from django.core.validators import validate_email
@@ -26,7 +25,7 @@ from community.models import Community
 from core.all_messages import all_messages
 from family.models import Family
 from home.models import Benachrichtigung
-from personals.models import UserErweitert, Level
+from personals.models import UserErweitert, Level, IOSDevice
 
 dezimalstellen = 4
 
@@ -343,18 +342,79 @@ def create_notification(request, notification_de, notification_en, user=None, ur
                                     url=url)
     send_mail_function(
         request=request,
-        fehlermeldung='Beim Erstellen einer Benachrichtigung ist beim Versenden der E-Mail ein Fehler aufgetreten. Die Benachrichtigung kann nur in dem Benachrichtigungsteil hier auf der Webseite gefunden werden!',
+        fehlermeldung='Beim Erstellen einer Benachrichtigung ist beim Versenden der E-Mail ein Fehler aufgetreten. Die Benachrichtigung kann nur in dem Benachrichtigungsteil hier auf der Webseite gefunden werden!' if user.usererweitert.lang == 'de' else 'An error occurred while sending the email during the creation of the notification. The notification can only be found in the notifications section here on the website!',
         subject='ClimateQuest - neue Benachrichtigung',
-        message=notification_de,
+        message=notification_de if user.usererweitert.lang == 'de' else notification_en,
         recipient_list=user.email,
         user=user,
         url=url
     )
+
+    tokens = IOSDevice.objects.filter(user=user).values_list("apns_token", flat=True)
+    for t in tokens:
+        send_ios_push(t, "Neue Benachrichtigung" if user.usererweitert.lang == 'de' else "New notification", notification_de if user.usererweitert.lang == 'de' else notification_en)
+
     res = send_push(benachrichtigung=notification_de if request.user.usererweitert.lang == "de" else notification_en,
                     user=user, url=url)
     if res == 500:
         create_internal_error(request, "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.",
                               "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.")
+
+
+import os
+from django.conf import settings
+
+
+APNS_TEAM_ID = os.environ.get("APPLE_TEAM_ID")
+APNS_KEY_ID = os.environ.get("APN_KEY_ID")
+APNS_AUTH_KEY = os.environ.get("APN_KEY")
+APPLE_BUNDLE_ID = os.environ.get("APPLE_BUNDLE_ID")
+
+import time
+import jwt
+import httpx
+from django.conf import settings
+
+
+def send_ios_push(device_token: str, title: str, body: str, data: dict = None):
+    token = _make_jwt()
+
+    payload = {
+        "aps": {
+            "alert": {"title": title, "body": body},
+            "sound": "default",
+            "badge": 1,
+        }
+    }
+    if data:
+        payload.update(data)  # Custom-Daten landen neben "aps"
+
+    url = f"{settings.APNS_HOST}/3/device/{device_token}"
+
+    with httpx.Client(http2=True) as client:
+        response = client.post(
+            url,
+            headers={
+                "authorization": f"bearer {token}",
+                "apns-topic": settings.APNS_BUNDLE_ID,
+                "apns-push-type": "alert",
+            },
+            json=payload,
+        )
+
+    if response.status_code != 200:
+        raise Exception(f"APNs Fehler {response.status_code}: {response.text}")
+
+
+def _make_jwt():
+    with open(settings.APNS_KEY_PATH) as f:
+        key = f.read()
+    return jwt.encode(
+        {"iss": settings.APNS_TEAM_ID, "iat": int(time.time())},
+        key,
+        algorithm="ES256",
+        headers={"kid": settings.APNS_KEY_ID},
+    )
 
 
 def send_push(benachrichtigung, user, url='/benachrichtigungen/', head="Neue Benachrichtigung"):
