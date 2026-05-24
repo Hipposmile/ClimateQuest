@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserErweitert, Level, TreeCodes
+from .models import UserErweitert, Level, TreeCodes, IOSDevice
 
 
 class UserErweitertAdmin(admin.ModelAdmin):
@@ -8,6 +8,7 @@ class UserErweitertAdmin(admin.ModelAdmin):
 
 admin.site.register(UserErweitert, UserErweitertAdmin)
 admin.site.register(TreeCodes)
+admin.site.register(IOSDevice)
 
 
 @admin.register(Level)
