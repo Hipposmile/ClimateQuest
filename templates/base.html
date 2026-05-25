@@ -1599,6 +1599,7 @@
                 {% elif message.message == "logged-in" %}
                     <script nonce="{{ request.csp_script_nonce }}">
                         if (isStandalone) {
+                            alert("Logged in");
                             if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers["logged-in"]) {
                                 try {
                                     window.webkit.messageHandlers["logged-in"].postMessage({
