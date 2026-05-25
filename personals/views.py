@@ -50,7 +50,7 @@ def login_view(request):
         if user:
             login(request, user)
             next_url = request.POST.get('next') or request.GET.get('next') or 'dashboard'
-            messages.info(request, "Login")
+            messages.info(request, "logged-in")
             return redirect(next_url)
         else:
             messages.error(request, all_messages["invalid_login_data"])
@@ -112,7 +112,7 @@ def register_view(request):
                 user.backend = "django.contrib.auth.backends.ModelBackend"
                 login(request, user)
                 messages.success(request, all_messages['successfully_signed_up'])
-                messages.info(request, "Login")
+                messages.info(request, "logged-in")
                 return redirect('dashboard')
             create_internal_error(request, 'bei Registrierung existiert Nutzer nicht')
             return redirect('register_view')
@@ -134,7 +134,7 @@ def register_view(request):
             user.backend = "django.contrib.auth.backends.ModelBackend"
             login(request, user)
             messages.success(request, all_messages['successfully_signed_up_email_not_verified'])
-            messages.info(request, "Login")
+            messages.info(request, "logged-in")
         else:
             create_internal_error(request, 'bei Registrierung existiert Nutzer nicht')
             return redirect('register_view')

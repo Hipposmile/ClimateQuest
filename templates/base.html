@@ -1513,7 +1513,7 @@
     {% if messages %}
         {% for message in messages %}
             {% if message.level_tag == "info" %}
-                {% if message == "Request review" %}
+                {% if message.message == "request-review" %}
                     <style nonce="{{ request.csp_style_nonce }}">
                         #rating-modal {
                             display: none;
@@ -1552,7 +1552,8 @@
                     <div id="rating-modal">
                         <div id="rating-modal-content">
                             <h2>Gefällt dir ClimateQuest?</h2>
-                            <a href="https://www.trustpilot.com/review/climate-quest.de" class="redirect-link">
+                            <a href="https://www.trustpilot.com/review/climate-quest.de" class="redirect-link"
+                               target="_blank">
                                 <span>{% trans 'Bewerte uns auf Trustpilot' %}</span>
                                 <span class="redirect-link-icon">→</span>
                             </a>
@@ -1569,7 +1570,9 @@
                                 localStorage.setItem("rating-count", count);
                                 if ([2, 5, 8, 15].includes(count)) {
                                     let modal = document.getElementById('rating-modal');
-                                    modal.classList.add('visible');
+                                    setTimeout(() => {
+                                        modal.classList.add('visible');
+                                    }, 1000)
                                     modal.onclick = (e) => {
                                         if (e.target === modal) {
                                             modal.classList.remove("visible");
@@ -1593,7 +1596,7 @@
                             }
                         }
                     </script>
-                {% elif message == "Login" %}
+                {% elif message.message == "logged-in" %}
                     <script nonce="{{ request.csp_script_nonce }}">
                         if (isStandalone) {
                             if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers["logged-in"]) {
