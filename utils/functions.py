@@ -1,12 +1,15 @@
 import logging
 import random
 import string
+import time
 import traceback
 from datetime import timedelta, date
 
 import bleach
+import httpx
+import jwt
 from PIL import Image
-from allauth.socialaccount.providers.apple.apple_session import APPLE_SESSION_COOKIE_NAME
+from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMultiAlternatives
@@ -352,19 +355,13 @@ def create_notification(request, notification_de, notification_en, user=None, ur
 
     tokens = IOSDevice.objects.filter(user=user).values_list("apns_token", flat=True)
     for t in tokens:
-        send_ios_push(t, "Neue Benachrichtigung" if user.usererweitert.lang == 'de' else "New notification", notification_de if user.usererweitert.lang == 'de' else notification_en)
+        send_ios_push(device_token = t, title="Neue Benachrichtigung" if user.usererweitert.lang == 'de' else "New notification", body=notification_de if user.usererweitert.lang == 'de' else notification_en, data={"url": url})
 
     res = send_push(benachrichtigung=notification_de if request.user.usererweitert.lang == "de" else notification_en,
                     user=user, url=url)
     if res == 500:
         create_internal_error(request, "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.",
                               "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.")
-
-import time
-import jwt
-import httpx
-from django.conf import settings
-
 
 def send_ios_push(device_token: str, title: str, body: str, data: dict = None):
     token = _make_jwt()
@@ -377,7 +374,7 @@ def send_ios_push(device_token: str, title: str, body: str, data: dict = None):
         }
     }
     if data:
-        payload.update(data)  # Custom-Daten landen neben "aps"
+        payload.update(data)
 
     url = f"{settings.APNS_HOST}/3/device/{device_token}"
 
