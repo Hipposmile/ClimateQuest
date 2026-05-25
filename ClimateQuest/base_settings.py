@@ -224,4 +224,13 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-APNS_KEY_PATH = BASE_DIR / 'secret' / 'APN-Key' / 'AuthKey_3B22TSH7YQ.p8'
+APN_KEY_PATH = BASE_DIR / 'secret' / 'APN-Key' / 'AuthKey_3B22TSH7YQ.p8'
+APPLE_TEAM_ID = os.environ.get("APPLE_TEAM_ID")
+APN_KEY_ID = os.environ.get("APN_KEY_ID")
+APN_KEY = os.environ.get("APN_KEY")
+APPLE_BUNDLE_ID = os.environ.get("APPLE_BUNDLE_ID")
+
+# Produktion
+#APNS_HOST = "https://api.push.apple.com"
+# Entwicklung/Sandbox (für Development-Zertifikate)
+APNS_HOST = "https://api.sandbox.push.apple.com"

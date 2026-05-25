@@ -360,16 +360,6 @@ def create_notification(request, notification_de, notification_en, user=None, ur
         create_internal_error(request, "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.",
                               "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.")
 
-
-import os
-from django.conf import settings
-
-
-APNS_TEAM_ID = os.environ.get("APPLE_TEAM_ID")
-APNS_KEY_ID = os.environ.get("APN_KEY_ID")
-APNS_AUTH_KEY = os.environ.get("APN_KEY")
-APPLE_BUNDLE_ID = os.environ.get("APPLE_BUNDLE_ID")
-
 import time
 import jwt
 import httpx
@@ -396,7 +386,7 @@ def send_ios_push(device_token: str, title: str, body: str, data: dict = None):
             url,
             headers={
                 "authorization": f"bearer {token}",
-                "apns-topic": settings.APNS_BUNDLE_ID,
+                "apns-topic": settings.APPLE_BUNDLE_ID,
                 "apns-push-type": "alert",
             },
             json=payload,
@@ -407,13 +397,13 @@ def send_ios_push(device_token: str, title: str, body: str, data: dict = None):
 
 
 def _make_jwt():
-    with open(settings.APNS_KEY_PATH) as f:
+    with open(settings.APN_KEY_PATH) as f:
         key = f.read()
     return jwt.encode(
-        {"iss": settings.APNS_TEAM_ID, "iat": int(time.time())},
+        {"iss": settings.APPLE_TEAM_ID, "iat": int(time.time())},
         key,
         algorithm="ES256",
-        headers={"kid": settings.APNS_KEY_ID},
+        headers={"kid": settings.APN_KEY_ID},
     )
 
 
