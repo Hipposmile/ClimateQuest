@@ -221,8 +221,7 @@
             {{ forloop.counter }}{% endif %}
       </span>
                     <span class="hof-name">{{ user.username }}</span>
-                    <span class="hof-count">{{ entries|length }} Eintr{% if entries|length == 1 %}ag{% else %}
-                        äge{% endif %}</span>
+                    <span class="hof-count">{{ entries|length }} Eintr{% if entries|length == 1 %}ag{% else %}äge{% endif %}</span>
                 </summary>
                 <div class="hof-body">
                     <ul class="hof-items">
