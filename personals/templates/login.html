@@ -13,9 +13,12 @@
 
 {% block content %}
     <style nonce="{{ request.csp_style_nonce }}">
-        .sign-in-with-google {
+        .sign-in-with-third-party-service-badge {
             margin: 20px;
-            max-width: 200px;
+        }
+
+        .sign-in-with-third-party-service-badge img {
+            width: 200px;
         }
     </style>
     <h1>{% trans "Login" %}</h1>
@@ -25,14 +28,46 @@
         {% endfor %}
     {% endif %}
     <a href="{% provider_login_url 'google' %}">
-        <img class="sign-in-with-google"
-             src="{% static 'icons/sign-in-with-google.png' %}"
-             alt="Sign in with Google">
+        <picture class="sign-in-with-third-party-service-badge">
+            <source type="image/avif" srcset="
+                    {% static 'icons/SignInWithGoogle/sign-in-with-google-320.avif' %} 320w,
+                    {% static 'icons/SignInWithGoogle/sign-in-with-google-640.avif' %} 640w,
+                    {% static 'icons/SignInWithGoogle/sign-in-with-google-1280.avif' %} 1280w,
+                    {% static 'icons/SignInWithGoogle/sign-in-with-google-1920.avif' %} 1920w
+                    " sizes="100vw"
+            >
+
+            <source type="image/webp" srcset="
+                    {% static 'icons/SignInWithGoogle/sign-in-with-google-320.avif' %} 320w,
+                    {% static 'icons/SignInWithGoogle/sign-in-with-google-640.webp' %} 640w,
+                    {% static 'icons/SignInWithGoogle/sign-in-with-google-1280.webp' %} 1280w,
+                    {% static 'icons/SignInWithGoogle/sign-in-with-google-1920.webp' %} 1920w
+                    " sizes="100vw"
+            >
+
+            <img src="{% static 'icons/SignInWithGoogle/sign-in-with-google-fallback.png' %}" alt="Sign in with Google">
+        </picture>
     </a>
     <a href="{% provider_login_url 'apple' %}">
-        <img class="sign-in-with-google"
-             src="{% static 'icons/sign-in-with-apple.png' %}"
-             alt="Sign in with Apple">
+        <picture class="sign-in-with-third-party-service-badge">
+            <source type="image/avif" srcset="
+                    {% static 'icons/SignInWithApple/sign-in-with-apple-320.avif' %} 320w,
+                    {% static 'icons/SignInWithApple/sign-in-with-apple-640.avif' %} 640w,
+                    {% static 'icons/SignInWithApple/sign-in-with-apple-1280.avif' %} 1280w,
+                    {% static 'icons/SignInWithApple/sign-in-with-apple-1920.avif' %} 1920w
+                    " sizes="100vw"
+            >
+
+            <source type="image/webp" srcset="
+                    {% static 'icons/SignInWithApple/sign-in-with-apple-320.avif' %} 320w,
+                    {% static 'icons/SignInWithApple/sign-in-with-apple-640.webp' %} 640w,
+                    {% static 'icons/SignInWithApple/sign-in-with-apple-1280.webp' %} 1280w,
+                    {% static 'icons/SignInWithApple/sign-in-with-apple-1920.webp' %} 1920w
+                    " sizes="100vw"
+            >
+
+            <img src="{% static 'icons/SignInWithApple/sign-in-with-apple-fallback.png' %}" alt="{% trans "Refresh" %}">
+        </picture>
     </a>
     <form method="post">
         {% csrf_token %}
