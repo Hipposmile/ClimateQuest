@@ -508,6 +508,10 @@
                     impact = Intl.NumberFormat('de-DE', {
                         maximumFractionDigits: 4
                     }).format(impact);
+                } else {
+                    impact = Intl.NumberFormat('en-US', {
+                        maximumFractionDigits: 4
+                    }).format(impact);
                 }
                 impact_anzeige.textContent = "{% trans 'Insgesamt durch diese Aktion gewonnene Klimapunkte:' %} " + impact;
             }

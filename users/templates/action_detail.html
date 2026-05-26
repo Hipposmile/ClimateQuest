@@ -81,14 +81,21 @@
                         {% csrf_token %}
 
                         <label for="action_type">{% trans "Ausgewähltes Element:" %}</label>
-                        <input type="text" id="action_type" name="action_type" value="{% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.name }}{% else %}{{ current_action.aktion.name_en }}{% endif %}"
-                               data-name="{% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.name }}{% else %}{{ current_action.aktion.name_en }}{% endif %}"
+                        <input type="text" id="action_type" name="action_type" value="
+                                {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.name }}{% else %}{{ current_action.aktion.name_en }}{% endif %}"
+                               data-name="
+                                       {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.name }}{% else %}{{ current_action.aktion.name_en }}{% endif %}"
                                data-klimapunkte="{{ current_action.aktion.klimapunkte|floatformat:-4 }}"
-                               data-anmerkung="{% if request.LANGUAGE_CODE == "de" %}{{ current_action.anmerkung }}{% else %}{{ current_action.anmerkung_en }}{% endif %}"
-                               data-mengebeschreibung="{% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.mengeBeschreibung }}{% else %}{{ current_action.aktion.mengeBeschreibung_en }}{% endif %}"
-                               data-mengebeschreibungsingular="{% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.mengeBeschreibungSingular }}{% else %}{{ current_action.aktion.mengeBeschreibungSingular_en }}{% endif %}"
-                               data-source="{% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.source }}{% else %}{{ current_action.aktion.source_en }}{% endif %}"
+                               data-anmerkung="
+                                       {% if request.LANGUAGE_CODE == "de" %}{{ current_action.anmerkung }}{% else %}{{ current_action.anmerkung_en }}{% endif %}"
+                               data-mengebeschreibung="
+                                       {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.mengeBeschreibung }}{% else %}{{ current_action.aktion.mengeBeschreibung_en }}{% endif %}"
+                               data-mengebeschreibungsingular="
+                                       {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.mengeBeschreibungSingular }}{% else %}{{ current_action.aktion.mengeBeschreibungSingular_en }}{% endif %}"
+                               data-source="
+                                       {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.source }}{% else %}{{ current_action.aktion.source_en }}{% endif %}"
                                data-categories="
+
                                        {% for action_category in current_action.aktion.category.all %}{% if request.LANGUAGE_CODE == "de" %}{{ action_category.name }}{% else %}{{ action_category.name_en }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}"
                                readonly>
                         <button type="button" id="openModal">{% trans "Element auswählen" %}</button>
@@ -532,10 +539,16 @@
                 if (isNaN(impact)) {
                     impact_anzeige.textContent = '';
                 } else {
-                    impact = Intl.NumberFormat('de-DE', {
-                        minimumFractionDigits: 4,
-                        maximumFractionDigits: 4
-                    }).format(impact);
+                    const lang = getLang();
+                    if (lang === 'de') {
+                        impact = Intl.NumberFormat('de-DE', {
+                            maximumFractionDigits: 4
+                        }).format(impact);
+                    } else {
+                        impact = Intl.NumberFormat('en-US', {
+                            maximumFractionDigits: 4
+                        }).format(impact);
+                    }
                     impact_anzeige.textContent = '{% trans 'Insgesamt durch diese Aktion gewonnene Klimapunkte:' %} ' + impact;
                 }
             }
