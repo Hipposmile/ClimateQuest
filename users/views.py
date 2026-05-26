@@ -16,7 +16,7 @@ from family.models import Family
 from personals.models import UserErweitert
 from utils.functions import dezimalstellen, get_additional_klimapunkte, get_weekly_goal_from_user, \
     get_streak_from_user, send_mail_function, get_level, create_notification, get_all_klimapunkte_from_user, \
-    get_family_rank_from_user, get_date_range, get_klimapunkte_fuer_member
+    get_family_rank_from_user, get_date_range, get_klimapunkte_fuer_member, get_hall_of_fame_entries
 from home.models import ReportedUser
 
 
@@ -224,6 +224,7 @@ def user_detail(request, user_id):
     streak = get_streak_from_user(user)
     all_klimapunkte = get_all_klimapunkte_from_user(user)
     worldwide_ranking_rank = get_family_rank_from_user(user, Family.objects.get(name='worldwide ranking'))
+    hall_of_fame_entries = get_hall_of_fame_entries(request.user)
 
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -235,7 +236,8 @@ def user_detail(request, user_id):
                                                   'weekly_goal_progress_percent': weekly_goal_progress_percent,
                                                   'weekly_klimapunkte': weekly_klimapunkte, 'streak': streak,
                                                   'all_klimapunkte': all_klimapunkte,
-                                                  'worldwide_ranking_rank': worldwide_ranking_rank})
+                                                  'worldwide_ranking_rank': worldwide_ranking_rank,
+                                                  'hall_of_fame_entries': hall_of_fame_entries})
 
 
 def action_detail(request, action_id, user_id):

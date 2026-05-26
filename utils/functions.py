@@ -11,6 +11,7 @@ import jwt
 from PIL import Image
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMultiAlternatives
 from django.core.validators import validate_email
@@ -27,6 +28,7 @@ from artikel.models import Artikel
 from community.models import Community
 from core.all_messages import all_messages
 from family.models import Family
+from hall_of_fame.models import HallOfFameEntry
 from home.models import Benachrichtigung
 from personals.models import UserErweitert, Level, IOSDevice
 
@@ -641,3 +643,6 @@ def get_klimapunkte_fuer_member(member, start: date | None, end: date | None) ->
     punkte = get_klimapunkte(aktionen) or 0
     punkte += get_additional_klimapunkte(member)
     return punkte
+
+def get_hall_of_fame_entries(user: User) -> int:
+    return HallOfFameEntry.objects.filter(user=user).count()

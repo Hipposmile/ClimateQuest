@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-24 10:44+0200\n"
+"POT-Creation-Date: 2026-05-26 10:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,7 +43,9 @@ msgstr "Available credits:"
 msgid ""
 "%(percent_done)s %% bis zum nächsten Credit geschafft. Dir fehlen also noch "
 "%(klimapunkte_missing)s Klimapunkte."
-msgstr "%(percent_done)s %% completed toward the next credit. So you still need %(klimapunkte_missing)s climate points."
+msgstr ""
+"%(percent_done)s %% completed toward the next credit. So you still need "
+"%(klimapunkte_missing)s climate points."
 
 #: personals/templates/credit_view.html:34
 msgid "1 Baum pflanzen"
@@ -523,7 +525,7 @@ msgstr "Send"
 msgid "Wir werden dir eine E-Mail mit deinen neuen Anmeldedaten schicken."
 msgstr "We will send you an email with your new login details."
 
-#: personals/views.py:142 personals/views.py:189 personals/views.py:255
+#: personals/views.py:148 personals/views.py:195 personals/views.py:261
 #, python-format
 msgid ""
 "Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: "
@@ -532,7 +534,7 @@ msgstr ""
 "Please click the following link to verify your email address: "
 "%(activation_link)s"
 
-#: personals/views.py:148
+#: personals/views.py:154
 msgid ""
 "Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge "
 "deine E-Mail-Adresse später in den Einstellungen hinzu."
@@ -540,11 +542,11 @@ msgstr ""
 "Error sending email. Try registering without email and add your email "
 "address later in the settings."
 
-#: personals/views.py:194
+#: personals/views.py:200
 msgid "Fehler beim E-Mail-Versand. Probiere es später erneut."
 msgstr "Error sending email. Please try again later."
 
-#: personals/views.py:395
+#: personals/views.py:402
 #, python-format
 msgid ""
 "Wir haben dir ein neues, zufällig generiertes Passwort erstellt: "

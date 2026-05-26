@@ -21,6 +21,7 @@
 
         <p>{% blocktrans with all_klimapunkte=all_klimapunkte|floatformat:-4 username=username %}<strong>{{ all_klimapunkte }}</strong> Klimapunkte besitzt {{ username }}{% endblocktrans %}</p>
         <p><strong>#{{ worldwide_ranking_rank }}</strong> {% trans "ist" %} {{ username }} {% trans "im worldwide ranking" %}</p>
+        <p>{% blocktrans with entries=hall_of_fame_entries username=username %}<strong>{{ entries }}</strong> Einträge hat {{ username}} in der Hall of Fame.{% endblocktrans %}</p>
 
         <hr>
 

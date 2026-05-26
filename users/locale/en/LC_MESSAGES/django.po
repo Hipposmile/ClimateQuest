@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-24 10:44+0200\n"
+"POT-Creation-Date: 2026-05-26 10:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -259,8 +259,8 @@ msgid ""
 "                %(klimapunkte_missing)s Klimapunkte."
 msgstr ""
 "\n"
-"                %(progress_percent)s %% completed towards the next level. "
-"So you still need \n"
+"                %(progress_percent)s %% completed towards the next level. So "
+"you still need \n"
 "                %(klimapunkte_missing)s climate points."
 
 #: users/templates/level.html:87
@@ -302,31 +302,40 @@ msgstr "is"
 msgid "im worldwide ranking"
 msgstr "in the worldwide ranking"
 
-#: users/templates/user_detail.html:28 users/templates/user_detail.html:51
+#: users/templates/user_detail.html:24
+#, python-format
+#| msgid ""
+#| "<strong>%(all_klimapunkte)s</strong> Klimapunkte besitzt %(username)s"
+msgid ""
+"<strong>%(entries)s</strong> Einträge hat %(username)s in der Hall of Fame."
+msgstr ""
+"<strong>%(entries)s</strong> entries has %(username)s already in the hall of fame"
+
+#: users/templates/user_detail.html:29 users/templates/user_detail.html:52
 msgid "hat die Ansicht der Daten gesperrt."
 msgstr "has locked the view of their data."
 
-#: users/templates/user_detail.html:32
+#: users/templates/user_detail.html:33
 msgid "Klimapunkte"
 msgstr "Climate points"
 
-#: users/templates/user_detail.html:35
+#: users/templates/user_detail.html:36
 msgid "Level"
 msgstr "Level"
 
-#: users/templates/user_detail.html:38
+#: users/templates/user_detail.html:39
 msgid "Aktions-Historie"
 msgstr "Action history"
 
-#: users/templates/user_detail.html:45
+#: users/templates/user_detail.html:46
 msgid "Statement"
 msgstr "Statement"
 
-#: users/templates/user_detail.html:53
+#: users/templates/user_detail.html:54
 msgid "Wöchentliches Ziel"
 msgstr "Weekly goal"
 
-#: users/templates/user_detail.html:63
+#: users/templates/user_detail.html:64
 #, python-format
 msgid ""
 "%(weekly_klimapunkte)s Klimapunkte bis zum wöchentlichen Ziel von "
@@ -339,47 +348,47 @@ msgstr ""
 "                climate points\n"
 "                achieved"
 
-#: users/templates/user_detail.html:155
+#: users/templates/user_detail.html:156
 msgid "Streak"
 msgstr "Streak"
 
-#: users/templates/user_detail.html:163
+#: users/templates/user_detail.html:164
 msgid "Aktuelle Streak"
 msgstr "Current streak"
 
-#: users/templates/user_detail.html:167
+#: users/templates/user_detail.html:168
 msgid "Wochen mit erreichtem wöchentlichen Ziel"
 msgstr "weeks with weekly goal achieved"
 
-#: users/templates/user_detail.html:176 users/templates/user_detail.html:182
+#: users/templates/user_detail.html:177 users/templates/user_detail.html:183
 msgid "User melden"
 msgstr "Report user"
 
-#: users/templates/user_detail.html:178
+#: users/templates/user_detail.html:179
 msgid "Bist du sicher, dass du diesen User melden möchtest."
 msgstr "Are you sure you want to report this user?"
 
-#: users/templates/user_detail.html:180
+#: users/templates/user_detail.html:181
 msgid "Begründung"
 msgstr "Reason"
 
-#: users/templates/user_detail.html:183
+#: users/templates/user_detail.html:184
 msgid "Dies wird eine Nachricht mit folgenden Daten an ClimateQuest senden:"
 msgstr "This will send a message with the following data to ClimateQuest:"
 
-#: users/templates/user_detail.html:185
+#: users/templates/user_detail.html:186
 msgid "Dein Userprofil"
 msgstr "Your user profile"
 
-#: users/templates/user_detail.html:186
+#: users/templates/user_detail.html:187
 msgid "Das Userprofil, welches du meldest"
 msgstr "The user profile you are reporting"
 
-#: users/templates/user_detail.html:187
+#: users/templates/user_detail.html:188
 msgid "Deine Begründung"
 msgstr "Your reason"
 
-#: users/templates/user_detail.html:189
+#: users/templates/user_detail.html:190
 msgid ""
 "Wenn du einen User wegen von ihm erstellten Content meldest, füge bitte alle "
 "für das Auffinden dieses Contents relevanten Informationen wie die URL hinzu."
@@ -387,17 +396,17 @@ msgstr ""
 "If you are reporting a user for content they created, please include all "
 "information relevant to finding that content, such as the URL."
 
-#: users/templates/user_detail.html:190
+#: users/templates/user_detail.html:191
 msgid "Durch das Melden eines Users erhältst du selbst keine Vorteile."
 msgstr "Reporting a user does not provide any benefits to you."
 
-#: users/templates/user_detail.html:191
+#: users/templates/user_detail.html:192
 msgid ""
 "User können vor allem wegen Verstößen gegen die Nutzungsbedingungen gemeldet "
 "werden."
 msgstr "Users can be reported primarily for violations of the Terms of Use."
 
-#: users/templates/user_detail.html:193
+#: users/templates/user_detail.html:194
 msgid ""
 "Wenn du User willkürlich und ohne konkrete Begründung meldest, ist auch dies "
 "ein Verstoß gegen die Nutzungsbedingungen."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-24 10:44+0200\n"
+"POT-Creation-Date: 2026-05-26 10:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -299,7 +299,6 @@ msgstr "Join family"
 
 #: family/templates/families.html:74
 #, python-format
-#| msgid "Mitglieder: %(count)s"
 msgid ""
 "Mitglieder:\n"
 "                            %(count)s"

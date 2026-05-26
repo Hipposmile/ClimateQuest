@@ -13,11 +13,12 @@ from community.models import Community
 from core.all_messages import all_messages
 from events.models import Event
 from family.models import Family
+from hall_of_fame.models import HallOfFameEntry
 from home.models import Benachrichtigung
 from personals.models import TreeCodes
 from utils.functions import get_streak_from_user, get_additional_klimapunkte, get_klimapunkte, \
     get_weekly_goal_from_user, get_all_klimapunkte_from_user, get_level, get_families_of_user, create_notification, \
-    get_perfect_week_progress
+    get_perfect_week_progress, get_hall_of_fame_entries, get_family_rank_from_user
 
 load_dotenv()
 
@@ -58,24 +59,15 @@ def dashboard(request):
 
     level = get_level(request.user)['current_level']
 
-    families = get_families_of_user(request.user).order_by('name')[:2]
+    hall_of_fame_entries = get_hall_of_fame_entries(request.user)
 
-    communities = Community.objects.filter(members__id__in=families).distinct().order_by('name')[:2]
+    worldwide_ranking_rank = get_family_rank_from_user(request.user, Family.objects.get(name='worldwide ranking'))
 
-    communities_with_user_families = []
-
-    for community in communities:
-        families_in_community = community.members.all()
-        families_user_belongs_to = families_in_community & families
-        communities_with_user_families.append({'community': community, 'families': families_user_belongs_to})
-
-    families = families[:2]
     return render(request, './dashboard.html',
                   {'weekly_goal': weekly_goal, 'weekly_goal_progress_percent': weekly_goal_progress_percent,
                    'weekly_klimapunkte': weekly_klimapunkte, 'streak': streak,
                    'perfect_week_progress_de': perfect_week_progress_de, 'perfect_week_progress_en': perfect_week_progress_en, 'perfect_week': perfect_week,
-                   'aktionen': aktionen, 'klimapunkte': klimapunkte, 'level': level, 'families': families,
-                   'communities_with_user_families': communities_with_user_families})
+                   'aktionen': aktionen, 'klimapunkte': klimapunkte, 'level': level, 'hall_of_fame_entries': hall_of_fame_entries, 'worldwide_ranking_rank': worldwide_ranking_rank})
 
 
 @login_required

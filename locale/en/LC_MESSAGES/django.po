@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-23 12:22+0200\n"
+"POT-Creation-Date: 2026-05-26 10:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -308,7 +308,7 @@ msgstr ""
 "Go to a specific page, for example <i>Aktion hinzufügen</i>, to make an "
 "extra tour for this step"
 
-#: templates/base.html:1554
+#: templates/base.html:1557
 msgid "Bewerte uns auf Trustpilot"
 msgstr "Rate us on trustpilot"
 

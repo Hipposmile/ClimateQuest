@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-18 17:17+0200\n"
+"POT-Creation-Date: 2026-05-26 10:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,7 +112,7 @@ msgstr "Actions"
 msgid "Aktion"
 msgstr "Action"
 
-#: home/templates/aktionenTable.html:74 home/templates/dashboard.html:431
+#: home/templates/aktionenTable.html:74 home/templates/dashboard.html:435
 msgid "Klimapunkte"
 msgstr "Climate Points"
 
@@ -246,11 +246,23 @@ msgstr ""
 msgid "Zur Hall of Fame"
 msgstr "To the hall of fame"
 
-#: home/templates/dashboard.html:240
+#: home/templates/dashboard.html:87
+#, python-format
+msgid ""
+"Du bist auf Platz <strong>#%(rank)s</strong> im worldwide\n"
+"        ranking"
+msgstr "You are ranked <strong>#%(rank)s</strong> in the worldwide ranking"
+
+#: home/templates/dashboard.html:89
+#, python-format
+msgid "Du hast <strong>%(entries)s</strong> Einträge in der Hall of Fame"
+msgstr "You have <strong>%(entries)s</strong> entries in the hall of fame"
+
+#: home/templates/dashboard.html:244
 msgid "Perfekte Woche"
 msgstr "Perfect Week"
 
-#: home/templates/dashboard.html:243
+#: home/templates/dashboard.html:247
 msgid ""
 "Die <b>perfekte Woche</b> kannst du erreichen, wenn du Aktionen aus jeder "
 "Kategorie eingetragen und dein wöchentliches Ziel erreicht hast."
@@ -258,15 +270,15 @@ msgstr ""
 "You can reach the <b>perfect week</b> if you logged actions from every "
 "category and reached your weekly goal."
 
-#: home/templates/dashboard.html:248 home/templates/dashboard.html:277
+#: home/templates/dashboard.html:252 home/templates/dashboard.html:281
 msgid "Wöchentliches Ziel"
 msgstr "Weekly Goal"
 
-#: home/templates/dashboard.html:268
+#: home/templates/dashboard.html:272
 msgid "Du hast eine perfekte Woche!"
 msgstr "You have a perfect week!"
 
-#: home/templates/dashboard.html:280
+#: home/templates/dashboard.html:284
 msgid ""
 "Das <b>wöchentliche Ziel</b> gibt an, wie viele Klimapunkte du jede Woche "
 "erreichen willst. Du kannst es selbstständig verändern."
@@ -274,7 +286,7 @@ msgstr ""
 "The <b>weekly goal</i> indicates how many climate points you want to reach "
 "every week. You can change it on your own."
 
-#: home/templates/dashboard.html:289
+#: home/templates/dashboard.html:293
 #, python-format
 msgid ""
 "\n"
@@ -285,15 +297,15 @@ msgstr ""
 "        %(weekly_klimapunkte)s climate points towards the weekly goal of\n"
 "        %(weekly_goal)s climate points achieved"
 
-#: home/templates/dashboard.html:293
+#: home/templates/dashboard.html:297
 msgid "Ziel ändern"
 msgstr "Change Goal"
 
-#: home/templates/dashboard.html:404
+#: home/templates/dashboard.html:408
 msgid "Streak"
 msgstr "Streak"
 
-#: home/templates/dashboard.html:407
+#: home/templates/dashboard.html:411
 msgid ""
 "Die <b>Streak</b> gibt an, wie oft das wöchentliche Ziel hintereinander "
 "erreicht wurde."
@@ -301,23 +313,23 @@ msgstr ""
 "The <b>streak</b> indicates how often the weekly goal was achieved "
 "consecutively."
 
-#: home/templates/dashboard.html:414
+#: home/templates/dashboard.html:418
 msgid "Aktuelle Streak"
 msgstr "Current Streak"
 
-#: home/templates/dashboard.html:418
+#: home/templates/dashboard.html:422
 msgid "Wochen mit erreichtem wöchentlichen Ziel"
 msgstr "weeks with weekly goal achieved"
 
-#: home/templates/dashboard.html:423
+#: home/templates/dashboard.html:427
 msgid "Du hast dein wöchentliches Ziel diese Woche bereits erreicht"
 msgstr "You have already reached your weekly goal this week"
 
-#: home/templates/dashboard.html:424
+#: home/templates/dashboard.html:428
 msgid "Du hast dein wöchentliches Ziel diese Woche noch nicht erreicht"
 msgstr "You haven't reached your weekly goal this week yet"
 
-#: home/templates/dashboard.html:433
+#: home/templates/dashboard.html:437
 msgid ""
 "Die <b>Klimapunkte</b> geben an, wie viele Klimapunkte du insgesamt bereits "
 "gesammelt hast."
@@ -325,7 +337,7 @@ msgstr ""
 "The <b>climate points</b> indicate, how many climate points you already "
 "collected overall."
 
-#: home/templates/dashboard.html:434
+#: home/templates/dashboard.html:438
 #, python-format
 msgid ""
 "Du hast bereits\n"
@@ -333,15 +345,15 @@ msgid ""
 "            gesammelt."
 msgstr "You have already collected %(klimapunkte)s climate points."
 
-#: home/templates/dashboard.html:438
+#: home/templates/dashboard.html:442
 msgid "Zu den Klimapunkten"
 msgstr "To Climate Points"
 
-#: home/templates/dashboard.html:443
+#: home/templates/dashboard.html:447
 msgid "Level"
 msgstr "Level"
 
-#: home/templates/dashboard.html:445
+#: home/templates/dashboard.html:449
 msgid ""
 "Je nachdem, wie viele Klimapunkte du bereits insgesamt gesammelt hast, "
 "besitzt du ein anderes <b>Level</b>."
@@ -349,11 +361,11 @@ msgstr ""
 "Depending on how many Climate Points you have accumulated in total so "
 "far,you hold a different <b>level</b>."
 
-#: home/templates/dashboard.html:445
+#: home/templates/dashboard.html:449
 msgid "Du bist im Level"
 msgstr "You are at level"
 
-#: home/templates/dashboard.html:449
+#: home/templates/dashboard.html:453
 msgid "Zu den Levels"
 msgstr "To Levels"
 
