@@ -14,7 +14,6 @@
             <p class="{{ message.level_tag }}-message">{{ message }}</p>
         {% endfor %}
     {% endif %}
-    <h3>{% trans "Benachrichtigung erstellen" %}</h3>
     <form method="post" class="form-confirm"
           data-confirm="{% trans "Möchtest du diese Benachrichtigung wirklich erstellen?" %}">
         {% csrf_token %}

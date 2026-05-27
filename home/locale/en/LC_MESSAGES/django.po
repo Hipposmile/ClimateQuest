@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 10:08+0200\n"
+"POT-Creation-Date: 2026-05-27 13:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,81 +22,77 @@ msgstr ""
 msgid "Benachrichtigungen erstellen - Admin"
 msgstr "Create Notifications - Admin"
 
-#: home/templates/admin.html:17
-msgid "Benachrichtigung erstellen"
-msgstr "Create Notification"
-
-#: home/templates/admin.html:19
+#: home/templates/admin.html:18
 msgid "Möchtest du diese Benachrichtigung wirklich erstellen?"
 msgstr "Are you sure you want to create this notification?"
 
-#: home/templates/admin.html:21
+#: home/templates/admin.html:20
 msgid "Empfänger-Typ:"
 msgstr "Receiver-Type:"
 
-#: home/templates/admin.html:23
+#: home/templates/admin.html:22
 msgid "User"
 msgstr "User"
 
-#: home/templates/admin.html:24
+#: home/templates/admin.html:23
 msgid "Family-Members"
 msgstr "Family Members"
 
-#: home/templates/admin.html:25
+#: home/templates/admin.html:24
 msgid "Community-Members"
 msgstr "Community Members"
 
-#: home/templates/admin.html:26
+#: home/templates/admin.html:25
 msgid "Event-Teilnehmer"
 msgstr "Event Participants"
 
-#: home/templates/admin.html:28
+#: home/templates/admin.html:27
 msgid "Name:"
 msgstr "Name:"
 
-#: home/templates/admin.html:29 home/templates/admin.html:47
+#: home/templates/admin.html:28 home/templates/admin.html:46
 msgid "Username"
 msgstr "Username"
 
-#: home/templates/admin.html:31
+#: home/templates/admin.html:30
 msgid "Nachricht (Deutsch):"
 msgstr "Message (Deutsch):"
 
-#: home/templates/admin.html:32 home/templates/admin.html:35
+#: home/templates/admin.html:31 home/templates/admin.html:34
 msgid "Nachricht"
 msgstr "Message"
 
-#: home/templates/admin.html:34
+#: home/templates/admin.html:33
 msgid "Nachricht (Englisch):"
 msgstr "Message (English):"
 
-#: home/templates/admin.html:37
+#: home/templates/admin.html:36
 msgid "URL:"
 msgstr "URL:"
 
-#: home/templates/admin.html:38
+#: home/templates/admin.html:37
 msgid "URL"
 msgstr "URL"
 
-#: home/templates/admin.html:39
+#: home/templates/admin.html:38
 msgid "Erstellen"
 msgstr "Create"
 
-#: home/templates/admin.html:40
+#: home/templates/admin.html:39
 msgid ""
 "Wenn alle User erreicht werden sollen, bitte Family 'worldwide ranking' "
 "angeben"
 msgstr "To reach all users, please specify the Family 'worldwide ranking'"
 
-#: home/templates/admin.html:49
+#: home/templates/admin.html:48
 msgid "Family-Name"
 msgstr "Family Name"
 
-#: home/templates/admin.html:51
+#: home/templates/admin.html:50
 msgid "Community-Name"
 msgstr "Community Name"
 
-#: home/templates/admin.html:53
+#: home/templates/admin.html:52
 msgid "Event-Id"
 msgstr "Event ID"
 
@@ -1709,8 +1705,8 @@ msgid ""
 "        dar und kann entsprechend geahndet werden."
 msgstr ""
 "Users can be reported by other users on their user page at any time in case "
-"of violation of the terms of use. Reports are checked. The operator decides on measures at its "
-"discretion. There is no\n"
+"of violation of the terms of use. Reports are checked. The operator decides "
+"on measures at its discretion. There is no\n"
 "        entitlement to a specific measure. However, unfounded reporting of "
 "other users also constitutes\n"
 "        a\n"
@@ -1834,6 +1830,9 @@ msgid ""
 msgstr ""
 "Do you have questions or need support? Just send an email to <a "
 "href=\"mailto:kontakt@climate-quest.de\">kontakt@climate-quest.de</a>!"
+
+#~ msgid "Benachrichtigung erstellen"
+#~ msgstr "Create Notification"
 
 #~ msgid "Schulen - ClimateQuest"
 #~ msgstr "Schools - ClimateQuest"
