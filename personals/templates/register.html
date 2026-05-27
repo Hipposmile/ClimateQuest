@@ -52,7 +52,7 @@
             <img src="{% static 'icons/SignInWithGoogle/sign-in-with-google-fallback.png' %}" alt="Sign in with Google">
         </picture>
     </a>
-    <a href="{% provider_login_url 'apple' %}">
+    {% comment %}<a href="{% provider_login_url 'apple' %}">
         <picture class="sign-in-with-third-party-service-badge">
             <source type="image/avif" srcset="
                     {% static 'icons/SignInWithApple/sign-in-with-apple-320.avif' %} 320w,
@@ -72,7 +72,7 @@
 
             <img src="{% static 'icons/SignInWithApple/sign-in-with-apple-fallback.png' %}" alt="{% trans "Refresh" %}">
         </picture>
-    </a>
+    </a>{% endcomment %}
     <form method="post" id="register_form" class="dont-show-loading">
         {% csrf_token %}
         <div class="cookie-blocked" data-requires="recaptcha"

@@ -77,22 +77,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.apple',
 ]
 
-"""MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'core.middleware.AddCORSHeaderMiddleware',
-    'servestatic.middleware.ServeStaticMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    #'django.middleware.locale.LocaleMiddleware',
-    'core.middleware.LanguageFallbackMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_browser_reload.middleware.BrowserReloadMiddleware',
-    'core.middleware.GenerateCSPNonceMiddleware'
-]"""
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'core.middleware.AddCORSHeaderMiddleware',
@@ -231,6 +215,6 @@ APN_KEY = os.environ.get("APN_KEY")
 APPLE_BUNDLE_ID = os.environ.get("APPLE_BUNDLE_ID")
 
 # Produktion
-#APNS_HOST = "https://api.push.apple.com"
+# APNS_HOST = "https://api.push.apple.com"
 # Entwicklung/Sandbox (für Development-Zertifikate)
 APNS_HOST = "https://api.sandbox.push.apple.com"

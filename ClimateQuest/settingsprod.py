@@ -34,6 +34,7 @@ DATABASES = {
 INTERNAL_IPS = ['https://climate-quest.de']
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
 
 CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = ['https://climate-quest.de']
