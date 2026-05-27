@@ -14,6 +14,7 @@ def artikel_overview(request):
 
     all_artikel = Artikel.objects.all()
     search_keyword = None
+    order_by_name = "name_de" if request.LANGUAGE_CODE == 'de' else "name_en"
     if request.method == 'POST':
         category = request.POST.get('category')
         if category != "Alle":
@@ -23,10 +24,10 @@ def artikel_overview(request):
         ordered_by = request.POST.get('order_by')
         search_keyword = request.POST.get('search_keyword')
         order_map = {
-            "Name": "name",
+            "Name": order_by_name,
             "Ersteller": "creator__username",
         }
-        order_by = order_map.get(ordered_by, "name")
+        order_by = order_map.get(ordered_by, order_by_name)
         if ordered_by == "von mir erstellte Artikel":
             artikel = all_artikel.filter(creator=request.user)
             already_ordered = True
@@ -61,7 +62,7 @@ def artikel_overview(request):
             artikel = artikel.order_by(order_by)
     else:
         ordered_by = "Name"
-        artikel = all_artikel.order_by('name')
+        artikel = all_artikel.order_by('name_de')
         category = "Alle"
 
     return render(request, 'artikel_overview.html',
@@ -79,8 +80,10 @@ def add_artikel(request):
             messages.error(request, all_messages["not_is_truth"])
             return redirect('add_artikel')
 
-        name = request.POST.get('name')
-        content = request.POST.get('content')
+        name_de = request.POST.get('name_de')
+        name_en = request.POST.get('name_en')
+        content_de = request.POST.get('content_de')
+        content_en = request.POST.get('content_en')
         category = request.POST.get('category')
 
         try:
@@ -89,19 +92,22 @@ def add_artikel(request):
             messages.error(request, all_messages["internal_error"])
             return redirect('add_artikel')
 
-        if len(name) > 100:
+        if len(name_de) > 100 or len(name_en) > 100:
             messages.error(request, all_messages["too_long_input"])
             return redirect('add_artikel')
 
-        if not name or not content:
+        if not name_de or not name_en or not content_de or not content_en:
             messages.error(request, all_messages["missing_required_inputs"])
             return redirect('add_artikel')
 
-        content = clean_html(content)
+        content_de = clean_html(content_de)
+        content_en = clean_html(content_en)
 
         artikel = Artikel.objects.create(
-            name=name,
-            content=content,
+            name_de=name_de,
+            name_en=name_en,
+            content_de=content_de,
+            content_en=content_en,
             creator=request.user,
             category=category
         )
@@ -134,7 +140,8 @@ def edit_artikel(request, artikel_id):
                 messages.error(request, all_messages["not_is_truth"])
                 return redirect('edit_artikel', artikel_id=artikel_id)
 
-            name = request.POST.get('name')
+            name_de = request.POST.get('name_de')
+            name_en = request.POST.get('name_en')
             content = request.POST.get('content')
             category = request.POST.get('category')
 
@@ -144,17 +151,18 @@ def edit_artikel(request, artikel_id):
                 messages.error(request, all_messages["internal_error"])
                 return redirect('edit_artikel', artikel_id=artikel_id)
 
-            if len(name) > 100:
+            if len(name_de) > 100 or len(name_en) > 100:
                 messages.error(request, all_messages["too_long_input"])
                 return redirect('edit_artikel', artikel_id=artikel_id)
 
-            if not name or not content:
+            if not name_de or not name_en or not content:
                 messages.error(request, all_messages["missing_required_inputs"])
                 return redirect('edit_artikel', artikel_id=artikel_id)
 
             content = clean_html(content)
 
-            artikel.name = name
+            artikel.name_de = name_de
+            artikel.name_en = name_en
             artikel.content = content
             artikel.category = category
             artikel.save()

@@ -18,12 +18,18 @@
 
     <form method="post" class="fill-editor">
         {% csrf_token %}
-        <label for="name">{% trans 'Name' %}</label>
-        <input type="text" name="name" id="name" placeholder="{% trans 'Name' %}" maxlength="100" required>
+        <label for="name_en">{% trans 'Name (Englisch)' %}</label>
+        <input type="text" name="name_en" id="name_en" placeholder="{% trans 'Name' %}" maxlength="100" required>
+        <label for="name_de">{% trans 'Name (Deutsch)' %}</label>
+        <input type="text" name="name_de" id="name_de" placeholder="{% trans 'Name' %}" maxlength="100" required>
 
-        <label for="content_editor">{% trans 'Inhalt' %}</label>
-        <div id="content_editor" class="quill-editor"></div>
-        <input type="hidden" name="content">
+        <label>{% trans 'Inhalt (Englisch)' %}</label>
+        <div id="" class="quill-editor content_editor"></div>
+        <input type="hidden" name="content_en">
+
+        <label>{% trans 'Inhalt (Deutsch)' %}</label>
+        <div class="quill-editor content_editor"></div>
+        <input type="hidden" name="content_de">
 
         <label for="category">{% trans 'Kategorie' %}</label>
         <select id="category" name="category">
@@ -36,7 +42,9 @@
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
             {% url 'nutzungsbedingungen' as nutzungs_url %}
-            <span class="label-text">{% blocktrans with url=nutzungs_url %}Ich bestätige, dass alle Angaben der Wahrheit entsprechen, mit mindestens zwei Quellen, welche im Text vorkommen, übereinstimmen und dass der Artikel mit den <a href="{{ url }}">Nutzungsbedingungen</a> übereinstimmt.{% endblocktrans %}</span>
+            <span class="label-text">{% blocktrans with url=nutzungs_url %}Ich bestätige, dass alle Angaben der Wahrheit
+                entsprechen, mit mindestens zwei Quellen, welche im Text vorkommen, übereinstimmen und dass der Artikel
+                mit den <a href="{{ url }}">Nutzungsbedingungen</a> übereinstimmt.{% endblocktrans %}</span>
         </label>
 
         <button type="submit">{% trans 'Speichern' %}</button>

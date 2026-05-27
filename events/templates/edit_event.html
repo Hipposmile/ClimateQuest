@@ -26,7 +26,7 @@
         <input type="text" id="name" name="name" placeholder="{% trans "Name" %}" maxlength="100" value="{{ event.name }}" required>
 
         <label for="content_editor">{% trans "Beschreibung" %}</label>
-        <div id="content_editor" class="quill-editor">{{ event.description|safe }}</div>
+        <div class="quill-editor content_editor">{{ event.description|safe }}</div>
         <input type="hidden" name="content">
 
         <label for="date_time">{% trans "Datum und Uhrzeit (Beginn)" %}</label>

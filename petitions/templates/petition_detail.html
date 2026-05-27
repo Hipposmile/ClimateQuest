@@ -41,11 +41,6 @@
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
-    {% comment %}
-    {% if petition.img %}
-        <img src="{{ petition.img.url }}" class="petition-img" alt="Petitionsbild">
-    {% endif %}
-    {% endcomment %}
     {% if petition.success %}
         <h2>{% trans "Die Petition hatte Erfolg!" %}</h2>
     {% endif %}

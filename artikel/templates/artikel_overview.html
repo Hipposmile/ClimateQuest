@@ -14,8 +14,7 @@
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
-    {% if request.LANGUAGE_CODE == "en" %}
-        <p>Articles are currently only available in German. Thanks for your understanding!</p>{% endif %}
+
     <a href="{% url 'add_artikel' %}" class="redirect-link">
         <span>{% trans 'Artikel hinzufügen' %}</span>
         <span class="redirect-link-icon">→</span>
@@ -71,12 +70,12 @@
     <p>{% blocktrans with count=artikel.count %}{{ count }} Suchergebnisse{% endblocktrans %}</p>
 
     {% if request.user.is_authenticated %}
-    <details>
-        <summary>{% trans "Farbcode" %}</summary>
-        <p class="event-card">{% trans "Ein ganz normaler Artikel" %}</p>
-        <p class="event-card event-card-creator">{% trans "Du hast diesen Artikel erstellt" %}</p>
-        <p class="event-card event-card-participant">{% trans "Du hast diesen Artikel geliket" %}</p>
-    </details>
+        <details>
+            <summary>{% trans "Farbcode" %}</summary>
+            <p class="event-card">{% trans "Ein ganz normaler Artikel" %}</p>
+            <p class="event-card event-card-creator">{% trans "Du hast diesen Artikel erstellt" %}</p>
+            <p class="event-card event-card-participant">{% trans "Du hast diesen Artikel geliket" %}</p>
+        </details>
     {% endif %}
     <hr>
 
@@ -85,7 +84,8 @@
             <section
                     class="event-card{% if request.user == single_artikel.creator %} event-card-creator{% elif request.user in single_artikel.like.all %} event-card-participant{% endif %}">
                 <div class="event-main">
-                    <h2 class="event-title">{{ single_artikel.name }}</h2>
+                    <h2 class="event-title">{% if request.LANGUAGE_CODE == "de" %}{{ single_artikel.name_de|safe }}{% else %}
+                        {{ single_artikel.name_en|safe }}{% endif %}</h2>
                     {% blocktrans with cat=single_artikel.category.title %}Kategorie: {{ cat }}{% endblocktrans %}
                     {% if single_artikel.blocked %}<p>
                         <p><span class="emoji">&#x274C;</span> {{ single_artikel.msg_if_wrong }}</p>

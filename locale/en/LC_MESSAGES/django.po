@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 10:08+0200\n"
+"POT-Creation-Date: 2026-05-27 13:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,277 +30,277 @@ msgstr ""
 "your knowledge in articles or in the forum and contribute to climate "
 "protection."
 
-#: templates/base.html:590
+#: templates/base.html:592
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: templates/base.html:595 templates/base.html:656 templates/base.html:724
-#: templates/base.html:809
+#: templates/base.html:597 templates/base.html:658 templates/base.html:726
+#: templates/base.html:811
 msgid "User"
 msgstr "User"
 
-#: templates/base.html:599 templates/base.html:616 templates/base.html:632
-#: templates/base.html:722 templates/base.html:826
+#: templates/base.html:601 templates/base.html:618 templates/base.html:634
+#: templates/base.html:724 templates/base.html:828
 msgid "Bildung"
 msgstr "Education"
 
-#: templates/base.html:603 templates/base.html:664
+#: templates/base.html:605 templates/base.html:666
 msgid "Schnellzugriff"
 msgstr "Fast Access"
 
-#: templates/base.html:607 templates/base.html:624
+#: templates/base.html:609 templates/base.html:626
 msgid "Mehr"
 msgstr "More"
 
-#: templates/base.html:612
+#: templates/base.html:614
 msgid "Home"
 msgstr "Home"
 
-#: templates/base.html:620 templates/base.html:825
+#: templates/base.html:622 templates/base.html:827
 msgid "Login"
 msgstr "Login"
 
-#: templates/base.html:634 templates/base.html:828
+#: templates/base.html:636 templates/base.html:830
 msgid "Artikel"
 msgstr "Articles"
 
-#: templates/base.html:635 templates/base.html:827
+#: templates/base.html:637 templates/base.html:829
 msgid "Events"
 msgstr "Events"
 
-#: templates/base.html:636 templates/base.html:829
+#: templates/base.html:638 templates/base.html:831
 msgid "Forum"
 msgstr "Forum"
 
-#: templates/base.html:637 templates/base.html:830
+#: templates/base.html:639 templates/base.html:832
 msgid "Petitionen"
 msgstr "Petitions"
 
-#: templates/base.html:648 templates/base.html:817
+#: templates/base.html:650 templates/base.html:819
 msgid "Family"
 msgstr "Family"
 
-#: templates/base.html:652
+#: templates/base.html:654
 msgid "Families"
 msgstr "Families"
 
-#: templates/base.html:654
+#: templates/base.html:656
 msgid "Communities"
 msgstr "Communities"
 
-#: templates/base.html:666
+#: templates/base.html:668
 msgid "Aktion eintragen"
 msgstr "Add Action"
 
-#: templates/base.html:667 templates/base.html:815
+#: templates/base.html:669 templates/base.html:817
 msgid "Aktions-Historie"
 msgstr "Action History"
 
-#: templates/base.html:669 templates/base.html:805
+#: templates/base.html:671 templates/base.html:807
 msgid "Level"
 msgstr "Level"
 
-#: templates/base.html:670 templates/base.html:806
+#: templates/base.html:672 templates/base.html:808
 msgid "Klimapunkte"
 msgstr "Climate Points"
 
-#: templates/base.html:672 templates/base.html:807
+#: templates/base.html:674 templates/base.html:809
 msgid "Credits / Bäume"
 msgstr "Credits / Trees"
 
-#: templates/base.html:684
+#: templates/base.html:686
 msgid "Seite"
 msgstr "Page"
 
-#: templates/base.html:686 templates/base.html:725 templates/base.html:803
+#: templates/base.html:688 templates/base.html:727 templates/base.html:805
 msgid "Teilen"
 msgstr "Share"
 
-#: templates/base.html:689
+#: templates/base.html:691
 msgid "Benachrichtigungen"
 msgstr "Notifications"
 
-#: templates/base.html:692 templates/base.html:804
+#: templates/base.html:694 templates/base.html:806
 msgid "Konto"
 msgstr "Account"
 
-#: templates/base.html:695
+#: templates/base.html:697
 msgid "Einstellungen"
 msgstr "Settings"
 
-#: templates/base.html:697 templates/base.html:810
+#: templates/base.html:699 templates/base.html:812
 msgid "Logout"
 msgstr "Logout"
 
-#: templates/base.html:701
+#: templates/base.html:703
 msgid "Sonstiges"
 msgstr "Other"
 
-#: templates/base.html:703 templates/base.html:816
+#: templates/base.html:705 templates/base.html:818
 msgid "Tracken"
 msgstr "Track"
 
-#: templates/base.html:708
+#: templates/base.html:710
 msgid "Admin"
 msgstr "Admin"
 
-#: templates/base.html:710
+#: templates/base.html:712
 msgid "Admin (I)"
 msgstr "Admin (I)"
 
-#: templates/base.html:711
+#: templates/base.html:713
 msgid "Admin (II)"
 msgstr "Admin (II)"
 
-#: templates/base.html:737
+#: templates/base.html:739
 msgid "Alle Aktionen"
 msgstr "All Actions"
 
-#: templates/base.html:738
+#: templates/base.html:740
 msgid "Nutzungsbedingungen"
 msgstr "Terms of Use"
 
-#: templates/base.html:739
+#: templates/base.html:741
 msgid "Impressum"
 msgstr "Legal Notice"
 
-#: templates/base.html:740
+#: templates/base.html:742
 msgid "Datenschutz"
 msgstr "Privacy Policy"
 
-#: templates/base.html:745
+#: templates/base.html:747
 msgid "Nach oben"
 msgstr "Up"
 
-#: templates/base.html:808
+#: templates/base.html:810
 msgid "Profil bearbeiten"
 msgstr "Edit Profile"
 
-#: templates/base.html:811
+#: templates/base.html:813
 msgid "Admin-Bereich (I)"
 msgstr "Admin Area (I)"
 
-#: templates/base.html:812
+#: templates/base.html:814
 msgid "Admin-Bereich (II)"
 msgstr "Admin Area (II)"
 
-#: templates/base.html:813
+#: templates/base.html:815
 msgid "Aktionen"
 msgstr "Actions"
 
-#: templates/base.html:814
+#: templates/base.html:816
 msgid "Aktion hinzufügen"
 msgstr "Add Actions"
 
-#: templates/base.html:818
+#: templates/base.html:820
 msgid "Family erstellen"
 msgstr "Create family"
 
-#: templates/base.html:819
+#: templates/base.html:821
 msgid "Family beitreten"
 msgstr "Join family"
 
-#: templates/base.html:820
+#: templates/base.html:822
 msgid "Meine Families"
 msgstr "My families"
 
-#: templates/base.html:821
+#: templates/base.html:823
 msgid "Community"
 msgstr "Community"
 
-#: templates/base.html:822
+#: templates/base.html:824
 msgid "Community erstellen"
 msgstr "Create community"
 
-#: templates/base.html:823
+#: templates/base.html:825
 msgid "Community beitreten"
 msgstr "Join community"
 
-#: templates/base.html:824
+#: templates/base.html:826
 msgid "Meine Communities"
 msgstr "My communities"
 
-#: templates/base.html:1183
+#: templates/base.html:1043
 msgid "Seite teilen"
 msgstr "Share page"
 
-#: templates/base.html:1194
+#: templates/base.html:1054
 msgid "Folgende URL teilen:"
 msgstr "Share the following URL:"
 
-#: templates/base.html:1198
+#: templates/base.html:1058
 msgid "Teilen über Gerät"
 msgstr "Share via device"
 
-#: templates/base.html:1200
+#: templates/base.html:1060
 msgid "ODER"
 msgstr "OR"
 
-#: templates/base.html:1204
+#: templates/base.html:1064
 msgid "Facebook"
 msgstr "Facebook"
 
-#: templates/base.html:1207
+#: templates/base.html:1067
 msgid "X (Twitter)"
 msgstr "X (Twitter)"
 
-#: templates/base.html:1210
+#: templates/base.html:1070
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: templates/base.html:1213
+#: templates/base.html:1073
 msgid "WhatsApp"
 msgstr "WhatsApp"
 
-#: templates/base.html:1216
+#: templates/base.html:1076
 msgid "E-Mail"
 msgstr "E-Mail"
 
-#: templates/base.html:1219 templates/base.html:1237
+#: templates/base.html:1079 templates/base.html:1097
 msgid "Link kopieren"
 msgstr "Copy link"
 
-#: templates/base.html:1220
+#: templates/base.html:1080
 msgid "QR-Code erstellen"
 msgstr "Create QR-code"
 
-#: templates/base.html:1235
+#: templates/base.html:1095
 msgid "Link kopiert"
 msgstr "Copied link"
 
-#: templates/base.html:1236
+#: templates/base.html:1096
 msgid "Kopieren fehlgeschlagen"
 msgstr "Copying failed"
 
-#: templates/base.html:1238
+#: templates/base.html:1098
 msgid "Teilen wird auf diesem Gerät nicht unterstützt."
 msgstr "Sharing is not supported on this device."
 
-#: templates/base.html:1323
+#: templates/base.html:1183
 msgid "Download"
 msgstr "Download"
 
-#: templates/base.html:1379
+#: templates/base.html:1234
 msgid "Bist du sicher?"
 msgstr "Are you sure?"
 
-#: templates/base.html:1484
+#: templates/base.html:1354
 msgid "Nächste"
 msgstr "Next"
 
-#: templates/base.html:1485
+#: templates/base.html:1355
 msgid "Zurück"
 msgstr "Back"
 
-#: templates/base.html:1486
+#: templates/base.html:1356
 msgid "Beenden"
 msgstr "Finish"
 
-#: templates/base.html:1492
+#: templates/base.html:1362
 msgid "Tour abgeschlossen"
 msgstr "Tour completed"
 
-#: templates/base.html:1495
+#: templates/base.html:1365
 msgid ""
 "Gehe auf eine einzelne Seite, zum Beispiel <i>Aktion hinzufügen</i>, um noch "
 "eine extra Tour zu diesem Schritt zu erhalten"
@@ -308,7 +308,7 @@ msgstr ""
 "Go to a specific page, for example <i>Aktion hinzufügen</i>, to make an "
 "extra tour for this step"
 
-#: templates/base.html:1557
+#: templates/base.html:1427
 msgid "Bewerte uns auf Trustpilot"
 msgstr "Rate us on trustpilot"
 

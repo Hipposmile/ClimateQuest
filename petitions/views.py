@@ -6,15 +6,11 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from core.all_messages import all_messages
-from .models import Petition, Comment, Category, Answer, Update
 from utils.functions import clean_html, check_is_truth, create_notification
+from .models import Petition, Comment, Category, Answer, Update
+
 
 # Create your views here.
-ALLOWED_EXTENSIONS = ["jpg", "jpeg", "png", "webp", "avif"]
-ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/avif", ]
-MAX_SIZE_MB = 5
-
-
 @login_required
 def add_petition(request):
     categories = Category.objects.all().order_by('title')
@@ -268,5 +264,6 @@ def petitions_overview(request):
         petitions = Petition.objects.filter(success=False).order_by('title')
 
     return render(request, './petitions_overview.html',
-                  {'petitions': petitions, 'ordered_by': ordered_by, 'category': category, 'search_keyword': search_keyword,
+                  {'petitions': petitions, 'ordered_by': ordered_by, 'category': category,
+                   'search_keyword': search_keyword,
                    'success_visible': success_visible, 'all_categories': all_categories})

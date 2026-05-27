@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 10:08+0200\n"
+"POT-Creation-Date: 2026-05-27 13:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,10 +51,10 @@ msgid ""
 "Um in die Hall of Fame zu kommen, musst du nächste Woche folgendes machen: "
 msgstr "To get into the Hall of Fame, you have to do the following next week: "
 
-#: hall_of_fame/templates/hall_of_fame_detail.html:236
+#: hall_of_fame/templates/hall_of_fame_detail.html:235
 msgid "Noch keine Einträge vorhanden."
 msgstr "No entries yet."
 
-#: hall_of_fame/templates/hall_of_fame_detail.html:245
+#: hall_of_fame/templates/hall_of_fame_detail.html:244
 msgid "Zu mir"
 msgstr "To me"

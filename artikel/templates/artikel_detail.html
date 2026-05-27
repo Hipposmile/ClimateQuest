@@ -2,10 +2,13 @@
 {% load i18n %}
 {% block meta %}
     <meta name="description"
-          content="{% blocktrans with name=artikel.name %}Lies den Artikel '{{ name }}' bei ClimateQuest. Hinterlasse Kommentare oder Antworten, um konstruktive Kritik, Fragen oder Anmerkungen hinzuzufügen.{% endblocktrans %}">
+          content="{% if request.LANGUAGE_CODE == "de" %}Lies den Artikel '{{ artikel.name_de }}' bei ClimateQuest. Hinterlasse Kommentare oder Antworten, um konstruktive Kritik, Fragen oder Anmerkungen hinzuzufügen.{% else %}Read the article '{{ artikel.name_en }} bei ClimateQuest. Leave comments to add constructive criticism and questions.'{% endif %}">
 {% endblock %}
 
-{% block title %}{% blocktrans with name=artikel.name %}Artikel {{ name }}{% endblocktrans %}{% endblock %}
+{% block title %}
+    {% trans 'Artikel' %}{% if request.LANGUAGE_CODE == "de" %}{{ artikel.name_de }}{% else %}
+        {{ artikel.name_en }}{% endif %}
+{% endblock %}
 
 {% block content %}
     <style nonce="{{ request.csp_style_nonce }}">
@@ -55,8 +58,9 @@
     </style>
 
     {% url 'artikel_overview' as overview_url %}
-    <h1>{% blocktrans with url=overview_url name=artikel.name %}<a href="{{ url }}">Artikel</a>
-        <i>{{ name }}</i>{% endblocktrans %}</h1>
+    <h1>{% if request.LANGUAGE_CODE == "de" %}<a href="{% url 'artikel_overview' %}">Artikel</a>
+        <i>{{ artikel.name_de|safe }}</i>{% else %}<a href="{% url 'artikel_overview' %}">Article</a>
+        <i>{{ artikel.name_en|safe }}</i>{% endif %}</h1>
 
     {% if messages %}
         {% for message in messages %}
@@ -148,7 +152,8 @@
         </div>
     {% endif %}
 
-    <div class="artikel-content"><p>{{ artikel.content|safe }}</p></div>
+    <div class="artikel-content"><p>{% if request.LANGUAGE_CODE == "de" %}{{ artikel.content_de|safe }}{% else %}
+        {{ artikel.content_en|safe }}{% endif %}</p></div>
     <br>
     {% url 'user_detail' artikel.creator.id as user_url %}
     <p>{% blocktrans with url=user_url creator=artikel.creator %}Erstellt von

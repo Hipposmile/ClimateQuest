@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.db import models
-from core.validators import validate_image
 from django.utils import timezone
 
 

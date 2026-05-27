@@ -4,12 +4,15 @@
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 
-{% block title %}{% blocktrans with name=artikel.name %}Artikel {{ name }} bearbeiten{% endblocktrans %}{% endblock %}
+{% block title %}
+    {% if request.LANGUAGE_CODE == "de" %}Artikel {{ artikel.name_de }} bearbeiten{% else %}
+        Edit article {{ artikel.name_en }}{% endif %}
+{% endblock %}
 
 {% block content %}
 
-    {% url 'artikel_detail' artikel.id as detail_url %}
-    <h2>{% blocktrans with url=detail_url name=artikel.name %}Artikel <a href="{{ url }}">{{ name }}</a> bearbeiten{% endblocktrans %}</h2>
+    <h2>{% if request.LANGUAGE_CODE == "de" %}Artikel <a href="{% url 'artikel_detail' artikel.id %}">{{ artikel.name_de }}</a> bearbeiten{% else %}
+        Edit article <a href="{% url 'artikel_detail' artikel.id %}">{{ artikel.name_en }}</a>{% endif %}</h2>
 
     {% if messages %}
         {% for message in messages %}
@@ -17,21 +20,29 @@
         {% endfor %}
     {% endif %}
 
-    <div class="artikel-content"><p>{{ artikel.content|safe }}</p></div>
+    <div class="artikel-content"><p>{% if request.LANGUAGE_CODE == "de" %}{{ artikel.content_de|safe }}{% else %}
+        {{ artikel.content_en|safe }}{% endif %}</p></div>
 
     <form method="post" class="fill-editor">
         {% csrf_token %}
-        <label for="name">{% trans 'Name' %}</label>
-        <input type="text" name="name" id="name" placeholder="{% trans 'Name' %}" maxlength="100" value="{{ artikel.name }}">
+        <label for="name_en">{% trans 'Name (Englisch)' %}</label>
+        <input type="text" name="nam_en" id="name_en" placeholder="{% trans 'Name' %}" maxlength="100" required>
+        <label for="name_de">{% trans 'Name (Deutsch)' %}</label>
+        <input type="text" name="name_de" id="name_de" placeholder="{% trans 'Name' %}" maxlength="100" required>
 
-        <label for="content_editor">{% trans 'Beschreibung' %}</label>
-        <div id="content_editor" class="quill-editor">{{ artikel.content|safe }}</div>
-        <input type="hidden" name="content">
+        <label for="content_editor">{% trans 'Inhalt (Englisch)' %}</label>
+        <div class="quill-editor content_editor">{{ artikel.content_en|safe }}</div>
+        <input type="hidden" name="content_en">
+
+        <label for="content_editor">{% trans 'Inhalt (Deutsch)' %}</label>
+        <div class="quill-editor content_editor">{{ artikel.content_de|safe }}</div>
+        <input type="hidden" name="content_de">
 
         <label for="category">{% trans 'Kategorie' %}</label>
         <select id="category" name="category">
             {% for category in categories %}
-                <option value="{{ category }}" {% if category == artikel.category.title %}selected{% endif %}>{% blocktrans with cat=category %}{{ cat }}{% endblocktrans %}</option>
+                <option value="{{ category }}" {% if category == artikel.category.title %}selected{% endif %}>
+                    {% blocktrans with cat=category %}{{ cat }}{% endblocktrans %}</option>
             {% endfor %}
         </select>
 
@@ -39,7 +50,9 @@
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
             {% url 'nutzungsbedingungen' as nutzungs_url %}
-            <span class="label-text">{% blocktrans with url=nutzungs_url %}Ich bestätige, dass alle Angaben der Wahrheit entsprechen, mit mindestens zwei Quellen, welche im Text vorkommen, übereinstimmen und dass der Artikel mit den <a href="{{ url }}">Nutzungsbedingungen</a> übereinstimmt.{% endblocktrans %}</span>
+            <span class="label-text">{% blocktrans with url=nutzungs_url %}Ich bestätige, dass alle Angaben der Wahrheit
+                entsprechen, mit mindestens zwei Quellen, welche im Text vorkommen, übereinstimmen und dass der Artikel
+                mit den <a href="{{ url }}">Nutzungsbedingungen</a> übereinstimmt.{% endblocktrans %}</span>
         </label>
 
         <button type="submit" name="edit_artikel">{% trans 'Speichern' %}</button>

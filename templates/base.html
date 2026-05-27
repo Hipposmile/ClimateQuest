@@ -555,30 +555,32 @@
 
     document.addEventListener("DOMContentLoaded", removeHoverStyles);
 
-    let quill;
+    const quillEditors = new Map();
 
     function initializeQuill() {
-        let editor = document.getElementById('content_editor')
+        const editors = document.querySelectorAll('.content_editor');
+
         const script = document.createElement("script");
         script.src = "{% static 'libraries/quill/quill.js' %}";
         document.body.appendChild(script);
+
         script.onload = function () {
-            if (editor) {
-                quill = new Quill(editor, {
+            editors.forEach((el) => {
+                const quill = new Quill(el, {
                     theme: 'snow',
                     modules: {
                         toolbar: [
                             [{header: [1, 2, false]}],
                             ['bold', 'italic', 'underline'],
-                            [{'list': 'ordered'}, {'list': 'bullet'}],
+                            [{list: 'ordered'}, {list: 'bullet'}],
                             ['link']
                         ]
                     }
                 });
-            } else {
-                console.warn("Editor not found");
-            }
-        }
+
+                quillEditors.set(el, quill);
+            });
+        };
     }
 </script>
 {% csrf_token %}
@@ -1030,148 +1032,6 @@
     </script>
 {% endif %}
 <script src="{% static 'pwa/register_sw.js' %}"></script>
-{% comment %}
-{% with url=request.build_absolute_uri %}
-    <!--Teilen-->
-    <div id="shareOverlay" class="overlay">
-        <div class="overlay-content">
-            <button class="closeShareOverlay"><span class="emoji">&#x2717;</span></button>
-
-            <div class="share-container">
-                <h1>Seite teilen</h1>
-
-                {% if messages %}
-                    <div class="message-box">
-                        {% for message in messages %}
-                            <p class="message {{ message.level_tag }}">{{ message }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-
-                <p class="h3_size">Folgende URL teilen: <a href="">{{ url }}</a></p>
-
-                <button class="share-btn native-share" id="share">Teilen über Gerät</button>
-
-                <p class="divider">ODER</p>
-
-                <div class="share-panel">
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ url }}" target="_blank">
-                        <button class="share-btn facebook">Facebook</button>
-                    </a>
-                    <a href="https://twitter.com/intent/tweet?url={{ url }}" target="_blank">
-                        <button class="share-btn x">X (Twitter)</button>
-                    </a>
-                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url }}" target="_blank">
-                        <button class="share-btn linkedin">LinkedIn</button>
-                    </a>
-                    <a href="https://api.whatsapp.com/send?text={{ url }}" target="_blank">
-                        <button class="share-btn whatsapp">WhatsApp</button>
-                    </a>
-                    <a href="mailto:?subject=Schau mal!&body={{ url }}" class="dont-show-loading">
-                        <button class="share-btn email">E-Mail</button>
-                    </a>
-                    <button class="share-btn copy" id="copy_button">Link kopieren
-                    </button>
-                    <button class="share-btn qrcode" id="generateQrCode">QR-Code erstellen</button>
-                </div>
-
-                <div id="qrcodeContainer">
-                    <canvas id="qrcode"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="{% static 'js/qrcode.min.js' %}"></script>
-    <script nonce="{{ request.csp_script_nonce }}">
-        function openOverlay() {
-            document.getElementById("shareOverlay").style.display = "flex";
-
-            document.getElementById("shareOverlay").addEventListener("click", function (e) {
-                if (e.target === this) {
-                    this.style.display = "none";
-                }
-            });
-        }
-
-        function closeOverlay() {
-            document.getElementById("shareOverlay").style.display = "none";
-        }
-
-        function resetOverlayTriggers() {
-            document.querySelectorAll('.openShareOverlay').forEach((el) => {
-                el.addEventListener('click', openOverlay);
-            });
-            document.querySelectorAll('.closeShareOverlay').forEach((el) => {
-                el.addEventListener('click', closeOverlay);
-            });
-        }
-
-        function initializeShareBtns() {
-            document.getElementById('share').addEventListener('click', () => {
-                sharePage("{{ url }}");
-            });
-            document.getElementById('copy_button').addEventListener('click', () => {
-                copyURL("{{ url }}");
-            });
-            document.getElementById('generateQrCode').addEventListener('click', () => {
-                generateQrCode("{{ url }}");
-            });
-        }
-
-        function sharePage(url = "{{ url }}") {
-            if (navigator.share) {
-                navigator.share({url: url}).catch(console.error);
-            } else {
-                alert("Teilen wird auf diesem Gerät nicht unterstützt.");
-            }
-        }
-
-        function generateQrCode(url = "{{ url }}") {
-            let qrcodeContainer = document.getElementById("qrcodeContainer");
-            qrcodeContainer.innerHTML = "";
-            qrcodeContainer.style.display = "block";
-
-            new QRCode(qrcodeContainer, {
-                text: url,
-                width: 400,
-                height: 400,
-                colorDark: "#000000",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H
-            });
-
-            let downloadButton = document.createElement("button");
-            downloadButton.id = "qrcodeDownload";
-            downloadButton.textContent = "Download";
-            downloadButton.addEventListener("click", downloadQrCode);
-            qrcodeContainer.appendChild(downloadButton);
-        }
-
-        function downloadQrCode() {
-            const qrCodeImg = document.querySelector('#qrcodeContainer canvas');
-            const dataUrl = qrCodeImg.toDataURL("image/png");
-            const link = document.createElement('a');
-            link.href = dataUrl;
-            link.download = 'qrcode.png';
-            link.click();
-        }
-
-        function copyURL(url = "{{ url }}") {
-            const copy_button = document.getElementById('copy_button');
-
-            navigator.clipboard.writeText(url)
-                .then(() => {
-                    copy_button.textContent = "Link kopiert";
-                    setTimeout(() => copy_button.textContent = "Link kopieren", 1000);
-                })
-                .catch(() => {
-                    copy_button.textContent = "Kopieren fehlgeschlagen";
-                    setTimeout(() => copy_button.textContent = "Link kopieren", 1000);
-                });
-        }
-    </script>
-{% endwith %}
-{% endcomment %}
 
 {% with url=request.build_absolute_uri %}
     <!--Teilen-->
@@ -1363,11 +1223,6 @@
 {% endwith %}
 
 <script nonce="{{ request.csp_script_nonce }}">
-    /*const a_showLoading = document.querySelectorAll('a[href]:not([href^="#"]):not(.dont-show-loading):not(.mobile-menu-trigger):not([target="_blank"]):not([download])');
-    a_showLoading.forEach((el) => {
-        el.addEventListener('click', showLoading);
-    });*/
-
     const form_showLoading = document.querySelectorAll('form:not(.dont-show-loading):not(.form-confirm)');
     form_showLoading.forEach((el) => {
         el.addEventListener('submit', showLoading);
@@ -1385,34 +1240,49 @@
         });
     });
 
-    forms_fillEditor = document.querySelectorAll('.fill-editor');
-    forms_fillEditor.forEach((el) => {
-        el.addEventListener('submit', () => {
-            fillEditor(event);
-        });
-    })
+    document.querySelectorAll('.fill-editor').forEach((form) => {
+        form.addEventListener('submit', (event) => fillEditor(event));
+    });
 
     function fillEditor(event) {
-        const form = event.target;
         event.preventDefault();
-        let content = "";
-        const btn_name = form.querySelector('button[type=submit]').name;
+        const form = event.target;
+
+        // Alle Quill-Container im Formular
+        const editorElements = form.querySelectorAll('.content_editor');
+
+        editorElements.forEach((editorEl) => {
+            const quill = quillEditors.get(editorEl);
+
+            if (!quill) {
+                console.error("Quill instance not found");
+                return;
+            }
+
+            const content = quill.root.innerHTML;
+
+            // Hidden Input direkt NACH dem Editor finden
+            const hiddenInput = editorEl.nextElementSibling;
+
+            if (!hiddenInput || hiddenInput.type !== "hidden") {
+                console.error("Kein Hidden Input gefunden");
+                return;
+            }
+
+            hiddenInput.value = content;
+        });
+
+        // Button-Name wie bei dir
+        const btnName = form.querySelector('button[type=submit]').name;
         const hidden = document.createElement('input');
         hidden.type = 'hidden';
-        hidden.name = btn_name;
+        hidden.name = btnName;
         form.appendChild(hidden);
-        try {
-            content = quill.root.innerHTML;
-        } catch {
-            console.error("Variable Quill not found");
-            alert("Ein interner Fehler ist aufgetreten. Probiere es später bitte erneut!");
-            return false;
-        }
-        form.querySelector('input[name=content]').value = content;
+
         form.submit();
     }
 
-    // Accordion
+
     document.querySelectorAll(".accordion").forEach((accordion) => {
         const toggleBtn = accordion.querySelector(".accordion-header");
         const contentWrapper = accordion.querySelector(".accordion-content-wrapper");

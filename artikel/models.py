@@ -32,8 +32,10 @@ class Category(models.Model):
 
 
 class Artikel(models.Model):
-    name = models.CharField(max_length=100)
-    content = models.TextField()
+    name_de = models.CharField(max_length=100)
+    name_en = models.CharField(max_length=100)
+    content_de = models.TextField()
+    content_en = models.TextField()
     comments = models.ManyToManyField(Comment, related_name='artikel', blank=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     like = models.ManyToManyField(User, blank=True, related_name='artikel_like')
@@ -54,4 +56,4 @@ class Artikel(models.Model):
         return self.like.count()
 
     def __str__(self):
-        return self.name
+        return self.name_de

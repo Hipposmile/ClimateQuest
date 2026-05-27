@@ -54,7 +54,7 @@
     <h3>{% trans "Antworten" %}</h3>
     <form method="post" class="fill-editor">
         {% csrf_token %}
-        <div id="content_editor" class="quill-editor"></div>
+        <div class="quill-editor content_editor"></div>
         <input type="hidden" name="content">
 
         <label class="custom-checkbox">

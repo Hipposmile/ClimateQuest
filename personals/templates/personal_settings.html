@@ -258,7 +258,7 @@
     <form method="post" class="fill-editor">
         {% csrf_token %}
         <label for="content_editor">{% trans "Statement" %}</label>
-        <div id="content_editor" class="quill-editor">{{ user.usererweitert.statement|safe }}</div>
+        <div class="quill-editor content_editor">{{ user.usererweitert.statement|safe }}</div>
         <input type="hidden" name="content">
         <button type="submit" name="change_statement">{% trans "Speichern" %}</button>
     </form>

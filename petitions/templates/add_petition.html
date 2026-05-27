@@ -4,38 +4,11 @@
 
 {% block meta %}
     <meta name="description" content="{% trans "Füge eine Petition zu ClimateQuest hinzu" %}">
-    {% comment %}<link rel="stylesheet" href="{% static 'libraries/cropperjs/cropper.css' %}">{% endcomment %}
 {% endblock %}
 
 {% block title %}{% trans "Petition hinzufügen" %}{% endblock %}
 
 {% block content %}
-    {% comment %}<!--Using Cropper.js: https://fengyuanchen.github.io/cropperjs/-->
-    <script src="{% static 'libraries/cropperjs/cropper.js' %}"></script>
-    <style nonce="{{ request.csp_style_nonce }}">
-        .cropper-wrapper {
-            width: 100%;
-            max-width: 600px; /* oder 100% wenn du willst */
-            height: 340px; /* wichtig! 16:9 von 600px → 337.5px */
-            position: relative;
-            border-radius: 16px;
-            margin-bottom: 16px;
-            display: none;
-        }
-
-        /* Cropper-Container selbst abrunden */
-        .cropper-container {
-            border-radius: 16px;
-            overflow: hidden;
-        }
-
-        .cropper-image {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: none;
-        }
-    </style>{% endcomment %}
     <h1>{% trans "Petition hinzufügen" %}</h1>
 
     {% if messages %}
@@ -45,25 +18,18 @@
     {% endif %}
 
     <form method="post" id="petition-form"
-          class="fill-editor" {% comment %}enctype="multipart/form-data"{% endcomment %}>
+          class="fill-editor">
         {% csrf_token %}
         <label for="title">{% trans "Titel" %}</label>
         <input type="text" name="title" id="title" placeholder="{% trans "Titel" %}" maxlength="100" required>
 
         <label for="content_editor">{% trans "Beschreibung" %}</label>
-        <div id="content_editor" class="quill-editor"></div>
+        <div class="quill-editor content_editor"></div>
         <input type="hidden" name="content">
 
         <label for="goal">{% trans "Ziel" %}</label>
         <small>{% trans "Das Ziel kann im Nachhinein aktualisiert werden" %}</small>
         <input type="number" name="goal" id="goal" min="10" step="1" required>
-
-        {% comment %}<label for="img">Bild (optional)</label>
-        <input type="file" name="img" id="img" accept="image/avif, image/webp, image/jpeg, image/png">
-
-        <div class="cropper-wrapper">
-            <img id="preview" class="cropper-image">
-        </div>{% endcomment %}
 
         <label for="category">{% trans "Kategorie" %}</label>
         <select id="category" name="category">
@@ -82,85 +48,6 @@
 
         <button type="submit">{% trans "Speichern" %}</button>
     </form>
-
-    {% comment %}<script nonce="{{ request.csp_script_nonce }}">
-        const fileInput = document.getElementById("img");
-        const preview = document.getElementById("preview");
-        const wrapper = document.querySelector('.cropper-wrapper');
-        const form = document.getElementById('petition-form');
-
-        let cropper = null;
-
-        fileInput.addEventListener("change", (event) => {
-            wrapper.style.display = 'block';
-            const file = event.target.files[0];
-            if (!file) return;
-
-            preview.src = URL.createObjectURL(file);
-            preview.style.display = "block";
-
-            preview.onload = () => {
-                if (cropper) cropper.destroy();
-
-                cropper = new Cropper(preview, {
-                    aspectRatio: 16 / 9,
-                    viewMode: 1,
-                    autoCropArea: 1,
-                    responsive: true,
-                    background: false,
-                });
-            };
-        });
-
-        form.addEventListener("submit", (event) => {
-            event.preventDefault();
-            handle_submit(event);
-        });
-
-        form.addEventListener("keydown", (event) => {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                handle_submit(event);
-            }
-        });
-
-        function handle_submit(event) {
-            if (!cropper) {
-                fillEditor(event);
-                form.submit();
-                return;
-            }
-
-            const canvas = cropper.getCroppedCanvas({
-                width: 1600,
-                height: 900,
-                fillColor: "#fff"
-            });
-
-            if (!canvas) {
-                console.error("Canvas konnte nicht erzeugt werden");
-                form.submit();
-                return;
-            }
-
-            canvas.toBlob((blob) => {
-                if (!blob) {
-                    console.error("Blob ist null – Cropper konnte kein Bild erzeugen");
-                    form.submit();
-                    return;
-                }
-
-                const file = new File([blob], "cropped.jpg", {type: "image/jpeg"});
-                const dt = new DataTransfer();
-                dt.items.add(file);
-                fileInput.files = dt.files;
-
-                fillEditor(event);
-
-                form.submit();
-            }, "image/jpeg", 0.9);
-        }
-    </script>{% endcomment %}
 
     <script nonce="{{ request.csp_script_nonce }}">
         document.addEventListener('DOMContentLoaded', initializeQuill);
