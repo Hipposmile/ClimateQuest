@@ -1330,7 +1330,13 @@
         const max = input.getAttribute('maxlength');
 
         const counter = document.createElement('span');
-        counter.textContent = `${input.value.length} / ${max}`;
+        const current_length = input.value.length
+        counter.textContent = `${current_length} / ${max}`;
+        if (current_length >= max * 0.9) {
+            counter.classList.add('full');
+        } else {
+            counter.classList.remove('full');
+        }
         counter.classList.add('input-max-span');
 
         input.insertAdjacentElement('beforebegin', counter);

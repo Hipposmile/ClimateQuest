@@ -142,7 +142,8 @@ def edit_artikel(request, artikel_id):
 
             name_de = request.POST.get('name_de')
             name_en = request.POST.get('name_en')
-            content = request.POST.get('content')
+            content_de = request.POST.get('content_de')
+            content_en = request.POST.get('content_en')
             category = request.POST.get('category')
 
             try:
@@ -155,15 +156,17 @@ def edit_artikel(request, artikel_id):
                 messages.error(request, all_messages["too_long_input"])
                 return redirect('edit_artikel', artikel_id=artikel_id)
 
-            if not name_de or not name_en or not content:
+            if not name_de or not name_en or not content_de or not content_en:
                 messages.error(request, all_messages["missing_required_inputs"])
                 return redirect('edit_artikel', artikel_id=artikel_id)
 
-            content = clean_html(content)
+            content_de = clean_html(content_de)
+            content_en = clean_html(content_en)
 
             artikel.name_de = name_de
             artikel.name_en = name_en
-            artikel.content = content
+            artikel.content_de = content_de
+            artikel.content_en = content_en
             artikel.category = category
             artikel.save()
 
