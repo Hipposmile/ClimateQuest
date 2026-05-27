@@ -11,7 +11,8 @@
 
 {% block content %}
 
-    <h2>{% if request.LANGUAGE_CODE == "de" %}Artikel <a href="{% url 'artikel_detail' artikel.id %}">{{ artikel.name_de }}</a> bearbeiten{% else %}
+    <h2>{% if request.LANGUAGE_CODE == "de" %}Artikel
+        <a href="{% url 'artikel_detail' artikel.id %}">{{ artikel.name_de }}</a> bearbeiten{% else %}
         Edit article <a href="{% url 'artikel_detail' artikel.id %}">{{ artikel.name_en }}</a>{% endif %}</h2>
 
     {% if messages %}
@@ -26,9 +27,9 @@
     <form method="post" class="fill-editor">
         {% csrf_token %}
         <label for="name_en">{% trans 'Name (Englisch)' %}</label>
-        <input type="text" name="nam_en" id="name_en" placeholder="{% trans 'Name' %}" maxlength="100" required>
+        <input type="text" name="name_en" id="name_en" value="{{ artikel.name_en }}" maxlength="100" required>
         <label for="name_de">{% trans 'Name (Deutsch)' %}</label>
-        <input type="text" name="name_de" id="name_de" placeholder="{% trans 'Name' %}" maxlength="100" required>
+        <input type="text" name="name_de" id="name_de" value="{{ artikel.name_de }}" maxlength="100" required>
 
         <label for="content_editor">{% trans 'Inhalt (Englisch)' %}</label>
         <div class="quill-editor content_editor">{{ artikel.content_en|safe }}</div>
