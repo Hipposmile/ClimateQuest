@@ -359,7 +359,7 @@ def create_notification(request, notification_de, notification_en, user=None, ur
 
     mobile_notification_redirect_url = reverse('benachrichtigungen_view_focused', args=[benachrichtigung.id])
     mobile_msg_de = notification_de.split('<span>')[0]
-    mobile_msg_en = notification_en.split('<span>')[1]
+    mobile_msg_en = notification_en.split('<span>')[0]
 
     tokens = IOSDevice.objects.filter(user=user).values_list("apns_token", flat=True)
     for t in tokens:
