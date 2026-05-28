@@ -75,6 +75,22 @@
             position: relative;
         }
 
+        @keyframes highlight-flash {
+            0% {
+                background-color: transparent;
+            }
+            30% {
+                background-color: #4ade80;
+            }
+            100% {
+                background-color: transparent;
+            }
+        }
+
+        .benachrichtigungen-list li.flash {
+            animation: highlight-flash 3s ease-out forwards;
+        }
+
         .benachrichtigung-inhalt {
             display: flex;
             align-items: center;
@@ -94,11 +110,6 @@
             color: var(--color-muted);
             font-size: 0.85rem;
         }
-
-        /*.benachrichtigungen-list li a {
-            margin-left: auto;
-            color: var(--color-white);
-        }*/
     </style>
     {% if messages %}
         {% for message in messages %}
@@ -108,10 +119,12 @@
     {% if benachrichtigungen %}
         <ul class="benachrichtigungen-list" id="benachrichtigungen-list-id">
             {% for benachrichtigung in benachrichtigungen %}
-                <li>
+                <li {% if id == benachrichtigung.id %}id="focus"{% endif %}>
                     <p class="emoji">&#x1F514;</p>
                     <div class="benachrichtigung-inhalt">
-                        <p>{% if request.LANGUAGE_CODE == "de" %}{{ benachrichtigung.benachrichtigung_de|safe }}{% else %}{{ benachrichtigung.benachrichtigung_en|safe }}{% endif %}
+                        <p>{% if request.LANGUAGE_CODE == "de" %}
+                            {{ benachrichtigung.benachrichtigung_de|safe }}{% else %}
+                            {{ benachrichtigung.benachrichtigung_en|safe }}{% endif %}
                             <a href="{{ benachrichtigung.url }}" class="redirect-link more-link">
                                 <span>{% trans "Mehr" %}</span>
                                 <span class="redirect-link-icon">→</span>
@@ -131,4 +144,17 @@
     {% else %}
         <p>{% trans "Du hast keine Benachrichtigungen" %}</p>
     {% endif %}
+    <script nonce="{{ request.csp_script_nonce }}">
+        document.addEventListener("DOMContentLoaded", () => {
+            const focused = document.getElementById("focus");
+
+            if (focused) {
+                focused.scrollIntoView({behavior: "smooth", block: "center"});
+
+                setTimeout(() => {
+                    focused.classList.add("flash");
+                }, 500);
+            }
+        });
+    </script>
 {% endblock %}

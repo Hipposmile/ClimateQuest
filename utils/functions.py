@@ -343,7 +343,9 @@ def create_notification(request, notification_de, notification_en, user=None, ur
         user = request.user
     if url is None:
         url = reverse('dashboard')
-    Benachrichtigung.objects.create(benachrichtigung_de=notification_de, benachrichtigung_en=notification_en, user=user,
+
+
+    benachrichtigung = Benachrichtigung.objects.create(benachrichtigung_de=notification_de, benachrichtigung_en=notification_en, user=user,
                                     url=url)
     send_mail_function(
         request=request,
@@ -355,12 +357,14 @@ def create_notification(request, notification_de, notification_en, user=None, ur
         url=url
     )
 
+    mobile_notification_redirect_url = reverse('benachrichtigungen_view_focused', args=[benachrichtigung.id])
+
     tokens = IOSDevice.objects.filter(user=user).values_list("apns_token", flat=True)
     for t in tokens:
-        send_ios_push(device_token = t, title="Neue Benachrichtigung" if user.usererweitert.lang == 'de' else "New notification", body=notification_de if user.usererweitert.lang == 'de' else notification_en, data={"url": url})
+        send_ios_push(device_token = t, title="Neue Benachrichtigung" if user.usererweitert.lang == 'de' else "New notification", body=notification_de if user.usererweitert.lang == 'de' else notification_en, data={"url": mobile_notification_redirect_url})
 
     res = send_push(benachrichtigung=notification_de if request.user.usererweitert.lang == "de" else notification_en,
-                    user=user, url=url)
+                    user=user, url=mobile_notification_redirect_url)
     if res == 500:
         create_internal_error(request, "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.",
                               "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.")

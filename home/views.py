@@ -66,8 +66,10 @@ def dashboard(request):
     return render(request, './dashboard.html',
                   {'weekly_goal': weekly_goal, 'weekly_goal_progress_percent': weekly_goal_progress_percent,
                    'weekly_klimapunkte': weekly_klimapunkte, 'streak': streak,
-                   'perfect_week_progress_de': perfect_week_progress_de, 'perfect_week_progress_en': perfect_week_progress_en, 'perfect_week': perfect_week,
-                   'aktionen': aktionen, 'klimapunkte': klimapunkte, 'level': level, 'hall_of_fame_entries': hall_of_fame_entries, 'worldwide_ranking_rank': worldwide_ranking_rank})
+                   'perfect_week_progress_de': perfect_week_progress_de,
+                   'perfect_week_progress_en': perfect_week_progress_en, 'perfect_week': perfect_week,
+                   'aktionen': aktionen, 'klimapunkte': klimapunkte, 'level': level,
+                   'hall_of_fame_entries': hall_of_fame_entries, 'worldwide_ranking_rank': worldwide_ranking_rank})
 
 
 @login_required
@@ -144,9 +146,9 @@ def count_benachrichtigungen(request):
 
 
 @login_required
-def benachrichtigungen_view(request):
+def benachrichtigungen_view(request, benachrichtigungen_id = None):
     benachrichtigungen = Benachrichtigung.objects.filter(user=request.user).order_by('-date')
-    return render(request, 'benachrichtigungen.html', {'benachrichtigungen': benachrichtigungen})
+    return render(request, 'benachrichtigungen.html', {'benachrichtigungen': benachrichtigungen, 'id': benachrichtigungen_id})
 
 
 @login_required
