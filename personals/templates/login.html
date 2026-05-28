@@ -48,7 +48,7 @@
             <img src="{% static 'icons/google/SignInWithGoogle/sign-in-with-google-fallback.png' %}" alt="Sign in with Google">
         </picture>
     </a>
-    {% if request.user.is_superuser %}<a href="{% provider_login_url 'apple' %}">
+    <a href="{% provider_login_url 'apple' %}">
         <picture class="sign-in-with-third-party-service-badge">
             <source type="image/avif" srcset="
                     {% static 'icons/apple/SignInWithApple/sign-in-with-apple-320.avif' %} 320w,
@@ -68,7 +68,7 @@
 
             <img src="{% static 'icons/apple/SignInWithApple/sign-in-with-apple-fallback.png' %}" alt="{% trans "Refresh" %}">
         </picture>
-    </a>{% endif %}
+    </a>
     <form method="post">
         {% csrf_token %}
         <label for="username">{% trans "Benutzername:" %}</label>
