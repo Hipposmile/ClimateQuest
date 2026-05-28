@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-27 13:12+0200\n"
+"POT-Creation-Date: 2026-05-28 13:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,41 +30,39 @@ msgstr ""
 msgid "Artikel hinzufügen"
 msgstr "Add Article"
 
-#: artikel/templates/add_artikel.html:21 artikel/templates/edit_artikel.html:28
+#: artikel/templates/add_artikel.html:21 artikel/templates/edit_artikel.html:29
 msgid "Name (Englisch)"
 msgstr "Name (English)"
 
 #: artikel/templates/add_artikel.html:22 artikel/templates/add_artikel.html:24
 #: artikel/templates/artikel_overview.html:31
-#: artikel/templates/edit_artikel.html:29
-#: artikel/templates/edit_artikel.html:31
 msgid "Name"
 msgstr "Name"
 
-#: artikel/templates/add_artikel.html:23 artikel/templates/edit_artikel.html:30
+#: artikel/templates/add_artikel.html:23 artikel/templates/edit_artikel.html:31
 msgid "Name (Deutsch)"
 msgstr "Name (German)"
 
-#: artikel/templates/add_artikel.html:26 artikel/templates/edit_artikel.html:33
+#: artikel/templates/add_artikel.html:26 artikel/templates/edit_artikel.html:34
 msgid "Inhalt (Englisch)"
 msgstr "Content (English)"
 
-#: artikel/templates/add_artikel.html:30 artikel/templates/edit_artikel.html:37
+#: artikel/templates/add_artikel.html:30 artikel/templates/edit_artikel.html:38
 msgid "Inhalt (Deutsch)"
 msgstr "Content (German)"
 
-#: artikel/templates/add_artikel.html:34 artikel/templates/edit_artikel.html:41
+#: artikel/templates/add_artikel.html:34 artikel/templates/edit_artikel.html:42
 msgid "Kategorie"
 msgstr "Category"
 
 #: artikel/templates/add_artikel.html:37
 #: artikel/templates/artikel_overview.html:46
-#: artikel/templates/edit_artikel.html:45
+#: artikel/templates/edit_artikel.html:46
 #, python-format
 msgid "%(cat)s"
 msgstr "%(cat)s"
 
-#: artikel/templates/add_artikel.html:45 artikel/templates/edit_artikel.html:53
+#: artikel/templates/add_artikel.html:45 artikel/templates/edit_artikel.html:54
 #, python-format
 msgid ""
 "Ich bestätige, dass alle Angaben der Wahrheit\n"
@@ -77,7 +75,7 @@ msgstr ""
 "sources mentioned in the text, and that the article complies with the <a "
 "href=\"%(url)s\">Terms of Use</a>."
 
-#: artikel/templates/add_artikel.html:50 artikel/templates/edit_artikel.html:58
+#: artikel/templates/add_artikel.html:50 artikel/templates/edit_artikel.html:59
 msgid "Speichern"
 msgstr "Save"
 
@@ -336,11 +334,11 @@ msgstr "View details"
 msgid "Es gibt derzeit keine Artikel mit diesem Filter."
 msgstr "There are currently no articles with this filter."
 
-#: artikel/templates/edit_artikel.html:65
+#: artikel/templates/edit_artikel.html:66
 msgid "Willst du diesen Artikel wirklich löschen?"
 msgstr "Do you really want to delete this article?"
 
-#: artikel/templates/edit_artikel.html:67
+#: artikel/templates/edit_artikel.html:68
 msgid "Diesen Artikel löschen"
 msgstr "Delete this article"
 

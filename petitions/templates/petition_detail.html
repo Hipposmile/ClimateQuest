@@ -1,28 +1,17 @@
 {% extends 'base.html' %}
-
 {% load html_math %}
+
 {% load static %}
 {% load i18n %}
 
 {% block meta %}
-    <meta name="description" content="{% blocktrans with title=petition_title %}Siehe dir die Petition {{ title }} an{% endblocktrans %}">
+    <meta name="description" content="{% blocktrans with title=petition_title %}Sieh dir die Petition {{ title }} an{% endblocktrans %}">
 {% endblock %}
 
 {% block title %}{% blocktrans with petition_title=petition.title %}Petition {{ petition_title }}{% endblocktrans %}{% endblock %}
 
 {% block content %}
     <style nonce="{{ request.csp_style_nonce }}">
-        .petition-img {
-            max-height: 50vh;
-            width: auto;
-            max-width: 100%;
-            height: auto;
-            object-fit: contain;
-            border-radius: 16px;
-            display: block;
-            margin: 0 auto;
-        }
-
         .updates {
             display: flex;
             flex-direction: column;
@@ -63,7 +52,7 @@
         <p>{% trans "Obwohl das Unterschriftenziel bereits erreicht wurde, heißt das nicht, dass die Petition auch erfolgreich ist. Deine Stimme ist immer noch wichtig!" %}</p>
     {% endif %}
     <hr>
-    <div class="artikel-content"><p>{{ petition.content|safe }}</p></div>
+    <div class="artikel-content">{{ petition.content|safe }}</div>
     <p>{% trans "Kategorie" %}: <strong>{{ petition.category.title }}</strong></p>
     <p>{% trans "Erstellt am" %} {{ petition.created_at|date:"SHORT_DATE_FORMAT" }}</p>
     <p>{% trans "Erstellt von" %}: <a href="{% url 'user_detail' petition.creator.id %}">{{ petition.creator.username }}</a></p>
@@ -133,7 +122,7 @@
                             {% for answer in comment.answers.all %}
                                 <div class="answer-header">
                                     <span class="answer-user"><a
-                                            href="{% url 'user_detail' comment.user.id %}">{{ answer.user }}</a></span>
+                                            href="{% url 'user_detail' answer.user.id %}">{{ answer.user }}</a></span>
                                     <span class="answer-date">{{ answer.date_time|date:"SHORT_DATETIME_FORMAT" }}</span>
                                 </div>
                                 <div class="answer expandable-text blur-enabled">{{ answer.answer }}</div>

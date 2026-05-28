@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-27 13:03+0200\n"
+"POT-Creation-Date: 2026-05-28 13:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,7 +40,7 @@ msgstr "Description"
 
 #: petitions/templates/add_petition.html:30
 #: petitions/templates/edit_petition.html:49
-#: petitions/templates/petition_detail.html:61
+#: petitions/templates/petition_detail.html:50
 msgid "Ziel"
 msgstr "Goal"
 
@@ -49,7 +49,7 @@ msgid "Das Ziel kann im Nachhinein aktualisiert werden"
 msgstr "The goal can be updated afterwards"
 
 #: petitions/templates/add_petition.html:34
-#: petitions/templates/petition_detail.html:67
+#: petitions/templates/petition_detail.html:56
 #: petitions/templates/petitions_overview.html:82
 #: petitions/templates/petitions_overview.html:104
 msgid "Kategorie"
@@ -77,7 +77,7 @@ msgid "Update zur Petition %(petition_name)s hinzufügen"
 msgstr "Add update to petition %(petition_name)s"
 
 #: petitions/templates/edit_petition.html:11
-#: petitions/templates/petition_detail.html:38
+#: petitions/templates/petition_detail.html:27
 msgid "Petition"
 msgstr "Petition"
 
@@ -126,23 +126,23 @@ msgstr "Declare petition successful"
 
 #: petitions/templates/petition_detail.html:8
 #, python-format
-msgid "Siehe dir die Petition %(title)s an"
-msgstr "Take a look at the petition %(title)s\">"
+msgid "Sieh dir die Petition %(title)s an"
+msgstr "Take a look at the petition %(title)s"
 
 #: petitions/templates/petition_detail.html:11
 #, python-format
 msgid "Petition %(petition_title)s"
 msgstr "Petition %(petition_title)s"
 
-#: petitions/templates/petition_detail.html:45
+#: petitions/templates/petition_detail.html:34
 msgid "Die Petition hatte Erfolg!"
 msgstr "The petition was successful!"
 
-#: petitions/templates/petition_detail.html:60
+#: petitions/templates/petition_detail.html:49
 msgid "Unterschriften gesammelt"
 msgstr "Signatures collected"
 
-#: petitions/templates/petition_detail.html:63
+#: petitions/templates/petition_detail.html:52
 msgid ""
 "Obwohl das Unterschriftenziel bereits erreicht wurde, heißt das nicht, dass "
 "die Petition auch erfolgreich ist. Deine Stimme ist immer noch wichtig!"
@@ -150,21 +150,21 @@ msgstr ""
 "Although the signature goal has already been reached, that does not mean "
 "that the petition is also successful. Your voice is still important!"
 
-#: petitions/templates/petition_detail.html:68
+#: petitions/templates/petition_detail.html:57
 #: petitions/templates/petitions_overview.html:40
 msgid "Erstellt am"
 msgstr "Created on"
 
-#: petitions/templates/petition_detail.html:69
+#: petitions/templates/petition_detail.html:58
 msgid "Erstellt von"
 msgstr "Created by"
 
-#: petitions/templates/petition_detail.html:72
-#: petitions/templates/petition_detail.html:80
+#: petitions/templates/petition_detail.html:61
+#: petitions/templates/petition_detail.html:69
 msgid "Unterschreiben"
 msgstr "Sign"
 
-#: petitions/templates/petition_detail.html:74
+#: petitions/templates/petition_detail.html:63
 msgid ""
 "Du kannst auch unterschreiben, obwohl die Petition bereits Erfolg hatte, um "
 "zu verdeutlichen, dass auch dir das Thema wichtig ist!"
@@ -172,87 +172,87 @@ msgstr ""
 "You can also sign, even though the petition has already been successful, to "
 "emphasize that the topic is important to you too!"
 
-#: petitions/templates/petition_detail.html:82
+#: petitions/templates/petition_detail.html:71
 msgid "Registriere dich"
 msgstr "Register"
 
-#: petitions/templates/petition_detail.html:82
+#: petitions/templates/petition_detail.html:71
 msgid "um zu unterschreiben"
 msgstr "to sign"
 
-#: petitions/templates/petition_detail.html:85
+#: petitions/templates/petition_detail.html:74
 msgid "Du hast bereits unterschrieben"
 msgstr "You have already signed"
 
-#: petitions/templates/petition_detail.html:86
+#: petitions/templates/petition_detail.html:75
 msgid "Unterschrift zurücknehmen"
 msgstr "Withdraw signature"
 
-#: petitions/templates/petition_detail.html:92
+#: petitions/templates/petition_detail.html:81
 msgid "Updates"
 msgstr "Updates"
 
-#: petitions/templates/petition_detail.html:114
+#: petitions/templates/petition_detail.html:103
 msgid "Noch keine Updates vorhanden."
 msgstr "No updates available yet."
 
-#: petitions/templates/petition_detail.html:120
+#: petitions/templates/petition_detail.html:109
 msgid "Kommentare"
 msgstr "Comments"
 
-#: petitions/templates/petition_detail.html:141
+#: petitions/templates/petition_detail.html:130
 msgid "Noch keine Antworten."
 msgstr "No replies yet."
 
-#: petitions/templates/petition_detail.html:144
-#: petitions/templates/petition_detail.html:193
+#: petitions/templates/petition_detail.html:133
+#: petitions/templates/petition_detail.html:182
 msgid "Mehr anzeigen"
 msgstr "Show more"
 
-#: petitions/templates/petition_detail.html:146
+#: petitions/templates/petition_detail.html:135
 msgid "selbst antworten"
 msgstr "reply yourself"
 
-#: petitions/templates/petition_detail.html:151
-#: petitions/templates/petition_detail.html:152
+#: petitions/templates/petition_detail.html:140
+#: petitions/templates/petition_detail.html:141
 msgid "Antwort"
 msgstr "Reply"
 
-#: petitions/templates/petition_detail.html:153
+#: petitions/templates/petition_detail.html:142
 msgid "Antworten"
 msgstr "Replies"
 
-#: petitions/templates/petition_detail.html:156
-#: petitions/templates/petition_detail.html:209
+#: petitions/templates/petition_detail.html:145
+#: petitions/templates/petition_detail.html:198
 msgid "Logge dich ein"
 msgstr "Log in"
 
-#: petitions/templates/petition_detail.html:156
+#: petitions/templates/petition_detail.html:145
 msgid "um den Kommentar zu beantworten"
 msgstr "to reply to the comment"
 
-#: petitions/templates/petition_detail.html:164
+#: petitions/templates/petition_detail.html:153
 msgid "Noch keine Kommentare vorhanden"
 msgstr "No comments available yet"
 
-#: petitions/templates/petition_detail.html:193
+#: petitions/templates/petition_detail.html:182
 msgid "Weniger anzeigen"
 msgstr "Show less"
 
-#: petitions/templates/petition_detail.html:204
+#: petitions/templates/petition_detail.html:193
 msgid "Neuen Kommentar hinzufügen:"
 msgstr "Add new comment:"
 
-#: petitions/templates/petition_detail.html:205
-#: petitions/templates/petition_detail.html:206
+#: petitions/templates/petition_detail.html:194
+#: petitions/templates/petition_detail.html:195
 msgid "Kommentar hinzufügen"
 msgstr "Add comment"
 
-#: petitions/templates/petition_detail.html:209
+#: petitions/templates/petition_detail.html:198
 msgid "um einen Kommentar zu verfassen"
 msgstr "to write a comment"
 
-#: petitions/templates/petition_detail.html:215
+#: petitions/templates/petition_detail.html:204
 msgid "Bearbeiten"
 msgstr "Edit"
 

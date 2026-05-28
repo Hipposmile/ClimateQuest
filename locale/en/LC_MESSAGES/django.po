@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-27 13:03+0200\n"
+"POT-Creation-Date: 2026-05-28 13:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -284,23 +284,23 @@ msgstr "Download"
 msgid "Bist du sicher?"
 msgstr "Are you sure?"
 
-#: templates/base.html:1354
+#: templates/base.html:1360
 msgid "Nächste"
 msgstr "Next"
 
-#: templates/base.html:1355
+#: templates/base.html:1361
 msgid "Zurück"
 msgstr "Back"
 
-#: templates/base.html:1356
+#: templates/base.html:1362
 msgid "Beenden"
 msgstr "Finish"
 
-#: templates/base.html:1362
+#: templates/base.html:1368
 msgid "Tour abgeschlossen"
 msgstr "Tour completed"
 
-#: templates/base.html:1365
+#: templates/base.html:1371
 msgid ""
 "Gehe auf eine einzelne Seite, zum Beispiel <i>Aktion hinzufügen</i>, um noch "
 "eine extra Tour zu diesem Schritt zu erhalten"
@@ -308,7 +308,7 @@ msgstr ""
 "Go to a specific page, for example <i>Aktion hinzufügen</i>, to make an "
 "extra tour for this step"
 
-#: templates/base.html:1427
+#: templates/base.html:1433
 msgid "Bewerte uns auf Trustpilot"
 msgstr "Rate us on trustpilot"
 

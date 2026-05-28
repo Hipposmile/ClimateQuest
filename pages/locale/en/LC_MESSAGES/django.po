@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-11 20:01+0200\n"
+"POT-Creation-Date: 2026-05-28 13:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -487,35 +487,27 @@ msgstr ""
 "If you have an iPhone, iPad or MacBook, you can download ClimateQuest from "
 "the App Store:"
 
-#: pages/templates/mobile_apps.html:46
-msgid "Download on the App Store"
-msgstr "Download on the App Store"
-
-#: pages/templates/mobile_apps.html:55
+#: pages/templates/mobile_apps.html:57
 msgid "Android"
 msgstr "Android"
 
-#: pages/templates/mobile_apps.html:56
+#: pages/templates/mobile_apps.html:58
 msgid "Wenn du ein Android-Handy hast"
 msgstr "If you have an Android phone"
 
-#: pages/templates/mobile_apps.html:65
+#: pages/templates/mobile_apps.html:67
 msgid ""
-"Momentan ist ClimateQuest noch im PlayStore verfügbar, dies wird sich "
-"allerdings bald ändern! Wie benachrichtigen alle User, sobald es soweit ist. "
-"Bis dahin kannst du die App als Webseite nutzen oder einen kleinen "
-"Workaround nutzen, der in Alle anderen Betriebssysteme erklärt ist."
+"Wenn du ein Android-Gerät besitzt, kannst du dir die App im Google Play "
+"Store herunterladen: "
 msgstr ""
-"Currently, ClimateQuest is still available in the Play Store, but this will "
-"change soon! We will notify all users as soon as it happens. Until then, you "
-"can use the app as a website or use a small workaround explained in All "
-"other operating systems."
+"If you have an Android-device, you can download ClimateQuest from the Google "
+"Play Store:"
 
-#: pages/templates/mobile_apps.html:73
+#: pages/templates/mobile_apps.html:80
 msgid "Alle anderen Betriebssysteme"
 msgstr "All other operating systems"
 
-#: pages/templates/mobile_apps.html:74
+#: pages/templates/mobile_apps.html:81
 msgid ""
 "Wenn du ein anderes Betriebssystem nutzt oder die App nicht über den App / "
 "Play Store installieren willst / kannst."
@@ -523,7 +515,7 @@ msgstr ""
 "If you use a different operating system or do not want / cannot install the "
 "app via the App / Play Store."
 
-#: pages/templates/mobile_apps.html:84
+#: pages/templates/mobile_apps.html:91
 msgid ""
 "Wenn du weder Zugriff auf den AppStore noch auf den PlayStore hast, kannst "
 "du die App entweder weiterhin als Webseite nutzen oder über einen kleinen "
@@ -533,7 +525,7 @@ msgstr ""
 "either continue to use the app as a website or install it via a small "
 "workaround. Here's how:"
 
-#: pages/templates/mobile_apps.html:86
+#: pages/templates/mobile_apps.html:93
 msgid ""
 "Öffne die Webseite über Safari (iOS) oder Chrome (Android). Der Workaround "
 "funktioniert aber auch mit den meisten anderen Browsern."
@@ -541,7 +533,7 @@ msgstr ""
 "Open the website via Safari (iOS) or Chrome (Android). The workaround also "
 "works with most other browsers."
 
-#: pages/templates/mobile_apps.html:87
+#: pages/templates/mobile_apps.html:94
 msgid ""
 "Klicke auf die drei Punkte und dann Zum Home-Bildschirm hinzufügen (Bei "
 "Safari findest du diese Option erst, wenn du auf Teilen gehst)"
@@ -549,11 +541,11 @@ msgstr ""
 "Click on the three dots and then on Add to Home Screen (In Safari, you will "
 "find this option only after clicking on Share)"
 
-#: pages/templates/mobile_apps.html:88
+#: pages/templates/mobile_apps.html:95
 msgid "Klicke auf Installieren bzw. Hinzufügen"
 msgstr "Click on Install or Add"
 
-#: pages/templates/mobile_apps.html:89
+#: pages/templates/mobile_apps.html:96
 msgid ""
 "Die App erscheint nun auf dem Home-Bildschirm. Wenn du sie öffnest, siehst "
 "du keine Browser-Elemente mehr und kannst sogar, wenn du es erlaubst, Push-"
@@ -575,13 +567,24 @@ msgid ""
 "        <a href=\"mailto:kontakt@climate-quest.de\">kontakt@climate-"
 "quest.de</a>!"
 msgstr ""
-"All in the app <i>PastelDone</i> saved data is only saved "
-"on the device\n"
-"        and can´t be seen by us. For questions "
-"or support, please contact\n"
+"All in the app <i>PastelDone</i> saved data is only saved on the device\n"
+"        and can´t be seen by us. For questions or support, please contact\n"
 "        <a href=\"mailto:kontakt@climate-quest.de\">kontakt@climate-"
 "quest.de</a>!"
 
+#~ msgid "Download on the App Store"
+#~ msgstr "Download on the App Store"
+
+#~ msgid ""
+#~ "Momentan ist ClimateQuest noch im PlayStore verfügbar, dies wird sich "
+#~ "allerdings bald ändern! Wie benachrichtigen alle User, sobald es soweit "
+#~ "ist. Bis dahin kannst du die App als Webseite nutzen oder einen kleinen "
+#~ "Workaround nutzen, der in Alle anderen Betriebssysteme erklärt ist."
+#~ msgstr ""
+#~ "Currently, ClimateQuest is still available in the Play Store, but this "
+#~ "will change soon! We will notify all users as soon as it happens. Until "
+#~ "then, you can use the app as a website or use a small workaround "
+#~ "explained in All other operating systems."
 
 #~ msgid "Mobile Apps - ClimateQuest"
 #~ msgstr "Mobile Apps - ClimateQuest"
