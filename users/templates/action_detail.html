@@ -38,7 +38,7 @@
     <ul class="action-list">
         <li class="action-list-container">
             <p class="action-list-description">{% trans "Aktion:" %}</p>
-            <p class="action-list-value">{{ current_action.aktion.name }}</p>
+            <p class="action-list-value">{% if request.LANGUAGE_CODE == 'de' %}{{ current_action.aktion.name }}{% else %}{{ current_action.aktion.name_en }}{% endif %}</p>
 
             {% if current_action.date %}
                 <p class="action-list-description">{% trans "Datum:" %}</p>
