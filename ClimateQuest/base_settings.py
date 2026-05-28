@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 
-#from django.conf.global_settings import APPEND_SLASH
+from django.conf.global_settings import APPEND_SLASH
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -220,4 +220,4 @@ APPLE_BUNDLE_ID = os.environ.get("APPLE_BUNDLE_ID")
 # Entwicklung/Sandbox (für Development-Zertifikate)
 APNS_HOST = "https://api.sandbox.push.apple.com"
 
-APPEND_SLASH = False
+#APPEND_SLASH = False
