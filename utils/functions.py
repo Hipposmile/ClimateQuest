@@ -358,12 +358,14 @@ def create_notification(request, notification_de, notification_en, user=None, ur
     )
 
     mobile_notification_redirect_url = reverse('benachrichtigungen_view_focused', args=[benachrichtigung.id])
+    mobile_msg_de = notification_de.split('<span>')[0]
+    mobile_msg_en = notification_en.split('<span>')[1]
 
     tokens = IOSDevice.objects.filter(user=user).values_list("apns_token", flat=True)
     for t in tokens:
-        send_ios_push(device_token = t, title="Neue Benachrichtigung" if user.usererweitert.lang == 'de' else "New notification", body=notification_de if user.usererweitert.lang == 'de' else notification_en, data={"url": mobile_notification_redirect_url})
+        send_ios_push(device_token = t, title="Neue Benachrichtigung" if user.usererweitert.lang == 'de' else "New notification", body=mobile_msg_de if user.usererweitert.lang == 'de' else mobile_msg_en, data={"url": mobile_notification_redirect_url})
 
-    res = send_push(benachrichtigung=notification_de if request.user.usererweitert.lang == "de" else notification_en,
+    res = send_push(benachrichtigung=mobile_msg_de if request.user.usererweitert.lang == "de" else mobile_msg_en,
                     user=user, url=mobile_notification_redirect_url)
     if res == 500:
         create_internal_error(request, "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.",
