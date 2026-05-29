@@ -224,7 +224,7 @@ def user_detail(request, user_id):
     streak = get_streak_from_user(user)
     all_klimapunkte = get_all_klimapunkte_from_user(user)
     worldwide_ranking_rank = get_family_rank_from_user(user, Family.objects.get(name='worldwide ranking'))
-    hall_of_fame_entries = get_hall_of_fame_entries(request.user)
+    hall_of_fame_entries = get_hall_of_fame_entries(user)
 
     if request.user.is_authenticated:
         if request.method == 'POST':
