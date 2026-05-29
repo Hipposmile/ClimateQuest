@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import home, dashboard, count_benachrichtigungen, benachrichtigungen_view, delete_benachrichtigung, admin, \
-    nutzungsbedingungen, datenschutz, impressum, actions_table, companies_and_schools, support, feedback
+    nutzungsbedingungen, datenschutz, impressum, companies_and_schools, support, feedback
 
 urlpatterns = [
     path('', home, name='home'),
@@ -13,7 +13,6 @@ urlpatterns = [
     path('nutzungsbedingungen/', nutzungsbedingungen, name='nutzungsbedingungen'),
     path('datenschutz/', datenschutz, name='datenschutz'),
     path('impressum/', impressum, name='impressum'),
-    path('aktionenTable/', actions_table, name='aktionenTable'),
     path('companies-schools', companies_and_schools, name='companies_and_schools'),
     path('support/', support, name='support'),
     path('feedback/', feedback, name='feedback'),

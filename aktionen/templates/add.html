@@ -318,7 +318,7 @@
                                 mengebeschreibung: `{% if request.LANGUAGE_CODE == 'de' %}{{ action.mengeBeschreibung }}{% else %}{{ action.mengeBeschreibung_en }}{% endif %}`,
                                 mengebeschreibungsingular: `{% if request.LANGUAGE_CODE == 'de' %}{{ action.mengeBeschreibungSingular }}{% else %}{{ action.mengeBeschreibungSingular_en }}{% endif %}`,
                                 source: `{% if request.LANGUAGE_CODE == 'de' %}{{ action.source|safe }}{% else %}{{ action.source_en|safe }}{% endif %}`,
-                                categories: `{% for action_category in action.category.all %}{% if request.LANGUAGE_CODE == 'de' %}{{ action_category.name }}{% else %}{{ action_category.name_en }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}`
+                                category_name: `{% if request.LANGUAGE_CODE == 'de' %}{{ action.category.name }}{% else %}{{ action.category.name_en }}{% endif %}`
                             },
                         {% endfor %}
                     ]
@@ -371,7 +371,7 @@
                 itemsList.innerHTML = "";
                 category.actions.forEach(action => {
                     const li = document.createElement("li");
-                    li.innerHTML = `<button class='item-btn' data-id='${action.id}' data-name='${action.name}' data-klimapunkte='${action.klimapunkte}' data-anmerkung='${action.anmerkung}' data-mengebeschreibung='${action.mengebeschreibung}' data-mengebeschreibungsingular='${action.mengebeschreibungsingular}' data-source='${action.source}' data-categories='${action.categories}'>${action.name}</button>`;
+                    li.innerHTML = `<button class='item-btn' data-id='${action.id}' data-name='${action.name}' data-klimapunkte='${action.klimapunkte}' data-anmerkung='${action.anmerkung}' data-mengebeschreibung='${action.mengebeschreibung}' data-mengebeschreibungsingular='${action.mengebeschreibungsingular}' data-source='${action.source}' data-category_name='${action.category_name}'>${action.name}</button>`;
                     itemsList.appendChild(li);
                 });
 
@@ -393,7 +393,7 @@
                 selectedItemInput.dataset.mengebeschreibung = e.target.dataset.mengebeschreibung;
                 selectedItemInput.dataset.mengebeschreibungsingular = e.target.dataset.mengebeschreibungsingular;
                 selectedItemInput.dataset.source = e.target.dataset.source;
-                selectedItemInput.dataset.categories = e.target.dataset.categories;
+                selectedItemInput.dataset.category_name = e.target.dataset.category_name;
                 changeActionType();
                 modal.classList.remove("active");
 
@@ -461,10 +461,10 @@
             let mengeBeschreibungSingular = action_type.dataset.mengebeschreibungsingular;
 
             let source = action_type.dataset.source;
-            let categories = action_type.dataset.categories;
+            let categories = action_type.dataset.category_name;
 
             sourceLabel.innerHTML = "{% trans 'Quelle:' %} " + source;
-            categoryLabel.textContent = "{% trans 'Kategorien:' %} " + categories;
+            categoryLabel.textContent = "{% trans 'Kategorie:' %} " + categories;
 
             action_quantity_label.textContent = mengeBeschreibung + ":";
             klimapunkte_anzeige.textContent = "{% trans 'Klimapunkte pro' %} " + mengeBeschreibungSingular + ": " + klimapunkte;

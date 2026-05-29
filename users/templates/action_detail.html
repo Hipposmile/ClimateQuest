@@ -38,7 +38,9 @@
     <ul class="action-list">
         <li class="action-list-container">
             <p class="action-list-description">{% trans "Aktion:" %}</p>
-            <p class="action-list-value">{% if request.LANGUAGE_CODE == 'de' %}{{ current_action.aktion.name }}{% else %}{{ current_action.aktion.name_en }}{% endif %}</p>
+            <p class="action-list-value">
+                {% if request.LANGUAGE_CODE == 'de' %}{{ current_action.aktion.name }}{% else %}
+                    {{ current_action.aktion.name_en }}{% endif %}</p>
 
             {% if current_action.date %}
                 <p class="action-list-description">{% trans "Datum:" %}</p>
@@ -82,21 +84,33 @@
 
                         <label for="action_type">{% trans "Ausgewähltes Element:" %}</label>
                         <input type="text" id="action_type" name="action_type" value="
+
+
                                 {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.name }}{% else %}{{ current_action.aktion.name_en }}{% endif %}"
                                data-name="
+
+
                                        {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.name }}{% else %}{{ current_action.aktion.name_en }}{% endif %}"
                                data-klimapunkte="{{ current_action.aktion.klimapunkte|floatformat:-4 }}"
                                data-anmerkung="
+
+
                                        {% if request.LANGUAGE_CODE == "de" %}{{ current_action.anmerkung }}{% else %}{{ current_action.anmerkung_en }}{% endif %}"
                                data-mengebeschreibung="
+
+
                                        {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.mengeBeschreibung }}{% else %}{{ current_action.aktion.mengeBeschreibung_en }}{% endif %}"
                                data-mengebeschreibungsingular="
+
+
                                        {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.mengeBeschreibungSingular }}{% else %}{{ current_action.aktion.mengeBeschreibungSingular_en }}{% endif %}"
                                data-source="
-                                       {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.source }}{% else %}{{ current_action.aktion.source_en }}{% endif %}"
-                               data-categories="
 
-                                       {% for action_category in current_action.aktion.category.all %}{% if request.LANGUAGE_CODE == "de" %}{{ action_category.name }}{% else %}{{ action_category.name_en }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}"
+
+                                       {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.source }}{% else %}{{ current_action.aktion.source_en }}{% endif %}"
+                               data-category_name="
+
+                                       {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.category.name }}{% else %}{{ current_action.aktion.category.name_en }}{% endif %}"
                                readonly>
                         <button type="button" id="openModal">{% trans "Element auswählen" %}</button>
                         <input type="hidden" name="action_type_id" id="action_type_id"
@@ -355,7 +369,7 @@
                                     mengebeschreibung: `{% if request.LANGUAGE_CODE == 'de' %}{{ action.mengeBeschreibung }}{% else %}{{ action.mengeBeschreibung_en }}{% endif %}`,
                                     mengebeschreibungsingular: `{% if request.LANGUAGE_CODE == 'de' %}{{ action.mengeBeschreibungSingular }}{% else %}{{ action.mengeBeschreibungSingular_en }}{% endif %}`,
                                     source: `{% if request.LANGUAGE_CODE == 'de' %}{{ action.source|safe }}{% else %}{{ action.source_en|safe }}{% endif %}`,
-                                    categories: `{% for action_category in action.category.all %}{% if request.LANGUAGE_CODE == 'de' %}{{ action_category.name }}{% else %}{{ action_category.name_en }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}`
+                                    category_name: `{% if request.LANGUAGE_CODE == 'de' %}{{ action.category.name }}{% else %}{{ action.category.name_en }}{% endif %}`
                                 },
                             {% endfor %}
                         ]
@@ -409,7 +423,7 @@
                     itemsList.innerHTML = "";
                     category.actions.forEach(action => {
                         const li = document.createElement("li");
-                        li.innerHTML = `<button class='item-btn' data-id='${action.id}' data-name='${action.name}' data-klimapunkte='${action.klimapunkte}' data-anmerkung='${action.anmerkung}' data-mengebeschreibung='${action.mengebeschreibung}' data-mengebeschreibungsingular='${action.mengebeschreibungsingular}' data-source='${action.source}' data-categories='${action.categories}'>${action.name}</button>`;
+                        li.innerHTML = `<button class='item-btn' data-id='${action.id}' data-name='${action.name}' data-klimapunkte='${action.klimapunkte}' data-anmerkung='${action.anmerkung}' data-mengebeschreibung='${action.mengebeschreibung}' data-mengebeschreibungsingular='${action.mengebeschreibungsingular}' data-source='${action.source}' data-category_name='${action.category_name}'>${action.name}</button>`;
                         itemsList.appendChild(li);
                     });
 
@@ -431,7 +445,7 @@
                     selectedItemInput.dataset.mengebeschreibung = e.target.dataset.mengebeschreibung;
                     selectedItemInput.dataset.mengebeschreibungsingular = e.target.dataset.mengebeschreibungsingular;
                     selectedItemInput.dataset.source = e.target.dataset.source;
-                    selectedItemInput.dataset.categories = e.target.dataset.categories;
+                    selectedItemInput.dataset.category_name = e.target.dataset.category_name;
                     changeActionType();
                     modal.classList.remove("active");
                     pageItems.style.display = "none";
@@ -497,10 +511,10 @@
                 let mengeBeschreibung = action_type.dataset.mengebeschreibung;
                 let mengeBeschreibungSingular = action_type.dataset.mengebeschreibungsingular;
                 let source = action_type.dataset.source;
-                let categories = action_type.dataset.categories;
+                let category_name = action_type.dataset.category_name;
 
                 sourceLabel.innerHTML = `Quelle: ${source}`;
-                categoryLabel.textContent = `Kategorien: ${categories}`;
+                categoryLabel.textContent = `Kategorie: ${category_name}`;
 
                 action_quantity_label.textContent = `${mengeBeschreibung}:`;
                 klimapunkte_anzeige.textContent = `Klimapunkte pro ${mengeBeschreibungSingular}: ${klimapunkte}`;

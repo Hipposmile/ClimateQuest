@@ -21,7 +21,7 @@ from django.views.generic import TemplateView, RedirectView
 from django.conf.urls.static import static
 from django.conf import settings
 
-from home.sitemaps import HomeSitemap, NutzungsbedingungenSitemap, AktionenTableSitemap, SupportSitemap, FeedbackSitemap
+from home.sitemaps import HomeSitemap, NutzungsbedingungenSitemap, SupportSitemap, FeedbackSitemap
 from artikel.sitemaps import ArtikelDetailSitemap, ArtikelOverviewSitemap, AddArtikelSitemap
 from events.sitemaps import EventDetailSitemap, EventsOverviewSitemap, AddEventSitemap
 from forum.sitemaps import ForumOverviewSitemap, ForumPostDetailSitemap, AddForumPostSitemap
@@ -36,7 +36,6 @@ from hall_of_fame.sitemaps import HallOfFameDetailSitemap
 sitemaps = {
     "home": HomeSitemap(),
     "nutzungsbedingungen": NutzungsbedingungenSitemap(),
-    "aktionen_table": AktionenTableSitemap(),
     "support": SupportSitemap(),
     "feedback": FeedbackSitemap(),
 

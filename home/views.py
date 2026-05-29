@@ -146,9 +146,10 @@ def count_benachrichtigungen(request):
 
 
 @login_required
-def benachrichtigungen_view(request, benachrichtigungen_id = None):
+def benachrichtigungen_view(request, benachrichtigungen_id=None):
     benachrichtigungen = Benachrichtigung.objects.filter(user=request.user).order_by('-date')
-    return render(request, 'benachrichtigungen.html', {'benachrichtigungen': benachrichtigungen, 'id': benachrichtigungen_id})
+    return render(request, 'benachrichtigungen.html',
+                  {'benachrichtigungen': benachrichtigungen, 'id': benachrichtigungen_id})
 
 
 @login_required
@@ -163,11 +164,6 @@ def delete_benachrichtigung(request, id):
 
 def nutzungsbedingungen(request):
     return render(request, 'nutzungsbedingungen.html')
-
-
-def actions_table(request):
-    aktionen = AktionenListe.objects.all()
-    return render(request, 'aktionenTable.html', {'aktionen': aktionen})
 
 
 def datenschutz(request):

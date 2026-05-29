@@ -56,17 +56,6 @@ class ImpressumSitemap(Sitemap):
     def location(self, item):
         return reverse(item)
 
-
-class AktionenTableSitemap(Sitemap):
-    changefreq = "monthly"
-    priority = 0.5
-
-    def items(self):
-        return ['aktionenTable']
-
-    def location(self, item):
-        return reverse(item)
-
 class SupportSitemap(Sitemap):
     changefreq = "yearly"
     priority = 0.5
