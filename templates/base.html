@@ -703,6 +703,7 @@
                                 class="emoji">&#x1F5C2;</span> {% trans "Sonstiges" %}</div>
                         <a href="{% url 'track_actions' %}"><span class="emoji">&#x23F1;</span>
                             {% trans "Tracken" %}</a>
+                        <a href="{% url 'statistics_view' %}">{% trans "Statistiken" %}</a>
                         <a href="mailto:kontakt@climate-quest.de?subject=Bug%20Meldung%20-%20[Kurze%20Beschreibung%20des%20Bugs]&body=Hi%2C%0D%0A%0D%0Aich%20habe%20einen%20Bug%20gefunden%20und%20möchte%20ihn%20melden.%0D%0A%0D%0A--%0D%0ABitte%20fülle%20folgende%20Felder%20aus%3A%0D%0A%0D%0ABetriebssystem%3A%20[z.B.%20Windows%2011%2C%20macOS%20Tahoe%2C%20iOS%2026%2C%20Android%2016]%0D%0ABrowser%2FApp%3A%20[z.B.%20Chrome%20%2C%20Firefox%20%2C%20Safari%20%2C%20iOS%20App%20v1.2%2C%20Android%20App%20v1.0]%0D%0A%0D%0ABetroffene%20Seite%2FURL%3A%20[z.B.%20https%3A%2F%2Fclimate-quest.de%2Fdashboard%2F]%0D%0A%0D%0ABeschreibung%20des%20Problems%3A%0D%0A[Hier%20genaue%20Schritte%20beschreiben%2C%20was%20passiert%20ist%2C%20inkl.%20Screenshots%20oder%20Fehlermeldungen%2C%20falls%20vorhanden.]%0D%0A%0D%0A--%0D%0AVielen%20Dank%20für%20die%20Meldung%21%0D%0AWir%20löschen%20die%20E-Mail%20und%20deine%20E-Mail-Adresse%20nach%20der%20Bearbeitung.%0D%0A">
                             <span class="emoji">&#x1FAB2;</span> {% trans "Fehler melden" %}
                         </a>
@@ -814,6 +815,7 @@
             profileEdit: "{% trans 'Profil bearbeiten' %}",
             user: "{% trans 'User' %}",
             logout: "{% trans 'Logout' %}",
+            statistics: "{% trans 'Statistiken' %}",
             reportBug: "{% trans 'Fehler melden' %}",
             adminI: "{% trans 'Admin-Bereich (I)' %}",
             adminII: "{% trans 'Admin-Bereich (II)' %}",
@@ -873,7 +875,9 @@
                             <a  href="{% url 'settings_view' %}">${navTranslations.profileEdit}</a>
                             <a  href="{% url 'users_overview' %}">${navTranslations.user}</a>
                             <a  href="{% url 'logout_view' %}">${navTranslations.logout}</a>
-                            <a href="mailto:kontakt@climate-quest.de?subject=Bug%20Meldung%20-%20[Kurze%20Beschreibung%20des%20Bugs]&body=Hi%2C%0D%0A%0D%0Aich%20habe%20einen%20Bug%20gefunden%20und%20möchte%20ihn%20melden.%0D%0A%0D%0A--%0D%0ABitte%20fülle%20folgende%20Felder%20aus%3A%0D%0A%0D%0ABetriebssystem%3A%20[z.B.%20Windows%2011%2C%20macOS%20Tahoe%2C%20iOS%2026%2C%20Android%2016]%0D%0ABrowser%2FApp%3A%20[z.B.%20Chrome%20%2C%20Firefox%20%2C%20Safari%20%2C%20iOS%20App%20v1.2%2C%20Android%20App%20v1.0]%0D%0A%0D%0ABetroffene%20Seite%2FURL%3A%20[z.B.%20https%3A%2F%2Fclimate-quest.de%2Fdashboard%2F]%0D%0A%0D%0ABeschreibung%20des%20Problems%3A%0D%0A[Hier%20genaue%20Schritte%20beschreiben%2C%20was%20passiert%20ist%2C%20inkl.%20Screenshots%20oder%20Fehlermeldungen%2C%20falls%20vorhanden.]%0D%0A%0D%0A--%0D%0AVielen%20Dank%20für%20die%20Meldung%21%0D%0AWir%20löschen%20die%20E-Mail%20und%20deine%20E-Mail-Adresse%20nach%20der%20Bearbeitung.%0D%0A">${navTranslations.reportBug}</a>
+                            <a href="{% url 'statistics_view' %}">${navTranslations.statistics}</a>
+                            <a href="mailto:kontakt@climate-quest.de?subject=Bug%20Meldung%20-%20[Kurze%20Beschreibung%20des%20Bugs]&body=Hi%2C%0D%0A%0D%0Aich%20habe%20einen%20Bug%20gefunden%20und%20möchte%20ihn%20melden.%0D%0A%0D%0A--%0D%0ABitte%20fülle%20folgende%20Felder%20aus%3A%0D%0A%0D%0ABetriebssystem%3A%20[z.B.%20Windows%2011%2C%20macOS%20Tahoe%2C%20iOS%2026%2C%20Android%2016]%0D%0ABrowser%2FApp%3A%20[z.B.%20Chrome%20%2C%20Firefox%20%2C%20Safari%20%2C%20iOS%20App%20v1.2%2C%20Android%20App%20v1.0]%0D%0A%0D%0ABetroffene%20Seite%2FURL%3A%20[z.B.%20https%3A%2F%2Fclimate-quest.de%2Fdashboard%2F]%0D%0A%0D%0ABeschreibung%20des%20Problems%3A%0D%0A[Hier%20genaue%20Schritte%20beschreiben%2C%20was%20passiert%20ist%2C%20inkl.%20Screenshots%20oder%20Fehlermeldungen%2C%20falls%20vorhanden.]%0D%0A%0D%0A--%0D%0AVielen%20Dank%20für%20die%20Meldung%21%0D%0AWir%20löschen%20die%20E-Mail%20und%20deine%20E-Mail-Adresse%20nach%20der%20Bearbeitung.%0D%0A">
+            ${navTranslations.reportBug}</a>
                             {% if request.user.is_staff %}
                             <a href="{% url 'admin:index' %}" target="_blank">${navTranslations.adminI}</a>
                             <a  href="{% url 'admin' %}">${navTranslations.adminII}</a>

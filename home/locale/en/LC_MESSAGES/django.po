@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-27 13:12+0200\n"
+"POT-Creation-Date: 2026-05-29 15:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -96,48 +96,15 @@ msgstr "Community Name"
 msgid "Event-Id"
 msgstr "Event ID"
 
-#: home/templates/aktionenTable.html:4
-msgid "Übersicht über alle Aktionen und deren Klimapunkte bei ClimateQuest."
-msgstr "Overview of all actions and their climate points on ClimateQuest."
-
-#: home/templates/aktionenTable.html:6 home/templates/aktionenTable.html:63
-msgid "Aktionen"
-msgstr "Actions"
-
-#: home/templates/aktionenTable.html:73
-msgid "Aktion"
-msgstr "Action"
-
-#: home/templates/aktionenTable.html:74 home/templates/dashboard.html:435
-msgid "Klimapunkte"
-msgstr "Climate Points"
-
-#: home/templates/aktionenTable.html:75
-msgid "Anmerkung"
-msgstr "Note"
-
-#: home/templates/aktionenTable.html:76
-msgid "Quelle"
-msgstr "Source"
-
-#: home/templates/aktionenTable.html:77
-msgid "Kategorien"
-msgstr "Categories"
-
-#: home/templates/aktionenTable.html:98
-msgid ""
-"Ein Klimapunkt steht stellvertretend für einen Kilogramm eingespartes CO2."
-msgstr "One climate point represents one kilogram of CO2 saved."
-
 #: home/templates/benachrichtigungen.html:8
 msgid "Benachrichtigungen"
 msgstr "Notifications"
 
-#: home/templates/benachrichtigungen.html:116
+#: home/templates/benachrichtigungen.html:129
 msgid "Mehr"
 msgstr "More"
 
-#: home/templates/benachrichtigungen.html:132
+#: home/templates/benachrichtigungen.html:145
 msgid "Du hast keine Benachrichtigungen"
 msgstr "You have no notifications"
 
@@ -324,6 +291,10 @@ msgstr "You have already reached your weekly goal this week"
 #: home/templates/dashboard.html:428
 msgid "Du hast dein wöchentliches Ziel diese Woche noch nicht erreicht"
 msgstr "You haven't reached your weekly goal this week yet"
+
+#: home/templates/dashboard.html:435
+msgid "Klimapunkte"
+msgstr "Climate Points"
 
 #: home/templates/dashboard.html:437
 msgid ""
@@ -1104,26 +1075,17 @@ msgstr ""
 msgid "Per Mail:"
 msgstr "By email:"
 
-#: home/templates/feedback.html:22
+#: home/templates/feedback.html:23
+msgid "Fehler melden"
+msgstr "Report error"
+
+#: home/templates/feedback.html:25
 msgid "Per Feedback-Formular:"
 msgstr "Via feedback form:"
 
-#: home/templates/feedback.html:22
+#: home/templates/feedback.html:26
 msgid "Feedback-Formular"
 msgstr "Feedback Form"
-
-#: home/templates/feedback.html:26
-#, python-format
-msgid ""
-"Wenn du die App testen möchtest, hilfst du uns damit sehr, denn so können "
-"wir von Fehlern erfahren! Am besten verwendest du dafür folgendes Feedback-"
-"Formular und sendest es uns ausgefüllt zurück: <a href=\"%(testbogen_url)s\" "
-"download>Download</a>"
-msgstr ""
-"If you'd like to test the app, you'd be helping us tremendously — it's how "
-"we find out about bugs! The best way to do this is to use the following "
-"feedback form and send it back to us completed: <a "
-"href=\"%(testbogen_url)s\" download>Download</a>"
 
 #: home/templates/home.html:8
 msgid ""
@@ -1830,6 +1792,40 @@ msgid ""
 msgstr ""
 "Do you have questions or need support? Just send an email to <a "
 "href=\"mailto:kontakt@climate-quest.de\">kontakt@climate-quest.de</a>!"
+
+#~ msgid "Übersicht über alle Aktionen und deren Klimapunkte bei ClimateQuest."
+#~ msgstr "Overview of all actions and their climate points on ClimateQuest."
+
+#~ msgid "Aktionen"
+#~ msgstr "Actions"
+
+#~ msgid "Aktion"
+#~ msgstr "Action"
+
+#~ msgid "Anmerkung"
+#~ msgstr "Note"
+
+#~ msgid "Quelle"
+#~ msgstr "Source"
+
+#~ msgid "Kategorien"
+#~ msgstr "Categories"
+
+#~ msgid ""
+#~ "Ein Klimapunkt steht stellvertretend für einen Kilogramm eingespartes CO2."
+#~ msgstr "One climate point represents one kilogram of CO2 saved."
+
+#, python-format
+#~ msgid ""
+#~ "Wenn du die App testen möchtest, hilfst du uns damit sehr, denn so können "
+#~ "wir von Fehlern erfahren! Am besten verwendest du dafür folgendes "
+#~ "Feedback-Formular und sendest es uns ausgefüllt zurück: <a "
+#~ "href=\"%(testbogen_url)s\" download>Download</a>"
+#~ msgstr ""
+#~ "If you'd like to test the app, you'd be helping us tremendously — it's "
+#~ "how we find out about bugs! The best way to do this is to use the "
+#~ "following feedback form and send it back to us completed: <a "
+#~ "href=\"%(testbogen_url)s\" download>Download</a>"
 
 #~ msgid "Benachrichtigung erstellen"
 #~ msgstr "Create Notification"

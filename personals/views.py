@@ -11,9 +11,11 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Sum, F
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode
 from django.utils.http import urlsafe_base64_encode
@@ -21,6 +23,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.csrf import csrf_exempt
 from dotenv import load_dotenv
 
+from aktionen.models import Aktion, Category
 from core.all_messages import all_messages
 from family.models import Family
 from personals.models import UserErweitert
@@ -515,4 +518,40 @@ def register_ios_device(request):
     return JsonResponse({"status": "ok", "device_id": device.id})
 
 def statistics_view(request):
-    return render(request, './statistics.html')
+    days = int(request.GET.get('days', 30))
+    since = timezone.now().date() - timedelta(days=days)
+
+    # Klimapunkte pro Tag und Kategorie
+    qs = (
+        Aktion.objects
+        .filter(user=request.user, date__gte=since)
+        .annotate(category_name=F('aktion__category__name') if request.LANGUAGE_CODE == "de" else F('aktion__category__name_en'))
+        .values('date', 'category_name')
+        .annotate(points=Sum(F('quantity') * F('aktion__klimapunkte')))
+        .order_by('date')
+    )
+
+    # Daten für Chart.js aufbereiten
+    categories = list(
+        Category.objects.values_list('name' if request.LANGUAGE_CODE == "de" else 'name_en', flat=True)
+    )
+    dates_set = sorted({str(r['date']) for r in qs})
+
+    # { category -> { date -> points } }
+    data_map = {cat: {d: 0 for d in dates_set} for cat in categories}
+    for row in qs:
+        cat = row['category_name'] or ('Ohne Kategorie' if request.LANGUAGE_CODE == 'de' else 'Without category')
+        if cat in data_map:
+            data_map[cat][str(row['date'])] = round(row['points'], 2)
+
+    chart_data = {
+        'labels': dates_set,
+        'categories': categories,
+        'series': [list(data_map[cat].values()) for cat in categories],
+    }
+
+    return render(request, './statistics.html', {
+        'chart_data': json.dumps(chart_data),
+        'days': days,
+        'days_options': [7, 30, 365]
+    })

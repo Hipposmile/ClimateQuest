@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-28 13:14+0200\n"
+"POT-Creation-Date: 2026-05-29 15:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,19 +94,19 @@ msgstr "Refresh"
 
 #: personals/templates/login.html:74
 #: personals/templates/personal_settings.html:31
-#: personals/templates/register.html:84
+#: personals/templates/register.html:83
 msgid "Benutzername:"
 msgstr "Username:"
 
-#: personals/templates/login.html:75 personals/templates/register.html:86
+#: personals/templates/login.html:75 personals/templates/register.html:85
 msgid "Benutzername"
 msgstr "Username"
 
-#: personals/templates/login.html:76 personals/templates/register.html:88
+#: personals/templates/login.html:76 personals/templates/register.html:87
 msgid "Passwort:"
 msgstr "Password:"
 
-#: personals/templates/login.html:77 personals/templates/register.html:90
+#: personals/templates/login.html:77 personals/templates/register.html:89
 msgid "Passwort"
 msgstr "Password"
 
@@ -141,7 +141,7 @@ msgid "Aktuelle Daten:"
 msgstr "Actual data:"
 
 #: personals/templates/personal_settings.html:32
-#: personals/templates/register.html:92
+#: personals/templates/register.html:91
 #: personals/templates/reset_password.html:19
 msgid "E-Mail-Adresse:"
 msgstr "E-Mail address:"
@@ -208,17 +208,17 @@ msgid "Speichern"
 msgstr "Save"
 
 #: personals/templates/personal_settings.html:65
-#: personals/templates/register.html:211
+#: personals/templates/register.html:210
 msgid "Überprüfe, ob Benutzername bereits existiert..."
 msgstr "Checking if username already exists..."
 
 #: personals/templates/personal_settings.html:71
-#: personals/templates/register.html:217
+#: personals/templates/register.html:216
 msgid "Benutzername bereits vorhanden"
 msgstr "Username already taken"
 
 #: personals/templates/personal_settings.html:74
-#: personals/templates/register.html:220
+#: personals/templates/register.html:219
 msgid "Name noch nicht vorhanden"
 msgstr "Name not found yet"
 
@@ -231,7 +231,7 @@ msgid "Neues Passwort:"
 msgstr "New password:"
 
 #: personals/templates/personal_settings.html:89
-#: personals/templates/register.html:89
+#: personals/templates/register.html:88
 msgid "Passwort anzeigen"
 msgstr "Show password"
 
@@ -240,7 +240,7 @@ msgid "Neues Passwort"
 msgstr "New password"
 
 #: personals/templates/personal_settings.html:93
-#: personals/templates/register.html:98
+#: personals/templates/register.html:97
 msgid ""
 "Unsere Empfehlungen für ein sicheres Passwort, um deinen Account vor "
 "Hackingangriffen und Accountübernahmen zu schützen:"
@@ -249,27 +249,27 @@ msgstr ""
 "hacking attacks and account takeovers:"
 
 #: personals/templates/personal_settings.html:95
-#: personals/templates/register.html:100
+#: personals/templates/register.html:99
 msgid "Mindestens acht Zeichen"
 msgstr "At least eight characters"
 
 #: personals/templates/personal_settings.html:96
-#: personals/templates/register.html:101
+#: personals/templates/register.html:100
 msgid "Mindestens ein Großbuchstabe"
 msgstr "At least one uppercase letter"
 
 #: personals/templates/personal_settings.html:97
-#: personals/templates/register.html:102
+#: personals/templates/register.html:101
 msgid "Mindestens ein Kleinbuchstabe"
 msgstr "At least one lowercase letter"
 
 #: personals/templates/personal_settings.html:98
-#: personals/templates/register.html:103
+#: personals/templates/register.html:102
 msgid "Mindestens eine Zahl"
 msgstr "At least one number"
 
 #: personals/templates/personal_settings.html:99
-#: personals/templates/register.html:104
+#: personals/templates/register.html:103
 msgid "Mindestens ein Sonderzeichen"
 msgstr "At least one special character"
 
@@ -279,7 +279,7 @@ msgid "Ändern"
 msgstr "Change"
 
 #: personals/templates/personal_settings.html:134
-#: personals/templates/register.html:150
+#: personals/templates/register.html:149
 msgid "Das Passwort entspricht nicht den Empfehlungen. Trotzdem fortfahren?"
 msgstr ""
 "The password does not meet the recommendations. Do you still want to proceed?"
@@ -310,12 +310,12 @@ msgstr ""
 "Your account will be inactive until the new email address has been verified."
 
 #: personals/templates/personal_settings.html:197
-#: personals/templates/register.html:244
+#: personals/templates/register.html:243
 msgid "E-Mail-Adresse bereits vorhanden"
 msgstr "E-Mail address already exists"
 
 #: personals/templates/personal_settings.html:200
-#: personals/templates/register.html:247
+#: personals/templates/register.html:246
 msgid "E-Mail-Adresse noch nicht vorhanden"
 msgstr "E-Mail address not found yet"
 
@@ -429,7 +429,7 @@ msgstr ""
 "Sign in to your ClimateQuest account to access personalized features and "
 "track your progress in the fight against climate change."
 
-#: personals/templates/register.html:12 personals/templates/register.html:129
+#: personals/templates/register.html:12 personals/templates/register.html:128
 msgid "Registrieren"
 msgstr "Register"
 
@@ -437,15 +437,15 @@ msgstr "Register"
 msgid "Registrierung"
 msgstr "Register"
 
-#: personals/templates/register.html:81
+#: personals/templates/register.html:80
 msgid "Zur Registrierung musst du die reCAPTCHA-Cookies erlauben"
 msgstr "To register, you need to allow reCAPTCHA cookies"
 
-#: personals/templates/register.html:94
+#: personals/templates/register.html:93
 msgid "E-Mail (Optional)"
 msgstr "E-Mail (optional)"
 
-#: personals/templates/register.html:95
+#: personals/templates/register.html:94
 msgid ""
 "Du kannst eine E-Mail-Adresse angeben, um Benachrichtigungen zu erhalten "
 "und, falls du deinen Benutzernamen oder dein Passwort vergessen hast, diese "
@@ -455,7 +455,7 @@ msgstr ""
 "your username or password, to reset them. However, this is optional, so you "
 "don't have to do it."
 
-#: personals/templates/register.html:112
+#: personals/templates/register.html:111
 #, python-format
 msgid ""
 "Ich habe die\n"
@@ -469,7 +469,7 @@ msgstr ""
 "yet of legal age, I confirm that the consent was given by a parent or "
 "guardian."
 
-#: personals/templates/register.html:122
+#: personals/templates/register.html:121
 #, python-format
 msgid ""
 "Ich habe die\n"
@@ -484,26 +484,26 @@ msgstr ""
 "processing of my personal data as described. If I am not yet of legal age, I "
 "confirm that this consent was given by a parent or guardian."
 
-#: personals/templates/register.html:130
+#: personals/templates/register.html:129
 msgid "Diese Seite wird geschützt von reCAPTCHA"
 msgstr "This site is protected by reCAPTCHA"
 
-#: personals/templates/register.html:134
+#: personals/templates/register.html:133
 #, python-format
 msgid "Bereits registriert? <a href=\"%(url)s\">Zum Login</a>"
 msgstr "Already registered? <a href=\"%(url)s\">Go to login</a>"
 
-#: personals/templates/register.html:143
+#: personals/templates/register.html:142
 msgid ""
 "Um sich zu registrieren, wird reCAPTCHA benötigt. Bitte akzeptiere diese, um "
 "sich zu registrieren."
 msgstr "To register, reCAPTCHA is required. Please accept it to register."
 
-#: personals/templates/register.html:225
+#: personals/templates/register.html:224
 msgid "Fehler beim Überprüfen des Benutzernamens:"
 msgstr "Error checking username:"
 
-#: personals/templates/register.html:238
+#: personals/templates/register.html:237
 msgid "Überprüfe, ob E-Mail-Adresse bereits existiert..."
 msgstr "Checking if email address already exists..."
 
@@ -529,7 +529,35 @@ msgstr "Send"
 msgid "Wir werden dir eine E-Mail mit deinen neuen Anmeldedaten schicken."
 msgstr "We will send you an email with your new login details."
 
-#: personals/views.py:148 personals/views.py:195 personals/views.py:261
+#: personals/templates/statistics.html:6
+msgid "Sieh dir deine Statistiken bei ClimateQuest an"
+msgstr "Look at your statistics on ClimateQuest"
+
+#: personals/templates/statistics.html:9 personals/templates/statistics.html:12
+msgid "Statistiken"
+msgstr "Statistics"
+
+#: personals/templates/statistics.html:133
+msgid "Jahr"
+msgstr "Year"
+
+#: personals/templates/statistics.html:133
+msgid "Tage"
+msgstr "Days"
+
+#: personals/templates/statistics.html:145
+msgid "Diagramm der Klimapunkte nach Kategorie und Zeit"
+msgstr "Chart of climate points by category and time"
+
+#: personals/templates/statistics.html:146
+msgid "Klimapunkte nach Kategorie über Zeit."
+msgstr "Climate points by category over time"
+
+#: personals/templates/statistics.html:188
+msgid "Gesamt"
+msgstr "Total"
+
+#: personals/views.py:151 personals/views.py:198 personals/views.py:264
 #, python-format
 msgid ""
 "Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: "
@@ -538,7 +566,7 @@ msgstr ""
 "Please click the following link to verify your email address: "
 "%(activation_link)s"
 
-#: personals/views.py:154
+#: personals/views.py:157
 msgid ""
 "Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge "
 "deine E-Mail-Adresse später in den Einstellungen hinzu."
@@ -546,11 +574,11 @@ msgstr ""
 "Error sending email. Try registering without email and add your email "
 "address later in the settings."
 
-#: personals/views.py:200
+#: personals/views.py:203
 msgid "Fehler beim E-Mail-Versand. Probiere es später erneut."
 msgstr "Error sending email. Please try again later."
 
-#: personals/views.py:402
+#: personals/views.py:405
 #, python-format
 msgid ""
 "Wir haben dir ein neues, zufällig generiertes Passwort erstellt: "

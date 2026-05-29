@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-27 13:03+0200\n"
+"POT-Creation-Date: 2026-05-29 15:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -124,8 +124,8 @@ msgid "Quelle:"
 msgstr "Source:"
 
 #: aktionen/templates/add.html:467
-msgid "Kategorien:"
-msgstr "Categories:"
+msgid "Kategorie:"
+msgstr "Category:"
 
 #: aktionen/templates/add.html:470
 msgid "Klimapunkte pro"

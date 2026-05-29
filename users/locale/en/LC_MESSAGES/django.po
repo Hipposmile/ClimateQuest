@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-27 13:03+0200\n"
+"POT-Creation-Date: 2026-05-29 15:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,84 +38,84 @@ msgstr "To the action history"
 msgid "Aktion:"
 msgstr "Action:"
 
-#: users/templates/action_detail.html:44 users/templates/history.html:29
+#: users/templates/action_detail.html:46 users/templates/history.html:29
 msgid "Datum:"
 msgstr "Date:"
 
-#: users/templates/action_detail.html:49 users/templates/action_detail.html:111
+#: users/templates/action_detail.html:51 users/templates/action_detail.html:125
 #: users/templates/history.html:33
 msgid "Beschreibung:"
 msgstr "Description:"
 
-#: users/templates/action_detail.html:53 users/templates/history.html:37
+#: users/templates/action_detail.html:55 users/templates/history.html:37
 #: users/templates/klimapunkte.html:21 users/templates/level.html:62
 msgid "Klimapunkte:"
 msgstr "Climate points:"
 
-#: users/templates/action_detail.html:65
+#: users/templates/action_detail.html:67
 msgid "Bearbeiten"
 msgstr "Edit"
 
-#: users/templates/action_detail.html:75
+#: users/templates/action_detail.html:77
 msgid ""
 "Bitte gib bei Aktionen, die länger als einen Tag gedauert haben, das "
 "Enddatum an."
 msgstr ""
 "Please provide an end date for actions that lasted longer than one day."
 
-#: users/templates/action_detail.html:83
+#: users/templates/action_detail.html:85
 msgid "Ausgewähltes Element:"
 msgstr "Selected item:"
 
-#: users/templates/action_detail.html:101
+#: users/templates/action_detail.html:115
 msgid "Element auswählen"
 msgstr "Select item"
 
-#: users/templates/action_detail.html:113
+#: users/templates/action_detail.html:127
 msgid "Optional"
 msgstr "Optional"
 
-#: users/templates/action_detail.html:118
+#: users/templates/action_detail.html:132
 msgid "Menge:"
 msgstr "Quantity:"
 
-#: users/templates/action_detail.html:119
+#: users/templates/action_detail.html:133
 msgid "Bitte verwenden Sie keinen 1000-Seperator"
 msgstr "Please do not use a thousands separator"
 
-#: users/templates/action_detail.html:131
+#: users/templates/action_detail.html:145
 msgid "Ich bestätige, dass alle Angaben der Wahrheit entsprechen und mit den"
 msgstr "I confirm that all information is truthful and complies with the"
 
-#: users/templates/action_detail.html:132
+#: users/templates/action_detail.html:146
 msgid "Nutzungsbedingungen"
 msgstr "Terms of Use"
 
-#: users/templates/action_detail.html:132
+#: users/templates/action_detail.html:146
 msgid "übereinstimmen."
 msgstr "."
 
-#: users/templates/action_detail.html:135
+#: users/templates/action_detail.html:149
 msgid "Speichern"
 msgstr "Save"
 
-#: users/templates/action_detail.html:158
+#: users/templates/action_detail.html:172
 msgid "Kategorien"
 msgstr "Categories"
 
-#: users/templates/action_detail.html:174
+#: users/templates/action_detail.html:188
 msgid "Zurück"
 msgstr "Back"
 
-#: users/templates/action_detail.html:552
+#: users/templates/action_detail.html:566
 msgid "Insgesamt durch diese Aktion gewonnene Klimapunkte:"
 msgstr "Total climate points earned through this action:"
 
-#: users/templates/action_detail.html:561
+#: users/templates/action_detail.html:575
 msgid "Willst du diese Aktion wirklich löschen?"
 msgstr "Are you sure you want to delete this action?"
 
-#: users/templates/action_detail.html:563
+#: users/templates/action_detail.html:577
 msgid "Diese Aktion löschen"
 msgstr "Delete this action"
 
