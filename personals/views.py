@@ -513,3 +513,6 @@ def register_ios_device(request):
         defaults={"user": user, "bundle_id": bundle_id, "app_version": app_version}
     )
     return JsonResponse({"status": "ok", "device_id": device.id})
+
+def statistics_view(request):
+    return render(request, './statistics.html')

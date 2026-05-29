@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <meta name="description" content="Sieh dir deine Erfolge und Statistiken bei ClimateQuest an">
+{% endblock %}
+
+{% block title %}Statistiken - ClimateQuest{% endblock %}
+
+{% block content %}
+    <h1>Statistiken</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
+        {% endfor %}
+    {% endif %}
+    
+{% endblock %}

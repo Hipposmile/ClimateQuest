@@ -17,4 +17,3 @@ class AktionenListeAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ("name",)
     search_fields = ("name",)
-    filter_horizontal = ("actions",)

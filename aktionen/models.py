@@ -28,6 +28,7 @@ class AktionenListe(models.Model):
     track_kilometerly = models.BooleanField(default=False)
 
     forbidden_in_same_period = models.ManyToManyField('self', blank=True)
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='actions', null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -36,7 +37,6 @@ class AktionenListe(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     name_en = models.CharField(max_length=100)
-    actions = models.ManyToManyField(AktionenListe, related_name='category')
 
     def __str__(self):
         return self.name
