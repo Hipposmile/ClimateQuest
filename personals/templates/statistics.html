@@ -89,27 +89,6 @@
             font-weight: 400;
         }
 
-        .klima-legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 14px;
-            margin-bottom: 12px;
-            font-size: 12px;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .legend-line {
-            width: 24px;
-            height: 3px;
-            border-radius: 2px;
-            display: inline-block;
-        }
-
         .chart-wrap {
             position: relative;
             width: 100%;
@@ -138,8 +117,6 @@
 
         <div class="klima-cards" id="cards"></div>
 
-        <div class="klima-legend" id="legend"></div>
-
         <div class="chart-wrap">
             <canvas id="klimaChart" role="img"
                     aria-label="{% trans 'Diagramm der Klimapunkte nach Kategorie und Zeit' %}">
@@ -163,16 +140,6 @@
             ];
             return {name, ...colors[i % colors.length]};
         });
-
-        function buildLegend() {
-            const el = document.getElementById('legend');
-            el.innerHTML = CATS.map(c => `
-    <span class="legend-item">
-      <span class="legend-line" style="background:${c.hex};"></span>
-      ${c.name}
-    </span>
-  `).join('');
-        }
 
         function buildCards() {
             const el = document.getElementById('cards');
@@ -234,7 +201,6 @@
                         axis: 'x',
                     },
                     plugins: {
-                        legend: {display: false},
                         tooltip: {
                             enabled: true,
                             backgroundColor: '#1a1a1a',
@@ -265,7 +231,6 @@
             });
         }
 
-        buildLegend();
         buildCards();
         buildChart();
 
