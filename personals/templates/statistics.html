@@ -16,7 +16,7 @@
         {% endfor %}
     {% endif %}
 
-    <style>
+    <style nonce="{{ request.csp_style_nonce }}">
         .klima-wrap {
             padding: 1.25rem 0 0.5rem;
         }
@@ -150,7 +150,7 @@
     </div>
 
     <script src="{% static 'libraries/chartjs/chart.js' %}"></script>
-    <script>
+    <script nonce="{{ request.csp_script_nonce }}">
         const RAW = {{ chart_data|safe }};
 
         const CATS = RAW.categories.map((name, i) => {
