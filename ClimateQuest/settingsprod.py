@@ -86,6 +86,7 @@ CRONJOBS = [
     ('0 12 * * 0', 'core.views.create_reminder', '>> /webapps/climatequest/ClimateQuest/logs/cronjobs.log 2>&1'),
     ('0 08 * * 0', 'aktionen.views.add_weekly_tracking_action',
      '>> /webapps/climatequest/ClimateQuest/logs/cronjobs.log 2>&1'),
+    ('0 18 * * 0', 'hall_of_fame.views.add_to_hall_of_fame_cron', '>> /webapps/climatequest/ClimateQuest/logs/cronjobs.log 2>&1')
 ]
 
 CRONTAB_PYTHON_EXECUTABLE = "/webapps/climatequest/venv/bin/python"
