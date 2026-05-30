@@ -47,6 +47,11 @@ class GenerateCSPNonceMiddleware:
             "frame-src https://www.google.com/recaptcha/; "
             "connect-src 'self' blob: https://www.google.com/recaptcha/;"
             "media-src blob:;"
+
+            "form-action 'self';"
+            "base-uri 'self';"
+            "frame-ancestors 'none';"
+            "object-src 'none';"
         )
         response["Content-Security-Policy"] = csp
 
