@@ -50,8 +50,8 @@ self.addEventListener('fetch', (event) => {
 self.addEventListener('push', function (event) {
     const eventInfo = event.data.text();
     const data = JSON.parse(eventInfo);
-    const head = data.head || 'New Notification 🕺🕺';
-    const body = data.body || 'This is default content. Your notification didn\'t have one 🙄🙄';
+    const head = data.head || 'New Notification';
+    const body = data.body || 'New notification';
     const url = data.url || '/benachrichtigungen/'
 
     // Keep the service worker alive until the notification is created.
