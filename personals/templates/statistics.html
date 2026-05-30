@@ -166,7 +166,7 @@
                 d.innerHTML = `
       <p class="metric-label">${cat.name}</p>
       <p class="metric-value-cat">
-        ${sum.toLocaleString('de-DE')}
+            {% if request.LANGUAGE_CODE == "de" %}${sum.toLocaleString('de-DE')}{% else %}${sum.toLocaleString('en-US')}{% endif %}
         <span class="metric-pct">${pct}%</span>
       </p>
     `;
@@ -193,6 +193,7 @@
                 type: 'bar',
                 data: {labels: RAW.labels, datasets},
                 options: {
+                    locale: {% if request.LANGUAGE_CODE == "de" %}'de-DE'{% else %}'en-US'{% endif %},
                     responsive: true,
                     maintainAspectRatio: false,
                     interaction: {
@@ -208,8 +209,8 @@
                             bodyColor: '#c0c0c0',
                             padding: 10,
                             callbacks: {
-                                label: (item) => ` ${item.dataset.label}: ${item.parsed.y.toLocaleString('de-DE')} Pkt.`,
-                                footer: (items) => 'Summe: ' + items.reduce((a, i) => a + i.parsed.y, 0).toLocaleString('de-DE') + ' Pkt.',
+                                label: (item) => ` ${item.dataset.label}: {% if request.LANGUAGE_CODE == "de" %}${item.parsed.y.toLocaleString('de-DE')}{% else %}${item.parsed.y.toLocaleString('en-US')}{% endif %} Pkt.`,
+                                footer: (items) => 'Summe: ' + items.reduce((a, i) => a + i.parsed.y, 0).toLocaleString('{% if request.LANGUAGE_CODE == "de" %}de-DE{% else %}en-US{% endif %}') + ' Pkt.',
                             }
                         }
                     },
