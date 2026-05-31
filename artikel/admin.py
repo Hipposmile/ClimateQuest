@@ -4,7 +4,7 @@ from .models import Artikel, Comment, Answer, Category
 
 
 class ArtikelAdmin(admin.ModelAdmin):
-    list_display = ('name_de', 'updated_at', 'creator')
+    list_display = ('name_de', 'name_en', 'updated_at', 'creator')
     filter_horizontal = ('comments',)
 
 class CommentAdmin(admin.ModelAdmin):
