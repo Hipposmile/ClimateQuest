@@ -440,12 +440,6 @@
                 pageCategories.style.display = "block";
             };
 
-            document.addEventListener('DOMContentLoaded', function () {
-                const today = new Date().toISOString().split("T")[0];
-                let dateInput = document.getElementById('action_date');
-                dateInput.setAttribute('max', today);
-            });
-
             function validateNumber(input) {
                 const lang = getLang();
                 input = input.toString();

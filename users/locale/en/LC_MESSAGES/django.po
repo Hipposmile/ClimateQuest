@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-29 15:34+0200\n"
+"POT-Creation-Date: 2026-05-31 17:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,7 +42,7 @@ msgstr "Action:"
 msgid "Datum:"
 msgstr "Date:"
 
-#: users/templates/action_detail.html:51 users/templates/action_detail.html:125
+#: users/templates/action_detail.html:51 users/templates/action_detail.html:105
 #: users/templates/history.html:33
 msgid "Beschreibung:"
 msgstr "Description:"
@@ -67,55 +67,55 @@ msgstr ""
 msgid "Ausgewähltes Element:"
 msgstr "Selected item:"
 
-#: users/templates/action_detail.html:115
+#: users/templates/action_detail.html:95
 msgid "Element auswählen"
 msgstr "Select item"
 
-#: users/templates/action_detail.html:127
+#: users/templates/action_detail.html:107
 msgid "Optional"
 msgstr "Optional"
 
-#: users/templates/action_detail.html:132
+#: users/templates/action_detail.html:112
 msgid "Menge:"
 msgstr "Quantity:"
 
-#: users/templates/action_detail.html:133
+#: users/templates/action_detail.html:113
 msgid "Bitte verwenden Sie keinen 1000-Seperator"
 msgstr "Please do not use a thousands separator"
 
-#: users/templates/action_detail.html:145
+#: users/templates/action_detail.html:125
 msgid "Ich bestätige, dass alle Angaben der Wahrheit entsprechen und mit den"
 msgstr "I confirm that all information is truthful and complies with the"
 
-#: users/templates/action_detail.html:146
+#: users/templates/action_detail.html:126
 msgid "Nutzungsbedingungen"
 msgstr "Terms of Use"
 
-#: users/templates/action_detail.html:146
+#: users/templates/action_detail.html:126
 msgid "übereinstimmen."
 msgstr "."
 
-#: users/templates/action_detail.html:149
+#: users/templates/action_detail.html:129
 msgid "Speichern"
 msgstr "Save"
 
-#: users/templates/action_detail.html:172
+#: users/templates/action_detail.html:152
 msgid "Kategorien"
 msgstr "Categories"
 
-#: users/templates/action_detail.html:188
+#: users/templates/action_detail.html:168
 msgid "Zurück"
 msgstr "Back"
 
-#: users/templates/action_detail.html:566
+#: users/templates/action_detail.html:540
 msgid "Insgesamt durch diese Aktion gewonnene Klimapunkte:"
 msgstr "Total climate points earned through this action:"
 
-#: users/templates/action_detail.html:575
+#: users/templates/action_detail.html:549
 msgid "Willst du diese Aktion wirklich löschen?"
 msgstr "Are you sure you want to delete this action?"
 
-#: users/templates/action_detail.html:577
+#: users/templates/action_detail.html:551
 msgid "Diese Aktion löschen"
 msgstr "Delete this action"
 

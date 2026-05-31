@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-29 15:42+0200\n"
+"POT-Creation-Date: 2026-05-31 17:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -537,23 +537,23 @@ msgstr "Look at your statistics on ClimateQuest"
 msgid "Statistiken"
 msgstr "Statistics"
 
-#: personals/templates/statistics.html:133
+#: personals/templates/statistics.html:112
 msgid "Jahr"
 msgstr "Year"
 
-#: personals/templates/statistics.html:133
+#: personals/templates/statistics.html:112
 msgid "Tage"
 msgstr "Days"
 
-#: personals/templates/statistics.html:145
+#: personals/templates/statistics.html:122
 msgid "Diagramm der Klimapunkte nach Kategorie und Zeit"
 msgstr "Chart of climate points by category and time"
 
-#: personals/templates/statistics.html:146
+#: personals/templates/statistics.html:123
 msgid "Klimapunkte nach Kategorie über Zeit."
 msgstr "Climate points by category over time"
 
-#: personals/templates/statistics.html:188
+#: personals/templates/statistics.html:155
 msgid "Gesamt"
 msgstr "Total"
 

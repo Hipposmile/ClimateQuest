@@ -9,8 +9,8 @@
 {% endblocktrans %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Petition" %} <a
-            href="{% url 'petition_detail' petition.id %}">{{ petition }}</a> {% trans "bearbeiten" %}</h1>
+    {% url 'petition_detail' petition.id as petition_detail_url %}
+    <h1>{% blocktrans with url=petition_detail_url petition=petition %}Petition <a href="{{ url }}">{{ petition }}</a> bearbeiten{% endblocktrans %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>

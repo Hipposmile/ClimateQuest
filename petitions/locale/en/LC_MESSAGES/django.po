@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-28 13:40+0200\n"
+"POT-Creation-Date: 2026-05-31 17:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,99 +28,122 @@ msgid "Petition hinzufügen"
 msgstr "Add petition"
 
 #: petitions/templates/add_petition.html:23
+msgid "Titel (Englisch)"
+msgstr "Title (English)"
+
 #: petitions/templates/add_petition.html:24
-#: petitions/templates/edit_petition.html:23
+#: petitions/templates/add_petition.html:26
+#: petitions/templates/edit_petition.html:25
+#: petitions/templates/edit_petition.html:27
 #: petitions/templates/petitions_overview.html:38
 msgid "Titel"
 msgstr "Title"
 
-#: petitions/templates/add_petition.html:26
-msgid "Beschreibung"
-msgstr "Description"
+#: petitions/templates/add_petition.html:25
+msgid "Titel (Deutsch)"
+msgstr "Title (German)"
 
-#: petitions/templates/add_petition.html:30
-#: petitions/templates/edit_petition.html:49
+#: petitions/templates/add_petition.html:28
+msgid "Beschreibung (Englisch)"
+msgstr "Description (English)"
+
+#: petitions/templates/add_petition.html:31
+msgid "Beschreibung (Deutsch)"
+msgstr "Description (German)"
+
+#: petitions/templates/add_petition.html:35
+#: petitions/templates/edit_petition.html:57
 #: petitions/templates/petition_detail.html:50
 msgid "Ziel"
 msgstr "Goal"
 
-#: petitions/templates/add_petition.html:31
+#: petitions/templates/add_petition.html:36
 msgid "Das Ziel kann im Nachhinein aktualisiert werden"
 msgstr "The goal can be updated afterwards"
 
-#: petitions/templates/add_petition.html:34
+#: petitions/templates/add_petition.html:39
 #: petitions/templates/petition_detail.html:56
 #: petitions/templates/petitions_overview.html:82
 #: petitions/templates/petitions_overview.html:104
 msgid "Kategorie"
 msgstr "Category"
 
-#: petitions/templates/add_petition.html:45
+#: petitions/templates/add_petition.html:50
 #, python-format
 msgid ""
-"<span class=\"label-text\">Ich bestätige, dass die Petition mit den <a\n"
-"                    href=\"%(url)s\">Nutzungsbedingungen</a> übereinstimmt. "
-"</span>"
+"\n"
+"                <span class=\"label-text\">Ich bestätige, dass die Petition "
+"mit den <a\n"
+"                        href=\"%(url)s\">Nutzungsbedingungen</a> "
+"übereinstimmt. </span>"
 msgstr ""
+"\n"
 "<span class=\"label-text\">I confirm that the petition complies with the <a\n"
 "                    href=\"%(url)s\">terms of use</a>. </span>"
 
-#: petitions/templates/add_petition.html:49
-#: petitions/templates/edit_petition.html:37
-#: petitions/templates/edit_petition.html:51
+#: petitions/templates/add_petition.html:55
+#: petitions/templates/edit_petition.html:45
+#: petitions/templates/edit_petition.html:59
 msgid "Speichern"
 msgstr "Save"
 
 #: petitions/templates/edit_petition.html:8
 #, python-format
-msgid "Update zur Petition %(petition_name)s hinzufügen"
-msgstr "Add update to petition %(petition_name)s"
+msgid "Update zur Petition %(petition_name)s hinzufügen\n"
+msgstr "Add update to petition %(petition_name)s\n"
 
-#: petitions/templates/edit_petition.html:11
-#: petitions/templates/petition_detail.html:27
-msgid "Petition"
-msgstr "Petition"
+#: petitions/templates/edit_petition.html:13
+#, python-format
+msgid "Petition <a href=\"%(url)s\">%(petition)s</a> bearbeiten"
+msgstr "Edit <a href=\"%(url)s\">%(petition)s</a> petition"
 
-#: petitions/templates/edit_petition.html:11
-msgid "bearbeiten"
-msgstr "edit"
-
-#: petitions/templates/edit_petition.html:18
+#: petitions/templates/edit_petition.html:20
 msgid "Update hinzufügen"
 msgstr "Add update"
 
-#: petitions/templates/edit_petition.html:22
-msgid "Name"
-msgstr "Name"
+#: petitions/templates/edit_petition.html:24
+msgid "Name (Englisch)"
+msgstr "Name (English)"
 
-#: petitions/templates/edit_petition.html:25
-msgid "Inhalt"
-msgstr "Content"
+#: petitions/templates/edit_petition.html:26
+msgid "Name (Deutsch)"
+msgstr "Name (German)"
 
-#: petitions/templates/edit_petition.html:33
+#: petitions/templates/edit_petition.html:29
+msgid "Inhalt (Englisch)"
+msgstr "Content (English)"
+
+#: petitions/templates/edit_petition.html:32
+msgid "Inhalt (Deutsch)"
+msgstr "Content (German)"
+
+#: petitions/templates/edit_petition.html:40
 #, python-format
 msgid ""
-"<span class=\"label-text\">Ich bestätige, dass alle Angaben mit den <a\n"
-"                    href=\"%(url)s\">Nutzungsbedingungen</a> übereinstimmen."
-"</span>"
+"\n"
+"                <span class=\"label-text\">Ich bestätige, dass alle Angaben "
+"mit den <a\n"
+"                        href=\"%(url)s\">Nutzungsbedingungen</a> "
+"übereinstimmen.</span>"
 msgstr ""
+"\n"
 "<span class=\"label-text\">I confirm that all information complies with the "
 "<a\n"
 "                    href=\"%(url)s\">terms of use</a>.</span>"
 
-#: petitions/templates/edit_petition.html:46
+#: petitions/templates/edit_petition.html:54
 msgid "Ziel ändern"
 msgstr "Change goal"
 
-#: petitions/templates/edit_petition.html:54
+#: petitions/templates/edit_petition.html:62
 msgid "Erfolg"
 msgstr "Success"
 
-#: petitions/templates/edit_petition.html:57
+#: petitions/templates/edit_petition.html:66
 msgid "Erfolg der Petition löschen"
 msgstr "Delete petition success"
 
-#: petitions/templates/edit_petition.html:58
+#: petitions/templates/edit_petition.html:67
 msgid "Petition zum Erfolg erklären"
 msgstr "Declare petition successful"
 
@@ -133,6 +156,10 @@ msgstr "Take a look at the petition %(title)s"
 #, python-format
 msgid "Petition %(petition_title)s"
 msgstr "Petition %(petition_title)s"
+
+#: petitions/templates/petition_detail.html:27
+msgid "Petition"
+msgstr "Petition"
 
 #: petitions/templates/petition_detail.html:34
 msgid "Die Petition hatte Erfolg!"
@@ -384,6 +411,15 @@ msgstr "View details"
 #: petitions/templates/petitions_overview.html:148
 msgid "Es gibt derzeit keine Petitionen mit diesem Filter."
 msgstr "There are currently no petitions with this filter."
+
+#~ msgid "bearbeiten"
+#~ msgstr "edit"
+
+#~ msgid "Name"
+#~ msgstr "Name"
+
+#~ msgid "Inhalt"
+#~ msgstr "Content"
 
 #~ msgid "Zuletzt bearbeitet"
 #~ msgstr "Last edited"

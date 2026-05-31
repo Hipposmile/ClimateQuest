@@ -1910,7 +1910,6 @@ msgstr ""
 #~ msgid "Zu den Communities"
 #~ msgstr "To Communities"
 
-#, fuzzy
 #~| msgid "Benachrichtigung erstellen"
 #~ msgid "ClimateQuest - Benachrichtigungen"
 #~ msgstr "Create Notification"
