@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 
-from django.conf.global_settings import APPEND_SLASH
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -54,6 +53,7 @@ INSTALLED_APPS = [
     'django_crontab',
     'webpush',
     'core',
+    'modeltranslation',
     'utils',
     'production_conf',
     'home',
@@ -148,7 +148,6 @@ LANGUAGES = [
 USE_THOUSAND_SEPARATOR = False
 
 USE_I18N = True
-
 USE_TZ = True
 TIME_ZONE = "Europe/Berlin"
 USE_L10N = True

@@ -15,17 +15,18 @@ from .models import Petition, Comment, Category, Answer, Update
 def add_petition(request):
     categories = Category.objects.all().order_by('title')
     if request.method == 'POST':
-        title = request.POST.get('title')
-        content = request.POST.get('content')
+        title_de = request.POST.get('title_de')
+        title_en = request.POST.get('title_en')
+        content_de = request.POST.get('content_de')
+        content_en = request.POST.get('content_en')
         goal = request.POST.get('goal')
-        # img = request.FILES.get('img')
         category_input = request.POST.get('category')
 
         is_truth = check_is_truth(request)
         if not is_truth:
             return redirect("add_petition")
 
-        if not title or not content or not goal:
+        if not title_de or not content_de or not title_en or not content_en or not goal:
             messages.error(request, all_messages["missing_required_inputs"])
             return redirect("add_petition")
 
@@ -44,24 +45,14 @@ def add_petition(request):
             messages.error(request, all_messages["internal_error"])
             return redirect("add_petition")
 
-        content = clean_html(content)
+        content_de = clean_html(content_de)
+        content_en = clean_html(content_en)
 
-        """if img:
-            valid, response = clean_img(img)
-            if not valid:
-                messages.error(request, response)
-                return redirect("add_petition")
-            img = response
-            width, height = Image.open(img).size
-            print(width, height)
-            if width / height != 16 / 9:
-                messages.error(request, all_messages["invalid_img_proportions"])
-                return redirect("add_petition")"""
-
-        petition = Petition.objects.create(title=title,
-                                           content=content,
+        petition = Petition.objects.create(title_de=title_de,
+                                           title_en=title_en,
+                                           content_de=content_de,
+                                           content_en=content_en,
                                            goal=goal,
-                                           # img=img if img else None,
                                            category=category,
                                            creator=request.user)
         messages.success(request, all_messages["petition_added"])
@@ -129,20 +120,23 @@ def edit_petition(request, petition_id):
 
     if request.method == 'POST':
         if 'update' in request.POST:
-            title = request.POST.get('title')
-            content = request.POST.get('content')
-
-            content = clean_html(content)
+            title_de = request.POST.get('title_de')
+            title_en = request.POST.get('title_en')
+            content_de = request.POST.get('content_de')
+            content_en = request.POST.get('content_en')
 
             is_truth = check_is_truth(request)
             if not is_truth:
                 return redirect("edit_petition", petition_id)
 
-            if not title or not content:
+            if not title_de or not title_en or not content_de or not content_en:
                 messages.error(request, all_messages["missing_required_inputs"])
                 return redirect("edit_petition", petition_id)
 
-            update = Update.objects.create(title=title, content=content)
+            content_de = clean_html(content_de)
+            content_en = clean_html(content_en)
+
+            update = Update.objects.create(title_de=title_de, title_en=title_en, content_de=content_de, content_en=content_en)
             petition.updates.add(update)
 
             for user in petition.signs.all():

@@ -20,16 +20,21 @@
     <form method="post" id="petition-form"
           class="fill-editor">
         {% csrf_token %}
-        <label for="title">{% trans "Titel" %}</label>
-        <input type="text" name="title" id="title" placeholder="{% trans "Titel" %}" maxlength="100" required>
+        <label for="title_en">{% trans "Titel (Englisch)" %}</label>
+        <input type="text" name="title_en" id="title_en" placeholder="{% trans "Titel" %}" maxlength="100" required>
+        <label for="title_de">{% trans "Titel (Deutsch)" %}</label>
+        <input type="text" name="title_de" id="title_de" placeholder="{% trans "Titel" %}" maxlength="100" required>
 
-        <label for="content_editor">{% trans "Beschreibung" %}</label>
+        <label for="content_editor">{% trans "Beschreibung (Englisch)" %}</label>
         <div class="quill-editor content_editor"></div>
-        <input type="hidden" name="content">
+        <input type="hidden" name="content_en">
+        <label for="content_editor">{% trans "Beschreibung (Deutsch)" %}</label>
+        <div class="quill-editor content_editor"></div>
+        <input type="hidden" name="content_de">
 
         <label for="goal">{% trans "Ziel" %}</label>
         <small>{% trans "Das Ziel kann im Nachhinein aktualisiert werden" %}</small>
-        <input type="number" name="goal" id="goal" min="10" step="1" required>
+        <input type="number" name="goal" id="goal" min="10" step="1" value="100" required>
 
         <label for="category">{% trans "Kategorie" %}</label>
         <select id="category" name="category">
@@ -42,8 +47,9 @@
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
             {% url 'nutzungsbedingungen' as nutzungsbedingungen_url %}
-            {% blocktrans with url=nutzungsbedingungen_url %}<span class="label-text">Ich bestätige, dass die Petition mit den <a
-                    href="{{ url }}">Nutzungsbedingungen</a> übereinstimmt. </span>{% endblocktrans %}
+            {% blocktrans with url=nutzungsbedingungen_url %}
+                <span class="label-text">Ich bestätige, dass die Petition mit den <a
+                        href="{{ url }}">Nutzungsbedingungen</a> übereinstimmt. </span>{% endblocktrans %}
         </label>
 
         <button type="submit">{% trans "Speichern" %}</button>

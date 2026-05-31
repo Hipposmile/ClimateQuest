@@ -5,10 +5,12 @@
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 
-{% block title %}{% blocktrans with petition_name=petition %}Update zur Petition {{ petition_name }} hinzufügen{% endblocktrans %}{% endblock %}
+{% block title %}{% blocktrans with petition_name=petition %}Update zur Petition {{ petition_name }} hinzufügen
+{% endblocktrans %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Petition" %} <a href="{% url 'petition_detail' petition.id %}">{{ petition }}</a> {% trans "bearbeiten" %}</h1>
+    <h1>{% trans "Petition" %} <a
+            href="{% url 'petition_detail' petition.id %}">{{ petition }}</a> {% trans "bearbeiten" %}</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
@@ -19,19 +21,25 @@
 
     <form method="post" class="fill-editor">
         {% csrf_token %}
-        <label for="title">{% trans "Name" %}</label>
-        <input type="text" name="title" id="title" placeholder="{% trans "Titel" %}" maxlength="100">
+        <label for="title_en">{% trans "Name (Englisch)" %}</label>
+        <input type="text" name="title_en" id="title_en" placeholder="{% trans "Titel" %}" maxlength="100">
+        <label for="title_de">{% trans "Name (Deutsch)" %}</label>
+        <input type="text" name="title_de" id="title_de" placeholder="{% trans "Titel" %}" maxlength="100">
 
-        <label for="content_editor">{% trans "Inhalt" %}</label>
+        <label for="content_editor">{% trans "Inhalt (Englisch)" %}</label>
         <div class="quill-editor content_editor"></div>
-        <input type="hidden" name="content">
+        <input type="hidden" name="content_en">
+        <label for="content_editor">{% trans "Inhalt (Deutsch)" %}</label>
+        <div class="quill-editor content_editor"></div>
+        <input type="hidden" name="content_de">
 
         <label class="custom-checkbox">
             <input type="checkbox" name="is_truth">
             <span class="checkmark"></span>
             {% url 'nutzungsbedingungen' as nutzungsbedingungen_url %}
-            {% blocktrans with url=nutzungsbedingungen_url %}<span class="label-text">Ich bestätige, dass alle Angaben mit den <a
-                    href="{{ url }}">Nutzungsbedingungen</a> übereinstimmen.</span>{% endblocktrans %}
+            {% blocktrans with url=nutzungsbedingungen_url %}
+                <span class="label-text">Ich bestätige, dass alle Angaben mit den <a
+                        href="{{ url }}">Nutzungsbedingungen</a> übereinstimmen.</span>{% endblocktrans %}
         </label>
 
         <button type="submit" name="update">{% trans "Speichern" %}</button>
@@ -54,7 +62,8 @@
     <h2>{% trans "Erfolg" %}</h2>
     <form method="post">
         {% csrf_token %}
-        <button name="success" class="color-red">{% if petition.success %}{% trans "Erfolg der Petition löschen" %}{% else %}
-            {% trans "Petition zum Erfolg erklären" %}{% endif %}</button>
+        <button name="success" class="color-red">
+            {% if petition.success %}{% trans "Erfolg der Petition löschen" %}{% else %}
+                {% trans "Petition zum Erfolg erklären" %}{% endif %}</button>
     </form>
 {% endblock %}
