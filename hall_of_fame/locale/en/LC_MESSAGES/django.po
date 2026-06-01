@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-29 15:34+0200\n"
+"POT-Creation-Date: 2026-06-01 19:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,8 +23,10 @@ msgid "Sie dir die besten User von ClimateQuest an!"
 msgstr "Look at the best users of ClimateQuest!"
 
 #: hall_of_fame/templates/hall_of_fame_detail.html:188
-msgid "Legenden & All-time-GOATS"
-msgstr "Legends & all-time-GOATS"
+#, fuzzy
+#| msgid "Legenden & All-time-GOATS"
+msgid "Legenden & GOATS"
+msgstr "Legends & GOATS"
 
 #: hall_of_fame/templates/hall_of_fame_detail.html:197
 msgid ""
