@@ -502,16 +502,12 @@
         }
     }*/
 
-    // 1. Direkt prüfen (falls schon gesetzt)
     getIfStandalone();
 
-    // 2. Wenn Chrome den Modus später setzt
     window.addEventListener('visibilitychange', getIfStandalone);
 
-    // 3. Chrome-spezifisches Event
     window.matchMedia('(display-mode: standalone)').addEventListener('change', getIfStandalone);
 
-    // 4. Fallback: nach load nochmal prüfen
     window.addEventListener('load', () => {
         setTimeout(getIfStandalone, 50);
     });
@@ -1238,6 +1234,8 @@
     form_showLoading.forEach((el) => {
         el.addEventListener('submit', showLoading);
     });
+
+    const a_show_loading = document.querySelectorAll('a:not(.dont-show-loading):not([target="_blank"])');
 
     const forms_confirm = document.querySelectorAll('.form-confirm');
     forms_confirm.forEach((el) => {
