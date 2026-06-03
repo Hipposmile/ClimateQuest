@@ -61,4 +61,4 @@ class IOSDevice(models.Model):
     last_seen_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.user_id} - {self.apns_token[:12]}..."
+        return f"{self.user} - {self.apns_token[:12]}..."

@@ -76,7 +76,7 @@
     <form method="post" id="register_form" class="dont-show-loading">
         {% csrf_token %}
         <div class="cookie-blocked" data-requires="recaptcha"
-             data-content='<script src="https://www.google.com/recaptcha/api.js?render=6Ld_S6orAAAAANqPdHX27TNVkzL0WmlG_XQhTD2l"></script>'
+             data-content='<script src="https://www.google.com/recaptcha/api.js?render=6LcnYgstAAAAAPedXElmA-40c2jzoEHDyv7gUYwn"></script>'
              data-text="{% trans 'Zur Registrierung musst du die reCAPTCHA-Cookies erlauben' %}"
              data-important="true"></div>
 
@@ -152,7 +152,7 @@
             }
 
             grecaptcha.ready(function () {
-                grecaptcha.execute('6Ld_S6orAAAAANqPdHX27TNVkzL0WmlG_XQhTD2l', {action: 'register'})
+                grecaptcha.execute('6LcnYgstAAAAAPedXElmA-40c2jzoEHDyv7gUYwn', {action: 'register'})
                     .then(function (token) {
                         if (!token) {
                             console.warn("reCAPTCHA hat kein Token zurückgegeben.");
