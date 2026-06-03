@@ -1236,6 +1236,9 @@
     });
 
     const a_show_loading = document.querySelectorAll('a:not(.dont-show-loading):not([target="_blank"])');
+    a_show_loading.forEach((el) => {
+        el.addEventListener('click', showLoading);
+    })
 
     const forms_confirm = document.querySelectorAll('.form-confirm');
     forms_confirm.forEach((el) => {
