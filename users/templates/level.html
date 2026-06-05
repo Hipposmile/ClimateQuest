@@ -81,7 +81,7 @@
         </style>
         <p>
             {% blocktrans with progress_percent=level_data.progress_percent klimapunkte_missing=level_data.klimapunkte_missing|floatformat:-4 %}
-                {{ progress_percent }} % bis zum nächsten Level geschafft. Dir fehlen also noch
+                {{ progress_percent }} % bis zum nächsten Level geschafft. Es fehlen also noch
                 {{ klimapunkte_missing }} Klimapunkte.{% endblocktrans %}</p>
     {% endif %}
     <h3>{% trans "Liste der Level" %}</h3>
