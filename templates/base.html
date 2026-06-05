@@ -304,86 +304,16 @@
             color: var(--color-primary);
         }
 
-        #pwaNav {
-            position: fixed;
-            top: max(25px, calc(25px + var(--safe-area-inset-top)));
-            left: max(10px, calc(10px + var(--safe-area-inset-left)));
-            display: flex;
-            pointer-events: none;
-            opacity: 0;
-            gap: 8px;
-            z-index: 9998;
-            transition: opacity 200ms ease-in-out;
-        }
-
-        #pwaNav.open {
-            pointer-events: auto;
-            opacity: 1;
-        }
-
-        #pwaNav button {
-            padding: 8px 12px;
-            font-size: 18px;
-            border: none;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--color-primary);
-            cursor: pointer;
-            min-width: 44px;
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            -webkit-appearance: none;
-            appearance: none;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: all 0.2s ease;
-        }
-
-        #pwaNav button:active {
-            transform: scale(0.95);
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        #pwaNav button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        #pwaNavToggle {
-            position: fixed;
-            top: max(0px, var(--safe-area-inset-top));
-            left: max(10px, calc(10px + var(--safe-area-inset-left)));
-            background: rgba(255, 255, 255, 0.9);
-            color: black;
-            height: 10px;
-            width: 20px;
-            z-index: 9997;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transform: rotate(180deg);
-            padding: 5px;
-            transition: transform 200ms ease-in-out;
-            border-radius: 5px;
-
-        }
-
-        #pwaNavToggle.open {
-            transform: rotate(0);
-        }
-
         .loading-div {
             display: flex;
             justify-content: center;
             align-items: center;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.4); /* ← Rauchiger Schleier */
-            z-index: 9998;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 99998;
             animation: fadeIn 0.3s ease-in-out;
-            pointer-events: auto; /* ← wichtig: erlaubt Interaktion mit dem Banner */
+            pointer-events: auto;
         }
 
         .loading {
@@ -393,7 +323,7 @@
             border: 8px solid transparent;
             border-top: 8px solid #ff0080;
             border-radius: 50%;
-            z-index: 9999;
+            z-index: 99999;
             animation: spin 1s ease-in-out infinite;
         }
 
@@ -430,7 +360,6 @@
     function getIfStandalone() {
         isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
         if (isStandalone) {
-            //createPwaNav();
         }
     }
 
@@ -452,55 +381,6 @@
             hideLoading();
         }
     });
-
-    /*function createPwaNav() {
-        if (isStandalone) {
-            // Auf- / Zuklapper erstellen
-            const navToggle = document.createElement('div');
-            navToggle.id = 'pwaNavToggle';
-            navToggle.innerHTML = '^';
-            document.body.appendChild(navToggle);
-
-            // Container erstellen
-            const nav = document.createElement('div');
-            nav.id = 'pwaNav';
-
-            navToggle.addEventListener('click', function () {
-                nav.classList.toggle("open");
-                navToggle.classList.toggle("open");
-            })
-
-            // Back-Button
-            const backBtn = document.createElement('button');
-            backBtn.innerHTML = '<span class="emoji">&#x2B05;&#xFE0F;</span>';
-            backBtn.onclick = () => {
-                if (window.history.length > 1) {
-                    showLoading();
-                    history.back();
-                }
-            };
-
-            // Reload-Btn
-            const reloadBtn = document.createElement('button');
-            reloadBtn.innerHTML = '<span class="emoji">&#x1F504;</span>';
-            reloadBtn.onclick = () => {
-                showLoading();
-                location.reload();
-            };
-
-            // Forward-Button
-            const forwardBtn = document.createElement('button');
-            forwardBtn.innerHTML = '<span class="emoji">&#x27A1;&#xFE0F;</span>';
-            forwardBtn.onclick = () => {
-                history.forward();
-            };
-
-            nav.appendChild(backBtn);
-            nav.appendChild(reloadBtn);
-            nav.appendChild(forwardBtn);
-            document.body.appendChild(nav);
-        }
-    }*/
 
     getIfStandalone();
 
