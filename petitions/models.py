@@ -43,11 +43,11 @@ class Petition(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
     goal = models.IntegerField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateField(auto_now_add=True)
     signs = models.ManyToManyField(User, blank=True, related_name='petition_sign')
     updates = models.ManyToManyField(Update, related_name='petition_update', blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='petition_category')
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='petition_creator')
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_petitions')
     comments = models.ManyToManyField(Comment, related_name='petition_comment', blank=True)
     success = models.BooleanField(default=False)
 

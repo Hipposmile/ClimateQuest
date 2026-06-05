@@ -68,7 +68,7 @@
             {% if request.user.is_authenticated %}
                 <button type="submit" name="sign">{% trans "Unterschreiben" %}</button>
             {% else %}
-                <p><a href="{% url 'register_view' %}">{% trans "Registriere dich" %}</a>, {% trans "um zu unterschreiben" %}</p>
+                <p><a href="{% url 'register_view' %}">{% trans "Registriere dich" %}</a> {% trans ", um zu unterschreiben" %}</p>
             {% endif %}
         {% else %}
             <p>{% trans "Du hast bereits unterschrieben" %}</p>

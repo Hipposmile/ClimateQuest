@@ -23,7 +23,6 @@ msgid "Sie dir die besten User von ClimateQuest an!"
 msgstr "Look at the best users of ClimateQuest!"
 
 #: hall_of_fame/templates/hall_of_fame_detail.html:188
-#, fuzzy
 #| msgid "Legenden & All-time-GOATS"
 msgid "Legenden & GOATS"
 msgstr "Legends & GOATS"

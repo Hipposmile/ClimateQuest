@@ -30,6 +30,7 @@ class Event(models.Model):
     participants = models.ManyToManyField(User, related_name='events')
     questions = models.ManyToManyField(Question, related_name='event', blank=True)
     last_modified = models.DateTimeField(auto_now=True)
+    created_at = models.DateField(auto_now_add=True)
 
     @property
     def participants_count(self):

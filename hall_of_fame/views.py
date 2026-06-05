@@ -33,7 +33,8 @@ def hall_of_fame_detail(request):
     else:
         in_hall_of_fame = False
     return render(request, './hall_of_fame_detail.html',
-                  {'user_entries': user_entries, 'in_hall_of_fame': in_hall_of_fame, 'to_to_next_week': to_to_next_week})
+                  {'user_entries': user_entries, 'in_hall_of_fame': in_hall_of_fame,
+                   'to_to_next_week': to_to_next_week})
 
 
 factory = RequestFactory()
@@ -245,19 +246,59 @@ def add_to_hall_of_fame_cron() -> None:
         description_de: str = f"Hat sich zwischen {week_start.strftime('%d.%m.%Y')} und {today.strftime('%d.%m.%Y')} vegetarisch ernährt."
         description_en: str = f"Lived as a vegetarian between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
 
-        # ...
+        qualifying_users: QuerySet[User] = (
+            User.objects.filter(
+                aktion__aktion_id=22,
+                aktion__date=today,
+                aktion__quantity__gte=1
+            ).distinct()
+        )
+
+        add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
     def vegan() -> None:
-        pass
+        description_de: str = f"Hat sich zwischen {week_start.strftime('%d.%m.%Y')} und {today.strftime('%d.%m.%Y')} vegan ernährt."
+        description_en: str = f"Lived vegan between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
+
+        qualifying_users: QuerySet[User] = (
+            User.objects.filter(
+                aktion__aktion_id=20,
+                aktion__date=today,
+                aktion__quantity__gte=1
+            ).distinct()
+        )
+
+        add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
     def created_article() -> None:  # ToDo: Create created_at field in model
-        pass
+        description_de: str = f"Hat zwischen {week_start.strftime('%d.%m.%Y')} und {today.strftime('%d.%m.%Y')} einen Artikel veröffentlicht."
+        description_en: str = f"Published an article between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
+
+        qualifying_users: QuerySet[User] = User.objects.filter(
+            artikel_set__created_at__range=(week_start, today)
+        ).distinct()
+
+        add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
     def created_event() -> None:  # ToDo: Create created_at field in model
-        pass
+        description_de: str = f"Hat zwischen {week_start.strftime('%d.%m.%Y')} und {today.strftime('%d.%m.%Y')} ein Event veröffentlicht."
+        description_en: str = f"Published an event between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
+
+        qualifying_users: QuerySet[User] = User.objects.filter(
+            artikel_set__created_at__range=(week_start, today)
+        ).distinct()
+
+        add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
     def created_petition() -> None:
-        pass
+        description_de: str = f"Hat zwischen {week_start.strftime('%d.%m.%Y')} und {today.strftime('%d.%m.%Y')} eine Petition erstellt."
+        description_en: str = f"Created a petition between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
+
+        qualifying_users: QuerySet[User] = User.objects.filter(
+            created_petitions__created_at__range=(week_start, today)
+        ).distinct()
+
+        add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
     def run_weekly_step(
             evaluation_func: Callable[[], None],
