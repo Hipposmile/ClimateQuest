@@ -365,7 +365,10 @@ def create_notification(request, notification_de, notification_en, user=None, ur
 
     tokens = IOSDevice.objects.filter(user=user).values_list("apns_token", flat=True)
     for t in tokens:
-        send_ios_push(device_token = t, title=head, body=mobile_msg_de if user.usererweitert.lang == 'de' else mobile_msg_en, data={"url": mobile_notification_redirect_url})
+        try:
+            send_ios_push(device_token = t, title=head, body=mobile_msg_de if user.usererweitert.lang == 'de' else mobile_msg_en, data={"url": mobile_notification_redirect_url})
+        except Exception as e:
+            logging.error(e)
 
     res = send_push(benachrichtigung=mobile_msg_de if request.user.usererweitert.lang == "de" else mobile_msg_en,
                     user=user, url=mobile_notification_redirect_url, head=head)
