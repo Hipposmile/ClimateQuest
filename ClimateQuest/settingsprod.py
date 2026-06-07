@@ -82,6 +82,8 @@ LOGGING = {
     },
 }
 
+# Add those crontabs by running ```python manage.py crontab add --settings=ClimateQuest.settingsprod```
+# Important: Add crontabs only with one user (e.g. only climatequestuser, not root, too). Otherwise, the cronjob will be done twice.
 CRONJOBS = [
     ('0 12 * * 0', 'core.views.create_reminder', '>> /webapps/climatequest/ClimateQuest/logs/cronjobs.log 2>&1'),
     ('0 08 * * 0', 'aktionen.views.add_weekly_tracking_action',
