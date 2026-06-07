@@ -10,7 +10,7 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 
 from core.all_messages import all_messages
-from utils.functions import create_notification, get_families_of_user, get_date_range, get_klimapunkte_fuer_member, get_communities_of_family, get_communities_of_user
+from utils.functions import create_notification, get_families_of_user, get_date_range, get_klimapunkte_for_member, get_communities_of_family, get_communities_of_user
 from .models import Family, FamilyChatMessage
 
 
@@ -477,7 +477,7 @@ def family_detail(request, family_id):
     members = family.members.all()
 
     members_with_klimapunkte = [
-        {'member': member, 'klimapunkte': get_klimapunkte_fuer_member(member, start_datum, end_datum)}
+        {'member': member, 'klimapunkte': get_klimapunkte_for_member(member, start_datum, end_datum)}
         for member in members
     ]
 

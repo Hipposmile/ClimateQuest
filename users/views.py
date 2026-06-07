@@ -16,7 +16,7 @@ from family.models import Family
 from personals.models import UserErweitert
 from utils.functions import dezimalstellen, get_additional_klimapunkte, get_weekly_goal_from_user, \
     get_streak_from_user, send_mail_function, get_level, create_notification, get_all_klimapunkte_from_user, \
-    get_family_rank_from_user, get_date_range, get_klimapunkte_fuer_member, get_hall_of_fame_entries
+    get_family_rank_from_user, get_date_range, get_klimapunkte_for_member, get_hall_of_fame_entries
 from home.models import ReportedUser
 
 
@@ -173,7 +173,7 @@ def klimapunkte_view(request, user_id):
                 zeitraum_text = zeitraum
 
     additional_klimapunkte = get_additional_klimapunkte(user)
-    klimapunkte = get_klimapunkte_fuer_member(user, start_datum, end_datum) - additional_klimapunkte
+    klimapunkte = get_klimapunkte_for_member(user, start_datum, end_datum)
     klimapunkte_total = klimapunkte + additional_klimapunkte
 
     saved_co2 = klimapunkte / 1000

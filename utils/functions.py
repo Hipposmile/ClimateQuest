@@ -643,7 +643,7 @@ def get_date_range(zeitraum: str, heute: date) -> tuple[date | None, date | None
     return None, None
 
 
-def get_klimapunkte_fuer_member(member, start: date | None, end: date | None) -> int:
+def get_klimapunkte_for_member(member, start: date | None, end: date | None) -> int:
     if start is not None and end is not None:
         aktionen = Aktion.objects.filter(user=member, date__range=(start, end))
     elif start is not None:
@@ -654,6 +654,11 @@ def get_klimapunkte_fuer_member(member, start: date | None, end: date | None) ->
     punkte = get_klimapunkte(aktionen) or 0
     punkte += get_additional_klimapunkte(member)
     return punkte
+
+def get_klimapunkte_for_member_with_additional_climate_points(member, start: date | None, end: date | None) -> int:
+    klimapunkte = get_klimapunkte_for_member(member, start, end)
+    klimapunkte += get_additional_klimapunkte(member)
+    return klimapunkte
 
 def get_hall_of_fame_entries(user: User) -> int:
     return HallOfFameEntry.objects.filter(user=user).count()
