@@ -652,11 +652,10 @@ def get_klimapunkte_for_member(member, start: date | None, end: date | None) -> 
         aktionen = Aktion.objects.filter(user=member)
 
     punkte = get_klimapunkte(aktionen) or 0
-    punkte += get_additional_klimapunkte(member)
     return punkte
 
 def get_klimapunkte_for_member_with_additional_climate_points(member, start: date | None, end: date | None) -> int:
-    klimapunkte = get_klimapunkte_for_member(member, start, end)
+    klimapunkte: int = get_klimapunkte_for_member(member, start, end)
     klimapunkte += get_additional_klimapunkte(member)
     return klimapunkte
 
