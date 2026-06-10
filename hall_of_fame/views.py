@@ -166,6 +166,8 @@ custom_fake_request = factory.get('/')
     else:
         data.weeks_count = 0"""
 
+# from hall_of_fame.views import add_to_hall_of_fame_cron
+# add_to_hall_of_fame_cron()
 
 def add_to_hall_of_fame_cron() -> None:
     week_start: date = date.today() - timedelta(days=date.today().weekday())
@@ -211,6 +213,7 @@ def add_to_hall_of_fame_cron() -> None:
 
         qualifying_users: QuerySet[User] = (
             family.members
+            .filter(aktion__date__gte=week_start)
             .annotate(
                 total_klimapunkte=Sum(
                     F("aktion__aktion__klimapunkte") * F("aktion__quantity")
@@ -247,7 +250,7 @@ def add_to_hall_of_fame_cron() -> None:
 
         qualifying_users: QuerySet[User] = (
             User.objects.filter(
-                aktion__aktion_id=22,
+                aktion__aktion_id__in=[20, 22],
                 aktion__date=today,
                 aktion__quantity__gte=1
             ).distinct()
@@ -274,7 +277,7 @@ def add_to_hall_of_fame_cron() -> None:
         description_en: str = f"Published an article between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
 
         qualifying_users: QuerySet[User] = User.objects.filter(
-            artikel_set__created_at__range=(week_start, today)
+            artikel__created_at__range=(week_start, today)
         ).distinct()
 
         add_to_hall_of_fame(qualifying_users, description_de, description_en)
@@ -284,7 +287,7 @@ def add_to_hall_of_fame_cron() -> None:
         description_en: str = f"Published an event between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
 
         qualifying_users: QuerySet[User] = User.objects.filter(
-            event_set__created_at__range=(week_start, today)
+            event__created_at__range=(week_start, today)
         ).distinct()
 
         add_to_hall_of_fame(qualifying_users, description_de, description_en)

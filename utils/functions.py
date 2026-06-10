@@ -372,7 +372,7 @@ def create_notification(request, notification_de, notification_en, user=None, ur
         except Exception as e:
             logging.error(e)
 
-    res = send_push(benachrichtigung=mobile_msg_de if request.user.usererweitert.lang == "de" else mobile_msg_en,
+    res = send_push(benachrichtigung=mobile_msg_de if user.usererweitert.lang == "de" else mobile_msg_en,
                     user=user, url=mobile_notification_redirect_url, head=head)
     if res == 500:
         create_internal_error(request, "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.",
