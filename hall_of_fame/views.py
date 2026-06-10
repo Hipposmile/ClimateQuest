@@ -10,7 +10,6 @@ from django.shortcuts import render
 from django.test import RequestFactory
 from django.urls import reverse
 
-from core.views import fake_request
 from family.models import Family
 from hall_of_fame.models import HallOfFameEntry, HallOfFameData
 from utils.functions import create_notification
@@ -181,7 +180,7 @@ def add_to_hall_of_fame_cron() -> None:
 
         for user in qualifying_users:
             create_notification(
-                fake_request,
+                custom_fake_request,
                 notification_de="Du wurdest in die Hall of Fame aufgenommen",
                 notification_en="You have been inducted into the hall of fame",
                 user=user,
@@ -285,7 +284,7 @@ def add_to_hall_of_fame_cron() -> None:
         description_en: str = f"Published an event between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
 
         qualifying_users: QuerySet[User] = User.objects.filter(
-            artikel_set__created_at__range=(week_start, today)
+            event_set__created_at__range=(week_start, today)
         ).distinct()
 
         add_to_hall_of_fame(qualifying_users, description_de, description_en)
@@ -355,3 +354,4 @@ def add_to_hall_of_fame_cron() -> None:
         run_weekly_step(*weekly_steps[data.weeks_count])
     else:
         data.weeks_count = 0
+        data.save()
