@@ -26,7 +26,7 @@ def hall_of_fame_detail(request):
     users = User.objects.filter(hall_of_fame_entry__isnull=False).prefetch_related(
         'hall_of_fame_entry').distinct().annotate(entry_count=Count('hall_of_fame_entry')).order_by('-entry_count')
     for user in users:
-        user_entries[user] = user.hall_of_fame_entry.all()
+        user_entries[user] = user.hall_of_fame_entry.order_by('-created_at')
     if request.user.is_authenticated:
         in_hall_of_fame = HallOfFameEntry.objects.filter(user=request.user).exists()
     else:
