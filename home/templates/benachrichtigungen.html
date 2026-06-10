@@ -119,7 +119,7 @@
     {% if benachrichtigungen %}
         <ul class="benachrichtigungen-list" id="benachrichtigungen-list-id">
             {% for benachrichtigung in benachrichtigungen %}
-                <li {% if id == benachrichtigung.id %}id="focus"{% endif %}>
+                <li {% if benachrichtigungen_id == benachrichtigung.id %}id="focus"{% endif %}>
                     <p class="emoji">&#x1F514;</p>
                     <div class="benachrichtigung-inhalt">
                         <p>{% if request.LANGUAGE_CODE == "de" %}

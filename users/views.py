@@ -16,7 +16,9 @@ from family.models import Family
 from personals.models import UserErweitert
 from utils.functions import dezimalstellen, get_additional_klimapunkte, get_weekly_goal_from_user, \
     get_streak_from_user, send_mail_function, get_level, create_notification, get_all_klimapunkte_from_user, \
-    get_family_rank_from_user, get_date_range, get_klimapunkte_for_member, get_hall_of_fame_entries
+    get_family_rank_from_user, get_date_range, get_klimapunkte_for_member, get_hall_of_fame_entries, \
+    get_all_klimapunkte_from_user_prefetched, get_perfect_week_progress_optimized, get_level_prefetched, \
+    get_family_rank_optimized
 from home.models import ReportedUser
 
 
@@ -214,7 +216,7 @@ def users_overview(request):
     return render(request, 'users_overview.html')
 
 
-def user_detail(request, user_id):
+"""def user_detail(request, user_id):
     user = get_user(request, user_id, False)
     if not user:
         return redirect('dashboard')
@@ -236,6 +238,42 @@ def user_detail(request, user_id):
                                                   'weekly_goal_progress_percent': weekly_goal_progress_percent,
                                                   'weekly_klimapunkte': weekly_klimapunkte, 'streak': streak,
                                                   'all_klimapunkte': all_klimapunkte,
+                                                  'worldwide_ranking_rank': worldwide_ranking_rank,
+                                                  'hall_of_fame_entries': hall_of_fame_entries})"""
+
+
+def user_detail(request, user_id):
+    user = get_user(request, user_id, False)
+    if not user:
+        return redirect('dashboard')
+    user_expanded = UserErweitert.objects.get(user=user)
+
+    user_aktionen = (
+        Aktion.objects
+        .filter(user=user)
+        .select_related('aktion', 'aktion__category')
+    )
+
+    user_klimapunkte = get_all_klimapunkte_from_user_prefetched(user, user_aktionen)
+
+    weekly_goal, weekly_klimapunkte, weekly_goal_progress_percent = get_weekly_goal_from_user(user)
+
+    streak = get_streak_from_user(user)
+
+    hall_of_fame_entries = get_hall_of_fame_entries(user)
+
+    worldwide_ranking_rank = get_family_rank_optimized(user, user_klimapunkte)
+
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            reason = request.POST.get('reason')
+            report_user(request, user, request.user, reason)
+            messages.success(request, all_messages["reported_user"])
+
+    return render(request, './user_detail.html', {'user_expanded': user_expanded, 'weekly_goal': weekly_goal,
+                                                  'weekly_goal_progress_percent': weekly_goal_progress_percent,
+                                                  'weekly_klimapunkte': weekly_klimapunkte, 'streak': streak,
+                                                  'all_klimapunkte': user_klimapunkte,
                                                   'worldwide_ranking_rank': worldwide_ranking_rank,
                                                   'hall_of_fame_entries': hall_of_fame_entries})
 

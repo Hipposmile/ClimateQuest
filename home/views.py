@@ -8,17 +8,17 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from dotenv import load_dotenv
 
-from aktionen.models import Aktion, AktionenListe
+from aktionen.models import Aktion
 from community.models import Community
 from core.all_messages import all_messages
 from events.models import Event
 from family.models import Family
-from hall_of_fame.models import HallOfFameEntry
 from home.models import Benachrichtigung
 from personals.models import TreeCodes
 from utils.functions import get_streak_from_user, get_additional_klimapunkte, get_klimapunkte, \
-    get_weekly_goal_from_user, get_all_klimapunkte_from_user, get_level, get_families_of_user, create_notification, \
-    get_perfect_week_progress, get_hall_of_fame_entries, get_family_rank_from_user
+    get_weekly_goal_from_user, create_notification, \
+    get_hall_of_fame_entries, get_level_prefetched, get_all_klimapunkte_from_user_prefetched, \
+    get_perfect_week_progress_optimized, get_family_rank_optimized
 
 load_dotenv()
 
@@ -39,7 +39,7 @@ def home(request):
                   {'klimapunkte': klimapunkte_gesamt, 'user_count': user_count, 'co2': co2, 'tree_count': tree_count})
 
 
-def dashboard(request):
+"""def dashboard(request):
     if not request.user.is_authenticated:
         return redirect('home')
 
@@ -69,6 +69,46 @@ def dashboard(request):
                    'perfect_week_progress_de': perfect_week_progress_de,
                    'perfect_week_progress_en': perfect_week_progress_en, 'perfect_week': perfect_week,
                    'aktionen': aktionen, 'klimapunkte': klimapunkte, 'level': level,
+                   'hall_of_fame_entries': hall_of_fame_entries, 'worldwide_ranking_rank': worldwide_ranking_rank})"""
+
+
+def dashboard(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
+
+    user = request.user
+
+    user_aktionen = (
+        Aktion.objects
+        .filter(user=user)
+        .select_related('aktion', 'aktion__category')
+    )
+
+    user_klimapunkte = get_all_klimapunkte_from_user_prefetched(user, user_aktionen)
+
+    weekly_goal, weekly_klimapunkte, weekly_goal_progress_percent = get_weekly_goal_from_user(user)
+
+    streak = get_streak_from_user(user)
+
+    perfect_week_progress_de, perfect_week_progress_en = get_perfect_week_progress_optimized(user, date.today(),
+                                                                                             user_aktionen)
+
+    perfect_week = False
+    if weekly_goal_progress_percent >= 100:
+        perfect_week = all(perfect_week_progress_de.values())
+
+    level = get_level_prefetched(user, user_klimapunkte)['current_level']
+
+    hall_of_fame_entries = get_hall_of_fame_entries(user)
+
+    worldwide_ranking_rank = get_family_rank_optimized(user, user_klimapunkte)
+
+    return render(request, './dashboard.html',
+                  {'weekly_goal': weekly_goal, 'weekly_goal_progress_percent': weekly_goal_progress_percent,
+                   'weekly_klimapunkte': weekly_klimapunkte, 'streak': streak,
+                   'perfect_week_progress_de': perfect_week_progress_de,
+                   'perfect_week_progress_en': perfect_week_progress_en, 'perfect_week': perfect_week,
+                   'klimapunkte': user_klimapunkte, 'level': level,
                    'hall_of_fame_entries': hall_of_fame_entries, 'worldwide_ranking_rank': worldwide_ranking_rank})
 
 
@@ -149,7 +189,7 @@ def count_benachrichtigungen(request):
 def benachrichtigungen_view(request, benachrichtigungen_id=None):
     benachrichtigungen = Benachrichtigung.objects.filter(user=request.user).order_by('-date')
     return render(request, 'benachrichtigungen.html',
-                  {'benachrichtigungen': benachrichtigungen, 'id': benachrichtigungen_id})
+                  {'benachrichtigungen': benachrichtigungen, 'benachrichtigungen_id': benachrichtigungen_id})
 
 
 @login_required

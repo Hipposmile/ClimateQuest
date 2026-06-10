@@ -188,7 +188,7 @@ def add_to_hall_of_fame_cron() -> None:
             )
 
     def at_least_50_climate_points() -> None:
-        description_de: str = f"Hat zwischen {week_start.strftime('%d.%m.%Y')} und {today.strftime('%d.%m.%Y')} 50 oder mehr Klimapunkte gesammelt."
+        description_de: str = f"Hat zwischen dem {week_start.strftime('%d.%m.%Y')} und dem {today.strftime('%d.%m.%Y')} 50 oder mehr Klimapunkte gesammelt."
         description_en: str = f"Has collected 50 or more climate points between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
 
         qualifying_users: QuerySet[User] = (
@@ -205,7 +205,7 @@ def add_to_hall_of_fame_cron() -> None:
         add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
     def top_5_climate_point_collector() -> None:
-        description_de: str = f"War zwischen {week_start.strftime('%d.%m.%Y')} und {today.strftime('%d.%m.%Y')} einer der Top-5 Klimapunkt-Sammler."
+        description_de: str = f"War zwischen dem {week_start.strftime('%d.%m.%Y')} und dem {today.strftime('%d.%m.%Y')} einer der Top-5 Klimapunkt-Sammler."
         description_en: str = f"Was one of the top-5 climate point collector between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
 
         family: Family = Family.objects.get(name="worldwide ranking")
@@ -227,7 +227,7 @@ def add_to_hall_of_fame_cron() -> None:
         add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
     def at_least_50_bike_kilometers() -> None:
-        description_de: str = f"Ist zwischen {week_start.strftime('%d.%m.%Y')} und {today.strftime('%d.%m.%Y')} mindestens 50 Kilometer Fahrrad gefahren."
+        description_de: str = f"Ist zwischen dem {week_start.strftime('%d.%m.%Y')} und dem {today.strftime('%d.%m.%Y')} mindestens 50 Kilometer Fahrrad gefahren."
         description_en: str = f"Drove at least 50 kilometers by bike between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
 
         qualifying_users: QuerySet[User] = (
@@ -243,7 +243,7 @@ def add_to_hall_of_fame_cron() -> None:
         add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
     def vegetarian() -> None:
-        description_de: str = f"Hat sich zwischen {week_start.strftime('%d.%m.%Y')} und {today.strftime('%d.%m.%Y')} vegetarisch ernährt."
+        description_de: str = f"Hat sich zwischen dem {week_start.strftime('%d.%m.%Y')} und dem {today.strftime('%d.%m.%Y')} vegetarisch ernährt."
         description_en: str = f"Lived as a vegetarian between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
 
         qualifying_users: QuerySet[User] = (
@@ -257,7 +257,7 @@ def add_to_hall_of_fame_cron() -> None:
         add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
     def vegan() -> None:
-        description_de: str = f"Hat sich zwischen {week_start.strftime('%d.%m.%Y')} und {today.strftime('%d.%m.%Y')} vegan ernährt."
+        description_de: str = f"Hat sich zwischen dem {week_start.strftime('%d.%m.%Y')} und dem {today.strftime('%d.%m.%Y')} vegan ernährt."
         description_en: str = f"Lived vegan between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
 
         qualifying_users: QuerySet[User] = (
@@ -270,8 +270,8 @@ def add_to_hall_of_fame_cron() -> None:
 
         add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
-    def created_article() -> None:  # ToDo: Create created_at field in model
-        description_de: str = f"Hat zwischen {week_start.strftime('%d.%m.%Y')} und {today.strftime('%d.%m.%Y')} einen Artikel veröffentlicht."
+    def created_article() -> None:
+        description_de: str = f"Hat zwischen dem {week_start.strftime('%d.%m.%Y')} und dem {today.strftime('%d.%m.%Y')} einen Artikel veröffentlicht."
         description_en: str = f"Published an article between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
 
         qualifying_users: QuerySet[User] = User.objects.filter(
@@ -280,8 +280,8 @@ def add_to_hall_of_fame_cron() -> None:
 
         add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
-    def created_event() -> None:  # ToDo: Create created_at field in model
-        description_de: str = f"Hat zwischen {week_start.strftime('%d.%m.%Y')} und {today.strftime('%d.%m.%Y')} ein Event veröffentlicht."
+    def created_event() -> None:
+        description_de: str = f"Hat zwischen dem {week_start.strftime('%d.%m.%Y')} und dem {today.strftime('%d.%m.%Y')} ein Event veröffentlicht."
         description_en: str = f"Published an event between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
 
         qualifying_users: QuerySet[User] = User.objects.filter(
@@ -291,7 +291,7 @@ def add_to_hall_of_fame_cron() -> None:
         add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
     def created_petition() -> None:
-        description_de: str = f"Hat zwischen {week_start.strftime('%d.%m.%Y')} und {today.strftime('%d.%m.%Y')} eine Petition erstellt."
+        description_de: str = f"Hat zwischen dem {week_start.strftime('%d.%m.%Y')} und dem {today.strftime('%d.%m.%Y')} eine Petition erstellt."
         description_en: str = f"Created a petition between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
 
         qualifying_users: QuerySet[User] = User.objects.filter(

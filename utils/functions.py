@@ -346,9 +346,9 @@ def create_notification(request, notification_de, notification_en, user=None, ur
 
     head = "Neue Benachrichtigung" if user.usererweitert.lang == "de" else "New notification"
 
-
-    benachrichtigung = Benachrichtigung.objects.create(benachrichtigung_de=notification_de, benachrichtigung_en=notification_en, user=user,
-                                    url=url)
+    benachrichtigung = Benachrichtigung.objects.create(benachrichtigung_de=notification_de,
+                                                       benachrichtigung_en=notification_en, user=user,
+                                                       url=url)
     send_mail_function(
         request=request,
         fehlermeldung='Beim Erstellen einer Benachrichtigung ist beim Versenden der E-Mail ein Fehler aufgetreten. Die Benachrichtigung kann nur in dem Benachrichtigungsteil hier auf der Webseite gefunden werden!' if user.usererweitert.lang == 'de' else 'An error occurred while sending the email during the creation of the notification. The notification can only be found in the notifications section here on the website!',
@@ -366,7 +366,9 @@ def create_notification(request, notification_de, notification_en, user=None, ur
     tokens = IOSDevice.objects.filter(user=user).values_list("apns_token", flat=True)
     for t in tokens:
         try:
-            send_ios_push(device_token = t, title=head, body=mobile_msg_de if user.usererweitert.lang == 'de' else mobile_msg_en, data={"url": mobile_notification_redirect_url})
+            send_ios_push(device_token=t, title=head,
+                          body=mobile_msg_de if user.usererweitert.lang == 'de' else mobile_msg_en,
+                          data={"url": mobile_notification_redirect_url})
         except Exception as e:
             logging.error(e)
 
@@ -375,6 +377,7 @@ def create_notification(request, notification_de, notification_en, user=None, ur
     if res == 500:
         create_internal_error(request, "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.",
                               "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.")
+
 
 def send_ios_push(device_token: str, title: str, body: str, data: dict = None):
     token = _make_jwt()
@@ -654,10 +657,106 @@ def get_klimapunkte_for_member(member, start: date | None, end: date | None) -> 
     punkte = get_klimapunkte(aktionen) or 0
     return punkte
 
+
 def get_klimapunkte_for_member_with_additional_climate_points(member, start: date | None, end: date | None) -> int:
     klimapunkte: int = get_klimapunkte_for_member(member, start, end)
     klimapunkte += get_additional_klimapunkte(member)
     return klimapunkte
 
+
 def get_hall_of_fame_entries(user: User) -> int:
     return HallOfFameEntry.objects.filter(user=user).count()
+
+
+# -- Optimized for dashboard --
+def get_all_klimapunkte_from_user_prefetched(user, prefetched_aktionen):
+    klimapunkte = get_klimapunkte(prefetched_aktionen)
+    klimapunkte += get_additional_klimapunkte(user)
+    return klimapunkte
+
+
+def get_perfect_week_progress_optimized(user, date_given, prefetched_aktionen):
+    week_start = date_given - timedelta(days=date_given.weekday())
+    week_end = week_start + timedelta(days=6)
+
+    covered_category_ids = set(
+        prefetched_aktionen
+        .filter(date__range=(week_start, week_end))
+        .values_list('aktion__category_id', flat=True)
+        .distinct()
+    )
+
+    output_de = {}
+    output_en = {}
+    for category in Category.objects.all():
+        has_action = category.id in covered_category_ids
+        output_de[category.name] = has_action
+        output_en[category.name_en] = has_action
+
+    return output_de, output_en
+
+
+def get_level_prefetched(user, klimapunkte):
+    levels = Level.objects.order_by('klimapunkte')
+
+    current_level = None
+    next_level = None
+    level_number = 1
+    progress_percent = 100
+
+    for i, level in enumerate(levels):
+        if klimapunkte >= level.klimapunkte:
+            current_level = level
+            if i + 1 < len(levels):
+                next_level = levels[i + 1]
+                differenz = next_level.klimapunkte - current_level.klimapunkte
+                fortschritt = klimapunkte - current_level.klimapunkte
+                progress_percent = int((fortschritt / differenz) * 100) if differenz > 0 else 100
+                level_number = i + 1
+            else:
+                level_number = i + 1
+                return {
+                    'info': _(
+                        'Du hast das höchste Level bereits erreicht: %(level)s <span class="emoji">&#x1F973;</span>') % {
+                                'level': current_level.description},
+                    'current_level': current_level, 'levels': levels, 'klimapunkte': klimapunkte,
+                    'level_number': level_number}
+
+    klimapunkte_missing = next_level.klimapunkte - klimapunkte
+
+    return {'current_level': current_level, 'next_level': next_level, 'progress_percent': progress_percent,
+            'levels': levels, 'klimapunkte_missing': klimapunkte_missing, 'level_number': level_number}
+
+
+def get_family_rank_optimized(user, user_klimapunkte):
+    family = (
+        Family.objects
+        .prefetch_related('members__usererweitert')
+        .get(name='worldwide ranking')
+    )
+
+    members = family.members.all()
+
+    member_ids = members.values_list('id', flat=True)
+
+    klimapunkte_per_member = (
+        Aktion.objects
+        .filter(user_id__in=member_ids)
+        .values('user_id')
+        .annotate(total=Sum(F('aktion__klimapunkte') * F('quantity')))
+    )
+    klimapunkte_map = {entry['user_id']: entry['total'] or 0 for entry in klimapunkte_per_member}
+
+    members_with_klimapunkte = []
+    for member in members:
+        base = klimapunkte_map.get(member.id, 0)
+        additional = get_additional_klimapunkte(member)
+        total = base + additional
+        if member == user:
+            total = user_klimapunkte
+        members_with_klimapunkte.append((member, total))
+
+    members_with_klimapunkte.sort(key=lambda x: x[1], reverse=True)
+
+    rank = next(i for i, (member, _) in enumerate(members_with_klimapunkte) if member == user)
+    return rank + 1
