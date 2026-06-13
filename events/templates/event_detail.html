@@ -23,7 +23,8 @@
     </style>
 
     {% url 'events_overview' as events_overview_url %}
-    <h1>{% blocktrans with url=events_overview_url name=event.name %}<a href="{{ url }}">Event</a> <i>{{ name }}</i>{% endblocktrans %}</h1>
+    <h1>{% blocktrans with url=events_overview_url name=event.name %}<a href="{{ url }}">Event</a>
+        <i>{{ name }}</i>{% endblocktrans %}</h1>
 
     {% if request.user != event.creator %}
         <p class="participant-status">
@@ -49,29 +50,24 @@
 
     <p class="{% if request.user == event.creator %}event-creator{% else %}event-user{% endif %}">
         {% url 'user_detail' event.creator.id as user_detail_url %}
-        {% blocktrans with url=user_detail_url username=event.creator.username %}<strong>Ersteller:</strong> <a href="{{ url }}">{{ username }}</a>{% endblocktrans %}
+        {% blocktrans with url=user_detail_url username=event.creator.username %}<strong>Ersteller:</strong>
+            <a href="{{ url }}">{{ username }}</a>{% endblocktrans %}
         {% if request.user == event.creator %}{% trans "(Du)" %}{% endif %}
     </p>
 
-    <details class="event-details">
-        <summary>
-            <strong>{% trans "Teilnehmeranzahl:" %}</strong> {{ event.participants_count }}
-        </summary>
-        <ul class="participant-list">
-            {% for participant in event.participants.all %}
-                <li>{{ participant }}</li>
-            {% endfor %}
-        </ul>
-    </details>
+    <strong>{% trans "Teilnehmeranzahl:" %}</strong> {{ event.participants_count }}
+    <hr>
 
     {% if user.is_authenticated %}
         {% if request.user != event.creator %}
             <form method="post" class="event-form">
                 {% csrf_token %}
                 {% if request.user in event.participants.all %}
-                    <button name="become_member" type="submit" class="leave-button">{% trans "aus Event aussteigen" %}</button>
+                    <button name="become_member" type="submit"
+                            class="leave-button">{% trans "aus Event aussteigen" %}</button>
                 {% else %}
-                    <button name="become_member" type="submit" class="join-button">{% trans "Teilnehmer werden" %}</button>
+                    <button name="become_member" type="submit"
+                            class="join-button">{% trans "Teilnehmer werden" %}</button>
                 {% endif %}
             </form>
         {% else %}
@@ -79,6 +75,7 @@
             <a href="{{ edit_event_url }}" class="edit-link">{% trans "Bearbeiten" %}</a>
         {% endif %}
     {% endif %}
+    <hr>
 
     <h3 class="section-title">{% trans "Fragen" %}</h3>
     <div class="comment-section">
@@ -96,7 +93,8 @@
                             {% for answer in question.answers.all %}
                                 <div class="answer-header">
                                     {% url 'user_detail' answer.user.id as answer_user_url %}
-                                    <span class="answer-user"><a href="{{ answer_user_url }}">{{ answer.user }}</a></span>
+                                    <span class="answer-user"><a
+                                            href="{{ answer_user_url }}">{{ answer.user }}</a></span>
                                     <span class="answer-date">{{ answer.date_time|date:"SHORT_DATETIME_FORMAT" }}</span>
                                 </div>
                                 <div class="answer expandable-text blur-enabled">{{ answer.answer }}</div>
@@ -108,7 +106,7 @@
                         <details>
                             <summary>{% trans "selbst antworten" %}</summary>
                             {% if user.is_authenticated %}
-                                <form method="post" >
+                                <form method="post">
                                     {% csrf_token %}
                                     <input type="hidden" name="question_id" value="{{ question.id }}">
                                     <label for="answer">{% trans "Antwort:" %}</label>
@@ -117,7 +115,8 @@
                                 </form>
                             {% else %}
                                 {% url 'login_view' as login_url %}
-                                <p>{% blocktrans with url=login_url %}<a href="{{ url }}">Logge dich ein</a>, um den Kommentar zu beantworten{% endblocktrans %}</p>
+                                <p>{% blocktrans with url=login_url %}<a href="{{ url }}">Logge dich ein</a>, um den
+                                    Kommentar zu beantworten{% endblocktrans %}</p>
                             {% endif %}
                         </details>
                     </div>
@@ -163,7 +162,7 @@
     </script>
 
     {% if user.is_authenticated %}
-        <form method="post" >
+        <form method="post">
             {% csrf_token %}
             <label for="question">{% trans "Frage stellen:" %}</label>
             <input type="text" name="question" id="question" placeholder="{% trans "Frage stellen" %}">
@@ -171,6 +170,7 @@
         </form>
     {% else %}
         {% url 'login_view' as login_url %}
-        <p>{% blocktrans with url=login_url %}<a href="{{ url }}">Logge dich ein</a>, um einen Kommentar zu verfassen{% endblocktrans %}</p>
+        <p>{% blocktrans with url=login_url %}<a href="{{ url }}">Logge dich ein</a>, um einen Kommentar zu
+            verfassen{% endblocktrans %}</p>
     {% endif %}
 {% endblock %}
