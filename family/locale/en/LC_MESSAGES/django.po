@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 10:08+0200\n"
+"POT-Creation-Date: 2026-06-13 13:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -360,7 +360,7 @@ msgstr ""
 msgid "Zeitraum"
 msgstr "Time period"
 
-#: family/templates/family_detail.html:40 family/views.py:421
+#: family/templates/family_detail.html:40 family/views.py:422
 msgid "Gesamt"
 msgstr "Total"
 
@@ -458,7 +458,7 @@ msgstr ""
 msgid "Oder <a href=\"%(url)s\">eine Family gründen</a>."
 msgstr "Or <a href=\"%(url)s\">create a family</a>."
 
-#: family/views.py:453
+#: family/views.py:454
 #, python-format
 msgid "%(start)s bis %(end)s"
 msgstr "%(start)s to %(end)s"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-05 13:08+0200\n"
+"POT-Creation-Date: 2026-06-13 13:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -186,7 +186,7 @@ msgstr "Period: %(timespan)s"
 msgid "Zeitraum"
 msgstr "Period"
 
-#: users/templates/klimapunkte.html:30 users/views.py:119
+#: users/templates/klimapunkte.html:30 users/views.py:121
 msgid "Gesamt"
 msgstr "Total"
 
@@ -252,11 +252,6 @@ msgstr "Next level:"
 
 #: users/templates/level.html:83
 #, python-format
-#| msgid ""
-#| "\n"
-#| "                %(progress_percent)s %% bis zum nächsten Level geschafft. "
-#| "Dir fehlen also noch\n"
-#| "                %(klimapunkte_missing)s Klimapunkte."
 msgid ""
 "\n"
 "                %(progress_percent)s %% bis zum nächsten Level geschafft. Es "
@@ -444,7 +439,7 @@ msgstr "View details"
 msgid "Es wurden keine User gefunden"
 msgstr "No users found"
 
-#: users/views.py:151
+#: users/views.py:153
 #, python-format
 msgid "%(start)s bis %(end)s"
 msgstr "%(start)s to %(end)s"
