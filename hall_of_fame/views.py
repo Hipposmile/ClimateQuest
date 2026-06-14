@@ -35,10 +35,6 @@ def hall_of_fame_detail(request):
                   {'user_entries': user_entries, 'in_hall_of_fame': in_hall_of_fame,
                    'to_to_next_week': to_to_next_week})
 
-
-factory = RequestFactory()
-custom_fake_request = factory.get('/')
-
 """def add_to_hall_of_fame():
     week_start = date.today() - timedelta(days=date.today().weekday())
     today = date.today()
@@ -170,6 +166,9 @@ custom_fake_request = factory.get('/')
 # add_to_hall_of_fame_cron()
 
 def add_to_hall_of_fame_cron() -> None:
+    factory = RequestFactory()
+    custom_fake_request = factory.get('/')
+
     week_start: date = date.today() - timedelta(days=date.today().weekday())
     today: date = date.today()
 
