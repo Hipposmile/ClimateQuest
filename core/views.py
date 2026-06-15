@@ -36,11 +36,10 @@ def custom_503(request, exception=""):
     return render(request, '5xx.html', status=503)
 
 
-factory = RequestFactory()
-fake_request = factory.get('/')
-
-
 def create_reminder():
+    factory = RequestFactory()
+    fake_request = factory.get('/')
+
     for user in User.objects.all():
         try:
             if get_weekly_goal_from_user(user)[-1] < 100:
