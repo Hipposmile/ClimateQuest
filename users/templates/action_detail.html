@@ -6,11 +6,13 @@
 {% endblock %}
 
 {% block title %}{% trans "Aktion" %}
-    {{ current_action.aktion.name }}{% if not request.user == user %} {% trans "von" %} {{ user }}
+    {% if request.LANGUAGE_CODE == 'de' %}{{ current_action.aktion.name }}{% else %}
+        {{ current_action.aktion.name_en }}{% endif %}{% if not request.user == user %} {% trans "von" %} {{ user }}
     {% endif %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Aktion" %} <i>{{ current_action.aktion.name }}</i>{% if not request.user == user %} {% trans "von" %}
+    <h1>{% trans "Aktion" %} <i>{% if request.LANGUAGE_CODE == 'de' %}{{ current_action.aktion.name }}{% else %}
+        {{ current_action.aktion.name_en }}{% endif %}</i>{% if not request.user == user %} {% trans "von" %}
         <a href="{% url 'user_detail' user.id %}">{{ user }}</a>{% endif %}</h1>
 
     {% if messages %}
@@ -83,14 +85,21 @@
                         {% csrf_token %}
 
                         <label for="action_type">{% trans "Ausgewähltes Element:" %}</label>
-                        <input type="text" id="action_type" name="action_type" value="{% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.name }}{% else %}{{ current_action.aktion.name_en }}{% endif %}"
-                               data-name="{% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.name }}{% else %}{{ current_action.aktion.name_en }}{% endif %}"
+                        <input type="text" id="action_type" name="action_type" value="
+                                {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.name }}{% else %}{{ current_action.aktion.name_en }}{% endif %}"
+                               data-name="
+                                       {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.name }}{% else %}{{ current_action.aktion.name_en }}{% endif %}"
                                data-klimapunkte="{{ current_action.aktion.klimapunkte|floatformat:-4 }}"
-                               data-anmerkung="{% if request.LANGUAGE_CODE == "de" %}{{ current_action.anmerkung }}{% else %}{{ current_action.anmerkung_en }}{% endif %}"
-                               data-mengebeschreibung="{% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.mengeBeschreibung }}{% else %}{{ current_action.aktion.mengeBeschreibung_en }}{% endif %}"
-                               data-mengebeschreibungsingular="{% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.mengeBeschreibungSingular }}{% else %}{{ current_action.aktion.mengeBeschreibungSingular_en }}{% endif %}"
-                               data-source="{% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.source }}{% else %}{{ current_action.aktion.source_en }}{% endif %}"
-                               data-category_name="{% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.category.name }}{% else %}{{ current_action.aktion.category.name_en }}{% endif %}"
+                               data-anmerkung="
+                                       {% if request.LANGUAGE_CODE == "de" %}{{ current_action.anmerkung }}{% else %}{{ current_action.anmerkung_en }}{% endif %}"
+                               data-mengebeschreibung="
+                                       {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.mengeBeschreibung }}{% else %}{{ current_action.aktion.mengeBeschreibung_en }}{% endif %}"
+                               data-mengebeschreibungsingular="
+                                       {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.mengeBeschreibungSingular }}{% else %}{{ current_action.aktion.mengeBeschreibungSingular_en }}{% endif %}"
+                               data-source="
+                                       {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.source }}{% else %}{{ current_action.aktion.source_en }}{% endif %}"
+                               data-category_name="
+                                       {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.category.name }}{% else %}{{ current_action.aktion.category.name_en }}{% endif %}"
                                readonly>
                         <button type="button" id="openModal">{% trans "Element auswählen" %}</button>
                         <input type="hidden" name="action_type_id" id="action_type_id"
