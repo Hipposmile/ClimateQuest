@@ -262,7 +262,7 @@ def track_actions(request):
 
             action = Aktion.objects.create(aktion=action, user=request.user, quantity=(distance / 1000),
                                            date=date.today(),
-                                           description='Diese Aktion wurde vom ClimateQuest Tracking Service automatisch getrackt.' if request.user.usererweitert.lang == "de" else "This action was automatically tracked by the ClimateQuest Tracking Service.")
+                                           description='Diese Aktion wurde vom ClimateQuest Tracking Service automatisch getrackt.' if request.user.usererweitert.lang == "de" else 'This action was automatically tracked by the ClimateQuest Tracking Service.')
 
             return JsonResponse({'success': True, 'action_id': action.id, 'user_id': request.user.id})
 

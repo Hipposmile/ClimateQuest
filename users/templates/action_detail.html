@@ -85,8 +85,7 @@
                         {% csrf_token %}
 
                         <label for="action_type">{% trans "Ausgewähltes Element:" %}</label>
-                        <input type="text" id="action_type" name="action_type" value="
-                                {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.name }}{% else %}{{ current_action.aktion.name_en }}{% endif %}"
+                        <input type="text" id="action_type" name="action_type" value="{% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.name }}{% else %}{{ current_action.aktion.name_en }}{% endif %}"
                                data-name="
                                        {% if request.LANGUAGE_CODE == "de" %}{{ current_action.aktion.name }}{% else %}{{ current_action.aktion.name_en }}{% endif %}"
                                data-klimapunkte="{{ current_action.aktion.klimapunkte|floatformat:-4 }}"
