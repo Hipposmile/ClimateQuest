@@ -35,6 +35,7 @@ def hall_of_fame_detail(request):
                   {'user_entries': user_entries, 'in_hall_of_fame': in_hall_of_fame,
                    'to_to_next_week': to_to_next_week})
 
+
 def add_to_hall_of_fame_cron() -> None:
     factory = RequestFactory()
     custom_fake_request = factory.get('/')
@@ -55,6 +56,7 @@ def add_to_hall_of_fame_cron() -> None:
                 notification_de="Du wurdest in die Hall of Fame aufgenommen",
                 notification_en="You have been inducted into the hall of fame",
                 user=user,
+                url=reverse('hall_of_fame_detail')
             )
 
     def at_least_50_climate_points() -> None:
@@ -226,40 +228,3 @@ def add_to_hall_of_fame_cron() -> None:
     else:
         data.weeks_count = 0
         data.save()
-
-def help_cron() -> None:
-    week_start: date = date.today() - timedelta(days=date.today().weekday())
-    today: date = date.today()
-    factory = RequestFactory()
-    custom_fake_request = factory.get('/')
-
-    def add_to_hall_of_fame(qualifying_users: QuerySet[User], description_de: str, description_en: str) -> None:
-        entries: List[HallOfFameEntry] = [
-            HallOfFameEntry(user=user, description_de=description_de, description_en=description_en) for user in
-            qualifying_users]
-        HallOfFameEntry.objects.bulk_create(entries)
-
-        for user in qualifying_users:
-            create_notification(
-                custom_fake_request,
-                notification_de="Du wurdest in die Hall of Fame aufgenommen",
-                notification_en="You have been inducted into the hall of fame",
-                user=user,
-            )
-
-    def at_least_50_bike_kilometers() -> None:
-        description_de: str = f"Ist zwischen dem {week_start.strftime('%d.%m.%Y')} und dem {today.strftime('%d.%m.%Y')} mindestens 50 Kilometer Fahrrad gefahren."
-        description_en: str = f"Drove at least 50 kilometers by bike between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
-
-        qualifying_users: QuerySet[User] = (
-            User.objects.annotate(
-                weekly_kilometers_by_bike=Sum(F("aktion__quantity"),
-                                              filter=Q(aktion__date__gte=week_start) & Q(aktion__aktion__id=19),
-                                              )
-            )
-            .filter(weekly_kilometers_by_bike__gte=50)
-        )
-
-        add_to_hall_of_fame(qualifying_users, description_de, description_en)
-
-    at_least_50_bike_kilometers()
