@@ -35,6 +35,7 @@ def hall_of_fame_detail(request):
                   {'user_entries': user_entries, 'in_hall_of_fame': in_hall_of_fame,
                    'to_to_next_week': to_to_next_week})
 
+
 """def add_to_hall_of_fame():
     week_start = date.today() - timedelta(days=date.today().weekday())
     today = date.today()
@@ -162,6 +163,7 @@ def hall_of_fame_detail(request):
     else:
         data.weeks_count = 0"""
 
+
 # from hall_of_fame.views import add_to_hall_of_fame_cron
 # add_to_hall_of_fame_cron()
 
@@ -233,12 +235,11 @@ def add_to_hall_of_fame_cron() -> None:
 
         qualifying_users: QuerySet[User] = (
             User.objects.annotate(
-                weekly_klimapunkte_by_bike=Sum(
-                    F("aktion__aktion__klimapunkte") * F("aktion__quantity"),
-                    filter=Q(aktion__date__gte=week_start) & Q(aktion__aktion__id=19),
-                )
+                weekly_kilometers_by_bike=Sum(F("aktion__quantity"),
+                                              filter=Q(aktion__date__gte=week_start) & Q(aktion__aktion__id=19),
+                                              )
             )
-            .filter(weekly_klimapunkte_by_bike__gte=50)
+            .filter(weekly_kilometers_by_bike__gte=50)
         )
 
         add_to_hall_of_fame(qualifying_users, description_de, description_en)
