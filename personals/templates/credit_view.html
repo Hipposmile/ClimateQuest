@@ -28,7 +28,9 @@
             max-width: 100%;
         }
     </style>
-    <p>{% blocktrans with percent_done=percent_done klimapunkte_missing=klimapunkte_missing|floatformat:-4 %}{{ percent_done }} % bis zum nächsten Credit geschafft. Dir fehlen also noch {{ klimapunkte_missing }} Klimapunkte.{% endblocktrans %}</p>
+    <p>{% blocktrans with percent_done=percent_done klimapunkte_missing=klimapunkte_missing|floatformat:-4 %}
+        {{ percent_done }} % bis zum nächsten Credit geschafft. Dir fehlen also noch {{ klimapunkte_missing }}
+        Klimapunkte.{% endblocktrans %}</p>
     <form method="post">
         {% csrf_token %}
         <button {% if available_credits <= 0 %}disabled{% endif %}>{% trans "1 Baum pflanzen" %}</button>
@@ -40,7 +42,8 @@
         <ul>
             {% for tree in request.user.usererweitert.planted_trees.all %}
                 <li>{% blocktrans with sponsor=tree.sponsor url=tree.redeemURL %}1 gepflanzter Baum (Sponsor:
-                    {{ sponsor }}) durch Plant-for-the-Planet: <a href="{{ url }}">Zertifikat</a>{% endblocktrans %}
+                    {{ sponsor }}) durch Plant-for-the-Planet:
+                    <a href="{{ url }}" class="dont-show-loading">Zertifikat</a>{% endblocktrans %}
                 </li>
             {% endfor %}
         </ul>

@@ -1115,7 +1115,7 @@
         el.addEventListener('submit', showLoading);
     });
 
-    const a_showLoading = document.querySelectorAll('a[href]:not([href^="#"]):not(.dont-show-loading):not(.mobile-menu-trigger):not([target="_blank"]):not([download])');
+    const a_showLoading = document.querySelectorAll('a[href]:not([href^="#"]):not([href^="mailto:"]):not(.dont-show-loading):not(.mobile-menu-trigger):not([target="_blank"]):not([download])');
     a_showLoading.forEach((el) => {
         el.addEventListener('click', showLoading);
     });
