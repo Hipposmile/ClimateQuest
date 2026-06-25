@@ -529,7 +529,7 @@ msgstr "Integration only takes place after active user consent."
 #: home/templates/datenschutz.html:68
 #| msgid "4.3 Verwendung von localStorage"
 msgid "4.2 Verwendung von localStorage"
-msgstr "4.3 Use of localStorage"
+msgstr "4.2 Use of localStorage"
 
 #: home/templates/datenschutz.html:69
 msgid ""
