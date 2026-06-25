@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-22 14:18+0200\n"
+"POT-Creation-Date: 2026-06-25 18:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -527,40 +527,11 @@ msgid "Die Einbindung erfolgt erst nach aktiver Zustimmung des Nutzers."
 msgstr "Integration only takes place after active user consent."
 
 #: home/templates/datenschutz.html:68
-msgid "4.2 Quill (Instructure Inc.)"
-msgstr "4.2 Quill (Instructure Inc.)"
-
-#: home/templates/datenschutz.html:69
-msgid ""
-"Wir verwenden Quill als Rich-Text-Editor zur Eingabe von Inhalten. Quill "
-"selbst verarbeitet keine\n"
-"        personenbezogenen Daten, jedoch können durch die Nutzung "
-"personenbezogene Inhalte eingegeben und gespeichert\n"
-"        werden."
-msgstr ""
-"We use Quill as a rich text editor for content input. Quill itself does not "
-"process any\n"
-"        personal data, however, personal content may be entered and stored "
-"through its use\n"
-"        ."
-
-#: home/templates/datenschutz.html:72
-msgid "Die Einbindung erfolgt lokal (siehe 4.4)."
-msgstr "Integration is done locally (see 4.4)."
-
-#: home/templates/datenschutz.html:73
-msgid ""
-"Datenschutzerklärung von Quill: <a href=\"https://quilljs.com/\" "
-"target=\"_blank\">https://quilljs.com/</a>"
-msgstr ""
-"Quill Privacy Policy: <a href=\"https://quilljs.com/\" "
-"target=\"_blank\">https://quilljs.com/</a>"
-
-#: home/templates/datenschutz.html:75
-msgid "4.3 Verwendung von localStorage"
+#| msgid "4.3 Verwendung von localStorage"
+msgid "4.2 Verwendung von localStorage"
 msgstr "4.3 Use of localStorage"
 
-#: home/templates/datenschutz.html:76
+#: home/templates/datenschutz.html:69
 msgid ""
 "Unsere App verwendet den sogenannten localStorage Ihres Browsers zur "
 "Speicherung bestimmter Einstellungen, um die\n"
@@ -571,11 +542,11 @@ msgstr ""
 "settings to improve\n"
 "        user-friendliness and document your consents."
 
-#: home/templates/datenschutz.html:78
+#: home/templates/datenschutz.html:71
 msgid "Zweck der Speicherung"
 msgstr "Purpose of Storage"
 
-#: home/templates/datenschutz.html:80
+#: home/templates/datenschutz.html:73
 msgid ""
 "Cookie-Einstellungen: Ihre Auswahl bezüglich der Verwendung von Cookies und "
 "Drittanbieterdiensten wird lokal\n"
@@ -589,11 +560,11 @@ msgstr ""
 "app.\n"
 "        "
 
-#: home/templates/datenschutz.html:84
+#: home/templates/datenschutz.html:77
 msgid "Speicherdauer"
 msgstr "Storage Duration"
 
-#: home/templates/datenschutz.html:85
+#: home/templates/datenschutz.html:78
 msgid ""
 "Die im localStorage gespeicherten Daten bleiben gespeichert, bis Sie die "
 "Cookie-Einstellungen verändern oder den\n"
@@ -603,11 +574,11 @@ msgstr ""
 "settings or manually delete the\n"
 "        localStorage or browser cache."
 
-#: home/templates/datenschutz.html:87
+#: home/templates/datenschutz.html:80
 msgid "Hinweis"
 msgstr "Note"
 
-#: home/templates/datenschutz.html:88
+#: home/templates/datenschutz.html:81
 msgid ""
 "localStorage speichert Daten ausschließlich auf Ihrem Endgerät. Es erfolgt "
 "keine automatische Übertragung dieser\n"
@@ -617,7 +588,7 @@ msgstr ""
 "automatic transmission of this\n"
 "        information to our servers or third parties."
 
-#: home/templates/datenschutz.html:90
+#: home/templates/datenschutz.html:83
 msgid ""
 "Die Nutzung von localStorage erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f "
 "DSGVO, da sie für den technisch\n"
@@ -631,11 +602,11 @@ msgstr ""
 "done on\n"
 "        the basis of Art. 6 para. 1 lit. a GDPR."
 
-#: home/templates/datenschutz.html:94
+#: home/templates/datenschutz.html:87
 msgid "Übermittlung von Daten in Drittländer"
 msgstr "Transmission of Data to Third Countries"
 
-#: home/templates/datenschutz.html:95
+#: home/templates/datenschutz.html:88
 msgid ""
 "Bei der Nutzung bestimmter Dienste (z. B. YouTube oder Google reCAPTCHA) "
 "kann es zu einer Übermittlung\n"
@@ -646,7 +617,7 @@ msgstr ""
 "data may be transmitted\n"
 "        to servers of Google LLC located in the USA."
 
-#: home/templates/datenschutz.html:97
+#: home/templates/datenschutz.html:90
 msgid ""
 "Google ist nach dem EU-U.S. Data Privacy Framework zertifiziert. Dennoch "
 "besteht bei Datenübermittlungen in die\n"
@@ -660,7 +631,7 @@ msgstr ""
 "persons having\n"
 "        effective legal remedies available against this."
 
-#: home/templates/datenschutz.html:100
+#: home/templates/datenschutz.html:93
 msgid ""
 "Die Nutzung dieser Dienste erfolgt ausschließlich nach ausdrücklicher "
 "Einwilligung gemäß Art. 6 Abs. 1 lit. a\n"
@@ -670,11 +641,11 @@ msgstr ""
 "accordance with Art. 6 para. 1 lit. a\n"
 "        GDPR."
 
-#: home/templates/datenschutz.html:104
+#: home/templates/datenschutz.html:97
 msgid "5. Speicherdauer"
 msgstr "5. Storage Duration"
 
-#: home/templates/datenschutz.html:105
+#: home/templates/datenschutz.html:98
 msgid ""
 "Personenbezogene Daten werden nur so lange gespeichert, wie dies für die "
 "jeweiligen Zwecke erforderlich ist."
@@ -682,11 +653,11 @@ msgstr ""
 "Personal data is only stored for as long as necessary for the respective "
 "purposes."
 
-#: home/templates/datenschutz.html:108
+#: home/templates/datenschutz.html:101
 msgid "Accountdaten: bis zur Löschung des Nutzerkontos."
 msgstr "Account data: until deletion of the user account."
 
-#: home/templates/datenschutz.html:109
+#: home/templates/datenschutz.html:102
 msgid ""
 "Inhalte (Artikel, Kommentare etc.): bis zur Löschung durch den Nutzer oder "
 "Beendigung des\n"
@@ -700,7 +671,7 @@ msgstr ""
 "            unless legal retention obligations exist.\n"
 "        "
 
-#: home/templates/datenschutz.html:113
+#: home/templates/datenschutz.html:106
 msgid ""
 "Server-Logfiles: Server-Logfiles werden zunächst mit IP-Adresse erhoben und "
 "unmittelbar anonymisiert. Die\n"
@@ -713,7 +684,7 @@ msgstr ""
 "            anonymized log data is stored for a maximum of 14 days.\n"
 "        "
 
-#: home/templates/datenschutz.html:116
+#: home/templates/datenschutz.html:109
 msgid ""
 "Fehlerprotokolle: maximal 14 Tage, sofern keine sicherheitsrelevanten "
 "Vorfälle eine längere\n"
@@ -727,58 +698,58 @@ msgstr ""
 "            .\n"
 "        "
 
-#: home/templates/datenschutz.html:120
+#: home/templates/datenschutz.html:113
 msgid ""
 "Sicherungskopien (Backups): werden regelmäßig überschrieben und spätestens "
 "nach 30 Tagen gelöscht."
 msgstr ""
 "Backups: are regularly overwritten and deleted at the latest after 30 days."
 
-#: home/templates/datenschutz.html:122
+#: home/templates/datenschutz.html:115
 msgid "Gesetzliche Aufbewahrungspflichten bleiben unberührt."
 msgstr "Legal retention obligations remain unaffected."
 
-#: home/templates/datenschutz.html:124
+#: home/templates/datenschutz.html:117
 msgid "6. Betroffenenrechte"
 msgstr "6. Data Subject Rights"
 
-#: home/templates/datenschutz.html:125
+#: home/templates/datenschutz.html:118
 msgid "Nutzer haben das Recht auf:"
 msgstr "Users have the right to:"
 
-#: home/templates/datenschutz.html:127
+#: home/templates/datenschutz.html:120
 msgid "Auskunft über die gespeicherten Daten (Art. 15 DSGVO)"
 msgstr "Information about stored data (Art. 15 GDPR)"
 
-#: home/templates/datenschutz.html:128
+#: home/templates/datenschutz.html:121
 msgid "Berichtigung unrichtiger Daten (Art. 16 DSGVO)"
 msgstr "Correction of incorrect data (Art. 16 GDPR)"
 
-#: home/templates/datenschutz.html:129
+#: home/templates/datenschutz.html:122
 msgid "Löschung der Daten (Art. 17 DSGVO)"
 msgstr "Deletion of data (Art. 17 GDPR)"
 
-#: home/templates/datenschutz.html:130
+#: home/templates/datenschutz.html:123
 msgid "Einschränkung der Verarbeitung (Art. 18 DSGVO)"
 msgstr "Restriction of processing (Art. 18 GDPR)"
 
-#: home/templates/datenschutz.html:131
+#: home/templates/datenschutz.html:124
 msgid "Datenübertragbarkeit (Art. 20 DSGVO)"
 msgstr "Data portability (Art. 20 GDPR)"
 
-#: home/templates/datenschutz.html:132
+#: home/templates/datenschutz.html:125
 msgid "Widerruf erteilter Einwilligungen (Art. 7 Abs. 3 DSGVO)"
 msgstr "Revocation of granted consents (Art. 7 para. 3 GDPR)"
 
-#: home/templates/datenschutz.html:133
+#: home/templates/datenschutz.html:126
 msgid "Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)"
 msgstr "Objection to processing (Art. 21 GDPR)"
 
-#: home/templates/datenschutz.html:136
+#: home/templates/datenschutz.html:129
 msgid "7. Datenspeicherung"
 msgstr "7. Data Storage"
 
-#: home/templates/datenschutz.html:137
+#: home/templates/datenschutz.html:130
 msgid ""
 "Wir speichern personenbezogene Daten auf einem eigenen, passwortgeschützten "
 "Server in Nürnberg, Deutschland. Die\n"
@@ -805,7 +776,7 @@ msgstr ""
 "        excluded. Google is certified under the EU-U.S. Data Privacy "
 "Framework."
 
-#: home/templates/datenschutz.html:144
+#: home/templates/datenschutz.html:137
 msgid ""
 "Der Zugriff auf diese Daten ist auf berechtigte Personen beschränkt. Die "
 "Daten werden gelöscht, sobald der Zweck\n"
@@ -816,11 +787,11 @@ msgstr ""
 "as soon as the purpose\n"
 "        of storage ceases and no legal retention obligations exist."
 
-#: home/templates/datenschutz.html:147
+#: home/templates/datenschutz.html:140
 msgid "8. Hinweise zur Nutzung des Standorts"
 msgstr "8. Notes on Location Usage"
 
-#: home/templates/datenschutz.html:149
+#: home/templates/datenschutz.html:142
 #, python-format
 msgid ""
 "Zur Bereitstellung der <a href=\"%(track_actions)s\">Tracking-Funktion</a> "
@@ -837,7 +808,7 @@ msgstr ""
 "end device (frontend) and serves\n"
 "        exclusively the calculation of the distance traveled."
 
-#: home/templates/datenschutz.html:154
+#: home/templates/datenschutz.html:147
 msgid ""
 "Eine Übermittlung konkreter Standortdaten an unsere Server oder an Dritte "
 "findet nicht statt. Die Standortdaten\n"
@@ -851,7 +822,7 @@ msgstr ""
 "device and not permanently\n"
 "        stored."
 
-#: home/templates/datenschutz.html:158
+#: home/templates/datenschutz.html:151
 msgid ""
 "Die im Rahmen der lokalen Verarbeitung berechnete zurückgelegte Distanz wird "
 "an unsere Server übermittelt und\n"
@@ -867,7 +838,7 @@ msgstr ""
 "        distance traveled. Storage of specific location data does not take "
 "place at any time."
 
-#: home/templates/datenschutz.html:162
+#: home/templates/datenschutz.html:155
 msgid ""
 "Die Speicherung der personenbezogenen Distanzdaten erfolgt bis zur manuellen "
 "Löschung durch Sie oder bis zur\n"
@@ -877,7 +848,7 @@ msgstr ""
 "deletion by you or until the\n"
 "        deletion of your user account."
 
-#: home/templates/datenschutz.html:165
+#: home/templates/datenschutz.html:158
 msgid ""
 "Rechtsgrundlage für die Verarbeitung der Standortdaten ist Ihre Einwilligung "
 "gemäß Art. 6 Abs. 1 lit. a DSGVO.\n"
@@ -891,7 +862,7 @@ msgstr ""
 "to the extent that this is necessary for\n"
 "        providing the tracking function."
 
-#: home/templates/datenschutz.html:169
+#: home/templates/datenschutz.html:162
 msgid ""
 "Sie können Ihre Einwilligung jederzeit über die Einstellungen Ihres "
 "Endgeräts oder Browsers widerrufen."
@@ -899,11 +870,11 @@ msgstr ""
 "You can revoke your consent at any time via the settings of your end device "
 "or browser."
 
-#: home/templates/datenschutz.html:172
+#: home/templates/datenschutz.html:165
 msgid "9. Datenverarbeitung bei Nutzung der App"
 msgstr "9. Data Processing When Using the App"
 
-#: home/templates/datenschutz.html:173
+#: home/templates/datenschutz.html:166
 msgid ""
 "Beim Aufruf der App werden technisch notwendige Zugriffsdaten verarbeitet. "
 "Dazu gehören Datum und Uhrzeit des\n"
@@ -915,7 +886,7 @@ msgstr ""
 "        access, pages called up, browser type, operating system as well as "
 "anonymized IP addresses."
 
-#: home/templates/datenschutz.html:175
+#: home/templates/datenschutz.html:168
 msgid ""
 "Die IP-Adresse wird unmittelbar nach Erhebung anonymisiert, sodass ein "
 "Personenbezug nicht mehr hergestellt\n"
@@ -925,7 +896,7 @@ msgstr ""
 "personal reference can no longer be established\n"
 "        ."
 
-#: home/templates/datenschutz.html:177
+#: home/templates/datenschutz.html:170
 msgid ""
 "Zur Fehleranalyse und Sicherstellung der Funktionsfähigkeit der App werden "
 "zusätzlich technische Protokolldaten\n"
@@ -940,7 +911,7 @@ msgstr ""
 "logs do not contain any\n"
 "        IP addresses and no directly identifying personal data."
 
-#: home/templates/datenschutz.html:180
+#: home/templates/datenschutz.html:173
 msgid ""
 "Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO "
 "(berechtigtes Interesse an IT-Sicherheit\n"
@@ -950,11 +921,11 @@ msgstr ""
 "in IT security\n"
 "        and stability of the platform)."
 
-#: home/templates/datenschutz.html:184
+#: home/templates/datenschutz.html:177
 msgid "10. Beschwerderecht bei der Aufsichtsbehörde"
 msgstr "10. Right to Complain to the Supervisory Authority"
 
-#: home/templates/datenschutz.html:185
+#: home/templates/datenschutz.html:178
 msgid ""
 "Betroffene Personen haben das Recht, sich bei einer "
 "Datenschutzaufsichtsbehörde zu beschweren, wenn sie der\n"
@@ -965,7 +936,7 @@ msgstr ""
 "authority if they\n"
 "        believe that the processing of their personal data violates the GDPR."
 
-#: home/templates/datenschutz.html:187
+#: home/templates/datenschutz.html:180
 msgid ""
 "Zuständig ist in der Regel die Datenschutzaufsichtsbehörde des Bundeslandes "
 "Ihres Wohnsitzes."
@@ -973,11 +944,11 @@ msgstr ""
 "The competent authority is usually the data protection supervisory authority "
 "of the federal state of your place of residence."
 
-#: home/templates/datenschutz.html:189
+#: home/templates/datenschutz.html:182
 msgid "Besondere Hinweise zum Schutz von Kindern und Jugendlichen"
 msgstr "Special Notes on the Protection of Children and Young People"
 
-#: home/templates/datenschutz.html:190
+#: home/templates/datenschutz.html:183
 msgid ""
 "Diese App richtet sich auch an junge Nutzerinnen und Nutzer. Der Schutz "
 "personenbezogener Daten von Kindern und\n"
@@ -989,7 +960,7 @@ msgstr ""
 "        young people has\n"
 "        special importance for us."
 
-#: home/templates/datenschutz.html:193
+#: home/templates/datenschutz.html:186
 msgid ""
 "Sofern für bestimmte Funktionen oder Dienste eine Einwilligung erforderlich "
 "ist, darf diese nur durch eine\n"
@@ -1003,7 +974,7 @@ msgstr ""
 "of consent,\n"
 "        to be authorized to do so."
 
-#: home/templates/datenschutz.html:196
+#: home/templates/datenschutz.html:189
 msgid ""
 "Die datenschutzrechtliche Verantwortung für die App liegt bei einer "
 "volljährigen Person. Minderjährige handeln\n"
@@ -1013,11 +984,11 @@ msgstr ""
 "Minors do not act\n"
 "        as responsible parties within the meaning of the GDPR."
 
-#: home/templates/datenschutz.html:199
+#: home/templates/datenschutz.html:192
 msgid "Kontakt für Datenschutzfragen"
 msgstr "Contact for Data Protection Questions"
 
-#: home/templates/datenschutz.html:201
+#: home/templates/datenschutz.html:194
 #, python-format
 msgid ""
 "Für Datenschutzanliegen wenden Sie sich bitte an den oben angegebenen "
@@ -1028,11 +999,11 @@ msgstr ""
 "(see also <a\n"
 "            href=\"%(impressum)s\">Imprint</a>)"
 
-#: home/templates/datenschutz.html:204
+#: home/templates/datenschutz.html:197
 msgid "Änderungen dieser Datenschutzerklärung"
 msgstr "Changes to this Legal Notice"
 
-#: home/templates/datenschutz.html:206
+#: home/templates/datenschutz.html:199
 #, python-format
 msgid ""
 "Wir behalten uns vor, diese Datenschutzerklärung anzupassen, um sie an "
@@ -1791,6 +1762,32 @@ msgid ""
 msgstr ""
 "Do you have questions or need support? Just send an email to <a "
 "href=\"mailto:info@climate-quest.de\">info@climate-quest.de</a>!"
+
+#~ msgid "4.2 Quill (Instructure Inc.)"
+#~ msgstr "4.2 Quill (Instructure Inc.)"
+
+#~ msgid ""
+#~ "Wir verwenden Quill als Rich-Text-Editor zur Eingabe von Inhalten. Quill "
+#~ "selbst verarbeitet keine\n"
+#~ "        personenbezogenen Daten, jedoch können durch die Nutzung "
+#~ "personenbezogene Inhalte eingegeben und gespeichert\n"
+#~ "        werden."
+#~ msgstr ""
+#~ "We use Quill as a rich text editor for content input. Quill itself does "
+#~ "not process any\n"
+#~ "        personal data, however, personal content may be entered and "
+#~ "stored through its use\n"
+#~ "        ."
+
+#~ msgid "Die Einbindung erfolgt lokal (siehe 4.4)."
+#~ msgstr "Integration is done locally (see 4.4)."
+
+#~ msgid ""
+#~ "Datenschutzerklärung von Quill: <a href=\"https://quilljs.com/\" "
+#~ "target=\"_blank\">https://quilljs.com/</a>"
+#~ msgstr ""
+#~ "Quill Privacy Policy: <a href=\"https://quilljs.com/\" "
+#~ "target=\"_blank\">https://quilljs.com/</a>"
 
 #~ msgid "Übersicht über alle Aktionen und deren Klimapunkte bei ClimateQuest."
 #~ msgstr "Overview of all actions and their climate points on ClimateQuest."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-22 14:18+0200\n"
+"POT-Creation-Date: 2026-06-25 18:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -133,8 +133,7 @@ msgid "Event %(name)s"
 msgstr "Event %(name)s"
 
 #: events/templates/event_detail.html:26
-#, , python-format
-#| msgid "<a href=\"%(url)s\">Event</a> <i>%(name)s</i>"
+#, python-format
 msgid ""
 "<a href=\"%(url)s\">Event</a>\n"
 "        <i>%(name)s</i>"
@@ -150,7 +149,6 @@ msgstr "You are not a participant in this event"
 
 #: events/templates/event_detail.html:53
 #, python-format
-#| msgid "<strong>Ersteller:</strong> <a href=\"%(url)s\">%(username)s</a>"
 msgid ""
 "<strong>Ersteller:</strong>\n"
 "            <a href=\"%(url)s\">%(username)s</a>"
@@ -210,8 +208,6 @@ msgstr "Answer"
 
 #: events/templates/event_detail.html:118
 #, python-format
-#| msgid ""
-#| "<a href=\"%(url)s\">Logge dich ein</a>, um den Kommentar zu beantworten"
 msgid ""
 "<a href=\"%(url)s\">Logge dich ein</a>, um den\n"
 "                                    Kommentar zu beantworten"
@@ -232,8 +228,6 @@ msgstr "Ask a question"
 
 #: events/templates/event_detail.html:173
 #, python-format
-#| msgid ""
-#| "<a href=\"%(url)s\">Logge dich ein</a>, um einen Kommentar zu verfassen"
 msgid ""
 "<a href=\"%(url)s\">Logge dich ein</a>, um einen Kommentar zu\n"
 "            verfassen"

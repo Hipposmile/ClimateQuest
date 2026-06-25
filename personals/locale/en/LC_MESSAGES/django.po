@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-22 14:18+0200\n"
+"POT-Creation-Date: 2026-06-25 18:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,9 +40,6 @@ msgstr "Available credits:"
 
 #: personals/templates/credit_view.html:31
 #, python-format
-#| msgid ""
-#| "%(percent_done)s %% bis zum nächsten Credit geschafft. Dir fehlen also "
-#| "noch %(klimapunkte_missing)s Klimapunkte."
 msgid ""
 "\n"
 "        %(percent_done)s %% bis zum nächsten Credit geschafft. Dir fehlen "
@@ -72,10 +69,6 @@ msgstr ""
 
 #: personals/templates/credit_view.html:44
 #, python-format
-#| msgid ""
-#| "1 gepflanzter Baum (Sponsor:\n"
-#| "                    %(sponsor)s) durch Plant-for-the-Planet: <a "
-#| "href=\"%(url)s\">Zertifikat</a>"
 msgid ""
 "1 gepflanzter Baum (Sponsor:\n"
 "                    %(sponsor)s) durch Plant-for-the-Planet:\n"
