@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 18:48+0200\n"
+"POT-Creation-Date: 2026-07-03 20:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -120,7 +120,7 @@ msgstr ""
 msgid "Schulen"
 msgstr "Schools"
 
-#: home/templates/companies_and_schools.html:13 home/templates/home.html:344
+#: home/templates/companies_and_schools.html:13 home/templates/home.html:350
 msgid "ClimateQuest für Schulen"
 msgstr "ClimateQuest for Schools"
 
@@ -527,7 +527,6 @@ msgid "Die Einbindung erfolgt erst nach aktiver Zustimmung des Nutzers."
 msgstr "Integration only takes place after active user consent."
 
 #: home/templates/datenschutz.html:68
-#| msgid "4.3 Verwendung von localStorage"
 msgid "4.2 Verwendung von localStorage"
 msgstr "4.2 Use of localStorage"
 
@@ -1171,22 +1170,26 @@ msgid "ClimateQuest als App downloaden"
 msgstr "Download ClimateQuest as an app"
 
 #: home/templates/home.html:338
+msgid "Artikel von Plant-for-the-Planet über ClimateQuest"
+msgstr "Article by Plant-for-the-Planet about ClimateQuest"
+
+#: home/templates/home.html:344
 msgid "Bewerten Sie uns auf Trustpilot"
 msgstr "Rate us on Trustpilot"
 
-#: home/templates/home.html:351
+#: home/templates/home.html:357
 msgid "Wie ClimateQuest funktioniert"
 msgstr "How ClimateQuest works"
 
-#: home/templates/home.html:355
+#: home/templates/home.html:361
 msgid "Aktion hinzufügen"
 msgstr "Add Action"
 
-#: home/templates/home.html:359
+#: home/templates/home.html:365
 msgid "Family gründen"
 msgstr "Create a Family"
 
-#: home/templates/home.html:362
+#: home/templates/home.html:368
 msgid "Family beitreten"
 msgstr "Join a Family"
 

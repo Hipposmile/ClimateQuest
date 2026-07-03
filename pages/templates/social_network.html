@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 
-{% load i18n %}
-
 {% block meta %}
     <meta name="description"
-          content="{% trans 'Erfahre mehr über die Gefahren von Sozialen Netzwerken und einen möglichen Lösungsansatz' %}">
+          content="Erfahre mehr über die Gefahren von Sozialen Netzwerken und einen möglichen Lösungsansatz">
 {% endblock %}
 
-{% block title %}{% trans 'Soziale Netzwerke' %}{% endblock %}
+{% block title %}Soziale Netzwerke{% endblock %}
 
 {% block content %}
-    <h1>{% trans 'Soziale Netzwerke' %}</h1>
+    <h1>Soziale Netzwerke</h1>
     {% if messages %}
         {% for message in messages %}
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
     {% if request.LANGUAGE_CODE != "de" %}<p>This page is only available in German.</p>{% endif %}
+    <p>Wir sind gerade dabei, eine zweite Plattform zu entwickeln: Ein nachhaltiges soziales Netzwerk, das Bäume pflanzt
+        und die Gefahren von sozialen Medien minimiert!</p>
     <style nonce="{{ request.csp_style_nonce }}">
         .survey-banner {
             background: linear-gradient(135deg, #7800F5, #FF4081);
@@ -143,8 +143,8 @@
         </div>
     </a>
     <div class="survey-banner-meta">
-        Das dauert nur drei Minuten und hilft uns, ein soziales Netzwerk zu
-        programmieren, das die Gefahren von Social Media minimiert oder sogar eliminiert!
+        Das dauert nur drei Minuten und hilft uns, ein nachhaltiges soziales Netzwerk zu
+        programmieren, das die Gefahren von Social Media minimiert oder sogar eliminiert und Bäume pflanzt!
     </div>
 
     <div class="accordion">
@@ -424,10 +424,30 @@
 
     <div class="accordion">
         <div class="accordion-header">
+            Emissionen
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="accordion-content">
+            Soziale Netzwerke sind nicht nur für User gefährlich, sondern auch klimaschädlich, da sowohl Server als auch
+            Endgeräte Strom verbrauchen.
+            Pro Minute Nutzung von Instagram oder YouTube werden 0,87 Gramm CO2e emittiert, bei TikTok
+            sind es sogar 0,96 Gramm CO2e (<a href="https://media4nature.de/die-co2-bilanz-von-social-media">https://media4nature.de/die-co2-bilanz-von-social-media</a>).
+
+            TikTok nutzen in Deutschland circa 23,56 Millionen Menschen, wobei die monatliche Nutzungsdauer etwa 38
+            Stunden beträgt (<a href="https://onlinemarketing.de/cases/social-media-report-wie-lange-swipen-tiktok">https://onlinemarketing.de/cases/social-media-report-wie-lange-swipen-tiktok</a>).
+            Daraus ergeben sich die monatlichen CO2-Emissionen von TikTok allein in Deutschland von ≈52
+            Millionen Kilogramm CO2. Andere große Plattformen wie Instagram oder YouTube sind hierbei noch nicht mit
+            eingerechnet.
+        </div>
+    </div>
+
+    <div class="accordion">
+        <div class="accordion-header">
             Vorteile sozialer Netzwerke
             <i class="fa-solid fa-chevron-down"></i>
         </div>
         <div class="accordion-content">
+            Soziale Netzwerke bieten auch viele Vorteile und sollten daher nicht einfach nur verteufelt werden:
             <ul>
                 <li>Vereinfachte Kommunikation</li>
                 <li>Vereinfachte Informationsbeschaffung</li>
