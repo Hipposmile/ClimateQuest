@@ -6,5 +6,5 @@ urlpatterns = [
     path('mobile-apps/', mobile_apps, name='mobile_apps'),
     path('aknachhaltigkeit/', aknachhaltigkeit, name='aknachhaltigkeit'),
     path('pastel_done/', pastel_done, name='pastel_done'),
-    #path('social_network/', social_network, name='social_network'),
+    path('social_network/', social_network, name='social_network'),
 ]

@@ -1338,7 +1338,7 @@
                             if (!isNaN(count)) {
                                 count += 1;
                                 localStorage.setItem("rating-count", count);
-                                if ([2, 5, 8, 15].includes(count)) {
+                                if ([2].includes(count)) {
                                     let modal = document.getElementById('rating-modal');
                                     setTimeout(() => {
                                         modal.classList.add('visible');

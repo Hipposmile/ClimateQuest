@@ -16,7 +16,6 @@
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
-    <!-- ToDo: Add nonces -->
     <style nonce="{{ request.csp_style_nonce }}">
         .survey-banner {
             background: linear-gradient(135deg, #7800F5, #FF4081);
@@ -30,7 +29,6 @@
             gap: 1rem;
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
             transition: transform .2s;
-            margin-bottom: 2rem;
         }
 
         .survey-banner:hover {
@@ -39,6 +37,13 @@
 
         .survey-banner-a {
             text-decoration: none;
+        }
+
+        .survey-banner-meta {
+            color: gray;
+            font-size: 1rem;
+            font-weight: 10;
+            margin-bottom: 20px;
         }
 
         .arrow-inside {
@@ -129,12 +134,17 @@
         }
     </style>
 
-    <a href="#" class="survey-banner-a" target="_blank">
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdjo3iaOWNmYsnpJUwCx8uOqdPJSLm32G3N86DCqFGq600GSg/viewform?usp=header"
+       class="survey-banner-a" target="_blank">
         <div class="survey-banner">
             <div class="arrow-inside">→</div>
             Bitte fülle unbedingt diese kurze Umfrage aus!!!
         </div>
     </a>
+    <div class="survey-banner-meta">
+        Es dauert nur drei Minuten und hilft uns, ein soziales Netzwerk zu
+        programmieren, das die Gefahren von Social Media minimiert oder sogar eliminiert!
+    </div>
 
     <div class="accordion">
         <div class="accordion-header">

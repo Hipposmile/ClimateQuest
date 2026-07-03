@@ -43,7 +43,7 @@
             {% for tree in request.user.usererweitert.planted_trees.all %}
                 <li>{% blocktrans with sponsor=tree.sponsor url=tree.redeemURL %}1 gepflanzter Baum (Sponsor:
                     {{ sponsor }}) durch Plant-for-the-Planet:
-                    <a href="{{ url }}" class="dont-show-loading">Zertifikat</a>{% endblocktrans %}
+                    <a href="{{ url }}" target="_blank">Zertifikat</a>{% endblocktrans %}
                 </li>
             {% endfor %}
         </ul>
