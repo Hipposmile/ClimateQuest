@@ -16,6 +16,7 @@
             <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
         {% endfor %}
     {% endif %}
+    {% if request.LANGUAGE_CODE != "de" %}<p>This page is only available in German.</p>{% endif %}
     <style nonce="{{ request.csp_style_nonce }}">
         .survey-banner {
             background: linear-gradient(135deg, #7800F5, #FF4081);
@@ -138,11 +139,11 @@
        class="survey-banner-a" target="_blank">
         <div class="survey-banner">
             <div class="arrow-inside">→</div>
-            Bitte fülle unbedingt diese kurze Umfrage aus!!!
+            Bitte mach bei dieser kurzen Umfrage mit!!!
         </div>
     </a>
     <div class="survey-banner-meta">
-        Es dauert nur drei Minuten und hilft uns, ein soziales Netzwerk zu
+        Das dauert nur drei Minuten und hilft uns, ein soziales Netzwerk zu
         programmieren, das die Gefahren von Social Media minimiert oder sogar eliminiert!
     </div>
 
@@ -152,25 +153,272 @@
             <i class="fa-solid fa-chevron-down"></i>
         </div>
         <div class="accordion-content">
-            <p>Soziale Netzwerke bringen Risiken mit sich, die oft unterschätzt werden.</p>
             <table>
                 <tr>
                     <th>Gefahr</th>
-                    <th>Beschreibung</th>
+                    <th>Erklärung</th>
                 </tr>
+
+                <tr>
+                    <td>Suchtgefahr</td>
+                    <td>
+                        Soziale Netzwerke sind darauf ausgelegt, süchtig zu machen.
+                        Über die Hälfte aller Menschen unter 20 Jahren zeigen Symptome von Social-Media-Sucht.
+                        <sup><a href="#SozialeNetzwerkeSucht">[11]</a></sup>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Radikalisierung</td>
+                    <td>
+                        Soziale Medien führen teils zu einer Radikalisierung der Nutzenden, da potentiell
+                        radikalisierende Inhalte durch durch die Digitalität und insbesondere Soziale Netzwerke ein
+                        größeres Publikum erreichen und effektiver werden
+                        <sup><a href="#SozialeNetzwerkeRadikalisierung">[3]</a></sup>.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Desinformation</td>
+                    <td>
+                        95% der in einer Studie Befragten Menschen erleben regelmäßig Falschinformationen, vor allem in
+                        den Sozialen Netzwerken
+                        <sup><a href="#SozialeNetzwerkeDesinformation">[4]</a></sup>.
+                        Gleichzeitig nutzen mehr Menschen Soziale Netzwerke als Informationsquelle als traditionelle
+                        Medien wie Zeitungen
+                        <sup><a href="#SocialMediaHauptinformationsquelle">[13]</a></sup>.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Hate Speech</td>
+                    <td>
+                        Meist werden beleidigende Inhalte aufgrund anderer politischer Ansichten, Herkunft, Religion,
+                        Geschlecht, sexueller Orientierung oder Behinderungen verfasst.
+                        In der EU haben 2025 42% der Internetnutzenden auf Webseiten oder Sozialen Medien Hate Speech
+                        wahrgenommen
+                        <sup><a href="#DigitaleGewalt">[5]</a></sup>.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Pornographische, rassistische, antisemitische oder ähnliche Inhalte</td>
+                    <td>
+                        In Sozialen Medien kursiert viel pornographischer, rassistischer oder antisemitischer Inhalt,
+                        was zu einer Normalisierung dieser Themen führt und gleichzeitig radikalisierend wirkt, da
+                        extreme Handlungen und Meinungen omnipräsent sind.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Verkürzung der Aufmerksamkeitsspanne</td>
+                    <td>
+                        Laut der Forscherin Gloria Mark sinkt die Aufmerksamkeitsspanne der Menschen aufgrund der
+                        Digitalisierung
+                        <sup><a href="#SozialeMedienAufmerksamkeitsspanne">[6]</a></sup>.
+                        Möglicherweise ist dies aber nicht auf eine schlechtere, sondern auf eine flexiblere
+                        Aufmerksamkeit zurückzuführen.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Soziale Isolation</td>
+                    <td>
+                        Die meisten Studien assoziieren eine negative Wirkung auf die soziale Isolation der User mit
+                        Social-Media, einige sehen aber auch positive Wirkungen.
+                        Dies hängt vor allem von der Nutzungsart ab.
+                        <sup><a href="#SozialeMedienSozialeIsolation2">[7]</a></sup>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Cybermobbing</td>
+                    <td>
+                        Rund zwei Millionen Kinder und Jugendliche in Deutschland sind von Cybermobbing betroffen
+                        <sup><a href="#Cybermobbing">[12]</a></sup>.
+                    </td>
+                </tr>
+
                 <tr>
                     <td>Datenschutz</td>
-                    <td>Persönliche Daten können gesammelt, analysiert und weitergegeben werden.</td>
+                    <td>
+                        Die meisten sozialen Netzwerke sammeln viele verschiedene persönliche Daten wie Name,
+                        E-Mail-Adresse oder Alter und nutzen diese für personalisierte Werbung oder den Weiterverkauf an
+                        Dritte.
+                    </td>
                 </tr>
+
                 <tr>
-                    <td>Suchtverhalten</td>
-                    <td>Endlose Feeds fördern ständiges Scrollen und Dopamin-Abhängigkeit.</td>
+                    <td><i>Das Internet vergisst nicht</i></td>
+                    <td>
+                        Einmal online gestellter Content kann nicht immer auch wieder entfernt werden, obwohl er von der
+                        Plattform gelöscht wird, da zuvor beispielsweise Screenshots davon angefertigt worden sein
+                        können.
+                    </td>
                 </tr>
+
                 <tr>
-                    <td>Manipulation</td>
-                    <td>Algorithmen beeinflussen Meinungen und verstärken extreme Inhalte.</td>
+                    <td>Sozialer Druck</td>
+                    <td>
+                        Unrealistische Ideale führen dazu, dass sich 40\% der jungen Erwachsenen unter Druck fühlen,
+                        schöner aussehen zu müssen
+                        <sup><a href="#SocialMediaKörperDruck">[14]</a></sup>.
+                    </td>
                 </tr>
+
+                <tr>
+                    <td>Einschränken kritischer Inhalte</td>
+                    <td>
+                        Plattformen schränken oft bewusst die Reichweite kritischen Contents ein.
+                    </td>
+                </tr>
+
             </table>
+
+            <ol>
+                <li id="SozialeMedienSozialeIsolation1">
+                    Primack, Brian A. and Shensa, Ariel and Sidani, Jaime E. and Whaite, Erin O. and Lin, Liu yi and
+                    Rosen, Daniel and Colditz, Jason B. and Radovic, Ana and Miller, Elizabeth:
+                    <i>Social Media Use and Perceived Social Isolation Among Young Adults in the U.S.</i>
+                    Online verfügbar unter:
+                    <a href="https://www.ajpmonline.org/article/S0749-3797(17)30016-8/fulltext">
+                        https://www.ajpmonline.org/article/S0749-3797(17)30016-8/fulltext
+                    </a>
+                    (Zugriff: 2026-05-30)
+                </li>
+
+                <li id="SozialeNetzwerkeFakten">
+                    Bundeszentrale für politische Bildung:
+                    <i>Soziale Netzerke</i>, 2025-09-16.
+                    Online verfügbar unter:
+                    <a href="https://www.bpb.de/kurz-knapp/zahlen-und-fakten/globalisierung/52777/soziale-netzwerke/">
+                        https://www.bpb.de/kurz-knapp/zahlen-und-fakten/globalisierung/52777/soziale-netzwerke/
+                    </a>
+                    (Zugriff: 2026-05-30)
+                </li>
+
+                <li id="SozialeNetzwerkeRadikalisierung">
+                    Bundeszentrale für politische Bildung:
+                    <i>Diskussionsräume und Radikalisierungsprozesse in Sozialen Medien</i>, 2025-05-09.
+                    Online verfügbar unter:
+                    <a href="https://www.bpb.de/themen/parteien/rechtspopulismus/562042/diskussionsraeume-und-radikalisierungsprozesse-in-sozialen-medien/">
+                        https://www.bpb.de/themen/parteien/rechtspopulismus/562042/diskussionsraeume-und-radikalisierungsprozesse-in-sozialen-medien/
+                    </a>
+                    (Zugriff: 2026-06-18)
+                </li>
+
+                <li id="SozialeNetzwerkeDesinformation">
+                    MIMIKAMA:
+                    <i>MIMIKAMA-Report 2025 – Die Wahrheit über die Lüge</i>, 2025-10.
+                    Online verfügbar unter:
+                    <a href="https://www.mimikama.org/wp-content/uploads/2025/10/1_Mimikama_Report_2025_Die-Wahrheit-ueber-die-Luege.pdf">
+                        https://www.mimikama.org/wp-content/uploads/2025/10/1_Mimikama_Report_2025_Die-Wahrheit-ueber-die-Luege.pdf
+                    </a>
+                    (Zugriff: 2026-06-18)
+                </li>
+
+                <li id="DigitaleGewalt">
+                    Statistisches Bundesamt:
+                    <i>Digitale Gewalt</i>, 2026-02-25.
+                    Online verfügbar unter:
+                    <a href="https://www.destatis.de/Europa/DE/Thema/Wissenschaft-Technologie-digitaleGesellschaft/digitale_gewalt.html">
+                        https://www.destatis.de/Europa/DE/Thema/Wissenschaft-Technologie-digitaleGesellschaft/digitale_gewalt.html
+                    </a>
+                    (Zugriff: 2026-06-18)
+                </li>
+
+                <li id="SozialeMedienAufmerksamkeitsspanne">
+                    Quarks:
+                    <i>Macht Social Media unsere Konzentration kaputt?</i>, 2023-10-09.
+                    Online verfügbar unter:
+                    <a href="https://www.quarks.de/gesellschaft/psychologie/konzentration-aufmerksamkeit-handy-konzentrationsfaehigkeit/">
+                        https://www.quarks.de/gesellschaft/psychologie/konzentration-aufmerksamkeit-handy-konzentrationsfaehigkeit/
+                    </a>
+                    (Zugriff: 2026-06-18)
+                </li>
+
+                <li id="SozialeMedienSozialeIsolation2">
+                    Yiting Liu, Sojen Pradhan & Xin Wang:
+                    <i>The relationship between social media use and social isolation in young adults: a systematic
+                        review</i>, 2026-05-28.
+                    Online verfügbar unter:
+                    <a href="https://www.tandfonline.com/doi/pdf/10.1080/1369118X.2026.2674934">
+                        https://www.tandfonline.com/doi/pdf/10.1080/1369118X.2026.2674934
+                    </a>
+                    (Zugriff: 2026-06-19)
+                </li>
+
+                <li id="SozialeNetzwerkeNutzungGenerationen">
+                    Statista:
+                    <i>Soziale Netzwerke in Deutschland nach Generationen 2025</i>, 2025-22-25.
+                    Online verfügbar unter:
+                    <a href="https://de.statista.com/prognosen/1181367/umfrage-in-deutschland-zu-beliebten-sozialen-netzwerken-nach-generationen/">
+                        https://de.statista.com/prognosen/1181367/umfrage-in-deutschland-zu-beliebten-sozialen-netzwerken-nach-generationen/
+                    </a>
+                    (Zugriff: 2026-06-03)
+                </li>
+
+                <li id="SozialeNetzwerkeEmissionen">
+                    media4nature:
+                    <i>Die CO2-Bilanz von Social Media</i>.
+                    Online verfügbar unter:
+                    <a href="https://media4nature.de/die-co2-bilanz-von-social-media">
+                        https://media4nature.de/die-co2-bilanz-von-social-media
+                    </a>
+                    (Zugriff: 2026-06-05)
+                </li>
+
+                <li id="TikTokNutzung">
+                    Onlinemarketing.de:
+                    <i>So lange swipen User in Deutschland auf TikTok</i>, 2024-02-27.
+                    Online verfügbar unter:
+                    <a href="https://onlinemarketing.de/cases/social-media-report-wie-lange-swipen-tiktok">
+                        https://onlinemarketing.de/cases/social-media-report-wie-lange-swipen-tiktok
+                    </a>
+                    (Zugriff: 2026-06-05)
+                </li>
+
+                <li id="SozialeNetzwerkeSucht">
+                    Die Zeit:
+                    <i>Soziale Netzwerke: Jeder zweite junge Mensch zeigt Symptome von Social-Media-Sucht | DIE ZEIT</i>,
+                    2025-11-21.
+                    Online verfügbar unter:
+                    <a href="https://www.zeit.de/gesellschaft/zeitgeschehen/2025-11/studie-soziale-netzwerke-bochum-sucht-nutzungsverhalten">
+                        https://www.zeit.de/gesellschaft/zeitgeschehen/2025-11/studie-soziale-netzwerke-bochum-sucht-nutzungsverhalten
+                    </a>
+                    (Zugriff: 2026-06-06)
+                </li>
+
+                <li id="Cybermobbing">
+                    Statista:
+                    <i>Cybermobbing ist unter Jugendlichen weit verbreitet</i>, 2025-12-17.
+                    Online verfügbar unter:
+                    <a href="https://de.statista.com/themen/3122/cybermobbing/#topicOverview">
+                        https://de.statista.com/themen/3122/cybermobbing/#topicOverview
+                    </a>
+                    (Zugriff: 2026-06-19)
+                </li>
+
+                <li id="SocialMediaHauptinformationsquelle">
+                    EuroNews:
+                    <i>More people get news from social media than traditional outlets, study shows</i>, 2026-06-17.
+                    Online verfügbar unter:
+                    <a href="https://www.euronews.com/next/2026/06/17/more-people-get-news-from-social-media-than-traditional-outlets-study-shows">
+                        https://www.euronews.com/next/2026/06/17/more-people-get-news-from-social-media-than-traditional-outlets-study-shows
+                    </a>
+                    (Zugriff: 2026-06-19)
+                </li>
+
+                <li id="SocialMediaKörperDruck">
+                    AOK:
+                    <i>Selbstliebe Fact Sheet</i>, 2023-07.
+                    Online verfügbar unter:
+                    <a href="https://www.aok.de/mk/cms/fileadmin/user_upload/AOK-BV/Zielgruppenlandingpage/Mentale_Gesundheit/230705_AOK_Selbstliebe_Fact_Sheet_Ansicht.pdf">
+                        https://www.aok.de/mk/cms/fileadmin/user_upload/AOK-BV/Zielgruppenlandingpage/Mentale_Gesundheit/230705_AOK_Selbstliebe_Fact_Sheet_Ansicht.pdf
+                    </a>
+                    (Zugriff: 2026-07-03)
+                </li>
+            </ol>
         </div>
     </div>
 
@@ -180,25 +428,15 @@
             <i class="fa-solid fa-chevron-down"></i>
         </div>
         <div class="accordion-content">
-            <p>Es gibt auch starke positive Aspekte, die soziale Netzwerke attraktiv machen.</p>
-            <table>
-                <tr>
-                    <th>Vorteil</th>
-                    <th>Beschreibung</th>
-                </tr>
-                <tr>
-                    <td>Vernetzung</td>
-                    <td>Menschen weltweit können miteinander kommunizieren.</td>
-                </tr>
-                <tr>
-                    <td>Information</td>
-                    <td>Schneller Zugang zu Nachrichten und Wissen.</td>
-                </tr>
-                <tr>
-                    <td>Marketing</td>
-                    <td>Unternehmen können Zielgruppen präzise erreichen.</td>
-                </tr>
-            </table>
+            <ul>
+                <li>Vereinfachte Kommunikation</li>
+                <li>Vereinfachte Informationsbeschaffung</li>
+                <li>Reichweitenverstärkung sozialer Projekte</li>
+                <li>Inspiration für Kunst, Freizeitbeschäftigung, Gerichte, etc.</li>
+                <li>Unterhaltung</li>
+                <li>Gemeinschaftsgefühl</li>
+                <li>Teilen von Studien und Recherchen</li>
+            </ul>
         </div>
     </div>
 
