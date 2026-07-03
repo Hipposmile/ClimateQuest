@@ -9,3 +9,6 @@ def aknachhaltigkeit(request):
 
 def pastel_done(request):
     return render(request, './pastel_done.html')
+
+def social_network(request):
+    return render(request, './social_network.html')

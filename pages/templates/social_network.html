@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block meta %}
+    <meta name="description"
+          content="{% trans 'Erfahre mehr über die Gefahren von Sozialen Netzwerken und einen möglichen Lösungsansatz' %}">
+{% endblock %}
+
+{% block title %}{% trans 'Soziale Netzwerke' %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans 'Soziale Netzwerke' %}</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
+        {% endfor %}
+    {% endif %}
+    <!-- ToDo: Add nonces -->
+    <style nonce="{{ request.csp_style_nonce }}">
+        .survey-banner {
+            background: linear-gradient(135deg, #7800F5, #FF4081);
+            padding: 1.4rem 2rem;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+            transition: transform .2s;
+            margin-bottom: 2rem;
+        }
+
+        .survey-banner:hover {
+            transform: scale(1.02);
+        }
+
+        .survey-banner-a {
+            text-decoration: none;
+        }
+
+        .arrow-inside {
+            font-size: 2rem;
+            animation: arrowWiggle 1.2s ease-in-out;
+            animation-iteration-count: 3;
+        }
+
+        @keyframes arrowWiggle {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(-8px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .accordion {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            background: #f9fafb;
+            border: 1px solid #FF4081;
+        }
+
+        .accordion-header {
+            background: #FF4081;
+            border-radius: 5px;
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: background .2s;
+        }
+
+        .accordion-header:hover {
+            background: #FFE2EC;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .35s ease;
+            background: #f9fafb;
+            padding: 0 1.5rem;
+        }
+
+        .accordion-content.open {
+            padding: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table th, table td {
+            padding: 0.9rem;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        table th {
+            background: #FFE2EC;
+            font-weight: 700;
+        }
+
+        @media (max-width: 600px) {
+            .accordion-header {
+                font-size: 1rem;
+            }
+
+            table th, table td {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+
+    <a href="#" class="survey-banner-a" target="_blank">
+        <div class="survey-banner">
+            <div class="arrow-inside">→</div>
+            Bitte fülle unbedingt diese kurze Umfrage aus!!!
+        </div>
+    </a>
+
+    <div class="accordion">
+        <div class="accordion-header">
+            Gefahren sozialer Netzwerke
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="accordion-content">
+            <p>Soziale Netzwerke bringen Risiken mit sich, die oft unterschätzt werden.</p>
+            <table>
+                <tr>
+                    <th>Gefahr</th>
+                    <th>Beschreibung</th>
+                </tr>
+                <tr>
+                    <td>Datenschutz</td>
+                    <td>Persönliche Daten können gesammelt, analysiert und weitergegeben werden.</td>
+                </tr>
+                <tr>
+                    <td>Suchtverhalten</td>
+                    <td>Endlose Feeds fördern ständiges Scrollen und Dopamin-Abhängigkeit.</td>
+                </tr>
+                <tr>
+                    <td>Manipulation</td>
+                    <td>Algorithmen beeinflussen Meinungen und verstärken extreme Inhalte.</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="accordion">
+        <div class="accordion-header">
+            Vorteile sozialer Netzwerke
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="accordion-content">
+            <p>Es gibt auch starke positive Aspekte, die soziale Netzwerke attraktiv machen.</p>
+            <table>
+                <tr>
+                    <th>Vorteil</th>
+                    <th>Beschreibung</th>
+                </tr>
+                <tr>
+                    <td>Vernetzung</td>
+                    <td>Menschen weltweit können miteinander kommunizieren.</td>
+                </tr>
+                <tr>
+                    <td>Information</td>
+                    <td>Schneller Zugang zu Nachrichten und Wissen.</td>
+                </tr>
+                <tr>
+                    <td>Marketing</td>
+                    <td>Unternehmen können Zielgruppen präzise erreichen.</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script nonce="{{ request.csp_script_nonce }}">
+        const accordions = document.querySelectorAll('.accordion');
+
+        accordions.forEach(acc => {
+            const header = acc.querySelector('.accordion-header');
+            const content = acc.querySelector('.accordion-content');
+
+            header.addEventListener('click', () => {
+                const isOpen = content.style.maxHeight;
+
+                document.querySelectorAll('.accordion-content').forEach(c => {
+                    c.style.maxHeight = null;
+                    c.classList.remove('open');
+                });
+
+                if (!isOpen) {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    content.classList.add('open');
+                }
+            });
+        });
+    </script>
+{% endblock %}
