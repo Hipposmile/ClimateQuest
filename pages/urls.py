@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import mobile_apps, aknachhaltigkeit, pastel_done, social_network
+from .views import mobile_apps, aknachhaltigkeit, pastel_done
 
 urlpatterns = [
     path('mobile-apps/', mobile_apps, name='mobile_apps'),
