@@ -3,6 +3,9 @@ from django.core.management import BaseCommand
 import json5
 from community.models import Community
 from family.models import Family
+from personals.models import UserErweitert
+
+LANGUAGE = "de"
 
 
 class Command(BaseCommand):
@@ -22,6 +25,10 @@ class Command(BaseCommand):
 
         name = data['name']
         short_name = data['short_name']
+
+        community_exists = Community.objects.filter(name=name).exists()
+        if community_exists:
+            raise ValueError(f"Community {name} already exists.")
 
         groups = data['groups']
         seen_groups = set()
@@ -56,5 +63,9 @@ class Command(BaseCommand):
                                            admin_password=short_name)
             community.members.add(family)
 
+        family_worldwide_ranking = Family.objects.get(name="worldwide ranking")
+
         for member in members:
-            User.objects.create(username=member, password=short_name)
+            new_user = User.objects.create(username=member, password=short_name)
+            UserErweitert.objects.create(user=new_user, lang=LANGUAGE)
+            family_worldwide_ranking.members.add(new_user)
