@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block title %}
-    {% trans 'Artikel' %}{% if request.LANGUAGE_CODE == "de" %}{{ artikel.name_de }}{% else %}
+    {% trans 'Artikel' %} {% if request.LANGUAGE_CODE == "de" %}{{ artikel.name_de }}{% else %}
         {{ artikel.name_en }}{% endif %}
 {% endblock %}
 
