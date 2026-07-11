@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-29 15:36+0200\n"
+"POT-Creation-Date: 2026-07-11 15:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,11 +26,7 @@ msgstr ""
 "Create a new action on ClimateQuest to collect climate points and compare "
 "yourself with other users."
 
-#: aktionen/templates/add.html:12
-msgid "ClimateQuest - Aktion hinzufügen"
-msgstr "ClimateQuest - Add Action"
-
-#: aktionen/templates/add.html:19
+#: aktionen/templates/add.html:12 aktionen/templates/add.html:19
 msgid "Aktion hinzufügen"
 msgstr "Add Action"
 
@@ -209,6 +205,9 @@ msgstr ""
 #: aktionen/templates/track.html:231
 msgid "wird getrackt seit"
 msgstr "has been tracked since"
+
+#~ msgid "ClimateQuest - Aktion hinzufügen"
+#~ msgstr "ClimateQuest - Add Action"
 
 #, python-format
 #~ msgid "Möchtest du das Tracking für %(name)s wirklich stoppen?"

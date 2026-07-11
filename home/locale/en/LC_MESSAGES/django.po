@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-03 20:45+0200\n"
+"POT-Creation-Date: 2026-07-11 15:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1025,11 +1025,8 @@ msgstr ""
 "suggestions for improvement or bug reports so that we can continue to "
 "improve ClimateQuest."
 
-#: home/templates/feedback.html:10
-msgid "Feedback - ClimateQuest"
-msgstr "Feedback - ClimateQuest"
-
-#: home/templates/feedback.html:13 home/templates/impressum.html:21
+#: home/templates/feedback.html:10 home/templates/feedback.html:13
+#: home/templates/impressum.html:21
 msgid "Feedback"
 msgstr "Feedback"
 
@@ -1201,7 +1198,8 @@ msgstr "The legal notice of ClimateQuest."
 msgid "Impressum"
 msgstr "Legal Notice"
 
-#: home/templates/impressum.html:16 home/templates/support.html:11
+#: home/templates/impressum.html:16 home/templates/support.html:8
+#: home/templates/support.html:11
 msgid "Support"
 msgstr "Support"
 
@@ -1750,10 +1748,6 @@ msgstr ""
 "Do you have questions or need help using ClimateQuest? Here you'll find all "
 "the ways to get in touch with us!"
 
-#: home/templates/support.html:8
-msgid "Support - ClimateQuest"
-msgstr "Support - ClimateQuest"
-
 #: home/templates/support.html:18
 msgid "Feedback geben"
 msgstr "Give Feedback"
@@ -1765,6 +1759,12 @@ msgid ""
 msgstr ""
 "Do you have questions or need support? Just send an email to <a "
 "href=\"mailto:info@climate-quest.de\">info@climate-quest.de</a>!"
+
+#~ msgid "Feedback - ClimateQuest"
+#~ msgstr "Feedback - ClimateQuest"
+
+#~ msgid "Support - ClimateQuest"
+#~ msgstr "Support - ClimateQuest"
 
 #~ msgid "4.2 Quill (Instructure Inc.)"
 #~ msgstr "4.2 Quill (Instructure Inc.)"
