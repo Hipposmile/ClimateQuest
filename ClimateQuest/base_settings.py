@@ -80,17 +80,17 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'core.middleware.AddCORSHeaderMiddleware',
+    'core.middleware.add_cors_header_middleware.AddCORSHeaderMiddleware',
     'servestatic.middleware.ServeStaticMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'core.middleware.LanguageFallbackMiddleware',
+    'core.middleware.language_middleware.LanguageFallbackMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django_browser_reload.middleware.BrowserReloadMiddleware',
-    'core.middleware.GenerateCSPNonceMiddleware',
-    'core.middleware.AddGloablVariablesMiddleware',
+    'core.middleware.generate_csp_nonce_middleware.GenerateCSPNonceMiddleware',
+    'core.middleware.add_global_variables_middleware.AddGloablVariablesMiddleware',
 
     # AllAuth
     'allauth.account.middleware.AccountMiddleware'
@@ -217,4 +217,4 @@ APNS_HOST = "https://api.push.apple.com"
 # Entwicklung/Sandbox (für Development-Zertifikate)
 # APNS_HOST = "https://api.sandbox.push.apple.com"
 
-#APPEND_SLASH = False
+# APPEND_SLASH = False

@@ -14,67 +14,72 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
-from django.contrib.sitemaps.views import sitemap
-from django.views.generic import TemplateView, RedirectView
-from django.conf.urls.static import static
 from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib import admin
+from django.contrib.sitemaps import Sitemap
+from django.contrib.sitemaps.views import sitemap
+from django.urls import include
+from django.urls import path
+from django.views.generic import TemplateView, RedirectView
 
-from home.sitemaps import HomeSitemap, NutzungsbedingungenSitemap, SupportSitemap, FeedbackSitemap
+from aktionen.sitemaps import AddAktionenSitemap
 from artikel.sitemaps import ArtikelDetailSitemap, ArtikelOverviewSitemap, AddArtikelSitemap
-from events.sitemaps import EventDetailSitemap, EventsOverviewSitemap, AddEventSitemap
-from forum.sitemaps import ForumOverviewSitemap, ForumPostDetailSitemap, AddForumPostSitemap
-from family.sitemaps import FamilyOverviewSitemap, AddFamilySitemap, JoinFamilySitemap
 from community.sitemaps import CommunityOverviewSitemap, AddCommunitySitemap, JoinCommunitySitemap
+from core.localized_sitemap_helper import build_localized_sitemaps
+from events.sitemaps import EventDetailSitemap, EventsOverviewSitemap, AddEventSitemap
+from family.sitemaps import FamilyOverviewSitemap, AddFamilySitemap, JoinFamilySitemap
+from forum.sitemaps import ForumOverviewSitemap, ForumPostDetailSitemap, AddForumPostSitemap
+from hall_of_fame.sitemaps import HallOfFameDetailSitemap
+from home.sitemaps import HomeSitemap, NutzungsbedingungenSitemap, SupportSitemap, FeedbackSitemap
+from pages.sitemaps import MobileAppsSitemap, AknachhaltigkeitSitemap
 from personals.sitemaps import LoginSitemap, RegisterSitemap, PersonalSettingsSitemap, ResetPasswordSitemap
 from users.sitemaps import KlimapunkteViewSitemap, LevelViewSitemap, HistorySitemap
-from aktionen.sitemaps import AddAktionenSitemap
-from pages.sitemaps import MobileAppsSitemap, AknachhaltigkeitSitemap
-from hall_of_fame.sitemaps import HallOfFameDetailSitemap
 
-sitemaps = {
-    "home": HomeSitemap(),
-    "nutzungsbedingungen": NutzungsbedingungenSitemap(),
-    "support": SupportSitemap(),
-    "feedback": FeedbackSitemap(),
+raw_sitemap_classes: dict[str, type[Sitemap]] = {
+    "home": HomeSitemap,
+    "nutzungsbedingungen": NutzungsbedingungenSitemap,
+    "support": SupportSitemap,
+    "feedback": FeedbackSitemap,
 
-    "family_overview": FamilyOverviewSitemap(),
-    "add_family": AddFamilySitemap(),
-    "join_family": JoinFamilySitemap(),
+    "family_overview": FamilyOverviewSitemap,
+    "add_family": AddFamilySitemap,
+    "join_family": JoinFamilySitemap,
 
-    "community_overview": CommunityOverviewSitemap(),
-    "add_community": AddCommunitySitemap(),
-    "join_community": JoinCommunitySitemap(),
+    "community_overview": CommunityOverviewSitemap,
+    "add_community": AddCommunitySitemap,
+    "join_community": JoinCommunitySitemap,
 
-    "login": LoginSitemap(),
-    "register": RegisterSitemap(),
-    "personal_settings": PersonalSettingsSitemap(),
-    "reset_password": ResetPasswordSitemap(),
+    "login": LoginSitemap,
+    "register": RegisterSitemap,
+    "personal_settings": PersonalSettingsSitemap,
+    "reset_password": ResetPasswordSitemap,
 
-    "klimapunkte_view": KlimapunkteViewSitemap(),
-    "level_view": LevelViewSitemap(),
-    "history": HistorySitemap(),
+    "klimapunkte_view": KlimapunkteViewSitemap,
+    "level_view": LevelViewSitemap,
+    "history": HistorySitemap,
 
-    "add_aktionen": AddAktionenSitemap(),
+    "add_aktionen": AddAktionenSitemap,
 
-    "artikel_detail": ArtikelDetailSitemap(),
-    "artikel_overview": ArtikelOverviewSitemap(),
-    "add_artikel": AddArtikelSitemap(),
+    "artikel_detail": ArtikelDetailSitemap,
+    "artikel_overview": ArtikelOverviewSitemap,
+    "add_artikel": AddArtikelSitemap,
 
-    "event_detail": EventDetailSitemap(),
-    "events_overview": EventsOverviewSitemap(),
-    "add_event": AddEventSitemap(),
+    "event_detail": EventDetailSitemap,
+    "events_overview": EventsOverviewSitemap,
+    "add_event": AddEventSitemap,
 
-    "forum_post_detail": ForumPostDetailSitemap(),
-    "forum_overview": ForumOverviewSitemap(),
-    "add_forum_post": AddForumPostSitemap(),
+    "forum_post_detail": ForumPostDetailSitemap,
+    "forum_overview": ForumOverviewSitemap,
+    "add_forum_post": AddForumPostSitemap,
 
-    "mobile_apps": MobileAppsSitemap(),
-    "aknachhaltigkeit": AknachhaltigkeitSitemap(),
+    "mobile_apps": MobileAppsSitemap,
+    "aknachhaltigkeit": AknachhaltigkeitSitemap,
 
-    "hall_of_fame_detail": HallOfFameDetailSitemap(),
+    "hall_of_fame_detail": HallOfFameDetailSitemap,
 }
+
+sitemaps = build_localized_sitemaps(raw_sitemap_classes)
 
 urlpatterns = [
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap"),
