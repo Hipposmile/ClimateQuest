@@ -4,7 +4,7 @@ from django.urls import reverse
 
 class HallOfFameDetailSitemap(Sitemap):
     changefreq = "weekly"
-    priority = 8.0
+    priority = 0.8
 
     def items(self):
         return ['hall_of_fame_detail']

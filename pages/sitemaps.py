@@ -4,7 +4,7 @@ from django.urls import reverse
 
 class MobileAppsSitemap(Sitemap):
     changefreq = "monthly"
-    priority = 4.0
+    priority = 0.4
 
     def items(self):
         return ['mobile_apps']
