@@ -246,7 +246,7 @@ msgid ""
 "Das <b>wöchentliche Ziel</b> gibt an, wie viele Klimapunkte du jede Woche "
 "erreichen willst. Du kannst es selbstständig verändern."
 msgstr ""
-"The <b>weekly goal</i> indicates how many climate points you want to reach "
+"The <b>weekly goal</b> indicates how many climate points you want to reach "
 "every week. You can change it on your own."
 
 #: home/templates/dashboard.html:293
