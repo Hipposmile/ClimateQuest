@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 15:08+0200\n"
+"POT-Creation-Date: 2026-07-23 13:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -367,8 +367,10 @@ msgid "Kuckucksblumenstr. 23"
 msgstr "Kuckucksblumenstr. 23"
 
 #: home/templates/datenschutz.html:21
-msgid "80469 München"
-msgstr "80469 Munich"
+#, fuzzy
+#| msgid "80469 München"
+msgid "80995 München"
+msgstr "80995 Munich"
 
 #: home/templates/datenschutz.html:23
 msgid "Telefon: +49 89 99954892"
