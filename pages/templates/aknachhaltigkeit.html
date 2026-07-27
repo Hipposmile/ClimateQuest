@@ -16,7 +16,6 @@
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        /* Basis-Styles */
         * {
             margin: 0;
             padding: 0;
@@ -30,7 +29,6 @@
             background-color: var(--background-color);
         }
 
-        /* Gemeinsame Komponenten-Styles */
         .button {
             cursor: pointer;
             margin: 10px;
@@ -60,7 +58,6 @@
             text-decoration: underline;
         }
 
-        /* Layout-Komponenten */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -83,7 +80,6 @@
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
 
-        /* Neue Regel für Bilder innerhalb von Sektionen */
         section img {
             opacity: 1;
             transform: none;
@@ -93,31 +89,12 @@
             box-shadow: var(--shadow);
         }
 
-        /* Grid-Container für Bilder sollten auch keine Animation haben */
         section .image-grid {
             opacity: 1;
             transform: none;
             transition: none;
         }
 
-        /* Formular-Elemente */
-        .input {
-            width: 50%;
-            height: 50px;
-            padding: 0.8rem;
-            border: 2px solid #eee;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .label {
-            display: block;
-            margin: 20px;
-            font-weight: 500;
-        }
-
-        /* Spezifische Komponenten */
         .hero {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
@@ -148,130 +125,6 @@
             color: var(--primary-color);
         }
 
-        .card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            margin-bottom: 1.5rem;
-        }
-
-        .input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        #back-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--primary-color);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border: 3px solid black;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.3s ease, border-color 0.3s ease;
-            box-shadow: var(--shadow);
-        }
-
-        #back-to-top:active {
-            border-color: gray;
-        }
-
-        #back-to-top.visible {
-            opacity: 1;
-        }
-
-        /* Spiel-Styles */
-        .game-container {
-            background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(39, 174, 96, 0.1));
-            padding: 2rem;
-            border-radius: 15px;
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        #gameCanvas {
-            background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 100%);
-            display: block;
-            margin: 2rem auto;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            border: 3px solid var(--primary-color);
-            max-width: 100%;
-            height: auto;
-        }
-
-        .game-controls {
-            margin: 2rem 0;
-            padding: 1.5rem;
-            background: white;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-        }
-
-        .game-controls p {
-            font-size: 1.1rem;
-            margin: 0.5rem 0;
-            color: var(--text-color);
-        }
-
-        .game-instructions {
-            background: #f0f9ff;
-            border-left: 4px solid var(--primary-color);
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 8px;
-        }
-
-        .game-instructions h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .game-instructions ul {
-            text-align: left;
-            margin-left: 2rem;
-        }
-
-        .game-instructions li {
-            margin: 0.5rem 0;
-        }
-
-        /* Button Varianten */
-        .button-start {
-            margin-top: 2rem;
-            width: auto;
-            padding: 15px 40px;
-            font-size: 1.1rem;
-        }
-
-        .button-reset {
-            width: auto;
-            padding: 10px 30px;
-            margin-top: 1rem;
-        }
-
-        /* Container Varianten */
-        #gameContainer {
-            display: none;
-        }
-
-        #gameContainer.active {
-            display: block;
-        }
-
-        #gameMenu.hide {
-            display: none;
-        }
-
-        /* Bild Styles */
         .section-image {
             width: 100%;
             max-width: 600px;
@@ -279,7 +132,6 @@
             margin: 20px 0;
         }
 
-        /* Upcycling Box */
         .upcycling-box {
             background-color: #f5f5f5;
             padding: 20px;
@@ -313,12 +165,6 @@
                 </a></li>
                 <li><a class="dont-show-loading" href="#upcycling">
                     <button class="button">{% trans "Upycling Ideen" %}</button>
-                </a></li>
-                <li><a class="dont-show-loading" href="#calculate">
-                    <button class="button">{% trans "CO2 Rechner" %}</button>
-                </a></li>
-                <li><a class="dont-show-loading" href="#game">
-                    <button class="button">{% trans "Müll-Sammel Spiel" %}</button>
                 </a></li>
             </ul>
             <img src="{% static 'images/aknachhaltigkeit/fff.jpg' %}"
@@ -441,250 +287,6 @@
                 </ul>
                 <p>{% trans 'Durch Upcycling können wir zeigen, dass "Müll" oft gar kein Müll ist, sondern wertvolles Material für neue, schöne und nützliche Dinge. Das hilft nicht nur der Umwelt, sondern macht auch noch Spaß!' %}</p>
             </div>
-        </section>
-
-        <section>
-            <h1 id="calculate">{% trans "CO2 Rechner" %}</h1>
-
-            <div class="div">
-                <form id="co2Form">
-                    <label class="label">{% trans "Wie viel Gramm CO2 stößt dein Auto pro 100 Kilometer aus?" %} <a
-                            href="https://www.co2online.de/klima-schuetzen/mobilitaet/auto-co2-ausstoss/#c162641"
-                            target="_blank">{% trans "Richtwerte" %}</a></label>
-                    <input type="number" class="input" id="ausstoß" min="0" step="1" required>
-
-                    <label class="label">{% trans "Wie viele Kilometer bist du mit dem Fahrrad gefahren?" %}</label>
-                    <input type="number" class="input" id="kilometer_gefahren" min="0" step="1" required>
-
-                    <button type="submit" class="button">{% trans "Berechnen" %}</button>
-                </form>
-            </div>
-
-            <script nonce="{{ request.csp_script_nonce }}">
-                // CO2 Calculator
-                const co2Form = document.getElementById('co2Form');
-                if (co2Form) {
-                    co2Form.addEventListener('submit', function (e) {
-                        e.preventDefault();
-                        berechnen();
-                    });
-                }
-
-                function berechnen() {
-                    let ausstoß = document.getElementById('ausstoß').value;
-                    let kilometer_gefahren = document.getElementById('kilometer_gefahren').value;
-
-                    ausstoß = parseFloat(ausstoß);
-                    kilometer_gefahren = parseFloat(kilometer_gefahren);
-
-                    if (isNaN(ausstoß) || isNaN(kilometer_gefahren)) {
-                        alert("{% trans 'Bitte gib gültige Zahlen für den CO2-Ausstoß und die gefahrenen Kilometer ein.' %}");
-                        return false;
-                    }
-
-                    let gespart = (ausstoß / 100) * kilometer_gefahren;
-
-                    alert("{% blocktrans with gespart=gespart %}Du hast {{ gespart }}
-                        Gramm CO2 im Vergleich zu einer Autofahrt gespart!\n\nBereits ca. 0, 2 Gramm CO2 in einem Liter
-                        Luft zu Kopfschmerzen führen!{% endblocktrans %}");
-                    return false;
-                }
-            </script>
-        </section>
-
-        <section>
-            <h1 id="game">{% trans "Müll-Sammel Spiel" %}</h1>
-            <div id="gameMenu" class="game-instructions">
-                <h3>{% trans "Wie funktioniert das Spiel?" %}</h3>
-                <ul>
-                    <li>
-                        <strong>{% trans "Ziel:" %}</strong> {% trans "Sammle alle Müllteile ein, die auf dich zukommen!" %}
-                    </li>
-                    <li><strong>{% trans "Desktop:" %}</strong> {% trans "Drücke die Leertaste um hochzufliegen" %}</li>
-                    <li><strong>{% trans "Handy:" %}</strong> {% trans "Tippe auf das Spielfeld um hochzufliegen" %}
-                    </li>
-                </ul>
-                <button id="startGameBtn" class="button button-start">{% trans "Spiel Starten" %}</button>
-            </div>
-
-            <div id="gameContainer" class="game-container">
-                <canvas id="gameCanvas" width="800" height="400"></canvas>
-
-                <div class="game-controls">
-                    <p><strong>{% trans "Desktop:" %}</strong> {% trans "Leertaste zum Fliegen" %}</p>
-                    <p><strong>{% trans "Handy:" %}</strong> {% trans "Tippe auf das Spielfeld" %}</p>
-                    <button id="resetGameBtn" class="button button-reset">{% trans "Neustarten" %}</button>
-                </div>
-            </div>
-
-            <script nonce="{{ request.csp_script_nonce }}">
-                const canvas = document.getElementById("gameCanvas");
-                const context = canvas.getContext("2d");
-                const gameMenu = document.getElementById("gameMenu");
-                const gameContainer = document.getElementById("gameContainer");
-
-                const player = {
-                    x: 50,
-                    y: 200,
-                    width: 20,
-                    height: 20,
-                    color: '#2ecc71',
-                    gravity: 1,
-                    lift: -15,
-                    velocity: 0
-                };
-                const coins = [];
-                let score = 0;
-                let gameActive = false;
-                let animationId = null;
-
-                function getRandomRGB() {
-                    const colors = ['#FF6B6B', '#FFA500', '#FFD700', '#FF4444', '#FF8800'];
-                    return colors[Math.floor(Math.random() * colors.length)];
-                }
-
-                function startGame() {
-                    gameMenu.classList.add('hide');
-                    gameContainer.classList.add('active');
-                    gameActive = true;
-                    resetGameState();
-                    draw();
-                }
-
-                function resetGame() {
-                    if (gameActive) {
-                        location.reload();
-                    }
-                }
-
-                // Event Listener für Button
-                document.getElementById('startGameBtn').addEventListener('click', startGame);
-                document.getElementById('resetGameBtn').addEventListener('click', resetGame);
-
-                function resetGameState() {
-                    player.x = 50;
-                    player.y = 200;
-                    player.velocity = 0;
-                    score = 0;
-                    coins.length = 0;
-                }
-
-                function movePlayer(e) {
-                    if (gameActive && e.code === "Space") {
-                        e.preventDefault();
-                        player.velocity = player.lift;
-                    }
-                }
-
-                // Touch event für Handy
-                canvas.addEventListener("touchstart", function (e) {
-                    if (gameActive) {
-                        e.preventDefault();
-                        player.velocity = player.lift;
-                    }
-                });
-
-                // Click event für Handy (als Fallback)
-                canvas.addEventListener("click", function () {
-                    if (gameActive) {
-                        player.velocity = player.lift;
-                    }
-                });
-
-                document.addEventListener("keydown", movePlayer);
-
-                function addCoin() {
-                    coins.push({
-                        x: canvas.width,
-                        y: Math.random() * canvas.height,
-                        width: 10,
-                        height: 10,
-                        color: getRandomRGB()
-                    });
-                }
-
-                function draw() {
-                    if (!gameActive) return;
-
-                    context.clearRect(0, 0, canvas.width, canvas.height);
-
-                    // Draw player
-                    context.fillStyle = player.color;
-                    context.fillRect(player.x, player.y, player.width, player.height);
-
-                    // Apply gravity
-                    player.velocity += player.gravity;
-                    player.y += player.velocity;
-
-                    // Prevent player from falling off the screen
-                    if (player.y > canvas.height - player.height) {
-                        player.y = canvas.height - player.height;
-                        player.velocity = 0;
-                    }
-
-                    if (player.y < 0) {
-                        player.y = 0;
-                        player.velocity = 0;
-                    }
-
-                    // Draw and move coins
-                    coins.forEach((coin, index) => {
-                        context.fillStyle = coin.color;
-                        context.fillRect(coin.x, coin.y, coin.width, coin.height);
-                        coin.x -= 2;
-
-                        // Check for collision with player
-                        if (
-                            player.x < coin.x + coin.width &&
-                            player.x + player.width > coin.x &&
-                            player.y < coin.y + coin.height &&
-                            player.y + player.height > coin.y
-                        ) {
-                            coins.splice(index, 1);
-                            score++;
-                        }
-
-                        // Remove coin if it goes off screen
-                        if (coin.x + coin.width < 0) {
-                            coins.splice(index, 1);
-                        }
-                    });
-
-                    // Display score
-                    context.fillStyle = "#2c3e50";
-                    context.font = "bold 20px Poppins";
-                    context.fillText("{% trans 'Score' %}: " + score, 10, canvas.height - 20);
-
-                    // Add new coins at intervals
-                    if (Math.random() < 0.02) {
-                        addCoin();
-                    }
-
-                    animationId = requestAnimationFrame(draw);
-                }
-            </script>
-        </section>
-
-        <section>
-            <h1 id="survey">{% trans "Mobilitätsumfrage" %}</h1>
-            <p>{% trans "Damit wir den ökologischen Fußabdruck unserer Schule berechnen können, müssen wir zuerst eine Mobilitätsumfrage mit allen Schülerinnen, Schülern, Lehrkräften und Mitarbeitenden durchführen. Bitte unterstütze uns und nimm an der Umfrage teil, wenn du eine Schülerin, ein Schüler, eine Lehrkraft, ein Mitarbeiter oder eine Mitarbeiterin des GMF bist." %}</p>
-            <p>{% trans "Zur Mobilitätsumfrage für ..." %}</p>
-            <ul>
-                <li>
-                    <a class="dont-show-loading"
-                       href="https://co2-schulrechner.greenpeace.de/umfrage/226/p/0wjjT6GbarWvawbZehTw9x-JuD9DrgRGEuqSEyTSeOs">...
-                        {% trans "Schülerinnen und Schüler" %}</a>
-                    <img src="{% static 'images/aknachhaltigkeit/qrcode_mobilitätsumfrage_sus.png' %}"
-                         alt="{% trans 'QR-Code' %}">
-                </li>
-                <li>
-                    <a class="dont-show-loading"
-                       href="https://co2-schulrechner.greenpeace.de/umfrage/226/t/KyiFHubRwOdHNJnGOBQoylWxtiN3IMvdd1Q4jaQWh1M">...
-                        {% trans "Lehrkräfte und Mitarbeitende" %}</a>
-                    <img src="{% static 'images/aknachhaltigkeit/qrcode_mobilitätsumfrage_lehrkräfte.png' %}"
-                         alt="{% trans 'QR-Code' %}">
-                </li>
-            </ul>
         </section>
     </div>
 

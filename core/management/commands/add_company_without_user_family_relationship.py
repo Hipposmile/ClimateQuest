@@ -56,9 +56,9 @@ class Command(BaseCommand):
         if duplicate_members:
             raise ValueError(f"Duplicate member names found: {', '.join(duplicate_members)}")
 
-        community = Community.objects.create(name=name, password=short_name, admin_password=short_name)
+        #community = Community.objects.create(name=name, password=short_name, admin_password=short_name)
 
-        for group in groups:
+        #for group in groups:
             family = Family.objects.create(name=f"{group} ({short_name})", password=short_name,
                                            admin_password=short_name)
             community.members.add(family)
@@ -66,6 +66,6 @@ class Command(BaseCommand):
         family_worldwide_ranking = Family.objects.get(name="worldwide ranking")
 
         for member in members:
-            new_user = User.objects.create(username=member, password=short_name)
+            new_user = User.objects.create_user(username=member, password=short_name)
             UserErweitert.objects.create(user=new_user, lang=LANGUAGE)
             family_worldwide_ranking.members.add(new_user)
