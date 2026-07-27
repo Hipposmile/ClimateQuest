@@ -26,22 +26,22 @@ class Command(BaseCommand):
         name = data['name']
         short_name = data['short_name']
 
-        community_exists = Community.objects.filter(name=name).exists()
-        if community_exists:
-            raise ValueError(f"Community {name} already exists.")
+        #community_exists = Community.objects.filter(name=name).exists()
+        #if community_exists:
+        #    raise ValueError(f"Community {name} already exists.")
 
-        groups = data['groups']
-        seen_groups = set()
-        duplicate_groups = set()
-        for g in groups:
-            group_name_exists = Family.objects.filter(name=f"{g} ({short_name})").exists()
-            if group_name_exists:
-                raise ValueError(f"Family {g} already exists.")
-            if g in seen_groups:
-                duplicate_groups.add(g)
-            seen_groups.add(g)
-        if duplicate_groups:
-            raise ValueError(f"Duplicate member names found: {', '.join(duplicate_groups)}")
+        #groups = data['groups']
+        #seen_groups = set()
+        #duplicate_groups = set()
+        #for g in groups:
+        #    group_name_exists = Family.objects.filter(name=f"{g} ({short_name})").exists()
+        #    if group_name_exists:
+        #        raise ValueError(f"Family {g} already exists.")
+        #    if g in seen_groups:
+        #        duplicate_groups.add(g)
+        #    seen_groups.add(g)
+        #if duplicate_groups:
+        #    raise ValueError(f"Duplicate member names found: {', '.join(duplicate_groups)}")
 
         members = data['members']
         seen_members = set()
