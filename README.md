@@ -1,22 +1,29 @@
 # ClimateQuest - Allgemeines
 
-Dieses Projekt ist eine Django Webanwendung, die Nutzerinnen und Nutzer dazu motiviert, mehr für den Klimaschutz zu tun, und zusätzlich Wissen zu dieser Thematik verbreitet. Die App ist unter [https://climate-quest.de](https://climate-quest.de) verfügbar. Weitere Informationen zu der Funktionsweise der App findest du [hier](https://climate-quest.de/artikel/artikel_detail/5). 
+Dieses Projekt ist eine Django Webanwendung, die Nutzerinnen und Nutzer dazu motiviert, mehr für den Klimaschutz zu tun,
+und zusätzlich Wissen zu dieser Thematik verbreitet. Die App ist
+unter [https://climate-quest.de](https://climate-quest.de) verfügbar. Weitere Informationen zu der Funktionsweise der
+App findest du [hier](https://climate-quest.de/artikel/artikel_detail/5).
 
 ---
 ---
 
 # Lokale Installation
 
-Wenn du das Projekt lokal ausführen odeer bearbeiten möchtest, folge dieser Anleitung. Sie erklärt Schritt für Schritt, ...
+Wenn du das Projekt lokal ausführen odeer bearbeiten möchtest, folge dieser Anleitung. Sie erklärt Schritt für
+Schritt, ...
 
-- wie du das Projekt lokal einrichtest  
-- wie du eine virtuelle Umgebung erstellst  
-- wie du alle Abhängigkeiten installierst  
-- wie du die Datenbank vorbereitest  
-- wie du den lokalen Server startest  
+- wie du das Projekt lokal einrichtest
+- wie du eine virtuelle Umgebung erstellst
+- wie du alle Abhängigkeiten installierst
+- wie du die Datenbank vorbereitest
+- wie du den lokalen Server startest
 
 > [!CAUTION]
-> Beachte allerdings, dass dieses Projekt nicht für externe Mitarbeit gedacht ist. Daher bitte keine Pull Requests, Issues oder Feature‑Vorschläge einreichen. Feedback und Verbesserungsvorschläge können allerdings gerne unter [diesem Formular](https://docs.google.com/forms/d/e/1FAIpQLSdRLG2HmXiJ0cT74Tfd1EmOPguJHS7xLNngVFjQY5BVKcD8mA/viewform) gegeben werden.
+> Beachte allerdings, dass dieses Projekt nicht für externe Mitarbeit gedacht ist. Daher bitte keine Pull Requests,
+Issues oder Feature‑Vorschläge einreichen. Feedback und Verbesserungsvorschläge können allerdings gerne
+unter [diesem Formular](https://docs.google.com/forms/d/e/1FAIpQLSdRLG2HmXiJ0cT74Tfd1EmOPguJHS7xLNngVFjQY5BVKcD8mA/viewform)
+gegeben werden.
 
 ---
 
@@ -24,12 +31,12 @@ Wenn du das Projekt lokal ausführen odeer bearbeiten möchtest, folge dieser An
 
 Um das Projekt auszuführen, benötigst du:
 
-| Komponente | Erklärung |
-|-----------|-----------|
-| **Python 3.10+** | Django benötigt eine moderne Python-Version |
-| **pip** | Installiert die Python-Abhängigkeiten |
+| Komponente            | Erklärung                                     |
+|-----------------------|-----------------------------------------------|
+| **Python 3.10+**      | Django benötigt eine moderne Python-Version   |
+| **pip**               | Installiert die Python-Abhängigkeiten         |
 | **virtualenv / venv** | Sorgt für eine isolierte Entwicklungsumgebung |
-| **SQLite** | Standard-Datenbank, keine Installation nötig |
+| **SQLite**            | Standard-Datenbank, keine Installation nötig  |
 
 ---
 
@@ -60,11 +67,13 @@ python3 -m venv venv
 Aktivieren:
 
 **macOS / Linux**
+
 ```bash
 source venv/bin/activate
 ```
 
 **Windows**
+
 ```bash
 venv\Scripts\activate
 ```

@@ -122,16 +122,7 @@
                             {% if request.user == event.creator %}{% trans "(Du)" %}{% endif %}</p>
 
                     {% elif ordered_by == 'Teilnehmeranzahl' %}
-                        <details class="event-details">
-                            <summary>
-                                <p><strong>{% trans "Teilnehmeranzahl:" %}</strong> {{ event.participants_count }}</p>
-                            </summary>
-                            <ul class="participant-list">
-                                {% for participant in event.participants.all %}
-                                    <li>{{ participant }}</li>
-                                {% endfor %}
-                            </ul>
-                        </details>
+                        <p><strong>{% trans "Teilnehmeranzahl:" %}</strong> {{ event.participants_count }}</p>
                     {% endif %}
                 </div>
 
@@ -159,17 +150,8 @@
                                 {% if request.user == event.creator %}{% trans "(Du)" %}{% endif %}</p>
                         {% endif %}
                         {% if ordered_by != 'Teilnehmeranzahl' %}
-                            <details class="event-details">
-                                <summary>
-                                    <p><strong>{% trans "Teilnehmeranzahl:" %}</strong> {{ event.participants_count }}
-                                    </p>
-                                </summary>
-                                <ul class="participant-list">
-                                    {% for participant in event.participants.all %}
-                                        <li>{{ participant }}</li>
-                                    {% endfor %}
-                                </ul>
-                            </details>
+                            <p><strong>{% trans "Teilnehmeranzahl:" %}</strong> {{ event.participants_count }}
+                            </p>
                         {% endif %}
                     </div>
                 </details>
