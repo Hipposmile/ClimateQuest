@@ -144,7 +144,7 @@ make test
 ```
 
 Für PostgreSQL werden `PGHOST`, `PGPORT`, `PGUSER`, `PGPASSWORD` (und optional `PGDATABASE`) gelesen; der Benutzer
-braucht das Recht, die Test-Datenbank anzulegen. Nur eine Datenbank testen: `make test-sqlite` bzw. `make test-postgres`.
+braucht das Recht, die Test-Datenbank anzulegen. Nur eine Datenbank testen: `make test-sqlite` bzw. `make test-postgres`. Zuvor ausführen: `export PGHOST=localhost PGUSER=tester PGPASSWORD=testpw123 PGDATABASE=postgres`!
 
 ```bash
 make lint      # ruff check + ruff format --check
