@@ -1,5 +1,6 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
+
 from .models import Artikel
 
 
@@ -12,26 +13,28 @@ class ArtikelDetailSitemap(Sitemap):
 
     def lastmod(self, obj):
         return obj.updated_at
-    
+
     def location(self, obj):
-        return reverse('artikel_detail', args=[obj.id])
-    
+        return reverse("artikel_detail", args=[obj.id])
+
+
 class ArtikelOverviewSitemap(Sitemap):
     changefreq = "daily"
     priority = 0.8
 
     def items(self):
-        return ['artikel_overview']
+        return ["artikel_overview"]
 
     def location(self, item):
         return reverse(item)
+
 
 class AddArtikelSitemap(Sitemap):
     changefreq = "yearly"
     priority = 0.5
 
     def items(self):
-        return ['add_artikel']
+        return ["add_artikel"]
 
     def location(self, item):
         return reverse(item)

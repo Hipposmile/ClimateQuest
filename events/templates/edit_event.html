@@ -9,7 +9,7 @@
     <h1>{% blocktrans with name=event.name %}Event <i>{{ name }}</i> bearbeiten{% endblocktrans %}</h1>
     {% if messages %}
         {% for message in messages %}
-            <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
+            <p class="{{ message.level_tag }}-message">{{ message|safe_html }}</p>
         {% endfor %}
     {% endif %}
 

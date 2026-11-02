@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-28 13:14+0200\n"
+"POT-Creation-Date: 2026-11-02 10:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,8 @@ msgstr ""
 msgid "Artikel hinzufügen"
 msgstr "Add Article"
 
-#: artikel/templates/add_artikel.html:21 artikel/templates/edit_artikel.html:29
+#: artikel/templates/add_artikel.html:21
+#: artikel/templates/edit_artikel.html:29
 msgid "Name (Englisch)"
 msgstr "Name (English)"
 
@@ -39,19 +40,23 @@ msgstr "Name (English)"
 msgid "Name"
 msgstr "Name"
 
-#: artikel/templates/add_artikel.html:23 artikel/templates/edit_artikel.html:31
+#: artikel/templates/add_artikel.html:23
+#: artikel/templates/edit_artikel.html:31
 msgid "Name (Deutsch)"
 msgstr "Name (German)"
 
-#: artikel/templates/add_artikel.html:26 artikel/templates/edit_artikel.html:34
+#: artikel/templates/add_artikel.html:26
+#: artikel/templates/edit_artikel.html:34
 msgid "Inhalt (Englisch)"
 msgstr "Content (English)"
 
-#: artikel/templates/add_artikel.html:30 artikel/templates/edit_artikel.html:38
+#: artikel/templates/add_artikel.html:30
+#: artikel/templates/edit_artikel.html:38
 msgid "Inhalt (Deutsch)"
 msgstr "Content (German)"
 
-#: artikel/templates/add_artikel.html:34 artikel/templates/edit_artikel.html:42
+#: artikel/templates/add_artikel.html:34
+#: artikel/templates/edit_artikel.html:42
 msgid "Kategorie"
 msgstr "Category"
 
@@ -62,20 +67,20 @@ msgstr "Category"
 msgid "%(cat)s"
 msgstr "%(cat)s"
 
-#: artikel/templates/add_artikel.html:45 artikel/templates/edit_artikel.html:54
+#: artikel/templates/add_artikel.html:45
+#: artikel/templates/edit_artikel.html:54
 #, python-format
 msgid ""
 "Ich bestätige, dass alle Angaben der Wahrheit\n"
-"                entsprechen, mit mindestens zwei Quellen, welche im Text "
-"vorkommen, übereinstimmen und dass der Artikel\n"
-"                mit den <a href=\"%(url)s\">Nutzungsbedingungen</a> "
-"übereinstimmt."
+"                entsprechen, mit mindestens zwei Quellen, welche im Text vorkommen, übereinstimmen und dass der Artikel\n"
+"                mit den <a href=\"%(url)s\">Nutzungsbedingungen</a> übereinstimmt."
 msgstr ""
 "I confirm that all information is true, corresponds with at least two "
 "sources mentioned in the text, and that the article complies with the <a "
 "href=\"%(url)s\">Terms of Use</a>."
 
-#: artikel/templates/add_artikel.html:50 artikel/templates/edit_artikel.html:59
+#: artikel/templates/add_artikel.html:50
+#: artikel/templates/edit_artikel.html:59
 msgid "Speichern"
 msgstr "Save"
 
@@ -213,7 +218,8 @@ msgstr "Unblock"
 #: artikel/templates/artikel_overview.html:5
 msgid ""
 "Übersicht aller Artikel bei ClimateQuest. Finde Artikel, die anderen Usern "
-"erstellt wurden, und informiere dich über verschiedene Themen zu Klimaschutz."
+"erstellt wurden, und informiere dich über verschiedene Themen zu "
+"Klimaschutz."
 msgstr ""
 "Overview of all articles on ClimateQuest. Find articles created by other "
 "users and learn about various topics on climate protection."
@@ -341,33 +347,3 @@ msgstr "Do you really want to delete this article?"
 #: artikel/templates/edit_artikel.html:68
 msgid "Diesen Artikel löschen"
 msgstr "Delete this article"
-
-#~ msgid "Inhalt"
-#~ msgstr "Content"
-
-#, python-format
-#~ msgid ""
-#~ "Lies den Artikel '%(name)s' bei ClimateQuest. Hinterlasse Kommentare oder "
-#~ "Antworten, um konstruktive Kritik, Fragen oder Anmerkungen hinzuzufügen."
-#~ msgstr ""
-#~ "Read the article '%(name)s' on ClimateQuest. Leave comments or replies to "
-#~ "add constructive criticism, questions, or notes."
-
-#, python-format
-#~ msgid ""
-#~ "<a href=\"%(url)s\">Artikel</a>\n"
-#~ "        <i>%(name)s</i>"
-#~ msgstr ""
-#~ "<a href=\"%(url)s\">Article</a>\n"
-#~ "        <i>%(name)s</i>"
-
-#, python-format
-#~ msgid "Artikel %(name)s bearbeiten"
-#~ msgstr "Edit Article %(name)s"
-
-#, python-format
-#~ msgid "Artikel <a href=\"%(url)s\">%(name)s</a> bearbeiten"
-#~ msgstr "Edit Article <a href=\"%(url)s\">%(name)s</a>"
-
-#~ msgid "Beschreibung"
-#~ msgstr "Description"

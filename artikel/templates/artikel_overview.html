@@ -11,7 +11,7 @@
     <h1>{% trans 'Artikel - Übersicht' %}</h1>
     {% if messages %}
         {% for message in messages %}
-            <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
+            <p class="{{ message.level_tag }}-message">{{ message|safe_html }}</p>
         {% endfor %}
     {% endif %}
 
@@ -84,8 +84,8 @@
             <section
                     class="event-card{% if request.user == single_artikel.creator %} event-card-creator{% elif request.user in single_artikel.like.all %} event-card-participant{% endif %}">
                 <div class="event-main">
-                    <h2 class="event-title">{% if request.LANGUAGE_CODE == "de" %}{{ single_artikel.name_de|safe }}{% else %}
-                        {{ single_artikel.name_en|safe }}{% endif %}</h2>
+                    <h2 class="event-title">{% if request.LANGUAGE_CODE == "de" %}{{ single_artikel.name_de }}{% else %}
+                        {{ single_artikel.name_en }}{% endif %}</h2>
                     {% blocktrans with cat=single_artikel.category.title %}Kategorie: {{ cat }}{% endblocktrans %}
                     {% if single_artikel.blocked %}<p>
                         <p><span class="emoji">&#x274C;</span> {{ single_artikel.msg_if_wrong }}</p>

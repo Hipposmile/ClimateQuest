@@ -3,22 +3,21 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-13 13:43+0200\n"
+"POT-Creation-Date: 2026-11-02 10:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: utils/functions.py:262 utils/functions.py:720
+#: utils/functions.py:184
 #, python-format
 msgid ""
 "Du hast das höchste Level bereits erreicht: %(level)s <span "
@@ -26,3 +25,28 @@ msgid ""
 msgstr ""
 "You have already reached the highest level: %(level)s <span "
 "class=\"emoji\">&#x1F973;</span>"
+
+#: utils/periods.py:16
+msgid "Gesamt"
+msgstr "Total"
+
+#: utils/periods.py:17
+msgid "Heute"
+msgstr "Today"
+
+#: utils/periods.py:18
+msgid "Sieben Tage"
+msgstr "Seven days"
+
+#: utils/periods.py:19
+msgid "Dreißig Tage"
+msgstr "Thirty days"
+
+#: utils/periods.py:20
+msgid "Dreihundertfünfundsechzig Tage"
+msgstr "Three hundred sixty-five days"
+
+#: utils/periods.py:70
+#, python-format
+msgid "%(start)s bis %(end)s"
+msgstr "%(start)s to %(end)s"

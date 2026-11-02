@@ -59,12 +59,12 @@
 
     {% url 'artikel_overview' as overview_url %}
     <h1>{% if request.LANGUAGE_CODE == "de" %}<a href="{% url 'artikel_overview' %}">Artikel</a>
-        <i>{{ artikel.name_de|safe }}</i>{% else %}<a href="{% url 'artikel_overview' %}">Article</a>
-        <i>{{ artikel.name_en|safe }}</i>{% endif %}</h1>
+        <i>{{ artikel.name_de }}</i>{% else %}<a href="{% url 'artikel_overview' %}">Article</a>
+        <i>{{ artikel.name_en }}</i>{% endif %}</h1>
 
     {% if messages %}
         {% for message in messages %}
-            <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
+            <p class="{{ message.level_tag }}-message">{{ message|safe_html }}</p>
         {% endfor %}
     {% endif %}
 

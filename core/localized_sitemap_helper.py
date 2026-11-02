@@ -28,7 +28,4 @@ def build_localized_sitemap_class(sitemap_class: type[Sitemap]) -> type[Sitemap]
 
 def build_localized_sitemaps(sitemap_classes: dict[str, type[Sitemap]]) -> dict[str, Sitemap]:
     """Baut aus einem Mapping {name: SitemapClass} das fertige sitemaps-Dict für urls.py."""
-    return {
-        name: build_localized_sitemap_class(sitemap_class)()
-        for name, sitemap_class in sitemap_classes.items()
-    }
+    return {name: build_localized_sitemap_class(sitemap_class)() for name, sitemap_class in sitemap_classes.items()}

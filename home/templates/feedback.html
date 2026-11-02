@@ -13,7 +13,7 @@
     <h1>{% trans "Feedback" %}</h1>
     {% if messages %}
         {% for message in messages %}
-            <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
+            <p class="{{ message.level_tag }}-message">{{ message|safe_html }}</p>
         {% endfor %}
     {% endif %}
     <p>{% trans "Feedback kannst du uns jederzeit mitteilen. Hierfür gibt es folgende Möglichkeiten:" %}</p>

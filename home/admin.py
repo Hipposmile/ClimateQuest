@@ -1,7 +1,9 @@
 from django.contrib import admin
+
 from .models import Benachrichtigung, ReportedUser
 
 admin.site.register(Benachrichtigung)
+
 
 @admin.register(ReportedUser)
 class ReportedUserAdmin(admin.ModelAdmin):

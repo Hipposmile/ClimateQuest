@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 18:48+0200\n"
+"POT-Creation-Date: 2026-11-02 10:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,8 +67,8 @@ msgid ""
 "verpflichte ich mich, bei dem Event selbst teilzunehmen."
 msgstr ""
 "I confirm that all information is true and complies with the <a "
-"href=\"%(url)s\">Terms of Use</a>. Furthermore, I commit to participating in "
-"the event myself."
+"href=\"%(url)s\">Terms of Use</a>. Furthermore, I commit to participating in"
+" the event myself."
 
 #: events/templates/add_event.html:41
 msgid "Hinzufügen"
@@ -86,13 +85,13 @@ msgid "Event <i>%(name)s</i> bearbeiten"
 msgstr "Edit Event <i>%(name)s</i>"
 
 #: events/templates/edit_event.html:18 events/templates/event_detail.html:45
-#: events/templates/events_overview.html:141
+#: events/templates/events_overview.html:132
 msgid "Beschreibung:"
 msgstr "Description:"
 
 #: events/templates/edit_event.html:19 events/templates/event_detail.html:47
 #: events/templates/events_overview.html:108
-#: events/templates/events_overview.html:145
+#: events/templates/events_overview.html:136
 msgid "Datum und Uhrzeit (Beginn):"
 msgstr "Date and Time (Start):"
 
@@ -102,7 +101,7 @@ msgstr "estimated duration in minutes:"
 
 #: events/templates/edit_event.html:21 events/templates/event_detail.html:49
 #: events/templates/events_overview.html:116
-#: events/templates/events_overview.html:153
+#: events/templates/events_overview.html:144
 msgid "Adresse:"
 msgstr "Address:"
 
@@ -156,13 +155,13 @@ msgstr "<strong>Creator:</strong> <a href=\"%(url)s\">%(username)s</a>"
 
 #: events/templates/event_detail.html:55
 #: events/templates/events_overview.html:122
-#: events/templates/events_overview.html:159
+#: events/templates/events_overview.html:150
 msgid "(Du)"
 msgstr "(You)"
 
 #: events/templates/event_detail.html:58
-#: events/templates/events_overview.html:127
-#: events/templates/events_overview.html:164
+#: events/templates/events_overview.html:125
+#: events/templates/events_overview.html:153
 msgid "Teilnehmeranzahl:"
 msgstr "Number of participants:"
 
@@ -325,55 +324,55 @@ msgid "Du nimmst an diesem Event teil"
 msgstr "You participate in this event"
 
 #: events/templates/events_overview.html:113
-#: events/templates/events_overview.html:150
+#: events/templates/events_overview.html:141
 msgid "Dauer in Minuten:"
 msgstr "Duration in minutes:"
 
 #: events/templates/events_overview.html:120
-#: events/templates/events_overview.html:157
+#: events/templates/events_overview.html:148
 msgid "Ersteller:"
 msgstr "Creator:"
 
-#: events/templates/events_overview.html:139
+#: events/templates/events_overview.html:130
 msgid "mehr"
 msgstr "more"
 
-#: events/templates/events_overview.html:178
+#: events/templates/events_overview.html:160
 msgid "Details ansehen"
 msgstr "View details"
 
-#: events/templates/events_overview.html:182
+#: events/templates/events_overview.html:164
 msgid "Es gibt derzeit keine Events mit diesem Filter."
 msgstr "There are currently no events with this filter."
 
-#: events/templates/events_overview.html:196
+#: events/templates/events_overview.html:178
 msgid "vergangen"
 msgstr "past"
 
-#: events/templates/events_overview.html:197
+#: events/templates/events_overview.html:179
 msgid "heute"
 msgstr "today"
 
-#: events/templates/events_overview.html:198
+#: events/templates/events_overview.html:180
 msgid "morgen"
 msgstr "tomorrow"
 
-#: events/templates/events_overview.html:199
+#: events/templates/events_overview.html:181
 msgid "übermorgen"
 msgstr "the day after tomorrow"
 
-#: events/templates/events_overview.html:200
+#: events/templates/events_overview.html:182
 msgid "innerhalb der nächsten Woche"
 msgstr "in the next week"
 
-#: events/templates/events_overview.html:201
+#: events/templates/events_overview.html:183
 msgid "innerhalb der nächsten 30 Tage"
 msgstr "in the next 30 days"
 
-#: events/templates/events_overview.html:202
+#: events/templates/events_overview.html:184
 msgid "innerhalb des nächsten Jahres"
 msgstr "in the next year"
 
-#: events/templates/events_overview.html:203
+#: events/templates/events_overview.html:185
 msgid "noch über ein Jahr entfernt"
 msgstr "more than a year away"

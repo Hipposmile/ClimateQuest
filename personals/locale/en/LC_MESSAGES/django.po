@@ -3,16 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-03 20:48+0200\n"
+"POT-Creation-Date: 2026-11-02 10:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -42,13 +41,11 @@ msgstr "Available credits:"
 #, python-format
 msgid ""
 "\n"
-"        %(percent_done)s %% bis zum nächsten Credit geschafft. Dir fehlen "
-"also noch %(klimapunkte_missing)s\n"
+"        %(percent_done)s %% bis zum nächsten Credit geschafft. Dir fehlen also noch %(klimapunkte_missing)s\n"
 "        Klimapunkte."
 msgstr ""
 "\n"
-"%(percent_done)s %% completed toward the next credit. So you still need "
-"%(klimapunkte_missing)s climate points."
+"%(percent_done)s %% completed toward the next credit. So you still need %(klimapunkte_missing)s climate points."
 
 #: personals/templates/credit_view.html:36
 msgid "1 Baum pflanzen"
@@ -79,8 +76,8 @@ msgstr ""
 
 #: personals/templates/login.html:8
 msgid ""
-"Logge dich in dein ClimateQuest Konto ein, um auf personalisierte Funktionen "
-"zuzugreifen und deine Fortschritte im Kampf gegen den Klimawandel zu "
+"Logge dich in dein ClimateQuest Konto ein, um auf personalisierte Funktionen"
+" zuzugreifen und deine Fortschritte im Kampf gegen den Klimawandel zu "
 "verfolgen."
 msgstr ""
 "Log in to your ClimateQuest account to access personalized features and "
@@ -115,7 +112,7 @@ msgstr "Password"
 
 #: personals/templates/login.html:80
 msgid "Du hast noch kein Konto?"
-msgstr "You don´t have an account yet?"
+msgstr "You don't have an account yet?"
 
 #: personals/templates/login.html:80
 msgid "Jetzt registrieren"
@@ -285,7 +282,8 @@ msgstr "Change"
 #: personals/templates/register.html:149
 msgid "Das Passwort entspricht nicht den Empfehlungen. Trotzdem fortfahren?"
 msgstr ""
-"The password does not meet the recommendations. Do you still want to proceed?"
+"The password does not meet the recommendations. Do you still want to "
+"proceed?"
 
 #: personals/templates/personal_settings.html:177
 msgid "E-Mail-Adresse ändern"
@@ -336,8 +334,8 @@ msgstr "Personal data visibility"
 
 #: personals/templates/personal_settings.html:242
 msgid ""
-"Einsicht der persönlichen Daten (Level, Klimapunkte, Aktionen, wöchentliches "
-"Ziel, Streak) für andere User erlauben"
+"Einsicht der persönlichen Daten (Level, Klimapunkte, Aktionen, wöchentliches"
+" Ziel, Streak) für andere User erlauben"
 msgstr ""
 "Permit other users to see personal data (level, climate points, actions, "
 "weekly goal, streak)"
@@ -393,8 +391,8 @@ msgid ""
 "werden darüber benachrichtigt werden."
 msgstr ""
 "All data linked to your account, such as actions or chat messages, will be "
-"deleted. All members of your families and communities will be notified about "
-"this."
+"deleted. All members of your families and communities will be notified about"
+" this."
 
 #: personals/templates/personal_settings.html:315
 msgid "Löschen einzelner Daten"
@@ -404,16 +402,13 @@ msgstr "Delete individual data"
 #, python-format
 msgid ""
 "Wenn du nur einige mit deinem Konto verknüpften Daten\n"
-"        löschen möchtest, wende dich bitte an <a href=\"mailto:"
-"%(email)s\">%(email)s</a>. Nenne hier bitte die\n"
-"        konkreten Daten, welche du löschen möchtest. Wenn sich die Daten "
-"über die Webseite bereits löschen lassen,\n"
-"        werden diese auch tatsächlich gelöscht und als Backup maximal 14 "
-"Tage gespeichert."
+"        löschen möchtest, wende dich bitte an <a href=\"mailto:%(email)s\">%(email)s</a>. Nenne hier bitte die\n"
+"        konkreten Daten, welche du löschen möchtest. Wenn sich die Daten über die Webseite bereits löschen lassen,\n"
+"        werden diese auch tatsächlich gelöscht und als Backup maximal 14 Tage gespeichert."
 msgstr ""
 "If you only want to delete some data linked to your account, please contact "
-"<a href=\"mailto:%(email)s\">%(email)s</a>. Please specify the concrete data "
-"you want to delete. If the data can already be deleted via the website, it "
+"<a href=\"mailto:%(email)s\">%(email)s</a>. Please specify the concrete data"
+" you want to delete. If the data can already be deleted via the website, it "
 "will actually be deleted and stored as a backup for a maximum of 14 days."
 
 #: personals/templates/personal_settings.html:325
@@ -454,38 +449,33 @@ msgid ""
 "und, falls du deinen Benutzernamen oder dein Passwort vergessen hast, diese "
 "zurückzusetzen. Dies ist allerdings optional, du musst es also nicht machen."
 msgstr ""
-"You can provide an email address to receive notifications and, if you forget "
-"your username or password, to reset them. However, this is optional, so you "
-"don't have to do it."
+"You can provide an email address to receive notifications and, if you forget"
+" your username or password, to reset them. However, this is optional, so you"
+" don't have to do it."
 
 #: personals/templates/register.html:111
 #, python-format
 msgid ""
 "Ich habe die\n"
-"                <a href=\"%(url)s\">Nutzungsbedingungen</a> gelesen und "
-"akzeptiere diese. Sofern ich noch nicht\n"
-"                volljährig bin, bestätige ich, dass die Zustimmung durch "
-"eine erziehungsberechtigte Person erfolgt\n"
+"                <a href=\"%(url)s\">Nutzungsbedingungen</a> gelesen und akzeptiere diese. Sofern ich noch nicht\n"
+"                volljährig bin, bestätige ich, dass die Zustimmung durch eine erziehungsberechtigte Person erfolgt\n"
 "                ist."
 msgstr ""
-"I have read and accept the <a href=\"%(url)s\">terms of use</a>. If I am not "
-"yet of legal age, I confirm that the consent was given by a parent or "
+"I have read and accept the <a href=\"%(url)s\">terms of use</a>. If I am not"
+" yet of legal age, I confirm that the consent was given by a parent or "
 "guardian."
 
 #: personals/templates/register.html:121
 #, python-format
 msgid ""
 "Ich habe die\n"
-"                <a href=\"%(url)s\">Datenschutzerklärung</a> gelesen und bin "
-"mit der beschriebenen Verarbeitung meiner\n"
-"                personenbezogenen Daten einverstanden. Sofern ich noch nicht "
-"volljährig bin, bestätige ich, dass diese\n"
-"                Einwilligung durch eine erziehungsberechtigte Person erfolgt "
-"ist."
+"                <a href=\"%(url)s\">Datenschutzerklärung</a> gelesen und bin mit der beschriebenen Verarbeitung meiner\n"
+"                personenbezogenen Daten einverstanden. Sofern ich noch nicht volljährig bin, bestätige ich, dass diese\n"
+"                Einwilligung durch eine erziehungsberechtigte Person erfolgt ist."
 msgstr ""
 "I have read the <a href=\"%(url)s\">privacy policy</a> and agree to the "
-"processing of my personal data as described. If I am not yet of legal age, I "
-"confirm that this consent was given by a parent or guardian."
+"processing of my personal data as described. If I am not yet of legal age, I"
+" confirm that this consent was given by a parent or guardian."
 
 #: personals/templates/register.html:129
 msgid "Diese Seite wird geschützt von reCAPTCHA"
@@ -498,8 +488,8 @@ msgstr "Already registered? <a href=\"%(url)s\">Go to login</a>"
 
 #: personals/templates/register.html:142
 msgid ""
-"Um sich zu registrieren, wird reCAPTCHA benötigt. Bitte akzeptiere diese, um "
-"sich zu registrieren."
+"Um sich zu registrieren, wird reCAPTCHA benötigt. Bitte akzeptiere diese, um"
+" sich zu registrieren."
 msgstr "To register, reCAPTCHA is required. Please accept it to register."
 
 #: personals/templates/register.html:224
@@ -521,7 +511,8 @@ msgstr "Password / username reset"
 
 #: personals/templates/reset_password.html:16
 msgid ""
-"Diese Funktion ist nur verfügbar, wenn du eine E-Mail-Adresse angegeben hast."
+"Diese Funktion ist nur verfügbar, wenn du eine E-Mail-Adresse angegeben "
+"hast."
 msgstr "This function is only available if you provided an email address."
 
 #: personals/templates/reset_password.html:21
@@ -536,7 +527,8 @@ msgstr "We will send you an email with your new login details."
 msgid "Sieh dir deine Statistiken bei ClimateQuest an"
 msgstr "Look at your statistics on ClimateQuest"
 
-#: personals/templates/statistics.html:9 personals/templates/statistics.html:12
+#: personals/templates/statistics.html:9
+#: personals/templates/statistics.html:12
 msgid "Statistiken"
 msgstr "Statistics"
 
@@ -554,22 +546,22 @@ msgstr "Chart of climate points by category and time"
 
 #: personals/templates/statistics.html:123
 msgid "Klimapunkte nach Kategorie über Zeit."
-msgstr "Climate points by category over time"
+msgstr "Climate points by category over time."
 
 #: personals/templates/statistics.html:155
 msgid "Gesamt"
 msgstr "Total"
 
-#: personals/views.py:151 personals/views.py:198 personals/views.py:264
+#: personals/views.py:79
 #, python-format
 msgid ""
-"Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: "
-"%(activation_link)s"
+"Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren:"
+" %(activation_link)s"
 msgstr ""
 "Please click the following link to verify your email address: "
 "%(activation_link)s"
 
-#: personals/views.py:157
+#: personals/views.py:182
 msgid ""
 "Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge "
 "deine E-Mail-Adresse später in den Einstellungen hinzu."
@@ -577,31 +569,15 @@ msgstr ""
 "Error sending email. Try registering without email and add your email "
 "address later in the settings."
 
-#: personals/views.py:203
+#: personals/views.py:213
 msgid "Fehler beim E-Mail-Versand. Probiere es später erneut."
 msgstr "Error sending email. Please try again later."
 
 #: personals/views.py:405
 #, python-format
 msgid ""
-"Wir haben dir ein neues, zufällig generiertes Passwort erstellt: "
-"<b>%(new_password)s</b> \n"
-"Melde dich damit und mit deinem Usernamen <b>%(username)s</b> <a "
-"href=\"https://climate-quest.de/personals/login/\">hier</a> an und ändere "
-"aus Sicherheitsgründen möglichst bald unter \"Profil bearbeiten\" dein "
-"Passwort."
+"Wir haben dir ein neues, zufällig generiertes Passwort erstellt: <b>%(new_password)s</b> \n"
+"Melde dich damit und mit deinem Usernamen <b>%(username)s</b> <a href=\"https://climate-quest.de/personals/login/\">hier</a> an und ändere aus Sicherheitsgründen möglichst bald unter \"Profil bearbeiten\" dein Passwort."
 msgstr ""
-"We´ve created a new, randomly generated password for you: "
-"<b>%(new_password)s</b> \n"
-" Log in with it and your username <b>%(username)s</b> <a href=\"https://"
-"climate-quest.de/personals/login/\">here</a> and change your password as "
-"soon as possible under \"edit profile\" for security reasons."
-
-#~ msgid "bis zum nächsten Credit geschafft"
-#~ msgstr "to the next credit achieved"
-
-#~ msgid "Aktuelles Passwort:"
-#~ msgstr "Password:"
-
-#~ msgid "Aktuelles Passwort"
-#~ msgstr "Current password"
+"We've created a new, randomly generated password for you: <b>%(new_password)s</b> \n"
+" Log in with it and your username <b>%(username)s</b> <a href=\"https://climate-quest.de/personals/login/\">here</a> and change your password as soon as possible under \"edit profile\" for security reasons."

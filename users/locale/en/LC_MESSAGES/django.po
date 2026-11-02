@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-22 14:18+0200\n"
+"POT-Creation-Date: 2026-11-02 10:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,8 +41,8 @@ msgstr "Action:"
 msgid "Datum:"
 msgstr "Date:"
 
-#: users/templates/action_detail.html:53 users/templates/action_detail.html:113
-#: users/templates/history.html:33
+#: users/templates/action_detail.html:53
+#: users/templates/action_detail.html:113 users/templates/history.html:33
 msgid "Beschreibung:"
 msgstr "Description:"
 
@@ -145,8 +144,8 @@ msgid ""
 "Guck dir deine Klimapunkte bei ClimateQuest an und erfahre, wie viel CO2 du "
 "eingespart hast."
 msgstr ""
-"Check your climate points on ClimateQuest and find out how much CO2 you have "
-"saved."
+"Check your climate points on ClimateQuest and find out how much CO2 you have"
+" saved."
 
 #: users/templates/klimapunkte.html:9
 msgid "Meine Klimapunkte"
@@ -186,7 +185,7 @@ msgstr "Period: %(timespan)s"
 msgid "Zeitraum"
 msgstr "Period"
 
-#: users/templates/klimapunkte.html:30 users/views.py:121
+#: users/templates/klimapunkte.html:30
 msgid "Gesamt"
 msgstr "Total"
 
@@ -254,14 +253,12 @@ msgstr "Next level:"
 #, python-format
 msgid ""
 "\n"
-"                %(progress_percent)s %% bis zum nächsten Level geschafft. Es "
-"fehlen also noch\n"
+"                %(progress_percent)s %% bis zum nächsten Level geschafft. Es fehlen also noch\n"
 "                %(klimapunkte_missing)s Klimapunkte."
 msgstr ""
 "\n"
-"                %(progress_percent)s %% completed towards the next level. So "
-"there are still \n"
-"                %(klimapunkte_missing)s climate points needed."
+"                %(progress_percent)s %% of the way to the next level. You still need\n"
+"                %(klimapunkte_missing)s climate points."
 
 #: users/templates/level.html:87
 msgid "Liste der Level"
@@ -307,8 +304,7 @@ msgstr "in the worldwide ranking"
 msgid ""
 "<strong>%(entries)s</strong> Einträge hat %(username)s in der Hall of Fame."
 msgstr ""
-"<strong>%(entries)s</strong> entries has %(username)s already in the hall of "
-"fame"
+"%(username)s has <strong>%(entries)s</strong> entries in the hall of fame."
 
 #: users/templates/user_detail.html:29 users/templates/user_detail.html:52
 msgid "hat die Ansicht der Daten gesperrt."
@@ -337,13 +333,11 @@ msgstr "Weekly goal"
 #: users/templates/user_detail.html:64
 #, python-format
 msgid ""
-"%(weekly_klimapunkte)s Klimapunkte bis zum wöchentlichen Ziel von "
-"%(weekly_goal)s\n"
+"%(weekly_klimapunkte)s Klimapunkte bis zum wöchentlichen Ziel von %(weekly_goal)s\n"
 "                Klimapunkten\n"
 "                geschafft"
 msgstr ""
-"%(weekly_klimapunkte)s climate points out of the weekly goal of "
-"%(weekly_goal)s\n"
+"%(weekly_klimapunkte)s climate points out of the weekly goal of %(weekly_goal)s\n"
 "                climate points\n"
 "                achieved"
 
@@ -389,8 +383,9 @@ msgstr "Your reason"
 
 #: users/templates/user_detail.html:190
 msgid ""
-"Wenn du einen User wegen von ihm erstellten Content meldest, füge bitte alle "
-"für das Auffinden dieses Contents relevanten Informationen wie die URL hinzu."
+"Wenn du einen User wegen von ihm erstellten Content meldest, füge bitte alle"
+" für das Auffinden dieses Contents relevanten Informationen wie die URL "
+"hinzu."
 msgstr ""
 "If you are reporting a user for content they created, please include all "
 "information relevant to finding that content, such as the URL."
@@ -401,19 +396,20 @@ msgstr "Reporting a user does not provide any benefits to you."
 
 #: users/templates/user_detail.html:192
 msgid ""
-"User können vor allem wegen Verstößen gegen die Nutzungsbedingungen gemeldet "
-"werden."
+"User können vor allem wegen Verstößen gegen die Nutzungsbedingungen gemeldet"
+" werden."
 msgstr "Users can be reported primarily for violations of the Terms of Use."
 
 #: users/templates/user_detail.html:194
 msgid ""
-"Wenn du User willkürlich und ohne konkrete Begründung meldest, ist auch dies "
-"ein Verstoß gegen die Nutzungsbedingungen."
+"Wenn du User willkürlich und ohne konkrete Begründung meldest, ist auch dies"
+" ein Verstoß gegen die Nutzungsbedingungen."
 msgstr ""
 "Reporting users arbitrarily and without a specific reason is itself a "
 "violation of the Terms of Use."
 
-#: users/templates/users_overview.html:8 users/templates/users_overview.html:12
+#: users/templates/users_overview.html:8
+#: users/templates/users_overview.html:12
 msgid "User-Übersicht"
 msgstr "User overview"
 
@@ -438,77 +434,3 @@ msgstr "View details"
 #: users/templates/users_overview.html:44
 msgid "Es wurden keine User gefunden"
 msgstr "No users found"
-
-#: users/views.py:153
-#, python-format
-msgid "%(start)s bis %(end)s"
-msgstr "%(start)s to %(end)s"
-
-#, python-format
-#~ msgid "%(progress_percent)s %% zum nächsten Level geschafft"
-#~ msgstr "%(progress_percent)s %% progress towards the next level"
-
-#~ msgid "Ungültiger Zeitraum."
-#~ msgstr "Invalid time period."
-
-#~ msgid "Bitte Start- und Enddatum angeben."
-#~ msgstr "Please provide both start and end date."
-
-#~ msgid "Ungültiges Datumsformat."
-#~ msgstr "Invalid date format."
-
-#~ msgid "Das Startdatum muss vor dem Enddatum liegen."
-#~ msgstr "The start date must be before the end date."
-
-#~ msgid "Das Enddatum darf nicht in der Zukunft liegen."
-#~ msgstr "The end date cannot be in the future."
-
-#~ msgid "Klimapunkte besitzt"
-#~ msgstr "climate points"
-
-#~ msgid "Das entspricht"
-#~ msgstr "This equals"
-
-#~ msgid "Tonnen eingespartem CO2"
-#~ msgstr "tonnes of CO2 saved"
-
-#, python-format
-#~ msgid ""
-#~ "Du hast eine Aktion vom Typen %(action_type)s bearbeitet und bist so ins "
-#~ "Level %(new_level)s aufgestiegen. <span class=\"emoji\">&#x1F973;</span>"
-#~ msgstr ""
-#~ "You edited a action (type: %(action_type)s) and so reached level "
-#~ "%(new_level)s.<span class=\"emoji\">&#x1F973;</span>"
-
-#, python-format
-#~ msgid ""
-#~ "Du hast eine Aktion vom Typen %(action_type)s bearbeitet, dadurch "
-#~ "Klimapunkte verloren und bist so ins Level %(new_level)s abgestiegen. "
-#~ "<span class=\"emoji\">&#x1F622;</span>"
-#~ msgstr ""
-#~ "You edited a action (type: %(action_type)s), lost climate points and so "
-#~ "descended to level %(new_level)s. <span class=\"emoji\">&#x1F622;</span>"
-
-#, python-format
-#~ msgid ""
-#~ "Du hast eine Aktion vom Typen %(action_type)s bearbeitet und so deine "
-#~ "Streak verlängert. <span class=\"emoji\">&#x1F973;</span>"
-#~ msgstr ""
-#~ "You edited a action (type: %(action_type)s) and extended your streak. "
-#~ "<span class=\"emoji\">&#x1F973;</span>"
-
-#, python-format
-#~ msgid ""
-#~ "Du hast eine Aktion vom Typen %(action_type)s bearbeitet und so deine "
-#~ "Streak verkürzt. <span class=\"emoji\">&#x1F622;</span>"
-#~ msgstr ""
-#~ "You edited a action (type: %(action_type)s) and shortened your streak. "
-#~ "<span class=\"emoji\">&#x1F622;</span>"
-
-#, python-format
-#~ msgid ""
-#~ "Du hast eine Aktion vom Typen %(action_type)s gelöscht und so deine "
-#~ "Streak verkürzt. <span class=\"emoji\">&#x1F622;</span>"
-#~ msgstr ""
-#~ "You deleted a action (type: %(action_type)s) and shortened your streak. "
-#~ "<span class=\"emoji\">&#x1F622;</span>"

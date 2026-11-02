@@ -1,8 +1,10 @@
 from django.contrib import admin
+
 from .models import Aktion, AktionenListe, Category, TrackedActions
 
 admin.site.register(Aktion)
 admin.site.register(TrackedActions)
+
 
 @admin.register(AktionenListe)
 class AktionenListeAdmin(admin.ModelAdmin):

@@ -19,20 +19,20 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-LOGIN_URL = '/personals/login/'
+LOGIN_URL = "/personals/login/"
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 LOCALE_PATHS = [
-    BASE_DIR / 'locale',
+    BASE_DIR / "locale",
 ]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.environ.get("EMAIL_HOST", "")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
@@ -42,107 +42,104 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.sitemaps',
-    'django_browser_reload',
-    'django_crontab',
-    'webpush',
-    'core',
-    'modeltranslation',
-    'utils',
-    'production_conf',
-    'home',
-    'personals',
-    'aktionen',
-    'family',
-    'community',
-    'users',
-    'artikel',
-    'events',
-    'forum',
-    'petitions',
-    'pages',
-    'hall_of_fame',
-
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.sitemaps",
+    "django_crontab",
+    "webpush",
+    "core",
+    "modeltranslation",
+    "utils",
+    "production_conf",
+    "home",
+    "personals",
+    "aktionen",
+    "family",
+    "community",
+    "users",
+    "artikel",
+    "events",
+    "forum",
+    "petitions",
+    "pages",
+    "hall_of_fame",
     # AllAuth
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.apple',
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.apple",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'core.middleware.add_cors_header_middleware.AddCORSHeaderMiddleware',
-    'servestatic.middleware.ServeStaticMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'core.middleware.language_middleware.LanguageFallbackMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django_browser_reload.middleware.BrowserReloadMiddleware',
-    'core.middleware.generate_csp_nonce_middleware.GenerateCSPNonceMiddleware',
-    'core.middleware.add_global_variables_middleware.AddGloablVariablesMiddleware',
-
+    "django.middleware.security.SecurityMiddleware",
+    "core.middleware.add_cors_header_middleware.AddCORSHeaderMiddleware",
+    "servestatic.middleware.ServeStaticMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "core.middleware.language_middleware.LanguageFallbackMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "core.middleware.generate_csp_nonce_middleware.GenerateCSPNonceMiddleware",
+    "core.middleware.add_global_variables_middleware.AddGloablVariablesMiddleware",
     # AllAuth
-    'allauth.account.middleware.AccountMiddleware'
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
-ROOT_URLCONF = 'ClimateQuest.urls'
+ROOT_URLCONF = "ClimateQuest.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-
-                'core.context_processors.vapid_key',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "builtins": ["core.templatetags.safe_html"],
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "core.context_processors.vapid_key",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'ClimateQuest.wsgi.application'
+WSGI_APPLICATION = "ClimateQuest.wsgi.application"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
 WEBPUSH_SETTINGS = {
     "VAPID_PUBLIC_KEY": os.environ.get("VAPID_PUBLIC_KEY", ""),
     "VAPID_PRIVATE_KEY": os.environ.get("VAPID_PRIVATE_KEY", ""),
-    "VAPID_ADMIN_EMAIL": os.environ.get("VAPID_ADMIN_EMAIL", "")
+    "VAPID_ADMIN_EMAIL": os.environ.get("VAPID_ADMIN_EMAIL", ""),
 }
 
-LANGUAGE_CODE = 'de'
+LANGUAGE_CODE = "de"
 
 LANGUAGES = [
-    ('en', 'English'),
-    ('de', 'Deutsch'),
+    ("en", "English"),
+    ("de", "Deutsch"),
 ]
 
 USE_THOUSAND_SEPARATOR = False
@@ -150,71 +147,60 @@ USE_THOUSAND_SEPARATOR = False
 USE_I18N = True
 USE_TZ = True
 TIME_ZONE = "Europe/Berlin"
-USE_L10N = True
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-NOCAPTCHA = True
 
-RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUBLIC_KEY", "")
 RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY", "")
 
 CSRF_FAILURE_VIEW = "core.views.csrf_error"
 
 STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-        "OPTIONS": {
-            "location": MEDIA_ROOT
-        }
-    },
-    'staticfiles': {
-        'BACKEND': 'servestatic.storage.CompressedManifestStaticFilesStorage'
-    }
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage", "OPTIONS": {"location": MEDIA_ROOT}},
+    "staticfiles": {"BACKEND": "servestatic.storage.CompressedManifestStaticFilesStorage"},
 }
 
 # AllAuth
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
 SITE_ID = 1
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = "/"
 
-SOCIALACCOUNT_ADAPTER = 'personals.adapters.MySocialAccountAdapter'
-SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
+SOCIALACCOUNT_ADAPTER = "personals.adapters.MySocialAccountAdapter"
+SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
 SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = False
 SOCIALACCOUNT_EMAIL_REQUIRED = False
 
 SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': ['profile', 'email'],
-        'AUTH_PARAMS': {'access_type': 'online'},
-        'FETCH_USERINFO': True,
+    "google": {
+        "SCOPE": ["profile", "email"],
+        "AUTH_PARAMS": {"access_type": "online"},
+        "FETCH_USERINFO": True,
     },
-    'apple': {
-        'APPS': [{
-            'client_id': 'de.climate-quest.login.service',
-            'secret': os.environ.get('APPLE_CERTIFICATE_KEY_ID', ''),
-            'key': os.environ.get('APPLE_TEAM_ID', ''),
-            'settings': {
-                'certificate_key': os.environ.get('APPLE_CERTIFICATE_KEY', ''),
+    "apple": {
+        "APPS": [
+            {
+                "client_id": "de.climate-quest.login.service",
+                "secret": os.environ.get("APPLE_CERTIFICATE_KEY_ID", ""),
+                "key": os.environ.get("APPLE_TEAM_ID", ""),
+                "settings": {
+                    "certificate_key": os.environ.get("APPLE_CERTIFICATE_KEY", ""),
+                },
             }
-        }]
-    }
+        ]
+    },
 }
 
-APN_KEY_PATH = BASE_DIR / 'secret' / 'APN-Key' / 'AuthKey_3B22TSH7YQ.p8'
+APN_KEY_PATH = BASE_DIR / "secret" / "APN-Key" / "AuthKey_3B22TSH7YQ.p8"
 APPLE_TEAM_ID = os.environ.get("APPLE_TEAM_ID")
 APN_KEY_ID = os.environ.get("APN_KEY_ID")
-APN_KEY = os.environ.get("APN_KEY")
 APPLE_BUNDLE_ID = os.environ.get("APPLE_BUNDLE_ID")
 
-# Produktion
-APNS_HOST = "https://api.push.apple.com"
-# Entwicklung/Sandbox (für Development-Zertifikate)
-# APNS_HOST = "https://api.sandbox.push.apple.com"
+# Production APNs host; use https://api.sandbox.push.apple.com for development certificates.
+APNS_HOST = os.environ.get("APNS_HOST", "https://api.push.apple.com")
 
-# APPEND_SLASH = False
+LOGS_DIR = BASE_DIR / "logs"

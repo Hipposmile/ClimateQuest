@@ -3,16 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-09 15:35+0200\n"
+"POT-Creation-Date: 2026-11-02 10:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,8 +23,8 @@ msgid ""
 "Klimakrise oder zur Organisation und Durchführung von Aktionen zum Klima-"
 "Themen von anderen Usern beantworten zu lassen."
 msgstr ""
-"Create a new post in the ClimateQuest forum to have your questions about the "
-"climate crisis or the organization and implementation of climate-themed "
+"Create a new post in the ClimateQuest forum to have your questions about the"
+" climate crisis or the organization and implementation of climate-themed "
 "actions answered by other users."
 
 #: forum/templates/add_forum_post.html:9
@@ -258,13 +257,3 @@ msgstr "View details"
 #: forum/templates/forum_overview.html:130
 msgid "Es gibt derzeit keine Posts mit diesem Filter."
 msgstr "There are currently no posts with this filter."
-
-#, python-format
-#~ msgid ""
-#~ "\n"
-#~ "                                            <a "
-#~ "href=\"%(url)s\">%(username)s</a>"
-#~ msgstr ""
-#~ "\n"
-#~ "                                            <a "
-#~ "href=\"%(url)s\">%(username)s</a>"

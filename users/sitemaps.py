@@ -1,6 +1,7 @@
+from django.contrib.auth.models import User
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
-from django.contrib.auth.models import User
+
 
 class KlimapunkteViewSitemap(Sitemap):
     changefreq = "daily"
@@ -13,7 +14,8 @@ class KlimapunkteViewSitemap(Sitemap):
         return obj.last_login
 
     def location(self, obj):
-        return reverse('klimapunkte_view', args=[obj.pk])
+        return reverse("klimapunkte_view", args=[obj.pk])
+
 
 class LevelViewSitemap(Sitemap):
     changefreq = "daily"
@@ -26,7 +28,8 @@ class LevelViewSitemap(Sitemap):
         return obj.last_login
 
     def location(self, obj):
-        return reverse('klimapunkte_view', args=[obj.pk])
+        return reverse("klimapunkte_view", args=[obj.pk])
+
 
 class HistorySitemap(Sitemap):
     changefreq = "daily"
@@ -39,4 +42,4 @@ class HistorySitemap(Sitemap):
         return obj.last_login
 
     def location(self, obj):
-        return reverse('history', args=[obj.pk])
+        return reverse("history", args=[obj.pk])

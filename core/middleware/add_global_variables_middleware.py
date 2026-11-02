@@ -4,6 +4,6 @@ class AddGloablVariablesMiddleware:
 
     def __call__(self, request):
         request.GLOBAL_VARIABLES = {
-            'klimapunkte_for_credit': 500,
+            "klimapunkte_for_credit": 500,
         }
         return self.get_response(request)

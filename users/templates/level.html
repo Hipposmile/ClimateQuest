@@ -55,14 +55,14 @@
 
     {% if messages %}
         {% for message in messages %}
-            <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
+            <p class="{{ message.level_tag }}-message">{{ message|safe_html }}</p>
         {% endfor %}
     {% endif %}
 
     <p>{% trans "Klimapunkte:" %} {{ level_data.klimapunkte|floatformat:-4 }}</p>
 
     {% if level_data.info %}
-        <p id="info">{{ level_data.info|safe }}</p>
+        <p id="info">{{ level_data.info|safe_html }}</p>
     {% else %}
         <p>{% trans "Du bist im Level:" %}
             {% if request.LANGUAGE_CODE == "de" %}{{ level_data.current_level.description }}{% else %}

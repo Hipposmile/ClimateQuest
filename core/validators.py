@@ -1,5 +1,5 @@
-from PIL import Image
 from django.core.exceptions import ValidationError
+from PIL import Image
 
 
 def validate_image(file):
@@ -16,8 +16,8 @@ def validate_image(file):
     try:
         img = Image.open(file)
         img.verify()
-    except Exception:
-        raise ValidationError("Die Datei ist kein gültiges Bild.")
+    except (OSError, SyntaxError, ValueError):  # Pillow raises these for unreadable or corrupt images
+        raise ValidationError("Die Datei ist kein gültiges Bild.") from None
 
     allowed_formats = ["JPEG", "PNG", "WEBP", "AVIF"]
 

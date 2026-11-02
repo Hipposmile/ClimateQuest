@@ -126,3 +126,34 @@ http://127.0.0.1:8000/
 
 **Warum?**  
 Dies startet den integrierten Django‑Entwicklungsserver, ideal für lokale Entwicklung.
+
+---
+
+## Tests, Linter und Übersetzungen
+
+Entwicklungs-Abhängigkeiten installieren (enthält pytest, coverage, ruff, polib):
+
+```bash
+pip install -r requirements-dev.txt
+```
+
+Alle Tests inklusive 100 % Coverage auf SQLite **und** PostgreSQL ausführen:
+
+```bash
+make test
+```
+
+Für PostgreSQL werden `PGHOST`, `PGPORT`, `PGUSER`, `PGPASSWORD` (und optional `PGDATABASE`) gelesen; der Benutzer
+braucht das Recht, die Test-Datenbank anzulegen. Nur eine Datenbank testen: `make test-sqlite` bzw. `make test-postgres`.
+
+```bash
+make lint      # ruff check + ruff format --check
+make format    # Code automatisch formatieren
+```
+
+Übersetzungen (`gettext` muss installiert sein): nach Änderungen an Texten in jedem App-Verzeichnis
+`django-admin makemessages -a` ausführen, die `.po`-Dateien ergänzen und danach `python manage.py compilemessages`.
+Die Tests schlagen fehl, wenn Einträge leer, `fuzzy`, veraltet oder nicht kompiliert sind.
+
+Einstellungen: `ClimateQuest.settings` (Entwicklung), `ClimateQuest.settingsprod` (Produktion, Geheimnisse aus
+Umgebungsvariablen/`.env`), `ClimateQuest.settingstest` (Tests).

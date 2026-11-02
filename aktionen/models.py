@@ -27,8 +27,8 @@ class AktionenListe(models.Model):
 
     track_kilometerly = models.BooleanField(default=False)
 
-    forbidden_in_same_period = models.ManyToManyField('self', blank=True)
-    category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='actions', null=True, blank=True)
+    forbidden_in_same_period = models.ManyToManyField("self", blank=True)
+    category = models.ForeignKey("Category", on_delete=models.CASCADE, related_name="actions", null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -58,8 +58,8 @@ class Aktion(models.Model):
 
 
 class TrackedActions(models.Model):
-    action = models.ForeignKey(AktionenListe, on_delete=models.CASCADE, related_name='tracked_actions')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tracked_actions')
+    action = models.ForeignKey(AktionenListe, on_delete=models.CASCADE, related_name="tracked_actions")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tracked_actions")
     since = models.DateField(default=timezone.now)
 
     def __str__(self):
