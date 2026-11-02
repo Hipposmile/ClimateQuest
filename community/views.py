@@ -23,21 +23,22 @@ def community_detail_url(community):
             first_family_of_user.setdefault(member.id, family.id)
 
     def url(user):
-        family_id = first_family_of_user.get(user.id)
-        return (
-            reverse("community_detail", kwargs={"community_id": community.id, "family_id": family_id})
-            if family_id
-            else None
+        return reverse(
+            "community_detail", kwargs={"community_id": community.id, "family_id": first_family_of_user[user.id]}
         )
 
     return url
 
 
-def notify_community(request, community, text_de, text_en, exclude_requester=True):
-    users = community.user_members()
-    if exclude_requester:
-        users = users.exclude(id=request.user.id)
-    notify(request, users, text_de, text_en, url=community_detail_url(community))
+def notify_community(request, community, text_de, text_en):
+    """Notify all members of the community except the requester."""
+    notify(
+        request,
+        community.user_members().exclude(id=request.user.id),
+        text_de,
+        text_en,
+        url=community_detail_url(community),
+    )
 
 
 def credentials_ok(request, family_name, family_admin_password, redirect_name):

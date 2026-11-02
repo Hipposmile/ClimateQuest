@@ -103,7 +103,7 @@ urlpatterns = [
     path("accounts/signup/", RedirectView.as_view(url="/personals/register/")),
     path("accounts/", include("allauth.urls")),
 ]
-if settings.DEBUG:
+if settings.DEBUG:  # pragma: no cover - development only
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns.append(path("__reload__/", include("django_browser_reload.urls")))
 

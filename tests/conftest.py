@@ -2,10 +2,10 @@ import itertools
 
 import pytest
 from django.conf import settings
-from django.utils import translation
 from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
 from django.test import Client
+from django.utils import translation
 
 from aktionen.models import Aktion, AktionenListe, Category
 from family.models import Family

@@ -399,7 +399,7 @@ def create_internal_error(request, beschreibung, fehlermeldung="interner Fehler"
         error_message["traceback"] = traceback.format_exc()
 
     if throw_exception and request is not None:
-        messages.error(request, fehlermeldung)
+        messages.error(request, fehlermeldung, fail_silently=True)  # cron jobs use requests without messages
 
     logger.error(error_message)
 
