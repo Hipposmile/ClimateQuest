@@ -49,6 +49,9 @@ class Aktion(models.Model):
     aktion = models.ForeignKey(AktionenListe, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.now)
 
+    class Meta:
+        indexes = [models.Index(fields=["user", "date"], name="aktion_user_date_idx")]
+
     @property
     def impact(self):
         return self.quantity * self.aktion.klimapunkte

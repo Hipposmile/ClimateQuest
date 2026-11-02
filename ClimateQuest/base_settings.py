@@ -147,13 +147,10 @@ USE_THOUSAND_SEPARATOR = False
 USE_I18N = True
 USE_TZ = True
 TIME_ZONE = "Europe/Berlin"
-USE_L10N = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-NOCAPTCHA = True
 
-RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUBLIC_KEY", "")
 RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY", "")
 
 CSRF_FAILURE_VIEW = "core.views.csrf_error"
@@ -201,7 +198,6 @@ SOCIALACCOUNT_PROVIDERS = {
 APN_KEY_PATH = BASE_DIR / "secret" / "APN-Key" / "AuthKey_3B22TSH7YQ.p8"
 APPLE_TEAM_ID = os.environ.get("APPLE_TEAM_ID")
 APN_KEY_ID = os.environ.get("APN_KEY_ID")
-APN_KEY = os.environ.get("APN_KEY")
 APPLE_BUNDLE_ID = os.environ.get("APPLE_BUNDLE_ID")
 
 # Production APNs host; use https://api.sandbox.push.apple.com for development certificates.
