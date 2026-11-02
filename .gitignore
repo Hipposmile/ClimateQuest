@@ -16,3 +16,13 @@ media/
 plant_for_the_planet_codes/
 secret/
 convert-img.sh
+# Python / tooling
+__pycache__/
+*.pyc
+.DS_Store
+.idea/
+.coverage
+htmlcov/
+.pytest_cache/
+.ruff_cache/
+logs/
