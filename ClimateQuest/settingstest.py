@@ -8,6 +8,7 @@ For PostgreSQL the usual ``PGHOST``, ``PGPORT``, ``PGUSER``, ``PGPASSWORD`` and
 import os
 
 from .base_settings import *  # noqa: F403
+from .base_settings import BASE_DIR
 
 SECRET_KEY = "test-only-secret-key-not-used-anywhere-else-0123456789"
 DEBUG = False
@@ -33,3 +34,5 @@ STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.InMemoryStorage"},
     "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
 }
+
+STATIC_ROOT = BASE_DIR / ".test-static"
