@@ -1,0 +1,34 @@
+Benutzer wechseln: sudo su - myuser
+ausloggen: exit
+supervisor neustarten: supervisorctl restart myproject
+nginx: sudo nginx -t
+nginx: sudo systemctl restart nginx
+nginx: sudo systemctl status nginx
+
+mit settingsprod migrieren o.Ä.: python manage.py [migrate] --settings=ClimateQuest.settingsprod
+
+Postgresql verbinden: sudo -u postgres psql
+Alle Datenbanken anzeigen: \l
+Mit Datenbank verbinden: \c mydatabase
+Alle User anzeigen: \u
+Alle Tabellen anzeigen: \dt
+Tabellenstruktur anzeigen: \d mytable
+Verlassen: \q
+SELECT row FROM mytable;
+
+ufw: sudo ufw allow myport
+sudo ufw status (verbose)
+
+
+caffeinate -t 3600 (Mac -> nicht Ruhemodus aktivieren)
+
+Cronjob anlegen: crontab -u username -e
+
+Rmdir (remove dir), mv [start][ziel] (File umbenennen und verschieben)
+
+Besitzer wechseln: chown neuerbesitzer:neuegruppe Dateiname
+
+Alle Dateien anzeigen: ls
+Alle Dateien inkl. Besitzer anzeigen: ls -l
+
+Datei von Mac auf VPS: scp /path/to/local/file username@your-vps-ip:/path/to/remote/directory

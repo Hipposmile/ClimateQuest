@@ -4,14 +4,14 @@ Branch `claude/django-cleanup-optimize-7tym6i`. Bug list: [BUGS_FIXED.md](BUGS_F
 
 ## Done criteria
 
-| Criterion | Result |
-|---|---|
-| One command for everything | `make test` (migration check, SQLite run, PostgreSQL run, coverage gate) |
-| Tests | 518 tests, all green on **SQLite** and on **PostgreSQL 16** |
-| Coverage | **100 %** line + branch of the project code on both databases (migrations, `manage.py`, `wsgi/asgi`, the three settings entry points and generated files are excluded) |
-| Linter | `ruff check` and `ruff format --check` clean (`make lint`) |
-| `makemigrations --check` | clean for all project apps. The third-party app `webpush` reports a missing migration that ships with the library, not with this project; it is outside our control (baseline and final state are identical) |
-| `check --deploy` | production settings: only `security.W004` (HSTS, a decision for you, see below). Before: the check crashed because the log directory was missing; development settings: 7 → 6 warnings |
+| Criterion                  | Result                                                                                                                                                                                                       |
+|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| One command for everything | `make test` (migration check, SQLite run, PostgreSQL run, coverage gate)                                                                                                                                     |
+| Tests                      | 518 tests, all green on **SQLite** and on **PostgreSQL 16**                                                                                                                                                  |
+| Coverage                   | **100 %** line + branch of the project code on both databases (migrations, `manage.py`, `wsgi/asgi`, the three settings entry points and generated files are excluded)                                       |
+| Linter                     | `ruff check` and `ruff format --check` clean (`make lint`)                                                                                                                                                   |
+| `makemigrations --check`   | clean for all project apps. The third-party app `webpush` reports a missing migration that ships with the library, not with this project; it is outside our control (baseline and final state are identical) |
+| `check --deploy`           | production settings: only `security.W004` (HSTS, a decision for you, see below). Before: the check crashed because the log directory was missing; development settings: 7 → 6 warnings                       |
 
 Baseline (before any change): `check --deploy` 7 warnings (dev), crash on production settings; `makemigrations --check`
 only the `webpush` drift; `ruff` default rules 328 findings; **no tests**. `requirements.txt` was missing six imported
@@ -44,14 +44,14 @@ packages (`django-allauth`, `django-modeltranslation`, `httpx`, `Pillow`, `PyJWT
 Data set A: 300 users, 30,000 actions. Data set B: 3,000 users, 300,000 actions. Time of one request through the
 Django test client (includes template rendering).
 
-| Page | Before (A) | After (A) | After (B) |
-|---|---|---|---|
-| Landing page (global statistics) | 19,391 ms, > 9,000 queries (capture limit hit) | 107 ms (first request, includes warm-up), 9 queries | 56 ms, 9 queries |
-| Dashboard | 267 ms | 35 ms, 16 queries | 185 ms, 16 queries |
-| User profile | 190 ms | 43 ms, 15 queries | 162 ms, 15 queries |
-| Family page (all users of the group) | 18,028 ms | 70 ms, 9 queries | 476 ms, 9 queries |
-| History (100 actions) | 99 ms | 34 ms, 5 queries | – |
-| Climate points page | 52 ms | 12 ms, 7 queries | – |
+| Page                                 | Before (A)                                     | After (A)                                           | After (B)          |
+|--------------------------------------|------------------------------------------------|-----------------------------------------------------|--------------------|
+| Landing page (global statistics)     | 19,391 ms, > 9,000 queries (capture limit hit) | 107 ms (first request, includes warm-up), 9 queries | 56 ms, 9 queries   |
+| Dashboard                            | 267 ms                                         | 35 ms, 16 queries                                   | 185 ms, 16 queries |
+| User profile                         | 190 ms                                         | 43 ms, 15 queries                                   | 162 ms, 15 queries |
+| Family page (all users of the group) | 18,028 ms                                      | 70 ms, 9 queries                                    | 476 ms, 9 queries  |
+| History (100 actions)                | 99 ms                                          | 34 ms, 5 queries                                    | –                  |
+| Climate points page                  | 52 ms                                          | 12 ms, 7 queries                                    | –                  |
 
 The old landing page and family page grow linearly with users × actions (one query per action *and* per user), so on
 data set B the old code would need roughly 190 s per request (extrapolated, not measured). The query count of the old
@@ -98,7 +98,8 @@ Only English `.po` files exist (German is the source language); 15 catalogs were
 
 1. **Password reset** e-mails a new password and sets it for anybody who knows the e-mail address (account lock-out by
    third parties, password in clear text in the mail). Recommended: token link flow like the e-mail verification.
-2. **`POST /personals/api/devices/ios/register/`** is `csrf_exempt` and unauthenticated: anyone can bind a device token to
+2. **`POST /personals/api/devices/ios/register/`** is `csrf_exempt` and unauthenticated: anyone can bind a device token
+   to
    any `user_id` (receive someone's notifications). Needs an auth scheme agreed with the iOS app.
 3. **Password rules**: `AUTH_PASSWORD_VALIDATORS` are configured but never applied; I only reject empty passwords.
 4. **No brute-force protection** for login and for joining families/communities by password.
@@ -106,20 +107,25 @@ Only English `.po` files exist (German is the source language); 15 catalogs were
 6. **Language prefix**: `{% url %}` and `redirect()` produce URLs without `/de|/en`, so every link/redirect costs an
    extra 302, and the target language is taken from the profile/browser rather than the current page. Setting the
    script prefix would fix this but changes all URLs in the HTML.
-7. **State-changing GET** requests: logout, like/unlike, delete notification (CSRF-able). Changing to POST changes the templates.
+7. **State-changing GET** requests: logout, like/unlike, delete notification (CSRF-able). Changing to POST changes the
+   templates.
 8. **Hall of fame**: "vegetarian/vegan" is evaluated for *today* only although the text says "between Monday and today";
    action ids 19/20/22 are hard-coded (constants now, but still production primary keys).
-9. **Community ranking** adds each member's bonus points for every period; the family page only for "total". Which is intended?
+9. **Community ranking** adds each member's bonus points for every period; the family page only for "total". Which is
+   intended?
 10. **Fan-out in the request**: family chat, delete family/account, petition updates, admin broadcast and the cron jobs
     send one mail + push per recipient synchronously. A task queue would fix it but changes timing semantics.
-11. **`icontains` searches** (user search, article/event/forum filters) are ASCII-case-insensitive only on SQLite but fully
+11. **`icontains` searches** (user search, article/event/forum filters) are ASCII-case-insensitive only on SQLite but
+    fully
     case-insensitive on PostgreSQL (e.g. "Ä" vs "ä").
-12. **Date defaults** `default=timezone.now` on `DateField`s (e.g. `Aktion.date`) yield a datetime in memory until reloaded;
+12. **Date defaults** `default=timezone.now` on `DateField`s (e.g. `Aktion.date`) yield a datetime in memory until
+    reloaded;
     changing to `timezone.localdate` needs `AlterField` migrations (no DB change).
 13. **Unpaginated lists** (history, users search, overviews). Pagination changes the visible output.
 14. **Events** cannot be edited when they start within 24 h (same rule as on creation) – intended?
 15. **Hard-coded user-visible strings** that are not translated through gettext: notification texts (stored in both
-    languages by design), mail subjects/footers (German only), admin-only text; formal "Sie" in the legal pages vs "du" in the app.
+    languages by design), mail subjects/footers (German only), admin-only text; formal "Sie" in the legal pages vs "du"
+    in the app.
 16. About 40 keys of `core/all_messages.py` look unused (some are looked up dynamically) – not removed.
 17. `CONN_MAX_AGE=60` is new: if PgBouncer in transaction mode is used, set it to 0.
 18. Production settings (`settingsprod.py`) are not imported by the tests (only by `check --deploy`).

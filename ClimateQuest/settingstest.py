@@ -36,3 +36,4 @@ STORAGES = {
 }
 
 STATIC_ROOT = BASE_DIR / ".test-static"
+STATIC_ROOT.mkdir(exist_ok=True)
