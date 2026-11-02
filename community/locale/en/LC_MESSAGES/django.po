@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-11 18:37+0200\n"
+"POT-Creation-Date: 2026-11-02 10:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,8 +65,8 @@ msgid ""
 "Wir machen eine Challenge: Wer schafft es von heute bis nächste Woche "
 "Sonntag am meisten Klimapunkte zu sammeln?"
 msgstr ""
-"We are doing a challenge: Who can collect the most climate points from today "
-"until next Sunday?"
+"We are doing a challenge: Who can collect the most climate points from today"
+" until next Sunday?"
 
 #: community/templates/chat_community.html:157
 #, python-format
@@ -100,8 +100,8 @@ msgstr "Send"
 
 #: community/templates/communities.html:5
 msgid ""
-"Übersicht über deine Communities bei ClimateQuest. Vergleiche deine Families "
-"mit anderen und tausche dich aus."
+"Übersicht über deine Communities bei ClimateQuest. Vergleiche deine Families"
+" mit anderen und tausche dich aus."
 msgstr ""
 "Overview of your communities on ClimateQuest. Compare your families with "
 "others and exchange ideas."
@@ -169,7 +169,7 @@ msgstr "The chat function is disabled for this community."
 msgid "Zeitraum auswählen"
 msgstr "Select time period"
 
-#: community/templates/community_detail.html:36 community/views.py:415
+#: community/templates/community_detail.html:36
 msgid "Gesamt"
 msgstr "Total"
 
@@ -474,8 +474,8 @@ msgid ""
 "Tritt einer Community bei ClimateQuest bei, um dich mit anderen Families zu "
 "vergleichen und auszutauschen."
 msgstr ""
-"Join a community on ClimateQuest to compare yourself with other families and "
-"exchange ideas."
+"Join a community on ClimateQuest to compare yourself with other families and"
+" exchange ideas."
 
 #: community/templates/join_community.html:32
 #, python-format
@@ -485,15 +485,3 @@ msgid ""
 msgstr ""
 "Or\n"
 " <a href=\"%(create_community_link)s\">found a community</a>."
-
-#: community/views.py:447
-#, python-format
-msgid "%(start)s bis %(end)s"
-msgstr "%(start)s to %(end)s"
-
-#: community/views.py:502
-msgid "Fehler beim Sortieren der Mitglieder."
-msgstr "Error sorting members."
-
-#~ msgid "Oder eine Community gründen."
-#~ msgstr "Or found a community."

@@ -3,16 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-13 13:43+0200\n"
+"POT-Creation-Date: 2026-11-02 10:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -56,8 +55,8 @@ msgid ""
 "Wir machen eine Challenge: Wer schafft es von heute bis nächste Woche "
 "Sonntag am meisten Klimapunkte zu sammeln?"
 msgstr ""
-"We are doing a challenge: Who can collect the most climate points from today "
-"until next Sunday?"
+"We are doing a challenge: Who can collect the most climate points from today"
+" until next Sunday?"
 
 #: family/templates/chat_family.html:162
 #, python-format
@@ -90,9 +89,11 @@ msgid ""
 "Erstelle eine neue Family bei ClimateQuest, um dich mit anderen Nutzern zu "
 "vergleichen und auszutauschen."
 msgstr ""
-"Create a new family on ClimateQuest to compare and exchange with other users."
+"Create a new family on ClimateQuest to compare and exchange with other "
+"users."
 
-#: family/templates/create_family.html:9 family/templates/create_family.html:12
+#: family/templates/create_family.html:9
+#: family/templates/create_family.html:12
 #: family/templates/create_family.html:37
 msgid "Family erstellen"
 msgstr "Create family"
@@ -129,8 +130,8 @@ msgid ""
 "Wir empfehlen folgende Admin-Passwort-Anforderungen, um die Family vor "
 "unerlaubter Bearbeitung zu schützen:"
 msgstr ""
-"We recommend the following admin password requirements to protect the family "
-"from unauthorized editing:"
+"We recommend the following admin password requirements to protect the family"
+" from unauthorized editing:"
 
 #: family/templates/create_family.html:30 family/templates/edit_family.html:86
 msgid "Mindestens acht Zeichen"
@@ -353,14 +354,14 @@ msgid ""
 "Weder die Chat-Funktion noch die Bearbeiten-Funktion sind für die Family "
 "worldwide ranking freigeschaltet"
 msgstr ""
-"Neither the chat function nor the edit function are available for the family "
-"worldwide ranking"
+"Neither the chat function nor the edit function are available for the family"
+" worldwide ranking"
 
 #: family/templates/family_detail.html:38
 msgid "Zeitraum"
 msgstr "Time period"
 
-#: family/templates/family_detail.html:40 family/views.py:422
+#: family/templates/family_detail.html:40
 msgid "Gesamt"
 msgstr "Total"
 
@@ -457,29 +458,3 @@ msgstr ""
 #, python-format
 msgid "Oder <a href=\"%(url)s\">eine Family gründen</a>."
 msgstr "Or <a href=\"%(url)s\">create a family</a>."
-
-#: family/views.py:454
-#, python-format
-msgid "%(start)s bis %(end)s"
-msgstr "%(start)s to %(end)s"
-
-#~ msgid "Familien-ID fehlt."
-#~ msgstr "Family-ID is missing."
-
-#~ msgid "Familie nicht gefunden."
-#~ msgstr "The family could not be found."
-
-#~ msgid "Ungültiger Zeitraum."
-#~ msgstr "Invalid time period."
-
-#~ msgid "Bitte Start- und Enddatum angeben."
-#~ msgstr "Please enter start and end date."
-
-#~ msgid "Ungültiges Datumsformat."
-#~ msgstr "Invalid date format."
-
-#~ msgid "Das Startdatum muss vor dem Enddatum liegen."
-#~ msgstr "The start date must be before the end date."
-
-#~ msgid "Das Enddatum darf nicht in der Zukunft liegen."
-#~ msgstr "The end date cannot be in the future."

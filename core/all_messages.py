@@ -151,12 +151,12 @@ all_messages = {
     "action_invalid_quantity": _("Ungültige Menge"),
     "max_action_quantity": mark_safe(
         _(
-            "Die angegebene Menge ist zu hoch, um realistisch zu sein. Weitere Informationen findest du in <a href='https://climate-questde/artikel/artikel_detail/9'>diesem Artikel</a>"
+            "Die angegebene Menge ist zu hoch, um realistisch zu sein. Weitere Informationen findest du in <a href='https://climate-quest.de/artikel/artikel_detail/9'>diesem Artikel</a>"
         )
     ),
     "action_too_past": mark_safe(
         _(
-            "Das angegebene Datum liegt zu weit in der Vergangenheit. Weitere Informationen findest du in <a href='https://climate-questde/artikel/artikel_detail/18'>diesem Artikel</a>"
+            "Das angegebene Datum liegt zu weit in der Vergangenheit. Weitere Informationen findest du in <a href='https://climate-quest.de/artikel/artikel_detail/18'>diesem Artikel</a>"
         )
     ),
     "action_already_set_in_period": _(
