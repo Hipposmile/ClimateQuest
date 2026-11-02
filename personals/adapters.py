@@ -30,7 +30,7 @@ class MySocialAccountAdapter(DefaultSocialAccountAdapter):
             return f"{given or ''} {family or ''}".strip()
 
         # GitHub & andere
-        if data.get("name"):
+        if isinstance(data.get("name"), str) and data["name"]:
             return data["name"]
 
         return None

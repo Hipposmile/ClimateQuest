@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
-from django.db import models
+from django.db import models, transaction
 
 
 class TreeCodes(models.Model):
@@ -30,12 +30,15 @@ class UserErweitert(models.Model):
         return self.planted_trees.count()
 
     def plant_tree(self):
-        tree_code = TreeCodes.objects.filter(planted=False).first()
-        if not tree_code:
-            return False
-        tree_code.planted = True
-        tree_code.save()
-        self.planted_trees.add(tree_code)
+        """Assign one unused tree code to this user. Returns False if there are none left."""
+        with transaction.atomic():
+            # skip_locked: concurrent requests must not hand out the same code twice.
+            tree_code = TreeCodes.objects.select_for_update(skip_locked=True).filter(planted=False).first()
+            if not tree_code:
+                return False
+            tree_code.planted = True
+            tree_code.save(update_fields=["planted"])
+            self.planted_trees.add(tree_code)
         return True
 
     def __str__(self):

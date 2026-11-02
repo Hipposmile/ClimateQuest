@@ -17,6 +17,8 @@ all_messages = {
     "not_is_truth": _("Du musst bestätigen, dass alle Angaben der Wahrheit entsprechen"),
     "too_long_input": _("Ein oder mehrere Input-Felder sind zu lang"),
     "not_a_number": _("Der Input muss eine Zahl sein"),
+    "weekly_goal_too_large": _("Das wöchentliche Ziel ist zu groß"),
+    "recaptcha_token_missing": _("reCAPTCHA-Token fehlt. Bitte versuche es erneut."),
     # Zeitraum
     "invalid_date_range": _("Startdatum muss vor Enddatum liegen"),
     "date_in_future": _("Datum darf nicht in der Zukunft liegen"),

@@ -3,12 +3,13 @@ from unittest import mock
 import pytest
 from django.utils import timezone
 
-from artikel.models import Artikel, Category as ArtikelCategory
+from artikel.models import Artikel
+from artikel.models import Category as ArtikelCategory
 from community.models import Community
 from core.all_messages import all_messages
 from events.models import Event
 from family.models import Family
-from home.models import Benachrichtigung, ReportedUser
+from home.models import Benachrichtigung
 from personals.models import TreeCodes
 from tests.conftest import flash
 

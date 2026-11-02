@@ -9,6 +9,7 @@ from aktionen.models import Aktion, Category
 from aktionen.services import ActionInputError, validate_action_input
 from core.all_messages import all_messages
 from home.models import ReportedUser
+from personals.models import UserErweitert
 from utils.action_feedback import report_action_change
 from utils.functions import (
     get_additional_klimapunkte,
@@ -29,13 +30,15 @@ REPORT_RECEIVER_USERNAME = "admin"
 
 def get_user(request, user_id, allow_needed=True):
     """The user with ``user_id`` if the requester may see their data, otherwise False (with a flash message)."""
-    user = User.objects.select_related("usererweitert").filter(id=user_id).first()
+    user = User.objects.filter(id=user_id).first()
     if user is None:
         messages.error(request, all_messages["user_not_found"])
         return False
-    if allow_needed and user != request.user and not getattr(user.usererweitert, "allows_data_view", False):
-        messages.error(request, all_messages["user_blocked_view"])
-        return False
+    if allow_needed and user != request.user:
+        profile = UserErweitert.objects.filter(user=user).first()
+        if profile is None or not profile.allows_data_view:
+            messages.error(request, all_messages["user_blocked_view"])
+            return False
     return user
 
 

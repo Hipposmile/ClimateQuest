@@ -6,4 +6,4 @@ class PersonalsConfig(AppConfig):
     name = "personals"
 
     def ready(self):
-        pass
+        from . import signals  # noqa: F401 - registers the allauth signal receivers
