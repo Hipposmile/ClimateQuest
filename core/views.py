@@ -1,13 +1,17 @@
+import logging
+
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.test import RequestFactory
 from django.urls import reverse
-from django.utils import timezone
 
 from utils.functions import create_internal_error, create_notification, get_weekly_goal_from_user
 
+logger = logging.getLogger(__name__)
 
-# Create your views here.
+WEEKLY_GOAL_REACHED_PERCENT = 100
+
+
 def custom_400(request, exception=""):
     create_internal_error(request, f"400 Error: {exception}")
     return render(request, "400.html", status=400)
@@ -37,24 +41,20 @@ def custom_503(request, exception=""):
 
 
 def create_reminder():
-    factory = RequestFactory()
-    fake_request = factory.get("/")
+    """Cron job: remind every user who has not reached the weekly goal yet."""
+    request = RequestFactory().get("/")
 
-    for user in User.objects.all():
+    for user in User.objects.select_related("usererweitert"):
+        request.user = user
         try:
-            if get_weekly_goal_from_user(user)[-1] < 100:
-                fake_request = fake_request.user = user
-                create_notification(
-                    fake_request,
-                    notification_de=f"Hey {user.username}, du hast dein wöchentliches Ziel noch nicht erreicht! Trage jetzt noch eine Aktion ein, die du durchgeführt hast, und erreiche nicht nur dein Ziel, sondern verlängere auch deine Streak!",
-                    notification_en=f"Hey {user.username}, you haven´t reached you´re weekly goal yet! Add an action you have done now and not only reach your goal but also extend your streak!",
-                    user=user,
-                    url=reverse("dashboard"),
-                )
-        except Exception as e:
-            error_message = f"Cronjob: {timezone.now().isoformat()} Create Reminder for User: {user}: Exception: {e}"
-            create_internal_error(fake_request, error_message)
-
-
-def get_default_user():
-    return User.objects.filter(is_superuser=True).first().id
+            if get_weekly_goal_from_user(user)[-1] >= WEEKLY_GOAL_REACHED_PERCENT:
+                continue
+            create_notification(
+                request,
+                notification_de=f"Hey {user.username}, du hast dein wöchentliches Ziel noch nicht erreicht! Trage jetzt noch eine Aktion ein, die du durchgeführt hast, und erreiche nicht nur dein Ziel, sondern verlängere auch deine Streak!",
+                notification_en=f"Hey {user.username}, you haven't reached your weekly goal yet! Add an action you have done now and not only reach your goal but also extend your streak!",
+                user=user,
+                url=reverse("dashboard"),
+            )
+        except Exception as error:  # noqa: BLE001 - one broken user must not stop the reminders for everybody else
+            create_internal_error(request, f"Cronjob: Create Reminder for User: {user}", exception=error)

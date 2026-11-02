@@ -551,5 +551,9 @@ def statistics_view(request):
     return render(
         request,
         "./statistics.html",
-        {"chart_data": json.dumps(chart_data), "days": days, "days_options": STATISTICS_DAY_OPTIONS},
+        {
+            "chart_data": json.dumps(chart_data).replace("<", "\\u003c"),
+            "days": days,
+            "days_options": STATISTICS_DAY_OPTIONS,
+        },
     )

@@ -8,51 +8,50 @@ from utils.functions import clean_html, create_notification
 
 from .models import Answer, Category, ForumPost
 
+MAX_TITLE_LENGTH = 100
+ALL_CATEGORIES = "Alle"
+ORDER_FIELDS = {"Titel": "title", "Ersteller": "creator__username"}
 
-# Create your views here.
+
 def forum_overview(request):
     all_categories = Category.objects.values_list("title", flat=True)
+    forum_posts = ForumPost.objects.select_related("creator", "category").prefetch_related("answers")
 
-    forum_posts = ForumPost.objects.all()
-    if request.method == "POST":
-        category = request.POST.get("category")
-        if category != "Alle":
-            forum_posts = forum_posts.filter(category__title=category)
+    if request.method != "POST":
+        return render(
+            request,
+            "./forum_overview.html",
+            {
+                "forum_posts": forum_posts.order_by("title"),
+                "ordered_by": "Titel",
+                "search_keyword": None,
+                "category": ALL_CATEGORIES,
+                "all_categories": all_categories,
+            },
+        )
 
-        already_ordered = False
-        ordered_by = request.POST.get("order_by")
-        search_keyword = request.POST.get("search_keyword")
-        order_map = {
-            "Titel": "title",
-            "Ersteller": "creator__username",
-        }
-        order_by = order_map.get(ordered_by, "name")
+    category = request.POST.get("category")
+    if category != ALL_CATEGORIES:
+        forum_posts = forum_posts.filter(category__title=category)
+    ordered_by = request.POST.get("order_by")
+    search_keyword = request.POST.get("search_keyword")
+    user = request.user if request.user.is_authenticated else None
 
-        if ordered_by == "von mir erstellte Posts":
-            forum_posts = forum_posts.filter(creator=request.user)
-            already_ordered = True
-        if ordered_by == "von mir beantwortete Posts":
-            forum_posts = ForumPost.objects.filter(answers__creator=request.user).distinct()
-            already_ordered = True
-        if ordered_by == "Erstellt am":
-            if search_keyword:
-                forum_posts = forum_posts.filter(**{"date_time__icontains": search_keyword})
-            else:
-                forum_posts = forum_posts
-            forum_posts = forum_posts.order_by("-date_time")
-            already_ordered = True
-        if not already_ordered:
-            if search_keyword:
-                forum_posts = forum_posts.filter(**{f"{order_by}__icontains": search_keyword})
-            else:
-                forum_posts = forum_posts
-            forum_posts = forum_posts.order_by(order_by)
-
-    else:
+    if ordered_by == "von mir erstellte Posts":
+        forum_posts = forum_posts.filter(creator=user) if user else forum_posts.none()
         forum_posts = forum_posts.order_by("title")
-        ordered_by = "Titel"
-        search_keyword = None
-        category = "Alle"
+    elif ordered_by == "von mir beantwortete Posts":
+        forum_posts = forum_posts.filter(answers__creator=user).distinct() if user else forum_posts.none()
+        forum_posts = forum_posts.order_by("title")
+    elif ordered_by == "Erstellt am":
+        if search_keyword:
+            forum_posts = forum_posts.filter(date_time__icontains=search_keyword)
+        forum_posts = forum_posts.order_by("-date_time")
+    else:
+        order_by = ORDER_FIELDS.get(ordered_by, "title")
+        if search_keyword:
+            forum_posts = forum_posts.filter(**{f"{order_by}__icontains": search_keyword})
+        forum_posts = forum_posts.order_by(order_by)
 
     return render(
         request,
@@ -69,67 +68,55 @@ def forum_overview(request):
 
 @login_required
 def add_forum_post(request):
-    all_categories = Category.objects.values_list("title", flat=True)
-
     if request.method == "POST":
-        is_truth = request.POST.get("is_truth") == "on"
-        if not is_truth:
+        if request.POST.get("is_truth") != "on":
             messages.error(request, all_messages["not_is_truth"])
             return redirect("add_forum_post")
-
-        title = request.POST.get("title")
-        content = request.POST.get("content")
-        category = request.POST.get("category")
-
-        try:
-            category = Category.objects.get(title=category)
-        except Category.DoesNotExist:
+        title = request.POST.get("title") or ""
+        content = request.POST.get("content") or ""
+        category = Category.objects.filter(title=request.POST.get("category")).first()
+        if category is None:
             messages.error(request, all_messages["internal_error"])
-            return redirect("add_artikel")
-
-        if len(title) > 100:
+            return redirect("add_forum_post")
+        if not title or not content:
+            messages.error(request, all_messages["missing_required_inputs"])
+            return redirect("add_forum_post")
+        if len(title) > MAX_TITLE_LENGTH:
             messages.error(request, all_messages["too_long_input"])
             return redirect("add_forum_post")
-
-        if not title or not content:
-            messages.error(request, all_messages["fill_all_required_fields"])
-            return redirect("add_forum_post")
-
-        clean_html(content)
-
-        post = ForumPost.objects.create(title=title, content=content, creator=request.user, category=category)
-
+        post = ForumPost.objects.create(
+            title=title, content=clean_html(content), creator=request.user, category=category
+        )
         return redirect("post_detail", post.id)
-    return render(request, "./add_forum_post.html", {"categories": all_categories})
+    return render(request, "./add_forum_post.html", {"categories": Category.objects.values_list("title", flat=True)})
 
 
 def post_detail(request, post_id):
-    try:
-        post = ForumPost.objects.get(id=post_id)
-    except ForumPost.DoesNotExist:
+    post = ForumPost.objects.select_related("creator", "category").filter(id=post_id).first()
+    if post is None:
         messages.error(request, all_messages["post_not_found"])
         return redirect("forum_overview")
 
-    if request.method == "POST":
-        is_truth = request.POST.get("is_truth") == "on"
-        if not is_truth:
+    if request.method == "POST" and request.user.is_authenticated:
+        if request.POST.get("is_truth") != "on":
             messages.error(request, all_messages["not_is_truth"])
             return redirect("post_detail", post_id=post_id)
-
         content = request.POST.get("content")
         if not content:
-            messages.error(request, all_messages["fill_all_required_fields"])
+            messages.error(request, all_messages["missing_required_inputs"])
             return redirect("post_detail", post_id=post_id)
-
-        clean_html(content)
-
-        Answer.objects.create(content=content, creator=request.user, forum_post=post)
+        Answer.objects.create(content=clean_html(content), creator=request.user, forum_post=post)
         create_notification(
             request=request,
             notification_de="Deine Forumsfrage wurde beantwortet",
-            notification_en="You´re forum question has been answered",
+            notification_en="Your forum question has been answered",
             user=post.creator,
             url=reverse("post_detail", args=[post_id]),
         )
         return redirect("post_detail", post_id=post_id)
-    return render(request, "./forum_detail.html", {"post": post, "answers": post.answers.all()})
+
+    return render(
+        request,
+        "./forum_detail.html",
+        {"post": post, "answers": post.answers.select_related("creator").order_by("date_time", "id")},
+    )

@@ -1,6 +1,8 @@
 import itertools
 
 import pytest
+from django.conf import settings
+from django.utils import translation
 from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
 from django.test import Client
@@ -10,6 +12,14 @@ from family.models import Family
 from personals.models import Level, UserErweitert
 
 _counter = itertools.count(1)
+
+
+@pytest.fixture(autouse=True)
+def default_language():
+    """Requests activate their language for the whole thread: start every test in the default language."""
+    translation.activate(settings.LANGUAGE_CODE)
+    yield
+    translation.deactivate_all()
 
 
 class LangClient(Client):
