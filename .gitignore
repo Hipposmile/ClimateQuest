@@ -22,3 +22,5 @@ htmlcov/
 .ruff_cache/
 logs/
 .test-static/
+convert-img.sh
+.idea/
