@@ -14,68 +14,58 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps import Sitemap
 from django.contrib.sitemaps.views import sitemap
-from django.urls import include
-from django.urls import path
-from django.views.generic import TemplateView, RedirectView
+from django.urls import include, path
+from django.views.generic import RedirectView, TemplateView
 
 from aktionen.sitemaps import AddAktionenSitemap
-from artikel.sitemaps import ArtikelDetailSitemap, ArtikelOverviewSitemap, AddArtikelSitemap
-from community.sitemaps import CommunityOverviewSitemap, AddCommunitySitemap, JoinCommunitySitemap
+from artikel.sitemaps import AddArtikelSitemap, ArtikelDetailSitemap, ArtikelOverviewSitemap
+from community.sitemaps import AddCommunitySitemap, CommunityOverviewSitemap, JoinCommunitySitemap
 from core.localized_sitemap_helper import build_localized_sitemaps
-from events.sitemaps import EventDetailSitemap, EventsOverviewSitemap, AddEventSitemap
-from family.sitemaps import FamilyOverviewSitemap, AddFamilySitemap, JoinFamilySitemap
-from forum.sitemaps import ForumOverviewSitemap, ForumPostDetailSitemap, AddForumPostSitemap
+from events.sitemaps import AddEventSitemap, EventDetailSitemap, EventsOverviewSitemap
+from family.sitemaps import AddFamilySitemap, FamilyOverviewSitemap, JoinFamilySitemap
+from forum.sitemaps import AddForumPostSitemap, ForumOverviewSitemap, ForumPostDetailSitemap
 from hall_of_fame.sitemaps import HallOfFameDetailSitemap
-from home.sitemaps import HomeSitemap, NutzungsbedingungenSitemap, SupportSitemap, FeedbackSitemap
-from pages.sitemaps import MobileAppsSitemap, AknachhaltigkeitSitemap
-from personals.sitemaps import LoginSitemap, RegisterSitemap, PersonalSettingsSitemap, ResetPasswordSitemap
-from users.sitemaps import KlimapunkteViewSitemap, LevelViewSitemap, HistorySitemap
+from home.sitemaps import FeedbackSitemap, HomeSitemap, NutzungsbedingungenSitemap, SupportSitemap
+from pages.sitemaps import AknachhaltigkeitSitemap, MobileAppsSitemap
+from personals.sitemaps import LoginSitemap, PersonalSettingsSitemap, RegisterSitemap, ResetPasswordSitemap
+from users.sitemaps import HistorySitemap, KlimapunkteViewSitemap, LevelViewSitemap
 
 raw_sitemap_classes: dict[str, type[Sitemap]] = {
     "home": HomeSitemap,
     "nutzungsbedingungen": NutzungsbedingungenSitemap,
     "support": SupportSitemap,
     "feedback": FeedbackSitemap,
-
     "family_overview": FamilyOverviewSitemap,
     "add_family": AddFamilySitemap,
     "join_family": JoinFamilySitemap,
-
     "community_overview": CommunityOverviewSitemap,
     "add_community": AddCommunitySitemap,
     "join_community": JoinCommunitySitemap,
-
     "login": LoginSitemap,
     "register": RegisterSitemap,
     "personal_settings": PersonalSettingsSitemap,
     "reset_password": ResetPasswordSitemap,
-
     "klimapunkte_view": KlimapunkteViewSitemap,
     "level_view": LevelViewSitemap,
     "history": HistorySitemap,
-
     "add_aktionen": AddAktionenSitemap,
-
     "artikel_detail": ArtikelDetailSitemap,
     "artikel_overview": ArtikelOverviewSitemap,
     "add_artikel": AddArtikelSitemap,
-
     "event_detail": EventDetailSitemap,
     "events_overview": EventsOverviewSitemap,
     "add_event": AddEventSitemap,
-
     "forum_post_detail": ForumPostDetailSitemap,
     "forum_overview": ForumOverviewSitemap,
     "add_forum_post": AddForumPostSitemap,
-
     "mobile_apps": MobileAppsSitemap,
     "aknachhaltigkeit": AknachhaltigkeitSitemap,
-
     "hall_of_fame_detail": HallOfFameDetailSitemap,
 }
 
@@ -83,44 +73,42 @@ sitemaps = build_localized_sitemaps(raw_sitemap_classes)
 
 urlpatterns = [
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap"),
-    path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
-    path('ClimateQuestAdmin/', admin.site.urls),
-    path('', include('home.urls')),
-    path('personals/', include('personals.urls')),
-    path('aktionen/', include('aktionen.urls')),
-    path('community/', include('community.urls')),
-    path('family/', include('family.urls')),
-    path('users/', include('users.urls')),
-    path('events/', include('events.urls')),
-    path('artikel/', include('artikel.urls')),
-    path('forum/', include('forum.urls')),
-    path('petitions/', include('petitions.urls')),
-    path('hall_of_fame/', include('hall_of_fame.urls')),
-    path('pages/', include('pages.urls')),
-
+    path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
+    path("ClimateQuestAdmin/", admin.site.urls),
+    path("", include("home.urls")),
+    path("personals/", include("personals.urls")),
+    path("aktionen/", include("aktionen.urls")),
+    path("community/", include("community.urls")),
+    path("family/", include("family.urls")),
+    path("users/", include("users.urls")),
+    path("events/", include("events.urls")),
+    path("artikel/", include("artikel.urls")),
+    path("forum/", include("forum.urls")),
+    path("petitions/", include("petitions.urls")),
+    path("hall_of_fame/", include("hall_of_fame.urls")),
+    path("pages/", include("pages.urls")),
     # Notifications
-    path('sw.js', TemplateView.as_view(template_name='sw.js', content_type='application/x-javascript')),
-    path('.well-known/assetlinks.json',
-         TemplateView.as_view(template_name='assetlinks.json', content_type='application/json')),
-    path('apple-app-site-association',
-         TemplateView.as_view(template_name='aasa.json', content_type='application/json')),
-
+    path("sw.js", TemplateView.as_view(template_name="sw.js", content_type="application/x-javascript")),
+    path(
+        ".well-known/assetlinks.json",
+        TemplateView.as_view(template_name="assetlinks.json", content_type="application/json"),
+    ),
+    path(
+        "apple-app-site-association", TemplateView.as_view(template_name="aasa.json", content_type="application/json")
+    ),
     # Webpush
-    path('webpush/', include('webpush.urls')),
-
-    # Hot Reload
-    path("__reload__/", include("django_browser_reload.urls")),
-
+    path("webpush/", include("webpush.urls")),
     # AllAuth
-    path('accounts/login/', RedirectView.as_view(url='/personals/login/')),
-    path('accounts/signup/', RedirectView.as_view(url='/personals/register/')),
-    path('accounts/', include('allauth.urls')),
+    path("accounts/login/", RedirectView.as_view(url="/personals/login/")),
+    path("accounts/signup/", RedirectView.as_view(url="/personals/register/")),
+    path("accounts/", include("allauth.urls")),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns.append(path("__reload__/", include("django_browser_reload.urls")))
 
-handler400 = 'core.views.custom_400'
-handler403 = 'core.views.custom_403'
-handler404 = 'core.views.custom_404'
-handler500 = 'core.views.custom_500'
-handler503 = 'core.views.custom_503'
+handler400 = "core.views.custom_400"
+handler403 = "core.views.custom_403"
+handler404 = "core.views.custom_404"
+handler500 = "core.views.custom_500"
+handler503 = "core.views.custom_503"

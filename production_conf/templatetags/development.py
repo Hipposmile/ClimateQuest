@@ -6,7 +6,7 @@ register = template.Library()
 
 @register.tag
 def development(parser, token):
-    nodelist = parser.parse(('enddevelopment',))
+    nodelist = parser.parse(("enddevelopment",))
     parser.delete_first_token()
     return DevelopmentNode(nodelist)
 

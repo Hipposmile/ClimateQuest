@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from django.db import models
-from django.contrib.auth.models import User
+
 
 class TreeCodes(models.Model):
     code = models.CharField(max_length=100)
@@ -10,7 +10,7 @@ class TreeCodes(models.Model):
     planted = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.sponsor} --> {self.code}'
+        return f"{self.sponsor} --> {self.code}"
 
 
 class UserErweitert(models.Model):
@@ -21,7 +21,7 @@ class UserErweitert(models.Model):
     weekly_goal = models.PositiveIntegerField(default=20, validators=[MinValueValidator(1)])
     planted_trees = models.ManyToManyField(TreeCodes, blank=True)
     allows_data_view = models.BooleanField(default=False)
-    lang = models.CharField(max_length=2, default='de')
+    lang = models.CharField(max_length=2, default="de")
     additional_klimapunkte = models.FloatField(default=0)
     show_tour_banner = models.BooleanField(default=True)
 
@@ -49,7 +49,7 @@ class Level(models.Model):
     description_en = models.CharField(max_length=100)
 
     def __str__(self):
-        return f'{self.description}'
+        return f"{self.description}"
 
 
 class IOSDevice(models.Model):

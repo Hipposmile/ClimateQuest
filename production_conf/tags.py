@@ -13,6 +13,7 @@ def development_only(view_func):
 
     return wrapper
 
+
 def production_only(view_func):
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):

@@ -3,34 +3,34 @@ import random
 import string
 import time
 import traceback
-from datetime import timedelta, date
+from datetime import date, timedelta
 
 import bleach
 import httpx
 import jwt
-from PIL import Image
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMultiAlternatives
 from django.core.validators import validate_email
-from django.db.models import Sum, F
+from django.db.models import F, Sum
 from django.db.models.functions import TruncWeek
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from PIL import Image
 from webpush import send_user_notification
 
-from ClimateQuest import settingsprod
 from aktionen.models import Aktion, Category
 from artikel.models import Artikel
+from ClimateQuest import settingsprod
 from community.models import Community
 from core.all_messages import all_messages
 from family.models import Family
 from hall_of_fame.models import HallOfFameEntry
 from home.models import Benachrichtigung
-from personals.models import UserErweitert, Level, IOSDevice
+from personals.models import IOSDevice, Level, UserErweitert
 
 dezimalstellen = 4
 
@@ -38,40 +38,43 @@ logger = logging.getLogger("django")
 
 
 def generate_random_password():
-    return ''.join(
-        random.choices(string.ascii_letters + string.digits + string.punctuation.replace('"', '').replace("'", ""),
-                       k=12))  # Removes " so string can´t be interrupted
+    return "".join(
+        random.choices(
+            string.ascii_letters + string.digits + string.punctuation.replace('"', "").replace("'", ""), k=12
+        )
+    )  # Removes " so string can´t be interrupted
 
 
 def send_mail_function(**kwargs):
-    request = kwargs.get('request')
-    fehlermeldung = kwargs.get('fehlermeldung', 'Fehler beim E-Mail-Versand')
-    subject = kwargs.get('subject')
-    message = kwargs.get('message')
-    fail_silently = kwargs.get('fail_silently', False)
-    mailinglist_needless = kwargs.get('mailinglist_needless', False)
-    url = kwargs.get('url', '/dashboard/')
+    request = kwargs.get("request")
+    fehlermeldung = kwargs.get("fehlermeldung", "Fehler beim E-Mail-Versand")
+    subject = kwargs.get("subject")
+    message = kwargs.get("message")
+    fail_silently = kwargs.get("fail_silently", False)
+    mailinglist_needless = kwargs.get("mailinglist_needless", False)
+    url = kwargs.get("url", "/dashboard/")
 
     if request is None or subject is None or message is None or fail_silently is None:
-        create_internal_error(request, 'Beim E-Mail Versand wurden nicht alle notwendigen Elemente übergeben',
-                              fehlermeldung)
+        create_internal_error(
+            request, "Beim E-Mail Versand wurden nicht alle notwendigen Elemente übergeben", fehlermeldung
+        )
 
-    user = kwargs.get('user')
+    user = kwargs.get("user")
     if not user:
         try:
             user = request.user
         except Exception:
-            create_internal_error(request, 'Bei send_mail_function wurde kein User übergeben', fehlermeldung)
+            create_internal_error(request, "Bei send_mail_function wurde kein User übergeben", fehlermeldung)
 
-    recipient_list = kwargs.get('recipient_list')
+    recipient_list = kwargs.get("recipient_list")
     if not recipient_list:
         recipient_list = user.email
 
-    if not mailinglist_needless and user.email != '':
+    if not mailinglist_needless and user.email != "":
         try:
             user_erweitert = UserErweitert.objects.get(user=user)
         except UserErweitert.DoesNotExist:
-            create_internal_error(request, f'UserErweitert zu User {user} nicht gefunden', fehlermeldung)
+            create_internal_error(request, f"UserErweitert zu User {user} nicht gefunden", fehlermeldung)
         if not user_erweitert.mail_verified:
             return True
         if user_erweitert.mailinglist:
@@ -139,16 +142,13 @@ def send_mail_function(**kwargs):
                 """
                 text_content = message
                 email = EmailMultiAlternatives(
-                    subject=subject,
-                    body=text_content,
-                    from_email=settingsprod.EMAIL_HOST_USER,
-                    to=[recipient_list]
+                    subject=subject, body=text_content, from_email=settingsprod.EMAIL_HOST_USER, to=[recipient_list]
                 )
                 email.attach_alternative(html_content, "text/html")
                 email.send()
                 return True
             except Exception as e:
-                create_internal_error(request, f'Fehler beim E-Mail-Versand an {recipient_list}: {e}', fehlermeldung)
+                create_internal_error(request, f"Fehler beim E-Mail-Versand an {recipient_list}: {e}", fehlermeldung)
 
     elif mailinglist_needless:
         try:
@@ -214,19 +214,16 @@ def send_mail_function(**kwargs):
                             """
             text_content = message
             email = EmailMultiAlternatives(
-                subject=subject,
-                body=text_content,
-                from_email=settingsprod.EMAIL_HOST_USER,
-                to=[recipient_list]
+                subject=subject, body=text_content, from_email=settingsprod.EMAIL_HOST_USER, to=[recipient_list]
             )
             email.attach_alternative(html_content, "text/html")
             email.send()
             return True
         except Exception as e:
-            create_internal_error(request, f'Fehler beim E-Mail-Versand an {recipient_list}: {e}', fehlermeldung)
+            create_internal_error(request, f"Fehler beim E-Mail-Versand an {recipient_list}: {e}", fehlermeldung)
             return False
 
-    elif user.email == '':
+    elif user.email == "":
         return True
     else:
         return True
@@ -239,7 +236,7 @@ def get_level(user):
     klimapunkte = get_klimapunkte(aktionen)
     klimapunkte += get_additional_klimapunkte(user)
 
-    levels = Level.objects.order_by('klimapunkte')
+    levels = Level.objects.order_by("klimapunkte")
 
     current_level = None
     next_level = None
@@ -258,25 +255,35 @@ def get_level(user):
             else:
                 level_number = i + 1
                 return {
-                    'info': _(
-                        'Du hast das höchste Level bereits erreicht: %(level)s <span class="emoji">&#x1F973;</span>') % {
-                                'level': current_level.description},
-                    'current_level': current_level, 'levels': levels, 'klimapunkte': klimapunkte,
-                    'level_number': level_number}
+                    "info": _(
+                        'Du hast das höchste Level bereits erreicht: %(level)s <span class="emoji">&#x1F973;</span>'
+                    )
+                    % {"level": current_level.description},
+                    "current_level": current_level,
+                    "levels": levels,
+                    "klimapunkte": klimapunkte,
+                    "level_number": level_number,
+                }
 
     klimapunkte_missing = next_level.klimapunkte - klimapunkte
 
-    return {'current_level': current_level, 'next_level': next_level, 'progress_percent': progress_percent,
-            'levels': levels, 'klimapunkte_missing': klimapunkte_missing, 'level_number': level_number}
+    return {
+        "current_level": current_level,
+        "next_level": next_level,
+        "progress_percent": progress_percent,
+        "levels": levels,
+        "klimapunkte_missing": klimapunkte_missing,
+        "level_number": level_number,
+    }
 
 
 def get_weekly_goal_from_user(user):
     weekly_goal = user.usererweitert.weekly_goal
     weekly_klimapunkte = (
-            Aktion.objects
-            .filter(user=user, date__gte=(date.today() - timedelta(days=date.today().weekday())))
-            .annotate(impact=(F("aktion__klimapunkte") * F("quantity")))
-            .aggregate(total=Sum('impact'))['total'] or 0
+        Aktion.objects.filter(user=user, date__gte=(date.today() - timedelta(days=date.today().weekday())))
+        .annotate(impact=(F("aktion__klimapunkte") * F("quantity")))
+        .aggregate(total=Sum("impact"))["total"]
+        or 0
     )
     weekly_goal_progress_percent = round((weekly_klimapunkte / weekly_goal) * 100)
     return weekly_goal, weekly_klimapunkte, weekly_goal_progress_percent
@@ -296,87 +303,96 @@ def get_klimapunkte(aktionen):
 
 def create_internal_error(request, beschreibung, fehlermeldung="interner Fehler", exception=None, throw_exception=True):
     def sanitize_post_data(post_data):
-        return {
-            k: ('***' if 'password' in k.lower() or 'token' in k.lower() else v)
-            for k, v in post_data.items()
-        }
+        return {k: ("***" if "password" in k.lower() or "token" in k.lower() else v) for k, v in post_data.items()}
 
     def sanitize_cookies(cookies):
-        return {k: '***' for k in cookies}
+        return {k: "***" for k in cookies}
 
     def extract_files(files):
         return {k: f.name for k, f in files.items()}
 
     def extract_meta(meta):
         # Nur HTTP-Header, keine IP-Adresse oder andere sensible Felder
-        return {k: v for k, v in meta.items() if k.startswith('HTTP_')}
+        return {k: v for k, v in meta.items() if k.startswith("HTTP_")}
 
     error_message = {
-        'timestamp': timezone.now().isoformat(),
-        'method': request.method,
-        'path': request.path,
-        'full_path': request.get_full_path(),
-        'user': str(request.user) if request.user.is_authenticated else 'Anonymous',
-        'GET': request.GET.dict(),
-        'POST': sanitize_post_data(request.POST.dict()),
-        'COOKIES': sanitize_cookies(request.COOKIES),
-        'FILES': extract_files(request.FILES),
-        'META': extract_meta(request.META),
-        'beschreibung': beschreibung
+        "timestamp": timezone.now().isoformat(),
+        "method": request.method,
+        "path": request.path,
+        "full_path": request.get_full_path(),
+        "user": str(request.user) if request.user.is_authenticated else "Anonymous",
+        "GET": request.GET.dict(),
+        "POST": sanitize_post_data(request.POST.dict()),
+        "COOKIES": sanitize_cookies(request.COOKIES),
+        "FILES": extract_files(request.FILES),
+        "META": extract_meta(request.META),
+        "beschreibung": beschreibung,
     }
 
     if exception:
-        error_message['exception'] = str(exception)
-        error_message['traceback'] = traceback.format_exc()
+        error_message["exception"] = str(exception)
+        error_message["traceback"] = traceback.format_exc()
 
     if throw_exception:
         messages.error(request, fehlermeldung)
 
     logging.error(error_message)
 
-    with open('logs/errors.log', 'a') as file:
-        file.write(f'{error_message}\n\n')
+    with open("logs/errors.log", "a") as file:
+        file.write(f"{error_message}\n\n")
 
 
 def create_notification(request, notification_de, notification_en, user=None, url=None):
     if user is None:
         user = request.user
     if url is None:
-        url = reverse('dashboard')
+        url = reverse("dashboard")
 
     head = "Neue Benachrichtigung" if user.usererweitert.lang == "de" else "New notification"
 
-    benachrichtigung = Benachrichtigung.objects.create(benachrichtigung_de=notification_de,
-                                                       benachrichtigung_en=notification_en, user=user,
-                                                       url=url)
+    benachrichtigung = Benachrichtigung.objects.create(
+        benachrichtigung_de=notification_de, benachrichtigung_en=notification_en, user=user, url=url
+    )
     send_mail_function(
         request=request,
-        fehlermeldung='Beim Erstellen einer Benachrichtigung ist beim Versenden der E-Mail ein Fehler aufgetreten. Die Benachrichtigung kann nur in dem Benachrichtigungsteil hier auf der Webseite gefunden werden!' if user.usererweitert.lang == 'de' else 'An error occurred while sending the email during the creation of the notification. The notification can only be found in the notifications section here on the website!',
-        subject='ClimateQuest - neue Benachrichtigung',
-        message=notification_de if user.usererweitert.lang == 'de' else notification_en,
+        fehlermeldung="Beim Erstellen einer Benachrichtigung ist beim Versenden der E-Mail ein Fehler aufgetreten. Die Benachrichtigung kann nur in dem Benachrichtigungsteil hier auf der Webseite gefunden werden!"
+        if user.usererweitert.lang == "de"
+        else "An error occurred while sending the email during the creation of the notification. The notification can only be found in the notifications section here on the website!",
+        subject="ClimateQuest - neue Benachrichtigung",
+        message=notification_de if user.usererweitert.lang == "de" else notification_en,
         recipient_list=user.email,
         user=user,
-        url=url
+        url=url,
     )
 
-    mobile_notification_redirect_url = reverse('benachrichtigungen_view_focused', args=[benachrichtigung.id])
-    mobile_msg_de = notification_de.split('<span>')[0]
-    mobile_msg_en = notification_en.split('<span>')[0]
+    mobile_notification_redirect_url = reverse("benachrichtigungen_view_focused", args=[benachrichtigung.id])
+    mobile_msg_de = notification_de.split("<span>")[0]
+    mobile_msg_en = notification_en.split("<span>")[0]
 
     tokens = IOSDevice.objects.filter(user=user).values_list("apns_token", flat=True)
     for t in tokens:
         try:
-            send_ios_push(device_token=t, title=head,
-                          body=mobile_msg_de if user.usererweitert.lang == 'de' else mobile_msg_en,
-                          data={"url": mobile_notification_redirect_url})
+            send_ios_push(
+                device_token=t,
+                title=head,
+                body=mobile_msg_de if user.usererweitert.lang == "de" else mobile_msg_en,
+                data={"url": mobile_notification_redirect_url},
+            )
         except Exception as e:
             logging.error(e)
 
-    res = send_push(benachrichtigung=mobile_msg_de if user.usererweitert.lang == "de" else mobile_msg_en,
-                    user=user, url=mobile_notification_redirect_url, head=head)
+    res = send_push(
+        benachrichtigung=mobile_msg_de if user.usererweitert.lang == "de" else mobile_msg_en,
+        user=user,
+        url=mobile_notification_redirect_url,
+        head=head,
+    )
     if res == 500:
-        create_internal_error(request, "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.",
-                              "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.")
+        create_internal_error(
+            request,
+            "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.",
+            "Beim Erstellen einer Benachrichtigung an das Gerät ist ein Fehler aufgetreten.",
+        )
 
 
 def send_ios_push(device_token: str, title: str, body: str, data: dict = None):
@@ -420,9 +436,9 @@ def _make_jwt():
     )
 
 
-def send_push(benachrichtigung, user, url='/benachrichtigungen/', head="Neue Benachrichtigung"):
+def send_push(benachrichtigung, user, url="/benachrichtigungen/", head="Neue Benachrichtigung"):
     try:
-        payload = {'head': head, 'body': benachrichtigung, 'url': url}
+        payload = {"head": head, "body": benachrichtigung, "url": url}
         send_user_notification(user=user, payload=payload, ttl=1000)
 
         return 200
@@ -440,7 +456,7 @@ def ist_email_gueltig(email):
 
 def check_worldwide_ranking_exists(request):
     try:
-        Family.objects.get(name='worldwide ranking')
+        Family.objects.get(name="worldwide ranking")
         return True
     except Family.DoesNotExist:
         create_internal_error(request, 'Family "worldwide ranking" existiert nicht')
@@ -448,7 +464,7 @@ def check_worldwide_ranking_exists(request):
 
 
 def get_families_of_user(user):
-    return Family.objects.filter(members=user).order_by('name')
+    return Family.objects.filter(members=user).order_by("name")
 
 
 def get_communities_of_user(user):
@@ -456,31 +472,22 @@ def get_communities_of_user(user):
     user_families = get_families_of_user(user)
 
     # Verwende diese IDs zum Filtern der Communities
-    communities = Community.objects.filter(members__id__in=user_families).distinct().order_by('name')
+    communities = Community.objects.filter(members__id__in=user_families).distinct().order_by("name")
 
     return communities
 
 
 def get_communities_of_family(family):
-    family_communities = Community.objects.filter(members=family).distinct().order_by('name')
+    family_communities = Community.objects.filter(members=family).distinct().order_by("name")
     return family_communities
 
 
-ALLOWED_TAGS = [
-    'p', 'strong', 'em', 'u', 'ol', 'ul', 'li', 'a', 'br', 'h1', 'h2'
-]
-ALLOWED_ATTRIBUTES = {
-    'a': ['href', 'target', 'rel']
-}
+ALLOWED_TAGS = ["p", "strong", "em", "u", "ol", "ul", "li", "a", "br", "h1", "h2"]
+ALLOWED_ATTRIBUTES = {"a": ["href", "target", "rel"]}
 
 
 def clean_html(html):
-    cleaned = bleach.clean(
-        html,
-        tags=ALLOWED_TAGS,
-        attributes=ALLOWED_ATTRIBUTES,
-        strip=True
-    )
+    cleaned = bleach.clean(html, tags=ALLOWED_TAGS, attributes=ALLOWED_ATTRIBUTES, strip=True)
     return bleach.linkify(cleaned, callbacks=[bleach.callbacks.nofollow])
 
 
@@ -505,14 +512,11 @@ def get_streak_from_user(user):
     weekly_goal = user.usererweitert.weekly_goal
 
     weekly_data = (
-        Aktion.objects
-        .filter(user=user)
-        .annotate(week=TruncWeek('date'))
-        .values('week')
-        .annotate(
-            total_impact=Sum(F("aktion__klimapunkte") * F("quantity"))
-        )
-        .order_by('-week')
+        Aktion.objects.filter(user=user)
+        .annotate(week=TruncWeek("date"))
+        .values("week")
+        .annotate(total_impact=Sum(F("aktion__klimapunkte") * F("quantity")))
+        .order_by("-week")
     )
 
     today = date.today()
@@ -548,9 +552,18 @@ def get_streak_from_user(user):
     return successful_weeks
 
 
-def clean_img(img, ALLOWED_EXTENSIONS=["jpg", "jpeg", "png", "webp", "avif"],
-              ALLOWED_MIME_TYPES=["image/jpeg", "image/png", "image/webp", "image/avif", ],
-              ALLOWED_FORMATS=["JPEG", "PNG", "WEBP", "AVIF"], MAX_SIZE_MB=5):
+def clean_img(
+    img,
+    ALLOWED_EXTENSIONS=["jpg", "jpeg", "png", "webp", "avif"],
+    ALLOWED_MIME_TYPES=[
+        "image/jpeg",
+        "image/png",
+        "image/webp",
+        "image/avif",
+    ],
+    ALLOWED_FORMATS=["JPEG", "PNG", "WEBP", "AVIF"],
+    MAX_SIZE_MB=5,
+):
     if img.size > MAX_SIZE_MB * 1024 * 1024:
         return False, all_messages["size_exceeded_maximum"].format(max_size_mb=MAX_SIZE_MB)
 
@@ -575,7 +588,7 @@ def clean_img(img, ALLOWED_EXTENSIONS=["jpg", "jpeg", "png", "webp", "avif"],
 
 
 def check_is_truth(request):
-    is_truth = request.POST.get('is_truth') == 'on'
+    is_truth = request.POST.get("is_truth") == "on"
     if not is_truth:
         messages.error(request, all_messages["not_is_truth"])
         return False
@@ -589,8 +602,9 @@ def get_perfect_week_progress(user, date_given):
     output_de = {}
     output_en = {}
     for category in Category.objects.all():
-        has_action = Aktion.objects.filter(user=user, aktion__category=category,
-                                           date__range=(week_start, week_end)).exists()
+        has_action = Aktion.objects.filter(
+            user=user, aktion__category=category, date__range=(week_start, week_end)
+        ).exists()
         output_de[category.name] = has_action
         output_en[category.name_en] = has_action
 
@@ -603,15 +617,11 @@ def get_family_rank_from_user(user, family):
 
     for member in members:
         klimapunkte = get_all_klimapunkte_from_user(member)
-        members_with_klimapunkte.append({'member': member, 'klimapunkte': klimapunkte})
+        members_with_klimapunkte.append({"member": member, "klimapunkte": klimapunkte})
 
-    members_with_klimapunkte_sortiert = sorted(
-        members_with_klimapunkte,
-        key=lambda x: x['klimapunkte'],
-        reverse=True
-    )
+    members_with_klimapunkte_sortiert = sorted(members_with_klimapunkte, key=lambda x: x["klimapunkte"], reverse=True)
 
-    rank = next(i for i, d in enumerate(members_with_klimapunkte_sortiert) if d['member'] == user)
+    rank = next(i for i, d in enumerate(members_with_klimapunkte_sortiert) if d["member"] == user)
     return rank + 1
 
 
@@ -636,10 +646,10 @@ def get_family_rank_from_user(user, family):
 
 def get_date_range(zeitraum: str, heute: date) -> tuple[date | None, date | None]:
     offsets = {
-        'Heute': timedelta(days=0),
-        'Sieben Tage': timedelta(days=7),
-        'Dreißig Tage': timedelta(days=30),
-        'Dreihundertfünfundsechzig Tage': timedelta(days=365),
+        "Heute": timedelta(days=0),
+        "Sieben Tage": timedelta(days=7),
+        "Dreißig Tage": timedelta(days=30),
+        "Dreihundertfünfundsechzig Tage": timedelta(days=365),
     }
     if zeitraum in offsets:
         return heute - offsets[zeitraum], heute
@@ -680,9 +690,8 @@ def get_perfect_week_progress_optimized(user, date_given, prefetched_aktionen):
     week_end = week_start + timedelta(days=6)
 
     covered_category_ids = set(
-        prefetched_aktionen
-        .filter(date__range=(week_start, week_end))
-        .values_list('aktion__category_id', flat=True)
+        prefetched_aktionen.filter(date__range=(week_start, week_end))
+        .values_list("aktion__category_id", flat=True)
         .distinct()
     )
 
@@ -697,7 +706,7 @@ def get_perfect_week_progress_optimized(user, date_given, prefetched_aktionen):
 
 
 def get_level_prefetched(user, klimapunkte):
-    levels = Level.objects.order_by('klimapunkte')
+    levels = Level.objects.order_by("klimapunkte")
 
     current_level = None
     next_level = None
@@ -716,36 +725,41 @@ def get_level_prefetched(user, klimapunkte):
             else:
                 level_number = i + 1
                 return {
-                    'info': _(
-                        'Du hast das höchste Level bereits erreicht: %(level)s <span class="emoji">&#x1F973;</span>') % {
-                                'level': current_level.description},
-                    'current_level': current_level, 'levels': levels, 'klimapunkte': klimapunkte,
-                    'level_number': level_number}
+                    "info": _(
+                        'Du hast das höchste Level bereits erreicht: %(level)s <span class="emoji">&#x1F973;</span>'
+                    )
+                    % {"level": current_level.description},
+                    "current_level": current_level,
+                    "levels": levels,
+                    "klimapunkte": klimapunkte,
+                    "level_number": level_number,
+                }
 
     klimapunkte_missing = next_level.klimapunkte - klimapunkte
 
-    return {'current_level': current_level, 'next_level': next_level, 'progress_percent': progress_percent,
-            'levels': levels, 'klimapunkte_missing': klimapunkte_missing, 'level_number': level_number}
+    return {
+        "current_level": current_level,
+        "next_level": next_level,
+        "progress_percent": progress_percent,
+        "levels": levels,
+        "klimapunkte_missing": klimapunkte_missing,
+        "level_number": level_number,
+    }
 
 
 def get_family_rank_optimized(user, user_klimapunkte):
-    family = (
-        Family.objects
-        .prefetch_related('members__usererweitert')
-        .get(name='worldwide ranking')
-    )
+    family = Family.objects.prefetch_related("members__usererweitert").get(name="worldwide ranking")
 
     members = family.members.all()
 
-    member_ids = members.values_list('id', flat=True)
+    member_ids = members.values_list("id", flat=True)
 
     klimapunkte_per_member = (
-        Aktion.objects
-        .filter(user_id__in=member_ids)
-        .values('user_id')
-        .annotate(total=Sum(F('aktion__klimapunkte') * F('quantity')))
+        Aktion.objects.filter(user_id__in=member_ids)
+        .values("user_id")
+        .annotate(total=Sum(F("aktion__klimapunkte") * F("quantity")))
     )
-    klimapunkte_map = {entry['user_id']: entry['total'] or 0 for entry in klimapunkte_per_member}
+    klimapunkte_map = {entry["user_id"]: entry["total"] or 0 for entry in klimapunkte_per_member}
 
     members_with_klimapunkte = []
     for member in members:

@@ -22,7 +22,7 @@ class Category(models.Model):
 
 class Answer(models.Model):
     answer = models.TextField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='petition_answer')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="petition_answer")
     date_time = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -31,8 +31,8 @@ class Answer(models.Model):
 
 class Comment(models.Model):
     comment = models.TextField()
-    answers = models.ManyToManyField(Answer, related_name='comment', blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='petition_comment')
+    answers = models.ManyToManyField(Answer, related_name="comment", blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="petition_comment")
     date_time = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -44,11 +44,11 @@ class Petition(models.Model):
     content = models.TextField()
     goal = models.IntegerField()
     created_at = models.DateField(auto_now_add=True)
-    signs = models.ManyToManyField(User, blank=True, related_name='petition_sign')
-    updates = models.ManyToManyField(Update, related_name='petition_update', blank=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='petition_category')
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_petitions')
-    comments = models.ManyToManyField(Comment, related_name='petition_comment', blank=True)
+    signs = models.ManyToManyField(User, blank=True, related_name="petition_sign")
+    updates = models.ManyToManyField(Update, related_name="petition_update", blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="petition_category")
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="created_petitions")
+    comments = models.ManyToManyField(Comment, related_name="petition_comment", blank=True)
     success = models.BooleanField(default=False)
 
     def signs_count(self):

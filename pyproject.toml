@@ -1,0 +1,34 @@
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "ClimateQuest.settingstest"
+python_files = ["test_*.py"]
+testpaths = ["tests"]
+addopts = "-p no:cacheprovider"
+
+[tool.coverage.run]
+source = ["."]
+branch = true
+omit = [
+    "*/migrations/*",
+    "manage.py",
+    "tests/*",
+    "ClimateQuest/wsgi.py",
+    "ClimateQuest/asgi.py",
+    "ClimateQuest/settings.py",
+    "ClimateQuest/settingsprod.py",
+    "ClimateQuest/settingstest.py",
+    "*/tests.py",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+exclude_also = ["if __name__ == .__main__.:"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+extend-exclude = ["migrations", "static", "staticfiles", "venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "BLE", "SIM"]
+ignore = ["E501", "SIM108"]

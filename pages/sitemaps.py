@@ -7,7 +7,7 @@ class MobileAppsSitemap(Sitemap):
     priority = 0.4
 
     def items(self):
-        return ['mobile_apps']
+        return ["mobile_apps"]
 
     def location(self, item):
         return reverse(item)
@@ -18,7 +18,7 @@ class AknachhaltigkeitSitemap(Sitemap):
     priority = 0.1
 
     def items(self):
-        return ['aknachhaltigkeit']
+        return ["aknachhaltigkeit"]
 
     def location(self, item):
         return reverse(item)

@@ -53,9 +53,7 @@ class MySocialAccountAdapter(DefaultSocialAccountAdapter):
         username = self._build_username(sociallogin)
         if User.objects.filter(username=username).exists():
             messages.error(request, all_messages["username_not_available"])
-            raise ImmediateHttpResponse(
-                HttpResponseRedirect("/personals/login/")
-            )
+            raise ImmediateHttpResponse(HttpResponseRedirect("/personals/login/"))
 
     def populate_user(self, request, sociallogin, data):
         user = super().populate_user(request, sociallogin, data)

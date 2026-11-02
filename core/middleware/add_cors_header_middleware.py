@@ -7,7 +7,7 @@ class AddCORSHeaderMiddleware:
     def __call__(self, request):
         response = self.get_response(request)
 
-        origin = request.headers.get('Origin')
+        origin = request.headers.get("Origin")
         if origin in self.ALLOWED_ORIGINS:
             response["Access-Control-Allow-Origin"] = origin
         else:

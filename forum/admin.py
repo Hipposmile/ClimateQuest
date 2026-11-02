@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import ForumPost, Answer, Category
+
+from .models import Answer, Category, ForumPost
 
 # Register your models here.
 admin.site.register(ForumPost)

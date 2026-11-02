@@ -2,12 +2,14 @@ from django import template
 
 register = template.Library()
 
+
 @register.filter
 def divide(value, arg):
     try:
         return float(value) / float(arg)
     except (ValueError, TypeError, ZeroDivisionError):
         return 0
+
 
 @register.filter
 def multiply(value, arg):
@@ -16,12 +18,14 @@ def multiply(value, arg):
     except (ValueError, TypeError):
         return 0
 
+
 @register.filter
 def subtract(value, arg):
     try:
         return float(value) - float(arg)
     except (ValueError, TypeError):
         return 0
+
 
 @register.filter
 def percent(value, arg):

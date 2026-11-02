@@ -7,7 +7,7 @@ class HallOfFameDetailSitemap(Sitemap):
     priority = 0.8
 
     def items(self):
-        return ['hall_of_fame_detail']
+        return ["hall_of_fame_detail"]
 
     def location(self, item):
         return reverse(item)

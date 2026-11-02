@@ -1,28 +1,29 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 
 from core.all_messages import all_messages
-from django.contrib import messages
 from utils.functions import clean_html
-from .models import Artikel, Comment, Answer, Category
+
+from .models import Answer, Artikel, Category, Comment
 
 
 # Create your views here.
 def artikel_overview(request):
-    all_categories = Category.objects.values_list('title', flat=True)
+    all_categories = Category.objects.values_list("title", flat=True)
 
     all_artikel = Artikel.objects.all()
     search_keyword = None
-    order_by_name = "name_de" if request.LANGUAGE_CODE == 'de' else "name_en"
-    if request.method == 'POST':
-        category = request.POST.get('category')
+    order_by_name = "name_de" if request.LANGUAGE_CODE == "de" else "name_en"
+    if request.method == "POST":
+        category = request.POST.get("category")
         if category != "Alle":
             all_artikel = all_artikel.filter(category__title=category)
 
         already_ordered = False
-        ordered_by = request.POST.get('order_by')
-        search_keyword = request.POST.get('search_keyword')
+        ordered_by = request.POST.get("order_by")
+        search_keyword = request.POST.get("search_keyword")
         order_map = {
             "Name": order_by_name,
             "Ersteller": "creator__username",
@@ -36,7 +37,7 @@ def artikel_overview(request):
             already_ordered = True
         if ordered_by == "Zuletzt bearbeitet":
             if search_keyword:
-                artikel = all_artikel.filter(**{f"updated_at__icontains": search_keyword})
+                artikel = all_artikel.filter(**{"updated_at__icontains": search_keyword})
             else:
                 artikel = all_artikel
             artikel = artikel.order_by("-updated_at")
@@ -47,12 +48,12 @@ def artikel_overview(request):
                     search_keyword = int(search_keyword)
                 except ValueError:
                     messages.error(request, all_messages["likes_search_keyword_not_a_number"])
-                    return redirect('artikel_overview')
+                    return redirect("artikel_overview")
 
-            artikel = all_artikel.annotate(num_likes=Count('like'))
+            artikel = all_artikel.annotate(num_likes=Count("like"))
             if search_keyword:
                 artikel = artikel.filter(num_likes__icontains=search_keyword)
-            artikel = artikel.order_by('-num_likes')
+            artikel = artikel.order_by("-num_likes")
             already_ordered = True
         if not already_ordered:
             if search_keyword:
@@ -62,43 +63,51 @@ def artikel_overview(request):
             artikel = artikel.order_by(order_by)
     else:
         ordered_by = "Name"
-        artikel = all_artikel.order_by('name_de')
+        artikel = all_artikel.order_by("name_de")
         category = "Alle"
 
-    return render(request, 'artikel_overview.html',
-                  {'artikel': artikel, 'ordered_by': ordered_by, 'search_keyword': search_keyword, 'category': category,
-                   'all_categories': all_categories})
+    return render(
+        request,
+        "artikel_overview.html",
+        {
+            "artikel": artikel,
+            "ordered_by": ordered_by,
+            "search_keyword": search_keyword,
+            "category": category,
+            "all_categories": all_categories,
+        },
+    )
 
 
 @login_required
 def add_artikel(request):
-    all_categories = Category.objects.values_list('title', flat=True)
+    all_categories = Category.objects.values_list("title", flat=True)
 
-    if request.method == 'POST':
-        is_truth = request.POST.get('is_truth') == 'on'
+    if request.method == "POST":
+        is_truth = request.POST.get("is_truth") == "on"
         if not is_truth:
             messages.error(request, all_messages["not_is_truth"])
-            return redirect('add_artikel')
+            return redirect("add_artikel")
 
-        name_de = request.POST.get('name_de')
-        name_en = request.POST.get('name_en')
-        content_de = request.POST.get('content_de')
-        content_en = request.POST.get('content_en')
-        category = request.POST.get('category')
+        name_de = request.POST.get("name_de")
+        name_en = request.POST.get("name_en")
+        content_de = request.POST.get("content_de")
+        content_en = request.POST.get("content_en")
+        category = request.POST.get("category")
 
         try:
             category = Category.objects.get(title=category)
         except Category.DoesNotExist:
             messages.error(request, all_messages["internal_error"])
-            return redirect('add_artikel')
+            return redirect("add_artikel")
 
         if len(name_de) > 100 or len(name_en) > 100:
             messages.error(request, all_messages["too_long_input"])
-            return redirect('add_artikel')
+            return redirect("add_artikel")
 
         if not name_de or not name_en or not content_de or not content_en:
             messages.error(request, all_messages["missing_required_inputs"])
-            return redirect('add_artikel')
+            return redirect("add_artikel")
 
         content_de = clean_html(content_de)
         content_en = clean_html(content_en)
@@ -109,14 +118,14 @@ def add_artikel(request):
             content_de=content_de,
             content_en=content_en,
             creator=request.user,
-            category=category
+            category=category,
         )
 
         messages.success(request, all_messages["successfully_created_artikel"])
 
-        return redirect('artikel_detail', artikel.id)
+        return redirect("artikel_detail", artikel.id)
 
-    return render(request, 'add_artikel.html', {'categories': all_categories})
+    return render(request, "add_artikel.html", {"categories": all_categories})
 
 
 @login_required
@@ -125,40 +134,40 @@ def edit_artikel(request, artikel_id):
         artikel = Artikel.objects.get(id=artikel_id)
     except Artikel.DoesNotExist:
         messages.error(request, all_messages["artikel_not_existing"])
-        return redirect('artikel_overview')
+        return redirect("artikel_overview")
 
     if artikel.creator != request.user:
         messages.error(request, all_messages["not_authorized_to_visit"])
-        return redirect('artikel_detail', artikel.id)
+        return redirect("artikel_detail", artikel.id)
 
-    all_categories = Category.objects.values_list('title', flat=True)
+    all_categories = Category.objects.values_list("title", flat=True)
 
-    if request.method == 'POST':
-        if 'edit_artikel' in request.POST:
-            is_truth = request.POST.get('is_truth') == 'on'
+    if request.method == "POST":
+        if "edit_artikel" in request.POST:
+            is_truth = request.POST.get("is_truth") == "on"
             if not is_truth:
                 messages.error(request, all_messages["not_is_truth"])
-                return redirect('edit_artikel', artikel_id=artikel_id)
+                return redirect("edit_artikel", artikel_id=artikel_id)
 
-            name_de = request.POST.get('name_de')
-            name_en = request.POST.get('name_en')
-            content_de = request.POST.get('content_de')
-            content_en = request.POST.get('content_en')
-            category = request.POST.get('category')
+            name_de = request.POST.get("name_de")
+            name_en = request.POST.get("name_en")
+            content_de = request.POST.get("content_de")
+            content_en = request.POST.get("content_en")
+            category = request.POST.get("category")
 
             try:
                 category = Category.objects.get(title=category)
             except Category.DoesNotExist:
                 messages.error(request, all_messages["internal_error"])
-                return redirect('edit_artikel', artikel_id=artikel_id)
+                return redirect("edit_artikel", artikel_id=artikel_id)
 
             if len(name_de) > 100 or len(name_en) > 100:
                 messages.error(request, all_messages["too_long_input"])
-                return redirect('edit_artikel', artikel_id=artikel_id)
+                return redirect("edit_artikel", artikel_id=artikel_id)
 
             if not name_de or not name_en or not content_de or not content_en:
                 messages.error(request, all_messages["missing_required_inputs"])
-                return redirect('edit_artikel', artikel_id=artikel_id)
+                return redirect("edit_artikel", artikel_id=artikel_id)
 
             content_de = clean_html(content_de)
             content_en = clean_html(content_en)
@@ -171,13 +180,13 @@ def edit_artikel(request, artikel_id):
             artikel.save()
 
             messages.success(request, all_messages["successfully_edited_artikel"])
-            return redirect('artikel_detail', artikel_id=artikel.id)
-        elif 'delete_artikel' in request.POST:
+            return redirect("artikel_detail", artikel_id=artikel.id)
+        elif "delete_artikel" in request.POST:
             artikel.delete()
             messages.success(request, all_messages["successfully_deleted_artikel"])
-            return redirect('artikel_overview')
+            return redirect("artikel_overview")
 
-    return render(request, 'edit_artikel.html', {'artikel': artikel, 'categories': all_categories})
+    return render(request, "edit_artikel.html", {"artikel": artikel, "categories": all_categories})
 
 
 def artikel_detail(request, artikel_id):
@@ -185,35 +194,35 @@ def artikel_detail(request, artikel_id):
         artikel = Artikel.objects.get(id=artikel_id)
     except Artikel.DoesNotExist:
         messages.error(request, all_messages["artikel_not_existing"])
-        return redirect('artikel_overview')
+        return redirect("artikel_overview")
 
-    if request.method == 'POST':
+    if request.method == "POST":
         if request.user.is_authenticated:
-            if 'add_comment' in request.POST:
-                comment_text = request.POST.get('comment')
+            if "add_comment" in request.POST:
+                comment_text = request.POST.get("comment")
                 comment = Comment.objects.create(comment=comment_text, user=request.user)
                 artikel.comments.add(comment)
 
                 messages.success(request, all_messages["successfully_asked_comment"])
-                return redirect('artikel_detail', artikel_id)
+                return redirect("artikel_detail", artikel_id)
 
-            elif 'answer_comment' in request.POST:
-                comment_id = request.POST.get('comment_id')
+            elif "answer_comment" in request.POST:
+                comment_id = request.POST.get("comment_id")
                 try:
                     comment = Comment.objects.get(id=comment_id)
                 except Comment.DoesNotExist:
                     messages.error(request, all_messages["internal_error"])
-                    return redirect('artikels_overview')
+                    return redirect("artikels_overview")
 
-                answer_text = request.POST.get('answer')
+                answer_text = request.POST.get("answer")
 
                 answer = Answer.objects.create(answer=answer_text, user=request.user)
                 comment.answers.add(answer)
 
                 messages.success(request, all_messages["successfully_answered_comment"])
-                return redirect('artikel_detail', artikel_id)
+                return redirect("artikel_detail", artikel_id)
             if request.user.is_staff:
-                if 'verify' in request.POST:
+                if "verify" in request.POST:
                     if artikel.verified:
                         artikel.verified = False
                         artikel.save()
@@ -223,14 +232,14 @@ def artikel_detail(request, artikel_id):
                         artikel.verified = True
                         artikel.save()
                         messages.success(request, all_messages["successfully_verified_article"])
-                    return redirect('artikel_detail', artikel_id)
-                elif 'block' in request.POST:
+                    return redirect("artikel_detail", artikel_id)
+                elif "block" in request.POST:
                     if artikel.blocked:
                         artikel.blocked = False
                         artikel.save()
                         messages.success(request, all_messages["successfully_unblocked_article"])
                     else:
-                        msg = request.POST.get('block_msg')
+                        msg = request.POST.get("block_msg")
                         if not msg:
                             msg = "Dieser Artikel enthält Fake News"
 
@@ -240,14 +249,14 @@ def artikel_detail(request, artikel_id):
                         artikel.save()
                         messages.success(request, all_messages["successfully_blocked_article"])
 
-                    return redirect('artikel_detail', artikel_id)
+                    return redirect("artikel_detail", artikel_id)
 
     has_liked = False
     if request.user.is_authenticated:
         if request.user in artikel.like.all():
             has_liked = True
 
-    return render(request, 'artikel_detail.html', {'artikel': artikel, 'has_liked': has_liked})
+    return render(request, "artikel_detail.html", {"artikel": artikel, "has_liked": has_liked})
 
 
 @login_required
@@ -256,7 +265,7 @@ def add_like(request, artikel_id):
         artikel = Artikel.objects.get(id=artikel_id)
     except Artikel.DoesNotExist:
         messages.error(request, all_messages["artikel_not_existing"])
-        return redirect('artikel_overview')
+        return redirect("artikel_overview")
 
     if request.user != artikel.creator:
         if request.user in artikel.like.all():
@@ -265,7 +274,7 @@ def add_like(request, artikel_id):
         else:
             artikel.like.add(request.user)
             messages.success(request, all_messages["successfully_added_like"])
-        return redirect('artikel_detail', artikel_id)
+        return redirect("artikel_detail", artikel_id)
     else:
         messages.error(request, all_messages["not_allowed_to_like_own_article"])
-        return redirect('artikel_detail', artikel_id)
+        return redirect("artikel_detail", artikel_id)

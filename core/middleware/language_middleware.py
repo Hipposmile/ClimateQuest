@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import logging
 import re
-from typing import Optional
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, AnonymousUser
@@ -47,7 +46,7 @@ def is_excluded_path(path_info: str) -> bool:
     return any(path_info.startswith(prefix) for prefix in EXCLUDED_PATH_PREFIXES)
 
 
-def get_language_code_from_path(path_info: str) -> Optional[str]:
+def get_language_code_from_path(path_info: str) -> str | None:
     match = LANGUAGE_PREFIX_PATTERN.match(path_info)
     if match is None:
         return None
@@ -55,13 +54,11 @@ def get_language_code_from_path(path_info: str) -> Optional[str]:
 
 
 def strip_language_prefix(path_info: str, language_code: str) -> str:
-    stripped_path = path_info[len(language_code) + 1:]
+    stripped_path = path_info[len(language_code) + 1 :]
     return stripped_path or "/"
 
 
-def build_redirect_with_language_prefix(
-        request: HttpRequest, language_code: str
-) -> HttpResponseRedirect:
+def build_redirect_with_language_prefix(request: HttpRequest, language_code: str) -> HttpResponseRedirect:
     query_string = request.META.get("QUERY_STRING", "")
     query_suffix = f"?{query_string}" if query_string else ""
     return HttpResponseRedirect(f"/{language_code}{request.path_info}{query_suffix}")
@@ -73,13 +70,11 @@ def resolve_target_language_code(request: HttpRequest) -> str:
     return resolve_browser_language_code(request.META.get("HTTP_ACCEPT_LANGUAGE", ""))
 
 
-def resolve_user_language_code(user: "AbstractBaseUser | AnonymousUser") -> str:
+def resolve_user_language_code(user: AbstractBaseUser | AnonymousUser) -> str:
     try:
         language_code = user.usererweitert.lang
     except (ObjectDoesNotExist, AttributeError):
-        logger.exception(
-            "Sprachpräferenz für User %s konnte nicht gelesen werden.", user.pk
-        )
+        logger.exception("Sprachpräferenz für User %s konnte nicht gelesen werden.", user.pk)
         return DEFAULT_LANGUAGE_CODE
     if language_code not in SUPPORTED_LANGUAGE_CODES:
         return DEFAULT_LANGUAGE_CODE
@@ -103,7 +98,7 @@ def parse_accept_language_header(accept_language_header: str) -> list[tuple[str,
     return entries
 
 
-def parse_accept_language_entry(part: str) -> Optional[tuple[str, float]]:
+def parse_accept_language_entry(part: str) -> tuple[str, float] | None:
     match = re.match(r"([a-zA-Z]+)(?:-[a-zA-Z0-9]+)?(?:;q=([\d.]+))?", part)
     if match is None:
         return None

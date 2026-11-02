@@ -1,50 +1,52 @@
 from collections.abc import Callable
 from datetime import date, timedelta
-from typing import List
 
 from django.contrib.auth.models import User
-from django.db.models import Count, F, Sum, Q, QuerySet
-from django.db.models import Window
+from django.db.models import Count, F, Q, QuerySet, Sum, Window
 from django.db.models.functions import Rank
 from django.shortcuts import render
 from django.test import RequestFactory
 from django.urls import reverse
 
 from family.models import Family
-from hall_of_fame.models import HallOfFameEntry, HallOfFameData
+from hall_of_fame.models import HallOfFameData, HallOfFameEntry
 from utils.functions import create_notification
 
 
 def hall_of_fame_detail(request):
     data, _ = HallOfFameData.objects.get_or_create(id=1)
-    to_to_next_week = {
-        "de": data.to_do_de,
-        "en": data.to_do_en
-    }
+    to_to_next_week = {"de": data.to_do_de, "en": data.to_do_en}
 
     user_entries = {}
-    users = User.objects.filter(hall_of_fame_entry__isnull=False).prefetch_related(
-        'hall_of_fame_entry').distinct().annotate(entry_count=Count('hall_of_fame_entry')).order_by('-entry_count')
+    users = (
+        User.objects.filter(hall_of_fame_entry__isnull=False)
+        .prefetch_related("hall_of_fame_entry")
+        .distinct()
+        .annotate(entry_count=Count("hall_of_fame_entry"))
+        .order_by("-entry_count")
+    )
     for user in users:
-        user_entries[user] = user.hall_of_fame_entry.order_by('-created_at')
+        user_entries[user] = user.hall_of_fame_entry.order_by("-created_at")
     if request.user.is_authenticated:
         in_hall_of_fame = HallOfFameEntry.objects.filter(user=request.user).exists()
     else:
         in_hall_of_fame = False
-    return render(request, './hall_of_fame_detail.html',
-                  {'user_entries': user_entries, 'in_hall_of_fame': in_hall_of_fame,
-                   'to_to_next_week': to_to_next_week})
+    return render(
+        request,
+        "./hall_of_fame_detail.html",
+        {"user_entries": user_entries, "in_hall_of_fame": in_hall_of_fame, "to_to_next_week": to_to_next_week},
+    )
 
 
 def add_to_hall_of_fame_cron() -> None:
     factory = RequestFactory()
-    custom_fake_request = factory.get('/')
+    custom_fake_request = factory.get("/")
 
     week_start: date = date.today() - timedelta(days=date.today().weekday())
     today: date = date.today()
 
     def add_to_hall_of_fame(qualifying_users: QuerySet[User], description_de: str, description_en: str) -> None:
-        entries: List[HallOfFameEntry] = [
+        entries: list[HallOfFameEntry] = [
             HallOfFameEntry(user=user, description_de=description_de, description_en=description_en)
             for user in qualifying_users
         ]
@@ -56,23 +58,18 @@ def add_to_hall_of_fame_cron() -> None:
                 notification_de="Du wurdest in die Hall of Fame aufgenommen",
                 notification_en="You have been inducted into the hall of fame",
                 user=user,
-                url=reverse('hall_of_fame_detail')
+                url=reverse("hall_of_fame_detail"),
             )
 
     def at_least_50_climate_points() -> None:
         description_de: str = f"Hat zwischen dem {week_start.strftime('%d.%m.%Y')} und dem {today.strftime('%d.%m.%Y')} 50 oder mehr Klimapunkte gesammelt."
         description_en: str = f"Has collected 50 or more climate points between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
 
-        qualifying_users: QuerySet[User] = (
-            User.objects
-            .annotate(
-                weekly_klimapunkte=Sum(
-                    F("aktion__aktion__klimapunkte") * F("aktion__quantity"),
-                    filter=Q(aktion__date__gte=week_start)
-                )
+        qualifying_users: QuerySet[User] = User.objects.annotate(
+            weekly_klimapunkte=Sum(
+                F("aktion__aktion__klimapunkte") * F("aktion__quantity"), filter=Q(aktion__date__gte=week_start)
             )
-            .filter(weekly_klimapunkte__gte=50)
-        )
+        ).filter(weekly_klimapunkte__gte=50)
 
         add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
@@ -83,12 +80,9 @@ def add_to_hall_of_fame_cron() -> None:
         family: Family = Family.objects.get(name="worldwide ranking")
 
         qualifying_users: QuerySet[User] = (
-            family.members
-            .filter(aktion__date__gte=week_start)
+            family.members.filter(aktion__date__gte=week_start)
             .annotate(
-                total_klimapunkte=Sum(
-                    F("aktion__aktion__klimapunkte") * F("aktion__quantity")
-                ),
+                total_klimapunkte=Sum(F("aktion__aktion__klimapunkte") * F("aktion__quantity")),
                 rank=Window(
                     expression=Rank(),
                     order_by=F("total_klimapunkte").desc(),
@@ -103,28 +97,24 @@ def add_to_hall_of_fame_cron() -> None:
         description_de: str = f"Ist zwischen dem {week_start.strftime('%d.%m.%Y')} und dem {today.strftime('%d.%m.%Y')} mindestens 50 Kilometer Fahrrad gefahren."
         description_en: str = f"Drove at least 50 kilometers by bike between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
 
-        qualifying_users: QuerySet[User] = (
-            User.objects.annotate(
-                weekly_kilometers_by_bike=Sum(F("aktion__quantity"),
-                                              filter=Q(aktion__date__gte=week_start) & Q(aktion__aktion__id=19),
-                                              )
+        qualifying_users: QuerySet[User] = User.objects.annotate(
+            weekly_kilometers_by_bike=Sum(
+                F("aktion__quantity"),
+                filter=Q(aktion__date__gte=week_start) & Q(aktion__aktion__id=19),
             )
-            .filter(weekly_kilometers_by_bike__gte=50)
-        )
+        ).filter(weekly_kilometers_by_bike__gte=50)
 
         add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
     def vegetarian() -> None:
         description_de: str = f"Hat sich zwischen dem {week_start.strftime('%d.%m.%Y')} und dem {today.strftime('%d.%m.%Y')} vegetarisch ernährt."
-        description_en: str = f"Lived as a vegetarian between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
-
-        qualifying_users: QuerySet[User] = (
-            User.objects.filter(
-                aktion__aktion_id__in=[20, 22],
-                aktion__date=today,
-                aktion__quantity__gte=1
-            ).distinct()
+        description_en: str = (
+            f"Lived as a vegetarian between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
         )
+
+        qualifying_users: QuerySet[User] = User.objects.filter(
+            aktion__aktion_id__in=[20, 22], aktion__date=today, aktion__quantity__gte=1
+        ).distinct()
 
         add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
@@ -132,19 +122,17 @@ def add_to_hall_of_fame_cron() -> None:
         description_de: str = f"Hat sich zwischen dem {week_start.strftime('%d.%m.%Y')} und dem {today.strftime('%d.%m.%Y')} vegan ernährt."
         description_en: str = f"Lived vegan between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
 
-        qualifying_users: QuerySet[User] = (
-            User.objects.filter(
-                aktion__aktion_id=20,
-                aktion__date=today,
-                aktion__quantity__gte=1
-            ).distinct()
-        )
+        qualifying_users: QuerySet[User] = User.objects.filter(
+            aktion__aktion_id=20, aktion__date=today, aktion__quantity__gte=1
+        ).distinct()
 
         add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
     def created_article() -> None:
         description_de: str = f"Hat zwischen dem {week_start.strftime('%d.%m.%Y')} und dem {today.strftime('%d.%m.%Y')} einen Artikel veröffentlicht."
-        description_en: str = f"Published an article between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
+        description_en: str = (
+            f"Published an article between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
+        )
 
         qualifying_users: QuerySet[User] = User.objects.filter(
             artikel__created_at__range=(week_start, today)
@@ -154,17 +142,19 @@ def add_to_hall_of_fame_cron() -> None:
 
     def created_event() -> None:
         description_de: str = f"Hat zwischen dem {week_start.strftime('%d.%m.%Y')} und dem {today.strftime('%d.%m.%Y')} ein Event veröffentlicht."
-        description_en: str = f"Published an event between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
+        description_en: str = (
+            f"Published an event between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
+        )
 
-        qualifying_users: QuerySet[User] = User.objects.filter(
-            event__created_at__range=(week_start, today)
-        ).distinct()
+        qualifying_users: QuerySet[User] = User.objects.filter(event__created_at__range=(week_start, today)).distinct()
 
         add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
     def created_petition() -> None:
         description_de: str = f"Hat zwischen dem {week_start.strftime('%d.%m.%Y')} und dem {today.strftime('%d.%m.%Y')} eine Petition erstellt."
-        description_en: str = f"Created a petition between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
+        description_en: str = (
+            f"Created a petition between {week_start.strftime('%m/%d/%Y')} and {today.strftime('%m/%d/%Y')}."
+        )
 
         qualifying_users: QuerySet[User] = User.objects.filter(
             created_petitions__created_at__range=(week_start, today)
@@ -173,10 +163,10 @@ def add_to_hall_of_fame_cron() -> None:
         add_to_hall_of_fame(qualifying_users, description_de, description_en)
 
     def run_weekly_step(
-            evaluation_func: Callable[[], None],
-            next_weeks_count: int,
-            to_do_de: str,
-            to_do_en: str,
+        evaluation_func: Callable[[], None],
+        next_weeks_count: int,
+        to_do_de: str,
+        to_do_en: str,
     ) -> None:
         evaluation_func()
         data.weeks_count = next_weeks_count
@@ -190,34 +180,33 @@ def add_to_hall_of_fame_cron() -> None:
                 notification_de=f"Es ist eine neue Challenge verfügbar, um nächste Woche in die Hall of Fame zu kommen: {to_do_de}",
                 notification_en=f"A new challenge is available to become a member of the hall of fame: {to_do_en}",
                 user=user,
-                url=reverse('hall_of_fame_detail'),
+                url=reverse("hall_of_fame_detail"),
             )
 
     weekly_steps: list[tuple[Callable[[], None], int, str, str]] = [
-        (at_least_50_climate_points, 1,
-         "Sei in der nächsten Woche einer der Top-5 Klimapunkte-Sammler",
-         "Be one of the top-5 climate points collector next week"),
-        (top_5_climate_point_collector, 2,
-         "Fahre nächste Woche mindestens 50 Kilometer mit dem Fahrrad",
-         "Drive at least 50 kilometer by bike next week"),
-        (at_least_50_bike_kilometers, 3,
-         "Ernähre dich nächste Woche vegetarisch",
-         "Eat vegetarian next week"),
-        (vegetarian, 4,
-         "Ernähre dich nächste Woche vegan",
-         "Eat vegan next week"),
-        (vegan, 5,
-         "Erstelle nächste Woche mindestens einen Artikel",
-         "Create at least one article next week"),
-        (created_article, 6,
-         "Erstelle nächste Woche mindestens ein Event",
-         "Create at least one event next week"),
-        (created_event, 7,
-         "Erstelle nächste Woche mindestens eine Petition",
-         "Create at least one Petition next week"),
-        (created_petition, 0,
-         "Sammle nächste Woche mindestens 50 Klimapunkte",
-         "Collect at least 50 climate points next week"),
+        (
+            at_least_50_climate_points,
+            1,
+            "Sei in der nächsten Woche einer der Top-5 Klimapunkte-Sammler",
+            "Be one of the top-5 climate points collector next week",
+        ),
+        (
+            top_5_climate_point_collector,
+            2,
+            "Fahre nächste Woche mindestens 50 Kilometer mit dem Fahrrad",
+            "Drive at least 50 kilometer by bike next week",
+        ),
+        (at_least_50_bike_kilometers, 3, "Ernähre dich nächste Woche vegetarisch", "Eat vegetarian next week"),
+        (vegetarian, 4, "Ernähre dich nächste Woche vegan", "Eat vegan next week"),
+        (vegan, 5, "Erstelle nächste Woche mindestens einen Artikel", "Create at least one article next week"),
+        (created_article, 6, "Erstelle nächste Woche mindestens ein Event", "Create at least one event next week"),
+        (created_event, 7, "Erstelle nächste Woche mindestens eine Petition", "Create at least one Petition next week"),
+        (
+            created_petition,
+            0,
+            "Sammle nächste Woche mindestens 50 Klimapunkte",
+            "Collect at least 50 climate points next week",
+        ),
     ]
 
     data: HallOfFameData

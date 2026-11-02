@@ -10,74 +10,78 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from .base_settings import *
+import os
 
-load_dotenv()
+from .base_settings import *  # noqa: F403
+from .base_settings import LOGS_DIR
+
+LOGS_DIR.mkdir(exist_ok=True)
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "")
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['climate-quest.de']
+ALLOWED_HOSTS = ["climate-quest.de"]
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'climatequest',
-        'USER': 'climatequestuser',
-        'PASSWORD': os.environ.get("DB_PASSWORD", ""),
-        'HOST': 'localhost',
-        'PORT': '',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "climatequest",
+        "USER": "climatequestuser",
+        "PASSWORD": os.environ.get("DB_PASSWORD", ""),
+        "HOST": "localhost",
+        "PORT": "",
+        # Reuse connections between requests instead of reconnecting on every request.
+        "CONN_MAX_AGE": 60,
+        "CONN_HEALTH_CHECKS": True,
     }
 }
 
-INTERNAL_IPS = ['https://climate-quest.de']
-
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 USE_X_FORWARDED_HOST = True
 
 CSRF_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = ['https://climate-quest.de']
+CSRF_TRUSTED_ORIGINS = ["https://climate-quest.de"]
 
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = True
-#SESSION_COOKIE_SAMESITE = "Strict"
-#CSRF_COOKIE_SAMESITE = "Strict"
+# SESSION_COOKIE_SAMESITE = "Strict"
+# CSRF_COOKIE_SAMESITE = "Strict"
 SESSION_COOKIE_SAMESITE = "Lax"
 CSRF_COOKIE_SAMESITE = "Lax"
 
 ADMINS = [("Paul", "paul@fraqment.de")]
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'timestamped': {
-            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
-            'datefmt': '%Y-%m-%d %H:%M:%S',
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "timestamped": {
+            "format": "[%(asctime)s] %(levelname)s in %(module)s: %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
         },
     },
-    'handlers': {
-        'file': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs', 'django_errors.log'),
-            'formatter': 'timestamped',
+    "handlers": {
+        "file": {
+            "level": "ERROR",
+            "class": "logging.FileHandler",
+            "filename": LOGS_DIR / "django_errors.log",
+            "formatter": "timestamped",
         },
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
-            'include_html': True,  # optional: HTML‑Mail mit Traceback
+        "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler",
+            "include_html": True,  # optional: HTML‑Mail mit Traceback
         },
     },
-    'loggers': {
-        'django': {
-            'handlers': ['file', 'mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
+    "loggers": {
+        "django": {
+            "handlers": ["file", "mail_admins"],
+            "level": "ERROR",
+            "propagate": True,
         }
     },
 }
@@ -85,11 +89,18 @@ LOGGING = {
 # Add those crontabs by running ```python manage.py crontab add --settings=ClimateQuest.settingsprod```
 # Important: Add crontabs only with one user (e.g. only climatequestuser, not root, too). Otherwise, the cronjob will be done twice.
 CRONJOBS = [
-    ('0 12 * * 0', 'core.views.create_reminder', '>> /webapps/climatequest/ClimateQuest/logs/cronjobs.log 2>&1'),
-    ('0 08 * * 0', 'aktionen.views.add_weekly_tracking_action',
-     '>> /webapps/climatequest/ClimateQuest/logs/cronjobs.log 2>&1'),
-    ('0 18 * * 0', 'hall_of_fame.views.add_to_hall_of_fame_cron', '>> /webapps/climatequest/ClimateQuest/logs/cronjobs.log 2>&1')
+    ("0 12 * * 0", "core.views.create_reminder", ">> /webapps/climatequest/ClimateQuest/logs/cronjobs.log 2>&1"),
+    (
+        "0 08 * * 0",
+        "aktionen.views.add_weekly_tracking_action",
+        ">> /webapps/climatequest/ClimateQuest/logs/cronjobs.log 2>&1",
+    ),
+    (
+        "0 18 * * 0",
+        "hall_of_fame.views.add_to_hall_of_fame_cron",
+        ">> /webapps/climatequest/ClimateQuest/logs/cronjobs.log 2>&1",
+    ),
 ]
 
 CRONTAB_PYTHON_EXECUTABLE = "/webapps/climatequest/venv/bin/python"
-CRONTAB_COMMAND_PREFIX = 'DJANGO_SETTINGS_MODULE=ClimateQuest.settingsprod'
+CRONTAB_COMMAND_PREFIX = "DJANGO_SETTINGS_MODULE=ClimateQuest.settingsprod"

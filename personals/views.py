@@ -6,19 +6,16 @@ from datetime import date, timedelta
 import requests
 from allauth.socialaccount.models import SocialAccount
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth import get_user_model
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import authenticate, get_user_model, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.db.models import Sum, F
+from django.db.models import F, Sum
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_decode
-from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext as _
 from django.views.decorators.csrf import csrf_exempt
 from dotenv import load_dotenv
@@ -27,8 +24,17 @@ from aktionen.models import Aktion, Category
 from core.all_messages import all_messages
 from family.models import Family
 from personals.models import UserErweitert
-from utils.functions import create_notification, create_internal_error, ist_email_gueltig, send_mail_function, \
-    get_families_of_user, get_communities_of_user, generate_random_password, get_all_klimapunkte_from_user
+from utils.functions import (
+    create_internal_error,
+    create_notification,
+    generate_random_password,
+    get_all_klimapunkte_from_user,
+    get_communities_of_user,
+    get_families_of_user,
+    ist_email_gueltig,
+    send_mail_function,
+)
+
 from .models import IOSDevice
 from .tokens import email_verification_token
 
@@ -39,72 +45,67 @@ def generate_verification_link(request):
     user = request.user
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     token = email_verification_token.make_token(user)
-    activation_link = request.build_absolute_uri(
-        reverse('activate', kwargs={'uidb64': uid, 'token': token})
-    )
+    activation_link = request.build_absolute_uri(reverse("activate", kwargs={"uidb64": uid, "token": token}))
     return activation_link
 
 
 def login_view(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            next_url = request.POST.get('next') or request.GET.get('next') or 'dashboard'
+            next_url = request.POST.get("next") or request.GET.get("next") or "dashboard"
             messages.info(request, "logged-in")
             return redirect(next_url)
         else:
             messages.error(request, all_messages["invalid_login_data"])
-            return redirect('login_view')
-    return render(request, './login.html', {'next': request.GET.get('next', '')})
+            return redirect("login_view")
+    return render(request, "./login.html", {"next": request.GET.get("next", "")})
 
 
 def logout_view(request):
     logout(request)
-    return redirect('home')
+    return redirect("home")
 
 
 def register_view(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         # reCAPTCHA
-        recaptcha_token = request.POST.get('recaptchaToken')
+        recaptcha_token = request.POST.get("recaptchaToken")
         if not recaptcha_token:
             messages.error(request, "reCAPTCHA-Token fehlt. Bitte versuche es erneut.")
-            return redirect('register_view')
+            return redirect("register_view")
         recaptcha_secret = os.environ.get("RECAPTCHA_PRIVATE_KEY", "")
 
         response = requests.post(
-            'https://www.google.com/recaptcha/api/siteverify',
-            data={
-                'secret': recaptcha_secret,
-                'response': recaptcha_token
-            }
+            "https://www.google.com/recaptcha/api/siteverify",
+            data={"secret": recaptcha_secret, "response": recaptcha_token},
         )
         result = response.json()
 
-        if not result.get('success') or result.get('score', 0) < 0.5:
+        if not result.get("success") or result.get("score", 0) < 0.5:
             messages.error(request, all_messages["robot"])
-            return redirect('register_view')
+            return redirect("register_view")
 
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        email = request.POST.get('email')
-        nutzungsbedingungen_accepted = request.POST.get('nutzungsbedingungen_accepted') == 'on'
-        datenschutz_accepted = request.POST.get('datenschutz_accepted') == 'on'
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        email = request.POST.get("email")
+        nutzungsbedingungen_accepted = request.POST.get("nutzungsbedingungen_accepted") == "on"
+        datenschutz_accepted = request.POST.get("datenschutz_accepted") == "on"
 
         if not nutzungsbedingungen_accepted:
             messages.error(request, all_messages["nutzungsbedingungen_not_accepted"])
-            return redirect('register_view')
+            return redirect("register_view")
 
         if not datenschutz_accepted:
             messages.error(request, all_messages["datenschutz_not_accepted"])
-            return redirect('register_view')
+            return redirect("register_view")
 
         if User.objects.filter(username=username).exists():
             messages.error(request, all_messages["username_not_available"])
-            return redirect('register_view')
+            return redirect("register_view")
 
         if email == "":
             user = User.objects.create_user(username=username, password=password)
@@ -114,19 +115,19 @@ def register_view(request):
             if user:
                 user.backend = "django.contrib.auth.backends.ModelBackend"
                 login(request, user)
-                messages.success(request, all_messages['successfully_signed_up'])
+                messages.success(request, all_messages["successfully_signed_up"])
                 messages.info(request, "logged-in")
-                return redirect('dashboard')
-            create_internal_error(request, 'bei Registrierung existiert Nutzer nicht')
-            return redirect('register_view')
+                return redirect("dashboard")
+            create_internal_error(request, "bei Registrierung existiert Nutzer nicht")
+            return redirect("register_view")
 
         if not ist_email_gueltig(email):
             messages.error(request, all_messages["invalid_email"])
-            return redirect('register_view')
+            return redirect("register_view")
 
         if User.objects.filter(email=email).exists():
             messages.error(request, all_messages["email_not_available"])
-            return redirect('register_view')
+            return redirect("register_view")
 
         user = User.objects.create_user(username=username, password=password, email=email)
 
@@ -136,30 +137,32 @@ def register_view(request):
         if user_authenticated:
             user.backend = "django.contrib.auth.backends.ModelBackend"
             login(request, user)
-            messages.success(request, all_messages['successfully_signed_up_email_not_verified'])
+            messages.success(request, all_messages["successfully_signed_up_email_not_verified"])
             messages.info(request, "logged-in")
         else:
-            create_internal_error(request, 'bei Registrierung existiert Nutzer nicht')
-            return redirect('register_view')
+            create_internal_error(request, "bei Registrierung existiert Nutzer nicht")
+            return redirect("register_view")
 
         activation_link = generate_verification_link(request)
 
         send_mail_function(
             request=request,
-            subject='ClimateQuest - dein Aktivierungslink ist da!',
+            subject="ClimateQuest - dein Aktivierungslink ist da!",
             message=_(
-                'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: %(activation_link)s' % {
-                    'activation_link': activation_link}),
+                "Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: %(activation_link)s"
+                % {"activation_link": activation_link}
+            ),
             recipient_list=email,
             mailinglist_needless=True,
             user=user,
             fehlermeldung=_(
-                'Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge deine E-Mail-Adresse später in den Einstellungen hinzu.')
+                "Fehler beim E-Mail-Versand. Probiere die Registrierung ohne E-Mail und füge deine E-Mail-Adresse später in den Einstellungen hinzu."
+            ),
         )
 
-        return redirect('dashboard')
+        return redirect("dashboard")
 
-    return render(request, './register.html')
+    return render(request, "./register.html")
 
 
 def activate(request, uidb64, token):
@@ -173,48 +176,47 @@ def activate(request, uidb64, token):
         UserErweitert.objects.filter(user=user).update(mail_verified=True)
         user.save()
         messages.success(request, all_messages["email_verified"])
-        return redirect('dashboard')
+        return redirect("dashboard")
     else:
         messages.error(request, all_messages["invalid_verification_link"])
-        return redirect('dashboard')
+        return redirect("dashboard")
 
 
 @login_required
 def resend_verification_email(request):
     if not request.user.is_authenticated:
         messages.error(request, all_messages["login_required"])
-        return redirect('login_view')
+        return redirect("login_view")
 
     if request.user.email == "":
         messages.error(request, all_messages["no_email_to_verify"])
-        return redirect('settings_view')
+        return redirect("settings_view")
 
     activation_link = generate_verification_link(request)
 
     send_mail_function(
         request=request,
-        subject='ClimateQuest - dein Aktivierungslink ist da!',
-        message=_(
-            'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: %(activation_link)s') % {
-                    'activation_link': activation_link},
+        subject="ClimateQuest - dein Aktivierungslink ist da!",
+        message=_("Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: %(activation_link)s")
+        % {"activation_link": activation_link},
         recipient_list=request.user.email,
         mailinglist_needless=True,
         user=request.user,
-        fehlermeldung=_('Fehler beim E-Mail-Versand. Probiere es später erneut.')
+        fehlermeldung=_("Fehler beim E-Mail-Versand. Probiere es später erneut."),
     )
 
     messages.success(request, all_messages["verification_email_resent"])
-    return redirect('settings_view')
+    return redirect("settings_view")
 
 
 @login_required
 def settings_view(request):
     if request.user.last_login.date() < (date.today() - timedelta(days=2)):
         messages.success(request, all_messages["relogin_to_edit"])
-        return redirect('login_view')
-    if request.method == 'POST':
-        if 'change_username' in request.POST:
-            new_username = request.POST.get('new_username')
+        return redirect("login_view")
+    if request.method == "POST":
+        if "change_username" in request.POST:
+            new_username = request.POST.get("new_username")
             if User.objects.filter(username=new_username).exists():
                 messages.error(request, all_messages["username_not_available"])
             elif new_username == request.user.username:
@@ -223,31 +225,31 @@ def settings_view(request):
                 request.user.username = new_username
                 request.user.save()
                 messages.success(request, all_messages["username_changed"])
-            return redirect('settings_view')
+            return redirect("settings_view")
 
-        elif 'change_password' in request.POST:
-            new_pw = request.POST.get('new_password')
+        elif "change_password" in request.POST:
+            new_pw = request.POST.get("new_password")
             request.user.set_password(new_pw)
             request.user.save()
             update_session_auth_hash(request, request.user)
             messages.success(request, all_messages["password_changed"])
-            return redirect('settings_view')
+            return redirect("settings_view")
 
-        elif 'change_email' in request.POST:
-            email = request.POST.get('email')
+        elif "change_email" in request.POST:
+            email = request.POST.get("email")
             if email == "":
                 request.user.email = email
                 request.user.save()
                 messages.success(request, all_messages["successfully_changed_email_no_email"])
-                return redirect('settings_view')
+                return redirect("settings_view")
 
             if not ist_email_gueltig(email):
                 messages.error(request, all_messages["invalid_email"])
-                return redirect('settings_view')
+                return redirect("settings_view")
 
             if User.objects.filter(email=email).exists():
                 messages.error(request, all_messages["email_not_available"])
-                return redirect('settings_view')
+                return redirect("settings_view")
 
             old_email = request.user.email
 
@@ -259,10 +261,11 @@ def settings_view(request):
 
             mail_output = send_mail_function(
                 request=request,
-                subject='ClimateQuest - dein Aktivierungslink ist da!',
+                subject="ClimateQuest - dein Aktivierungslink ist da!",
                 message=_(
-                    'Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: %(activation_link)s') % {
-                            'activation_link': activation_link},
+                    "Bitte klick auf den folgenden Link, um deine E-Mail-Adresse zu verifizieren: %(activation_link)s"
+                )
+                % {"activation_link": activation_link},
                 recipient_list=email,
                 mailinglist_needless=True,
                 user=request.user,
@@ -272,13 +275,13 @@ def settings_view(request):
                 request.user.email = old_email
                 request.user.save()
                 UserErweitert.objects.filter(user=request.user).update(mail_verified=True)
-                return redirect('settings_view')
+                return redirect("settings_view")
             else:
                 messages.success(request, all_messages["email_changed"])
-            return redirect('settings_view')
+            return redirect("settings_view")
 
-        elif 'change_email_settings' in request.POST:
-            mailinglist = request.POST.get('mailinglist') == 'on'
+        elif "change_email_settings" in request.POST:
+            mailinglist = request.POST.get("mailinglist") == "on"
             user_extended = request.user.usererweitert
             user_extended.mailinglist = mailinglist
             user_extended.save()
@@ -286,10 +289,10 @@ def settings_view(request):
                 messages.success(request, all_messages["mailinglist_enabled"])
             else:
                 messages.success(request, all_messages["mailinglist_disabled"])
-            return redirect('settings_view')
+            return redirect("settings_view")
 
-        elif 'change_block_data_settings' in request.POST:
-            block_data_settings = request.POST.get('block_data_settings') == 'on'
+        elif "change_block_data_settings" in request.POST:
+            block_data_settings = request.POST.get("block_data_settings") == "on"
             user_extended = request.user.usererweitert
             user_extended.allows_data_view = block_data_settings
             user_extended.save()
@@ -298,40 +301,39 @@ def settings_view(request):
             else:
                 messages.success(request, all_messages["allows_data_view_disabled"])
 
-
-        elif 'change_statement' in request.POST:
-            statement = request.POST.get('content')
+        elif "change_statement" in request.POST:
+            statement = request.POST.get("content")
             user_extended = request.user.usererweitert
             user_extended.statement = statement
             user_extended.save()
             messages.success(request, all_messages["successfully_changed_statement"])
-            return redirect('settings_view')
+            return redirect("settings_view")
 
-        elif 'change_weekly_goal' in request.POST:
-            weekly_goal = request.POST.get('weekly_goal')
+        elif "change_weekly_goal" in request.POST:
+            weekly_goal = request.POST.get("weekly_goal")
             try:
                 weekly_goal = int(weekly_goal)
             except ValueError:
                 messages.error(request, all_messages["not_a_number"])
-                return redirect('settings_view')
+                return redirect("settings_view")
             if weekly_goal < 1:
                 messages.error(request, all_messages["weekly_goal_too_small"])
-                return redirect('settings_view')
+                return redirect("settings_view")
             try:
                 user_erweitert = UserErweitert.objects.get(user=request.user)
             except UserErweitert.DoesNotExist:
                 create_internal_error(request, f"UserErweitert zu User {request.user} existiert nicht")
-                return redirect('settings_view')
+                return redirect("settings_view")
             user_erweitert.weekly_goal = weekly_goal
             user_erweitert.save()
             messages.success(request, all_messages["successfully_changed_goal"])
-            return redirect('dashboard')
+            return redirect("dashboard")
 
-        elif 'change_lang' in request.POST:
-            lang = request.POST.get('lang')
-            if lang != 'de' and lang != 'en':
+        elif "change_lang" in request.POST:
+            lang = request.POST.get("lang")
+            if lang != "de" and lang != "en":
                 messages.error(request, all_messages["internal_error"])
-                return redirect('settings_view')
+                return redirect("settings_view")
             else:
                 user_extended = request.user.usererweitert
                 user_extended.lang = lang
@@ -340,70 +342,79 @@ def settings_view(request):
                     messages.success(request, "Sprache erfolgreich geändert")
                 else:
                     messages.success(request, "Language successfully changed")
-                return redirect('settings_view')
+                return redirect("settings_view")
 
-        elif 'change_tour_banner' in request.POST:
+        elif "change_tour_banner" in request.POST:
             user_extended = request.user.usererweitert
-            show_tour_banner = request.POST.get('show_tour_banner') == 'on'
+            show_tour_banner = request.POST.get("show_tour_banner") == "on"
             user_extended.show_tour_banner = show_tour_banner
             user_extended.save()
-            messages.success(request, all_messages["activated_tour_banner"] if show_tour_banner else all_messages[
-                "deactivated_tour_banner"])
-            return redirect('settings_view')
+            messages.success(
+                request,
+                all_messages["activated_tour_banner"] if show_tour_banner else all_messages["deactivated_tour_banner"],
+            )
+            return redirect("settings_view")
 
-
-        elif 'delete_account' in request.POST:
+        elif "delete_account" in request.POST:
             contacted_user_ids = set()
             families = get_families_of_user(request.user) or []
             communities = get_communities_of_user(request.user) or []
             for family in families:
-                if family.name != 'worldwide ranking':
+                if family.name != "worldwide ranking":
                     for user in family.members.all():
                         if user.id not in contacted_user_ids:
                             contacted_user_ids.add(user.id)
-                            create_notification(request,
-                                                f'User {request.user.username}, mit dem / der du zusammen in einer Family warst, hat den eigenen Account gelöscht. Von {request.user.username} gesendete Nachrichten werden auch gelöscht.',
-                                                f'User {request.user.username}, with who you were in a family, deleted his / her account. His / her messages will also be deleted.',
-                                                user)
+                            create_notification(
+                                request,
+                                f"User {request.user.username}, mit dem / der du zusammen in einer Family warst, hat den eigenen Account gelöscht. Von {request.user.username} gesendete Nachrichten werden auch gelöscht.",
+                                f"User {request.user.username}, with who you were in a family, deleted his / her account. His / her messages will also be deleted.",
+                                user,
+                            )
             for community in communities:
                 for family in community.members.all():
                     for user in family.members.all():
                         if user.id not in contacted_user_ids:
                             contacted_user_ids.add(user.id)
-                            create_notification(request,
-                                                f'User {request.user.username}, mit dem du zusammen in einer Community warst, hat seinen Account gelöscht. Von {request.user.username} gesendete Nachrichten werden auch gelöscht.',
-                                                f'User {request.user.username}, with who you were in a community, deleted his / her account. His / her messages will also be deleted.',
-                                                user)
+                            create_notification(
+                                request,
+                                f"User {request.user.username}, mit dem du zusammen in einer Community warst, hat seinen Account gelöscht. Von {request.user.username} gesendete Nachrichten werden auch gelöscht.",
+                                f"User {request.user.username}, with who you were in a community, deleted his / her account. His / her messages will also be deleted.",
+                                user,
+                            )
             request.user.delete()
             logout(request)
             messages.error(request, all_messages["account_deleted"])
-            return redirect('login_view')
+            return redirect("login_view")
 
-    return render(request, './personal_settings.html',
-                  {'is_social_account': SocialAccount.objects.filter(user=request.user).exists()})
+    return render(
+        request,
+        "./personal_settings.html",
+        {"is_social_account": SocialAccount.objects.filter(user=request.user).exists()},
+    )
 
 
 def reset_password(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
+    if request.method == "POST":
+        email = request.POST.get("email")
 
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:
             messages.error(request, all_messages["email_not_found"])
-            return redirect('reset_password')
+            return redirect("reset_password")
         if SocialAccount.objects.filter(user=user).exists():
             messages.error(request, all_messages["socialaccount_no_password_reset"])
-            return redirect('reset_password')
+            return redirect("reset_password")
 
         new_password = generate_random_password()
 
         output = send_mail_function(
             request=request,
-            subject='ClimateQuest - Passwort Reset',
+            subject="ClimateQuest - Passwort Reset",
             message=_(
-                'Wir haben dir ein neues, zufällig generiertes Passwort erstellt: <b>%(new_password)s</b> \nMelde dich damit und mit deinem Usernamen <b>%(username)s</b> <a href="https://climate-quest.de/personals/login/">hier</a> an und ändere aus Sicherheitsgründen möglichst bald unter "Profil bearbeiten" dein Passwort.') % {
-                        'new_password': new_password, 'username': user.username},
+                'Wir haben dir ein neues, zufällig generiertes Passwort erstellt: <b>%(new_password)s</b> \nMelde dich damit und mit deinem Usernamen <b>%(username)s</b> <a href="https://climate-quest.de/personals/login/">hier</a> an und ändere aus Sicherheitsgründen möglichst bald unter "Profil bearbeiten" dein Passwort.'
+            )
+            % {"new_password": new_password, "username": user.username},
             recipient_list=user.email,
             user=user,
         )
@@ -413,36 +424,37 @@ def reset_password(request):
                 user.set_password(new_password)
                 user.save()
                 messages.success(request, all_messages["password_reset_mail_sent"])
-                return redirect('login_view')
+                return redirect("login_view")
 
             except Exception as e:
-                create_internal_error(request, f'Fehler beim Zurücksetzen des Passworts: {e}',
-                                      all_messages["password_reset_error"])
-                return redirect('reset_password')
+                create_internal_error(
+                    request, f"Fehler beim Zurücksetzen des Passworts: {e}", all_messages["password_reset_error"]
+                )
+                return redirect("reset_password")
         else:
-            return redirect('reset_password')
+            return redirect("reset_password")
 
-    return render(request, 'reset_password.html')
+    return render(request, "reset_password.html")
 
 
 def actions_after_registration(request, user):
     try:
-        Family.objects.get(name='worldwide ranking').members.add(user)
+        Family.objects.get(name="worldwide ranking").members.add(user)
     except Family.DoesNotExist:
         create_internal_error(request, 'Family "worldwide ranking" existiert nicht')
     UserErweitert.objects.create(user=user, lang=request.LANGUAGE_CODE)
 
 
 def check_username(request):
-    username = request.GET.get('username', None)
+    username = request.GET.get("username", None)
     exists = User.objects.filter(username=username).exists()
-    return JsonResponse({'exists': exists})
+    return JsonResponse({"exists": exists})
 
 
 def check_email(request):
-    email = request.GET.get('email')
+    email = request.GET.get("email")
     exists = User.objects.filter(email=email).exists()
-    return JsonResponse({'exists': exists})
+    return JsonResponse({"exists": exists})
 
 
 @login_required
@@ -450,15 +462,15 @@ def get_email_settings(request):
     try:
         user_erweitert = UserErweitert.objects.get(user=request.user)
     except UserErweitert.DoesNotExist:
-        create_internal_error(request, f'UserErweitert zu User {request.user} existiert nicht')
+        create_internal_error(request, f"UserErweitert zu User {request.user} existiert nicht")
     mailinglist = user_erweitert.mailinglist
-    return JsonResponse({'mailinglist': mailinglist})
+    return JsonResponse({"mailinglist": mailinglist})
 
 
 @login_required
 def get_block_data_settings(request):
     block_data_settings = request.user.usererweitert.allows_data_view
-    return JsonResponse({'block_data_settings': block_data_settings})
+    return JsonResponse({"block_data_settings": block_data_settings})
 
 
 @login_required
@@ -473,20 +485,28 @@ def credit_view(request):
     rest = klimapunkte % klimapunkte_for_credit
     percent_done = int((rest / klimapunkte_for_credit) * 100)
 
-    if request.method == 'POST':
+    if request.method == "POST":
         if available_credits > 0:
             worked = request.user.usererweitert.plant_tree()
             if not worked:
-                create_internal_error(request,
-                                      f'{all_messages["error_planting_tree"]} (vermutlich sind keine Baumcodes mehr vorhanden)',
-                                      all_messages["error_planting_tree"])
-            return redirect('credit_view')
+                create_internal_error(
+                    request,
+                    f"{all_messages['error_planting_tree']} (vermutlich sind keine Baumcodes mehr vorhanden)",
+                    all_messages["error_planting_tree"],
+                )
+            return redirect("credit_view")
 
     klimapunkte_missing = klimapunkte_for_credit - rest
 
-    return render(request, './credit_view.html',
-                  {'available_credits': available_credits, 'percent_done': percent_done,
-                   'klimapunkte_missing': klimapunkte_missing})
+    return render(
+        request,
+        "./credit_view.html",
+        {
+            "available_credits": available_credits,
+            "percent_done": percent_done,
+            "klimapunkte_missing": klimapunkte_missing,
+        },
+    )
 
 
 @csrf_exempt
@@ -512,46 +532,45 @@ def register_ios_device(request):
         return JsonResponse({"error": "user not found"}, status=404)
 
     device, _ = IOSDevice.objects.update_or_create(
-        apns_token=apns_token,
-        defaults={"user": user, "bundle_id": bundle_id, "app_version": app_version}
+        apns_token=apns_token, defaults={"user": user, "bundle_id": bundle_id, "app_version": app_version}
     )
     return JsonResponse({"status": "ok", "device_id": device.id})
 
+
 def statistics_view(request):
-    days = int(request.GET.get('days', 30))
+    days = int(request.GET.get("days", 30))
     since = timezone.now().date() - timedelta(days=days)
 
     # Klimapunkte pro Tag und Kategorie
     qs = (
-        Aktion.objects
-        .filter(user=request.user, date__gte=since)
-        .annotate(category_name=F('aktion__category__name') if request.LANGUAGE_CODE == "de" else F('aktion__category__name_en'))
-        .values('date', 'category_name')
-        .annotate(points=Sum(F('quantity') * F('aktion__klimapunkte')))
-        .order_by('date')
+        Aktion.objects.filter(user=request.user, date__gte=since)
+        .annotate(
+            category_name=F("aktion__category__name")
+            if request.LANGUAGE_CODE == "de"
+            else F("aktion__category__name_en")
+        )
+        .values("date", "category_name")
+        .annotate(points=Sum(F("quantity") * F("aktion__klimapunkte")))
+        .order_by("date")
     )
 
     # Daten für Chart.js aufbereiten
-    categories = list(
-        Category.objects.values_list('name' if request.LANGUAGE_CODE == "de" else 'name_en', flat=True)
-    )
-    dates_set = sorted({str(r['date']) for r in qs})
+    categories = list(Category.objects.values_list("name" if request.LANGUAGE_CODE == "de" else "name_en", flat=True))
+    dates_set = sorted({str(r["date"]) for r in qs})
 
     # { category -> { date -> points } }
     data_map = {cat: {d: 0 for d in dates_set} for cat in categories}
     for row in qs:
-        cat = row['category_name'] or ('Ohne Kategorie' if request.LANGUAGE_CODE == 'de' else 'Without category')
+        cat = row["category_name"] or ("Ohne Kategorie" if request.LANGUAGE_CODE == "de" else "Without category")
         if cat in data_map:
-            data_map[cat][str(row['date'])] = round(row['points'], 2)
+            data_map[cat][str(row["date"])] = round(row["points"], 2)
 
     chart_data = {
-        'labels': dates_set,
-        'categories': categories,
-        'series': [list(data_map[cat].values()) for cat in categories],
+        "labels": dates_set,
+        "categories": categories,
+        "series": [list(data_map[cat].values()) for cat in categories],
     }
 
-    return render(request, './statistics.html', {
-        'chart_data': json.dumps(chart_data),
-        'days': days,
-        'days_options': [7, 30, 365]
-    })
+    return render(
+        request, "./statistics.html", {"chart_data": json.dumps(chart_data), "days": days, "days_options": [7, 30, 365]}
+    )

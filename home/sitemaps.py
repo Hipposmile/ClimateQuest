@@ -7,7 +7,7 @@ class HomeSitemap(Sitemap):
     priority = 1.0
 
     def items(self):
-        return ['home']
+        return ["home"]
 
     def location(self, item):
         return reverse(item)
@@ -18,7 +18,7 @@ class DashboardSitemap(Sitemap):
     priority = 1.0
 
     def items(self):
-        return ['dashboard']
+        return ["dashboard"]
 
     def location(self, item):
         return reverse(item)
@@ -29,7 +29,7 @@ class NutzungsbedingungenSitemap(Sitemap):
     priority = 0.5
 
     def items(self):
-        return ['nutzungsbedingungen']
+        return ["nutzungsbedingungen"]
 
     def location(self, item):
         return reverse(item)
@@ -40,7 +40,7 @@ class DatenschutzSitemap(Sitemap):
     priority = 0.5
 
     def items(self):
-        return ['datenschutz']
+        return ["datenschutz"]
 
     def location(self, item):
         return reverse(item)
@@ -51,27 +51,29 @@ class ImpressumSitemap(Sitemap):
     priority = 0.5
 
     def items(self):
-        return ['impressum']
+        return ["impressum"]
 
     def location(self, item):
         return reverse(item)
+
 
 class SupportSitemap(Sitemap):
     changefreq = "yearly"
     priority = 0.5
 
     def items(self):
-        return ['support']
+        return ["support"]
 
     def location(self, item):
         return reverse(item)
+
 
 class FeedbackSitemap(Sitemap):
     changefreq = "yearly"
     priority = 0.5
 
     def items(self):
-        return ['feedback']
+        return ["feedback"]
 
     def location(self, item):
         return reverse(item)
