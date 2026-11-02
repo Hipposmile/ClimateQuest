@@ -45,18 +45,18 @@ def events_overview(request):
                     messages.error(request, all_messages["teilnehmeranzahl_search_keyword_not_a_number"])
                     return redirect("events_overview")
                 events = events.filter(num_participants__icontains=search_keyword)
-            events = events.order_by("-num_participants")
+            events = events.order_by("-num_participants", "pk")
         elif ordered_by == "von mir erstellte Events":
-            events = (events.filter(creator=user) if user else events.none()).order_by("name")
+            events = (events.filter(creator=user) if user else events.none()).order_by("name", "pk")
         elif ordered_by == "Events, bei denen ich Teilnehmer bin":
-            events = (events.filter(participants=user) if user else events.none()).order_by("name")
+            events = (events.filter(participants=user) if user else events.none()).order_by("name", "pk")
         else:
             order_by = ORDER_FIELDS.get(ordered_by, "name")
             if search_keyword:
                 events = events.filter(**{f"{order_by}__icontains": search_keyword})
-            events = events.order_by(order_by)
+            events = events.order_by(order_by, "pk")
     else:
-        events = events.filter(date_time__gte=timezone.now()).order_by("name")
+        events = events.filter(date_time__gte=timezone.now()).order_by("name", "pk")
 
     return render(
         request,

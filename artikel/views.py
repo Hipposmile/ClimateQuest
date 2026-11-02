@@ -28,7 +28,7 @@ def artikel_overview(request):
             request,
             "artikel_overview.html",
             {
-                "artikel": all_artikel.order_by("name_de"),
+                "artikel": all_artikel.order_by("name_de", "pk"),
                 "ordered_by": "Name",
                 "search_keyword": None,
                 "category": ALL_CATEGORIES,
@@ -45,14 +45,14 @@ def artikel_overview(request):
 
     if ordered_by == "von mir erstellte Artikel":
         artikel = all_artikel.filter(creator=user) if user else all_artikel.none()
-        artikel = artikel.order_by(order_by_name)
+        artikel = artikel.order_by(order_by_name, "pk")
     elif ordered_by == "von mir gelikte Artikel":
         artikel = all_artikel.filter(like=user) if user else all_artikel.none()
-        artikel = artikel.order_by(order_by_name)
+        artikel = artikel.order_by(order_by_name, "pk")
     elif ordered_by == "Zuletzt bearbeitet":
         if search_keyword:
             all_artikel = all_artikel.filter(updated_at__icontains=search_keyword)
-        artikel = all_artikel.order_by("-updated_at")
+        artikel = all_artikel.order_by("-updated_at", "pk")
     elif ordered_by == "Likes":
         if search_keyword:
             try:
@@ -61,12 +61,12 @@ def artikel_overview(request):
                 messages.error(request, all_messages["likes_search_keyword_not_a_number"])
                 return redirect("artikel_overview")
             all_artikel = all_artikel.filter(num_likes__icontains=search_keyword)
-        artikel = all_artikel.order_by("-num_likes")
+        artikel = all_artikel.order_by("-num_likes", "pk")
     else:
         order_by = "creator__username" if ordered_by == "Ersteller" else order_by_name
         if search_keyword:
             all_artikel = all_artikel.filter(**{f"{order_by}__icontains": search_keyword})
-        artikel = all_artikel.order_by(order_by)
+        artikel = all_artikel.order_by(order_by, "pk")
 
     return render(
         request,

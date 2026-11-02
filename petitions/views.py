@@ -59,7 +59,7 @@ def add_petition(request):
         )
         messages.success(request, all_messages["petition_added"])
         return redirect("petition_detail", petition.id)
-    return render(request, "./add_petition.html", {"categories": Category.objects.order_by("title")})
+    return render(request, "./add_petition.html", {"categories": Category.objects.order_by("title", "pk")})
 
 
 def _toggle_signature(request, petition):
@@ -215,7 +215,7 @@ def petitions_overview(request):
             request,
             "./petitions_overview.html",
             {
-                "petitions": petitions.filter(success=False).order_by("title"),
+                "petitions": petitions.filter(success=False).order_by("title", "pk"),
                 "ordered_by": "Titel",
                 "category": ALL_CATEGORIES,
                 "search_keyword": None,
@@ -235,13 +235,13 @@ def petitions_overview(request):
     user = request.user if request.user.is_authenticated else None
 
     if ordered_by == "von mir erstellte Petitionen":
-        petitions = (petitions.filter(creator=user) if user else petitions.none()).order_by("title")
+        petitions = (petitions.filter(creator=user) if user else petitions.none()).order_by("title", "pk")
     elif ordered_by == "von mir unterschriebene Petitionen":
-        petitions = (petitions.filter(signs=user) if user else petitions.none()).order_by("title")
+        petitions = (petitions.filter(signs=user) if user else petitions.none()).order_by("title", "pk")
     elif ordered_by == "Erstellt am":
         if search_keyword:
             petitions = petitions.filter(created_at__icontains=search_keyword)
-        petitions = petitions.order_by("-created_at")
+        petitions = petitions.order_by("-created_at", "pk")
     elif ordered_by == "Unterschriften":
         petitions = petitions.annotate(num_signs=Count("signs", distinct=True))
         if search_keyword:
@@ -251,12 +251,12 @@ def petitions_overview(request):
                 messages.error(request, all_messages["signs_search_keyword_not_a_number"])
                 return redirect("petitions_overview")
             petitions = petitions.filter(num_signs__icontains=search_keyword)
-        petitions = petitions.order_by("-num_signs")
+        petitions = petitions.order_by("-num_signs", "pk")
     else:
         order_by = ORDER_FIELDS.get(ordered_by, "title")
         if search_keyword:
             petitions = petitions.filter(**{f"{order_by}__icontains": search_keyword})
-        petitions = petitions.order_by(order_by)
+        petitions = petitions.order_by(order_by, "pk")
 
     return render(
         request,

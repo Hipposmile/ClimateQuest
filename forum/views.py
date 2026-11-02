@@ -22,7 +22,7 @@ def forum_overview(request):
             request,
             "./forum_overview.html",
             {
-                "forum_posts": forum_posts.order_by("title"),
+                "forum_posts": forum_posts.order_by("title", "pk"),
                 "ordered_by": "Titel",
                 "search_keyword": None,
                 "category": ALL_CATEGORIES,
@@ -39,19 +39,19 @@ def forum_overview(request):
 
     if ordered_by == "von mir erstellte Posts":
         forum_posts = forum_posts.filter(creator=user) if user else forum_posts.none()
-        forum_posts = forum_posts.order_by("title")
+        forum_posts = forum_posts.order_by("title", "pk")
     elif ordered_by == "von mir beantwortete Posts":
         forum_posts = forum_posts.filter(answers__creator=user).distinct() if user else forum_posts.none()
-        forum_posts = forum_posts.order_by("title")
+        forum_posts = forum_posts.order_by("title", "pk")
     elif ordered_by == "Erstellt am":
         if search_keyword:
             forum_posts = forum_posts.filter(date_time__icontains=search_keyword)
-        forum_posts = forum_posts.order_by("-date_time")
+        forum_posts = forum_posts.order_by("-date_time", "pk")
     else:
         order_by = ORDER_FIELDS.get(ordered_by, "title")
         if search_keyword:
             forum_posts = forum_posts.filter(**{f"{order_by}__icontains": search_keyword})
-        forum_posts = forum_posts.order_by(order_by)
+        forum_posts = forum_posts.order_by(order_by, "pk")
 
     return render(
         request,
