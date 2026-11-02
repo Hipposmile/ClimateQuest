@@ -10,7 +10,7 @@
     <h1>PastelDone</h1>
     {% if messages %}
         {% for message in messages %}
-            <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
+            <p class="{{ message.level_tag }}-message">{{ message|safe_html }}</p>
         {% endfor %}
     {% endif %}
     <p>{% blocktrans %}Alle in der App <i>PastelDone</i> gespeicherten Daten werden ausschließlich auf dem Gerät

@@ -9,7 +9,7 @@
     <h1>{% trans "Datenschutzerklärung" %}</h1>
     {% if messages %}
         {% for message in messages %}
-            <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
+            <p class="{{ message.level_tag }}-message">{{ message|safe_html }}</p>
         {% endfor %}
     {% endif %}
 

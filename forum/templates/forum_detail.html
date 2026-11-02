@@ -31,11 +31,11 @@
 
     {% if messages %}
         {% for message in messages %}
-            <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
+            <p class="{{ message.level_tag }}-message">{{ message|safe_html }}</p>
         {% endfor %}
     {% endif %}
 
-    <div class="artikel-content"><p>{{ post.content|safe }}</p></div>
+    <div class="artikel-content"><p>{{ post.content|safe_html }}</p></div>
 
     <br>
 
@@ -45,7 +45,7 @@
 
     {% for answer in answers %}
         <div class="answer">
-            <p>{{ answer.content|safe }}</p>
+            <p>{{ answer.content|safe_html }}</p>
             <p><small>{% url 'user_detail' answer.creator.id as answer_creator_url %}{% blocktrans with url=answer_creator_url creator=answer.creator date=answer.date_time|date:"SHORT_DATETIME_FORMAT" %}Antwort von <a href="{{ url }}">{{ creator }}</a> am {{ date }}{% endblocktrans %}</small></p>
         </div>
     {% endfor %}

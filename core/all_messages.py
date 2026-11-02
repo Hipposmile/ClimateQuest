@@ -29,6 +29,7 @@ all_messages = {
     # Community
     # --------
     # Create
+    "community__family_not_in_community": _("Diese Family ist nicht Mitglied der Community"),
     "community_exists": _("Community mit diesem Namen existiert bereits"),
     "community__invalid_family_credentials": _("Family-Anmeldedaten ungültig"),
     "community_created": _("Community erfolgreich erstellt"),

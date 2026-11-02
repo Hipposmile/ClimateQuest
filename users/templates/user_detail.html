@@ -15,7 +15,7 @@
 
         {% if messages %}
             {% for message in messages %}
-                <p class="{{ message.level_tag }}-message">{{ message|safe }}</p>
+                <p class="{{ message.level_tag }}-message">{{ message|safe_html }}</p>
             {% endfor %}
         {% endif %}
 
@@ -44,7 +44,7 @@
         <hr>
 
         <h2>{% trans "Statement" %}</h2>
-        <div class="artikel-content"><p>{{ user_expanded.statement|safe }}</p></div>
+        <div class="artikel-content"><p>{{ user_expanded.statement|safe_html }}</p></div>
 
         <hr>
 

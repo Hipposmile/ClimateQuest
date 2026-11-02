@@ -287,29 +287,38 @@ def get_hall_of_fame_entries(user: User) -> int:
     return HallOfFameEntry.objects.filter(user=user).count()
 
 
+def get_klimapunkte_by_user(user_ids, start=None, end=None, include_additional=True):
+    """``{user_id: climate points}`` for all given users using a constant number of queries.
+
+    Actions are limited to ``start``..``end`` (inclusive, either may be None). With ``include_additional`` the
+    bonus points and article likes of every user are added regardless of the period.
+    """
+    totals = dict.fromkeys(user_ids, 0.0)
+    actions = Aktion.objects.filter(user__in=totals)
+    if start is not None:
+        actions = actions.filter(date__gte=start)
+    if end is not None:
+        actions = actions.filter(date__lte=end)
+    for row in actions.values("user_id").annotate(total=Sum(F("quantity") * F("aktion__klimapunkte"))):
+        totals[row["user_id"]] += row["total"]
+    if include_additional:
+        for user_id, additional in UserErweitert.objects.filter(user__in=totals).values_list(
+            "user_id", "additional_klimapunkte"
+        ):
+            totals[user_id] += additional
+        for row in Artikel.objects.filter(creator__in=totals).values("creator_id").annotate(likes=Count("like")):
+            totals[row["creator_id"]] += row["likes"] * KLIMAPUNKTE_PER_LIKE
+    return totals
+
+
 def get_family_rank_from_user(user, family, user_klimapunkte=None):
     """1-based rank of ``user`` among the members of ``family`` by total climate points, None for non-members.
 
     Members with the same points share a rank. ``user_klimapunkte`` can be passed to skip recomputing it.
     """
-    member_ids = set(family.members.values_list("id", flat=True))
-    if user.id not in member_ids:
+    totals = get_klimapunkte_by_user(set(family.members.values_list("id", flat=True)))
+    if user.id not in totals:
         return None
-
-    totals = dict.fromkeys(member_ids, 0.0)
-    for row in (
-        Aktion.objects.filter(user__in=member_ids)
-        .values("user_id")
-        .annotate(total=Sum(F("quantity") * F("aktion__klimapunkte")))
-    ):
-        totals[row["user_id"]] += row["total"]
-    for user_id, additional in UserErweitert.objects.filter(user__in=member_ids).values_list(
-        "user_id", "additional_klimapunkte"
-    ):
-        totals[user_id] += additional
-    for row in Artikel.objects.filter(creator__in=member_ids).values("creator_id").annotate(likes=Count("like")):
-        totals[row["creator_id"]] += row["likes"] * KLIMAPUNKTE_PER_LIKE
-
     own_total = totals[user.id] if user_klimapunkte is None else user_klimapunkte
     return 1 + sum(1 for user_id, total in totals.items() if user_id != user.id and total > own_total)
 

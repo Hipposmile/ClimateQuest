@@ -1,12 +1,12 @@
-from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
+from core.models import HashPasswordsOnSaveMixin
 from family.models import Family
 
 
-class Community(models.Model):
+class Community(HashPasswordsOnSaveMixin, models.Model):
     name = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
     admin_password = models.CharField(max_length=100)
@@ -15,14 +15,6 @@ class Community(models.Model):
 
     def __str__(self):
         return self.name
-
-    def save(self, *args, **kwargs):
-        if not self.password.startswith("pbkdf2_"):
-            self.password = make_password(self.password)
-
-        if not self.admin_password.startswith("pbkdf2_"):
-            self.admin_password = make_password(self.admin_password)
-        super().save(*args, **kwargs)
 
     def members_count(self):
         return self.members.count()

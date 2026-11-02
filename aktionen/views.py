@@ -53,9 +53,7 @@ def _toggle_weekly_tracking(request):
     tracked, _ = TrackedActions.objects.filter(action=action, user=request.user).delete()
     if tracked:
         messages.success(request, all_messages["stopped_tracking"])
-    elif TrackedActions.objects.filter(
-        action__in=action.forbidden_in_same_period.all(), user=request.user
-    ).exists():
+    elif TrackedActions.objects.filter(action__in=action.forbidden_in_same_period.all(), user=request.user).exists():
         messages.error(request, all_messages["forbidden_tracking_action"])
     else:
         TrackedActions.objects.create(action=action, user=request.user)
@@ -73,7 +71,8 @@ def _track_kilometers(request):
         return redirect("track_actions")
 
     action_type = AktionenListe.objects.filter(
-        id=parse_id(request.POST.get("action_id")), track_kilometerly=True,
+        id=parse_id(request.POST.get("action_id")),
+        track_kilometerly=True,
     ).first()
     if action_type is None:
         return JsonResponse({"success": False, "error": str(all_messages["internal_error"])})

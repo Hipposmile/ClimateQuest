@@ -219,4 +219,3 @@ def report_user(request, reported_user, reporting_user, reason):
         url=f"/ClimateQuestAdmin/home/reporteduser/{report.id}/change/",
     )
     return report
-

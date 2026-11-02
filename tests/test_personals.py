@@ -583,8 +583,7 @@ def test_signal_creates_profile_for_social_signup(rf, worldwide, db):
 
 
 def FakeSocialLogin(extra_data):  # noqa: N802 - behaves like a class in the tests below
-    from allauth.socialaccount.models import SocialAccount
-    from allauth.socialaccount.models import SocialLogin
+    from allauth.socialaccount.models import SocialAccount, SocialLogin
 
     return SocialLogin(user=User(), account=SocialAccount(provider="google", uid="1", extra_data=extra_data))
 

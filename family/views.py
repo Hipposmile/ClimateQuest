@@ -1,560 +1,343 @@
-from datetime import date, datetime
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
-from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.utils.translation import gettext as _
+from django.utils import timezone
 
+from community.models import Community
 from core.all_messages import all_messages
 from utils.functions import (
-    create_notification,
-    get_additional_klimapunkte,
-    get_communities_of_family,
-    get_communities_of_user,
-    get_date_range,
+    WORLDWIDE_RANKING_NAME,
     get_families_of_user,
-    get_klimapunkte_for_member,
+    get_klimapunkte_by_user,
 )
+from utils.groups import escaped, notify, require_admin_password, too_long
+from utils.periods import InvalidPeriod, default_period, parse_period
 
 from .models import Family, FamilyChatMessage
 
 
 @login_required
 def create_family(request):
-    if request.method == "POST":
-        family_name = request.POST.get("familyname")
-        family_password = request.POST.get("family_password")
-        family_admin_password = request.POST.get("family_admin_password")
+    if request.method != "POST":
+        return render(request, "./create_family.html")
 
-        if not family_name or not family_password or not family_admin_password:
-            messages.error(request, all_messages["missing_required_inputs"])
-            return redirect("create_family")
+    name = request.POST.get("familyname")
+    password = request.POST.get("family_password")
+    admin_password = request.POST.get("family_admin_password")
+    if not name or not password or not admin_password:
+        messages.error(request, all_messages["missing_required_inputs"])
+        return redirect("create_family")
+    if too_long(request, name, password, admin_password):
+        return redirect("create_family")
+    if Family.objects.filter(name=name).exists():
+        messages.error(request, all_messages["family_exists"])
+        return redirect("create_family")
+    if name == WORLDWIDE_RANKING_NAME:
+        messages.error(request, all_messages["family_name_forbidden"])
+        return redirect("create_family")
 
-        if len(family_name) > 100 or len(family_password) > 100 or len(family_admin_password) > 100:
-            messages.error(request, all_messages["too_long_input"])
-            return redirect("create_family")
-
-        if Family.objects.filter(name=family_name).exists():
-            messages.error(request, all_messages["family_exists"])
-            return redirect("create_family")
-
-        if family_name == "worldwide ranking":
-            messages.error(request, all_messages["family_name_forbidden"])
-            return redirect("create_family")
-
-        family = Family.objects.create(name=family_name, password=family_password, admin_password=family_admin_password)
-        family.members.add(request.user)
-        messages.success(request, all_messages["family_created"])
-        return redirect("families_view")
-
-    return render(request, "./create_family.html")
+    family = Family.objects.create(name=name, password=password, admin_password=admin_password)
+    family.members.add(request.user)
+    messages.success(request, all_messages["family_created"])
+    return redirect("families_view")
 
 
 @login_required
 def join_family(request):
-    if request.method == "POST":
-        family_name = request.POST.get("familyname")
-        family_password = request.POST.get("family_password")
-        if not family_name or not family_password:
-            messages.error(request, all_messages["missing_required_inputs"])
-            return redirect("join_family")
+    if request.method != "POST":
+        return render(request, "./join_family.html")
 
-        try:
-            family = Family.objects.get(name=family_name)
-            if request.user in family.members.all():
-                messages.error(request, all_messages["family_already_joined"])
-            if check_password(family_password, family.password):
-                for user_to_message in family.members.all().exclude(id=request.user.id):
-                    create_notification(
-                        request,
-                        f"User {request.user} ist der Family {family} beigetreten",
-                        f"User {request.user} has joined the family {family}",
-                        user_to_message,
-                        url=reverse("family_detail", args=[family.id]),
-                    )
-                family.members.add(request.user)
-                messages.success(request, all_messages["family_joined"].format(familyname=family))
-                return redirect("families_view")
-            else:
-                messages.error(request, all_messages["invalid_family_credentials"])
-                return redirect("join_family")
-        except Family.DoesNotExist:
-            messages.error(request, all_messages["invalid_family_credentials"])
-            return redirect("join_family")
+    name = request.POST.get("familyname")
+    password = request.POST.get("family_password")
+    if not name or not password:
+        messages.error(request, all_messages["missing_required_inputs"])
+        return redirect("join_family")
 
-    return render(request, "./join_family.html")
+    family = Family.objects.filter(name=name).first()
+    if family is None or not check_password(password, family.password):
+        messages.error(request, all_messages["invalid_family_credentials"])
+        return redirect("join_family")
+    if family.members.filter(id=request.user.id).exists():
+        messages.error(request, all_messages["family_already_joined"].format(familyname=family))
+        return redirect("join_family")
+
+    notify(
+        request,
+        family.members.exclude(id=request.user.id),
+        f"User {escaped(request.user)} ist der Family {escaped(family)} beigetreten",
+        f"User {escaped(request.user)} has joined the family {escaped(family)}",
+        url=reverse("family_detail", args=[family.id]),
+    )
+    family.members.add(request.user)
+    messages.success(request, all_messages["family_joined"].format(familyname=family))
+    return redirect("families_view")
+
+
+def get_family_or_redirect(request, family_id, not_found_redirect="families_view"):
+    """``(family, None)``, or ``(None, redirect response)`` if the family does not exist."""
+    family = Family.objects.filter(id=family_id).first()
+    if family is None:
+        messages.error(request, all_messages["family_not_found"])
+        return None, redirect(not_found_redirect)
+    return family, None
 
 
 @login_required
 def chat_family(request, family_id):
-    if not family_id:
-        messages.error(request, all_messages["family_id_missing"])
+    family, response = get_family_or_redirect(request, family_id)
+    if response:
+        return response
+    if family.name == WORLDWIDE_RANKING_NAME:
+        messages.error(request, all_messages["chat_not_enabled_for_worldwide_ranking"])
         return redirect("families_view")
-    try:
-        family = Family.objects.get(id=family_id)
-    except Family.DoesNotExist:
-        messages.error(request, all_messages["family_not_found"])
-        return redirect("families_view")
-
-    if family.name == "worldwide ranking":
-        messages.error(request, all_messages["chat_not_enabled_for_worldwide"])
-        return redirect("families_view")
-
     if not family.chat:
         messages.error(request, all_messages["chat_disabled_for_family"])
         return redirect("family_detail", family_id=family.id)
-
-    if request.user not in family.members.all():
+    if not family.members.filter(id=request.user.id).exists():
         messages.error(request, all_messages["not_part_of_family"].format(familyname=family))
         return redirect("families_view")
 
     if request.method == "POST":
-        msg = request.POST.get("message")
-        FamilyChatMessage.objects.create(family=family, user=request.user, message=msg)
-        for user_to_message in family.members.all().exclude(id=request.user.id):
-            if user_to_message != request.user:
-                create_notification(
-                    request,
-                    f"Neue Nachricht in Family {family.name} von User {request.user}: {msg}",
-                    f"New message in family {family.name} from User {request.user}: {msg}",
-                    user_to_message,
-                    url=reverse("chat_family", args=[family_id]),
-                )
+        text = request.POST.get("message")
+        if text:
+            FamilyChatMessage.objects.create(family=family, user=request.user, message=text)
+            notify(
+                request,
+                family.members.exclude(id=request.user.id),
+                f"Neue Nachricht in Family {escaped(family.name)} von User {escaped(request.user)}: {escaped(text)}",
+                f"New message in family {escaped(family.name)} from User {escaped(request.user)}: {escaped(text)}",
+                url=reverse("chat_family", args=[family_id]),
+            )
         return redirect("chat_family", family_id=family.id)
 
-    msgs = FamilyChatMessage.objects.filter(family=family)
-
+    msgs = FamilyChatMessage.objects.filter(family=family).select_related("user").order_by("erstellt_am", "id")
     return render(request, "chat_family.html", {"family": family, "msgs": msgs})
 
 
 @login_required
 def families_view(request):
-    families = get_families_of_user(request.user)
-    return render(request, "./families.html", {"families": families})
+    return render(request, "./families.html", {"families": get_families_of_user(request.user)})
 
 
-@login_required
-def edit_family(request, family_id):
-    if not family_id:
-        messages.error(request, all_messages["family_id_missing"])
-        return redirect("families_view")
-    try:
-        family = Family.objects.get(id=family_id)
-    except Family.DoesNotExist:
-        messages.error(request, all_messages["family_not_found"])
-        return redirect("families_view")
-
-    if family.name == "worldwide ranking":
-        messages.error(request, all_messages["family_name_forbidden"])
-        return redirect("families_view")
-
-    if request.user not in family.members.all():
-        messages.error(request, all_messages["not_part_of_family"].format(familyname=family))
-        return redirect("families_view")
-
-    if request.method == "POST":
-        if "change_familyname" in request.POST:
-            admin_password = request.POST.get("admin_password_familyname")
-            familyname = request.POST.get("new_familyname")
-
-            if Family.objects.filter(name=familyname).exists():
-                messages.error(request, all_messages["family_exists"])
-                return redirect("edit_family", family_id)
-
-            if len(familyname) > 100:
-                messages.error(request, all_messages["too_long_input"])
-                return redirect("edit_family", family_id)
-
-            if not admin_password or not familyname:
-                messages.error(request, all_messages["missing_required_inputs"])
-            elif not check_password(admin_password, family.admin_password):
-                messages.error(request, all_messages["invalid_admin_password"])
-            else:
-                old_familyname = family.name
-                family.name = familyname
-                family.save()
-                for user_to_message in family.members.all().exclude(id=request.user.id):
-                    create_notification(
-                        request,
-                        f"Der Familyname der Family {old_familyname} wurde von {request.user} zu {familyname} geändert",
-                        f"The familyname of the family {old_familyname} hast been updated by {request.user} to {familyname}",
-                        user_to_message,
-                        url=reverse("family_detail", args=[family_id]),
-                    )
-                messages.success(request, all_messages["family_name_changed"])
-
-        if "change_password" in request.POST:
-            admin_password = request.POST.get("admin_password_password")
-            password = request.POST.get("new_password")
-
-            if len(password) > 100:
-                messages.error(request, all_messages["too_long_input"])
-                return redirect("edit_family", family_id)
-
-            if not admin_password or not password:
-                messages.error(request, all_messages["missing_required_inputs"])
-            elif not check_password(admin_password, family.admin_password):
-                messages.error(request, all_messages["invalid_admin_password"])
-            else:
-                family.password = password
-                family.save()
-                for user_to_message in family.members.all().exclude(id=request.user.id):
-                    create_notification(
-                        request,
-                        f"Passwort der Family {family.name} wurde von User {request.user} geändert",
-                        f"Password of family {family.name} hast been updated by {request.user}",
-                        user_to_message,
-                        url=reverse("family_detail", args=[family_id]),
-                    )
-                messages.success(request, all_messages["family_password_changed"])
-
-        if "change_admin_password" in request.POST:
-            current_admin_password = request.POST.get("current_admin_password")
-            new_admin_password = request.POST.get("new_admin_password")
-
-            if len(new_admin_password) > 100:
-                messages.error(request, all_messages["too_long_input"])
-                return redirect("edit_family", family_id)
-
-            if not current_admin_password or not new_admin_password:
-                messages.error(request, all_messages["missing_required_inputs"])
-            elif not check_password(current_admin_password, family.admin_password):
-                messages.error(request, all_messages["invalid_admin_password"])
-            else:
-                family.admin_password = new_admin_password
-                family.save()
-                for user_to_message in family.members.all().exclude(id=request.user.id):
-                    create_notification(
-                        request,
-                        f"Das Family-Admin-Passwort der Family {family.name} wurde von User {request.user} geändert",
-                        f"Admin-Password of family {family.name} hast been updated by {request.user}",
-                        user_to_message,
-                        url=reverse("family_detail", args=[family_id]),
-                    )
-                messages.success(request, all_messages["family_admin_password_changed"])
-
-        if "remove_member" in request.POST:
-            admin_password = request.POST.get("admin_password_remove")
-            username = request.POST.get("username")
-
-            if not admin_password or not username:
-                messages.error(request, all_messages["missing_required_inputs"])
-            elif not check_password(admin_password, family.admin_password):
-                messages.error(request, all_messages["invalid_admin_password"])
-            elif username == request.user.username:
-                family.members.remove(request.user)
-                messages.success(request, all_messages["family_left"])
-                return redirect("families_view")
-            else:
-                try:
-                    user = User.objects.get(username=username)
-                except User.DoesNotExist:
-                    messages.error(request, all_messages["family_user_not_found"])
-                    return redirect("edit_family", family_id)
-                family.members.remove(user)
-                for user_to_message in family.members.all():
-                    if user_to_message == user:
-                        create_notification(
-                            request,
-                            f"Du wurdest von User {request.user} aus der Family {family.name} entfernt",
-                            f"You have been removed from family {family.name}",
-                            user_to_message,
-                            url=reverse("families_view"),
-                        )
-                    else:
-                        create_notification(
-                            request,
-                            f"User {user} wurde von User {request.user} aus Family {family.name} entfernt.",
-                            f"User {user} has been removed from family {family.name}",
-                            user_to_message,
-                            url=reverse("family_detail", args=[family_id]),
-                        )
-                messages.error(request, all_messages["family_user_removed"])
-
-        if "leave_family" in request.POST:
-            family.members.remove(request.user)
-            messages.success(request, all_messages["family_left"])
-            return redirect("families_view")
-
-        if "change_chat_settings" in request.POST:
-            admin_password = request.POST.get("admin_password_chat_settings")
-            if not check_password(admin_password, family.admin_password):
-                messages.error(request, all_messages["invalid_admin_password"])
-            else:
-                chat_enabled = request.POST.get("chat_checkbox") == "on"
-                family.chat = chat_enabled
-                family.save()
-                if chat_enabled:
-                    messages.success(request, all_messages["family_chat_enabled"])
-                else:
-                    messages.success(request, all_messages["family_chat_disabled"])
-
-        if "delete_family" in request.POST:
-            admin_password = request.POST.get("admin_password_delete")
-            if not admin_password:
-                messages.error(request, all_messages["missing_required_inputs"])
-            elif not check_password(admin_password, family.admin_password):
-                messages.error(request, all_messages["invalid_admin_password"])
-            else:
-                for user_to_message in family.members.all().exclude(id=request.user.id):
-                    create_notification(
-                        request,
-                        f"Family {family.name} wurde von User {request.user} gelöscht.",
-                        f"Family {family.name} hast been deleted by {request.user}",
-                        user_to_message,
-                        url=reverse("families_view"),
-                    )
-                family.delete()
-                messages.success(request, all_messages["family_deleted"])
-                return redirect("families_view")
-
-    return render(request, "edit_family.html", {"family": family})
+def _notify_others(request, family, text_de, text_en):
+    notify(
+        request,
+        family.members.exclude(id=request.user.id),
+        text_de,
+        text_en,
+        url=reverse("family_detail", args=[family.id]),
+    )
 
 
-"""@login_required
-def family_detail(request, family_id):
-    if not family_id:
-        messages.error(request, all_messages["family_id_missing"])
-        return redirect('dashboard')
-    try:
-        family = Family.objects.get(id=family_id)
-    except Family.DoesNotExist:
-        messages.error(request, all_messages["family_not_found"])
-        return redirect('dashboard')
+def _change_name(request, family):
+    admin_password = request.POST.get("admin_password_familyname")
+    name = request.POST.get("new_familyname")
+    if name is not None and too_long(request, name):
+        return None
+    if Family.objects.filter(name=name).exists():
+        messages.error(request, all_messages["family_exists"])
+        return None
+    if not require_admin_password(request, admin_password, family.admin_password, name):
+        return None
+    old_name = family.name
+    family.name = name
+    family.save()
+    _notify_others(
+        request,
+        family,
+        f"Der Familyname der Family {escaped(old_name)} wurde von {escaped(request.user)} zu {escaped(name)} geändert",
+        f"The family name of the family {escaped(old_name)} has been changed by {escaped(request.user)} to {escaped(name)}",
+    )
+    messages.success(request, all_messages["family_name_changed"])
+    return None
 
-    members_with_klimapunkte = []
-    members = family.members.all()
 
-    zeitraum = 'gesamt'
+def _change_password(request, family):
+    new_password = request.POST.get("new_password")
+    if too_long(request, new_password):
+        return None
+    if not require_admin_password(
+        request, request.POST.get("admin_password_password"), family.admin_password, new_password
+    ):
+        return None
+    family.password = new_password
+    family.save()
+    _notify_others(
+        request,
+        family,
+        f"Passwort der Family {escaped(family.name)} wurde von User {escaped(request.user)} geändert",
+        f"Password of family {escaped(family.name)} has been changed by {escaped(request.user)}",
+    )
+    messages.success(request, all_messages["family_password_changed"])
+    return None
 
-    if request.method == 'POST':
-        zeitraum = request.POST.get('zeitraum')
 
-        heute = date.today()
-        seven_days = heute - timedelta(days=7)
-        thirty_days = heute - timedelta(days=30)
-        threehundertsixtyfive_days = heute - timedelta(days=365)
+def _change_admin_password(request, family):
+    new_password = request.POST.get("new_admin_password")
+    if too_long(request, new_password):
+        return None
+    if not require_admin_password(
+        request, request.POST.get("current_admin_password"), family.admin_password, new_password
+    ):
+        return None
+    family.admin_password = new_password
+    family.save()
+    _notify_others(
+        request,
+        family,
+        f"Das Family-Admin-Passwort der Family {escaped(family.name)} wurde von User {escaped(request.user)} geändert",
+        f"Admin password of family {escaped(family.name)} has been changed by {escaped(request.user)}",
+    )
+    messages.success(request, all_messages["family_admin_password_changed"])
+    return None
 
-        if zeitraum == 'benutzerdefiniert':
-            start_datum = request.POST.get('start_date')
-            end_datum = request.POST.get('end_date')
 
-            if not start_datum or not end_datum:
-                messages.error(request, all_messages["missing_required_inputs"])
-                return redirect('family_detail', family_id)
+def _remove_member(request, family):
+    username = request.POST.get("username")
+    if not require_admin_password(request, request.POST.get("admin_password_remove"), family.admin_password, username):
+        return None
+    if username == request.user.username:
+        family.members.remove(request.user)
+        messages.success(request, all_messages["family_left"])
+        return "families_view"
+    removed = family.members.filter(username=username).first()
+    if removed is None:
+        messages.error(request, all_messages["family_user_not_found"])
+        return "edit_family"
+    family.members.remove(removed)
+    notify(
+        request,
+        [removed],
+        f"Du wurdest von User {escaped(request.user)} aus der Family {escaped(family.name)} entfernt",
+        f"You have been removed from family {escaped(family.name)} by {escaped(request.user)}",
+        url=reverse("families_view"),
+    )
+    _notify_others(
+        request,
+        family,
+        f"User {escaped(removed)} wurde von User {escaped(request.user)} aus Family {escaped(family.name)} entfernt.",
+        f"User {escaped(removed)} has been removed from family {escaped(family.name)} by {escaped(request.user)}",
+    )
+    messages.error(request, all_messages["family_user_removed"])
+    return None
 
-            try:
-                start_datum = datetime.strptime(start_datum, '%Y-%m-%d').date()
-                end_datum = datetime.strptime(end_datum, '%Y-%m-%d').date()
 
-                if start_datum > end_datum:
-                    messages.error(request, all_messages["invalid_date_range"])
-                    return redirect('family_detail', family_id)
-                if end_datum > heute:
-                    messages.error(request, all_messages["date_in_future"])
-                    return redirect('family_detail', family_id)
+def _leave_family(request, family):
+    family.members.remove(request.user)
+    messages.success(request, all_messages["family_left"])
+    return "families_view"
 
-            except ValueError:
-                messages.error(request, all_messages["invalid_date"])
-                return redirect('family_detail', family_id)
 
-            zeitraum_text = f"von {start_datum.strftime('%d.%m.%Y')} bis {end_datum.strftime('%d.%m.%Y')}"  # ToDo: Internationalisierung
+def _change_chat_settings(request, family):
+    if not require_admin_password(request, request.POST.get("admin_password_chat_settings"), family.admin_password):
+        return None
+    family.chat = request.POST.get("chat_checkbox") == "on"
+    family.save()
+    messages.success(request, all_messages["family_chat_enabled" if family.chat else "family_chat_disabled"])
+    return None
 
-        elif zeitraum not in ['heute', 'sieben Tage', 'dreißig Tage', 'dreihundertfünfundsechzig Tage', 'gesamt']:
-            messages.error(request, all_messages["invalid_time_period"])
-            return redirect('family_detail', family_id)
 
-        for member in members:
+def _delete_family(request, family):
+    if not require_admin_password(request, request.POST.get("admin_password_delete"), family.admin_password):
+        return None
+    notify(
+        request,
+        family.members.exclude(id=request.user.id),
+        f"Family {escaped(family.name)} wurde von User {escaped(request.user)} gelöscht.",
+        f"Family {escaped(family.name)} has been deleted by {escaped(request.user)}",
+        url=reverse("families_view"),
+    )
+    family.delete()
+    messages.success(request, all_messages["family_deleted"])
+    return "families_view"
 
-            if zeitraum == 'heute':
-                aktionen = Aktion.objects.filter(user=member, date=heute)
-                klimapunkte = get_klimapunkte(aktionen)
 
-            elif zeitraum == 'sieben Tage':
-                aktionen = Aktion.objects.filter(user=member, date__gte=seven_days)
-                klimapunkte = get_klimapunkte(aktionen)
-
-            elif zeitraum == 'dreißig Tage':
-                aktionen = Aktion.objects.filter(user=member, date__gte=thirty_days)
-                klimapunkte = get_klimapunkte(aktionen)
-
-            elif zeitraum == 'dreihundertfünfundsechzig Tage':
-                aktionen = Aktion.objects.filter(user=member, date__gte=threehundertsixtyfive_days)
-                klimapunkte = get_klimapunkte(aktionen)
-
-            elif zeitraum == 'gesamt':
-                aktionen = Aktion.objects.filter(user=member)
-                klimapunkte = get_klimapunkte(aktionen)
-
-            elif zeitraum == 'benutzerdefiniert':
-                aktionen = Aktion.objects.filter(user=member, date__range=(start_datum, end_datum))
-                klimapunkte = get_klimapunkte(aktionen)
-                zeitraum = zeitraum_text
-
-            if klimapunkte is None:
-                klimapunkte = 0
-
-            klimapunkte += get_klimapunkte_from_likes(member)
-            members_with_klimapunkte.append({'member': member, 'klimapunkte': klimapunkte})
-
-    else:
-        for member in members:
-            aktionen = Aktion.objects.filter(user=member)
-            klimapunkte = get_klimapunkte(aktionen)
-            klimapunkte += get_klimapunkte_from_likes(member)
-            members_with_klimapunkte.append({'member': member, 'klimapunkte': klimapunkte})
-
-    # Sortierung anwenden
-    try:
-        members_with_klimapunkte_sortiert = sorted(
-            members_with_klimapunkte,
-            key=lambda x: x['klimapunkte'],
-            reverse=True
-        )
-    except KeyError:
-        messages.error(request, "Fehler beim Sortieren der Mitglieder.")
-        return redirect('family_detail', family_id)
-
-    total_klimapunkte = sum(member['klimapunkte'] for member in members_with_klimapunkte_sortiert)
-    members_count = len(members_with_klimapunkte)
-    average_klimapunkte = total_klimapunkte / members_count if members_with_klimapunkte_sortiert else 0
-    return render(request, './family_detail.html', {
-        'family': family,
-        'members': members_with_klimapunkte_sortiert,
-        'zeitraum': zeitraum,
-        'average_klimapunkte': average_klimapunkte,
-        'total_klimapunkte': total_klimapunkte,
-        'members_count': members_count,
-    })"""
-
-VALID_ZEITRAEUME = {
-    "Heute",
-    "Sieben Tage",
-    "Dreißig Tage",
-    "Dreihundertfünfundsechzig Tage",
-    "Gesamt",
-    "Benutzerdefiniert",
+FAMILY_ACTIONS = {
+    "change_familyname": _change_name,
+    "change_password": _change_password,
+    "change_admin_password": _change_admin_password,
+    "remove_member": _remove_member,
+    "leave_family": _leave_family,
+    "change_chat_settings": _change_chat_settings,
+    "delete_family": _delete_family,
 }
 
 
 @login_required
-def family_detail(request, family_id):
-    if not family_id:
-        messages.error(request, all_messages["family_id_missing"])
+def edit_family(request, family_id):
+    family, response = get_family_or_redirect(request, family_id)
+    if response:
+        return response
+    if family.name == WORLDWIDE_RANKING_NAME:
+        messages.error(request, all_messages["family_name_forbidden"])
         return redirect("families_view")
-
-    try:
-        family = Family.objects.get(id=family_id)
-    except Family.DoesNotExist:
-        messages.error(request, all_messages["family_not_found"])
+    if not family.members.filter(id=request.user.id).exists():
+        messages.error(request, all_messages["not_part_of_family"].format(familyname=family))
         return redirect("families_view")
-    if request.user not in family.members.all():
-        family_communities = get_communities_of_family(family)
-        user_communities = get_communities_of_user(request.user)
-        if not family_communities.filter(id__in=user_communities).exists():
-            messages.error(request, all_messages["not_part_of_family"].format(familyname=family.name))
-            return redirect("families_view")
-
-    heute = date.today()
-    zeitraum_text = _("Gesamt")
-    start_datum = end_datum = None
 
     if request.method == "POST":
-        zeitraum = request.POST.get("zeitraum", "Gesamt")
+        for button, handler in FAMILY_ACTIONS.items():
+            if button in request.POST:
+                target = handler(request, family)
+                if target == "edit_family":
+                    return redirect("edit_family", family_id)
+                if target:
+                    return redirect(target)
+    return render(request, "edit_family.html", {"family": family})
 
-        if zeitraum not in VALID_ZEITRAEUME:
-            messages.error(request, all_messages["invalid_time_period"])
+
+def can_view_family(user, family):
+    """Members may see their family; so may members of other families in a shared community."""
+    if family.members.filter(id=user.id).exists():
+        return True
+    return Community.objects.filter(members=family).filter(members__in=get_families_of_user(user)).exists()
+
+
+@login_required
+def family_detail(request, family_id):
+    family = Family.objects.filter(id=family_id).first()
+    if family is None:
+        messages.error(request, all_messages["family_not_found"])
+        return redirect("families_view")
+    if not can_view_family(request.user, family):
+        messages.error(request, all_messages["not_part_of_family"].format(familyname=family.name))
+        return redirect("families_view")
+
+    period = default_period()
+    if request.method == "POST":
+        try:
+            period = parse_period(request.POST, request.LANGUAGE_CODE, timezone.localdate())
+        except InvalidPeriod as error:
+            messages.error(request, error.message)
             return redirect("family_detail", family_id)
 
-        if zeitraum == "Benutzerdefiniert":
-            raw_start = request.POST.get("start_date")
-            raw_end = request.POST.get("end_date")
-
-            if not raw_start or not raw_end:
-                messages.error(request, all_messages["missing_required_inputs"])
-                return redirect("family_detail", family_id)
-
-            try:
-                start_datum = datetime.strptime(raw_start, "%Y-%m-%d").date()
-                end_datum = datetime.strptime(raw_end, "%Y-%m-%d").date()
-            except ValueError:
-                messages.error(request, all_messages["invalid_date"])
-                return redirect("family_detail", family_id)
-
-            if start_datum > end_datum:
-                messages.error(request, all_messages["invalid_date_range"])
-                return redirect("family_detail", family_id)
-            if end_datum > heute:
-                messages.error(request, all_messages["date_in_future"])
-                return redirect("family_detail", family_id)
-
-            zeitraum_text = _("%(start)s bis %(end)s") % {
-                "start": start_datum.strftime("%d.%m.%Y")
-                if request.LANGUAGE_CODE == "de"
-                else start_datum.strftime("%m/%d/%Y"),
-                "end": end_datum.strftime("%d.%m.%Y")
-                if request.LANGUAGE_CODE == "de"
-                else end_datum.strftime("%m/%d/%Y"),
-            }
-        else:
-            start_datum, end_datum = get_date_range(zeitraum, heute)
-
-            if zeitraum == "heute":
-                start_datum = end_datum = heute
-
-            if request.LANGUAGE_CODE == "en":
-                zeitraum_text_translations = {
-                    "Gesamt": "Total",
-                    "Heute": "Today",
-                    "Sieben Tage": "Seven days",
-                    "Dreißig Tage": "Thirty days",
-                    "Dreihundertfünfundsechzig Tage": "Threehundredsixtyfive days",
-                }
-                zeitraum_text = zeitraum_text_translations.get(zeitraum)
-            else:
-                zeitraum_text = zeitraum
-
-    members = family.members.all()
-
-    members_with_klimapunkte = [
-        {
-            "member": member,
-            "klimapunkte": get_klimapunkte_for_member(member, start_datum, end_datum)
-            + (get_additional_klimapunkte(member) if zeitraum_text == "Gesamt" or zeitraum_text == "Total" else 0),
-        }
-        for member in members
-    ]
-
-    members_with_klimapunkte_sortiert = sorted(
-        members_with_klimapunkte,
-        key=lambda x: x["klimapunkte"],
+    members = list(family.members.all())
+    points = get_klimapunkte_by_user(
+        [member.id for member in members], period.start, period.end, include_additional=period.is_total
+    )
+    ranking = sorted(
+        ({"member": member, "klimapunkte": points[member.id]} for member in members),
+        key=lambda row: row["klimapunkte"],
         reverse=True,
     )
-
-    total_klimapunkte = sum(m["klimapunkte"] for m in members_with_klimapunkte_sortiert)
-    members_count = len(members_with_klimapunkte_sortiert)
-    average_klimapunkte = total_klimapunkte / members_count if members_count else 0
-
+    total = sum(row["klimapunkte"] for row in ranking)
     return render(
         request,
         "./family_detail.html",
         {
             "family": family,
-            "members": members_with_klimapunkte_sortiert,
-            "zeitraum": zeitraum_text,
-            "average_klimapunkte": average_klimapunkte,
-            "total_klimapunkte": total_klimapunkte,
-            "members_count": members_count,
+            "members": ranking,
+            "zeitraum": period.text,
+            "average_klimapunkte": total / len(ranking) if ranking else 0,
+            "total_klimapunkte": total,
+            "members_count": len(ranking),
         },
     )
 
 
 @login_required
 def check_familyname(request):
-    familyname = request.GET.get("familyname", None)
-    exists = Family.objects.filter(name=familyname).exists()
-    return JsonResponse({"exists": exists})
+    return JsonResponse({"exists": Family.objects.filter(name=request.GET.get("familyname")).exists()})

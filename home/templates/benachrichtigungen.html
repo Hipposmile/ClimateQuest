@@ -123,8 +123,8 @@
                     <p class="emoji">&#x1F514;</p>
                     <div class="benachrichtigung-inhalt">
                         <p>{% if request.LANGUAGE_CODE == "de" %}
-                            {{ benachrichtigung.benachrichtigung_de|safe }}{% else %}
-                            {{ benachrichtigung.benachrichtigung_en|safe }}{% endif %}
+                            {{ benachrichtigung.benachrichtigung_de|safe_html }}{% else %}
+                            {{ benachrichtigung.benachrichtigung_en|safe_html }}{% endif %}
                             <a href="{{ benachrichtigung.url }}" class="redirect-link more-link">
                                 <span>{% trans "Mehr" %}</span>
                                 <span class="redirect-link-icon">→</span>
