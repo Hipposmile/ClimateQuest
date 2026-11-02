@@ -27,5 +27,4 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install -y gettext
       - run: pip install -r requirements-dev.txt
       - run: make lint
-      - run: python manage.py makemigrations --check --dry-run --settings=ClimateQuest.settingstest || true
       - run: make test

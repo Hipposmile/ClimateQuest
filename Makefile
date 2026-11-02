@@ -2,9 +2,12 @@
 # PostgreSQL connection comes from PGHOST/PGPORT/PGUSER/PGPASSWORD (see ClimateQuest/settingstest.py).
 PYTHON ?= python
 
-.PHONY: test test-sqlite test-postgres lint format
+# Third-party apps (e.g. webpush) may ship model changes without migrations; only our own apps are checked.
+PROJECT_APPS = aktionen artikel community core events family forum hall_of_fame home pages personals petitions users
 
-test: test-sqlite test-postgres
+.PHONY: test test-sqlite test-postgres lint format migrations-check
+
+test: migrations-check test-sqlite test-postgres
 
 test-sqlite:
 	TEST_DB=sqlite $(PYTHON) -m coverage run -m pytest -q
@@ -21,3 +24,6 @@ lint:
 format:
 	$(PYTHON) -m ruff check --fix .
 	$(PYTHON) -m ruff format .
+
+migrations-check:
+	DJANGO_SETTINGS_MODULE=ClimateQuest.settingstest $(PYTHON) manage.py makemigrations --check --dry-run $(PROJECT_APPS)
