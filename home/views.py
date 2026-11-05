@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.cache import cache
 from django.db.models import Count, F, Sum
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
@@ -30,6 +31,8 @@ from utils.functions import (
 MAX_NOTIFICATION_LENGTH = 500
 KLIMAPUNKTE_PER_KG_CO2 = 1000
 PERFECT_WEEK_PERCENT = 100
+HOME_STATISTICS_CACHE_KEY = "home_statistics"
+HOME_STATISTICS_CACHE_SECONDS = 10 * 60
 
 
 def total_klimapunkte_of_all_users():
@@ -40,18 +43,23 @@ def total_klimapunkte_of_all_users():
     return from_actions + bonus + likes * KLIMAPUNKTE_PER_LIKE
 
 
-def home(request):
-    klimapunkte_gesamt = int(total_klimapunkte_of_all_users())
-    return render(
-        request,
-        "./home.html",
-        {
+def get_home_statistics():
+    """Global counters of the start page, cached for 10 minutes (they are the same for every visitor)."""
+    statistics = cache.get(HOME_STATISTICS_CACHE_KEY)
+    if statistics is None:
+        klimapunkte_gesamt = int(total_klimapunkte_of_all_users())
+        statistics = {
             "klimapunkte": klimapunkte_gesamt,
             "user_count": User.objects.count(),
             "co2": klimapunkte_gesamt // KLIMAPUNKTE_PER_KG_CO2,
             "tree_count": TreeCodes.objects.filter(planted=True).count(),
-        },
-    )
+        }
+        cache.set(HOME_STATISTICS_CACHE_KEY, statistics, HOME_STATISTICS_CACHE_SECONDS)
+    return statistics
+
+
+def home(request):
+    return render(request, "./home.html", get_home_statistics())
 
 
 def dashboard(request):

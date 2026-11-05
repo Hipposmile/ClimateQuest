@@ -171,3 +171,8 @@ Umgebungsvariablen/`.env`), `ClimateQuest.settingstest` (Tests).
 - **Komprimierung:** Dynamische Seiten werden per gzip ausgeliefert, statische Dateien vorab mit Brotli/gzip (`Brotli` in
   `requirements.txt`).
 - **Bibliotheken nur bei Bedarf:** Quill (Editor) und der QR-Code-Generator werden erst geladen, wenn sie gebraucht werden.
+- **Dunkles Farbschema:** Bei Geräten mit aktivierter Systemeinstellung „Dunkel“ (`prefers-color-scheme: dark`) wird
+  automatisch ein dunkles Farbschema genutzt (spart Strom auf OLED-Displays). Die Farben stehen als CSS-Variablen in
+  `static/css/style.css`; für Hintergründe bitte `--color-surface` statt `--color-white` verwenden.
+- **Startseiten-Statistik** wird 10 Minuten zwischengespeichert, Lottie-Animationen starten erst per Klick/Tap.
+- **Bilder im Karussell** sind auf 1280 px Breite begrenzt.

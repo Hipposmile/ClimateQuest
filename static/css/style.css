@@ -10,6 +10,10 @@
     --color-primary-light: #e3f0fa;
     --color-accent: #000000;
     --color-white: #ffffff;
+    --color-surface: #ffffff;
+    --color-text-soft: #4b5563;
+    --color-divider: #e5e7eb;
+    --color-track: #e0e0e0;
     --color-header-bg: #2c3e50;
     --color-header-text: #ecf0f1;
     --color-muted: #888;
@@ -37,6 +41,35 @@
 
     --font-family-system: system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Dark colour scheme: follows the system setting (prefers-color-scheme). Dark pixels need less power on OLED screens. */
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+        --color-bg: #0e1116;
+        --color-bg-light: #151a21;
+        --color-bg-dark: #12261b;
+        --color-text: #e4e7eb;
+        --color-primary: #5b7cff;
+        --color-primary-hover: #4db3ff;
+        --color-primary-light: #1b2740;
+        --color-accent: #ffffff;
+        --color-muted: #9aa3ad;
+        --color-shadow-light: rgba(0, 0, 0, 0.5);
+        --color-green-dark: #4cc380;
+        --color-blue-dark: #9db4cf;
+        --color-border: #3a424c;
+        --color-border-green: #2c5a4a;
+        --color-counters: #6fcf97;
+        --color-counters-bg: #14231b;
+        --color-own-cards: #4cc380;
+        --color-description: #ffffff22;
+        --color-surface: #181e26;
+        --color-text-soft: #b6bdc6;
+        --color-divider: #2a323c;
+        --color-track: #2a323c;
+    }
 }
 
 html {
@@ -135,7 +168,7 @@ form {
     max-width: 400px;
     margin: 2rem auto;
     padding: 2rem;
-    background-color: var(--color-white);
+    background-color: var(--color-surface);
     border-radius: 16px;
     box-shadow: var(--shadow-md);
 }
@@ -158,7 +191,7 @@ form select {
     font-size: 16px;
     -webkit-appearance: none;
     appearance: none;
-    background-color: var(--color-white);
+    background-color: var(--color-surface);
 }
 
 form button {
@@ -371,7 +404,7 @@ main {
     max-width: 500px;
     margin: 2rem auto;
     padding: 0;
-    background-color: var(--color-white);
+    background-color: var(--color-surface);
     border-radius: 8px;
     box-shadow: var(--shadow-md);
     list-style: none;
@@ -385,13 +418,13 @@ main {
 
 @keyframes focus {
     0% {
-        background-color: var(--color-white);
+        background-color: var(--color-surface);
     }
     50% {
         background-color: #ff5500;
     }
     100% {
-        background-color: var(--color-white);
+        background-color: var(--color-surface);
     }
 }
 
@@ -579,7 +612,7 @@ main {
 .checkmark {
     min-height: 24px;
     min-width: 24px;
-    background-color: var(--color-white);
+    background-color: var(--color-surface);
     border: 2px solid var(--color-primary);
     border-radius: 8px;
     box-shadow: var(--shadow-md);
@@ -620,7 +653,7 @@ summary {
 
 /*In mehreren Dateien vorhanden*/
 .event-card {
-    background-color: var(--color-white);
+    background-color: var(--color-surface);
     border-radius: 10px;
     box-shadow: var(--shadow-md);
     padding: 1.8rem;
@@ -640,7 +673,7 @@ summary {
     cursor: pointer;
     padding: 0.5rem 0;
     list-style: none;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--color-divider);
     transition: color 0.2s ease;
 }
 
@@ -821,7 +854,7 @@ summary {
     font-weight: bold;
     color: var(--color-text);
     margin-bottom: 0.5rem;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--color-divider);
 }
 
 .answers {
@@ -831,7 +864,7 @@ summary {
 
 .answer {
     padding: 0.4rem 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--color-divider);
     color: var(--color-text);
 }
 
@@ -881,7 +914,7 @@ summary {
     left: 0;
     width: 100%;
     height: 5em;
-    background: linear-gradient(to bottom, transparent, #fff);
+    background: linear-gradient(to bottom, transparent, var(--color-surface));
 }
 
 .expandable-text.blur-enabled {
@@ -898,7 +931,7 @@ summary {
     left: 0;
     width: 100%;
     height: 1.5em;
-    background: linear-gradient(to bottom, transparent, #fff);
+    background: linear-gradient(to bottom, transparent, var(--color-surface));
 }
 
 .expanded .expandable-text.blur-enabled {
@@ -1082,7 +1115,7 @@ input[type="file"]::-webkit-file-upload-button {
 
 .progress-container {
     width: 100%;
-    background-color: #e0e0e0;
+    background-color: var(--color-track);
     border-radius: 8px;
 }
 
@@ -1277,7 +1310,7 @@ input[type="file"]::-webkit-file-upload-button {
     transform: translateX(-50%);
     width: 90%;
     max-width: 520px;
-    background: var(--color-white);
+    background: var(--color-surface);
     color: var(--color-text);
     border-radius: 12px;
     padding: 24px;
@@ -1458,7 +1491,7 @@ canvas {
 
 .accordion {
     width: 100%;
-    background: #ffffff;
+    background: var(--color-surface);
     border-radius: 14px;
     box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
     padding: 18px 20px;
@@ -1477,7 +1510,7 @@ canvas {
 .accordion-title {
     font-size: 1rem;
     font-weight: 600;
-    color: #0f172a;
+    color: var(--color-text);
 }
 
 .accordion-meta {
@@ -1553,10 +1586,10 @@ canvas {
 
 .accordion-content {
     padding: 14px 0 14px 0;
-    color: #4b5563;
+    color: var(--color-text-soft);
     font-size: 0.95rem;
     line-height: 1.6;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid var(--color-divider);
     margin-top: 12px;
 }
 
@@ -1586,5 +1619,16 @@ canvas {
         animation-iteration-count: 1 !important;
         transition-duration: 0.001ms !important;
         scroll-behavior: auto !important;
+    }
+}
+
+/* The logo graphic has dark lettering: in the dark scheme it keeps its light background. */
+@media (prefers-color-scheme: dark) {
+    .logo-link {
+        background: #e0f7e9;
+    }
+
+    .logo-link:hover {
+        background: #f7fafd;
     }
 }

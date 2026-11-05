@@ -215,3 +215,14 @@ def test_base_template_renders_notification_count_without_extra_request(logged_i
 def test_dynamic_pages_are_gzip_compressed(client):
     response = client.get("/", headers={"accept-encoding": "gzip"})
     assert response.headers["Content-Encoding"] == "gzip"
+
+
+def test_home_statistics_are_cached_for_ten_minutes(client, make_user, django_assert_num_queries):
+    make_user("first")
+    assert client.get("/").context["user_count"] == 1
+    make_user("second")
+    with django_assert_num_queries(0):  # served from the cache: no statistics queries at all
+        from home.views import get_home_statistics
+
+        assert get_home_statistics()["user_count"] == 1
+    assert client.get("/").context["user_count"] == 1
