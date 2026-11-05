@@ -196,3 +196,22 @@ def test_admin_family_community_and_event_receivers(staff_client, user, other, m
     post_admin(staff_client, receiver="event-participants", name=str(event.id), url="/events/")
     note = Benachrichtigung.objects.get()
     assert (note.user, note.url) == (other, "/events/")
+
+
+def test_base_template_renders_notification_count_without_extra_request(logged_in, user, other):
+    """The count is rendered into the page (no separate /count-benachrichtigungen/ request per page view)."""
+    response = logged_in.get("/dashboard/")
+    assert 'id="benachrichtigungen-count"' not in response.content.decode()  # nothing to show for 0
+
+    Benachrichtigung.objects.create(user=user, benachrichtigung_de="a", benachrichtigung_en="a", url="/x/")
+    Benachrichtigung.objects.create(user=user, benachrichtigung_de="b", benachrichtigung_en="b", url="/x/")
+    Benachrichtigung.objects.create(user=other, benachrichtigung_de="c", benachrichtigung_en="c", url="/x/")
+    html = logged_in.get("/dashboard/").content.decode()
+    assert 'id="benachrichtigungen-count" class="count">2</span>' in html
+    assert "/count-benachrichtigungen/" not in html
+
+
+@pytest.mark.django_db
+def test_dynamic_pages_are_gzip_compressed(client):
+    response = client.get("/", headers={"accept-encoding": "gzip"})
+    assert response.headers["Content-Encoding"] == "gzip"

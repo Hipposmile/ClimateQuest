@@ -163,7 +163,7 @@
                     " sizes="100vw"
                         >
 
-                        <img src="{% static 'images/ice-train/ice-train-fallback.png' %}"
+                        <img src="{% static 'images/ice-train/ice-train-fallback.jpg' %}"
                              alt="{% trans 'Bild eines Zugs' %}" loading="lazy">
                     </picture>
                 </li>
@@ -185,7 +185,7 @@
                     " sizes="100vw"
                         >
 
-                        <img src="{% static 'images/vegan/vegan-fallback.png' %}"
+                        <img src="{% static 'images/vegan/vegan-fallback.jpg' %}"
                              alt="{% trans 'Bild eines veganes Gerichts' %}" loading="lazy">
                     </picture>
                 </li>
@@ -207,7 +207,7 @@
                     " sizes="100vw"
                         >
 
-                        <img src="{% static 'images/mail/mail-fallback.png' %}"
+                        <img src="{% static 'images/mail/mail-fallback.jpg' %}"
                              alt="{% trans 'Bild eines Mailprogramms' %}" loading="lazy">
                     </picture>
                 </li>
@@ -391,26 +391,22 @@
         });
 
         function animateCount(element, endValue, maxDuration = 1500) {
-            let startValue = 0;
+            // Counts up over at most `maxDuration` ms; only the last `steps` numbers are animated (as before).
+            const stepTime = 10;
+            const steps = Math.floor(maxDuration / stepTime);
+            const startValue = endValue > steps ? endValue - steps : 0;
+            const duration = steps * stepTime;
+            const startedAt = performance.now();
 
-            let stepTime = 10;
-            let steps = Math.floor(maxDuration / stepTime);
-
-            if (endValue > steps) {
-                startValue = endValue - steps;
+            // requestAnimationFrame instead of a 10 ms interval: at most one update per frame and
+            // no work at all while the tab is in the background.
+            function frame(now) {
+                const progress = Math.min((now - startedAt) / duration, 1);
+                element.textContent = Math.floor(startValue + (endValue - startValue) * progress);
+                if (progress < 1) requestAnimationFrame(frame);
             }
 
-            let current = startValue;
-            const increment = (endValue - startValue) / steps;
-
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= endValue) {
-                    current = endValue;
-                    clearInterval(timer);
-                }
-                element.textContent = Math.floor(current);
-            }, stepTime);
+            requestAnimationFrame(frame);
         }
     </script>
 {% endblock %}

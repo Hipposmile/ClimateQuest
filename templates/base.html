@@ -35,12 +35,12 @@
     <meta name="robots" content="index, follow">
 
     <meta name="vapid-key" content="{{ vapid_public_key }}">
+    <meta name="cq-user-id" content="{{ request.user.pk|default:'' }}">
     <meta name="cps-style-nonce" content="{{ request.cps_style_nonce }}">
 
     <title>{% block title %}MyPage{% endblock %} - ClimateQuest</title>
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'libraries/quill/quill.snow.css' %}">
     <link rel="icon" href="{% static 'icons/favicon.ico' %}" type="image/x-icon">
     <script src="{% static 'js/cookie-consent.js' %}" defer></script>
 
@@ -436,6 +436,14 @@
     function initializeQuill() {
         const editors = document.querySelectorAll('.content_editor');
 
+        if (editors.length === 0) return;
+
+        // The editor (≈400 KB JS + CSS) is only downloaded on pages that really contain one.
+        const stylesheet = document.createElement("link");
+        stylesheet.rel = "stylesheet";
+        stylesheet.href = "{% static 'libraries/quill/quill.snow.css' %}";
+        document.head.appendChild(stylesheet);
+
         const script = document.createElement("script");
         script.src = "{% static 'libraries/quill/quill.js' %}";
         document.body.appendChild(script);
@@ -724,7 +732,7 @@
                     {% static 'icons/ClimateQuest/ClimateQuest-640.avif' %} 640w,
                     {% static 'icons/ClimateQuest/ClimateQuest-1280.avif' %} 1280w,
                     {% static 'icons/ClimateQuest/ClimateQuest-1920.avif' %} 1920w
-                    " sizes="100vw"
+                    " sizes="135px"
                 >
 
                 <source type="image/webp" srcset="
@@ -732,7 +740,7 @@
                     {% static 'icons/ClimateQuest/ClimateQuest-640.webp' %} 640w,
                     {% static 'icons/ClimateQuest/ClimateQuest-1280.webp' %} 1280w,
                     {% static 'icons/ClimateQuest/ClimateQuest-1920.webp' %} 1920w
-                    " sizes="100vw"
+                    " sizes="135px"
                 >
 
                 <img src="{% static 'icons/ClimateQuest/ClimateQuest-fallback.png' %}" alt="ClimateQuestLogo" class="logo-img">
@@ -788,7 +796,7 @@
                     <a  href="{% url 'benachrichtigungen_view' %}">
                         <div class="benachrichtigung-wrapper">
                             <span class="emoji">&#x1F514;</span>
-                            <span id="benachrichtigungen-count" class="count">?</span>
+                            {% if benachrichtigungen_count %}<span id="benachrichtigungen-count" class="count">{{ benachrichtigungen_count }}</span>{% endif %}
                         </div>
                     </a>
                     {% else %}
@@ -829,9 +837,6 @@
                 .forEach(el => el.classList.remove('visible'));
         });
 
-        {% if request.user.is_authenticated %}
-            ladeBenachrichtigungenAnzahl();
-        {% endif %}
     }
 
     function handleResize() {
@@ -875,50 +880,7 @@
     });
 </script>
 
-{% if request.user.is_authenticated %}
-    <script nonce="{{ request.csp_script_nonce }}">
-        const maxTries = 99;
-        let tries = 0;
-
-        function ladeBenachrichtigungenAnzahl() {
-            fetch('/count-benachrichtigungen/')
-                .then(response => {
-                    if (!response.ok) throw new Error("Netzwerkfehler: " + response.status);
-                    return response.json();
-                })
-                .then(data => {
-                    const countSpan = document.getElementById('benachrichtigungen-count');
-                    let benachrichtigungen_count = data.benachrichtigungen_count;
-                    if (!countSpan) {
-                        console.error("Element #benachrichtigungen-count nicht gefunden.");
-                        timeoutId = setTimeout(function () {
-                            tries++;
-                            if (tries < maxTries) {
-                                ladeBenachrichtigungenAnzahl();
-                            }
-                        }, 100)
-                        return false;
-                    }
-                    if (benachrichtigungen_count != 0) {
-                        /*let previousCount = parseInt(localStorage.getItem('benachrichtigungen_count') || "0");
-                        if (benachrichtigungen_count > previousCount) {
-                        }
-                        localStorage.setItem('benachrichtigungen_count', benachrichtigungen_count);*/
-
-                        countSpan.textContent = benachrichtigungen_count;
-                    } else {
-                        countSpan.style.display = 'none';
-                    }
-                    return true;
-                })
-                .catch(error => {
-                    console.error('Fehler beim Laden der Benachrichtigungen:', error);
-                    return false;
-                });
-        }
-    </script>
-{% endif %}
-<script src="{% static 'pwa/register_sw.js' %}"></script>
+<script src="{% static 'pwa/register_sw.js' %}" defer></script>
 
 {% with url=request.build_absolute_uri %}
     <!--Teilen-->
@@ -974,7 +936,6 @@
         </div>
     </div>
 
-    <script src="{% static 'js/qrcode.min.js' %}"></script>
     <script nonce="{{ request.csp_script_nonce }}">
 
         let currentShareUrl = "{{ url }}";
@@ -1051,7 +1012,32 @@
             }
         }
 
-        function generateQrCode(url) {
+        let qrLibraryPromise = null;
+
+        // qrcode.js is only downloaded when someone actually asks for a QR code.
+        function loadQrLibrary() {
+            if (typeof QRCode !== 'undefined') return Promise.resolve();
+            if (!qrLibraryPromise) {
+                qrLibraryPromise = new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = "{% static 'js/qrcode.min.js' %}";
+                    script.onload = resolve;
+                    script.onerror = () => {
+                        qrLibraryPromise = null;
+                        reject();
+                    };
+                    document.head.appendChild(script);
+                });
+            }
+            return qrLibraryPromise;
+        }
+
+        async function generateQrCode(url) {
+            try {
+                await loadQrLibrary();
+            } catch (error) {
+                return;
+            }
             let qrcodeContainer = document.getElementById("qrcodeContainer");
             qrcodeContainer.innerHTML = "";
             qrcodeContainer.style.display = "block";

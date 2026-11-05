@@ -72,7 +72,34 @@ const subscribe = async (reg) => {
     sendSubData(sub)
 };
 
+// The server only needs to hear about a push subscription when it is new or the user changed.
+// Without this check every single page view sent a POST (and a database write) to /webpush/save_information.
+const syncKey = (subscription) => {
+    const userMeta = document.querySelector('meta[name="cq-user-id"]');
+    return `${userMeta ? userMeta.content : ''}|${subscription.endpoint}`;
+};
+
+const alreadySynced = (key) => {
+    try {
+        return localStorage.getItem('push-subscription-synced') === key;
+    } catch (error) {
+        return false;
+    }
+};
+
+const rememberSynced = (key) => {
+    try {
+        localStorage.setItem('push-subscription-synced', key);
+    } catch (error) {
+        // storage not available: we simply sync again next time
+    }
+};
+
 const sendSubData = async (subscription) => {
+    const key = syncKey(subscription);
+    if (alreadySynced(key)) {
+        return;
+    }
     const browser = navigator.userAgent.match(/(firefox|msie|chrome|safari|trident)/ig)[0].toLowerCase();
     const token = getCsrfMiddlewareToken();
     const data = {
@@ -91,6 +118,9 @@ const sendSubData = async (subscription) => {
         credentials: "include"
     });
 
+    if (res.ok) {
+        rememberSynced(key);
+    }
     handleResponse(res);
 };
 

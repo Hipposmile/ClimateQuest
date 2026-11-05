@@ -456,7 +456,7 @@ main {
 
 @font-face {
     font-family: 'OpenMoji';
-    src: url("../fonts/OpenMoji-color-glyf_colr_0.ttf") format('truetype');
+    src: url("../fonts/OpenMoji-subset.woff2") format('woff2');
     font-display: swap;
 }
 
@@ -1576,4 +1576,15 @@ canvas {
 
 .input-max-span.full {
     color: red;
+}
+/* Energy saving: users who ask their system for reduced motion get no continuous/decorative animations (no constant repaints). */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
 }
