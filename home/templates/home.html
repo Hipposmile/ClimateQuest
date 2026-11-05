@@ -120,29 +120,9 @@
     {% endif %}
 
     <h1 class="slider-heading">{% trans "ClimateQuest - Motivation für mehr Klimaschutz" %}</h1>
-    <section class="splide" aria-label="Splide Basic HTML Example">
+    <section class="splide" aria-label="ClimateQuest achievement examples">
         <div class="splide__track">
             <ul class="splide__list">
-                <li class="splide__slide">
-                    <picture class="active">
-                        <source type="image/avif" srcset="
-                    {% static 'images/plant-tree/plant-tree-320.avif' %} 320w,
-                    {% static 'images/plant-tree/plant-tree-640.avif' %} 640w,
-                    {% static 'images/plant-tree/plant-tree-1280.avif' %} 1280w
-                    " sizes="100vw"
-                        >
-
-                        <source type="image/webp" srcset="
-                    {% static 'images/plant-tree/plant-tree-320.webp' %} 320w,
-                    {% static 'images/plant-tree/plant-tree-640.webp' %} 640w,
-                    {% static 'images/plant-tree/plant-tree-1280.webp' %} 1280w
-                    " sizes="100vw"
-                        >
-
-                        <img src="{% static 'images/plant-tree/plant-tree-fallback.jpg' %}"
-                             alt="{% trans 'Bild, auf dem ein Baum gepflanzt wird' %}">
-                    </picture>
-                </li>
                 <li class="splide__slide">
                     <picture class="active">
                         <source type="image/avif" srcset="
@@ -203,6 +183,26 @@
                              alt="{% trans 'Bild eines Mailprogramms' %}" loading="lazy">
                     </picture>
                 </li>
+                <li class="splide__slide">
+                    <picture>
+                        <source type="image/avif" srcset="
+                    {% static 'images/plant-tree/plant-tree-320.avif' %} 320w,
+                    {% static 'images/plant-tree/plant-tree-640.avif' %} 640w,
+                    {% static 'images/plant-tree/plant-tree-1280.avif' %} 1280w
+                    " sizes="100vw"
+                        >
+
+                        <source type="image/webp" srcset="
+                    {% static 'images/plant-tree/plant-tree-320.webp' %} 320w,
+                    {% static 'images/plant-tree/plant-tree-640.webp' %} 640w,
+                    {% static 'images/plant-tree/plant-tree-1280.webp' %} 1280w
+                    " sizes="100vw"
+                        >
+
+                        <img src="{% static 'images/plant-tree/plant-tree-fallback.jpg' %}"
+                             alt="{% trans 'Bild, auf dem ein Baum gepflanzt wird' %}">
+                    </picture>
+                </li>
             </ul>
         </div>
     </section>
@@ -218,10 +218,10 @@
 
         const caption = document.querySelector('.splide__caption');
         const caption_list = {
-            0: '{% trans "User BrunnerL3 wurde durch ClimateQuest dazu motiviert, einen Baum zu pflanzen" %}',
-            1: '{% trans "User Maradona wurde durch ClimateQuest dazu motiviert, mit dem Zug statt mit dem Flugzeug zu reisen" %}',
-            2: '{% trans "User Jessi wurde durch ClimateQuest dazu motiviert, weniger Käse zu essen" %}',
-            3: '{% trans "User Jessi wurde durch ClimateQuest dazu motiviert, E-Mails regelmäßig zu löschen" %}',
+            0: '{% trans "User Maradona wurde durch ClimateQuest dazu motiviert, mit dem Zug statt mit dem Flugzeug zu reisen" %}',
+            1: '{% trans "User Jessi wurde durch ClimateQuest dazu motiviert, weniger Käse zu essen" %}',
+            2: '{% trans "User Jessi wurde durch ClimateQuest dazu motiviert, E-Mails regelmäßig zu löschen" %}',
+            3: '{% trans "User BrunnerL3 wurde durch ClimateQuest dazu motiviert, einen Baum zu pflanzen" %}',
         }
 
         splide.on('move', function (newIndex) {
