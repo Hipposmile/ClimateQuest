@@ -175,6 +175,7 @@
         }
 
         function buildChart() {
+            Chart.defaults.color = window.matchMedia('(prefers-color-scheme: dark)').matches ? '#b6bdc6' : '#666';
             const datasets = CATS.map((cat, i) => ({
                 label: cat.name,
                 data: RAW.series[i],

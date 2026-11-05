@@ -12,6 +12,7 @@ Class-based views
     2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
 Including another URLconf
     1. Import the include() function: from django.urls import include, path
+from django.views.decorators.cache import cache_control, cache_page
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
@@ -21,6 +22,7 @@ from django.contrib import admin
 from django.contrib.sitemaps import Sitemap
 from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
+from django.views.decorators.cache import cache_control, cache_page
 from django.views.generic import RedirectView, TemplateView
 
 from aktionen.sitemaps import AddAktionenSitemap
@@ -70,10 +72,22 @@ raw_sitemap_classes: dict[str, type[Sitemap]] = {
 }
 
 sitemaps = build_localized_sitemaps(raw_sitemap_classes)
+SECONDS_PER_DAY = 24 * 60 * 60
 
 urlpatterns = [
-    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap"),
-    path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
+    # Crawler endpoints change rarely: render once a day instead of on every crawler visit.
+    path(
+        "sitemap.xml",
+        cache_page(SECONDS_PER_DAY)(sitemap),
+        {"sitemaps": sitemaps},
+        name="django.contrib.sitemaps.views.sitemap",
+    ),
+    path(
+        "robots.txt",
+        cache_control(public=True, max_age=SECONDS_PER_DAY)(
+            TemplateView.as_view(template_name="robots.txt", content_type="text/plain")
+        ),
+    ),
     path("ClimateQuestAdmin/", admin.site.urls),
     path("", include("home.urls")),
     path("personals/", include("personals.urls")),

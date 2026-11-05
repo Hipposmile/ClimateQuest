@@ -128,20 +128,18 @@
                         <source type="image/avif" srcset="
                     {% static 'images/plant-tree/plant-tree-320.avif' %} 320w,
                     {% static 'images/plant-tree/plant-tree-640.avif' %} 640w,
-                    {% static 'images/plant-tree/plant-tree-1280.avif' %} 1280w,
-                    {% static 'images/plant-tree/plant-tree-1920.avif' %} 1920w
+                    {% static 'images/plant-tree/plant-tree-1280.avif' %} 1280w
                     " sizes="100vw"
                         >
 
                         <source type="image/webp" srcset="
                     {% static 'images/plant-tree/plant-tree-320.webp' %} 320w,
                     {% static 'images/plant-tree/plant-tree-640.webp' %} 640w,
-                    {% static 'images/plant-tree/plant-tree-1280.webp' %} 1280w,
-                    {% static 'images/plant-tree/plant-tree-1920.webp' %} 1920w
+                    {% static 'images/plant-tree/plant-tree-1280.webp' %} 1280w
                     " sizes="100vw"
                         >
 
-                        <img src="{% static 'images/plant-tree/plant-tree-fallback.png' %}"
+                        <img src="{% static 'images/plant-tree/plant-tree-fallback.jpg' %}"
                              alt="{% trans 'Bild, auf dem ein Baum gepflanzt wird' %}">
                     </picture>
                 </li>
@@ -150,20 +148,18 @@
                         <source type="image/avif" srcset="
                     {% static 'images/ice-train/ice-train-320.avif' %} 320w,
                     {% static 'images/ice-train/ice-train-640.avif' %} 640w,
-                    {% static 'images/ice-train/ice-train-1280.avif' %} 1280w,
-                    {% static 'images/ice-train/ice-train-1920.avif' %} 1920w
+                    {% static 'images/ice-train/ice-train-1280.avif' %} 1280w
                     " sizes="100vw"
                         >
 
                         <source type="image/webp" srcset="
                     {% static 'images/ice-train/ice-train-320.webp' %} 320w,
                     {% static 'images/ice-train/ice-train-640.webp' %} 640w,
-                    {% static 'images/ice-train/ice-train-1280.webp' %} 1280w,
-                    {% static 'images/ice-train/ice-train-1920.webp' %} 1920w
+                    {% static 'images/ice-train/ice-train-1280.webp' %} 1280w
                     " sizes="100vw"
                         >
 
-                        <img src="{% static 'images/ice-train/ice-train-fallback.png' %}"
+                        <img src="{% static 'images/ice-train/ice-train-fallback.jpg' %}"
                              alt="{% trans 'Bild eines Zugs' %}" loading="lazy">
                     </picture>
                 </li>
@@ -172,20 +168,18 @@
                         <source type="image/avif" srcset="
                     {% static 'images/vegan/vegan-320.avif' %} 320w,
                     {% static 'images/vegan/vegan-640.avif' %} 640w,
-                    {% static 'images/vegan/vegan-1280.avif' %} 1280w,
-                    {% static 'images/vegan/vegan-1920.avif' %} 1920w
+                    {% static 'images/vegan/vegan-1280.avif' %} 1280w
                     " sizes="100vw"
                         >
 
                         <source type="image/webp" srcset="
                     {% static 'images/vegan/vegan-320.webp' %} 320w,
                     {% static 'images/vegan/vegan-640.webp' %} 640w,
-                    {% static 'images/vegan/vegan-1280.webp' %} 1280w,
-                    {% static 'images/vegan/vegan-1920.webp' %} 1920w
+                    {% static 'images/vegan/vegan-1280.webp' %} 1280w
                     " sizes="100vw"
                         >
 
-                        <img src="{% static 'images/vegan/vegan-fallback.png' %}"
+                        <img src="{% static 'images/vegan/vegan-fallback.jpg' %}"
                              alt="{% trans 'Bild eines veganes Gerichts' %}" loading="lazy">
                     </picture>
                 </li>
@@ -194,20 +188,18 @@
                         <source type="image/avif" srcset="
                     {% static 'images/mail/mail-320.avif' %} 320w,
                     {% static 'images/mail/mail-640.avif' %} 640w,
-                    {% static 'images/mail/mail-1280.avif' %} 1280w,
-                    {% static 'images/mail/mail-1920.avif' %} 1920w
+                    {% static 'images/mail/mail-1280.avif' %} 1280w
                     " sizes="100vw"
                         >
 
                         <source type="image/webp" srcset="
                     {% static 'images/mail/mail-320.webp' %} 320w,
                     {% static 'images/mail/mail-640.webp' %} 640w,
-                    {% static 'images/mail/mail-1280.webp' %} 1280w,
-                    {% static 'images/mail/mail-1920.webp' %} 1920w
+                    {% static 'images/mail/mail-1280.webp' %} 1280w
                     " sizes="100vw"
                         >
 
-                        <img src="{% static 'images/mail/mail-fallback.png' %}"
+                        <img src="{% static 'images/mail/mail-fallback.jpg' %}"
                              alt="{% trans 'Bild eines Mailprogramms' %}" loading="lazy">
                     </picture>
                 </li>
@@ -391,26 +383,22 @@
         });
 
         function animateCount(element, endValue, maxDuration = 1500) {
-            let startValue = 0;
+            // Counts up over at most `maxDuration` ms; only the last `steps` numbers are animated (as before).
+            const stepTime = 10;
+            const steps = Math.floor(maxDuration / stepTime);
+            const startValue = endValue > steps ? endValue - steps : 0;
+            const duration = steps * stepTime;
+            const startedAt = performance.now();
 
-            let stepTime = 10;
-            let steps = Math.floor(maxDuration / stepTime);
-
-            if (endValue > steps) {
-                startValue = endValue - steps;
+            // requestAnimationFrame instead of a 10 ms interval: at most one update per frame and
+            // no work at all while the tab is in the background.
+            function frame(now) {
+                const progress = Math.min((now - startedAt) / duration, 1);
+                element.textContent = Math.floor(startValue + (endValue - startValue) * progress);
+                if (progress < 1) requestAnimationFrame(frame);
             }
 
-            let current = startValue;
-            const increment = (endValue - startValue) / steps;
-
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= endValue) {
-                    current = endValue;
-                    clearInterval(timer);
-                }
-                element.textContent = Math.floor(current);
-            }, stepTime);
+            requestAnimationFrame(frame);
         }
     </script>
 {% endblock %}

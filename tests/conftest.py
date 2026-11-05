@@ -4,6 +4,7 @@ import pytest
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
+from django.core.cache import cache
 from django.test import Client
 from django.utils import translation
 
@@ -20,6 +21,14 @@ def default_language():
     translation.activate(settings.LANGUAGE_CODE)
     yield
     translation.deactivate_all()
+
+
+@pytest.fixture(autouse=True)
+def clear_cache():
+    """The home page statistics are cached: every test starts with an empty cache."""
+    cache.clear()
+    yield
+    cache.clear()
 
 
 class LangClient(Client):

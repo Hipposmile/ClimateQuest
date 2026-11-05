@@ -77,6 +77,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # Compresses dynamic HTML/JSON (≈70-80 % less data). Django's GZipMiddleware randomises the output (BREACH mitigation).
+    "django.middleware.gzip.GZipMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "core.middleware.add_cors_header_middleware.AddCORSHeaderMiddleware",
     "servestatic.middleware.ServeStaticMiddleware",
@@ -107,6 +109,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "core.context_processors.vapid_key",
+                "core.context_processors.notification_count",
             ],
         },
     },

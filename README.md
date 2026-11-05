@@ -157,3 +157,22 @@ Die Tests schlagen fehl, wenn Einträge leer, `fuzzy`, veraltet oder nicht kompi
 
 Einstellungen: `ClimateQuest.settings` (Entwicklung), `ClimateQuest.settingsprod` (Produktion, Geheimnisse aus
 Umgebungsvariablen/`.env`), `ClimateQuest.settingstest` (Tests).
+
+---
+
+# Energie- und CO₂-Sparmaßnahmen
+
+- **Emoji-Schrift:** `static/fonts/OpenMoji-subset.woff2` (≈ 29 KB) enthält nur die tatsächlich verwendeten Emojis. Die
+  vollständige Schrift (2,6 MB) liegt unter `tools/fonts/`. Wird irgendwo ein **neues** Emoji
+  (`<span class="emoji">&#x....;</span>`) verwendet, danach `tools/subset_emoji_font.sh` ausführen
+  (`pip install fonttools brotli`).
+- **Bilder:** `<picture>`-Elemente nutzen korrekte `sizes`-Werte, damit nur die Bildbreite geladen wird, die wirklich
+  angezeigt wird. Die PNG/JPG-Fallbacks sind klein gehalten (nur für sehr alte Browser).
+- **Komprimierung:** Dynamische Seiten werden per gzip ausgeliefert, statische Dateien vorab mit Brotli/gzip (`Brotli` in
+  `requirements.txt`).
+- **Bibliotheken nur bei Bedarf:** Quill (Editor) und der QR-Code-Generator werden erst geladen, wenn sie gebraucht werden.
+- **Dunkles Farbschema:** Bei Geräten mit aktivierter Systemeinstellung „Dunkel“ (`prefers-color-scheme: dark`) wird
+  automatisch ein dunkles Farbschema genutzt (spart Strom auf OLED-Displays). Die Farben stehen als CSS-Variablen in
+  `static/css/style.css`; für Hintergründe bitte `--color-surface` statt `--color-white` verwenden.
+- **Startseiten-Statistik** wird 10 Minuten zwischengespeichert, Lottie-Animationen starten erst per Klick/Tap.
+- **Bilder im Karussell** sind auf 1280 px Breite begrenzt.

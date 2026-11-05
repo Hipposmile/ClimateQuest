@@ -1,11 +1,3 @@
-/* global workbox */
-
-importScripts('/static/pwa/workbox/workbox-sw.js');
-
-workbox.setConfig({
-    modulePathPrefix: '/static/pwa/workbox/'
-});
-
 const CACHE = "pwabuilder-page";
 
 const offlineFallbackPage = "/static/pwa/offline.html";
@@ -21,9 +13,12 @@ self.addEventListener('install', async (event) => {
         .then((cache) => cache.add(offlineFallbackPage)));
 });
 
-if (self.workbox && workbox.navigationPreload.isSupported()) {
-    workbox.navigationPreload.enable();
-}
+// Native navigation preload (no Workbox runtime needed: saves several script downloads and start-up work).
+self.addEventListener('activate', (event) => {
+    if (self.registration.navigationPreload) {
+        event.waitUntil(self.registration.navigationPreload.enable());
+    }
+});
 
 self.addEventListener('fetch', (event) => {
     if (event.request.mode === 'navigate') {

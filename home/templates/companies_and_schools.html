@@ -28,7 +28,7 @@
             margin-top: 1rem;
             align-items: center;
             padding: 1.5rem;
-            background-color: #f1faf1;
+            background-color: var(--color-counters-bg);
             border-radius: 16px;
         }
 
@@ -310,32 +310,79 @@
         </div>
     </div>
 
-    <script src="{% static 'libraries/lottie/lottie.min.js' %}"></script>
     <script nonce="{{ request.csp_script_nonce }}">
         document.addEventListener("DOMContentLoaded", () => {
             const elements = document.querySelectorAll(".lottie-anim");
+            let lottiePromise = null;
+
+            // The animation library (≈300 KB) is only downloaded when the first animation becomes visible.
+            function loadLottie() {
+                if (typeof lottie !== "undefined") return Promise.resolve();
+                if (!lottiePromise) {
+                    lottiePromise = new Promise((resolve, reject) => {
+                        const script = document.createElement("script");
+                        script.src = "{% static 'libraries/lottie/lottie.min.js' %}";
+                        script.onload = resolve;
+                        script.onerror = () => {
+                            lottiePromise = null;
+                            reject();
+                        };
+                        document.head.appendChild(script);
+                    });
+                }
+                return lottiePromise;
+            }
+
+            // Animations no longer run on their own: they show a still image and play once on click/tap
+            // (or Enter/Space), so no CPU/GPU is used for animations nobody asked for.
+            function prepare(element) {
+                const showsStartView = element.dataset.startview === "true";
+                const anim = lottie.loadAnimation({
+                    container: element,
+                    renderer: "svg",
+                    loop: false,
+                    autoplay: false,
+                    path: element.dataset.src,
+                });
+
+                anim.addEventListener("DOMLoaded", () => {
+                    anim.goToAndStop(showsStartView ? 0 : anim.totalFrames - 1, true);
+                });
+                anim.addEventListener("complete", () => {
+                    element.dataset.playing = "false";
+                    if (showsStartView) anim.goToAndStop(0, true);
+                });
+
+                const play = () => {
+                    if (element.dataset.playing === "true") return;
+                    element.dataset.playing = "true";
+                    anim.goToAndPlay(0, true);
+                };
+                element.addEventListener("click", play);
+                element.addEventListener("keydown", (event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        play();
+                    }
+                });
+                element.setAttribute("role", "button");
+                element.setAttribute("tabindex", "0");
+                element.style.cursor = "pointer";
+            }
+
+            // Animations inside a still collapsed accordion are not loaded yet.
+            function isRevealed(element) {
+                const wrapper = element.closest(".accordion-content-wrapper");
+                return !wrapper || wrapper.getBoundingClientRect().height > 0;
+            }
 
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting && !entry.target.dataset.started) {
-
+                    if (entry.isIntersecting && isRevealed(entry.target) && !entry.target.dataset.started) {
                         entry.target.dataset.started = "true";
-
-                        const anim = lottie.loadAnimation({
-                            container: entry.target,
-                            renderer: "svg",
-                            loop: false,
-                            autoplay: true,
-                            path: entry.target.dataset.src,
+                        loadLottie().then(() => prepare(entry.target)).catch(() => {
+                            entry.target.dataset.started = "";
                         });
-
-
-                        // Wenn startview=true → nach Ende wieder auf Anfangsbild springen
-                        if (entry.target.dataset.startview === "true") {
-                            anim.addEventListener("complete", () => {
-                                anim.goToAndStop(0, true);
-                            });
-                        }
                     }
                 });
             }, {threshold: 0.4});
