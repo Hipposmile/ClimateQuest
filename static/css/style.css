@@ -43,35 +43,6 @@
     "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Dark colour scheme: follows the system setting (prefers-color-scheme). Dark pixels need less power on OLED screens. */
-@media (prefers-color-scheme: dark) {
-    :root {
-        color-scheme: dark;
-        --color-bg: #0e1116;
-        --color-bg-light: #151a21;
-        --color-bg-dark: #12261b;
-        --color-text: #e4e7eb;
-        --color-primary: #5b7cff;
-        --color-primary-hover: #4db3ff;
-        --color-primary-light: #1b2740;
-        --color-accent: #ffffff;
-        --color-muted: #9aa3ad;
-        --color-shadow-light: rgba(0, 0, 0, 0.5);
-        --color-green-dark: #4cc380;
-        --color-blue-dark: #9db4cf;
-        --color-border: #3a424c;
-        --color-border-green: #2c5a4a;
-        --color-counters: #6fcf97;
-        --color-counters-bg: #14231b;
-        --color-own-cards: #4cc380;
-        --color-description: #ffffff22;
-        --color-surface: #181e26;
-        --color-text-soft: #b6bdc6;
-        --color-divider: #2a323c;
-        --color-track: #2a323c;
-    }
-}
-
 html {
     scroll-behavior: smooth;
     color: var(--color-text);
@@ -1610,6 +1581,7 @@ canvas {
 .input-max-span.full {
     color: red;
 }
+
 /* Energy saving: users who ask their system for reduced motion get no continuous/decorative animations (no constant repaints). */
 @media (prefers-reduced-motion: reduce) {
     *,
@@ -1619,16 +1591,5 @@ canvas {
         animation-iteration-count: 1 !important;
         transition-duration: 0.001ms !important;
         scroll-behavior: auto !important;
-    }
-}
-
-/* The logo graphic has dark lettering: in the dark scheme it keeps its light background. */
-@media (prefers-color-scheme: dark) {
-    .logo-link {
-        background: #e0f7e9;
-    }
-
-    .logo-link:hover {
-        background: #f7fafd;
     }
 }
