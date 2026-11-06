@@ -104,3 +104,10 @@ CRONJOBS = [
 
 CRONTAB_PYTHON_EXECUTABLE = "/webapps/climatequest/venv/bin/python"
 CRONTAB_COMMAND_PREFIX = "DJANGO_SETTINGS_MODULE=ClimateQuest.settingsprod"
+
+# Activate these lines to log which requests are made, cpu-time (from django and postgresql) and answer size in logs/energy_usage.jsonl
+# Deactivate these lines if these logs will not be used to calculate the carbon footprint etc.
+MIDDLEWARE.insert(
+    MIDDLEWARE.index("servestatic.middleware.ServeStaticMiddleware") + 1,
+    "carbon.middleware.EnergyMeterMiddleware",
+)
